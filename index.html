@@ -71,13 +71,15 @@
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- React Router DOM -->
-    <script src="https://unpkg.com/react-router-dom@6/dist/umd/react-router-dom.production.min.js"></script>
-    
-    <!-- Lucide React Icons -->
-    <script src="https://unpkg.com/lucide-react@0.292.0/dist/umd/lucide-react.min.js"></script>
-    
+
+    <!-- React Router DOM - with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.20.0/dist/umd/react-router-dom.production.min.js"
+            onerror="this.onerror=null; this.src='https://unpkg.com/react-router-dom@6/dist/umd/react-router-dom.production.min.js'"></script>
+
+    <!-- Lucide React Icons - with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.292.0/dist/umd/lucide-react.min.js"
+            onerror="this.onerror=null; this.src='https://unpkg.com/lucide-react@0.292.0/dist/umd/lucide-react.min.js'"></script>
+
     <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
