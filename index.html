@@ -164,10 +164,44 @@
     </script>
 
     <script type="text/babel" data-presets="env,react">
+        // --- DEPENDENCY CHECK ---
+        // Check if all required libraries loaded
+        const missingDeps = [];
+        if (typeof React === 'undefined') missingDeps.push('React');
+        if (typeof ReactDOM === 'undefined') missingDeps.push('ReactDOM');
+        if (typeof ReactRouterDOM === 'undefined') missingDeps.push('React Router');
+        if (typeof lucideReact === 'undefined') missingDeps.push('Lucide Icons');
+
+        if (missingDeps.length > 0) {
+            document.getElementById('root').innerHTML = `
+                <div style="padding: 40px; max-width: 800px; margin: 0 auto; font-family: Arial, sans-serif;">
+                    <h1 style="color: #dc2626; margin-bottom: 20px;">⚠️ Failed to Load Required Libraries</h1>
+                    <p style="font-size: 16px; margin-bottom: 20px;">
+                        The following libraries failed to load: <strong>${missingDeps.join(', ')}</strong>
+                    </p>
+                    <p style="margin-bottom: 20px;">This could be caused by:</p>
+                    <ul style="line-height: 1.8; margin-bottom: 20px;">
+                        <li>Network connectivity issues</li>
+                        <li>Browser tracking prevention blocking CDN resources</li>
+                        <li>Firewall or security software blocking external scripts</li>
+                        <li>Ad blockers interfering with script loading</li>
+                    </ul>
+                    <p style="margin-bottom: 20px;"><strong>Try these solutions:</strong></p>
+                    <ol style="line-height: 1.8;">
+                        <li>Disable tracking prevention for this site</li>
+                        <li>Disable ad blockers temporarily</li>
+                        <li>Try a different browser (Chrome, Firefox, or Edge)</li>
+                        <li>Check your internet connection and try again</li>
+                    </ol>
+                </div>
+            `;
+            throw new Error('Missing dependencies: ' + missingDeps.join(', '));
+        }
+
         // --- GLOBAL IMPORTS & DESTRUCTURING ---
         const { useState, useEffect, useCallback } = React;
         const { BrowserRouter, Routes, Route, Link, useLocation, Navigate, useSearchParams } = ReactRouterDOM;
-        
+
         // Destructure Icons from global lucideReact object
         const {
             Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck,
