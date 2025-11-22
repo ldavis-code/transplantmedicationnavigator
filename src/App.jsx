@@ -1155,6 +1155,286 @@ const MEDICATIONS = [
         commonOrgans: [OrganType.LUNG],
         papUrl: 'https://www.boehringer-ingelheim.com/us/patient-assistance'
     },
+    {
+        id: 'levalbuterol',
+        brandName: 'Xopenex',
+        genericName: 'Levalbuterol',
+        category: 'Bronchodilator',
+        manufacturer: 'Sunovion',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.sunovion.com/patient-support'
+    },
+    {
+        id: 'ipratropium',
+        brandName: 'Atrovent',
+        genericName: 'Ipratropium',
+        category: 'Bronchodilator',
+        manufacturer: 'Boehringer Ingelheim',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.boehringer-ingelheim.com/us/patient-assistance'
+    },
+    {
+        id: 'ipratropium-albuterol',
+        brandName: 'Combivent / DuoNeb',
+        genericName: 'Ipratropium/Albuterol',
+        category: 'Bronchodilator',
+        manufacturer: 'Boehringer Ingelheim',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.boehringer-ingelheim.com/us/patient-assistance'
+    },
+    {
+        id: 'fluticasone',
+        brandName: 'Flovent',
+        genericName: 'Fluticasone',
+        category: 'Inhaled Corticosteroid',
+        manufacturer: 'GlaxoSmithKline',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.gskforyou.com/'
+    },
+    {
+        id: 'budesonide-inhaled',
+        brandName: 'Pulmicort',
+        genericName: 'Budesonide',
+        category: 'Inhaled Corticosteroid',
+        manufacturer: 'AstraZeneca',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.azandmeapp.com/'
+    },
+    {
+        id: 'beclomethasone',
+        brandName: 'QVAR',
+        genericName: 'Beclomethasone',
+        category: 'Inhaled Corticosteroid',
+        manufacturer: 'Teva',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.tevausa.com/patient-resources/'
+    },
+    {
+        id: 'mometasone-inhaled',
+        brandName: 'Asmanex',
+        genericName: 'Mometasone',
+        category: 'Inhaled Corticosteroid',
+        manufacturer: 'Organon',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.organon.com/usa/patient-resources/'
+    },
+    {
+        id: 'ciclesonide',
+        brandName: 'Alvesco',
+        genericName: 'Ciclesonide',
+        category: 'Inhaled Corticosteroid',
+        manufacturer: 'Sunovion',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.sunovion.com/patient-support'
+    },
+    {
+        id: 'fluticasone-vilanterol',
+        brandName: 'Breo Ellipta',
+        genericName: 'Fluticasone/Vilanterol',
+        category: 'Respiratory',
+        manufacturer: 'GlaxoSmithKline',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.gskforyou.com/'
+    },
+    {
+        id: 'mometasone-formoterol',
+        brandName: 'Dulera',
+        genericName: 'Mometasone/Formoterol',
+        category: 'Respiratory',
+        manufacturer: 'Organon',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.organon.com/usa/patient-resources/'
+    },
+    {
+        id: 'umeclidinium-vilanterol',
+        brandName: 'Anoro Ellipta',
+        genericName: 'Umeclidinium/Vilanterol',
+        category: 'Bronchodilator',
+        manufacturer: 'GlaxoSmithKline',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.gskforyou.com/'
+    },
+    {
+        id: 'omalizumab',
+        brandName: 'Xolair',
+        genericName: 'Omalizumab',
+        category: 'Asthma Biologic',
+        manufacturer: 'Genentech / Novartis',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.genentech-access.com/patient.html'
+    },
+    {
+        id: 'mepolizumab',
+        brandName: 'Nucala',
+        genericName: 'Mepolizumab',
+        category: 'Asthma Biologic',
+        manufacturer: 'GlaxoSmithKline',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.gskforyou.com/'
+    },
+    {
+        id: 'benralizumab',
+        brandName: 'Fasenra',
+        genericName: 'Benralizumab',
+        category: 'Asthma Biologic',
+        manufacturer: 'AstraZeneca',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.azandmeapp.com/'
+    },
+    {
+        id: 'dupilumab',
+        brandName: 'Dupixent',
+        genericName: 'Dupilumab',
+        category: 'Asthma Biologic / Allergy',
+        manufacturer: 'Regeneron / Sanofi',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.dupixentmyway.com/'
+    },
+    {
+        id: 'tezepelumab',
+        brandName: 'Tezspire',
+        genericName: 'Tezepelumab',
+        category: 'Asthma Biologic',
+        manufacturer: 'AstraZeneca',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.azandmeapp.com/'
+    },
+    {
+        id: 'zafirlukast',
+        brandName: 'Accolate',
+        genericName: 'Zafirlukast',
+        category: 'Leukotriene Modifier',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
+    {
+        id: 'zileuton',
+        brandName: 'Zyflo',
+        genericName: 'Zileuton',
+        category: 'Leukotriene Modifier',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
+    // Allergy Medications (Both)
+    {
+        id: 'cetirizine',
+        brandName: 'Zyrtec',
+        genericName: 'Cetirizine',
+        category: 'Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG, OrganType.KIDNEY]
+    },
+    {
+        id: 'loratadine',
+        brandName: 'Claritin',
+        genericName: 'Loratadine',
+        category: 'Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG, OrganType.KIDNEY]
+    },
+    {
+        id: 'fexofenadine',
+        brandName: 'Allegra',
+        genericName: 'Fexofenadine',
+        category: 'Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG, OrganType.KIDNEY]
+    },
+    {
+        id: 'levocetirizine',
+        brandName: 'Xyzal',
+        genericName: 'Levocetirizine',
+        category: 'Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG, OrganType.KIDNEY]
+    },
+    {
+        id: 'desloratadine',
+        brandName: 'Clarinex',
+        genericName: 'Desloratadine',
+        category: 'Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG, OrganType.KIDNEY]
+    },
+    {
+        id: 'fluticasone-nasal',
+        brandName: 'Flonase',
+        genericName: 'Fluticasone Nasal',
+        category: 'Nasal Corticosteroid',
+        manufacturer: 'GlaxoSmithKline',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.gskforyou.com/'
+    },
+    {
+        id: 'mometasone-nasal',
+        brandName: 'Nasonex',
+        genericName: 'Mometasone Nasal',
+        category: 'Nasal Corticosteroid',
+        manufacturer: 'Organon',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG],
+        papUrl: 'https://www.organon.com/usa/patient-resources/'
+    },
+    {
+        id: 'triamcinolone-nasal',
+        brandName: 'Nasacort',
+        genericName: 'Triamcinolone Nasal',
+        category: 'Nasal Corticosteroid',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
+    {
+        id: 'azelastine-nasal',
+        brandName: 'Astelin / Astepro',
+        genericName: 'Azelastine Nasal',
+        category: 'Nasal Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
+    {
+        id: 'olopatadine-nasal',
+        brandName: 'Patanase',
+        genericName: 'Olopatadine Nasal',
+        category: 'Nasal Antihistamine',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
+    {
+        id: 'cromolyn',
+        brandName: 'NasalCrom',
+        genericName: 'Cromolyn Sodium',
+        category: 'Mast Cell Stabilizer',
+        manufacturer: 'Generic',
+        stage: TransplantStage.BOTH,
+        commonOrgans: [OrganType.LUNG]
+    },
     // Gastrointestinal Medications (Both)
     {
         id: 'omeprazole',
