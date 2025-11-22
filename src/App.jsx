@@ -2325,6 +2325,9 @@ const Home = () => {
                     <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
                     <p className="text-sm text-slate-600 mt-1">24/7 • Free • Confidential</p>
                 </div>
+                <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
+                    Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out—there are people who want to help.
+                </p>
                 <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
                     <div className="bg-white/80 p-3 rounded-lg">
                         <p className="font-bold text-slate-900 mb-1">Call or Text</p>
