@@ -901,6 +901,7 @@ const Layout = ({ children }) => {
         { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
         { path: '/application-help', label: 'Application Guide', ariaLabel: 'View application help guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
+        { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
 
     return (
@@ -2402,6 +2403,237 @@ const ApplicationHelp = () => {
     );
 };
 
+// FAQ Page
+const FAQ = () => {
+    const [openIndex, setOpenIndex] = useState(null);
+
+    const toggleQuestion = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+
+    const faqs = [
+        {
+            category: 'About This Site',
+            questions: [
+                {
+                    q: 'What is Transplant Med Navigator?',
+                    a: 'Transplant Med Navigator is a free, safe guide for transplant patients and care partners to find affordable medications and assistance programs. We help you navigate patient assistance programs (PAPs), copay foundations, and other resources to reduce medication costs.'
+                },
+                {
+                    q: 'Is this site free to use?',
+                    a: 'Yes! This site is completely free. We never ask for payment or personal financial information. All official assistance programs are also free—if any site asks you for money, leave immediately.'
+                },
+                {
+                    q: 'Who should use this site?',
+                    a: 'This site is designed for transplant patients, care partners, family members, social workers, and transplant coordinators who need help navigating medication costs and finding financial assistance.'
+                },
+                {
+                    q: 'Is my information kept private?',
+                    a: 'Yes. The "My Path" quiz stores your answers only in your browser—nothing is sent to a server. When you close the browser, your data is gone unless you save your results.'
+                }
+            ]
+        },
+        {
+            category: 'Patient Assistance Programs (PAPs)',
+            questions: [
+                {
+                    q: 'What is a Patient Assistance Program (PAP)?',
+                    a: 'Patient Assistance Programs are offered directly by pharmaceutical manufacturers to provide free or low-cost medications to people who cannot afford them. Each drug manufacturer has its own program with specific eligibility requirements.'
+                },
+                {
+                    q: 'Who qualifies for Patient Assistance Programs?',
+                    a: 'Eligibility varies by program but typically includes income limits (often 300-500% of federal poverty level), insurance status requirements, and U.S. residency. Some programs are only for uninsured patients, while others accept insured patients who face high out-of-pocket costs.'
+                },
+                {
+                    q: 'How do I apply for a PAP?',
+                    a: 'Each manufacturer has its own application process. Generally, you need: basic personal info, income documentation (tax returns, pay stubs), prescription information, and a doctor\'s signature. Our Application Guide breaks down the specific requirements.'
+                },
+                {
+                    q: 'What\'s the difference between PAPs and copay cards?',
+                    a: 'Copay cards help cover your copayment if you have commercial insurance. PAPs provide free medication if you\'re uninsured or underinsured. Copay cards are typically easy to get and work instantly, while PAPs require applications and income documentation.'
+                },
+                {
+                    q: 'Can I use a PAP if I have Medicare?',
+                    a: 'Most manufacturer PAPs do NOT accept Medicare patients due to federal anti-kickback laws. However, Medicare patients can use copay foundations (see below) and should explore Medicare Extra Help and state pharmaceutical assistance programs.'
+                }
+            ]
+        },
+        {
+            category: 'Copay Foundations',
+            questions: [
+                {
+                    q: 'What is a copay foundation?',
+                    a: 'Copay foundations are independent nonprofit organizations that provide financial assistance to help patients pay insurance premiums, copays, and deductibles. Unlike manufacturer PAPs, foundations can help Medicare patients.'
+                },
+                {
+                    q: 'What\'s the difference between a foundation and a PAP?',
+                    a: 'Foundations are independent nonprofits funded by multiple sources and can serve Medicare patients. PAPs are run by drug manufacturers, often cannot serve Medicare patients, but may provide free medication directly.'
+                },
+                {
+                    q: 'How do I know if a foundation is legitimate?',
+                    a: 'Legitimate foundations NEVER ask you to pay to apply. They have 501(c)(3) nonprofit status. Check the National Organization for Rare Disorders (NORD) or HealthWell Foundation as examples of trusted organizations.'
+                },
+                {
+                    q: 'Do foundations have waiting lists?',
+                    a: 'Yes, many foundations have limited funding and may close enrollment when funds run out. They typically reopen when new funding becomes available. Apply as early as possible and check multiple foundations.'
+                }
+            ]
+        },
+        {
+            category: 'Insurance & Coverage',
+            questions: [
+                {
+                    q: 'What is a Specialty Pharmacy?',
+                    a: 'Specialty pharmacies handle complex, high-cost medications like transplant drugs. Most commercial insurance plans require you to use a specific specialty pharmacy (often mail-order) instead of your local retail pharmacy like CVS or Walgreens.'
+                },
+                {
+                    q: 'Can I use my copay card with Medicare?',
+                    a: 'No. Federal law prohibits using manufacturer copay cards with Medicare. However, Medicare patients can use copay foundations for assistance with out-of-pocket costs.'
+                },
+                {
+                    q: 'What is the Medicare donut hole?',
+                    a: 'The Medicare Part D "donut hole" (coverage gap) is when you\'re temporarily responsible for a larger share of drug costs after reaching a certain spending threshold. As of 2024-2025, this has been significantly reduced thanks to the Inflation Reduction Act.'
+                },
+                {
+                    q: 'What is Medicare Extra Help?',
+                    a: 'Medicare Extra Help (Low-Income Subsidy or LIS) helps people with limited income pay Medicare prescription drug costs. It can eliminate or reduce premiums, deductibles, and copays. Eligibility is based on income and resources.'
+                }
+            ]
+        },
+        {
+            category: 'Using This Site',
+            questions: [
+                {
+                    q: 'How does the "My Path" quiz work?',
+                    a: 'The quiz asks about your role, transplant status, organ type, insurance, and medications. Based on your answers, it provides personalized recommendations for assistance programs that match your situation.'
+                },
+                {
+                    q: 'Can I search for a specific medication?',
+                    a: 'Yes! Use the "Search Meds" page to look up specific medications. You\'ll see price estimates, manufacturer assistance programs, and foundation resources for each drug.'
+                },
+                {
+                    q: 'What if my medication isn\'t listed?',
+                    a: 'We focus on common transplant medications, but our database is growing. You can still use the general strategies in our Resources & Education section, and check GoodRx, RxAssist, or NeedyMeds for additional medications.'
+                },
+                {
+                    q: 'Can I print my results?',
+                    a: 'Yes! Most result pages have a print button. We\'ve designed the printouts to be clean and easy to share with your healthcare team or bring to appointments.'
+                }
+            ]
+        },
+        {
+            category: 'Getting Help',
+            questions: [
+                {
+                    q: 'I\'m overwhelmed. Where do I start?',
+                    a: 'Start with the "My Path" quiz—it will guide you step-by-step and provide personalized recommendations. If you need hands-on help, contact your transplant center\'s social worker or financial coordinator.'
+                },
+                {
+                    q: 'Can you help me fill out applications?',
+                    a: 'While we can\'t fill out applications for you, our Application Guide breaks down each step. Your transplant center\'s social worker or financial coordinator can provide hands-on assistance.'
+                },
+                {
+                    q: 'What if I\'m denied by a program?',
+                    a: 'Don\'t give up! Many programs have appeal processes. Also, try applying to other foundations—each has different eligibility criteria and funding. Consider asking your social worker for assistance.'
+                },
+                {
+                    q: 'Who can I contact for more help?',
+                    a: 'Contact your transplant center\'s social worker or financial coordinator—they specialize in helping patients navigate these programs. You can also reach out to organizations like the National Kidney Foundation, American Liver Foundation, or other organ-specific groups.'
+                }
+            ]
+        }
+    ];
+
+    const FAQItem = ({ question, answer, index }) => {
+        const isOpen = openIndex === index;
+        return (
+            <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <button
+                    onClick={() => toggleQuestion(index)}
+                    className="w-full px-6 py-4 text-left bg-white hover:bg-slate-50 transition flex items-center justify-between gap-4"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${index}`}
+                >
+                    <span className="font-semibold text-slate-900 pr-4">{question}</span>
+                    <ChevronDown
+                        size={20}
+                        className={`flex-shrink-0 text-emerald-600 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                        aria-hidden="true"
+                    />
+                </button>
+                {isOpen && (
+                    <div
+                        id={`faq-answer-${index}`}
+                        className="px-6 py-4 bg-slate-50 border-t border-slate-200"
+                        role="region"
+                    >
+                        <p className="text-slate-700 leading-relaxed">{answer}</p>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    return (
+        <article className="max-w-5xl mx-auto space-y-8 pb-12">
+            <header className="text-center py-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
+                    <Info size={32} className="text-emerald-700" aria-hidden="true" />
+                </div>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Frequently Asked Questions</h1>
+                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                    Find answers to common questions about transplant medications, assistance programs, and using this site.
+                </p>
+            </header>
+
+            <div className="space-y-8">
+                {faqs.map((section, sectionIndex) => (
+                    <section key={sectionIndex} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                            <span className="w-1 h-8 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                            {section.category}
+                        </h2>
+                        <div className="space-y-3">
+                            {section.questions.map((faq, faqIndex) => {
+                                const globalIndex = `${sectionIndex}-${faqIndex}`;
+                                return (
+                                    <FAQItem
+                                        key={globalIndex}
+                                        question={faq.q}
+                                        answer={faq.a}
+                                        index={globalIndex}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </section>
+                ))}
+            </div>
+
+            <aside className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 md:p-8 text-center">
+                <h2 className="text-xl font-bold text-emerald-900 mb-3">Still have questions?</h2>
+                <p className="text-emerald-800 mb-6">
+                    Your transplant center's social worker or financial coordinator is your best resource for personalized guidance.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link
+                        to="/wizard"
+                        className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition"
+                    >
+                        Start My Path Quiz
+                    </Link>
+                    <Link
+                        to="/education"
+                        className="px-6 py-3 bg-white hover:bg-slate-50 text-emerald-700 font-bold rounded-lg shadow-md border border-emerald-200 transition"
+                    >
+                        Browse Resources
+                    </Link>
+                </div>
+            </aside>
+        </article>
+    );
+};
+
 // NotFound Page
 const NotFound = () => {
     return (
@@ -2454,6 +2686,7 @@ const App = () => {
                     <Route path="/medications" element={<MedicationSearch />} />
                     <Route path="/education" element={<Education />} />
                     <Route path="/application-help" element={<ApplicationHelp />} />
+                    <Route path="/faq" element={<FAQ />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Layout>
