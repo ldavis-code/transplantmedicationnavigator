@@ -832,12 +832,6 @@ const DIRECTORY_RESOURCES = [
         category: 'Support Group'
     },
     {
-        name: 'UNOS Patient Support',
-        url: 'https://www.unos.org/community/patient-support/',
-        description: 'United Network for Organ Sharing provides patient education, community forums, and support resources for transplant candidates and recipients.',
-        category: 'Support Group'
-    },
-    {
         name: 'Donate Life America',
         url: 'https://www.donatelife.net/patient-services/',
         description: 'Connects transplant recipients with local resources, events, and community support programs across the United States.',
@@ -1498,12 +1492,44 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Mental Health Hotline */}
+            <section className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-6 md:p-8 text-center max-w-3xl mx-auto mb-12" aria-labelledby="mental-health-hotline">
+                <div className="bg-rose-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" aria-hidden="true">
+                    <Phone size={32} />
+                </div>
+                <h3 id="mental-health-hotline" className="text-2xl font-bold text-slate-900 mb-3">
+                    Need to Talk to Someone?
+                </h3>
+                <p className="text-slate-600 mb-4">
+                    The transplant journey can be emotionally challenging. Free, confidential support is available 24/7.
+                </p>
+                <div className="mb-4">
+                    <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
+                        988
+                    </a>
+                    <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
+                    <p className="text-sm text-slate-600 mt-1">24/7 • Free • Confidential</p>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
+                    <div className="bg-white/80 p-3 rounded-lg">
+                        <p className="font-bold text-slate-900 mb-1">Call or Text</p>
+                        <p className="text-slate-600">Dial or text <strong>988</strong> from any phone</p>
+                    </div>
+                    <div className="bg-white/80 p-3 rounded-lg">
+                        <p className="font-bold text-slate-900 mb-1">Online Chat</p>
+                        <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-rose-600 font-medium hover:underline flex items-center gap-1">
+                            988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
+                        </a>
+                    </div>
+                </div>
+            </section>
+
             {/* Privacy Note */}
             <section className="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
                 <div className="flex justify-center mb-2 text-slate-400" aria-hidden="true"><Lock size={20}/></div>
                 <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">Your Privacy is Our Priority</h3>
                 <p className="text-slate-600 text-sm">
-                    We do not store your data. We do not ask for your social security number. 
+                    We do not store your data. We do not ask for your social security number.
                     We do not sell your information. This is a purely educational tool.
                 </p>
             </section>
