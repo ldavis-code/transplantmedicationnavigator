@@ -3707,36 +3707,8 @@ const MedicationCard = ({ med, activeTab, onRemove }) => {
                     </div>
                 )}
                 {activeTab === 'PRINT' && (
-                    <div className="fade-in space-y-4">
-                        {/* Simplified Medication Listing */}
-                        <section>
-                            <div className="space-y-2 text-sm">
-                                <p className="text-slate-700">
-                                    <span className="font-semibold">Medication:</span> {med.brandName} ({med.genericName})
-                                </p>
-                                <p className="text-slate-700">
-                                    <span className="font-semibold">Category:</span> {med.category}
-                                </p>
-                                {isCostPlusAvailable && (
-                                    <p className="text-emerald-700">
-                                        <span className="font-semibold">Cost Plus Drugs:</span> Available ({med.category === 'Immunosuppressant' ? '$15 - $40' : '$10 - $25'})
-                                    </p>
-                                )}
-                            </div>
-                        </section>
-
-                        {/* Print Instructions */}
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm no-print">
-                            <div className="flex items-start gap-3">
-                                <Printer size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
-                                <div>
-                                    <p className="font-bold text-blue-900 mb-1">Ready to Print</p>
-                                    <p className="text-blue-800">
-                                        This summary lists your medications. Use your browser's print function or the Print button above to create a PDF or hard copy.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="fade-in">
+                        <p className="text-slate-900 text-base">{med.brandName}</p>
                     </div>
                 )}
             </div>
