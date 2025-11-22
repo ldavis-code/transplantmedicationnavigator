@@ -2360,6 +2360,30 @@ const MedicationSearch = () => {
             </section>
 
             {hasItems && (
+                <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-emerald-600 text-white p-3 rounded-full" aria-hidden="true">
+                                <BookOpen size={24} />
+                            </div>
+                            <div>
+                                <h2 id="app-guide-heading" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h2>
+                                <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
+                            </div>
+                        </div>
+                        <Link
+                            to="/application-help"
+                            className="flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
+                            aria-label="View application guide for step-by-step help"
+                        >
+                            <FileText size={18} aria-hidden="true" />
+                            Application Guide
+                        </Link>
+                    </div>
+                </section>
+            )}
+
+            {hasItems && (
                 <nav className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
@@ -2435,17 +2459,43 @@ const MedicationCard = ({ med, activeTab, onRemove }) => {
                     </div>
                 )}
                 {activeTab === 'ASSISTANCE' && (
-                    <div className="grid md:grid-cols-2 gap-6 fade-in">
-                        <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
-                            <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Manufacturer PAP</h3>
-                            <p className="text-sm text-slate-700 mb-4">Many manufacturers offer free medication if you are uninsured or have commercial insurance but can't afford copays.</p>
-                            <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
-                        </section>
-                        <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
-                            <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
-                            <p className="text-sm text-slate-700 mb-4">Check HealthWell, PAN Foundation, and PAF for copay assistance.</p>
-                            <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
-                        </section>
+                    <div className="space-y-6 fade-in">
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
+                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Manufacturer PAP</h3>
+                                <p className="text-sm text-slate-700 mb-4">Many manufacturers offer free medication if you are uninsured or have commercial insurance but can't afford copays.</p>
+                                <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
+                            </section>
+                            <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
+                                <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
+                                <p className="text-sm text-slate-700 mb-4">Check HealthWell, PAN Foundation, and PAF for copay assistance.</p>
+                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
+                            </section>
+                        </div>
+                        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-5 shadow-sm no-print">
+                            <div className="flex items-start gap-4">
+                                <div className="bg-indigo-600 text-white p-2.5 rounded-lg flex-shrink-0" aria-hidden="true">
+                                    <FileText size={20} />
+                                </div>
+                                <div className="flex-grow">
+                                    <h4 className="font-bold text-indigo-900 mb-1 flex items-center gap-2">
+                                        Need Help Filling Out the Application?
+                                    </h4>
+                                    <p className="text-sm text-slate-700 mb-3">
+                                        Our comprehensive guide walks you through the entire application process with templates, checklists, and step-by-step instructions.
+                                    </p>
+                                    <Link
+                                        to="/application-help"
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition text-sm shadow-md"
+                                        aria-label="View complete application guide"
+                                    >
+                                        <BookOpen size={16} aria-hidden="true" />
+                                        View Application Guide
+                                        <ArrowRight size={16} aria-hidden="true" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
                 {activeTab === 'PRICE' && (
