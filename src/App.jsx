@@ -4197,6 +4197,160 @@ const Education = () => {
                             <h3 className="font-bold text-emerald-900 mb-2">Key Insight</h3>
                             <p className="text-emerald-800">Many patients combine programs—for example: Medicare patient → foundation grants for copays. Also compare cash pricing for generics.</p>
                         </aside>
+
+                        <div className="border-t border-slate-200 pt-8">
+                            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
+                                <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                    <BookOpen size={24} className="text-blue-600" aria-hidden="true" />
+                                    Insurance Jargon Made Simple
+                                </h2>
+                                <p className="text-slate-600 mb-6">Understanding insurance terms helps you navigate costs and find the help you need.</p>
+
+                                <div className="space-y-6">
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Premium</h3>
+                                        <p className="text-slate-700 text-sm">The amount you pay each month to have insurance. Think of it like a gym membership - you pay every month whether you use it or not.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Deductible</h3>
+                                        <p className="text-slate-700 text-sm">The amount you must pay yourself before your insurance starts helping. If your deductible is $500, you pay the first $500 of medicine costs. After that, insurance helps pay.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Copay (or Co-payment)</h3>
+                                        <p className="text-slate-700 text-sm">A fixed amount you pay each time you get medicine. Example: You might pay $10 for each prescription, and insurance pays the rest.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Coinsurance</h3>
+                                        <p className="text-slate-700 text-sm">The percentage you pay after meeting your deductible. If you have 20% coinsurance, you pay $20 for every $100 of medicine cost. Insurance pays the other $80.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Out-of-Pocket Maximum</h3>
+                                        <p className="text-slate-700 text-sm">The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Formulary</h3>
+                                        <p className="text-slate-700 text-sm">The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Tier</h3>
+                                        <p className="text-slate-700 text-sm mb-3">How insurance groups medicines by cost. Lower tiers (1-2) cost less. Higher tiers (3-4-5) cost more.</p>
+                                        <ul className="text-slate-600 text-sm space-y-1 ml-4 list-disc">
+                                            <li><strong>Tier 1:</strong> Usually generic drugs (lowest cost)</li>
+                                            <li><strong>Tier 2:</strong> Preferred brand drugs</li>
+                                            <li><strong>Tier 3-5:</strong> Non-preferred or specialty drugs (highest cost)</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Prior Authorization</h3>
+                                        <p className="text-slate-700 text-sm">When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Generic Medicine</h3>
+                                        <p className="text-slate-700 text-sm">A medicine that works the same as a brand name but costs less. Like store-brand cereal versus name-brand - same thing, different package.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Brand Name Medicine</h3>
+                                        <p className="text-slate-700 text-sm">The original version of a medicine made by the company that invented it. Usually costs more than generic.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Specialty Medication</h3>
+                                        <p className="text-slate-700 text-sm">Expensive medicines that need special handling or monitoring. Most transplant medicines are specialty medications. They often cost $600+ per month.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Medicare Part D</h3>
+                                        <p className="text-slate-700 text-sm">The part of Medicare that helps pay for prescription medicines. You must sign up for this separately.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Donut Hole (Coverage Gap)</h3>
+                                        <p className="text-slate-700 text-sm">A temporary limit in Medicare Part D coverage. After you and your plan spend a certain amount, you pay more until you reach catastrophic coverage. This happens in the middle of the year for some people.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Catastrophic Coverage</h3>
+                                        <p className="text-slate-700 text-sm">After you spend a lot on medicines in one year, Medicare pays almost everything. You only pay a small amount (about $4-$12) per prescription.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">In-Network Pharmacy</h3>
+                                        <p className="text-slate-700 text-sm">A pharmacy that works with your insurance. You pay less here. Think of it as a preferred partner.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Out-of-Network Pharmacy</h3>
+                                        <p className="text-slate-700 text-sm">A pharmacy that doesn't have a deal with your insurance. You might pay more or get no coverage here.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">PBM (Pharmacy Benefit Manager)</h3>
+                                        <p className="text-slate-700 text-sm">The company that manages prescription drug coverage for your insurance. They decide which medicines are covered and how much they cost.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Patient Assistance Program (PAP)</h3>
+                                        <p className="text-slate-700 text-sm">Free or low-cost medicine programs run by drug companies. If you can't afford your medicine, these programs might help.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Copay Card or Coupon</h3>
+                                        <p className="text-slate-700 text-sm">Help from drug companies to lower what you pay for brand name medicines. <strong>Important:</strong> These often don't work with Medicare.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Manufacturer Assistance</h3>
+                                        <p className="text-slate-700 text-sm">Help directly from the company that makes your medicine. This can be free medicine, copay help, or discounts.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Mail Order Pharmacy</h3>
+                                        <p className="text-slate-700 text-sm">A pharmacy that ships medicine to your home. Usually gives you 90 days of medicine at once. Often costs less than getting 30 days at a local pharmacy.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Step Therapy</h3>
+                                        <p className="text-slate-700 text-sm">When insurance requires you to try a cheaper medicine first before they'll pay for a more expensive one. Like having to try the basic version before getting the premium version.</p>
+                                    </div>
+
+                                    <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Exclusion</h3>
+                                        <p className="text-slate-700 text-sm">A medicine that insurance will not cover at all. You must pay the full price yourself or find other help.</p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                                    <h3 className="font-bold text-yellow-900 text-lg mb-3">Why This Matters for Transplant Patients</h3>
+                                    <p className="text-yellow-900 mb-4">Your anti-rejection medicines are specialty medications. They are expensive. Understanding these words helps you:</p>
+                                    <ul className="text-yellow-900 space-y-2 ml-6 list-disc">
+                                        <li>Know what you'll pay</li>
+                                        <li>Find help when costs are too high</li>
+                                        <li>Talk to your transplant team about options</li>
+                                        <li>Apply for assistance programs</li>
+                                    </ul>
+                                </div>
+
+                                <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-lg p-6">
+                                    <h3 className="font-bold text-emerald-900 text-lg mb-3">Questions to Ask</h3>
+                                    <ul className="text-emerald-900 space-y-2 ml-6 list-disc">
+                                        <li>What tier are my transplant medicines?</li>
+                                        <li>How much is my deductible?</li>
+                                        <li>When do I reach my out-of-pocket maximum?</li>
+                                        <li>Are my medicines on the formulary?</li>
+                                        <li>Can I use mail order to save money?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
                 {activeTab === 'DIRECTORY' && (
