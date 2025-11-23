@@ -4019,6 +4019,12 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <p>Price estimates are approximate ranges based on general market research (last updated: November 2024). Always check live prices via the links above for current rates.</p>
                             </div>
+                            {isCostPlusAvailable && (
+                                <div className="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2" role="note">
+                                    <DollarSign size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                    <p><strong>Cost Plus Drugs Pricing Note:</strong> Cost Plus Drugs operates as a cash-based pharmacy. When dealing with insurance deductibles, cash payments will not count toward your deductible. However, your medications may be cheaper paying cash than running through insurance.</p>
+                                </div>
+                            )}
                             {(costPlusStats || goodRxStats || amazonStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">
                                     <Users size={14} className="flex-shrink-0 mt-0.5" />
