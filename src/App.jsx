@@ -4161,18 +4161,111 @@ const Education = () => {
                                     <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
                                  </div>
                                  <p className="text-sm text-indigo-900 mb-4 font-medium">A major change from the Inflation Reduction Act</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting in 2025, Medicare Part D enrollees can choose this option to spread out their prescription drug costs over the course of the year instead of paying large amounts up front.</p>
-                                 <p className="text-slate-700 text-sm">This "smoothing" program helps make your out-of-pocket costs more predictable.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting in 2025, Medicare Part D enrollees can choose this option to spread out their prescription drug costs over the course of the year instead of paying large amounts up front (like when hitting the donut hole/coverage gap).</p>
+                                 <p className="text-slate-700 text-sm mb-4">This "smoothing" program helps make your out-of-pocket costs more predictable and manageable.</p>
+                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about enrolling in the Medicare Prescription Payment Plan during open enrollment.</p>
                              </section>
                              <section className="bg-purple-50 p-6 rounded-xl border border-purple-100">
                                  <div className="flex items-center gap-2 mb-3">
                                     <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Coming in 2026</span>
-                                    <h3 className="font-bold text-purple-900">Drug Price Negotiation</h3>
+                                    <h3 className="font-bold text-purple-900">Medicare Drug Price Negotiation</h3>
                                  </div>
-                                 <p className="text-sm text-purple-900 mb-4 font-medium">Medicare will negotiate prices for high-cost drugs.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first negotiated prices will take effect in 2026. This should lead to lower out-of-pocket costs.</p>
+                                 <p className="text-sm text-purple-900 mb-4 font-medium">A landmark change allowing Medicare to negotiate drug prices for the first time.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">For the first time ever, Medicare will directly negotiate the price for some of the highest-cost drugs. The first negotiated prices will take effect in 2026, which should lead to lower out-of-pocket costs for patients on these specific medications.</p>
+                                 <p className="text-slate-700 text-sm">The first 10 drugs selected for negotiation include medications for heart failure (Entresto), diabetes (Jardiance, Farxiga), and autoimmune conditions (Stelara), which are highly relevant for many transplant patients.</p>
                              </section>
                         </div>
+
+                        <div className="border-t border-slate-200 pt-8">
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Part D vs Medicare Advantage: Choosing Your Plan</h2>
+                            <p className="text-slate-600 mb-6">Understanding the differences can save you significant money on transplant medications.</p>
+                            <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                <section className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                                    <h3 className="font-bold text-blue-900 text-xl mb-3">Medicare Part D (Traditional)</h3>
+                                    <p className="text-sm text-slate-600 mb-4">Stand-alone prescription drug coverage that works with Original Medicare.</p>
+                                    <ul className="space-y-2 text-slate-700 text-sm">
+                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Works with any Medicare-accepting provider</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Separate deductible and premium</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>$2,000 out-of-pocket cap (2025)</span></li>
+                                    </ul>
+                                </section>
+                                <section className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
+                                    <h3 className="font-bold text-green-900 text-xl mb-3">Medicare Advantage (MA-PD)</h3>
+                                    <p className="text-sm text-slate-600 mb-4">All-in-one plan that includes medical coverage AND prescription drugs.</p>
+                                    <ul className="space-y-2 text-slate-700 text-sm">
+                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Often lower or $0 premiums</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Provider networks may be limited</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>$2,000 out-of-pocket cap (2025)</span></li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-xl border border-slate-200 mb-8">
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">How to Compare Plans for Your Medications</h3>
+                                <div className="space-y-4">
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-slate-800 mb-1">Check Formularies</h4>
+                                            <p className="text-slate-600 text-sm mb-2">Use the Medicare Plan Finder tool at medicare.gov to compare which plans cover your drugs and their tier levels.</p>
+                                            <a href="https://www.medicare.gov/plan-compare/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Visit Medicare Plan Finder (opens in new tab)">Medicare Plan Finder <ExternalLink size={12} aria-hidden="true" /></a>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-slate-800 mb-1">Compare Total Costs</h4>
+                                            <p className="text-slate-600 text-sm">Look at premiums, deductibles, copays/coinsurance, and pharmacy networks. Include the $2,000 out-of-pocket cap in your calculations.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-slate-800 mb-1">Consider Extra Help</h4>
+                                            <p className="text-slate-600 text-sm mb-2">If you have limited income, the Extra Help program can lower costs for both Part D and MA-PD plans, eliminating premiums and deductibles and capping copays (e.g., $4.90 for generics, $12.15 for brand-name drugs in 2025).</p>
+                                            <a href="https://www.ssa.gov/medicare/prescriptionhelp" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-slate-800 mb-1">Get Free Help</h4>
+                                            <p className="text-slate-600 text-sm mb-2">Contact your State Health Insurance Assistance Program (SHIP) for free, personalized help comparing plans.</p>
+                                            <a href="https://www.shiphelp.org/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Find Your Local SHIP (opens in new tab)">Find Your Local SHIP <ExternalLink size={12} aria-hidden="true" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">Medicare Parts for Transplant Drugs</h3>
+                                <p className="text-slate-600 mb-4">Understanding which part of Medicare covers your transplant medications is crucial.</p>
+                                <div className="grid md:grid-cols-3 gap-4">
+                                    <div className="bg-white p-4 rounded-lg border border-slate-200">
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part A (Hospital)</h4>
+                                        <p className="text-xs text-slate-500 mb-3">Covers drugs given during an inpatient hospital stay.</p>
+                                        <ul className="text-sm text-slate-700 list-disc pl-4">
+                                            <li>Induction agents (Thymoglobulin, Simulect)</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-white p-4 rounded-lg border border-slate-200">
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part B (Medical)</h4>
+                                        <p className="text-xs text-slate-500 mb-3">Covers some outpatient drugs, including immunosuppressants if you don't have Part D.</p>
+                                        <ul className="text-sm text-slate-700 list-disc pl-4">
+                                            <li>IV infusions (Belatacept/Nulojix)</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-white p-4 rounded-lg border border-slate-200">
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part D (Prescription)</h4>
+                                        <p className="text-xs text-slate-500 mb-3">Covers most of your daily oral take-home medications.</p>
+                                        <ul className="text-sm text-slate-700 list-disc pl-4">
+                                            <li>Tacrolimus, Mycophenolate, etc.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="border-t border-slate-200 pt-8">
                             <h3 className="text-xl font-bold text-slate-900 mb-6">Strategies by Insurance Type</h3>
                             <div className="grid gap-6 md:grid-cols-2">
