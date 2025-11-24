@@ -4955,20 +4955,6 @@ const Education = () => {
                                     <p className="text-emerald-600 font-medium text-sm">www.mat.org</p>
                                 </a>
 
-                                <a href="https://www.bio.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-blue-700 mb-1">BIO Organization</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-blue-100 text-blue-700">Industry Resource</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        <strong>Patient assistance programs during COVID-19:</strong> Bio.org put together a comprehensive look at patient support programs available during the pandemic and beyond.
-                                    </p>
-                                    <p className="text-blue-600 font-medium text-sm">www.bio.org</p>
-                                </a>
-
                                 <a href="https://www.drugs.com" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
