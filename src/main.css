@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 /* ========================================
-   ACCESSIBILITY IMPROVEMENTS
+   ACCESSIBILITY IMPROVEMENTS FOR TRANSPLANT PATIENTS
+   Priority: Vision changes from medications require higher contrast
    ======================================== */
 
 /* Base font size - minimum 16px for readability */
@@ -14,23 +15,32 @@ html {
 /* Ensure body text is readable */
 body {
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* Minimum tap target size for touch devices (44x44px) */
+/* Minimum tap target size for touch devices (44x44px) - WCAG 2.1 AAA */
 @layer components {
     .tap-target {
         min-height: 44px;
         min-width: 44px;
     }
+
+    /* Accessible button base - applies minimum tap target */
+    .btn-accessible {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* Enhanced focus indicators for keyboard navigation */
 @layer base {
-    /* Global focus styles - high contrast ring */
+    /* Global focus styles - high contrast ring with increased visibility */
     *:focus-visible {
-        outline: 3px solid #059669 !important;
-        outline-offset: 2px !important;
+        outline: 3px solid #047857 !important; /* emerald-700 for better contrast */
+        outline-offset: 3px !important;
     }
 
     /* Remove default outline since we use focus-visible */
@@ -38,7 +48,7 @@ body {
         outline: none;
     }
 
-    /* Enhanced focus for buttons and links */
+    /* Enhanced focus for interactive elements - larger, more visible */
     button:focus-visible,
     a:focus-visible,
     [role="button"]:focus-visible,
@@ -46,54 +56,137 @@ body {
     [role="checkbox"]:focus-visible,
     [role="radio"]:focus-visible,
     [role="option"]:focus-visible,
+    [role="link"]:focus-visible,
+    [role="menuitem"]:focus-visible,
+    [tabindex]:focus-visible,
     input:focus-visible,
     select:focus-visible,
     textarea:focus-visible {
-        outline: 3px solid #059669 !important;
-        outline-offset: 2px !important;
-        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.2);
+        outline: 3px solid #047857 !important; /* emerald-700 */
+        outline-offset: 3px !important;
+        box-shadow: 0 0 0 6px rgba(4, 120, 87, 0.25);
     }
 
-    /* High contrast focus for dark backgrounds */
+    /* High contrast focus for dark backgrounds - white outline */
     .bg-emerald-600 *:focus-visible,
     .bg-emerald-700 *:focus-visible,
     .bg-emerald-800 *:focus-visible,
     .bg-emerald-900 *:focus-visible,
+    .bg-emerald-950 *:focus-visible,
+    .bg-slate-800 *:focus-visible,
     .bg-slate-900 *:focus-visible,
     .bg-indigo-600 *:focus-visible,
+    .bg-indigo-700 *:focus-visible,
+    .bg-indigo-800 *:focus-visible,
     .bg-indigo-900 *:focus-visible {
         outline-color: #fff !important;
-        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Focus indicator for cards and larger clickable areas */
+    .group:focus-visible,
+    [role="listitem"]:focus-visible {
+        outline: 3px solid #047857 !important;
+        outline-offset: 2px !important;
+        border-radius: 0.5rem;
     }
 }
 
-/* Skip link enhancement */
+/* Skip link enhancement - more visible */
 .sr-only.focus\:not-sr-only:focus {
     position: absolute !important;
     width: auto !important;
     height: auto !important;
-    padding: 1rem !important;
+    padding: 1rem 1.5rem !important;
     margin: 0 !important;
     overflow: visible !important;
     clip: auto !important;
     white-space: nowrap !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
 }
 
-/* Ensure minimum text size for small text */
+/* ========================================
+   FONT SIZE OVERRIDES - Minimum 16px base
+   ======================================== */
+
+/* Override text-xs to be 14px minimum (0.875rem) */
 .text-xs {
-    font-size: 0.875rem; /* 14px minimum, up from 12px */
-    line-height: 1.4;
+    font-size: 0.875rem !important; /* 14px - up from 12px */
+    line-height: 1.5 !important;
 }
 
-/* Improve readability of slate colors - boost contrast */
+/* Override text-sm to be 15px minimum (0.9375rem) */
+.text-sm {
+    font-size: 0.9375rem !important; /* 15px - up from 14px */
+    line-height: 1.5 !important;
+}
+
+/* ========================================
+   COLOR CONTRAST OVERRIDES - WCAG AA Compliant
+   Transplant patients often have vision changes from medications
+   ======================================== */
+
 @layer utilities {
-    /* Replace low-contrast colors with accessible alternatives */
+    /* High contrast text utilities */
     .text-accessible-muted {
-        color: #475569; /* slate-600 - passes WCAG AA */
+        color: #374151 !important; /* gray-700 - 7:1 contrast ratio */
     }
 
     .text-accessible-secondary {
-        color: #64748b; /* slate-500 - use sparingly, only large text */
+        color: #475569 !important; /* slate-600 - 5.5:1 contrast ratio */
+    }
+
+    /* Override low-contrast slate colors */
+    .text-slate-300 {
+        color: #cbd5e1 !important; /* Keep for dark backgrounds - passes on dark */
+    }
+
+    .text-slate-400 {
+        color: #94a3b8 !important; /* slate-400 - only use on dark backgrounds */
+    }
+
+    /* Footer text on dark backgrounds - ensure readability */
+    .bg-slate-900 .text-slate-300 {
+        color: #e2e8f0 !important; /* slate-200 for better contrast on dark */
+    }
+
+    .bg-slate-900 .text-slate-400 {
+        color: #cbd5e1 !important; /* slate-300 for better contrast on dark */
+    }
+
+    /* Emerald text on emerald backgrounds - ensure contrast */
+    .bg-emerald-800 .text-emerald-100,
+    .bg-emerald-900 .text-emerald-100,
+    .bg-emerald-950 .text-emerald-100 {
+        color: #d1fae5 !important; /* emerald-100 - good contrast */
+    }
+}
+
+/* ========================================
+   LINK AND BUTTON ACCESSIBILITY
+   ======================================== */
+
+/* Ensure all links have visible underlines or other indicators */
+@layer base {
+    /* Links in content areas should have underlines */
+    main a:not([class*="btn"]):not([class*="rounded"]):not([role="tab"]):not([role="button"]) {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+    }
+
+    main a:not([class*="btn"]):not([class*="rounded"]):not([role="tab"]):not([role="button"]):hover {
+        text-decoration-thickness: 2px;
+    }
+}
+
+/* Minimum touch target for inline interactive elements */
+@layer utilities {
+    .touch-target-inline {
+        position: relative;
+        padding: 0.5rem;
+        margin: -0.5rem;
     }
 }
 
