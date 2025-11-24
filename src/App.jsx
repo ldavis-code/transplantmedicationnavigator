@@ -299,7 +299,7 @@ const ChatWidget = () => {
 
                     {/* Quick Actions */}
                     <div className="border-t border-slate-200 p-3 bg-white">
-                        <p className="text-xs text-slate-700 mb-2 font-medium">Quick Actions:</p>
+                        <p className="text-sm text-slate-800 mb-2 font-semibold">Quick Actions:</p>
                         <div className="grid grid-cols-2 gap-2">
                             {QUICK_ACTIONS.slice(0, 4).map(action => {
                                 const Icon = action.icon;
@@ -307,11 +307,11 @@ const ChatWidget = () => {
                                     <button
                                         key={action.id}
                                         onClick={() => handleQuickAction(action)}
-                                        className="flex items-center gap-2 p-2 rounded-lg border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 transition text-left min-h-[44px]"
+                                        className="flex items-center gap-2 p-3 rounded-lg border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 transition text-left min-h-[48px]"
                                         title={action.description}
                                     >
-                                        <Icon size={16} className="text-emerald-600 flex-shrink-0" />
-                                        <span className="text-xs text-slate-700 truncate">{action.label}</span>
+                                        <Icon size={18} className="text-emerald-700 flex-shrink-0" />
+                                        <span className="text-sm text-slate-800 truncate">{action.label}</span>
                                     </button>
                                 );
                             })}
@@ -327,16 +327,16 @@ const ChatWidget = () => {
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                                 placeholder="Ask a question..."
-                                className="flex-1 px-4 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                                className="flex-1 px-4 py-3 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 text-base min-h-[44px]"
                                 aria-label="Type your message"
                             />
                             <button
                                 onClick={handleSendMessage}
                                 disabled={!inputValue.trim()}
-                                className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-2 rounded-full transition disabled:cursor-not-allowed min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white p-3 rounded-full transition disabled:cursor-not-allowed min-h-[48px] min-w-[48px] flex items-center justify-center"
                                 aria-label="Send message"
                             >
-                                <Send size={20} />
+                                <Send size={22} />
                             </button>
                         </div>
                     </div>
@@ -363,9 +363,9 @@ const Layout = ({ children }) => {
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
             {/* Safety Banner */}
-            <div className="bg-emerald-800 text-white px-4 py-2 text-xs md:text-sm text-center font-medium no-print" role="alert">
+            <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
-                    <ShieldAlert size={16} className="text-emerald-200" aria-hidden="true" />
+                    <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
                     Official assistance programs NEVER ask for payment. If a site asks for money, leave immediately.
                 </span>
             </div>
@@ -381,16 +381,16 @@ const Layout = ({ children }) => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
+                    <nav className="hidden md:flex items-center gap-4" aria-label="Main navigation">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 to={link.path}
                                 aria-label={link.ariaLabel}
-                                className={`text-sm font-medium transition-colors ${
+                                className={`text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center ${
                                     location.pathname === link.path
-                                        ? 'text-emerald-700 font-bold border-b-2 border-emerald-600'
-                                        : 'text-slate-600 hover:text-emerald-600'
+                                        ? 'text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600'
+                                        : 'text-slate-700 hover:text-emerald-700 hover:bg-emerald-50'
                                 }`}
                             >
                                 {link.label}
@@ -412,17 +412,17 @@ const Layout = ({ children }) => {
                 {/* Mobile Nav */}
                 {isMobileMenuOpen && (
                     <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label="Mobile navigation">
-                        <div className="flex flex-col p-4 space-y-3">
+                        <div className="flex flex-col p-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     aria-label={link.ariaLabel}
-                                    className={`px-4 py-3 rounded-lg text-base font-medium ${
+                                    className={`px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center ${
                                         location.pathname === link.path
-                                            ? 'bg-emerald-50 text-emerald-700'
-                                            : 'text-slate-700 hover:bg-slate-50'
+                                            ? 'bg-emerald-100 text-emerald-800 font-bold'
+                                            : 'text-slate-800 hover:bg-slate-100'
                                     }`}
                                 >
                                     {link.label}
@@ -439,14 +439,14 @@ const Layout = ({ children }) => {
             </main>
 
             {/* Footer */}
-            <footer className="bg-slate-900 text-slate-300 py-8 text-sm no-print" role="contentinfo">
+            <footer className="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
                 <div className="container mx-auto px-4 text-center">
                     <p className="mb-4">
                         <strong>Disclaimer:</strong> This tool is for educational purposes only. It does not provide medical advice.
                         Prices are estimates. Always verify with your provider and pharmacist.
                     </p>
                     <p>© {new Date().getFullYear()} Transplant Medication Navigator. No data is stored on our servers.</p>
-                    <p className="mt-4 text-slate-400 text-xs">Created by Lorrinda Gray-Davis. est August 2025</p>
+                    <p className="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
                 </div>
             </footer>
 
@@ -467,7 +467,7 @@ const Home = () => {
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
                     See your medication options <span className="text-emerald-600">in one place.</span>
                 </h1>
-                <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
                     A free, safe guide for transplant patients and care partners to find affordable medications and assistance programs.
                 </p>
                 
@@ -1555,8 +1555,8 @@ const MedicationSearch = () => {
                                 </button>
                             )}
                         </div>
-                        <button onClick={handleSearch} disabled={!searchTerm.trim()} className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 justify-center shrink-0 disabled:cursor-not-allowed" aria-label="Search for medications">
-                            <Search size={20} aria-hidden="true" /> Search
+                        <button onClick={handleSearch} disabled={!searchTerm.trim()} className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 justify-center shrink-0 disabled:cursor-not-allowed min-h-[56px]" aria-label="Search for medications">
+                            <Search size={22} aria-hidden="true" /> Search
                         </button>
                     </div>
 
@@ -1570,7 +1570,7 @@ const MedicationSearch = () => {
                     )}
                     {searchResult && searchTerm && !isSearching && (
                         <div id="search-results-listbox" className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[60vh] overflow-y-auto z-50" role="listbox" aria-label="Search results">
-                            <div className="px-4 py-2 text-xs font-bold text-slate-600 uppercase tracking-wider">Search Results</div>
+                            <div className="px-4 py-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Search Results</div>
                             {searchResult.internal.length > 0 ? (
                                 <div className="space-y-1 mb-2">
                                     {searchResult.internal.map(med => {
@@ -1647,9 +1647,9 @@ const MedicationSearch = () => {
                             role="tab"
                             aria-selected={activeTab === tab.id}
                             aria-controls={`${tab.id}-panel`}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-t-lg font-bold whitespace-nowrap transition ${activeTab === tab.id ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-50'}`}
+                            className={`flex items-center gap-2 px-6 py-3 rounded-t-lg font-bold text-base whitespace-nowrap transition min-h-[48px] ${activeTab === tab.id ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700'}`}
                         >
-                            <tab.icon size={18} aria-hidden="true" /> {tab.label}
+                            <tab.icon size={20} aria-hidden="true" /> {tab.label}
                         </button>
                     ))}
                 </nav>
@@ -1657,10 +1657,10 @@ const MedicationSearch = () => {
 
             <div className="space-y-6 pb-12" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {!hasItems ? (
-                    <div className="text-center py-16 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
-                        <div className="text-slate-300 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
+                    <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
+                        <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
                         <h2 className="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
-                        <p className="text-slate-600 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
+                        <p className="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
                     </div>
                 ) : (
                     <>
@@ -2153,13 +2153,13 @@ const Education = () => {
             role="tab"
             aria-selected={activeTab === id}
             aria-controls={`${id}-panel`}
-            className={`flex items-center gap-2 px-4 py-3 font-bold text-sm md:text-base transition-all border-b-4 whitespace-nowrap ${
+            className={`flex items-center gap-2 px-5 py-3 font-bold text-base transition-all border-b-4 whitespace-nowrap min-h-[48px] ${
                 activeTab === id
-                    ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50'
-                    : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'
+                    ? 'border-emerald-600 text-emerald-800 bg-emerald-50'
+                    : 'border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100'
             }`}
         >
-            <Icon size={18} aria-hidden="true" />
+            <Icon size={20} aria-hidden="true" />
             {label}
         </button>
     );
@@ -2168,7 +2168,7 @@ const Education = () => {
         <article className="max-w-6xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Resources & Education</h1>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">Understand the difference between Patient Assistance Programs and Foundations, and learn how to navigate medication costs effectively.</p>
+                <p className="text-xl text-slate-700 max-w-3xl mx-auto">Understand the difference between Patient Assistance Programs and Foundations, and learn how to navigate medication costs effectively.</p>
             </header>
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
                 <div className="flex min-w-max">
@@ -2186,7 +2186,7 @@ const Education = () => {
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
                             <h2 className="text-2xl font-bold text-slate-900">Combining Programs</h2>
-                            <p className="text-lg text-slate-600">Most transplant patients have to mix and match different types of coverage to afford their medication. It is like a puzzle.</p>
+                            <p className="text-lg text-slate-700">Most transplant patients have to mix and match different types of coverage to afford their medication. It is like a puzzle.</p>
                         </div>
                         <div className="grid md:grid-cols-2 gap-6">
                              <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
