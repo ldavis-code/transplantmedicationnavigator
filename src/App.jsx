@@ -28,6 +28,8 @@ import COST_PLUS_EXCLUSIONS_DATA from './data/cost-plus-exclusions.json';
 import CATEGORY_ORDER_DATA from './data/category-order.json';
 import APPLICATION_CHECKLIST_DATA from './data/application-checklist.json';
 import FAQS_DATA from './data/faqs.json';
+import { useMetaTags } from './hooks/useMetaTags.js';
+import { seoMetadata } from './data/seo-metadata.js';
 
 // Initialize data from imported JSON files
 const MEDICATIONS = MEDICATIONS_DATA;
@@ -441,6 +443,8 @@ const Layout = ({ children }) => {
 
 // Home Page
 const Home = () => {
+    useMetaTags(seoMetadata.home);
+
     return (
         <article className="space-y-12">
             {/* Hero Section */}
@@ -757,6 +761,8 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
 
 // Wizard Page
 const Wizard = () => {
+    useMetaTags(seoMetadata.wizard);
+
     const [step, setStep] = useState(1);
     const [answers, setAnswers] = useState({
         role: null,
@@ -1393,6 +1399,8 @@ const getCommunityPriceStats = (medicationId, source) => {
 
 // MedicationSearch Page
 const MedicationSearch = () => {
+    useMetaTags(seoMetadata.medications);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResult, setSearchResult] = useState(null);
@@ -2070,6 +2078,8 @@ const ExternalMedCard = ({ name, onRemove }) => {
 
 // Education Page
 const Education = () => {
+    useMetaTags(seoMetadata.education);
+
     const [activeTab, setActiveTab] = useState('DEDUCTIBLE_TRAP');
     const [selectedState, setSelectedState] = useState("");
     const [appealName, setAppealName] = useState("");
@@ -3073,6 +3083,8 @@ const Education = () => {
 
 // ApplicationHelp Page
 const ApplicationHelp = () => {
+    useMetaTags(seoMetadata.applicationHelp);
+
     const [activeTab, setActiveTab] = useState('START');
     const checklistItems = APPLICATION_CHECKLIST_DATA;
     const [checkedItems, setCheckedItems] = useState({});
@@ -3454,6 +3466,8 @@ const ApplicationHelp = () => {
 
 // FAQ Page
 const FAQ = () => {
+    useMetaTags(seoMetadata.faq);
+
     const [openIndex, setOpenIndex] = useState(null);
 
     const toggleQuestion = (index) => {
@@ -3554,6 +3568,8 @@ const FAQ = () => {
 
 // NotFound Page
 const NotFound = () => {
+    useMetaTags(seoMetadata.notFound);
+
     return (
         <article className="space-y-12">
             <section className="text-center max-w-3xl mx-auto py-16 md:py-24">
