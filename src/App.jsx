@@ -551,21 +551,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Created by Someone Who's Been There */}
-            <section className="bg-gradient-to-br from-slate-50 to-emerald-50 border-2 border-emerald-200 rounded-2xl p-6 md:p-8 max-w-4xl mx-auto" aria-labelledby="founder-heading">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="bg-emerald-100 p-2 rounded-lg" aria-hidden="true">
-                        <Heart size={24} className="text-emerald-600"/>
-                    </div>
-                    <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">
-                        Created by Someone Who's Been There
-                    </h2>
-                </div>
-                <p className="text-slate-700 leading-relaxed">
-                    <strong className="text-slate-900">Lorrinda Gray-Davis</strong> — liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO) — built this tool from lived experience. She serves as Vice Chair on the OPTN Patient Affairs Committee, is a Harrison Fellow with the Fatty Liver Foundation, and has received an HRSA Commendation Letter for her work on the Transitional Nominating Committee. Her peer support research is published in <em>Hepatology Communications</em>, where she is co-first author on "Enhancing Care in Alcohol-Associated Liver Disease Through Peer Support for Alcohol Use Disorder."
-                </p>
-            </section>
-
             {/* Mission & Vision Section */}
             <section className="bg-emerald-900 rounded-3xl overflow-hidden shadow-2xl text-white my-16 max-w-6xl mx-auto" aria-labelledby="mission-heading">
 
@@ -648,6 +633,21 @@ const Home = () => {
                     <Map size={20} aria-hidden="true" />
                     Start My Medication Path Quiz
                 </Link>
+            </section>
+
+            {/* Created by Someone Who's Been There */}
+            <section className="bg-gradient-to-br from-slate-50 to-emerald-50 border-2 border-emerald-200 rounded-2xl p-6 md:p-8 max-w-4xl mx-auto" aria-labelledby="founder-heading">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-emerald-100 p-2 rounded-lg" aria-hidden="true">
+                        <Heart size={24} className="text-emerald-600"/>
+                    </div>
+                    <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">
+                        Created by Someone Who's Been There
+                    </h2>
+                </div>
+                <p className="text-slate-700 leading-relaxed">
+                    <strong className="text-slate-900">Lorrinda Gray-Davis</strong> — liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO) — built this tool from lived experience. She serves as Vice Chair on the OPTN Patient Affairs Committee, is a Harrison Fellow with the Fatty Liver Foundation, and has received an HRSA Commendation Letter for her work on the Transitional Nominating Committee. Her peer support research is published in <em>Hepatology Communications</em>, where she is co-first author on "Enhancing Care in Alcohol-Associated Liver Disease Through Peer Support for Alcohol Use Disorder."
+                </p>
             </section>
 
             {/* Mental Health Hotline */}
