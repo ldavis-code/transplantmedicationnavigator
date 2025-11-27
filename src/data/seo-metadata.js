@@ -53,7 +53,7 @@ export const seoMetadata = {
     canonical: `${BASE_URL}/application-help`,
     ogTitle: 'Apply for Patient Assistance Programs',
     ogDescription: 'Complete guide to applying for medication assistance. Get templates, checklists, and step-by-step instructions for Patient Assistance Program applications.',
-    twitterTitle: 'Patient Assistance Program Application Guide',
+    twitterTitle: 'Patient Assistance Program Grants & Foundations',
     twitterDescription: 'Step-by-step guide to applying for Patient Assistance Programs. Learn what documents you need and how to get approval faster.',
   },
 

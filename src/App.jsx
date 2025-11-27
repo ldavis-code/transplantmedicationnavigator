@@ -368,7 +368,7 @@ const Layout = ({ children }) => {
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
         { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
-        { path: '/application-help', label: 'Application Guide', ariaLabel: 'View application help guide' },
+        { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
@@ -1701,7 +1701,7 @@ const MedicationSearch = () => {
                             aria-label="View application guide for step-by-step help"
                         >
                             <FileText size={18} aria-hidden="true" />
-                            Application Guide
+                            Grants & Foundations
                         </Link>
                     </div>
                 </section>
@@ -1999,7 +1999,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         aria-label="View complete application guide"
                                     >
                                         <BookOpen size={16} aria-hidden="true" />
-                                        View Application Guide
+                                        View Grants & Foundations
                                         <ArrowRight size={16} aria-hidden="true" />
                                     </Link>
                                 </div>
