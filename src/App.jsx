@@ -2254,7 +2254,6 @@ const Education = () => {
                     <TabButton id="SPECIALTY" label="Specialty Pharmacy" icon={Stethoscope} />
                     <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
-                    <TabButton id="GRANTS" label="Grants/Assistance" icon={HeartHandshake} />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
@@ -2995,211 +2994,6 @@ const Education = () => {
                         </aside>
                     </div>
                 )}
-                {activeTab === 'GRANTS' && (
-                    <div className="max-w-4xl mx-auto space-y-8">
-                        <div className="text-center mb-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Grants/Foundations Patient Assistance Programs</h2>
-                            <p className="text-lg text-slate-600">Understanding the types of assistance available and how to access affordable medications</p>
-                        </div>
-
-                        <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8 mb-8" aria-labelledby="pap-definition">
-                            <h3 id="pap-definition" className="text-xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
-                            <p className="text-slate-700 leading-relaxed mb-4">
-                                Patient Assistance Programs (PAPs) are programs created by pharmaceutical and medical supply manufacturers to help patients access affordable medications. These programs provide prescription medications at no cost or minimal fee for individuals who need help affording their medications.
-                            </p>
-                            <p className="text-slate-700 leading-relaxed font-medium">
-                                <strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs.
-                            </p>
-                        </section>
-
-                        <div className="grid md:grid-cols-3 gap-6 mb-8">
-                            <section className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
-                                <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <Pill size={24} aria-hidden="true" />
-                                </div>
-                                <h3 className="font-bold text-blue-900 text-lg mb-3">Patient Assistance Programs</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
-                                    Programs for everyone who needs affordable medications. Get prescription medications at no cost or minimal fee, regardless of insurance status.
-                                </p>
-                            </section>
-
-                            <section className="bg-purple-50 p-6 rounded-xl border-2 border-purple-200">
-                                <div className="bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <DollarSign size={24} aria-hidden="true" />
-                                </div>
-                                <h3 className="font-bold text-purple-900 text-lg mb-3">Copay Assistance</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
-                                    Ask the pharmaceutical company or foundation to assist with the amount you pay after your insurance company has paid for qualifying medications.
-                                </p>
-                            </section>
-
-                            <section className="bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200">
-                                <div className="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <Shield size={24} aria-hidden="true" />
-                                </div>
-                                <h3 className="font-bold text-indigo-900 text-lg mb-3">Premium Assistance</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
-                                    Ask the foundation to assist with the amount you pay to your insurance company to have medical or prescription coverage.
-                                </p>
-                            </section>
-                        </div>
-
-                        <aside className="bg-rose-50 border-l-4 border-rose-500 p-6 rounded-r-lg mb-8" role="note">
-                            <h3 className="font-bold text-rose-900 mb-3 flex items-center gap-2">
-                                <AlertCircle size={20} aria-hidden="true" />
-                                Important Safety Notice
-                            </h3>
-                            <p className="text-rose-900 font-bold leading-relaxed">
-                                Remember: These organizations will NEVER ask for payment information. If someone asks for payment or credit card details, it is a scam.
-                            </p>
-                        </aside>
-
-                        <div className="mb-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-6">Medication Resources</h2>
-
-                            <div className="space-y-4">
-                                <a href="http://www.mat.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-emerald-700 mb-1">PhRMA's Medicine Assistance Tool (M.A.T)</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-emerald-100 text-emerald-700">Search Engine</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        PhRMA's Medicine Assistance Tool (MAT) is a free SEARCH ENGINE designed to help patients, caregivers and health care providers learn more about the resources available through the various biopharmaceutical industry programs. MAT is not its own patient assistance program, but rather a search engine for many of the patient assistance resources that the biopharmaceutical industry offers.
-                                    </p>
-                                    <p className="text-emerald-600 font-medium text-sm">www.mat.org</p>
-                                </a>
-
-                                <a href="https://www.drugs.com" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-purple-700 mb-1">Drugs.com</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-purple-100 text-purple-700">Medication Database</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        This website and app is a valuable tool. You can look up and identify medications, it lists all of the manufacturers of the drug and will directly connect you to their specific Patient Assistance Programs.
-                                    </p>
-                                    <p className="text-purple-600 font-medium text-sm">www.drugs.com</p>
-                                </a>
-
-                                <a href="https://www.healthwellfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-indigo-700 mb-1">HealthWell Foundation</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-indigo-100 text-indigo-700">Foundation</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        <strong>Our Mission:</strong> To reduce financial barriers to care for underinsured patients with chronic or life-altering diseases. This includes copays, travel costs, pediatric and insurance premiums.
-                                    </p>
-                                    <p className="text-indigo-600 font-medium text-sm">www.healthwellfoundation.org</p>
-                                </a>
-
-                                <a href="https://fundfinder.panfoundation.org/Home/Index" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-teal-700 mb-1">FundFinder</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-teal-100 text-teal-700">Directory</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        FundFinder now features a directory of more than 150 patient advocacy organizations that provide dedicated patient services including helplines, peer counseling, disease-specific education, and more.
-                                    </p>
-                                    <p className="text-teal-600 font-medium text-sm">fundfinder.panfoundation.org</p>
-                                </a>
-
-                                <a href="http://www.panfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-cyan-700 mb-1">PAN Foundation</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-cyan-100 text-cyan-700">Foundation</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        We help underinsured people with life-threatening, chronic and rare diseases get the medications and treatments they need by assisting with their out-of-pocket costs and advocating for improved access and affordability.
-                                    </p>
-                                    <p className="text-cyan-600 font-medium text-sm">www.panfoundation.org</p>
-                                </a>
-
-                                <a href="https://www.patientadvocate.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-rose-200 hover:border-rose-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-rose-700 mb-1">Patient Advocate Foundation</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-rose-100 text-rose-700">Advocacy</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        Patient Advocate Foundation provides direct services to patients with chronic, life threatening and debilitating diseases to help access care and treatment recommended by their doctor.
-                                    </p>
-                                    <p className="text-rose-600 font-medium text-sm">www.patientadvocate.org</p>
-                                </a>
-
-                                <a href="https://www.patientservicesinc.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-amber-200 hover:border-amber-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-amber-700 mb-1">Patient Services Incorporated (PSI)</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-amber-100 text-amber-700">Support Services</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        PSI provides help to pay for your medication, provide health insurance premium and copay assistance, navigate health insurance plans, give legal advice, and be there every step of the way.
-                                    </p>
-                                    <p className="text-amber-600 font-medium text-sm">www.patientservicesinc.org</p>
-                                </a>
-
-                                <a href="https://rarediseases.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-violet-200 hover:border-violet-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-violet-700 mb-1">National Organization for Rare Disorders (NORD)</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-violet-100 text-violet-700">Rare Disease Support</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        <strong>RareCare®:</strong> Since 1987, NORD has provided assistance programs to help patients obtain life-saving or life-sustaining medication they could not otherwise afford. These programs provide medication, financial assistance with insurance premiums and co-pays, and diagnostic testing.
-                                    </p>
-                                    <p className="text-violet-600 font-medium text-sm">rarediseases.org</p>
-                                </a>
-
-                                <a href="https://rxoutreach.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-lg transition">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-green-700 mb-1">Patients Rx Outreach</h3>
-                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-green-100 text-green-700">Affordable Pharmacy</span>
-                                        </div>
-                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                                    </div>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                                        At Rx Outreach, we believe that everyone deserves access to affordable medications. No one should ever have to choose between filling a prescription and feeding their family. Since 2010, we have saved our patients more than $822 million in prescription medication costs.
-                                    </p>
-                                    <p className="text-green-600 font-medium text-sm">rxoutreach.org</p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note">
-                            <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2">
-                                <Lightbulb size={20} aria-hidden="true" />
-                                Getting Started
-                            </h3>
-                            <p className="text-emerald-900 leading-relaxed mb-3">
-                                If you're unsure which program is right for you, start with PhRMA's Medicine Assistance Tool (M.A.T) or Drugs.com to search for programs specific to your medications.
-                            </p>
-                            <p className="text-emerald-900 leading-relaxed">
-                                Your transplant center's financial counselor or social worker can also help you navigate these programs and determine which ones you may qualify for.
-                            </p>
-                        </aside>
-                    </div>
-                )}
             </div>
         </article>
     );
@@ -3235,7 +3029,7 @@ const ApplicationHelp = () => {
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="MEDGUIDE" label="Medication Guide" icon={Pill} /><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /></div></nav>
+            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="MEDGUIDE" label="Medication Guide" icon={Pill} /><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /><TabButton id="GRANTS" label="Grants/Assistance" icon={HeartHandshake} /></div></nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'MEDGUIDE' && (
                     <div className="max-w-4xl mx-auto space-y-6">
@@ -3586,6 +3380,211 @@ const ApplicationHelp = () => {
                         <h2 className="text-2xl font-bold text-slate-900">Phone Scripts & Templates</h2>
                         <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">calling manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
                         <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">calling foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
+                    </div>
+                )}
+                {activeTab === 'GRANTS' && (
+                    <div className="max-w-4xl mx-auto space-y-8">
+                        <div className="text-center mb-8">
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Grants/Foundations Patient Assistance Programs</h2>
+                            <p className="text-lg text-slate-600">Understanding the types of assistance available and how to access affordable medications</p>
+                        </div>
+
+                        <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8 mb-8" aria-labelledby="pap-definition">
+                            <h3 id="pap-definition" className="text-xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
+                            <p className="text-slate-700 leading-relaxed mb-4">
+                                Patient Assistance Programs (PAPs) are programs created by pharmaceutical and medical supply manufacturers to help patients access affordable medications. These programs provide prescription medications at no cost or minimal fee for individuals who need help affording their medications.
+                            </p>
+                            <p className="text-slate-700 leading-relaxed font-medium">
+                                <strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs.
+                            </p>
+                        </section>
+
+                        <div className="grid md:grid-cols-3 gap-6 mb-8">
+                            <section className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
+                                <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                    <Pill size={24} aria-hidden="true" />
+                                </div>
+                                <h3 className="font-bold text-blue-900 text-lg mb-3">Patient Assistance Programs</h3>
+                                <p className="text-slate-700 text-sm leading-relaxed">
+                                    Programs for everyone who needs affordable medications. Get prescription medications at no cost or minimal fee, regardless of insurance status.
+                                </p>
+                            </section>
+
+                            <section className="bg-purple-50 p-6 rounded-xl border-2 border-purple-200">
+                                <div className="bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                    <DollarSign size={24} aria-hidden="true" />
+                                </div>
+                                <h3 className="font-bold text-purple-900 text-lg mb-3">Copay Assistance</h3>
+                                <p className="text-slate-700 text-sm leading-relaxed">
+                                    Ask the pharmaceutical company or foundation to assist with the amount you pay after your insurance company has paid for qualifying medications.
+                                </p>
+                            </section>
+
+                            <section className="bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200">
+                                <div className="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                    <Shield size={24} aria-hidden="true" />
+                                </div>
+                                <h3 className="font-bold text-indigo-900 text-lg mb-3">Premium Assistance</h3>
+                                <p className="text-slate-700 text-sm leading-relaxed">
+                                    Ask the foundation to assist with the amount you pay to your insurance company to have medical or prescription coverage.
+                                </p>
+                            </section>
+                        </div>
+
+                        <aside className="bg-rose-50 border-l-4 border-rose-500 p-6 rounded-r-lg mb-8" role="note">
+                            <h3 className="font-bold text-rose-900 mb-3 flex items-center gap-2">
+                                <AlertCircle size={20} aria-hidden="true" />
+                                Important Safety Notice
+                            </h3>
+                            <p className="text-rose-900 font-bold leading-relaxed">
+                                Remember: These organizations will NEVER ask for payment information. If someone asks for payment or credit card details, it is a scam.
+                            </p>
+                        </aside>
+
+                        <div className="mb-8">
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">Medication Resources</h2>
+
+                            <div className="space-y-4">
+                                <a href="http://www.mat.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-emerald-700 mb-1">PhRMA's Medicine Assistance Tool (M.A.T)</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-emerald-100 text-emerald-700">Search Engine</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        PhRMA's Medicine Assistance Tool (MAT) is a free SEARCH ENGINE designed to help patients, caregivers and health care providers learn more about the resources available through the various biopharmaceutical industry programs. MAT is not its own patient assistance program, but rather a search engine for many of the patient assistance resources that the biopharmaceutical industry offers.
+                                    </p>
+                                    <p className="text-emerald-600 font-medium text-sm">www.mat.org</p>
+                                </a>
+
+                                <a href="https://www.drugs.com" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-purple-700 mb-1">Drugs.com</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-purple-100 text-purple-700">Medication Database</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        This website and app is a valuable tool. You can look up and identify medications, it lists all of the manufacturers of the drug and will directly connect you to their specific Patient Assistance Programs.
+                                    </p>
+                                    <p className="text-purple-600 font-medium text-sm">www.drugs.com</p>
+                                </a>
+
+                                <a href="https://www.healthwellfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-indigo-700 mb-1">HealthWell Foundation</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-indigo-100 text-indigo-700">Foundation</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        <strong>Our Mission:</strong> To reduce financial barriers to care for underinsured patients with chronic or life-altering diseases. This includes copays, travel costs, pediatric and insurance premiums.
+                                    </p>
+                                    <p className="text-indigo-600 font-medium text-sm">www.healthwellfoundation.org</p>
+                                </a>
+
+                                <a href="https://fundfinder.panfoundation.org/Home/Index" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-teal-700 mb-1">FundFinder</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-teal-100 text-teal-700">Directory</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        FundFinder now features a directory of more than 150 patient advocacy organizations that provide dedicated patient services including helplines, peer counseling, disease-specific education, and more.
+                                    </p>
+                                    <p className="text-teal-600 font-medium text-sm">fundfinder.panfoundation.org</p>
+                                </a>
+
+                                <a href="http://www.panfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-cyan-700 mb-1">PAN Foundation</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-cyan-100 text-cyan-700">Foundation</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        We help underinsured people with life-threatening, chronic and rare diseases get the medications and treatments they need by assisting with their out-of-pocket costs and advocating for improved access and affordability.
+                                    </p>
+                                    <p className="text-cyan-600 font-medium text-sm">www.panfoundation.org</p>
+                                </a>
+
+                                <a href="https://www.patientadvocate.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-rose-200 hover:border-rose-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-rose-700 mb-1">Patient Advocate Foundation</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-rose-100 text-rose-700">Advocacy</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        Patient Advocate Foundation provides direct services to patients with chronic, life threatening and debilitating diseases to help access care and treatment recommended by their doctor.
+                                    </p>
+                                    <p className="text-rose-600 font-medium text-sm">www.patientadvocate.org</p>
+                                </a>
+
+                                <a href="https://www.patientservicesinc.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-amber-200 hover:border-amber-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-amber-700 mb-1">Patient Services Incorporated (PSI)</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-amber-100 text-amber-700">Support Services</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        PSI provides help to pay for your medication, provide health insurance premium and copay assistance, navigate health insurance plans, give legal advice, and be there every step of the way.
+                                    </p>
+                                    <p className="text-amber-600 font-medium text-sm">www.patientservicesinc.org</p>
+                                </a>
+
+                                <a href="https://rarediseases.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-violet-200 hover:border-violet-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-violet-700 mb-1">National Organization for Rare Disorders (NORD)</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-violet-100 text-violet-700">Rare Disease Support</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        <strong>RareCare®:</strong> Since 1987, NORD has provided assistance programs to help patients obtain life-saving or life-sustaining medication they could not otherwise afford. These programs provide medication, financial assistance with insurance premiums and co-pays, and diagnostic testing.
+                                    </p>
+                                    <p className="text-violet-600 font-medium text-sm">rarediseases.org</p>
+                                </a>
+
+                                <a href="https://rxoutreach.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-lg transition">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="font-bold text-xl text-slate-900 group-hover:text-green-700 mb-1">Patients Rx Outreach</h3>
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold bg-green-100 text-green-700">Affordable Pharmacy</span>
+                                        </div>
+                                        <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                                        At Rx Outreach, we believe that everyone deserves access to affordable medications. No one should ever have to choose between filling a prescription and feeding their family. Since 2010, we have saved our patients more than $822 million in prescription medication costs.
+                                    </p>
+                                    <p className="text-green-600 font-medium text-sm">rxoutreach.org</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note">
+                            <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2">
+                                <Lightbulb size={20} aria-hidden="true" />
+                                Getting Started
+                            </h3>
+                            <p className="text-emerald-900 leading-relaxed mb-3">
+                                If you're unsure which program is right for you, start with PhRMA's Medicine Assistance Tool (M.A.T) or Drugs.com to search for programs specific to your medications.
+                            </p>
+                            <p className="text-emerald-900 leading-relaxed">
+                                Your transplant center's financial counselor or social worker can also help you navigate these programs and determine which ones you may qualify for.
+                            </p>
+                        </aside>
                     </div>
                 )}
             </div>
