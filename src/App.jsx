@@ -46,6 +46,7 @@ import SINGLECARE_EXCLUSIONS_DATA from './data/singlecare-exclusions.json';
 import CATEGORY_ORDER_DATA from './data/category-order.json';
 import APPLICATION_CHECKLIST_DATA from './data/application-checklist.json';
 import FAQS_DATA from './data/faqs.json';
+import PRICE_ESTIMATES_DATA from './data/price-estimates.json';
 import { useMetaTags } from './hooks/useMetaTags.js';
 import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
@@ -70,6 +71,27 @@ const QUICK_ACTIONS = QUICK_ACTIONS_DATA.map(action => ({
     ...action,
     icon: iconMap[action.icon]
 }));
+
+// Helper function to get price estimates for a medication
+const getPriceEstimate = (medicationId, category, source) => {
+    // Check for medication-specific override first
+    if (PRICE_ESTIMATES_DATA.medicationOverrides[medicationId]) {
+        const override = PRICE_ESTIMATES_DATA.medicationOverrides[medicationId][source];
+        if (override) {
+            return `$${override.min} - $${override.max}`;
+        }
+    }
+
+    // Fall back to category defaults
+    const categoryKey = category === 'Immunosuppressant' ? 'Immunosuppressant' : 'default';
+    const categoryDefaults = PRICE_ESTIMATES_DATA.categoryDefaults[categoryKey];
+    if (categoryDefaults && categoryDefaults[source]) {
+        return `$${categoryDefaults[source].min} - $${categoryDefaults[source].max}`;
+    }
+
+    // Ultimate fallback
+    return 'Check live price';
+};
 
 // --- COMPONENTS ---
 
@@ -2066,7 +2088,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3">
                                             <div className="text-emerald-600 font-bold">
-                                                {med.category === 'Immunosuppressant' ? '$15 - $40' : '$10 - $25'}
+                                                {getPriceEstimate(med.id, med.category, 'costplus')}
                                             </div>
                                             <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -2100,7 +2122,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3">
                                             <div className="text-slate-600">
-                                                {med.category === 'Immunosuppressant' ? '$30 - $80' : '$15 - $40'}
+                                                {getPriceEstimate(med.id, med.category, 'blinkhealth')}
                                             </div>
                                             <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -2134,7 +2156,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3">
                                             <div className="text-slate-600">
-                                                {med.category === 'Immunosuppressant' ? '$35 - $90' : '$4 - $40'}
+                                                {getPriceEstimate(med.id, med.category, 'walmart')}
                                             </div>
                                             <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -2168,7 +2190,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3">
                                             <div className="text-slate-600">
-                                                {med.category === 'Immunosuppressant' ? '$40 - $100' : '$20 - $50'}
+                                                {getPriceEstimate(med.id, med.category, 'goodrx')}
                                             </div>
                                             <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -2202,7 +2224,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3">
                                             <div className="text-slate-600">
-                                                {med.category === 'Immunosuppressant' ? '$35 - $95' : '$15 - $45'}
+                                                {getPriceEstimate(med.id, med.category, 'singlecare')}
                                             </div>
                                             <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
