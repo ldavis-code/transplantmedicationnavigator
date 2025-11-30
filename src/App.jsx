@@ -374,6 +374,7 @@ const Layout = ({ children }) => {
         { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
+        { path: '/survey', label: 'Survey', ariaLabel: 'Take the medication journey survey' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
 
