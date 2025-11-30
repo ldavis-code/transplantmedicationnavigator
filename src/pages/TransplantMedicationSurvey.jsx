@@ -1,4 +1,14 @@
 import { useState } from 'react';
+import {
+  Building2,
+  Pill,
+  Package,
+  ClipboardList,
+  HeartHandshake,
+  Phone,
+  Heart,
+  ChevronLeft
+} from 'lucide-react';
 
 // Transplant Medication Journey Survey
 // Captures transplant-specific failure points in medication access
@@ -18,7 +28,7 @@ export default function TransplantMedicationSurvey() {
       id: 'discharge',
       title: "Discharge & Transition",
       shortTitle: "Discharge",
-      icon: "🏥",
+      icon: Building2,
       description: "Your experience leaving the hospital after transplant",
       questions: [
         { id: 'meds_in_hand_at_discharge', label: 'Did you leave the hospital with all your medications in hand?', type: 'yesno' },
@@ -33,7 +43,7 @@ export default function TransplantMedicationSurvey() {
       id: 'immunosuppressants',
       title: "Immunosuppressant Experience",
       shortTitle: "Immunosuppressants",
-      icon: "💊",
+      icon: Pill,
       description: "Challenges specific to your anti-rejection medications",
       questions: [
         { id: 'generic_switch_forced', label: 'Have you ever been switched from brand to generic (or vice versa) without your input?', type: 'yesno' },
@@ -50,7 +60,7 @@ export default function TransplantMedicationSurvey() {
       id: 'specialty',
       title: "Specialty Pharmacy",
       shortTitle: "Specialty Pharmacy",
-      icon: "📦",
+      icon: Package,
       description: "Your experience with specialty pharmacy services",
       questions: [
         { id: 'uses_specialty_pharmacy', label: 'Are any of your transplant medications filled through a specialty pharmacy?', type: 'yesno' },
@@ -67,7 +77,7 @@ export default function TransplantMedicationSurvey() {
       id: 'insurance',
       title: "Insurance & Coverage",
       shortTitle: "Insurance",
-      icon: "📋",
+      icon: ClipboardList,
       description: "Insurance challenges post-transplant",
       questions: [
         { id: 'insurance_changed_post_tx', label: 'Has your insurance changed since your transplant?', type: 'yesno' },
@@ -84,7 +94,7 @@ export default function TransplantMedicationSurvey() {
       id: 'center',
       title: "Transplant Center Support",
       shortTitle: "Center Support",
-      icon: "🏛️",
+      icon: Building2,
       description: "Support from your transplant team",
       questions: [
         { id: 'center_has_pharmacy', label: 'Does your transplant center have an in-house or affiliated pharmacy?', type: 'select',
@@ -101,7 +111,7 @@ export default function TransplantMedicationSurvey() {
       id: 'pap',
       title: "Patient Assistance Programs",
       shortTitle: "Assistance Programs",
-      icon: "🤝",
+      icon: HeartHandshake,
       description: "Your experience with financial assistance",
       questions: [
         { id: 'uses_pap', label: 'Do you currently use any patient assistance programs for transplant medications?', type: 'yesno' },
@@ -118,7 +128,7 @@ export default function TransplantMedicationSurvey() {
       id: 'communication',
       title: "Communication & Coordination",
       shortTitle: "Communication",
-      icon: "📞",
+      icon: Phone,
       description: "How well the system communicates with you",
       questions: [
         { id: 'pharmacy_center_communicate', label: 'Do your pharmacy and transplant center communicate well with each other?', type: 'select',
@@ -135,7 +145,7 @@ export default function TransplantMedicationSurvey() {
       id: 'about',
       title: "About Your Transplant Journey",
       shortTitle: "About You",
-      icon: "💚",
+      icon: Heart,
       description: "Optional background (helps us segment the data)",
       questions: [
         { id: 'organ_type', label: 'What type of transplant did you receive?', type: 'select',
@@ -296,7 +306,7 @@ export default function TransplantMedicationSurvey() {
                       <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
                         isCompleted ? 'bg-emerald-100' : 'bg-slate-100'
                       }`}>
-                        <span className="text-2xl">{section.icon}</span>
+                        <section.icon className={`w-6 h-6 ${isCompleted ? 'text-emerald-600' : 'text-slate-600'}`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -342,12 +352,10 @@ export default function TransplantMedicationSurvey() {
                 onClick={() => setActiveTab(null)}
                 className="mt-1 text-slate-400 hover:text-slate-600 transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+                <ChevronLeft className="w-6 h-6" />
               </button>
               <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">{activeSection.icon}</span>
+                <activeSection.icon className="w-7 h-7 text-emerald-600" />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-slate-800">{activeSection.title}</h2>
