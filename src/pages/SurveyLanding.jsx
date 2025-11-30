@@ -78,8 +78,9 @@ export default function SurveyLanding() {
             Why We're Asking
           </h3>
           <blockquote className="text-slate-600 italic mb-4 border-l-4 border-emerald-200 pl-4">
-            "Your answers help us document where the medication access system is failing patients.
-            This data goes directly into our advocacy with OPTN, Congress, and pharmaceutical partners."
+            "Every experience you share helps another patient navigate their journey. Together, we're building
+            something that didn't exist for us — a roadmap through the medication maze, and the evidence we need
+            to fix a broken system."
           </blockquote>
           <p className="text-sm text-slate-500">
             — Lorrinda, TRIO President & Liver Transplant Recipient
