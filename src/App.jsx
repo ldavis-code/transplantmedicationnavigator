@@ -5,6 +5,7 @@ import Fuse from 'fuse.js';
 // Lazy loaded page components for code splitting
 const LazyFAQ = lazy(() => import('./pages/FAQ.jsx'));
 const LazyNotFound = lazy(() => import('./pages/NotFound.jsx'));
+const LazyTransplantMedicationSurvey = lazy(() => import('./pages/TransplantMedicationSurvey.jsx'));
 
 // Google Analytics 4 integration
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
@@ -3866,6 +3867,7 @@ const App = () => {
                         <Route path="/education" element={<Education />} />
                         <Route path="/application-help" element={<ApplicationHelp />} />
                         <Route path="/faq" element={<LazyFAQ />} />
+                        <Route path="/survey" element={<LazyTransplantMedicationSurvey />} />
                         <Route path="*" element={<LazyNotFound />} />
                     </Routes>
                 </Suspense>
