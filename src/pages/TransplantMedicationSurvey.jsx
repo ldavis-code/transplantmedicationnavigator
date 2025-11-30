@@ -5,9 +5,9 @@ import { useState } from 'react';
 // HIPAA-free: All user self-reported, no PHI collected
 
 export default function TransplantMedicationSurvey() {
-  const [currentSection, setCurrentSection] = useState(0);
+  const [activeTab, setActiveTab] = useState(null);
   const [responses, setResponses] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [completedSections, setCompletedSections] = useState(new Set());
 
   const updateResponse = (field, value) => {
     setResponses(prev => ({ ...prev, [field]: value }));
@@ -15,7 +15,9 @@ export default function TransplantMedicationSurvey() {
 
   const sections = [
     {
+      id: 'discharge',
       title: "Discharge & Transition",
+      shortTitle: "Discharge",
       icon: "🏥",
       description: "Your experience leaving the hospital after transplant",
       questions: [
@@ -28,7 +30,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'immunosuppressants',
       title: "Immunosuppressant Experience",
+      shortTitle: "Immunosuppressants",
       icon: "💊",
       description: "Challenges specific to your anti-rejection medications",
       questions: [
@@ -43,7 +47,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'specialty',
       title: "Specialty Pharmacy",
+      shortTitle: "Specialty Pharmacy",
       icon: "📦",
       description: "Your experience with specialty pharmacy services",
       questions: [
@@ -58,7 +64,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'insurance',
       title: "Insurance & Coverage",
+      shortTitle: "Insurance",
       icon: "📋",
       description: "Insurance challenges post-transplant",
       questions: [
@@ -73,7 +81,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'center',
       title: "Transplant Center Support",
+      shortTitle: "Center Support",
       icon: "🏛️",
       description: "Support from your transplant team",
       questions: [
@@ -88,7 +98,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'pap',
       title: "Patient Assistance Programs",
+      shortTitle: "Assistance Programs",
       icon: "🤝",
       description: "Your experience with financial assistance",
       questions: [
@@ -103,7 +115,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'communication',
       title: "Communication & Coordination",
+      shortTitle: "Communication",
       icon: "📞",
       description: "How well the system communicates with you",
       questions: [
@@ -118,7 +132,9 @@ export default function TransplantMedicationSurvey() {
       ]
     },
     {
+      id: 'about',
       title: "About Your Transplant Journey",
+      shortTitle: "About You",
       icon: "💚",
       description: "Optional background (helps us segment the data)",
       questions: [
@@ -135,6 +151,15 @@ export default function TransplantMedicationSurvey() {
       ]
     }
   ];
+
+  const handleSubmitSection = (sectionId) => {
+    setCompletedSections(prev => new Set([...prev, sectionId]));
+    setActiveTab(null);
+  };
+
+  const getSectionResponseCount = (section) => {
+    return section.questions.filter(q => responses[q.id] !== undefined).length;
+  };
 
   const renderQuestion = (q) => {
     if (q.type === 'yesno') {
@@ -223,131 +248,142 @@ export default function TransplantMedicationSurvey() {
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-6">
-        <div className="bg-white rounded-3xl shadow-xl p-10 max-w-lg text-center border border-emerald-100">
-          <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-4xl">💚</span>
-          </div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-3">Thank You, Fellow Transplant Recipient</h2>
-          <p className="text-slate-600 mb-6">
-            Your experience will help us advocate for better medication access for every transplant patient.
-            Together, we're building the evidence to change the system.
-          </p>
-          <div className="text-sm text-slate-500 bg-emerald-50 p-4 rounded-xl">
-            <strong>Your privacy is protected:</strong> No names, dates, or medical record numbers were collected.
-            Your responses are combined with others to identify patterns in the system.
-          </div>
-          <p className="text-xs text-slate-400 mt-6">
-            Powered by TransplantMedicationNavigator.com — By patients, for patients
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const section = sections[currentSection];
-  const progress = ((currentSection + 1) / sections.length) * 100;
+  const activeSection = sections.find(s => s.id === activeTab);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-emerald-100 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h1 className="text-lg font-bold text-slate-800">
-                Transplant Medication Journey Survey
-              </h1>
-              <p className="text-xs text-slate-500">Help us identify where the system is failing patients</p>
+      <div className="bg-white/80 backdrop-blur-sm border-b border-emerald-100">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">
+            Transplant Medication Journey Survey
+          </h1>
+          <p className="text-slate-600">
+            Choose the topics that matter most to you. Each section can be submitted independently.
+          </p>
+          {completedSections.size > 0 && (
+            <div className="mt-3 flex items-center gap-2 text-sm text-emerald-600">
+              <span className="font-medium">{completedSections.size} of {sections.length} sections completed</span>
+              <span className="text-emerald-400">- Thank you for sharing your experience!</span>
             </div>
-            <span className="text-sm font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-              {currentSection + 1} / {sections.length}
-            </span>
-          </div>
-          <div className="h-2 bg-emerald-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-3xl mx-auto px-6 py-8">
-        <div className="bg-white rounded-3xl shadow-lg border border-emerald-100 p-8 mb-6">
-          <div className="flex items-start gap-4 mb-2">
-            <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <span className="text-2xl">{section.icon}</span>
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-slate-800">{section.title}</h2>
-              <p className="text-sm text-slate-500">{section.description}</p>
-            </div>
-          </div>
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        {/* Topic Selection View */}
+        {!activeTab && (
+          <>
+            <div className="grid gap-4 md:grid-cols-2">
+              {sections.map((section) => {
+                const isCompleted = completedSections.has(section.id);
+                const responseCount = getSectionResponseCount(section);
+                const hasResponses = responseCount > 0;
 
-          <div className="space-y-7 mt-8">
-            {section.questions.map((q) => (
-              <div key={q.id} className="border-b border-slate-100 pb-6 last:border-0 last:pb-0">
-                <p className="text-slate-700 font-medium leading-relaxed">{q.label}</p>
-                {renderQuestion(q)}
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => setActiveTab(section.id)}
+                    className={`text-left p-6 rounded-2xl border-2 transition-all hover:shadow-lg ${
+                      isCompleted
+                        ? 'bg-emerald-50 border-emerald-200 hover:border-emerald-300'
+                        : hasResponses
+                        ? 'bg-amber-50 border-amber-200 hover:border-amber-300'
+                        : 'bg-white border-slate-200 hover:border-emerald-300'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                        isCompleted ? 'bg-emerald-100' : 'bg-slate-100'
+                      }`}>
+                        <span className="text-2xl">{section.icon}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-slate-800">{section.title}</h3>
+                          {isCompleted && (
+                            <span className="text-emerald-600 text-sm">✓ Submitted</span>
+                          )}
+                        </div>
+                        <p className="text-sm text-slate-500 mt-1">{section.description}</p>
+                        <p className="text-xs text-slate-400 mt-2">
+                          {section.questions.length} questions
+                          {hasResponses && !isCompleted && (
+                            <span className="text-amber-600 ml-2">({responseCount} answered)</span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Privacy Notice */}
+            <div className="mt-10 text-center">
+              <div className="inline-block bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                <p className="text-sm text-slate-500">
+                  <strong>Your privacy is protected:</strong> No names, dates, or medical record numbers are collected.<br/>
+                  All responses are anonymous and help us advocate for better medication access.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
+              <p className="text-xs text-slate-400 mt-4">
+                Powered by TransplantMedicationNavigator.com — By patients, for patients
+              </p>
+            </div>
+          </>
+        )}
 
-        {/* Navigation */}
-        <div className="flex justify-between items-center">
-          <button
-            onClick={() => setCurrentSection(prev => Math.max(0, prev - 1))}
-            disabled={currentSection === 0}
-            className={`px-6 py-3 rounded-xl font-medium transition-all ${
-              currentSection === 0
-                ? 'text-slate-300 cursor-not-allowed'
-                : 'text-slate-600 hover:bg-white hover:shadow-md'
-            }`}
-          >
-            ← Back
-          </button>
-
-          <div className="flex gap-1">
-            {sections.map((_, idx) => (
+        {/* Active Section View */}
+        {activeTab && activeSection && (
+          <div className="bg-white rounded-3xl shadow-lg border border-emerald-100 p-8">
+            <div className="flex items-start gap-4 mb-6">
               <button
-                key={idx}
-                onClick={() => setCurrentSection(idx)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentSection ? 'bg-emerald-500 w-6' : 'bg-slate-200 hover:bg-slate-300'
+                onClick={() => setActiveTab(null)}
+                className="mt-1 text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <span className="text-2xl">{activeSection.icon}</span>
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-slate-800">{activeSection.title}</h2>
+                <p className="text-sm text-slate-500">{activeSection.description}</p>
+              </div>
+            </div>
+
+            <div className="space-y-7">
+              {activeSection.questions.map((q) => (
+                <div key={q.id} className="border-b border-slate-100 pb-6 last:border-0 last:pb-0">
+                  <p className="text-slate-700 font-medium leading-relaxed">{q.label}</p>
+                  {renderQuestion(q)}
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-between items-center mt-8 pt-6 border-t border-slate-100">
+              <button
+                onClick={() => setActiveTab(null)}
+                className="px-6 py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium transition-all"
+              >
+                ← Back to Topics
+              </button>
+              <button
+                onClick={() => handleSubmitSection(activeSection.id)}
+                className={`px-8 py-3 rounded-xl font-medium transition-all shadow-md hover:shadow-lg ${
+                  completedSections.has(activeSection.id)
+                    ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700'
                 }`}
-              />
-            ))}
+              >
+                {completedSections.has(activeSection.id) ? 'Update Responses ✓' : 'Submit This Section ✓'}
+              </button>
+            </div>
           </div>
-
-          {currentSection < sections.length - 1 ? (
-            <button
-              onClick={() => setCurrentSection(prev => prev + 1)}
-              className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg"
-            >
-              Continue →
-            </button>
-          ) : (
-            <button
-              onClick={() => setSubmitted(true)}
-              className="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md hover:shadow-lg"
-            >
-              Submit Survey ✓
-            </button>
-          )}
-        </div>
-
-        {/* Privacy Notice */}
-        <div className="mt-10 text-center">
-          <p className="text-xs text-slate-400">
-            This survey is conducted by TransplantMedicationNavigator.com, a patient-led initiative.<br/>
-            No protected health information (PHI) is collected. All responses are anonymous.
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );
