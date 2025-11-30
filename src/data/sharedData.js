@@ -8,6 +8,7 @@ export { default as COST_PLUS_EXCLUSIONS_DATA } from './cost-plus-exclusions.jso
 export { default as CATEGORY_ORDER_DATA } from './category-order.json';
 export { default as APPLICATION_CHECKLIST_DATA } from './application-checklist.json';
 export { default as FAQS_DATA } from './faqs.json';
+export { default as PRICE_ESTIMATES_DATA } from './price-estimates.json';
 
 // Re-export constants
 export {
