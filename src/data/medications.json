@@ -2402,17 +2402,5 @@
       "Liver"
     ],
     "papUrl": "https://madrigalpatientsupport.com/"
-  },
-  {
-    "id": "obeticholic-acid",
-    "brandName": "Ocaliva",
-    "genericName": "Obeticholic Acid",
-    "category": "Fatty Liver Disease (PBC/NASH)",
-    "manufacturer": "Intercept",
-    "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ],
-    "papUrl": "https://www.ocaliva.com/support-for-ocaliva/"
   }
 ]
