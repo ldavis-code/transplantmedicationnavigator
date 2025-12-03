@@ -1528,6 +1528,7 @@ const MedicationSearch = () => {
     const [linkCopied, setLinkCopied] = useState(false);
     const [priceReportRefresh, setPriceReportRefresh] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
+    const [showSavings, setShowSavings] = useState(false);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
     const fuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -1634,7 +1635,12 @@ const MedicationSearch = () => {
                     )}
                 </div>
 
-{/* Important Safety Warning */}
+                {/* Search Medications Help Text */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 no-print">
+                    <p className="text-emerald-800 font-medium">Help is here, let's find it together. Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
+                </div>
+
+                {/* Important Safety Warning */}
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 no-print" role="alert">
                     <div className="flex items-start gap-3">
                         <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
@@ -1760,7 +1766,7 @@ const MedicationSearch = () => {
                 </section>
             )}
 
-            {hasItems && (
+            {hasItems && showSavings && (
                 <nav id="medication-tabs" className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
@@ -1789,6 +1795,31 @@ const MedicationSearch = () => {
                         <h2 className="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
                         <p className="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
                     </div>
+                ) : !showSavings ? (
+                    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                        <h2 className="text-lg font-bold text-slate-900 mb-4">Your Medications</h2>
+                        <div className="space-y-3">
+                            {displayListInternal.map(med => (
+                                <div key={med.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                    <div>
+                                        <span className="font-bold text-slate-900">{med.brandName}</span>
+                                        <span className="text-slate-600 ml-2">({med.genericName})</span>
+                                    </div>
+                                    <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${med.brandName}`}>
+                                        <X size={18} />
+                                    </button>
+                                </div>
+                            ))}
+                            {myCustomMeds.map((name, idx) => (
+                                <div key={`${name}-${idx}`} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                    <span className="font-bold text-slate-900">{name}</span>
+                                    <button onClick={() => removeCustomFromList(name)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${name}`}>
+                                        <X size={18} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 ) : (
                     <>
                         {displayListInternal.map(med => (
@@ -1801,28 +1832,23 @@ const MedicationSearch = () => {
                 )}
             </div>
 
-            {/* Search Medications Help */}
-            <section className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-lg font-bold text-emerald-800 mb-2">Help is here, let's find it together.</h2>
-                        <p className="text-emerald-700">Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
-                    </div>
+            {/* Find My Savings Button */}
+            {hasItems && !showSavings && (
+                <div className="flex justify-center no-print">
                     <button
                         onClick={() => {
-                            if (document.getElementById('medication-tabs')) {
-                                setActiveTab('PRICE');
-                                document.getElementById('medication-tabs').scrollIntoView({ behavior: 'smooth' });
-                            } else {
-                                document.getElementById('med-search').focus();
-                            }
+                            setShowSavings(true);
+                            setActiveTab('PRICE');
+                            setTimeout(() => {
+                                document.getElementById('medication-tabs')?.scrollIntoView({ behavior: 'smooth' });
+                            }, 100);
                         }}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition flex items-center gap-2 whitespace-nowrap"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2"
                     >
                         Find My Savings
                     </button>
                 </div>
-            </section>
+            )}
         </article>
     );
 };
