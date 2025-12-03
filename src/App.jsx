@@ -20,7 +20,7 @@ import {
     Trash2, Globe, List, Info, Copy, Check, Building2, LandPlot, Scale, FileText,
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, Share2, Home as HomeIcon,
-    MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2, Bookmark
+    MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -1746,7 +1746,6 @@ const MedicationSearch = () => {
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
                         { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
-                        { id: 'RESOURCES', label: 'Resources', icon: Bookmark },
                         { id: 'OVERVIEW', label: 'Overview', icon: Info },
                         { id: 'PRINT', label: 'Print Summary', icon: Printer },
                     ].map(tab => (
@@ -2108,141 +2107,6 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                {activeTab === 'RESOURCES' && (
-                    <div className="space-y-8 fade-in">
-                        {/* Discount Tools Section */}
-                        <section>
-                            <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                <DollarSign size={20} className="text-emerald-600" aria-hidden="true" />
-                                Discount Tools (Compare prices & get coupons)
-                            </h3>
-                            <div className="overflow-x-auto rounded-lg border border-slate-200">
-                                <table className="w-full text-sm text-left">
-                                    <thead className="bg-slate-100 text-slate-700 font-bold">
-                                        <tr>
-                                            <th scope="col" className="p-3">Tool</th>
-                                            <th scope="col" className="p-3">Description</th>
-                                            <th scope="col" className="p-3 no-print">Link</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-200">
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">GoodRx</td>
-                                            <td className="p-3 text-slate-600">Coupons and price comparisons at 70,000+ pharmacies nationwide</td>
-                                            <td className="p-3 no-print">
-                                                <a href={`https://www.goodrx.com/search?q=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">SingleCare</td>
-                                            <td className="p-3 text-slate-600">Free discount card with prices at 35,000+ pharmacies</td>
-                                            <td className="p-3 no-print">
-                                                <a href={`https://www.singlecare.com/search?search=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">RxSaver</td>
-                                            <td className="p-3 text-slate-600">Coupons and price comparisons; no sign-up required</td>
-                                            <td className="p-3 no-print">
-                                                <a href={`https://www.rxsaver.com/drugs/${encodeURIComponent(med.genericName.toLowerCase())}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">ScriptSave WellRx</td>
-                                            <td className="p-3 text-slate-600">Free savings card accepted at most U.S. pharmacies</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.wellrx.com/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
-
-                        {/* Pharmacies Section */}
-                        <section>
-                            <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                <Building size={20} className="text-emerald-600" aria-hidden="true" />
-                                Pharmacies (Where to fill your prescription)
-                            </h3>
-                            <div className="overflow-x-auto rounded-lg border border-slate-200">
-                                <table className="w-full text-sm text-left">
-                                    <thead className="bg-slate-100 text-slate-700 font-bold">
-                                        <tr>
-                                            <th scope="col" className="p-3">Pharmacy</th>
-                                            <th scope="col" className="p-3">Description</th>
-                                            <th scope="col" className="p-3 no-print">Link</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-200">
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>
-                                            <td className="p-3 text-slate-600">Online pharmacy with cost-plus pricing model; often lowest for generics</td>
-                                            <td className="p-3 no-print">
-                                                <a href={`https://costplusdrugs.com/medications/?query=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Walmart Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Consistently low prices; $4 generic list available</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.walmart.com/cp/pharmacy/5431" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Costco Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Low markup; no membership required for pharmacy</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.costco.com/pharmacy/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">CVS Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Wide availability; accepts most discount cards</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.cvs.com/pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Walgreens</td>
-                                            <td className="p-3 text-slate-600">Large national chain; accepts most discount cards</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.walgreens.com/pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Kroger/Grocery Pharmacies</td>
-                                            <td className="p-3 text-slate-600">Competitive pricing; convenient if you're already shopping</td>
-                                            <td className="p-3 no-print">
-                                                <a href="https://www.kroger.com/rx" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1">
-                                                    Visit <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
                     </div>
                 )}
                 {activeTab === 'PRICE' && (
