@@ -1618,7 +1618,7 @@ const MedicationSearch = () => {
             <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                     <div>
-                        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Build Your Medication List</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Search Medications</h1>
                         <p className="text-slate-600">Search for your medications to build a shareable price list.</p>
                     </div>
                     {hasItems && (
@@ -1634,23 +1634,7 @@ const MedicationSearch = () => {
                     )}
                 </div>
 
-                {/* Search Medications Help */}
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-6 no-print">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                        <div>
-                            <h2 className="text-lg font-bold text-emerald-800 mb-2">Help is here, let's find it together.</h2>
-                            <p className="text-emerald-700">Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
-                        </div>
-                        <button
-                            onClick={() => document.getElementById('med-search').focus()}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition flex items-center gap-2 whitespace-nowrap"
-                        >
-                            Find My Savings
-                        </button>
-                    </div>
-                </div>
-
-                {/* Important Safety Warning */}
+{/* Important Safety Warning */}
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 no-print" role="alert">
                     <div className="flex items-start gap-3">
                         <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
@@ -1816,6 +1800,22 @@ const MedicationSearch = () => {
                     </>
                 )}
             </div>
+
+            {/* Search Medications Help */}
+            <section className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div>
+                        <h2 className="text-lg font-bold text-emerald-800 mb-2">Help is here, let's find it together.</h2>
+                        <p className="text-emerald-700">Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
+                    </div>
+                    <button
+                        onClick={() => document.getElementById('med-search').focus()}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition flex items-center gap-2 whitespace-nowrap"
+                    >
+                        Find My Savings
+                    </button>
+                </div>
+            </section>
         </article>
     );
 };
