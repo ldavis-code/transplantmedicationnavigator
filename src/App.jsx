@@ -1634,6 +1634,22 @@ const MedicationSearch = () => {
                     )}
                 </div>
 
+                {/* Search Medications Help */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-6 no-print">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div>
+                            <h2 className="text-lg font-bold text-emerald-800 mb-2">Help is here, let's find it together.</h2>
+                            <p className="text-emerald-700">Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
+                        </div>
+                        <button
+                            onClick={() => document.getElementById('med-search').focus()}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition flex items-center gap-2 whitespace-nowrap"
+                        >
+                            Find My Savings
+                        </button>
+                    </div>
+                </div>
+
                 {/* Important Safety Warning */}
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 no-print" role="alert">
                     <div className="flex items-start gap-3">
