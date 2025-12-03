@@ -1742,30 +1742,6 @@ const MedicationSearch = () => {
                 </div>
             </section>
 
-            {hasItems && (
-                <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                        <div className="flex items-start gap-4">
-                            <div className="bg-emerald-600 text-white p-3 rounded-full" aria-hidden="true">
-                                <BookOpen size={24} />
-                            </div>
-                            <div>
-                                <h2 id="app-guide-heading" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h2>
-                                <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
-                            </div>
-                        </div>
-                        <Link
-                            to="/application-help"
-                            className="flex items-center gap-2 px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
-                            aria-label="View application guide for step-by-step help"
-                        >
-                            <FileText size={18} aria-hidden="true" />
-                            Grants & Foundations
-                        </Link>
-                    </div>
-                </section>
-            )}
-
             {hasItems && showSavings && (
                 <nav id="medication-tabs" className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
                     {[
@@ -1848,6 +1824,31 @@ const MedicationSearch = () => {
                         Find My Savings
                     </button>
                 </div>
+            )}
+
+            {/* Grants & Foundations */}
+            {hasItems && !showSavings && (
+                <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-emerald-600 text-white p-3 rounded-full" aria-hidden="true">
+                                <BookOpen size={24} />
+                            </div>
+                            <div>
+                                <h2 id="app-guide-heading" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h2>
+                                <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
+                            </div>
+                        </div>
+                        <Link
+                            to="/application-help"
+                            className="flex items-center gap-2 px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
+                            aria-label="View application guide for step-by-step help"
+                        >
+                            <FileText size={18} aria-hidden="true" />
+                            Grants & Foundations
+                        </Link>
+                    </div>
+                </section>
             )}
         </article>
     );
