@@ -2178,7 +2178,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={`https://www.walmart.com/search?q=${encodeURIComponent(med.genericName)}+pharmacy`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on Walmart for ${med.genericName} (opens in new tab)`}>
+                                                <a href={`https://www.walmart.com/search?q=${encodeURIComponent(med.genericName)}+capsule+pharmacy`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on Walmart for ${med.genericName} (opens in new tab)`}>
                                                     Check Live <ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('walmart', 'Walmart Pharmacy')} className="text-emerald-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
@@ -2313,7 +2313,7 @@ const ExternalMedCard = ({ name, onRemove }) => {
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">Cost Plus</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
-                    <a href={`https://www.walmart.com/search?q=${encodedTerm}+pharmacy`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={`Check ${name} price on Walmart (opens in new tab)`}>
+                    <a href={`https://www.walmart.com/search?q=${encodedTerm}+capsule+pharmacy`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={`Check ${name} price on Walmart (opens in new tab)`}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">Walmart</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
