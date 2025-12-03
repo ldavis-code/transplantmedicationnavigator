@@ -2054,7 +2054,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
 
             <div className="p-6">
                 {activeTab === 'OVERVIEW' && (
-                    <div className="space-y-4 fade-in">
+                    <div className="space-y-6 fade-in">
                         <p className="text-slate-700 leading-relaxed">
                             Manufacturer: <strong>{med.manufacturer}</strong><br/>
                             Commonly prescribed for: <strong>{med.commonOrgans.join(', ')}</strong> recipients.
@@ -2067,6 +2067,86 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                         <div className="flex gap-4 mt-4 no-print">
                             <a href={`https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
+
+                        {/* Pharmacies Section */}
+                        <section className="mt-6">
+                            <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                                <Building size={20} className="text-emerald-600" aria-hidden="true" />
+                                Pharmacies (Where to fill your prescription)
+                            </h3>
+                            <div className="overflow-x-auto rounded-lg border border-slate-200">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-slate-100 text-slate-700 font-bold">
+                                        <tr>
+                                            <th scope="col" className="p-3">Pharmacy</th>
+                                            <th scope="col" className="p-3">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-200">
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>
+                                            <td className="p-3 text-slate-600">Online pharmacy with cost-plus pricing model; often lowest for generics</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">Walmart Pharmacy</td>
+                                            <td className="p-3 text-slate-600">Consistently low prices; $4 generic list available</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">Costco Pharmacy</td>
+                                            <td className="p-3 text-slate-600">Low markup; no membership required for pharmacy</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">CVS Pharmacy</td>
+                                            <td className="p-3 text-slate-600">Wide availability; accepts most discount cards</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">Walgreens</td>
+                                            <td className="p-3 text-slate-600">Large national chain; accepts most discount cards</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">Kroger/Grocery Pharmacies</td>
+                                            <td className="p-3 text-slate-600">Competitive pricing; convenient if you're already shopping</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        {/* Discount Tools Section */}
+                        <section className="mt-6">
+                            <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                                <DollarSign size={20} className="text-emerald-600" aria-hidden="true" />
+                                Discount Tools (Compare prices & get coupons)
+                            </h3>
+                            <div className="overflow-x-auto rounded-lg border border-slate-200">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-slate-100 text-slate-700 font-bold">
+                                        <tr>
+                                            <th scope="col" className="p-3">Tool</th>
+                                            <th scope="col" className="p-3">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-200">
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">GoodRx</td>
+                                            <td className="p-3 text-slate-600">Coupons and price comparisons at 70,000+ pharmacies nationwide</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">SingleCare</td>
+                                            <td className="p-3 text-slate-600">Free discount card with prices at 35,000+ pharmacies</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">RxSaver</td>
+                                            <td className="p-3 text-slate-600">Coupons and price comparisons; no sign-up required</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">ScriptSave WellRx</td>
+                                            <td className="p-3 text-slate-600">Free savings card accepted at most U.S. pharmacies</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
                     </div>
                 )}
                 {activeTab === 'ASSISTANCE' && (
