@@ -1761,7 +1761,7 @@ const MedicationSearch = () => {
             )}
 
             {hasItems && (
-                <nav className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
+                <nav id="medication-tabs" className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
                         { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
@@ -1809,7 +1809,14 @@ const MedicationSearch = () => {
                         <p className="text-emerald-700">Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
                     </div>
                     <button
-                        onClick={() => document.getElementById('med-search').focus()}
+                        onClick={() => {
+                            if (document.getElementById('medication-tabs')) {
+                                setActiveTab('PRICE');
+                                document.getElementById('medication-tabs').scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                document.getElementById('med-search').focus();
+                            }
+                        }}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition flex items-center gap-2 whitespace-nowrap"
                     >
                         Find My Savings
