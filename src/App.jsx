@@ -1634,11 +1634,6 @@ const MedicationSearch = () => {
                     )}
                 </div>
 
-                {/* Search Medications Help Text */}
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 no-print">
-                    <p className="text-emerald-800 font-medium">Help is here, let's find it together. Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
-                </div>
-
                 {/* Important Safety Warning */}
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 no-print" role="alert">
                     <div className="flex items-start gap-3">
@@ -1696,6 +1691,9 @@ const MedicationSearch = () => {
                     )}
                     {searchResult && searchTerm && !isSearching && (
                         <div id="search-results-listbox" className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[60vh] overflow-y-auto z-50" role="listbox" aria-label="Search results">
+                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mb-2 mx-2">
+                                <p className="text-emerald-800 text-sm font-medium">Help is here, let's find it together. Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
+                            </div>
                             <div className="px-4 py-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Search Results</div>
                             {searchResult.internal.length > 0 ? (
                                 <div className="space-y-1 mb-2">
