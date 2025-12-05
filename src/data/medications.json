@@ -7,14 +7,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Astellas / Veloxis",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.astellaspharmasupportsolutions.com/"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "papUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "cyclosporine",
@@ -24,13 +21,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Liver",
-      "Lung"
-    ],
-    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
+    "commonOrgans": ["Kidney", "Heart", "Liver", "Lung"],
+    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "mycophenolate",
@@ -40,14 +35,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.genentech-access.com/patient.html"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "papUrl": "https://www.genentech-access.com/patient.html",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "myfortic",
@@ -57,14 +49,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "imuran",
@@ -74,12 +63,10 @@
     "category": "Immunosuppressant",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "sirolimus",
@@ -89,12 +76,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Lung",
-      "Liver"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Kidney", "Lung", "Liver"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "everolimus",
@@ -104,12 +90,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ],
-    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "belatacept",
@@ -119,10 +104,11 @@
     "category": "Immunosuppressant",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "simulect",
@@ -132,11 +118,11 @@
     "category": "Induction",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ],
-    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
+    "commonOrgans": ["Kidney", "Liver"],
+    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "thymoglobulin",
@@ -146,13 +132,11 @@
     "category": "Induction",
     "manufacturer": "Sanofi",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Lung",
-      "Liver"
-    ],
-    "papUrl": "https://www.sanofipatientconnection.com/"
+    "commonOrgans": ["Kidney", "Heart", "Lung", "Liver"],
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "atgam",
@@ -162,10 +146,11 @@
     "category": "Induction",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "prednisone",
@@ -175,13 +160,10 @@
     "category": "Steroid",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "solumedrol",
@@ -191,13 +173,11 @@
     "category": "Steroid",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "valcyte",
@@ -207,14 +187,11 @@
     "category": "Anti-viral",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.genentech-access.com/patient.html"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "papUrl": "https://www.genentech-access.com/patient.html",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "cytovene",
@@ -224,13 +201,11 @@
     "category": "Anti-viral",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ],
-    "papUrl": "https://www.genentech-access.com/patient.html"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "papUrl": "https://www.genentech-access.com/patient.html",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "zovirax",
@@ -240,11 +215,10 @@
     "category": "Anti-viral",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "valtrex",
@@ -254,10 +228,10 @@
     "category": "Anti-viral",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "prevymis",
@@ -267,11 +241,11 @@
     "category": "Anti-viral",
     "manufacturer": "Merck",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Heart"
-    ],
-    "papUrl": "https://www.merckhelps.com/"
+    "commonOrgans": ["Kidney", "Heart"],
+    "papUrl": "https://www.merckhelps.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "livtencity",
@@ -280,12 +254,11 @@
     "category": "Anti-viral",
     "manufacturer": "Takeda",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Lung"
-    ],
-    "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/"
+    "commonOrgans": ["Kidney", "Heart", "Lung"],
+    "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "bactrim",
@@ -295,13 +268,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "diflucan",
@@ -311,12 +281,11 @@
     "category": "Anti-fungal",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "nystatin",
@@ -326,12 +295,10 @@
     "category": "Anti-fungal",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "noxafil",
@@ -341,11 +308,11 @@
     "category": "Anti-fungal",
     "manufacturer": "Merck",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.merckhelps.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.merckhelps.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "vfend",
@@ -355,10 +322,11 @@
     "category": "Anti-fungal",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "cresemba",
@@ -368,10 +336,11 @@
     "category": "Anti-fungal",
     "manufacturer": "Astellas",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.astellaspharmasupportsolutions.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "baraclude",
@@ -381,10 +350,11 @@
     "category": "Hepatitis B",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ],
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/"
+    "commonOrgans": ["Liver"],
+    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "vemlidy",
@@ -393,11 +363,11 @@
     "category": "Hepatitis B",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Kidney"
-    ],
-    "papUrl": "https://www.gileadadvancingaccess.com/"
+    "commonOrgans": ["Liver", "Kidney"],
+    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "viread",
@@ -407,11 +377,11 @@
     "category": "Hepatitis B",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Kidney"
-    ],
-    "papUrl": "https://www.gileadadvancingaccess.com/"
+    "commonOrgans": ["Liver", "Kidney"],
+    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "hbig",
@@ -420,10 +390,11 @@
     "category": "Hepatitis B",
     "manufacturer": "Saol / Grifols",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ],
-    "papUrl": "https://www.grifols.com/en/patient-support"
+    "commonOrgans": ["Liver"],
+    "papUrl": "https://www.grifols.com/en/patient-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "epclusa",
@@ -433,11 +404,11 @@
     "category": "Hepatitis C",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Kidney"
-    ],
-    "papUrl": "https://www.gileadadvancingaccess.com/"
+    "commonOrgans": ["Liver", "Kidney"],
+    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "mavyret",
@@ -447,11 +418,11 @@
     "category": "Hepatitis C",
     "manufacturer": "AbbVie",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Kidney"
-    ],
-    "papUrl": "https://www.abbvie.com/patients/patient-assistance.html"
+    "commonOrgans": ["Liver", "Kidney"],
+    "papUrl": "https://www.abbvie.com/patients/patient-assistance.html",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "xifaxan",
@@ -460,10 +431,11 @@
     "category": "Liver Support",
     "manufacturer": "Bausch Health",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Liver"
-    ],
-    "papUrl": "https://xifaxan.copaysavingsprogram.com/"
+    "commonOrgans": ["Liver"],
+    "papUrl": "https://xifaxan.copaysavingsprogram.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "lactulose",
@@ -472,9 +444,10 @@
     "category": "Liver Support",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Liver"
-    ]
+    "commonOrgans": ["Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ursodiol",
@@ -484,9 +457,10 @@
     "category": "Liver Support",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ]
+    "commonOrgans": ["Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "creon",
@@ -495,11 +469,11 @@
     "category": "Enzymes",
     "manufacturer": "AbbVie / Nestle",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Pancreas",
-      "Lung"
-    ],
-    "papUrl": "https://www.creon.com/savings-support"
+    "commonOrgans": ["Pancreas", "Lung"],
+    "papUrl": "https://www.creon.com/savings-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "entresto",
@@ -508,10 +482,11 @@
     "category": "Heart Failure",
     "manufacturer": "Novartis",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Heart"
-    ],
-    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
+    "commonOrgans": ["Heart"],
+    "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "jardiance",
@@ -520,11 +495,11 @@
     "category": "Heart/Kidney Support",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ],
-    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance"
+    "commonOrgans": ["Heart", "Kidney"],
+    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "farxiga",
@@ -533,11 +508,11 @@
     "category": "Heart/Kidney Support",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ],
-    "papUrl": "https://www.azandmeapp.com/"
+    "commonOrgans": ["Heart", "Kidney"],
+    "papUrl": "https://www.azandmeapp.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "renvela",
@@ -546,10 +521,11 @@
     "category": "Kidney Support",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.sanofipatientconnection.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "lasix",
@@ -559,11 +535,10 @@
     "category": "Diuretic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Heart", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "aldactone",
@@ -572,11 +547,11 @@
     "category": "Diuretic",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Heart", "Liver"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "inderal",
@@ -585,10 +560,10 @@
     "category": "Beta Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "coreg",
@@ -598,9 +573,10 @@
     "category": "Beta Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "lopressor",
@@ -610,9 +586,10 @@
     "category": "Beta Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "protonix",
@@ -622,13 +599,10 @@
     "category": "Stomach Protection",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "revatio",
@@ -637,11 +611,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Pfizer",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "tracleer",
@@ -650,11 +624,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.janssencarepath.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.janssencarepath.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 4
   },
   {
     "id": "letairis",
@@ -663,11 +637,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Gilead",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.gileadadvancingaccess.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": 4
   },
   {
     "id": "opsumit",
@@ -676,11 +650,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.janssencarepath.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.janssencarepath.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "adempas",
@@ -689,11 +663,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Bayer",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.adempas.com/savings-support"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.adempas.com/savings-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "uptravi",
@@ -702,11 +676,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.janssencarepath.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.janssencarepath.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "flolan",
@@ -715,11 +689,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "remodulin",
@@ -728,11 +702,11 @@
     "category": "Pulmonary Hypertension",
     "manufacturer": "United Therapeutics",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ],
-    "papUrl": "https://unitedtherapeuticscares.com/"
+    "commonOrgans": ["Lung", "Heart"],
+    "papUrl": "https://unitedtherapeuticscares.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "procrit",
@@ -741,10 +715,11 @@
     "category": "Anemia (ESRD)",
     "manufacturer": "Janssen / Amgen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.janssencarepath.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.janssencarepath.com/",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "aranesp",
@@ -753,10 +728,11 @@
     "category": "Anemia (ESRD)",
     "manufacturer": "Amgen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.amgenfirststep.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.amgenfirststep.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "mircera",
@@ -765,10 +741,11 @@
     "category": "Anemia (ESRD)",
     "manufacturer": "Vifor Pharma",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.viforpharma.com/en/patient-support"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.viforpharma.com/en/patient-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "venofer",
@@ -777,10 +754,11 @@
     "category": "Iron Supplement (ESRD)",
     "manufacturer": "American Regent",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.venofer.com/venaccess"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.venofer.com/venaccess",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 3
   },
   {
     "id": "feraheme",
@@ -789,10 +767,11 @@
     "category": "Iron Supplement (ESRD)",
     "manufacturer": "AMAG",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.feraheme.com/support"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.feraheme.com/support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "injectafer",
@@ -801,10 +780,11 @@
     "category": "Iron Supplement (ESRD)",
     "manufacturer": "American Regent",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.dsiaccesscentral.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.dsiaccesscentral.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "calcitriol",
@@ -813,9 +793,10 @@
     "category": "Vitamin D (ESRD)",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ]
+    "commonOrgans": ["Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "zemplar",
@@ -824,10 +805,11 @@
     "category": "Vitamin D (ESRD)",
     "manufacturer": "AbbVie",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.abbvie.com/patients/patient-assistance.html"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.abbvie.com/patients/patient-assistance.html",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "hectorol",
@@ -836,10 +818,11 @@
     "category": "Vitamin D (ESRD)",
     "manufacturer": "Sanofi",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.sanofipatientconnection.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "sensipar",
@@ -848,10 +831,11 @@
     "category": "Hyperparathyroidism (ESRD)",
     "manufacturer": "Amgen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.amgenfirststep.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.amgenfirststep.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "parsabiv",
@@ -860,10 +844,11 @@
     "category": "Hyperparathyroidism (ESRD)",
     "manufacturer": "Amgen",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.amgenfirststep.com/"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.amgenfirststep.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "auryxia",
@@ -872,10 +857,11 @@
     "category": "Phosphate Binder (ESRD)",
     "manufacturer": "Akebia",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://www.auryxia.com/phosphate-binder/savings-support"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://www.auryxia.com/phosphate-binder/savings-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "phoslo",
@@ -884,9 +870,10 @@
     "category": "Phosphate Binder (ESRD)",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ]
+    "commonOrgans": ["Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "campath",
@@ -895,12 +882,11 @@
     "category": "Acute Rejection",
     "manufacturer": "Sanofi",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ],
-    "papUrl": "https://www.sanofipatientconnection.com/"
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "rituxan",
@@ -909,12 +895,11 @@
     "category": "Acute Rejection",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ],
-    "papUrl": "https://www.genentech-access.com/patient.html"
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "papUrl": "https://www.genentech-access.com/patient.html",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "ivig",
@@ -923,13 +908,11 @@
     "category": "Acute Rejection",
     "manufacturer": "Various",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ],
-    "papUrl": "https://www.gammagard.com/primary-immunodeficiency/copay-support"
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "papUrl": "https://www.gammagard.com/primary-immunodeficiency/copay-support",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "soliris",
@@ -938,10 +921,11 @@
     "category": "Antibody-Mediated Rejection",
     "manufacturer": "Alexion",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://alexion.com/our-patients"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://alexion.com/our-patients",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "ultomiris",
@@ -950,10 +934,11 @@
     "category": "Antibody-Mediated Rejection",
     "manufacturer": "Alexion",
     "stage": "Post-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": "https://alexion.com/our-patients"
+    "commonOrgans": ["Kidney"],
+    "papUrl": "https://alexion.com/our-patients",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "lisinopril",
@@ -963,11 +948,10 @@
     "category": "ACE Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "enalapril",
@@ -976,10 +960,10 @@
     "category": "ACE Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ramipril",
@@ -988,10 +972,10 @@
     "category": "ACE Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "losartan",
@@ -1000,10 +984,10 @@
     "category": "ARB",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "valsartan",
@@ -1012,10 +996,10 @@
     "category": "ARB",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "olmesartan",
@@ -1024,10 +1008,10 @@
     "category": "ARB",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "irbesartan",
@@ -1036,10 +1020,10 @@
     "category": "ARB",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "amlodipine",
@@ -1049,10 +1033,10 @@
     "category": "Calcium Channel Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "diltiazem",
@@ -1061,9 +1045,10 @@
     "category": "Calcium Channel Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "nifedipine",
@@ -1072,9 +1057,10 @@
     "category": "Calcium Channel Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "atenolol",
@@ -1083,9 +1069,10 @@
     "category": "Beta Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "bisoprolol",
@@ -1094,9 +1081,10 @@
     "category": "Beta Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "atorvastatin",
@@ -1106,12 +1094,10 @@
     "category": "Statin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver",
-      "Kidney",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Heart", "Liver", "Kidney", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "simvastatin",
@@ -1120,11 +1106,10 @@
     "category": "Statin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Liver", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "rosuvastatin",
@@ -1133,11 +1118,10 @@
     "category": "Statin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Liver", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "pravastatin",
@@ -1147,10 +1131,10 @@
     "category": "Statin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "lovastatin",
@@ -1159,10 +1143,10 @@
     "category": "Statin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "hydrochlorothiazide",
@@ -1171,10 +1155,10 @@
     "category": "Diuretic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "chlorthalidone",
@@ -1183,10 +1167,10 @@
     "category": "Diuretic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ]
+    "commonOrgans": ["Heart", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "clopidogrel",
@@ -1195,11 +1179,10 @@
     "category": "Antiplatelet",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "aspirin",
@@ -1209,12 +1192,10 @@
     "category": "Antiplatelet",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney",
-      "Liver",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Heart", "Kidney", "Liver", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "warfarin",
@@ -1223,11 +1204,10 @@
     "category": "Anticoagulant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Lung",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Lung", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "apixaban",
@@ -1236,11 +1216,11 @@
     "category": "Anticoagulant",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ],
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/"
+    "commonOrgans": ["Heart", "Kidney"],
+    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "rivaroxaban",
@@ -1249,11 +1229,11 @@
     "category": "Anticoagulant",
     "manufacturer": "Janssen",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney"
-    ],
-    "papUrl": "https://www.janssencarepath.com/"
+    "commonOrgans": ["Heart", "Kidney"],
+    "papUrl": "https://www.janssencarepath.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "digoxin",
@@ -1262,9 +1242,10 @@
     "category": "Cardiac Glycoside",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart"
-    ]
+    "commonOrgans": ["Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "metformin",
@@ -1273,12 +1254,10 @@
     "category": "Diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "glipizide",
@@ -1287,10 +1266,10 @@
     "category": "Diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "glyburide",
@@ -1299,10 +1278,10 @@
     "category": "Diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "glimepiride",
@@ -1311,10 +1290,10 @@
     "category": "Diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "sitagliptin",
@@ -1323,11 +1302,11 @@
     "category": "Diabetes",
     "manufacturer": "Merck",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.merckhelps.com/"
+    "commonOrgans": ["Kidney", "Pancreas"],
+    "papUrl": "https://www.merckhelps.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "insulin-glargine",
@@ -1336,12 +1315,11 @@
     "category": "Insulin",
     "manufacturer": "Sanofi / Lilly",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.sanofipatientconnection.com/"
+    "commonOrgans": ["Kidney", "Liver", "Pancreas"],
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "insulin-lispro",
@@ -1350,12 +1328,11 @@
     "category": "Insulin",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.lillycares.com/"
+    "commonOrgans": ["Kidney", "Liver", "Pancreas"],
+    "papUrl": "https://www.lillycares.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "insulin-aspart",
@@ -1364,12 +1341,11 @@
     "category": "Insulin",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.novocare.com/"
+    "commonOrgans": ["Kidney", "Liver", "Pancreas"],
+    "papUrl": "https://www.novocare.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "semaglutide",
@@ -1378,12 +1354,11 @@
     "category": "Diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.novocare.com/"
+    "commonOrgans": ["Kidney", "Heart", "Pancreas"],
+    "papUrl": "https://www.novocare.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "dulaglutide",
@@ -1392,12 +1367,11 @@
     "category": "Diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Heart",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.lillycares.com/"
+    "commonOrgans": ["Kidney", "Heart", "Pancreas"],
+    "papUrl": "https://www.lillycares.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 4
   },
   {
     "id": "levothyroxine",
@@ -1406,13 +1380,10 @@
     "category": "Thyroid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney",
-      "Liver",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Heart", "Kidney", "Liver", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "liothyronine",
@@ -1421,11 +1392,10 @@
     "category": "Thyroid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Heart",
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Heart", "Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "albuterol",
@@ -1434,10 +1404,10 @@
     "category": "Bronchodilator",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Heart"
-    ]
+    "commonOrgans": ["Lung", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "fluticasone-salmeterol",
@@ -1446,10 +1416,11 @@
     "category": "Respiratory",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "budesonide-formoterol",
@@ -1458,10 +1429,11 @@
     "category": "Respiratory",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.azandmeapp.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.azandmeapp.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "montelukast",
@@ -1470,9 +1442,10 @@
     "category": "Respiratory",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "tiotropium",
@@ -1481,10 +1454,11 @@
     "category": "Bronchodilator",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "levalbuterol",
@@ -1493,10 +1467,11 @@
     "category": "Bronchodilator",
     "manufacturer": "Sunovion",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.sunovion.com/patient-support"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.sunovion.com/patient-support",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "ipratropium",
@@ -1505,10 +1480,11 @@
     "category": "Bronchodilator",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ipratropium-albuterol",
@@ -1517,10 +1493,11 @@
     "category": "Bronchodilator",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "fluticasone",
@@ -1529,10 +1506,11 @@
     "category": "Inhaled Corticosteroid",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "budesonide-inhaled",
@@ -1541,10 +1519,11 @@
     "category": "Inhaled Corticosteroid",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.azandmeapp.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.azandmeapp.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "beclomethasone",
@@ -1553,10 +1532,11 @@
     "category": "Inhaled Corticosteroid",
     "manufacturer": "Teva",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.tevausa.com/patient-resources/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.tevausa.com/patient-resources/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "mometasone-inhaled",
@@ -1565,10 +1545,11 @@
     "category": "Inhaled Corticosteroid",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "ciclesonide",
@@ -1577,10 +1558,11 @@
     "category": "Inhaled Corticosteroid",
     "manufacturer": "Sunovion",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.sunovion.com/patient-support"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.sunovion.com/patient-support",
+    "cost_tier": "medium",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "fluticasone-vilanterol",
@@ -1589,10 +1571,11 @@
     "category": "Respiratory",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "mometasone-formoterol",
@@ -1601,10 +1584,11 @@
     "category": "Respiratory",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "umeclidinium-vilanterol",
@@ -1613,10 +1597,11 @@
     "category": "Bronchodilator",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": 3
   },
   {
     "id": "omalizumab",
@@ -1625,10 +1610,11 @@
     "category": "Asthma Biologic",
     "manufacturer": "Genentech / Novartis",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.genentech-access.com/patient.html"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.genentech-access.com/patient.html",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "mepolizumab",
@@ -1637,10 +1623,11 @@
     "category": "Asthma Biologic",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "benralizumab",
@@ -1649,10 +1636,11 @@
     "category": "Asthma Biologic",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.azandmeapp.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.azandmeapp.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "dupilumab",
@@ -1661,10 +1649,11 @@
     "category": "Asthma Biologic / Allergy",
     "manufacturer": "Regeneron / Sanofi",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.dupixent.com/support-savings/dupixent-my-way"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.dupixent.com/support-savings/dupixent-my-way",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "tezepelumab",
@@ -1673,10 +1662,11 @@
     "category": "Asthma Biologic",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.azandmeapp.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.azandmeapp.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   },
   {
     "id": "zafirlukast",
@@ -1685,9 +1675,10 @@
     "category": "Leukotriene Modifier",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "zileuton",
@@ -1696,9 +1687,10 @@
     "category": "Leukotriene Modifier",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "cetirizine",
@@ -1707,10 +1699,10 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Kidney"
-    ]
+    "commonOrgans": ["Lung", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "loratadine",
@@ -1719,10 +1711,10 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Kidney"
-    ]
+    "commonOrgans": ["Lung", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "fexofenadine",
@@ -1731,10 +1723,10 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Kidney"
-    ]
+    "commonOrgans": ["Lung", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "levocetirizine",
@@ -1743,10 +1735,10 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Kidney"
-    ]
+    "commonOrgans": ["Lung", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "desloratadine",
@@ -1755,10 +1747,10 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung",
-      "Kidney"
-    ]
+    "commonOrgans": ["Lung", "Kidney"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "fluticasone-nasal",
@@ -1767,10 +1759,11 @@
     "category": "Nasal Corticosteroid",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.gskforyou.com/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.gskforyou.com/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "mometasone-nasal",
@@ -1779,10 +1772,11 @@
     "category": "Nasal Corticosteroid",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/"
+    "commonOrgans": ["Lung"],
+    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "triamcinolone-nasal",
@@ -1791,9 +1785,10 @@
     "category": "Nasal Corticosteroid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "azelastine-nasal",
@@ -1802,9 +1797,10 @@
     "category": "Nasal Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "olopatadine-nasal",
@@ -1813,9 +1809,10 @@
     "category": "Nasal Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "cromolyn",
@@ -1824,9 +1821,10 @@
     "category": "Mast Cell Stabilizer",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Lung"
-    ]
+    "commonOrgans": ["Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "omeprazole",
@@ -1836,13 +1834,10 @@
     "category": "Proton Pump Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "esomeprazole",
@@ -1851,12 +1846,10 @@
     "category": "Proton Pump Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "lansoprazole",
@@ -1865,11 +1858,10 @@
     "category": "Proton Pump Inhibitor",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "famotidine",
@@ -1878,11 +1870,10 @@
     "category": "H2 Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ranitidine",
@@ -1891,10 +1882,10 @@
     "category": "H2 Blocker",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "tramadol",
@@ -1903,13 +1894,10 @@
     "category": "Pain Relief",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "hydrocodone-acetaminophen",
@@ -1918,13 +1906,10 @@
     "category": "Pain Relief",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "oxycodone",
@@ -1933,13 +1918,10 @@
     "category": "Pain Relief",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "gabapentin",
@@ -1948,13 +1930,10 @@
     "category": "Nerve Pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "pregabalin",
@@ -1963,12 +1942,11 @@
     "category": "Nerve Pain",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ],
-    "papUrl": "https://www.pfizerrxpathways.com/"
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "papUrl": "https://www.pfizerrxpathways.com/",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2
   },
   {
     "id": "meloxicam",
@@ -1977,10 +1955,10 @@
     "category": "NSAID",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ibuprofen",
@@ -1989,10 +1967,10 @@
     "category": "NSAID",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "naproxen",
@@ -2001,10 +1979,10 @@
     "category": "NSAID",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "sertraline",
@@ -2013,13 +1991,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "escitalopram",
@@ -2028,13 +2003,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "fluoxetine",
@@ -2043,12 +2015,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "citalopram",
@@ -2057,11 +2027,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "duloxetine",
@@ -2070,11 +2039,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "venlafaxine",
@@ -2083,11 +2051,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "bupropion",
@@ -2096,11 +2063,10 @@
     "category": "Antidepressant",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "trazodone",
@@ -2109,12 +2075,10 @@
     "category": "Antidepressant/Sleep",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "alprazolam",
@@ -2123,12 +2087,10 @@
     "category": "Anxiety",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "lorazepam",
@@ -2137,11 +2099,10 @@
     "category": "Anxiety",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "clonazepam",
@@ -2150,11 +2111,10 @@
     "category": "Anxiety",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "buspirone",
@@ -2163,10 +2123,10 @@
     "category": "Anxiety",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "zolpidem",
@@ -2175,12 +2135,10 @@
     "category": "Sleep Aid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "quetiapine",
@@ -2189,11 +2147,10 @@
     "category": "Antipsychotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "amoxicillin",
@@ -2202,13 +2159,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "azithromycin",
@@ -2217,12 +2171,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "ciprofloxacin",
@@ -2231,11 +2183,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "levofloxacin",
@@ -2244,11 +2195,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "doxycycline",
@@ -2257,11 +2207,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Lung"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "cephalexin",
@@ -2270,50 +2219,10 @@
     "category": "Antibiotic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver"
-    ]
-  },
-  {
-    "id": "cetirizine",
-    "brandName": "Zyrtec",
-    "genericName": "Cetirizine",
-    "category": "Antihistamine",
-    "manufacturer": "Generic",
-    "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Lung"
-    ]
-  },
-  {
-    "id": "loratadine",
-    "brandName": "Claritin",
-    "genericName": "Loratadine",
-    "category": "Antihistamine",
-    "manufacturer": "Generic",
-    "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Lung"
-    ]
-  },
-  {
-    "id": "fexofenadine",
-    "brandName": "Allegra",
-    "genericName": "Fexofenadine",
-    "category": "Antihistamine",
-    "manufacturer": "Generic",
-    "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Lung"
-    ]
+    "commonOrgans": ["Kidney", "Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "vitamin-d",
@@ -2322,12 +2231,10 @@
     "category": "Vitamin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart",
-      "Pancreas"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart", "Pancreas"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "folic-acid",
@@ -2336,11 +2243,10 @@
     "category": "Vitamin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Liver",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Liver", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "allopurinol",
@@ -2349,10 +2255,10 @@
     "category": "Gout",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "colchicine",
@@ -2361,10 +2267,10 @@
     "category": "Gout",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Kidney",
-      "Heart"
-    ]
+    "commonOrgans": ["Kidney", "Heart"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "vitamin-e",
@@ -2373,9 +2279,10 @@
     "category": "Fatty Liver Disease (NASH)",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ]
+    "commonOrgans": ["Liver"],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "pioglitazone",
@@ -2384,12 +2291,11 @@
     "category": "Fatty Liver Disease (NASH)",
     "manufacturer": "Takeda",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver",
-      "Kidney",
-      "Pancreas"
-    ],
-    "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/"
+    "commonOrgans": ["Liver", "Kidney", "Pancreas"],
+    "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/",
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
   },
   {
     "id": "resmetirom",
@@ -2398,9 +2304,10 @@
     "category": "Fatty Liver Disease (NASH)",
     "manufacturer": "Madrigal",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": [
-      "Liver"
-    ],
-    "papUrl": "https://madrigalpatientsupport.com/"
+    "commonOrgans": ["Liver"],
+    "papUrl": "https://madrigalpatientsupport.com/",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   }
 ]
