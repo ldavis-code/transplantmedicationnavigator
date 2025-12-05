@@ -84,6 +84,10 @@
       {
         "q": "What is Medicare Extra Help?",
         "a": "Medicare Extra Help (Low-Income Subsidy or LIS) helps people with limited income pay Medicare prescription drug costs. It can eliminate or reduce premiums, deductibles, and copays. Eligibility is based on income and resources."
+      },
+      {
+        "q": "Do drug tiers vary by insurance plan?",
+        "a": "Yes. Each insurance plan creates its own formulary (list of covered drugs) and decides which tier to place each medication on. This means the same drug can be on Tier 2 with one plan and Tier 4 with another—even within the same insurance company. This matters because tier placement directly affects what you pay. A medication on Tier 2 might cost you $25, while that same medication on Tier 4 could cost $150 or more. When comparing plans, don't just check if your medications are covered—look up which tier they're on and what the cost-sharing is at that tier."
       }
     ]
   },
