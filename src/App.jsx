@@ -2046,6 +2046,35 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 <div>
                     <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{med.brandName}</h2>
                     <p className="text-slate-600 font-medium text-sm">{med.genericName} • <span className="text-emerald-600">{med.category}</span></p>
+                    {/* Cost Tier Badges */}
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {med.cost_tier && (
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                med.cost_tier === 'low' ? 'bg-green-100 text-green-800' :
+                                med.cost_tier === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-red-100 text-red-800'
+                            }`}>
+                                <DollarSign size={12} aria-hidden="true" />
+                                {med.cost_tier === 'low' ? 'Low Cost' : med.cost_tier === 'medium' ? 'Medium Cost' : 'High Cost'}
+                            </span>
+                        )}
+                        {med.typical_copay_tier && (
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                med.typical_copay_tier === 'Specialty' ? 'bg-purple-100 text-purple-800' :
+                                med.typical_copay_tier <= 2 ? 'bg-blue-100 text-blue-800' :
+                                'bg-orange-100 text-orange-800'
+                            }`}>
+                                <Pill size={12} aria-hidden="true" />
+                                {med.typical_copay_tier === 'Specialty' ? 'Specialty Tier' : `Tier ${med.typical_copay_tier}`}
+                            </span>
+                        )}
+                        {med.generic_available && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                <CheckCircle size={12} aria-hidden="true" />
+                                Generic Available
+                            </span>
+                        )}
+                    </div>
                 </div>
                 <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
             </header>
@@ -2161,6 +2190,28 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
                         </div>
+                        {/* High-cost medication PAP recommendation */}
+                        {med.cost_tier === 'high' && med.papUrl && (
+                            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl p-5 shadow-sm">
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-amber-500 text-white p-2.5 rounded-lg flex-shrink-0" aria-hidden="true">
+                                        <Lightbulb size={20} />
+                                    </div>
+                                    <div className="flex-grow">
+                                        <h4 className="font-bold text-amber-900 mb-1 flex items-center gap-2">
+                                            High-Cost Medication — Strong PAP Recommended
+                                        </h4>
+                                        <p className="text-sm text-slate-700 mb-2">
+                                            <strong>{med.brandName}</strong> is a high-cost medication, but the manufacturer offers a Patient Assistance Program that can provide it <strong>free or at significantly reduced cost</strong> if you qualify.
+                                            {med.typical_copay_tier === 'Specialty' && " As a specialty tier drug, this is often the best path to affordable access."}
+                                        </p>
+                                        <p className="text-sm text-amber-800 font-medium">
+                                            We strongly recommend applying — many patients who think they won't qualify are surprised to find they do.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-5 shadow-sm no-print">
                             <div className="flex items-start gap-4">
                                 <div className="bg-indigo-600 text-white p-2.5 rounded-lg flex-shrink-0" aria-hidden="true">
