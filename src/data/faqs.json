@@ -215,6 +215,22 @@
         "a": "Yes! Use the \"Search Meds\" page to look up specific medications. You'll see price estimates, manufacturer assistance programs, and foundation resources for each drug."
       },
       {
+        "q": "What do the cost tier badges mean on medication cards?",
+        "a": "When you search for a medication, you'll see color-coded badges that help you quickly understand cost factors: The Cost badge shows whether a medication is generally Low Cost (green), Medium Cost (yellow), or High Cost (red) compared to other transplant medications. The Tier badge shows the typical insurance formulary tier—Tier 1-2 (blue) means lower copays, Tier 3-4 (orange) means higher copays, and Specialty Tier (purple) often requires specialty pharmacy and highest cost-sharing. The Generic Available badge (green checkmark) indicates a lower-cost generic version exists. Remember: Your actual tier depends on YOUR specific insurance plan's formulary—these are typical placements across common plans."
+      },
+      {
+        "q": "How accurate are the price estimates on this site?",
+        "a": "Our price estimates show typical cost ranges based on publicly available pricing data and common insurance tier placements. However, your actual cost depends on many factors: your specific insurance plan's formulary and tier placement, whether you've met your deductible, your plan's copay/coinsurance structure, whether you use a specialty pharmacy, and your pharmacy's current acquisition cost for generics. Use our estimates as a starting point for planning, but always verify with your pharmacy and insurance for your exact out-of-pocket cost. For the most accurate pricing, call your specialty pharmacy with your insurance information."
+      },
+      {
+        "q": "How do I use the Assistance tab on a medication page?",
+        "a": "When you select a medication and click on the ASSISTANCE tab, you'll find: Patient Assistance Program (PAP) links that go directly to the manufacturer's assistance application—these programs can provide FREE medication if you qualify based on income. For high-cost medications, you'll see a highlighted recommendation box explaining why applying to the PAP is especially important. The tab also lists relevant copay foundations that can help cover your out-of-pocket costs. We've done the research to connect you directly to the right resources for each specific medication."
+      },
+      {
+        "q": "What's the difference between the PRICE, ASSISTANCE, and OVERVIEW tabs?",
+        "a": "Each medication card has three tabs with different information: PRICE shows cost estimates across different pharmacies and discount programs—useful for comparing options if you're paying cash or want to know typical costs. ASSISTANCE is where you'll find manufacturer Patient Assistance Programs (PAPs), copay cards, and foundation grants—this is the most important tab for finding financial help. OVERVIEW provides general information about the medication including what it's used for, common side effects, and important notes for transplant patients. For most transplant patients, the ASSISTANCE tab is your best starting point for reducing costs."
+      },
+      {
         "q": "What if my medication isn't listed?",
         "a": "We focus on common transplant medications, but our database is growing. You can still use the general strategies in our Resources & Education section, and check GoodRx, RxAssist, or NeedyMeds for additional medications."
       },
