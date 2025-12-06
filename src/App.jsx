@@ -416,7 +416,7 @@ const Layout = ({ children }) => {
                     <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home">
                         <HeartHandshake size={28} aria-hidden="true" />
                         <span className="font-bold text-lg md:text-xl leading-tight">
-                            Transplant Med<br className="md:hidden"/> Navigator
+                            Transplant Med<br className="md:hidden"/> Navigator<sup className="text-xs">™</sup>
                         </span>
                     </Link>
 
