@@ -4,21 +4,21 @@
  */
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
-const SITE_NAME = 'Transplant Medication Navigator';
+const SITE_NAME = 'Transplant Medication Navigator™';
 
 export const seoMetadata = {
   home: {
-    title: 'Transplant Medication Navigator - Free Medication Assistance Guide for Transplant Patients',
+    title: 'Transplant Medication Navigator™ - Free Medication Assistance Guide for Transplant Patients',
     description: 'Find free medication assistance programs for transplant patients. Search Patient Assistance Programs, compare copay foundations, and get help paying for immunosuppressants.',
     canonical: `${BASE_URL}/`,
-    ogTitle: 'Transplant Medication Navigator - Free Medication Assistance',
+    ogTitle: 'Transplant Medication Navigator™ - Free Medication Assistance',
     ogDescription: 'Free guide helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants.',
-    twitterTitle: 'Transplant Medication Navigator',
+    twitterTitle: 'Transplant Medication Navigator™',
     twitterDescription: 'Find free medication assistance programs for transplant patients. Search PAPs, copay foundations, and get help paying for immunosuppressants.',
   },
 
   wizard: {
-    title: 'Personalized Medication Path | Transplant Medication Navigator',
+    title: 'Personalized Medication Path | Transplant Medication Navigator™',
     description: 'Take our free personalized quiz to discover the best medication assistance programs for your transplant needs. Get tailored recommendations in minutes.',
     canonical: `${BASE_URL}/wizard`,
     ogTitle: 'Find Your Medication Assistance Path',
@@ -28,7 +28,7 @@ export const seoMetadata = {
   },
 
   medications: {
-    title: 'Search Medications & Assistance Programs | Transplant Medication Navigator',
+    title: 'Search Medications & Assistance Programs | Transplant Medication Navigator™',
     description: 'Search and compare transplant medications, prices, and Patient Assistance Programs. Find help paying for tacrolimus, mycophenolate, prednisone, and more.',
     canonical: `${BASE_URL}/medications`,
     ogTitle: 'Search Transplant Medications & Assistance',
@@ -38,7 +38,7 @@ export const seoMetadata = {
   },
 
   education: {
-    title: 'Resources & Education | Transplant Medication Navigator',
+    title: 'Resources & Education | Transplant Medication Navigator™',
     description: 'Learn about insurance coverage, copay foundations, specialty pharmacies, and medication assistance options for transplant patients. Expert guidance and resources.',
     canonical: `${BASE_URL}/education`,
     ogTitle: 'Transplant Medication Education & Resources',
@@ -48,7 +48,7 @@ export const seoMetadata = {
   },
 
   applicationHelp: {
-    title: 'How to Apply for Medication Assistance | Transplant Medication Navigator',
+    title: 'How to Apply for Medication Assistance | Transplant Medication Navigator™',
     description: 'Step-by-step guide to applying for Patient Assistance Programs. Learn what documents you need, how to complete applications, and get approval faster.',
     canonical: `${BASE_URL}/application-help`,
     ogTitle: 'Apply for Patient Assistance Programs',
@@ -58,7 +58,7 @@ export const seoMetadata = {
   },
 
   faq: {
-    title: 'Frequently Asked Questions | Transplant Medication Navigator',
+    title: 'Frequently Asked Questions | Transplant Medication Navigator™',
     description: 'Find answers to common questions about Patient Assistance Programs, copay foundations, medication costs, and financial help for transplant patients.',
     canonical: `${BASE_URL}/faq`,
     ogTitle: 'Transplant Medication Assistance FAQs',
@@ -68,11 +68,11 @@ export const seoMetadata = {
   },
 
   notFound: {
-    title: 'Page Not Found | Transplant Medication Navigator',
+    title: 'Page Not Found | Transplant Medication Navigator™',
     description: 'The page you are looking for could not be found. Visit our homepage to find medication assistance programs and resources for transplant patients.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Page Not Found',
-    ogDescription: 'This page could not be found. Visit Transplant Medication Navigator to find medication assistance programs for transplant patients.',
+    ogDescription: 'This page could not be found. Visit Transplant Medication Navigator™ to find medication assistance programs for transplant patients.',
     twitterTitle: 'Page Not Found',
     twitterDescription: 'This page could not be found. Visit our homepage to find medication assistance programs for transplant patients.',
   },

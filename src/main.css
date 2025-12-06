@@ -381,7 +381,7 @@ body {
 
     /* ---- Website URL Header ---- */
     body::before {
-        content: "Transplant Medication Navigator - TransplantMedNavigator.com";
+        content: "Transplant Medication Navigator™ - TransplantMedNavigator.com";
         display: block;
         text-align: center;
         font-size: 10pt;

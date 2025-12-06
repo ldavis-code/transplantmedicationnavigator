@@ -7,7 +7,7 @@
 export const DEFAULT_ORG = {
   id: null,
   slug: 'public',
-  name: 'Transplant Medication Navigator',
+  name: 'Transplant Medication Navigator™',
   logoUrl: null,
   primaryColor: '#1e40af',
   secondaryColor: '#3b82f6',
@@ -99,7 +99,7 @@ export function isFeatureEnabled(org, featureName) {
  */
 export function getOrgDisplayName(org) {
   if (!org || org.slug === 'public') {
-    return 'Transplant Medication Navigator';
+    return 'Transplant Medication Navigator™';
   }
   return `${org.name} - Medication Navigator`;
 }
