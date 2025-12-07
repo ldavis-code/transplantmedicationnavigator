@@ -2183,6 +2183,9 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Manufacturer PAP</h3>
                                 <p className="text-sm text-slate-700 mb-4">Many manufacturers offer free medication if you are uninsured or have commercial insurance but can't afford copays.</p>
                                 <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
+                                {med.supportUrl && (
+                                    <a href={med.supportUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
+                                )}
                             </section>
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
                                 <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
@@ -3417,6 +3420,18 @@ const ApplicationHelp = () => {
                                                         <ExternalLink size={18} aria-hidden="true" />
                                                         Visit {selectedMedication.manufacturer} PAP
                                                     </a>
+                                                    {selectedMedication.supportUrl && (
+                                                        <a
+                                                            href={selectedMedication.supportUrl}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="inline-flex items-center gap-2 bg-white border-2 border-indigo-600 text-indigo-700 hover:bg-indigo-50 font-bold px-6 py-3 rounded-lg transition shadow-md"
+                                                            aria-label={`Visit ${selectedMedication.manufacturer} Patient Support Services (opens in new tab)`}
+                                                        >
+                                                            <ExternalLink size={18} aria-hidden="true" />
+                                                            Patient Support Services
+                                                        </a>
+                                                    )}
                                                     <p className="text-xs text-slate-600 italic">Approval typically takes 2-4 weeks</p>
                                                 </div>
                                             </section>
