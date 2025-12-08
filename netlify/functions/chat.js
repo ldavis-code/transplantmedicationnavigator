@@ -89,40 +89,78 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
   const eligibilityColumn = getEligibilityColumn(insuranceType);
 
   try {
-    // Get programs that match the medication OR are general programs (no medication_id)
-    const programs = await sql`
-      SELECT
-        sp.*,
-        COALESCE(
-          (SELECT json_agg(json_build_object(
-            'step_number', hs.step_number,
-            'step_title', hs.step_title,
-            'step_detail', hs.step_detail,
-            'tip', hs.tip,
-            'common_mistake', hs.common_mistake
-          ) ORDER BY hs.step_number)
-          FROM how_to_steps hs
-          WHERE hs.program_id = sp.id),
-          '[]'::json
-        ) as steps
-      FROM savings_programs sp
-      WHERE
-        sp.is_active = true
-        AND (sp.medication_id = ${medicationId} OR sp.medication_id IS NULL)
-        AND sp.${sql.unsafe(eligibilityColumn)} = true
-      ORDER BY
-        CASE sp.program_type
-          WHEN 'copay_card' THEN 1
-          WHEN 'discount_card' THEN 2
-          WHEN 'foundation' THEN 3
-          WHEN 'pap' THEN 4
-          WHEN 'discount_pharmacy' THEN 5
-          ELSE 6
-        END,
-        sp.program_name
-    `;
+    let programs;
 
-    return programs;
+    if (medicationId) {
+      // Get programs for specific medication OR general programs
+      programs = await sql`
+        SELECT
+          sp.*,
+          COALESCE(
+            (SELECT json_agg(json_build_object(
+              'step_number', hs.step_number,
+              'step_title', hs.step_title,
+              'step_detail', hs.step_detail,
+              'tip', hs.tip,
+              'common_mistake', hs.common_mistake
+            ) ORDER BY hs.step_number)
+            FROM how_to_steps hs
+            WHERE hs.program_id = sp.id),
+            '[]'::json
+          ) as steps
+        FROM savings_programs sp
+        WHERE
+          sp.is_active = true
+          AND (sp.medication_id = ${medicationId} OR sp.medication_id IS NULL)
+        ORDER BY
+          CASE sp.program_type
+            WHEN 'copay_card' THEN 1
+            WHEN 'discount_card' THEN 2
+            WHEN 'foundation' THEN 3
+            WHEN 'pap' THEN 4
+            WHEN 'discount_pharmacy' THEN 5
+            ELSE 6
+          END,
+          sp.program_name
+      `;
+    } else {
+      // Get only general programs (no specific medication)
+      programs = await sql`
+        SELECT
+          sp.*,
+          COALESCE(
+            (SELECT json_agg(json_build_object(
+              'step_number', hs.step_number,
+              'step_title', hs.step_title,
+              'step_detail', hs.step_detail,
+              'tip', hs.tip,
+              'common_mistake', hs.common_mistake
+            ) ORDER BY hs.step_number)
+            FROM how_to_steps hs
+            WHERE hs.program_id = sp.id),
+            '[]'::json
+          ) as steps
+        FROM savings_programs sp
+        WHERE
+          sp.is_active = true
+          AND sp.medication_id IS NULL
+        ORDER BY
+          CASE sp.program_type
+            WHEN 'copay_card' THEN 1
+            WHEN 'discount_card' THEN 2
+            WHEN 'foundation' THEN 3
+            WHEN 'pap' THEN 4
+            WHEN 'discount_pharmacy' THEN 5
+            ELSE 6
+          END,
+          sp.program_name
+      `;
+    }
+
+    // Filter by insurance eligibility in JavaScript (simpler than dynamic SQL)
+    const filteredPrograms = programs.filter(p => p[eligibilityColumn] === true);
+
+    return filteredPrograms;
   } catch (error) {
     console.error('Error fetching savings programs:', error);
     return [];
@@ -318,11 +356,24 @@ const handleAction = async (action, body) => {
       const { answers } = body;
       const { insurance_type, medication, cost_burden, role, transplant_stage, organ_type } = answers;
 
-      // Get medication details
-      const medicationDetails = medication ? await getMedicationDetails(medication) : null;
+      // Handle medication - could be an ID, typed name, or "general"
+      let medicationDetails = null;
+      let medicationName = medication || 'General transplant medications';
 
-      // Get matching programs
-      const programs = await getSavingsPrograms(medication, insurance_type);
+      if (medication && medication !== 'general') {
+        // Try to get medication from database by ID
+        medicationDetails = await getMedicationDetails(medication);
+        if (medicationDetails) {
+          medicationName = `${medicationDetails.brand_name} (${medicationDetails.generic_name})`;
+        } else {
+          // User typed a medication name not in DB
+          medicationName = medication;
+        }
+      }
+
+      // Get matching programs (use null for general or typed meds not in DB)
+      const medicationId = medicationDetails ? medication : null;
+      const programs = await getSavingsPrograms(medicationId, insurance_type);
 
       // Build context for Claude
       const userContext = {
@@ -330,10 +381,8 @@ const handleAction = async (action, body) => {
         transplant_stage,
         organ_type,
         insurance_type,
-        medication_id: medication,
-        medication_name: medicationDetails
-          ? `${medicationDetails.brand_name} (${medicationDetails.generic_name})`
-          : 'Not specified',
+        medication_id: medicationId,
+        medication_name: medicationName,
         cost_burden,
       };
 

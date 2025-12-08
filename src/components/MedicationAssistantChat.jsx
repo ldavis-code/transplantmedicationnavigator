@@ -64,6 +64,8 @@ const QUESTIONS = [
     id: 'medication',
     question: "Which medication do you need help with?",
     type: 'medication_search',
+    allowSkip: true,
+    skipLabel: "I'm not sure / Show all options",
   },
   {
     id: 'cost_burden',
@@ -448,7 +450,7 @@ const MedicationAssistantChat = () => {
               type="text"
               value={medicationSearch}
               onChange={(e) => setMedicationSearch(e.target.value)}
-              placeholder="Search by medication name..."
+              placeholder="Type medication name (e.g., Tacrolimus, Prograf)..."
               className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
               autoFocus
             />
@@ -457,6 +459,7 @@ const MedicationAssistantChat = () => {
             )}
           </div>
 
+          {/* Show database results if any */}
           {medicationResults.length > 0 && (
             <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
               {medicationResults.map((med) => (
@@ -472,10 +475,26 @@ const MedicationAssistantChat = () => {
             </div>
           )}
 
-          {medicationSearch && medicationResults.length === 0 && !isSearching && (
-            <p className="text-sm text-slate-500 text-center py-2">
-              No medications found. Try a different search term.
-            </p>
+          {/* Use typed medication name if no DB results */}
+          {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
+            <button
+              onClick={() => handleOptionSelect({ value: medicationSearch, label: medicationSearch })}
+              className="w-full text-left p-3 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition"
+            >
+              <div className="font-medium text-emerald-700">Use "{medicationSearch}"</div>
+              <div className="text-sm text-slate-500">Continue with this medication name</div>
+            </button>
+          )}
+
+          {/* Skip option */}
+          {question.allowSkip && (
+            <button
+              onClick={() => handleOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' })}
+              className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
+            >
+              <div className="font-medium text-slate-700">{question.skipLabel || 'Skip this step'}</div>
+              <div className="text-sm text-slate-500">Show general assistance programs</div>
+            </button>
           )}
         </div>
       );
