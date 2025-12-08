@@ -13,6 +13,8 @@ const LazyGeneralMedicationSurvey = lazy(() => import('./pages/GeneralMedication
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 // First-visit disclaimer modal
 import DisclaimerModal from './components/DisclaimerModal.jsx';
+// AI Medication Assistant Chat Widget
+import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 import {
     Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck,
     Menu, X, ShieldAlert, HeartHandshake, CheckCircle, ChevronLeft, DollarSign,
@@ -500,8 +502,8 @@ const Layout = ({ children }) => {
                 </div>
             </footer>
 
-            {/* Assistant Chat Widget */}
-            <ChatWidget />
+            {/* AI Medication Assistant Chat Widget */}
+            <MedicationAssistantChat />
         </div>
     );
 };
