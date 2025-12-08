@@ -311,6 +311,31 @@ Based on this patient's profile and the available programs, provide personalized
 // Handle different chat actions
 const handleAction = async (action, body) => {
   switch (action) {
+    case 'test': {
+      // Test database connection
+      try {
+        const db = getDb();
+        const result = await db`
+          SELECT m.generic_name, sp.program_name
+          FROM medications m
+          JOIN savings_programs sp ON m.id = sp.medication_id
+          LIMIT 5
+        `;
+        return {
+          success: true,
+          message: 'Database connection successful!',
+          sampleData: result,
+          medicationCount: result.length
+        };
+      } catch (error) {
+        return {
+          success: false,
+          error: error.message,
+          hint: 'Check DATABASE_URL environment variable'
+        };
+      }
+    }
+
     case 'start': {
       const conversationId = generateConversationId();
       return {
