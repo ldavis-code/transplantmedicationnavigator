@@ -10,6 +10,7 @@
     "sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "@neondatabase/serverless": "^0.10.4",
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.292.0",

@@ -1,530 +1,541 @@
 /**
  * Medication Assistant Chat Component
- * A conversational AI chatbot that guides transplant patients to medication assistance programs
+ * AI-powered chatbot that guides transplant patients to medication assistance programs
+ * Integrates with Claude API and Neon PostgreSQL database
  */
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  MessageCircle, X, Send, HeartHandshake, Check, Search, ChevronRight,
-  ArrowLeft, Loader2, Pill, ExternalLink, RefreshCw, Sparkles, CheckCircle2
+  MessageCircle, X, Send, HeartHandshake, Check, Search,
+  ChevronRight, Loader2, Pill, ExternalLink, RefreshCw,
+  User, Building2, Stethoscope, Heart, AlertCircle
 } from 'lucide-react';
-import Fuse from 'fuse.js';
 
-import MEDICATIONS_DATA from '../data/medications.json';
-import {
-  getChatQuestions,
-  generateGuidanceSummary,
-  formatGuidanceAsMessages,
-} from '../lib/chatbotGuidance.js';
-
-// Fuse.js configuration for medication search
-const fuseOptions = {
-  keys: ['brandName', 'genericName'],
-  threshold: 0.3,
-  includeScore: true,
-};
+// Question flow configuration
+const QUESTIONS = [
+  {
+    id: 'role',
+    question: "Hi! I'm here to help you find medication assistance. First, who am I helping today?",
+    type: 'single',
+    options: [
+      { value: 'patient', label: 'Patient', icon: User, description: "I'm the transplant patient" },
+      { value: 'carepartner', label: 'Carepartner / Family', icon: Heart, description: "I'm helping a loved one" },
+      { value: 'social_worker', label: 'Social Worker / Coordinator', icon: Building2, description: "I'm a healthcare professional" },
+    ],
+  },
+  {
+    id: 'transplant_stage',
+    question: "Where are you in the transplant process?",
+    type: 'single',
+    options: [
+      { value: 'pre', label: 'Pre-transplant', description: 'On the waitlist or in evaluation' },
+      { value: 'post_1yr', label: 'Post-transplant (< 1 year)', description: 'Within the first year' },
+      { value: 'post_1yr_plus', label: 'Post-transplant (1+ years)', description: 'More than a year post-transplant' },
+    ],
+  },
+  {
+    id: 'organ_type',
+    question: "What type of transplant?",
+    type: 'single',
+    options: [
+      { value: 'kidney', label: 'Kidney' },
+      { value: 'liver', label: 'Liver' },
+      { value: 'heart', label: 'Heart' },
+      { value: 'lung', label: 'Lung' },
+      { value: 'pancreas', label: 'Pancreas' },
+      { value: 'multi', label: 'Multi-organ' },
+      { value: 'other', label: 'Other' },
+    ],
+  },
+  {
+    id: 'insurance_type',
+    question: "What's your primary insurance? This determines which programs you're eligible for.",
+    type: 'single',
+    options: [
+      { value: 'commercial', label: 'Commercial / Employer', description: 'Private insurance through work or marketplace', hint: '✓ Copay cards available!' },
+      { value: 'medicare', label: 'Medicare', description: 'Federal program (65+ or disability)', hint: 'Foundations & PAPs available' },
+      { value: 'medicaid', label: 'Medicaid', description: 'State program based on income', hint: 'Usually well covered' },
+      { value: 'tricare_va', label: 'TRICARE / VA', description: 'Military or veterans benefits' },
+      { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
+      { value: 'uninsured', label: 'Uninsured / Self-pay', description: 'No current insurance', hint: 'PAPs can provide FREE meds' },
+    ],
+  },
+  {
+    id: 'medication',
+    question: "Which medication do you need help with?",
+    type: 'medication_search',
+  },
+  {
+    id: 'cost_burden',
+    question: "How would you describe your current medication costs?",
+    type: 'single',
+    options: [
+      { value: 'manageable', label: 'Manageable', description: "I can afford my medications" },
+      { value: 'challenging', label: 'Challenging', description: "It's tight, but I manage" },
+      { value: 'unaffordable', label: 'Unaffordable', description: "I struggle to pay for meds" },
+      { value: 'crisis', label: 'Crisis', description: "I've skipped or rationed doses", urgent: true },
+    ],
+  },
+];
 
 const MedicationAssistantChat = () => {
+  // Chat state
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Conversation state
+  const [conversationId, setConversationId] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [isTyping, setIsTyping] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+
+  // Medication search state
   const [medicationSearch, setMedicationSearch] = useState('');
-  const [selectedMedications, setSelectedMedications] = useState([]);
+  const [medicationResults, setMedicationResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Free text input
   const [inputValue, setInputValue] = useState('');
 
+  // Refs
   const messagesEndRef = useRef(null);
-  const chatContainerRef = useRef(null);
+  const inputRef = useRef(null);
 
-  const questions = useMemo(() => getChatQuestions(), []);
+  // Scroll to bottom of messages
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
 
-  // Fuse instance for medication search
-  const fuse = useMemo(() => new Fuse(MEDICATIONS_DATA, fuseOptions), []);
-
-  // Filtered medications based on search
-  const filteredMedications = useMemo(() => {
-    if (!medicationSearch.trim()) {
-      // Group by category when not searching
-      return MEDICATIONS_DATA.slice(0, 20);
-    }
-    return fuse.search(medicationSearch).map(result => result.item).slice(0, 15);
-  }, [medicationSearch, fuse]);
-
-  // Scroll to bottom when messages change
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isTyping]);
+    scrollToBottom();
+  }, [messages, isLoading, scrollToBottom]);
 
-  // Initialize chat with welcome message
+  // Initialize chat when opened
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      setIsTyping(true);
-      setTimeout(() => {
-        setMessages([{
-          id: 1,
-          type: 'assistant',
-          text: "Hi! I'm your Medication Navigator assistant. I'll help you find the best assistance programs for your transplant medications.\n\nLet me ask you a few quick questions to personalize your recommendations.",
-          timestamp: new Date(),
-        }]);
-        setIsTyping(false);
-
-        // Show first question after brief delay
-        setTimeout(() => {
-          addQuestionMessage(0);
-        }, 800);
-      }, 600);
+      initializeChat();
     }
   }, [isOpen]);
 
-  // Add a question message to the chat
-  const addQuestionMessage = (questionIndex) => {
-    if (questionIndex >= questions.length) {
-      generateResults();
+  // Initialize the chat session
+  const initializeChat = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'start' }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setConversationId(data.conversationId);
+      setMessages([{
+        id: Date.now(),
+        role: 'assistant',
+        content: data.message,
+        timestamp: new Date(),
+      }]);
+      setCurrentQuestionIndex(0);
+    } catch (err) {
+      console.error('Failed to initialize chat:', err);
+      // Fallback to local welcome message
+      setMessages([{
+        id: Date.now(),
+        role: 'assistant',
+        content: "Hi! I'm your Medication Navigator. I'll help you find assistance programs for your transplant medications. Let's get started!\n\nFirst, who am I helping today?",
+        timestamp: new Date(),
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle option selection
+  const handleOptionSelect = async (option) => {
+    const question = QUESTIONS[currentQuestionIndex];
+
+    // Add user's selection to messages
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      content: option.label,
+      timestamp: new Date(),
+    };
+    setMessages(prev => [...prev, userMessage]);
+
+    // Update answers
+    const newAnswers = { ...answers, [question.id]: option.value };
+    setAnswers(newAnswers);
+
+    // Check if this is the last question
+    if (currentQuestionIndex >= QUESTIONS.length - 1) {
+      await generateResults(newAnswers);
+    } else {
+      // Move to next question
+      setIsLoading(true);
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'answer',
+            conversationId,
+            questionId: question.id,
+            answer: option.value,
+            answers: newAnswers,
+          }),
+        });
+
+        const data = await response.json();
+
+        // Add assistant response
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            role: 'assistant',
+            content: data.message || QUESTIONS[currentQuestionIndex + 1]?.question || '',
+            timestamp: new Date(),
+          }]);
+          setCurrentQuestionIndex(prev => prev + 1);
+          setIsLoading(false);
+        }, 300);
+      } catch (err) {
+        console.error('Failed to process answer:', err);
+        // Fallback - just show next question
+        setTimeout(() => {
+          const nextQ = QUESTIONS[currentQuestionIndex + 1];
+          if (nextQ) {
+            setMessages(prev => [...prev, {
+              id: Date.now(),
+              role: 'assistant',
+              content: nextQ.question,
+              timestamp: new Date(),
+            }]);
+          }
+          setCurrentQuestionIndex(prev => prev + 1);
+          setIsLoading(false);
+        }, 300);
+      }
+    }
+  };
+
+  // Search medications from database
+  const searchMedications = async (query) => {
+    if (!query || query.length < 2) {
+      setMedicationResults([]);
       return;
     }
 
-    const question = questions[questionIndex];
-    setIsTyping(true);
+    setIsSearching(true);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'searchMedications',
+          query,
+        }),
+      });
 
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        type: 'question',
-        questionIndex,
-        question: question.question,
-        subtitle: question.subtitle,
-        helpText: question.helpText,
-        timestamp: new Date(),
-      }]);
-      setIsTyping(false);
-      setCurrentQuestion(questionIndex);
-    }, 500);
-  };
-
-  // Handle single-select answer
-  const handleSingleSelect = (option) => {
-    const question = questions[currentQuestion];
-
-    // Add user's selection as a message
-    setMessages(prev => [...prev, {
-      id: Date.now(),
-      type: 'user',
-      text: `${option.icon || ''} ${option.label}`,
-      timestamp: new Date(),
-    }]);
-
-    // Update answers
-    const newAnswers = { ...answers, [question.key]: option.value };
-    setAnswers(newAnswers);
-
-    // Move to next question
-    setTimeout(() => {
-      addQuestionMessage(currentQuestion + 1);
-    }, 300);
-  };
-
-  // Handle multi-select toggle
-  const handleMultiSelect = (option) => {
-    const question = questions[currentQuestion];
-    const currentSelections = answers[question.key] || [];
-
-    let newSelections;
-    if (currentSelections.includes(option.value)) {
-      newSelections = currentSelections.filter(v => v !== option.value);
-    } else {
-      newSelections = [...currentSelections, option.value];
+      const data = await response.json();
+      setMedicationResults(data.medications || []);
+    } catch (err) {
+      console.error('Medication search failed:', err);
+      setMedicationResults([]);
+    } finally {
+      setIsSearching(false);
     }
-
-    setAnswers({ ...answers, [question.key]: newSelections });
   };
 
-  // Confirm multi-select and move to next question
-  const confirmMultiSelect = () => {
-    const question = questions[currentQuestion];
-    const selections = answers[question.key] || [];
-
-    if (selections.length === 0) return;
-
-    // Add user's selection as a message
-    setMessages(prev => [...prev, {
-      id: Date.now(),
-      type: 'user',
-      text: selections.join(', '),
-      timestamp: new Date(),
-    }]);
-
-    // Move to next question
-    setTimeout(() => {
-      addQuestionMessage(currentQuestion + 1);
+  // Debounced medication search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (medicationSearch) {
+        searchMedications(medicationSearch);
+      }
     }, 300);
-  };
+    return () => clearTimeout(timer);
+  }, [medicationSearch]);
 
   // Handle medication selection
-  const toggleMedication = (med) => {
-    if (selectedMedications.find(m => m.id === med.id)) {
-      setSelectedMedications(prev => prev.filter(m => m.id !== med.id));
-    } else {
-      setSelectedMedications(prev => [...prev, med]);
-    }
-  };
-
-  // Confirm medication selection
-  const confirmMedicationSelect = () => {
-    if (selectedMedications.length === 0) {
-      // Allow skipping
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        type: 'user',
-        text: 'No specific medications selected',
-        timestamp: new Date(),
-      }]);
-    } else {
-      // Add user's selection as a message
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        type: 'user',
-        text: selectedMedications.map(m => m.brandName.split('/')[0]).join(', '),
-        timestamp: new Date(),
-      }]);
-    }
-
-    // Update answers with medication IDs
-    setAnswers(prev => ({
-      ...prev,
-      medications: selectedMedications.map(m => m.id),
-    }));
-
-    // Move to next question
-    setTimeout(() => {
-      addQuestionMessage(currentQuestion + 1);
-    }, 300);
-  };
-
-  // Generate personalized results
-  const generateResults = () => {
-    setIsTyping(true);
-
-    setTimeout(() => {
-      // Generate guidance summary
-      const summary = generateGuidanceSummary(answers, MEDICATIONS_DATA);
-      const guidanceMessages = formatGuidanceAsMessages(summary);
-
-      // Add results messages
-      const resultMessages = guidanceMessages.map((msg, idx) => ({
-        id: Date.now() + idx,
-        type: 'assistant',
-        text: msg.text,
-        timestamp: new Date(),
-      }));
-
-      setMessages(prev => [...prev, ...resultMessages]);
-      setIsTyping(false);
-      setShowResults(true);
-    }, 1500);
-  };
-
-  // Reset the chat
-  const resetChat = () => {
-    setMessages([]);
-    setAnswers({});
-    setCurrentQuestion(0);
-    setShowResults(false);
-    setSelectedMedications([]);
+  const handleMedicationSelect = (medication) => {
+    handleOptionSelect({
+      value: medication.id,
+      label: `${medication.brand_name} (${medication.generic_name})`,
+    });
     setMedicationSearch('');
-
-    // Restart with welcome message
-    setIsTyping(true);
-    setTimeout(() => {
-      setMessages([{
-        id: 1,
-        type: 'assistant',
-        text: "Let's start fresh! I'll help you find the best assistance programs for your transplant medications.",
-        timestamp: new Date(),
-      }]);
-      setIsTyping(false);
-      setTimeout(() => addQuestionMessage(0), 800);
-    }, 500);
+    setMedicationResults([]);
   };
 
-  // Handle free-text input
-  const handleTextSubmit = () => {
-    if (!inputValue.trim()) return;
+  // Generate final results with Claude API
+  const generateResults = async (finalAnswers) => {
+    setIsLoading(true);
+    setIsComplete(true);
 
-    // For now, just acknowledge and encourage using the guided flow
-    setMessages(prev => [...prev, {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'generateResults',
+          conversationId,
+          answers: finalAnswers,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Add the AI-generated response with programs and steps
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        role: 'assistant',
+        content: data.message,
+        programs: data.programs,
+        timestamp: new Date(),
+      }]);
+    } catch (err) {
+      console.error('Failed to generate results:', err);
+      setError('Sorry, I had trouble finding programs. Please try again.');
+
+      // Add error message
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        role: 'assistant',
+        content: "I apologize, but I'm having trouble connecting to our database right now. Please try again in a moment, or visit our Resources page to browse assistance programs manually.",
+        timestamp: new Date(),
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle free text input
+  const handleTextSubmit = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const userMessage = {
       id: Date.now(),
-      type: 'user',
-      text: inputValue,
+      role: 'user',
+      content: inputValue,
       timestamp: new Date(),
-    }]);
-
+    };
+    setMessages(prev => [...prev, userMessage]);
     setInputValue('');
 
-    setTimeout(() => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'freeText',
+          conversationId,
+          message: inputValue,
+          answers,
+        }),
+      });
+
+      const data = await response.json();
+
       setMessages(prev => [...prev, {
         id: Date.now(),
-        type: 'assistant',
-        text: "Thanks for your question! To give you the most accurate guidance, please complete the questions above. Once I know your insurance type and medications, I can provide specific assistance program recommendations.",
+        role: 'assistant',
+        content: data.message,
         timestamp: new Date(),
       }]);
-    }, 500);
+    } catch (err) {
+      console.error('Failed to process message:', err);
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        role: 'assistant',
+        content: "I'm sorry, I couldn't process that. Please try selecting from the options above, or ask your question again.",
+        timestamp: new Date(),
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Handle Escape key to close chat
+  // Reset chat
+  const resetChat = () => {
+    setMessages([]);
+    setConversationId(null);
+    setCurrentQuestionIndex(0);
+    setAnswers({});
+    setIsComplete(false);
+    setError(null);
+    setMedicationSearch('');
+    setMedicationResults([]);
+    setTimeout(initializeChat, 100);
+  };
+
+  // Handle escape key
   useEffect(() => {
-    if (!isOpen) return;
     const handleEscape = (e) => {
-      if (e.key === 'Escape') setIsOpen(false);
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen]);
 
-  // Render option button
-  const renderOptionButton = (option, isSelected, onClick, showHint = false) => (
-    <button
-      key={option.value}
-      onClick={onClick}
-      className={`
-        flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left w-full
-        ${isSelected
-          ? 'border-emerald-500 bg-emerald-50 text-emerald-800'
-          : 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50 text-slate-700'
-        }
-      `}
-    >
-      {option.icon && <span className="text-xl flex-shrink-0">{option.icon}</span>}
-      <div className="flex-1 min-w-0">
-        <span className="font-medium block">{option.label}</span>
-        {showHint && option.hint && (
-          <span className="text-xs text-emerald-600 block mt-0.5">{option.hint}</span>
-        )}
-        {option.description && (
-          <span className="text-xs text-slate-500 block mt-0.5">{option.description}</span>
-        )}
-      </div>
-      {isSelected && <CheckCircle2 size={20} className="text-emerald-600 flex-shrink-0" />}
-    </button>
-  );
+  // Render message content with markdown-like formatting
+  const renderMessageContent = (content) => {
+    if (!content) return null;
 
-  // Render the current question's options
+    // Split by newlines and process
+    const lines = content.split('\n');
+
+    return lines.map((line, i) => {
+      // Bold text
+      let processedLine = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      // Links
+      processedLine = processedLine.replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:text-emerald-700 underline">$1</a>'
+      );
+
+      if (line.startsWith('### ')) {
+        return <h3 key={i} className="font-bold text-lg mt-4 mb-2 text-slate-900">{line.slice(4)}</h3>;
+      }
+      if (line.startsWith('## ')) {
+        return <h2 key={i} className="font-bold text-xl mt-4 mb-2 text-slate-900">{line.slice(3)}</h2>;
+      }
+      if (line.startsWith('- ') || line.startsWith('• ')) {
+        return (
+          <li key={i} className="ml-4 mb-1" dangerouslySetInnerHTML={{ __html: processedLine.slice(2) }} />
+        );
+      }
+      if (line.match(/^\d+\.\s/)) {
+        return (
+          <li key={i} className="ml-4 mb-1 list-decimal" dangerouslySetInnerHTML={{ __html: processedLine }} />
+        );
+      }
+      if (line.trim() === '') {
+        return <br key={i} />;
+      }
+      return <p key={i} className="mb-2" dangerouslySetInnerHTML={{ __html: processedLine }} />;
+    });
+  };
+
+  // Render current question options
   const renderQuestionOptions = () => {
-    const question = questions[currentQuestion];
+    if (isComplete || isLoading) return null;
+
+    const question = QUESTIONS[currentQuestionIndex];
     if (!question) return null;
 
-    // Single select
-    if (question.type === 'single') {
+    // Medication search
+    if (question.type === 'medication_search') {
       return (
-        <div className="space-y-2 p-3 bg-slate-50 rounded-xl">
-          {question.options.map(option =>
-            renderOptionButton(
-              option,
-              answers[question.key] === option.value,
-              () => handleSingleSelect(option),
-              question.key === 'insurance'
-            )
-          )}
-        </div>
-      );
-    }
-
-    // Multi select
-    if (question.type === 'multi') {
-      const currentSelections = answers[question.key] || [];
-      return (
-        <div className="space-y-2 p-3 bg-slate-50 rounded-xl">
-          <div className="grid grid-cols-2 gap-2">
-            {question.options.map(option =>
-              renderOptionButton(
-                option,
-                currentSelections.includes(option.value),
-                () => handleMultiSelect(option)
-              )
-            )}
-          </div>
-          {currentSelections.length > 0 && (
-            <button
-              onClick={confirmMultiSelect}
-              className="w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
-            >
-              Continue with {currentSelections.length} selected
-              <ChevronRight size={18} />
-            </button>
-          )}
-        </div>
-      );
-    }
-
-    // Medication select
-    if (question.type === 'medication-select') {
-      return (
-        <div className="space-y-3 p-3 bg-slate-50 rounded-xl">
-          {/* Search input */}
+        <div className="p-3 bg-slate-50 rounded-xl space-y-3">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input
               type="text"
               value={medicationSearch}
               onChange={(e) => setMedicationSearch(e.target.value)}
-              placeholder="Search medications..."
-              className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+              placeholder="Search by medication name..."
+              className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+              autoFocus
             />
+            {isSearching && (
+              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 animate-spin" size={18} />
+            )}
           </div>
 
-          {/* Selected medications */}
-          {selectedMedications.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {selectedMedications.map(med => (
-                <span
+          {medicationResults.length > 0 && (
+            <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
+              {medicationResults.map((med) => (
+                <button
                   key={med.id}
-                  onClick={() => toggleMedication(med)}
-                  className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs cursor-pointer hover:bg-emerald-200"
+                  onClick={() => handleMedicationSelect(med)}
+                  className="w-full text-left p-3 hover:bg-emerald-50 border-b border-slate-100 last:border-b-0 transition"
                 >
-                  <Pill size={12} />
-                  {med.brandName.split('/')[0]}
-                  <X size={12} />
-                </span>
+                  <div className="font-medium text-slate-900">{med.brand_name}</div>
+                  <div className="text-sm text-slate-500">{med.generic_name} • {med.category}</div>
+                </button>
               ))}
             </div>
           )}
 
-          {/* Medication list */}
-          <div className="max-h-48 overflow-y-auto space-y-1.5 border border-slate-200 rounded-lg p-2 bg-white">
-            {filteredMedications.map(med => {
-              const isSelected = selectedMedications.find(m => m.id === med.id);
-              return (
-                <button
-                  key={med.id}
-                  onClick={() => toggleMedication(med)}
-                  className={`
-                    w-full text-left p-2 rounded-lg text-sm transition flex items-center gap-2
-                    ${isSelected
-                      ? 'bg-emerald-100 text-emerald-800'
-                      : 'hover:bg-slate-100 text-slate-700'
-                    }
-                  `}
-                >
-                  <span className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center ${
-                    isSelected ? 'bg-emerald-600 border-emerald-600' : 'border-slate-300'
-                  }`}>
-                    {isSelected && <Check size={12} className="text-white" />}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium block truncate">{med.brandName}</span>
-                    <span className="text-xs text-slate-500 block truncate">{med.genericName}</span>
-                  </div>
-                  <span className="text-xs text-slate-400 flex-shrink-0">{med.category}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Continue button */}
-          <button
-            onClick={confirmMedicationSelect}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
-          >
-            {selectedMedications.length > 0
-              ? `Continue with ${selectedMedications.length} medication${selectedMedications.length > 1 ? 's' : ''}`
-              : 'Skip for now'
-            }
-            <ChevronRight size={18} />
-          </button>
+          {medicationSearch && medicationResults.length === 0 && !isSearching && (
+            <p className="text-sm text-slate-500 text-center py-2">
+              No medications found. Try a different search term.
+            </p>
+          )}
         </div>
       );
     }
 
-    return null;
-  };
-
-  // Render a message bubble
-  const renderMessage = (message) => {
-    const isUser = message.type === 'user';
-    const isQuestion = message.type === 'question';
-
+    // Single select options
     return (
-      <div
-        key={message.id}
-        className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2`}
-      >
-        <div
-          className={`max-w-[90%] rounded-2xl p-3 ${
-            isUser
-              ? 'bg-emerald-600 text-white'
-              : isQuestion
-                ? 'bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 text-slate-800'
-                : 'bg-white border border-slate-200 text-slate-800'
-          }`}
-        >
-          {isQuestion ? (
-            <div>
-              <p className="font-bold text-indigo-900 flex items-center gap-2">
-                <Sparkles size={16} className="text-indigo-500" />
-                {message.question}
-              </p>
-              {message.subtitle && (
-                <p className="text-xs text-indigo-600 mt-1">{message.subtitle}</p>
-              )}
-              {message.helpText && (
-                <p className="text-xs text-slate-500 mt-1 italic">{message.helpText}</p>
-              )}
-            </div>
-          ) : (
-            <div className="text-sm whitespace-pre-wrap leading-relaxed prose prose-sm prose-emerald max-w-none">
-              {formatMessageText(message.text)}
-            </div>
-          )}
-        </div>
+      <div className="p-3 bg-slate-50 rounded-xl space-y-2">
+        {question.options.map((option) => {
+          const Icon = option.icon;
+          return (
+            <button
+              key={option.value}
+              onClick={() => handleOptionSelect(option)}
+              className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+                option.urgent
+                  ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
+                  : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                {Icon && (
+                  <div className={`p-2 rounded-lg ${option.urgent ? 'bg-red-100' : 'bg-emerald-100'}`}>
+                    <Icon size={18} className={option.urgent ? 'text-red-600' : 'text-emerald-600'} />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <div className="font-medium text-slate-900 flex items-center gap-2">
+                    {option.label}
+                    {option.hint && (
+                      <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                        {option.hint}
+                      </span>
+                    )}
+                  </div>
+                  {option.description && (
+                    <div className="text-sm text-slate-500 mt-0.5">{option.description}</div>
+                  )}
+                </div>
+                <ChevronRight size={18} className="text-slate-400 mt-1" />
+              </div>
+            </button>
+          );
+        })}
       </div>
     );
   };
 
-  // Format message text with basic markdown
-  const formatMessageText = (text) => {
-    // Simple markdown-like formatting
-    const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
-
-    return parts.map((part, i) => {
-      // Bold
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={i}>{part.slice(2, -2)}</strong>;
-      }
-      // Link
-      const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
-      if (linkMatch) {
-        return (
-          <a
-            key={i}
-            href={linkMatch[2]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
-          >
-            {linkMatch[1]}
-            <ExternalLink size={12} />
-          </a>
-        );
-      }
-      return part;
-    });
-  };
-
   return (
     <div className="fixed bottom-6 right-6 z-50 no-print">
-      {/* Chat Button */}
+      {/* Chat Toggle Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group min-h-[56px] hover:scale-105"
+          className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105"
           aria-label="Open medication assistance chat"
         >
-          <MessageCircle size={24} aria-hidden="true" />
+          <MessageCircle size={24} />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">
-            Need help finding assistance?
+            Need help with medication costs?
           </span>
         </button>
       )}
@@ -535,24 +546,24 @@ const MedicationAssistantChat = () => {
           className="bg-white rounded-2xl shadow-2xl w-[calc(100vw-2rem)] sm:w-[420px] h-[85vh] sm:h-[650px] max-h-[700px] flex flex-col border border-slate-200 animate-in slide-in-from-bottom-5"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="chat-widget-title"
+          aria-label="Medication assistance chat"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-4 rounded-t-2xl flex justify-between items-center">
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <div className="bg-white/20 p-2 rounded-xl" aria-hidden="true">
+              <div className="bg-white/20 p-2 rounded-xl">
                 <HeartHandshake size={22} />
               </div>
               <div>
-                <h3 id="chat-widget-title" className="font-bold text-lg">Medication Navigator</h3>
-                <p className="text-xs text-emerald-100">Your guide to medication assistance</p>
+                <h2 className="font-bold text-lg">Medication Navigator</h2>
+                <p className="text-xs text-emerald-100">Find assistance programs</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              {showResults && (
+              {(messages.length > 1 || isComplete) && (
                 <button
                   onClick={resetChat}
-                  className="hover:bg-white/20 p-2 rounded-lg transition min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  className="hover:bg-white/20 p-2 rounded-lg transition"
                   aria-label="Start over"
                   title="Start over"
                 >
@@ -561,7 +572,7 @@ const MedicationAssistantChat = () => {
               )}
               <button
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-white/20 p-2 rounded-lg transition min-h-[44px] min-w-[44px] flex items-center justify-center"
+                className="hover:bg-white/20 p-2 rounded-lg transition"
                 aria-label="Close chat"
               >
                 <X size={20} />
@@ -569,39 +580,80 @@ const MedicationAssistantChat = () => {
             </div>
           </div>
 
-          {/* Messages Container */}
-          <div
-            ref={chatContainerRef}
-            className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white"
-            role="log"
-            aria-live="polite"
-            aria-label="Chat messages"
-          >
-            {messages.map(message => renderMessage(message))}
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[85%] rounded-2xl p-4 ${
+                    message.role === 'user'
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-white border border-slate-200 text-slate-800 shadow-sm'
+                  }`}
+                >
+                  <div className="text-sm leading-relaxed">
+                    {renderMessageContent(message.content)}
+                  </div>
 
-            {/* Typing indicator */}
-            {isTyping && (
-              <div className="flex justify-start animate-in slide-in-from-bottom-2">
-                <div className="bg-white border border-slate-200 rounded-2xl p-3 flex items-center gap-2">
-                  <Loader2 size={16} className="animate-spin text-emerald-600" />
-                  <span className="text-sm text-slate-500">Thinking...</span>
+                  {/* Render programs if available */}
+                  {message.programs && message.programs.length > 0 && (
+                    <div className="mt-4 space-y-3">
+                      {message.programs.map((program, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-emerald-50 border border-emerald-200 rounded-xl p-3"
+                        >
+                          <div className="font-bold text-emerald-800 flex items-center gap-2">
+                            <Pill size={16} />
+                            {program.program_name}
+                          </div>
+                          {program.max_benefit && (
+                            <div className="text-sm text-emerald-700 mt-1">
+                              Benefit: {program.max_benefit}
+                            </div>
+                          )}
+                          {program.application_url && (
+                            <a
+                              href={program.application_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-700 mt-2 font-medium"
+                            >
+                              Apply Now <ExternalLink size={14} />
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Loading indicator */}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <Loader2 size={18} className="animate-spin" />
+                    <span className="text-sm">Finding the best options for you...</span>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Current question options */}
-            {!isTyping && !showResults && currentQuestion < questions.length && (
-              <div className="animate-in slide-in-from-bottom-3">
-                {renderQuestionOptions()}
-              </div>
-            )}
+            {/* Question options */}
+            {!isLoading && !isComplete && messages.length > 0 && renderQuestionOptions()}
 
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Footer with input or results actions */}
+          {/* Input Area */}
           <div className="border-t border-slate-200 p-4 bg-white rounded-b-2xl">
-            {showResults ? (
+            {isComplete ? (
               <div className="space-y-2">
                 <button
                   onClick={resetChat}
@@ -612,7 +664,7 @@ const MedicationAssistantChat = () => {
                 </button>
                 <a
                   href="/medications"
-                  className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
+                  className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition block text-center"
                 >
                   <Search size={18} />
                   Browse All Medications
@@ -621,18 +673,19 @@ const MedicationAssistantChat = () => {
             ) : (
               <div className="flex gap-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
-                  placeholder="Or ask a question..."
-                  className="flex-1 px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm min-h-[48px]"
-                  aria-label="Type your question"
+                  placeholder="Or type a question..."
+                  className="flex-1 px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                  disabled={isLoading}
                 />
                 <button
                   onClick={handleTextSubmit}
-                  disabled={!inputValue.trim()}
-                  className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-3 rounded-xl transition disabled:cursor-not-allowed min-h-[48px] min-w-[48px] flex items-center justify-center"
+                  disabled={!inputValue.trim() || isLoading}
+                  className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-3 rounded-xl transition disabled:cursor-not-allowed"
                   aria-label="Send message"
                 >
                   <Send size={20} />
