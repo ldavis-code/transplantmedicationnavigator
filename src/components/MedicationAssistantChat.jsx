@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, Loader2, Pill, ExternalLink, RefreshCw,
-  User, Building2, Stethoscope, Heart, AlertCircle
+  User, Building2, Stethoscope, Heart, AlertCircle, Printer
 } from 'lucide-react';
 
 // Question flow configuration
@@ -410,6 +410,96 @@ const MedicationAssistantChat = () => {
     setTimeout(initializeChat, 100);
   };
 
+  // Print action plan
+  const printActionPlan = () => {
+    // Get the last message with programs (the results message)
+    const resultsMessage = messages.find(m => m.programs && m.programs.length > 0);
+    if (!resultsMessage) return;
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to print your action plan');
+      return;
+    }
+
+    const programsHtml = resultsMessage.programs.map(program => `
+      <div style="border: 1px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ecfdf5;">
+        <h3 style="margin: 0 0 8px 0; color: #065f46; font-size: 16px;">${program.program_name}</h3>
+        ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
+          ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
+          ${program.program_type === 'pap' ? 'Patient Assistance (Free Meds)' : ''}
+          ${program.program_type === 'foundation' ? 'Foundation' : ''}
+          ${program.program_type === 'discount_pharmacy' ? 'Discount Pharmacy' : ''}
+          ${program.program_type === 'discount_card' ? 'Discount Card' : ''}
+        </span>` : ''}
+        ${program.max_benefit ? `<p style="margin: 8px 0 4px 0; font-size: 14px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
+        ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
+        ${program.income_limit ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
+        ${program.application_url ? `<p style="margin: 8px 0 0 0;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
+      </div>
+    `).join('');
+
+    const profileHtml = `
+      <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 12px 0; color: #334155;">Your Profile</h3>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>Insurance:</strong> ${answers.insurance_type || 'Not specified'}</p>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>Transplant Stage:</strong> ${answers.transplant_stage || 'Not specified'}</p>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>Organ Type:</strong> ${answers.organ_type || 'Not specified'}</p>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>Medication(s):</strong> ${
+          messages.find(m => m.role === 'user' && messages.indexOf(m) > 3)?.content || 'Not specified'
+        }</p>
+      </div>
+    `;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Medication Assistance Action Plan - TransplantMedicationNavigator.com</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 24px; color: #1e293b; }
+          h1 { color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 12px; }
+          h2 { color: #334155; margin-top: 24px; }
+          .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+          .date { color: #64748b; font-size: 14px; }
+          .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
+          @media print { body { padding: 0; } }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>🏥 Medication Assistance Action Plan</h1>
+          <span class="date">Generated: ${new Date().toLocaleDateString()}</span>
+        </div>
+
+        ${profileHtml}
+
+        <h2>Recommended Programs</h2>
+        <p style="color: #64748b; margin-bottom: 16px;">Based on your profile, here are the assistance programs you may qualify for. Click the links to apply.</p>
+
+        ${programsHtml}
+
+        <h2>Next Steps</h2>
+        <ol style="line-height: 1.8;">
+          <li>Start with the programs marked as your best options for your insurance type</li>
+          <li>Gather required documents: proof of income, insurance card, prescription</li>
+          <li>Apply to multiple programs - you can use more than one!</li>
+          <li>Contact your transplant center social worker for additional help</li>
+          <li>If in crisis, call programs directly - many have expedited processing</li>
+        </ol>
+
+        <div class="footer">
+          <p>Generated by TransplantMedicationNavigator.com</p>
+          <p>This is not medical advice. Always consult with your healthcare team about your medications.</p>
+        </div>
+
+        <script>window.onload = function() { window.print(); }</script>
+      </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e) => {
@@ -698,13 +788,34 @@ const MedicationAssistantChat = () => {
                           key={idx}
                           className="bg-emerald-50 border border-emerald-200 rounded-xl p-3"
                         >
-                          <div className="font-bold text-emerald-800 flex items-center gap-2">
-                            <Pill size={16} />
-                            {program.program_name}
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="font-bold text-emerald-800 flex items-center gap-2">
+                              <Pill size={16} className="flex-shrink-0" />
+                              {program.program_name}
+                            </div>
+                            {program.program_type && (
+                              <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
+                                {program.program_type === 'copay_card' && 'Copay Card'}
+                                {program.program_type === 'pap' && 'Free Meds'}
+                                {program.program_type === 'foundation' && 'Foundation'}
+                                {program.program_type === 'discount_pharmacy' && 'Discount'}
+                                {program.program_type === 'discount_card' && 'Discount'}
+                              </span>
+                            )}
                           </div>
                           {program.max_benefit && (
                             <div className="text-sm text-emerald-700 mt-1">
-                              Benefit: {program.max_benefit}
+                              <strong>Benefit:</strong> {program.max_benefit}
+                            </div>
+                          )}
+                          {program.eligibility_summary && (
+                            <div className="text-sm text-slate-600 mt-1">
+                              <strong>Eligibility:</strong> {program.eligibility_summary}
+                            </div>
+                          )}
+                          {program.income_limit && (
+                            <div className="text-sm text-slate-600 mt-1">
+                              <strong>Income Limit:</strong> {program.income_limit}
                             </div>
                           )}
                           {program.application_url && (
@@ -712,9 +823,12 @@ const MedicationAssistantChat = () => {
                               href={program.application_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-700 mt-2 font-medium"
+                              className="inline-flex items-center gap-1 text-sm bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                             >
-                              {program.program_type === 'discount_pharmacy' ? 'Check Prices' : 'Apply Now'} <ExternalLink size={14} />
+                              {program.program_type === 'discount_pharmacy' ? 'Check Prices' :
+                               program.program_type === 'pap' ? 'Apply for Free Meds' :
+                               program.program_type === 'foundation' ? 'Check Fund Status' :
+                               'Apply Now'} <ExternalLink size={14} />
                             </a>
                           )}
                         </div>
@@ -747,6 +861,13 @@ const MedicationAssistantChat = () => {
           <div className="border-t border-slate-200 p-4 bg-white rounded-b-2xl">
             {isComplete ? (
               <div className="space-y-2">
+                <button
+                  onClick={printActionPlan}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
+                >
+                  <Printer size={18} />
+                  Print Action Plan
+                </button>
                 <button
                   onClick={resetChat}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
