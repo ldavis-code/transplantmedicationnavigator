@@ -502,65 +502,81 @@ const handleAction = async (action, body) => {
       let medicationDetailsList = [];
       let medicationNames = [];
       let anyCostPlusAvailable = false;
-      let allPrograms = [];
+
+      // Structure to hold programs grouped by medication
+      let medicationPrograms = [];
 
       // Normalize medication input to array
       const medicationIds = Array.isArray(medication) ? medication : (medication && medication !== 'general' ? [medication] : []);
 
       if (medicationIds.length > 0) {
-        // Get details for each medication
+        // Get details and programs for each medication separately
         for (const medId of medicationIds) {
           const details = await getMedicationDetails(medId);
           if (details) {
             medicationDetailsList.push(details);
             medicationNames.push(`${details.brand_name} (${details.generic_name})`);
+
+            // Get programs for this specific medication
+            const medPrograms = await getSavingsPrograms(medId, insurance_type);
+
+            // Build medication entry with its programs
+            const medEntry = {
+              medication_id: medId,
+              medication_name: details.brand_name,
+              generic_name: details.generic_name,
+              cost_plus_available: details.cost_plus_available || false,
+              programs: []
+            };
+
+            // Add Cost Plus Drugs first if available for this medication
             if (details.cost_plus_available) {
               anyCostPlusAvailable = true;
+              medEntry.programs.push({
+                id: 'cost-plus-drugs-' + medId,
+                program_name: 'Mark Cuban Cost Plus Drugs',
+                program_type: 'discount_pharmacy',
+                max_benefit: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping',
+                application_url: 'https://costplusdrugs.com',
+                description: 'Transparent, low-cost pricing. No insurance needed.',
+                eligibility_summary: 'Available to everyone',
+              });
             }
-            // Get programs for this medication
-            const medPrograms = await getSavingsPrograms(medId, insurance_type);
-            allPrograms.push(...medPrograms);
+
+            // Add medication-specific programs
+            medEntry.programs.push(...medPrograms);
+
+            medicationPrograms.push(medEntry);
           } else {
             // User typed a medication name not in DB
             medicationNames.push(medId);
+            medicationPrograms.push({
+              medication_id: medId,
+              medication_name: medId,
+              generic_name: 'Custom entry',
+              cost_plus_available: false,
+              programs: []
+            });
           }
         }
+      }
+
+      // If no valid medications found, get general programs
+      if (medicationDetailsList.length === 0) {
+        const generalPrograms = await getSavingsPrograms(null, insurance_type);
+        medicationPrograms.push({
+          medication_id: 'general',
+          medication_name: 'General Assistance',
+          generic_name: 'All transplant medications',
+          cost_plus_available: false,
+          programs: generalPrograms
+        });
       }
 
       // If no valid medications found, use general
       const medicationName = medicationNames.length > 0
         ? medicationNames.join(', ')
         : 'General transplant medications';
-
-      // If no specific medications, get general programs
-      if (medicationDetailsList.length === 0) {
-        const generalPrograms = await getSavingsPrograms(null, insurance_type);
-        allPrograms.push(...generalPrograms);
-      }
-
-      // Deduplicate programs by ID
-      const uniquePrograms = allPrograms.filter((program, index, self) =>
-        index === self.findIndex(p => p.id === program.id)
-      );
-
-      // Add Cost Plus Drugs as a program if any medication is available there
-      if (anyCostPlusAvailable) {
-        const costPlusMeds = medicationDetailsList
-          .filter(m => m.cost_plus_available)
-          .map(m => m.brand_name)
-          .join(', ');
-
-        uniquePrograms.unshift({
-          id: 'cost-plus-drugs',
-          program_name: 'Mark Cuban Cost Plus Drugs',
-          program_type: 'discount_pharmacy',
-          max_benefit: `Available for: ${costPlusMeds}`,
-          application_url: 'https://costplusdrugs.com',
-          description: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping. No insurance needed.',
-          eligibility_summary: 'Available to everyone - no insurance required',
-          steps: [],
-        });
-      }
 
       // Build context for Claude
       const userContext = {
@@ -575,18 +591,22 @@ const handleAction = async (action, body) => {
         cost_plus_medications: medicationDetailsList.filter(m => m.cost_plus_available).map(m => m.brand_name),
       };
 
+      // Flatten programs for Claude context
+      const allPrograms = medicationPrograms.flatMap(m => m.programs);
+
       // Generate personalized response with Claude
       let message;
       try {
-        message = await generateClaudeResponse(userContext, uniquePrograms, anyCostPlusAvailable);
+        message = await generateClaudeResponse(userContext, allPrograms, anyCostPlusAvailable);
       } catch (error) {
         // Fallback message if Claude fails
-        message = generateFallbackMessage(uniquePrograms, insurance_type, cost_burden, anyCostPlusAvailable);
+        message = generateFallbackMessage(allPrograms, insurance_type, cost_burden, anyCostPlusAvailable);
       }
 
       return {
         message,
-        programs: uniquePrograms.slice(0, 8), // Return top 8 programs for display (more for multiple meds)
+        medicationPrograms, // Programs grouped by medication
+        programs: allPrograms.slice(0, 8), // Flat list for backward compatibility
         costPlusAvailable: anyCostPlusAvailable,
       };
     }

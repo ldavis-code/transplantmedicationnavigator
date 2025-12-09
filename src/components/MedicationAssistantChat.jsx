@@ -104,11 +104,17 @@ const MedicationAssistantChat = () => {
 
   // Refs
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
 
   // Scroll to bottom of messages
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Use setTimeout to ensure DOM has updated
+    setTimeout(() => {
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      }
+    }, 100);
   }, []);
 
   useEffect(() => {
@@ -325,12 +331,13 @@ const MedicationAssistantChat = () => {
         throw new Error(data.error);
       }
 
-      // Add the AI-generated response with programs and steps
+      // Add the AI-generated response with programs grouped by medication
       setMessages(prev => [...prev, {
         id: Date.now(),
         role: 'assistant',
         content: data.message,
         programs: data.programs,
+        medicationPrograms: data.medicationPrograms, // Programs grouped by medication
         timestamp: new Date(),
       }]);
     } catch (err) {
@@ -413,7 +420,7 @@ const MedicationAssistantChat = () => {
   // Print action plan
   const printActionPlan = () => {
     // Get the last message with programs (the results message)
-    const resultsMessage = messages.find(m => m.programs && m.programs.length > 0);
+    const resultsMessage = messages.find(m => m.medicationPrograms || m.programs);
     if (!resultsMessage) return;
 
     const printWindow = window.open('', '_blank');
@@ -422,22 +429,58 @@ const MedicationAssistantChat = () => {
       return;
     }
 
-    const programsHtml = resultsMessage.programs.map(program => `
-      <div style="border: 1px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ecfdf5;">
-        <h3 style="margin: 0 0 8px 0; color: #065f46; font-size: 16px;">${program.program_name}</h3>
-        ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
-          ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
-          ${program.program_type === 'pap' ? 'Patient Assistance (Free Meds)' : ''}
-          ${program.program_type === 'foundation' ? 'Foundation' : ''}
-          ${program.program_type === 'discount_pharmacy' ? 'Discount Pharmacy' : ''}
-          ${program.program_type === 'discount_card' ? 'Discount Card' : ''}
-        </span>` : ''}
-        ${program.max_benefit ? `<p style="margin: 8px 0 4px 0; font-size: 14px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
-        ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
-        ${program.income_limit ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
-        ${program.application_url ? `<p style="margin: 8px 0 0 0;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
-      </div>
-    `).join('');
+    // Generate programs HTML - grouped by medication if available
+    let programsHtml = '';
+
+    if (resultsMessage.medicationPrograms && resultsMessage.medicationPrograms.length > 0) {
+      // Programs grouped by medication
+      programsHtml = resultsMessage.medicationPrograms.map(medGroup => `
+        <div style="border: 2px solid #334155; border-radius: 12px; margin-bottom: 24px; overflow: hidden;">
+          <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #cbd5e1;">
+            <h3 style="margin: 0; color: #1e293b; font-size: 18px;">💊 ${medGroup.medication_name}</h3>
+            <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">${medGroup.generic_name}${medGroup.cost_plus_available ? ' • Available on Cost Plus Drugs' : ''}</p>
+          </div>
+          <div style="padding: 16px;">
+            ${medGroup.programs && medGroup.programs.length > 0 ? medGroup.programs.map(program => `
+              <div style="border: 1px solid #10b981; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #ecfdf5;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                  <strong style="color: #065f46;">${program.program_name}</strong>
+                  ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 11px;">
+                    ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
+                    ${program.program_type === 'pap' ? 'Free Meds' : ''}
+                    ${program.program_type === 'foundation' ? 'Foundation' : ''}
+                    ${program.program_type === 'discount_pharmacy' ? 'Discount' : ''}
+                    ${program.program_type === 'discount_card' ? 'Discount' : ''}
+                  </span>` : ''}
+                </div>
+                ${program.max_benefit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
+                ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
+                ${program.income_limit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
+                ${program.application_url ? `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply Here:</strong> <a href="${program.application_url}" style="color: #059669; word-break: break-all;">${program.application_url}</a></p>` : ''}
+              </div>
+            `).join('') : '<p style="color: #64748b; font-style: italic;">No specific programs found. Contact your transplant center social worker.</p>'}
+          </div>
+        </div>
+      `).join('');
+    } else if (resultsMessage.programs && resultsMessage.programs.length > 0) {
+      // Flat programs list (fallback)
+      programsHtml = resultsMessage.programs.map(program => `
+        <div style="border: 1px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ecfdf5;">
+          <h3 style="margin: 0 0 8px 0; color: #065f46; font-size: 16px;">${program.program_name}</h3>
+          ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
+            ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
+            ${program.program_type === 'pap' ? 'Patient Assistance (Free Meds)' : ''}
+            ${program.program_type === 'foundation' ? 'Foundation' : ''}
+            ${program.program_type === 'discount_pharmacy' ? 'Discount Pharmacy' : ''}
+            ${program.program_type === 'discount_card' ? 'Discount Card' : ''}
+          </span>` : ''}
+          ${program.max_benefit ? `<p style="margin: 8px 0 4px 0; font-size: 14px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
+          ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
+          ${program.income_limit ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
+          ${program.application_url ? `<p style="margin: 8px 0 0 0;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
+        </div>
+      `).join('');
+    }
 
     const profileHtml = `
       <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
@@ -763,7 +806,7 @@ const MedicationAssistantChat = () => {
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -780,8 +823,90 @@ const MedicationAssistantChat = () => {
                     {renderMessageContent(message.content)}
                   </div>
 
-                  {/* Render programs if available */}
-                  {message.programs && message.programs.length > 0 && (
+                  {/* Render programs grouped by medication */}
+                  {message.medicationPrograms && message.medicationPrograms.length > 0 && (
+                    <div className="mt-4 space-y-4">
+                      {message.medicationPrograms.map((medGroup, medIdx) => (
+                        <div key={medIdx} className="border border-slate-300 rounded-xl overflow-hidden">
+                          {/* Medication Header */}
+                          <div className="bg-slate-100 px-3 py-2 border-b border-slate-300">
+                            <div className="font-bold text-slate-800 flex items-center gap-2">
+                              <Pill size={16} className="text-emerald-600" />
+                              {medGroup.medication_name}
+                              {medGroup.cost_plus_available && (
+                                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                                  Cost Plus Available
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
+                          </div>
+
+                          {/* Programs for this medication */}
+                          <div className="p-2 space-y-2">
+                            {medGroup.programs && medGroup.programs.length > 0 ? (
+                              medGroup.programs.map((program, idx) => (
+                                <div
+                                  key={idx}
+                                  className="bg-emerald-50 border border-emerald-200 rounded-lg p-3"
+                                >
+                                  <div className="flex items-start justify-between gap-2">
+                                    <div className="font-semibold text-emerald-800 text-sm">
+                                      {program.program_name}
+                                    </div>
+                                    {program.program_type && (
+                                      <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
+                                        {program.program_type === 'copay_card' && 'Copay Card'}
+                                        {program.program_type === 'pap' && 'Free Meds'}
+                                        {program.program_type === 'foundation' && 'Foundation'}
+                                        {program.program_type === 'discount_pharmacy' && 'Discount'}
+                                        {program.program_type === 'discount_card' && 'Discount'}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {program.max_benefit && (
+                                    <div className="text-xs text-emerald-700 mt-1">
+                                      <strong>Benefit:</strong> {program.max_benefit}
+                                    </div>
+                                  )}
+                                  {program.eligibility_summary && (
+                                    <div className="text-xs text-slate-600 mt-1">
+                                      <strong>Eligibility:</strong> {program.eligibility_summary}
+                                    </div>
+                                  )}
+                                  {program.income_limit && (
+                                    <div className="text-xs text-slate-600 mt-1">
+                                      <strong>Income Limit:</strong> {program.income_limit}
+                                    </div>
+                                  )}
+                                  {program.application_url && (
+                                    <a
+                                      href={program.application_url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                                    >
+                                      {program.program_type === 'discount_pharmacy' ? 'Check Prices' :
+                                       program.program_type === 'pap' ? 'Apply for Free Meds' :
+                                       program.program_type === 'foundation' ? 'Check Fund Status' :
+                                       'Apply Now'} <ExternalLink size={12} />
+                                    </a>
+                                  )}
+                                </div>
+                              ))
+                            ) : (
+                              <div className="text-sm text-slate-500 p-2">
+                                No specific programs found in our database. Contact your transplant center social worker for assistance.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Fallback: Render flat programs list if no medicationPrograms */}
+                  {(!message.medicationPrograms || message.medicationPrograms.length === 0) && message.programs && message.programs.length > 0 && (
                     <div className="mt-4 space-y-3">
                       {message.programs.map((program, idx) => (
                         <div
@@ -806,16 +931,6 @@ const MedicationAssistantChat = () => {
                           {program.max_benefit && (
                             <div className="text-sm text-emerald-700 mt-1">
                               <strong>Benefit:</strong> {program.max_benefit}
-                            </div>
-                          )}
-                          {program.eligibility_summary && (
-                            <div className="text-sm text-slate-600 mt-1">
-                              <strong>Eligibility:</strong> {program.eligibility_summary}
-                            </div>
-                          )}
-                          {program.income_limit && (
-                            <div className="text-sm text-slate-600 mt-1">
-                              <strong>Income Limit:</strong> {program.income_limit}
                             </div>
                           )}
                           {program.application_url && (
