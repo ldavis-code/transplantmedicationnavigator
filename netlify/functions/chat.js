@@ -201,72 +201,130 @@ const getMedicationDetails = async (medicationId) => {
   }
 };
 
-// Format programs for display
+// Format programs for display - ordered by insurance type
 const formatProgramsForContext = (programs, insuranceType) => {
   if (!programs || programs.length === 0) {
-    return 'No specific programs found in the database for this combination.';
+    return 'NO PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
   }
 
   let context = '';
 
   // Group by program type
   const copayCards = programs.filter(p => p.program_type === 'copay_card');
-  const discountCards = programs.filter(p => p.program_type === 'discount_card' || p.program_type === 'discount_pharmacy');
+  const discountCards = programs.filter(p => p.program_type === 'discount_card');
+  const discountPharmacies = programs.filter(p => p.program_type === 'discount_pharmacy');
   const foundations = programs.filter(p => p.program_type === 'foundation');
   const paps = programs.filter(p => p.program_type === 'pap');
 
-  // Commercial insurance: show copay cards first
-  if (insuranceType === 'commercial' && copayCards.length > 0) {
-    context += '\n**COPAY CARDS (Best for Commercial Insurance):**\n';
-    copayCards.forEach(p => {
-      context += `- ${p.program_name}: ${p.max_benefit || 'Savings available'}\n`;
-      context += `  URL: ${p.application_url || 'Contact manufacturer'}\n`;
-      if (p.steps && p.steps.length > 0) {
-        context += '  Steps:\n';
-        p.steps.forEach(s => {
-          context += `    ${s.step_number}. ${s.step_title}: ${s.step_detail}\n`;
-          if (s.tip) context += `       💡 Tip: ${s.tip}\n`;
-        });
-      }
-    });
+  // Check for Cost Plus Drugs first (it's a discount_pharmacy)
+  const costPlusDrugs = discountPharmacies.find(p =>
+    p.program_name.toLowerCase().includes('cost plus') ||
+    p.program_name.toLowerCase().includes('mark cuban')
+  );
+
+  if (costPlusDrugs) {
+    context += '\n**✓ COST PLUS DRUGS AVAILABLE:**\n';
+    context += `- ${costPlusDrugs.program_name}\n`;
+    context += `  Price: ${costPlusDrugs.max_benefit || 'Significant savings'}\n`;
+    context += `  URL: ${costPlusDrugs.application_url || 'costplusdrugs.com'}\n`;
+    context += '  (No insurance needed, transparent pricing)\n';
   }
 
-  // Discount cards (good for everyone)
-  if (discountCards.length > 0) {
-    context += '\n**DISCOUNT CARDS:**\n';
-    discountCards.forEach(p => {
-      context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
-      context += `  URL: ${p.application_url || 'N/A'}\n`;
-    });
-  }
+  // Order depends on insurance type
+  if (insuranceType === 'commercial') {
+    // Commercial: Copay cards FIRST, then discount cards, then foundations, then PAPs
+    if (copayCards.length > 0) {
+      context += '\n**🥇 BEST OPTION - COPAY CARDS (for Commercial Insurance):**\n';
+      copayCards.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  Savings: ${p.max_benefit || 'Up to $0 copay'}\n`;
+        context += `  URL: ${p.application_url || 'Contact manufacturer'}\n`;
+        if (p.steps && p.steps.length > 0) {
+          context += '  Steps to apply:\n';
+          p.steps.forEach(s => {
+            context += `    ${s.step_number}. ${s.step_title}: ${s.step_detail}\n`;
+            if (s.tip) context += `       Tip: ${s.tip}\n`;
+          });
+        }
+      });
+    }
+    // Then discount cards
+    if (discountCards.length > 0) {
+      context += '\n**DISCOUNT CARDS (compare prices):**\n';
+      discountCards.forEach(p => {
+        context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
+  } else if (insuranceType === 'medicare') {
+    // Medicare: NO copay cards allowed! Foundations first, then PAPs, then discount cards
+    context += '\n**⚠️ IMPORTANT: Medicare patients CANNOT use manufacturer copay cards (Anti-Kickback Statute)**\n';
 
-  // Foundations (Medicare/underinsured)
-  if (foundations.length > 0 && insuranceType !== 'medicaid') {
-    context += '\n**COPAY ASSISTANCE FOUNDATIONS:**\n';
-    foundations.forEach(p => {
-      context += `- ${p.program_name}\n`;
-      context += `  Income Limit: ${p.income_limit || 'Varies'}\n`;
-      context += `  Benefit: ${p.max_benefit || 'Varies'}\n`;
-      context += `  URL: ${p.application_url || 'N/A'}\n`;
-      if (p.fund_status_note) context += `  Note: ${p.fund_status_note}\n`;
-    });
-  }
-
-  // PAPs (uninsured/underinsured)
-  if (paps.length > 0) {
-    context += '\n**PATIENT ASSISTANCE PROGRAMS (PAPs) - Free Medication:**\n';
-    paps.forEach(p => {
-      context += `- ${p.program_name}\n`;
-      context += `  Income Limit: ${p.income_limit || 'Varies'}\n`;
-      context += `  Benefit: ${p.max_benefit || 'Free medication'}\n`;
-      context += `  URL: ${p.application_url || 'N/A'}\n`;
-      if (p.steps && p.steps.length > 0) {
-        context += '  How to Apply:\n';
-        p.steps.forEach(s => {
-          context += `    ${s.step_number}. ${s.step_title}\n`;
-        });
-      }
-    });
+    if (foundations.length > 0) {
+      context += '\n**🥇 BEST OPTION - COPAY ASSISTANCE FOUNDATIONS:**\n';
+      foundations.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  Income Limit: ${p.income_limit || 'Varies'}\n`;
+        context += `  Benefit: ${p.max_benefit || 'Copay assistance'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+        if (p.fund_status_note) context += `  Fund Status: ${p.fund_status_note}\n`;
+      });
+    }
+    if (paps.length > 0) {
+      context += '\n**PATIENT ASSISTANCE PROGRAMS (free medication if eligible):**\n';
+      paps.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  Income Limit: ${p.income_limit || 'Varies'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
+    if (discountCards.length > 0) {
+      context += '\n**DISCOUNT CARDS (may beat Part D prices):**\n';
+      discountCards.forEach(p => {
+        context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
+  } else if (insuranceType === 'uninsured') {
+    // Uninsured: PAPs first (FREE meds), then discount pharmacies, then discount cards
+    if (paps.length > 0) {
+      context += '\n**🥇 BEST OPTION - PATIENT ASSISTANCE PROGRAMS (FREE medication):**\n';
+      paps.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  Income Limit: ${p.income_limit || 'Usually 400% FPL'}\n`;
+        context += `  Benefit: ${p.max_benefit || 'FREE medication'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+        if (p.steps && p.steps.length > 0) {
+          context += '  How to apply:\n';
+          p.steps.forEach(s => {
+            context += `    ${s.step_number}. ${s.step_title}\n`;
+          });
+        }
+      });
+    }
+    if (discountCards.length > 0 || discountPharmacies.length > 0) {
+      context += '\n**DISCOUNT OPTIONS (while PAP processes):**\n';
+      [...discountPharmacies, ...discountCards].forEach(p => {
+        context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
+  } else {
+    // Medicaid, TRICARE/VA, IHS - show what's available
+    if (discountCards.length > 0) {
+      context += '\n**DISCOUNT CARDS (if needed):**\n';
+      discountCards.forEach(p => {
+        context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
+    if (paps.length > 0) {
+      context += '\n**PATIENT ASSISTANCE PROGRAMS:**\n';
+      paps.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  URL: ${p.application_url || 'N/A'}\n`;
+      });
+    }
   }
 
   return context;
@@ -276,6 +334,7 @@ const formatProgramsForContext = (programs, insuranceType) => {
 const generateClaudeResponse = async (userContext, programs, previousMessages = []) => {
   try {
     const programContext = formatProgramsForContext(programs, userContext.insurance_type);
+    const programCount = programs ? programs.length : 0;
 
     const userMessage = `
 **Patient Profile:**
@@ -286,10 +345,18 @@ const generateClaudeResponse = async (userContext, programs, previousMessages = 
 - Medication: ${userContext.medication_name || 'Not specified'}
 - Cost Burden: ${userContext.cost_burden || 'Not specified'}
 
-**Available Programs from Database:**
+**SPECIFIC PROGRAMS FROM DATABASE (${programCount} programs found):**
 ${programContext}
 
-Based on this patient's profile and the available programs, provide personalized guidance. Be specific about which programs they should apply to first and exactly how to do it. If they indicated "crisis" or "unaffordable" cost burden, emphasize urgency and immediate steps.`;
+**INSTRUCTIONS:**
+1. ONLY recommend the specific programs listed above from the database - do NOT make up programs or give generic advice
+2. Present programs in the order shown above (they are already sorted by priority for this insurance type)
+3. If Cost Plus Drugs is available, mention it first as a quick pricing check
+4. Include the specific URLs and application steps from the database
+5. If the patient indicated "crisis" or "unaffordable" cost burden, emphasize urgency and immediate steps
+6. If NO programs were found, then and only then provide general guidance about where to look
+
+Be specific and actionable. Reference the exact program names and URLs from the database.`;
 
     const response = await getAnthropic().messages.create({
       model: 'claude-sonnet-4-20250514',
