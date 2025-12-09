@@ -526,12 +526,48 @@ export async function handler(event) {
     return { statusCode: 204, headers };
   }
 
-  // Only accept POST
+  // Handle GET requests - for testing in browser
+  if (event.httpMethod === 'GET') {
+    // Check for test action in query params
+    const params = event.queryStringParameters || {};
+    if (params.action === 'test') {
+      try {
+        const result = await handleAction('test', {});
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(result),
+        };
+      } catch (error) {
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ error: error.message }),
+        };
+      }
+    }
+    // Return info for GET without action
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        status: 'ok',
+        message: 'Chat API is running. Use POST with {"action": "test"} to test database, or GET with ?action=test',
+        endpoints: {
+          test: 'GET /api/chat?action=test or POST {"action": "test"}',
+          start: 'POST {"action": "start"}',
+          searchMedications: 'POST {"action": "searchMedications", "query": "tacrolimus"}',
+        }
+      }),
+    };
+  }
+
+  // Handle POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
       headers,
-      body: JSON.stringify({ error: 'Method not allowed' }),
+      body: JSON.stringify({ error: 'Method not allowed. Use GET or POST.' }),
     };
   }
 
