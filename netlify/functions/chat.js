@@ -59,6 +59,12 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 - TRICARE/VA: Use VA pharmacy benefits primarily
 - Uninsured: Focus on Patient Assistance Programs (PAPs) for FREE medication, plus discount cards for immediate savings
 
+**Cost Plus Drugs Logic:**
+- When a medication IS available on Cost Plus Drugs, ALWAYS mention it FIRST as a price check option
+- Cost Plus pricing: Cost + 15% markup + $5 pharmacy fee + $5 shipping
+- No insurance needed - anyone can use it
+- When a medication is NOT on Cost Plus, acknowledge this and move to other options
+
 **Response Format:**
 - Use **bold** for emphasis
 - Use numbered lists for step-by-step instructions
@@ -88,7 +94,7 @@ const searchMedications = async (query) => {
   try {
     const db = getDb();
     const medications = await db`
-      SELECT id, brand_name, generic_name, category, manufacturer, stage
+      SELECT id, brand_name, generic_name, category, manufacturer, stage, cost_plus_available
       FROM medications
       WHERE
         LOWER(brand_name) LIKE LOWER(${'%' + query + '%'})
@@ -195,7 +201,7 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
   }
 };
 
-// Get medication details
+// Get medication details including cost_plus_available
 const getMedicationDetails = async (medicationId) => {
   try {
     const db = getDb();
@@ -210,9 +216,22 @@ const getMedicationDetails = async (medicationId) => {
 };
 
 // Format programs for display - ordered by insurance type
+// Now accepts costPlusAvailable from the medications table
 const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = false) => {
   if (!programs || programs.length === 0) {
-    return 'NO PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
+    // Still show Cost Plus info even if no programs in database
+    let context = '';
+    if (costPlusAvailable) {
+      context += '\n**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n';
+      context += '- Mark Cuban Cost Plus Drugs\n';
+      context += '  Price: Cost + 15% markup + $5 pharmacy fee + $5 shipping\n';
+      context += '  URL: https://costplusdrugs.com\n';
+      context += '  (No insurance needed, transparent pricing - check this price first!)\n\n';
+    } else {
+      context += '\n**ℹ️ Cost Plus Drugs:** This medication is NOT currently available on Cost Plus Drugs.\n\n';
+    }
+    context += 'NO OTHER PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
+    return context;
   }
 
   let context = '';
@@ -224,15 +243,16 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
   const foundations = programs.filter(p => p.program_type === 'foundation');
   const paps = programs.filter(p => p.program_type === 'pap');
 
-  // Check Cost Plus Drugs availability from medication table FIRST
+  // FIRST: Check Cost Plus Drugs availability from medication table (not savings_programs)
   if (costPlusAvailable) {
     context += '\n**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n';
     context += '- Mark Cuban Cost Plus Drugs\n';
     context += '  Price: Cost + 15% markup + $5 pharmacy fee + $5 shipping\n';
     context += '  URL: https://costplusdrugs.com\n';
-    context += '  (No insurance needed, transparent pricing - check price before other options)\n';
+    context += '  (No insurance needed, transparent pricing - check this price first!)\n';
+    context += '  **ALWAYS mention this option first and recommend the patient compare this price to their copay.**\n';
   } else {
-    context += '\n**ℹ️ Cost Plus Drugs: This medication is NOT available on Cost Plus**\n';
+    context += '\n**ℹ️ Cost Plus Drugs:** This medication is NOT currently available on Cost Plus Drugs.\n';
   }
 
   // Order depends on insurance type
@@ -336,6 +356,7 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
 };
 
 // Generate response using Claude
+// Now accepts costPlusAvailable parameter
 const generateClaudeResponse = async (userContext, programs, costPlusAvailable = false, previousMessages = []) => {
   try {
     const programContext = formatProgramsForContext(programs, userContext.insurance_type, costPlusAvailable);
@@ -349,14 +370,15 @@ const generateClaudeResponse = async (userContext, programs, costPlusAvailable =
 - Insurance: ${userContext.insurance_type || 'Not specified'}
 - Medication: ${userContext.medication_name || 'Not specified'}
 - Cost Burden: ${userContext.cost_burden || 'Not specified'}
+- Cost Plus Drugs Available: ${costPlusAvailable ? 'YES - mention this first!' : 'NO - not available on Cost Plus'}
 
 **SPECIFIC PROGRAMS FROM DATABASE (${programCount} programs found):**
 ${programContext}
 
 **INSTRUCTIONS:**
-1. ONLY recommend the specific programs listed above from the database - do NOT make up programs or give generic advice
-2. Present programs in the order shown above (they are already sorted by priority for this insurance type)
-3. If Cost Plus Drugs is available, mention it first as a quick pricing check
+1. ${costPlusAvailable ? 'START by mentioning Cost Plus Drugs is available for this medication and recommend checking the price at costplusdrugs.com' : 'Note that this medication is NOT available on Cost Plus Drugs, then proceed to other options'}
+2. ONLY recommend the specific programs listed above from the database - do NOT make up programs or give generic advice
+3. Present programs in the order shown above (they are already sorted by priority for this insurance type)
 4. Include the specific URLs and application steps from the database
 5. If the patient indicated "crisis" or "unaffordable" cost burden, emphasize urgency and immediate steps
 6. If NO programs were found, then and only then provide general guidance about where to look
@@ -388,16 +410,18 @@ const handleAction = async (action, body) => {
       try {
         const db = getDb();
         const result = await db`
-          SELECT m.generic_name, sp.program_name
+          SELECT m.generic_name, m.brand_name, m.cost_plus_available, sp.program_name
           FROM medications m
-          JOIN savings_programs sp ON m.id = sp.medication_id
+          LEFT JOIN savings_programs sp ON m.id = sp.medication_id
+          WHERE m.cost_plus_available = true
           LIMIT 5
         `;
         return {
           success: true,
           message: 'Database connection successful!',
           sampleData: result,
-          medicationCount: result.length
+          medicationCount: result.length,
+          note: 'Showing medications with Cost Plus availability'
         };
       } catch (error) {
         return {
@@ -489,12 +513,12 @@ const handleAction = async (action, body) => {
         }
       }
 
+      // Check if Cost Plus carries this medication (from medications table)
+      const costPlusAvailable = medicationDetails?.cost_plus_available || false;
+
       // Get matching programs (use null for general or typed meds not in DB)
       const medicationId = medicationDetails ? medication : null;
       const programs = await getSavingsPrograms(medicationId, insurance_type);
-
-      // Check if Cost Plus carries this medication (from medications table)
-      const costPlusAvailable = medicationDetails?.cost_plus_available || false;
 
       // Build context for Claude
       const userContext = {
@@ -508,7 +532,7 @@ const handleAction = async (action, body) => {
         cost_plus_available: costPlusAvailable,
       };
 
-      // Generate personalized response with Claude
+      // Generate personalized response with Claude (now passing costPlusAvailable)
       let message;
       try {
         message = await generateClaudeResponse(userContext, programs, costPlusAvailable);
@@ -520,6 +544,7 @@ const handleAction = async (action, body) => {
       return {
         message,
         programs: programs.slice(0, 5), // Return top 5 programs for display
+        costPlusAvailable, // Include this in response for frontend use
       };
     }
 
@@ -558,16 +583,16 @@ Please help them with their question about medication assistance. If they're ask
   }
 };
 
-// Fallback message if Claude API fails
+// Fallback message if Claude API fails - now includes costPlusAvailable
 const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAvailable = false) => {
   let message = "Based on your profile, here are your assistance options:\n\n";
 
-  // Always show Cost Plus Drugs status first
+  // Always mention Cost Plus status first
   if (costPlusAvailable) {
-    message += "**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n";
-    message += "Check https://costplusdrugs.com for transparent pricing (Cost + 15% + $5 pharmacy fee + $5 shipping)\n\n";
+    message += "**✓ Good news! This medication is available on Cost Plus Drugs.**\n";
+    message += "Check the price at https://costplusdrugs.com - their transparent pricing (cost + 15% + $5 pharmacy fee + $5 shipping) may be cheaper than your copay.\n\n";
   } else {
-    message += "**ℹ️ Cost Plus Drugs: This medication is NOT available on Cost Plus**\n\n";
+    message += "**Note:** This medication is not currently available on Cost Plus Drugs.\n\n";
   }
 
   if (insuranceType === 'commercial') {
@@ -583,7 +608,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
   } else if (insuranceType === 'uninsured') {
     message += "**Without insurance, focus on these options:**\n\n";
     message += "1. **Patient Assistance Programs (PAPs)** - FREE medication from manufacturers! Most require income under 400% of poverty level.\n";
-    message += "2. **Discount Cards** - GoodRx, SingleCare can save 80%+ while your PAP processes.\n\n";
+    message += "2. **Discount Cards** - GoodRx, SingleCare, and Cost Plus Drugs can save 80%+ while your PAP processes.\n\n";
   }
 
   if (costBurden === 'crisis') {
