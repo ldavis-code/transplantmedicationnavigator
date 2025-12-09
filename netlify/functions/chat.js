@@ -520,6 +520,20 @@ const handleAction = async (action, body) => {
       const medicationId = medicationDetails ? medication : null;
       const programs = await getSavingsPrograms(medicationId, insurance_type);
 
+      // Add Cost Plus Drugs as a program if medication is available there
+      if (costPlusAvailable) {
+        programs.unshift({
+          id: 'cost-plus-drugs',
+          program_name: 'Mark Cuban Cost Plus Drugs',
+          program_type: 'discount_pharmacy',
+          max_benefit: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping',
+          application_url: 'https://costplusdrugs.com',
+          description: 'Online pharmacy with transparent, low-cost pricing. No insurance needed.',
+          eligibility_summary: 'Available to everyone - no insurance required',
+          steps: [],
+        });
+      }
+
       // Build context for Claude
       const userContext = {
         role,
