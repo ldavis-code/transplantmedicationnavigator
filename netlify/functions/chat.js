@@ -498,37 +498,65 @@ const handleAction = async (action, body) => {
       const { answers } = body;
       const { insurance_type, medication, cost_burden, role, transplant_stage, organ_type } = answers;
 
-      // Handle medication - could be an ID, typed name, or "general"
-      let medicationDetails = null;
-      let medicationName = medication || 'General transplant medications';
+      // Handle medication - could be a single ID, array of IDs, typed name, or "general"
+      let medicationDetailsList = [];
+      let medicationNames = [];
+      let anyCostPlusAvailable = false;
+      let allPrograms = [];
 
-      if (medication && medication !== 'general') {
-        // Try to get medication from database by ID
-        medicationDetails = await getMedicationDetails(medication);
-        if (medicationDetails) {
-          medicationName = `${medicationDetails.brand_name} (${medicationDetails.generic_name})`;
-        } else {
-          // User typed a medication name not in DB
-          medicationName = medication;
+      // Normalize medication input to array
+      const medicationIds = Array.isArray(medication) ? medication : (medication && medication !== 'general' ? [medication] : []);
+
+      if (medicationIds.length > 0) {
+        // Get details for each medication
+        for (const medId of medicationIds) {
+          const details = await getMedicationDetails(medId);
+          if (details) {
+            medicationDetailsList.push(details);
+            medicationNames.push(`${details.brand_name} (${details.generic_name})`);
+            if (details.cost_plus_available) {
+              anyCostPlusAvailable = true;
+            }
+            // Get programs for this medication
+            const medPrograms = await getSavingsPrograms(medId, insurance_type);
+            allPrograms.push(...medPrograms);
+          } else {
+            // User typed a medication name not in DB
+            medicationNames.push(medId);
+          }
         }
       }
 
-      // Check if Cost Plus carries this medication (from medications table)
-      const costPlusAvailable = medicationDetails?.cost_plus_available || false;
+      // If no valid medications found, use general
+      const medicationName = medicationNames.length > 0
+        ? medicationNames.join(', ')
+        : 'General transplant medications';
 
-      // Get matching programs (use null for general or typed meds not in DB)
-      const medicationId = medicationDetails ? medication : null;
-      const programs = await getSavingsPrograms(medicationId, insurance_type);
+      // If no specific medications, get general programs
+      if (medicationDetailsList.length === 0) {
+        const generalPrograms = await getSavingsPrograms(null, insurance_type);
+        allPrograms.push(...generalPrograms);
+      }
 
-      // Add Cost Plus Drugs as a program if medication is available there
-      if (costPlusAvailable) {
-        programs.unshift({
+      // Deduplicate programs by ID
+      const uniquePrograms = allPrograms.filter((program, index, self) =>
+        index === self.findIndex(p => p.id === program.id)
+      );
+
+      // Add Cost Plus Drugs as a program if any medication is available there
+      if (anyCostPlusAvailable) {
+        const costPlusMeds = medicationDetailsList
+          .filter(m => m.cost_plus_available)
+          .map(m => m.brand_name)
+          .join(', ');
+
+        uniquePrograms.unshift({
           id: 'cost-plus-drugs',
           program_name: 'Mark Cuban Cost Plus Drugs',
           program_type: 'discount_pharmacy',
-          max_benefit: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping',
+          max_benefit: `Available for: ${costPlusMeds}`,
           application_url: 'https://costplusdrugs.com',
-          description: 'Online pharmacy with transparent, low-cost pricing. No insurance needed.',
+          description: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping. No insurance needed.',
           eligibility_summary: 'Available to everyone - no insurance required',
           steps: [],
         });
@@ -540,25 +568,26 @@ const handleAction = async (action, body) => {
         transplant_stage,
         organ_type,
         insurance_type,
-        medication_id: medicationId,
+        medication_ids: medicationIds,
         medication_name: medicationName,
         cost_burden,
-        cost_plus_available: costPlusAvailable,
+        cost_plus_available: anyCostPlusAvailable,
+        cost_plus_medications: medicationDetailsList.filter(m => m.cost_plus_available).map(m => m.brand_name),
       };
 
-      // Generate personalized response with Claude (now passing costPlusAvailable)
+      // Generate personalized response with Claude
       let message;
       try {
-        message = await generateClaudeResponse(userContext, programs, costPlusAvailable);
+        message = await generateClaudeResponse(userContext, uniquePrograms, anyCostPlusAvailable);
       } catch (error) {
         // Fallback message if Claude fails
-        message = generateFallbackMessage(programs, insurance_type, cost_burden, costPlusAvailable);
+        message = generateFallbackMessage(uniquePrograms, insurance_type, cost_burden, anyCostPlusAvailable);
       }
 
       return {
         message,
-        programs: programs.slice(0, 5), // Return top 5 programs for display
-        costPlusAvailable, // Include this in response for frontend use
+        programs: uniquePrograms.slice(0, 8), // Return top 8 programs for display (more for multiple meds)
+        costPlusAvailable: anyCostPlusAvailable,
       };
     }
 

@@ -97,6 +97,7 @@ const MedicationAssistantChat = () => {
   const [medicationSearch, setMedicationSearch] = useState('');
   const [medicationResults, setMedicationResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedMedications, setSelectedMedications] = useState([]);
 
   // Free text input
   const [inputValue, setInputValue] = useState('');
@@ -267,12 +268,37 @@ const MedicationAssistantChat = () => {
     return () => clearTimeout(timer);
   }, [medicationSearch]);
 
-  // Handle medication selection
+  // Handle medication selection - add to list
   const handleMedicationSelect = (medication) => {
-    handleOptionSelect({
-      value: medication.id,
-      label: `${medication.brand_name} (${medication.generic_name})`,
-    });
+    // Check if already selected
+    if (selectedMedications.find(m => m.id === medication.id)) {
+      return;
+    }
+    setSelectedMedications(prev => [...prev, medication]);
+    setMedicationSearch('');
+    setMedicationResults([]);
+  };
+
+  // Remove a medication from selection
+  const handleMedicationRemove = (medicationId) => {
+    setSelectedMedications(prev => prev.filter(m => m.id !== medicationId));
+  };
+
+  // Proceed with selected medications
+  const handleMedicationsContinue = () => {
+    if (selectedMedications.length === 0) {
+      // Skip - show general options
+      handleOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' });
+    } else {
+      // Pass medication IDs as comma-separated string or array
+      const medIds = selectedMedications.map(m => m.id);
+      const medLabels = selectedMedications.map(m => `${m.brand_name} (${m.generic_name})`).join(', ');
+      handleOptionSelect({
+        value: medIds.length === 1 ? medIds[0] : medIds,
+        label: medLabels,
+      });
+    }
+    setSelectedMedications([]);
     setMedicationSearch('');
     setMedicationResults([]);
   };
@@ -380,6 +406,7 @@ const MedicationAssistantChat = () => {
     setError(null);
     setMedicationSearch('');
     setMedicationResults([]);
+    setSelectedMedications([]);
     setTimeout(initializeChat, 100);
   };
 
@@ -444,13 +471,37 @@ const MedicationAssistantChat = () => {
     if (question.type === 'medication_search') {
       return (
         <div className="p-3 bg-slate-50 rounded-xl space-y-3">
+          {/* Selected medications */}
+          {selectedMedications.length > 0 && (
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
+              <div className="flex flex-wrap gap-2">
+                {selectedMedications.map((med) => (
+                  <span
+                    key={med.id}
+                    className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
+                  >
+                    {med.brand_name}
+                    <button
+                      onClick={() => handleMedicationRemove(med.id)}
+                      className="hover:bg-emerald-200 rounded-full p-0.5"
+                      aria-label={`Remove ${med.brand_name}`}
+                    >
+                      <X size={14} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input
               type="text"
               value={medicationSearch}
               onChange={(e) => setMedicationSearch(e.target.value)}
-              placeholder="Type medication name (e.g., Tacrolimus, Prograf)..."
+              placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name (e.g., Tacrolimus, Prograf)..."}
               className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
               autoFocus
             />
@@ -462,32 +513,54 @@ const MedicationAssistantChat = () => {
           {/* Show database results if any */}
           {medicationResults.length > 0 && (
             <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
-              {medicationResults.map((med) => (
-                <button
-                  key={med.id}
-                  onClick={() => handleMedicationSelect(med)}
-                  className="w-full text-left p-3 hover:bg-emerald-50 border-b border-slate-100 last:border-b-0 transition"
-                >
-                  <div className="font-medium text-slate-900">{med.brand_name}</div>
-                  <div className="text-sm text-slate-500">{med.generic_name} • {med.category}</div>
-                </button>
-              ))}
+              {medicationResults.map((med) => {
+                const isSelected = selectedMedications.find(m => m.id === med.id);
+                return (
+                  <button
+                    key={med.id}
+                    onClick={() => handleMedicationSelect(med)}
+                    disabled={isSelected}
+                    className={`w-full text-left p-3 border-b border-slate-100 last:border-b-0 transition ${
+                      isSelected ? 'bg-emerald-50 opacity-50' : 'hover:bg-emerald-50'
+                    }`}
+                  >
+                    <div className="font-medium text-slate-900 flex items-center gap-2">
+                      {med.brand_name}
+                      {isSelected && <Check size={16} className="text-emerald-600" />}
+                    </div>
+                    <div className="text-sm text-slate-500">{med.generic_name} • {med.category}</div>
+                  </button>
+                );
+              })}
             </div>
           )}
 
           {/* Use typed medication name if no DB results */}
           {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
             <button
-              onClick={() => handleOptionSelect({ value: medicationSearch, label: medicationSearch })}
+              onClick={() => {
+                handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: 'Custom entry' });
+              }}
               className="w-full text-left p-3 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition"
             >
-              <div className="font-medium text-emerald-700">Use "{medicationSearch}"</div>
-              <div className="text-sm text-slate-500">Continue with this medication name</div>
+              <div className="font-medium text-emerald-700">Add "{medicationSearch}"</div>
+              <div className="text-sm text-slate-500">Add this medication to your list</div>
+            </button>
+          )}
+
+          {/* Continue button when medications selected */}
+          {selectedMedications.length > 0 && (
+            <button
+              onClick={handleMedicationsContinue}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
+            >
+              Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
+              <ChevronRight size={18} />
             </button>
           )}
 
           {/* Skip option */}
-          {question.allowSkip && (
+          {question.allowSkip && selectedMedications.length === 0 && (
             <button
               onClick={() => handleOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' })}
               className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
@@ -641,7 +714,7 @@ const MedicationAssistantChat = () => {
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-700 mt-2 font-medium"
                             >
-                              Apply Now <ExternalLink size={14} />
+                              {program.program_type === 'discount_pharmacy' ? 'Check Prices' : 'Apply Now'} <ExternalLink size={14} />
                             </a>
                           )}
                         </div>
