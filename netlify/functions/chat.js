@@ -177,8 +177,16 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
       `;
     }
 
-    // Filter by insurance eligibility in JavaScript (simpler than dynamic SQL)
-    const filteredPrograms = programs.filter(p => p[eligibilityColumn] === true);
+    // Filter by insurance eligibility - BUT always include discount_pharmacy and discount_card
+    // because they are cash-pay options available to everyone regardless of insurance
+    const filteredPrograms = programs.filter(p => {
+      // Always include discount pharmacies (Cost Plus Drugs, etc) and discount cards
+      if (p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
+        return true;
+      }
+      // For other program types, check insurance eligibility
+      return p[eligibilityColumn] === true;
+    });
 
     return filteredPrograms;
   } catch (error) {
