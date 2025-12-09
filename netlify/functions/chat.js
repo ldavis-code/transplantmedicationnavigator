@@ -406,22 +406,32 @@ Be specific and actionable. Reference the exact program names and URLs from the 
 const handleAction = async (action, body) => {
   switch (action) {
     case 'test': {
-      // Test database connection
+      // Test database connection and show what's in the DB
       try {
         const db = getDb();
-        const result = await db`
-          SELECT m.generic_name, m.brand_name, m.cost_plus_available, sp.program_name
-          FROM medications m
-          LEFT JOIN savings_programs sp ON m.id = sp.medication_id
-          WHERE m.cost_plus_available = true
-          LIMIT 5
+
+        // Get medications
+        const medications = await db`
+          SELECT id, brand_name, generic_name, cost_plus_available
+          FROM medications
+          LIMIT 10
         `;
+
+        // Get all savings programs
+        const programs = await db`
+          SELECT id, program_name, program_type, medication_id, application_url,
+                 commercial_eligible, medicare_eligible, uninsured_eligible
+          FROM savings_programs
+          WHERE is_active = true
+          LIMIT 20
+        `;
+
         return {
           success: true,
           message: 'Database connection successful!',
-          sampleData: result,
-          medicationCount: result.length,
-          note: 'Showing medications with Cost Plus availability'
+          medications: medications,
+          programs: programs,
+          note: 'Showing medications and savings programs in database'
         };
       } catch (error) {
         return {
