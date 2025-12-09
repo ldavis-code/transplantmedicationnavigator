@@ -210,7 +210,7 @@ const getMedicationDetails = async (medicationId) => {
 };
 
 // Format programs for display - ordered by insurance type
-const formatProgramsForContext = (programs, insuranceType) => {
+const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = false) => {
   if (!programs || programs.length === 0) {
     return 'NO PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
   }
@@ -224,18 +224,15 @@ const formatProgramsForContext = (programs, insuranceType) => {
   const foundations = programs.filter(p => p.program_type === 'foundation');
   const paps = programs.filter(p => p.program_type === 'pap');
 
-  // Check for Cost Plus Drugs first (it's a discount_pharmacy)
-  const costPlusDrugs = discountPharmacies.find(p =>
-    p.program_name.toLowerCase().includes('cost plus') ||
-    p.program_name.toLowerCase().includes('mark cuban')
-  );
-
-  if (costPlusDrugs) {
-    context += '\n**✓ COST PLUS DRUGS AVAILABLE:**\n';
-    context += `- ${costPlusDrugs.program_name}\n`;
-    context += `  Price: ${costPlusDrugs.max_benefit || 'Significant savings'}\n`;
-    context += `  URL: ${costPlusDrugs.application_url || 'costplusdrugs.com'}\n`;
-    context += '  (No insurance needed, transparent pricing)\n';
+  // Check Cost Plus Drugs availability from medication table FIRST
+  if (costPlusAvailable) {
+    context += '\n**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n';
+    context += '- Mark Cuban Cost Plus Drugs\n';
+    context += '  Price: Cost + 15% markup + $5 pharmacy fee + $5 shipping\n';
+    context += '  URL: https://costplusdrugs.com\n';
+    context += '  (No insurance needed, transparent pricing - check price before other options)\n';
+  } else {
+    context += '\n**ℹ️ Cost Plus Drugs: This medication is NOT available on Cost Plus**\n';
   }
 
   // Order depends on insurance type
@@ -339,9 +336,9 @@ const formatProgramsForContext = (programs, insuranceType) => {
 };
 
 // Generate response using Claude
-const generateClaudeResponse = async (userContext, programs, previousMessages = []) => {
+const generateClaudeResponse = async (userContext, programs, costPlusAvailable = false, previousMessages = []) => {
   try {
-    const programContext = formatProgramsForContext(programs, userContext.insurance_type);
+    const programContext = formatProgramsForContext(programs, userContext.insurance_type, costPlusAvailable);
     const programCount = programs ? programs.length : 0;
 
     const userMessage = `
@@ -496,6 +493,9 @@ const handleAction = async (action, body) => {
       const medicationId = medicationDetails ? medication : null;
       const programs = await getSavingsPrograms(medicationId, insurance_type);
 
+      // Check if Cost Plus carries this medication (from medications table)
+      const costPlusAvailable = medicationDetails?.cost_plus_available || false;
+
       // Build context for Claude
       const userContext = {
         role,
@@ -505,15 +505,16 @@ const handleAction = async (action, body) => {
         medication_id: medicationId,
         medication_name: medicationName,
         cost_burden,
+        cost_plus_available: costPlusAvailable,
       };
 
       // Generate personalized response with Claude
       let message;
       try {
-        message = await generateClaudeResponse(userContext, programs);
+        message = await generateClaudeResponse(userContext, programs, costPlusAvailable);
       } catch (error) {
         // Fallback message if Claude fails
-        message = generateFallbackMessage(programs, insurance_type, cost_burden);
+        message = generateFallbackMessage(programs, insurance_type, cost_burden, costPlusAvailable);
       }
 
       return {
@@ -558,8 +559,16 @@ Please help them with their question about medication assistance. If they're ask
 };
 
 // Fallback message if Claude API fails
-const generateFallbackMessage = (programs, insuranceType, costBurden) => {
+const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAvailable = false) => {
   let message = "Based on your profile, here are your assistance options:\n\n";
+
+  // Always show Cost Plus Drugs status first
+  if (costPlusAvailable) {
+    message += "**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n";
+    message += "Check https://costplusdrugs.com for transparent pricing (Cost + 15% + $5 pharmacy fee + $5 shipping)\n\n";
+  } else {
+    message += "**ℹ️ Cost Plus Drugs: This medication is NOT available on Cost Plus**\n\n";
+  }
 
   if (insuranceType === 'commercial') {
     message += "**With Commercial Insurance, you have great options:**\n\n";
@@ -574,7 +583,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden) => {
   } else if (insuranceType === 'uninsured') {
     message += "**Without insurance, focus on these options:**\n\n";
     message += "1. **Patient Assistance Programs (PAPs)** - FREE medication from manufacturers! Most require income under 400% of poverty level.\n";
-    message += "2. **Discount Cards** - GoodRx, SingleCare, and Cost Plus Drugs can save 80%+ while your PAP processes.\n\n";
+    message += "2. **Discount Cards** - GoodRx, SingleCare can save 80%+ while your PAP processes.\n\n";
   }
 
   if (costBurden === 'crisis') {
