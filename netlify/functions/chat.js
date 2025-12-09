@@ -1,13 +1,31 @@
 import { neon } from '@neondatabase/serverless';
 import Anthropic from '@anthropic-ai/sdk';
 
-// Initialize Neon client
-const sql = neon(process.env.DATABASE_URL);
+// Lazy initialization for Neon client
+let sql = null;
+const getDb = () => {
+  if (!sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not set');
+    }
+    sql = neon(process.env.DATABASE_URL);
+  }
+  return sql;
+};
 
-// Initialize Anthropic client
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+// Lazy initialization for Anthropic client
+let anthropic = null;
+const getAnthropic = () => {
+  if (!anthropic) {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      throw new Error('ANTHROPIC_API_KEY environment variable is not set');
+    }
+    anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+  }
+  return anthropic;
+};
 
 // CORS headers
 const headers = {
@@ -68,7 +86,8 @@ const getEligibilityColumn = (insuranceType) => {
 // Search medications in database
 const searchMedications = async (query) => {
   try {
-    const medications = await sql`
+    const db = getDb();
+    const medications = await db`
       SELECT id, brand_name, generic_name, category, manufacturer, stage
       FROM medications
       WHERE
@@ -89,11 +108,12 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
   const eligibilityColumn = getEligibilityColumn(insuranceType);
 
   try {
+    const db = getDb();
     let programs;
 
     if (medicationId) {
       // Get programs for specific medication OR general programs
-      programs = await sql`
+      programs = await db`
         SELECT
           sp.*,
           COALESCE(
@@ -125,7 +145,7 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
       `;
     } else {
       // Get only general programs (no specific medication)
-      programs = await sql`
+      programs = await db`
         SELECT
           sp.*,
           COALESCE(
@@ -170,7 +190,8 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
 // Get medication details
 const getMedicationDetails = async (medicationId) => {
   try {
-    const [medication] = await sql`
+    const db = getDb();
+    const [medication] = await db`
       SELECT * FROM medications WHERE id = ${medicationId}
     `;
     return medication;
@@ -270,7 +291,7 @@ ${programContext}
 
 Based on this patient's profile and the available programs, provide personalized guidance. Be specific about which programs they should apply to first and exactly how to do it. If they indicated "crisis" or "unaffordable" cost burden, emphasize urgency and immediate steps.`;
 
-    const response = await anthropic.messages.create({
+    const response = await getAnthropic().messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 1500,
       system: SYSTEM_PROMPT,
@@ -290,6 +311,31 @@ Based on this patient's profile and the available programs, provide personalized
 // Handle different chat actions
 const handleAction = async (action, body) => {
   switch (action) {
+    case 'test': {
+      // Test database connection
+      try {
+        const db = getDb();
+        const result = await db`
+          SELECT m.generic_name, sp.program_name
+          FROM medications m
+          JOIN savings_programs sp ON m.id = sp.medication_id
+          LIMIT 5
+        `;
+        return {
+          success: true,
+          message: 'Database connection successful!',
+          sampleData: result,
+          medicationCount: result.length
+        };
+      } catch (error) {
+        return {
+          success: false,
+          error: error.message,
+          hint: 'Check DATABASE_URL environment variable'
+        };
+      }
+    }
+
     case 'start': {
       const conversationId = generateConversationId();
       return {
@@ -406,7 +452,7 @@ const handleAction = async (action, body) => {
 
       // For free text, use Claude to respond
       try {
-        const response = await anthropic.messages.create({
+        const response = await getAnthropic().messages.create({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 800,
           system: SYSTEM_PROMPT,

@@ -6,18 +6,20 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# API routes - redirect to Netlify Functions
+# API routes - redirect to Netlify Functions (force=true ensures these take priority)
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
   status = 200
+  force = true
 
 [[redirects]]
-  from = "/api/chat/*"
-  to = "/.netlify/functions/chat/:splat"
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
   status = 200
+  force = true
 
-# SPA fallback - Netlify Functions are handled automatically before redirects
+# SPA fallback - must come AFTER API routes
 [[redirects]]
   from = "/*"
   to = "/index.html"
