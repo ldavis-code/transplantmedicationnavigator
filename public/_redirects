@@ -1,5 +1,9 @@
-# Netlify redirects file for SPA (Single Page Application)
-# This ensures all routes are handled by React Router
+# Netlify redirects file
+# API routes must come FIRST (before SPA fallback)
 
-# Redirect all requests to index.html for client-side routing
-/*    /index.html   200
+# API routes - proxy to Netlify Functions
+/api/chat    /.netlify/functions/chat    200
+/api/*       /.netlify/functions/:splat  200
+
+# SPA fallback - all other routes go to index.html
+/*           /index.html                 200
