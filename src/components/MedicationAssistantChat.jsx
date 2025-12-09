@@ -468,7 +468,14 @@ const MedicationAssistantChat = () => {
                   onClick={() => handleMedicationSelect(med)}
                   className="w-full text-left p-3 hover:bg-emerald-50 border-b border-slate-100 last:border-b-0 transition"
                 >
-                  <div className="font-medium text-slate-900">{med.brand_name}</div>
+                  <div className="font-medium text-slate-900 flex items-center gap-2">
+                    {med.brand_name}
+                    {med.cost_plus_available && (
+                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-normal">
+                        Cost Plus ✓
+                      </span>
+                    )}
+                  </div>
                   <div className="text-sm text-slate-500">{med.generic_name} • {med.category}</div>
                 </button>
               ))}
