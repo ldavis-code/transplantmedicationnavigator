@@ -2181,15 +2181,15 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-6 fade-in">
-                        {/* Copay Card Section - For Commercial Insurance */}
+                        {/* Copay Card Section - For Commercial Insurance ONLY */}
                         {med.copayUrl && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
                                 <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Manufacturer Copay Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
-                                    <strong>For Commercial/Employer Insurance:</strong> Save on your copay — often pay as little as $0-$25 per prescription.
+                                    <strong>For Commercial/Employer Insurance ONLY:</strong> Save on your copay — often pay as little as $0-$25 per prescription.
                                 </p>
-                                <p className="text-xs text-violet-700 mb-4">
-                                    Note: Copay cards are NOT available for Medicare, Medicaid, or government insurance.
+                                <p className="text-xs text-red-600 font-medium mb-4">
+                                    ⚠️ NOT available for Medicare, Medicaid, TRICARE, VA, or IHS — see Manufacturer PAP below instead.
                                 </p>
                                 <a href={med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     Get Copay Card <ExternalLink size={14} aria-hidden="true" />
