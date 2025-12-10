@@ -543,8 +543,16 @@ const handleAction = async (action, body) => {
               });
             }
 
-            // Add medication-specific programs
-            medEntry.programs.push(...medPrograms);
+            // Add medication-specific programs (filter out duplicates and unwanted universal programs)
+            const filteredPrograms = medPrograms.filter(p =>
+              !p.program_name?.toLowerCase().includes('cost plus') &&
+              !p.program_name?.toLowerCase().includes('costplus') &&
+              !p.program_name?.toLowerCase().includes('needymeds') &&
+              !p.program_name?.toLowerCase().includes('american transplant foundation') &&
+              !p.program_name?.toLowerCase().includes('medicare extra help') &&
+              !p.program_name?.toLowerCase().includes('rxassist')
+            );
+            medEntry.programs.push(...filteredPrograms);
 
             medicationPrograms.push(medEntry);
           } else {
@@ -564,12 +572,21 @@ const handleAction = async (action, body) => {
       // If no valid medications found, get general programs
       if (medicationDetailsList.length === 0) {
         const generalPrograms = await getSavingsPrograms(null, insurance_type);
+        // Filter out unwanted universal programs
+        const filteredGeneralPrograms = generalPrograms.filter(p =>
+          !p.program_name?.toLowerCase().includes('cost plus') &&
+          !p.program_name?.toLowerCase().includes('costplus') &&
+          !p.program_name?.toLowerCase().includes('needymeds') &&
+          !p.program_name?.toLowerCase().includes('american transplant foundation') &&
+          !p.program_name?.toLowerCase().includes('medicare extra help') &&
+          !p.program_name?.toLowerCase().includes('rxassist')
+        );
         medicationPrograms.push({
           medication_id: 'general',
           medication_name: 'General Assistance',
           generic_name: 'All transplant medications',
           cost_plus_available: false,
-          programs: generalPrograms
+          programs: filteredGeneralPrograms
         });
       }
 
