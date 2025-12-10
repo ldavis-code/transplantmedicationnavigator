@@ -97,7 +97,7 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 
 **Key Insurance Rules:**
 - Commercial/Employer Insurance: ELIGIBLE for manufacturer copay cards (can reduce costs to $0-$50/month)
-- Medicare: NOT eligible for copay cards (Anti-Kickback Statute), but CAN use foundations (HealthWell, PAN), PAPs, and discount cards
+- Medicare: NOT eligible for copay cards (Anti-Kickback Statute), but CAN use foundations (HealthWell, PAN, etc.—funds open throughout the year, so check back if closed), PAPs, and discount cards
 - Medicaid: Usually well-covered, but can use discount cards if needed
 - TRICARE/VA: Use VA pharmacy benefits primarily
 - Uninsured: Focus on Patient Assistance Programs (PAPs) for FREE medication, plus discount cards for immediate savings
@@ -711,7 +711,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
   } else if (insuranceType === 'medicare') {
     message += "**Important for Medicare patients:**\n\n";
     message += "You cannot use manufacturer copay cards (it's prohibited), but you have other options:\n\n";
-    message += "• **Foundations** - HealthWell, PAN Foundation, and Patient Advocate Foundation offer copay assistance.\n";
+    message += "• **Foundations** - HealthWell, PAN Foundation, and Patient Advocate Foundation offer copay assistance. *Funds open throughout the year—check back if currently closed!*\n";
     message += "• **Patient Assistance Programs** - Apply directly to manufacturers for free medication.\n";
     message += "• **Discount Cards** - GoodRx may offer lower prices than your Part D copay.\n\n";
   } else if (insuranceType === 'uninsured') {

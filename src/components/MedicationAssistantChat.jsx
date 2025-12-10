@@ -846,6 +846,11 @@ const MedicationAssistantChat = () => {
                             Apply <ExternalLink size={12} />
                           </a>
                         )}
+                        {program.program_type === 'foundation' && (
+                          <p className="text-xs text-emerald-600 mt-2 italic">
+                            💡 Tip: Funds open throughout the year—check back if currently closed!
+                          </p>
+                        )}
                       </div>
                     ))
                   ) : !medGroup.cost_plus_available && (
