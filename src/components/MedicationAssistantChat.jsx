@@ -1,103 +1,65 @@
 /**
  * Medication Assistant Chat Component
- * AI-powered chatbot that guides transplant patients to medication assistance programs
- * Integrates with Claude API and Neon PostgreSQL database
+ * AI-powered chatbot with integrated quiz mode
+ * Seamlessly switch between conversational chat and structured quiz
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
-  ChevronRight, Loader2, Pill, ExternalLink, RefreshCw,
-  User, Building2, Stethoscope, Heart, AlertCircle, Printer
+  ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
+  User, Building2, Heart, AlertCircle, Printer,
+  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle
 } from 'lucide-react';
+import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 
-// Question flow configuration
-const QUESTIONS = [
-  {
-    id: 'role',
-    question: "Hi! I'm here to help you find medication assistance. First, who am I helping today?",
-    type: 'single',
-    options: [
-      { value: 'patient', label: 'Patient', icon: User, description: "I'm the transplant patient" },
-      { value: 'carepartner', label: 'Carepartner / Family', icon: Heart, description: "I'm helping a loved one" },
-      { value: 'social_worker', label: 'Social Worker / Coordinator', icon: Building2, description: "I'm a healthcare professional" },
-    ],
-  },
-  {
-    id: 'transplant_stage',
-    question: "Where are you in the transplant process?",
-    type: 'single',
-    options: [
-      { value: 'pre', label: 'Pre-transplant', description: 'On the waitlist or in evaluation' },
-      { value: 'post_1yr', label: 'Post-transplant (< 1 year)', description: 'Within the first year' },
-      { value: 'post_1yr_plus', label: 'Post-transplant (1+ years)', description: 'More than a year post-transplant' },
-    ],
-  },
-  {
-    id: 'organ_type',
-    question: "What type of transplant?",
-    type: 'single',
-    options: [
-      { value: 'kidney', label: 'Kidney' },
-      { value: 'liver', label: 'Liver' },
-      { value: 'heart', label: 'Heart' },
-      { value: 'lung', label: 'Lung' },
-      { value: 'pancreas', label: 'Pancreas' },
-      { value: 'multi', label: 'Multi-organ' },
-      { value: 'other', label: 'Other' },
-    ],
-  },
-  {
-    id: 'insurance_type',
-    question: "What's your primary insurance? This determines which programs you're eligible for.",
-    type: 'single',
-    options: [
-      { value: 'commercial', label: 'Commercial / Employer', description: 'Private insurance through work or marketplace', hint: '✓ Copay cards available!' },
-      { value: 'medicare', label: 'Medicare', description: 'Federal program (65+ or disability)', hint: 'Foundations & PAPs available' },
-      { value: 'medicaid', label: 'Medicaid', description: 'State program based on income', hint: 'Usually well covered' },
-      { value: 'tricare_va', label: 'TRICARE / VA', description: 'Military or veterans benefits' },
-      { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
-      { value: 'uninsured', label: 'Uninsured / Self-pay', description: 'No current insurance', hint: 'PAPs can provide FREE meds' },
-    ],
-  },
-  {
-    id: 'medication',
-    question: "Which medication do you need help with?",
-    type: 'medication_search',
-    allowSkip: true,
-    skipLabel: "I'm not sure / Show all options",
-  },
-  {
-    id: 'cost_burden',
-    question: "How would you describe your current medication costs?",
-    type: 'single',
-    options: [
-      { value: 'manageable', label: 'Manageable', description: "I can afford my medications" },
-      { value: 'challenging', label: 'Challenging', description: "It's tight, but I manage" },
-      { value: 'unaffordable', label: 'Unaffordable', description: "I struggle to pay for meds" },
-      { value: 'crisis', label: 'Crisis', description: "I've skipped or rationed doses", urgent: true },
-    ],
-  },
+// Mode toggle tabs
+const MODE_TABS = [
+  { id: 'chat', label: 'Chat', icon: MessageCircle, description: 'Conversational guidance' },
+  { id: 'quiz', label: 'Quick Quiz', icon: ClipboardList, description: 'Step-by-step questions' },
 ];
 
 const MedicationAssistantChat = () => {
-  // Chat state
-  const [isOpen, setIsOpen] = useState(false);
+  // Context for shared state
+  const {
+    mode,
+    setMode,
+    isOpen,
+    setIsOpen,
+    answers,
+    setAnswer,
+    setAnswers,
+    quizProgress,
+    nextQuizQuestion,
+    prevQuizQuestion,
+    setQuizProgress,
+    selectedMedications,
+    addMedication,
+    removeMedication,
+    setSelectedMedications,
+    results,
+    setResults,
+    hasProgress,
+    currentQuizQuestion,
+    quizCompletionPercent,
+    profileSummary,
+    questions,
+    resetProgress,
+    hasSeenResults,
+  } = useChatQuiz();
+
+  // Local chat state (kept separate for API communication)
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Conversation state
   const [conversationId, setConversationId] = useState(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [isComplete, setIsComplete] = useState(false);
+  const [chatQuestionIndex, setChatQuestionIndex] = useState(0);
+  const [isChatComplete, setIsChatComplete] = useState(false);
 
   // Medication search state
   const [medicationSearch, setMedicationSearch] = useState('');
   const [medicationResults, setMedicationResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedMedications, setSelectedMedications] = useState([]);
 
   // Free text input
   const [inputValue, setInputValue] = useState('');
@@ -108,17 +70,15 @@ const MedicationAssistantChat = () => {
   const inputRef = useRef(null);
   const lastUserMessageRef = useRef(null);
 
-  // Scroll to show the last user message at the top with answer below
+  // Scroll handling
   const scrollToLastUserMessage = useCallback(() => {
     setTimeout(() => {
       if (lastUserMessageRef.current && messagesContainerRef.current) {
-        // Scroll to position the user's message near the top of the visible area
         const container = messagesContainerRef.current;
         const userMessage = lastUserMessageRef.current;
-        const offsetTop = userMessage.offsetTop - 16; // 16px padding from top
+        const offsetTop = userMessage.offsetTop - 16;
         container.scrollTop = offsetTop;
       } else if (messagesContainerRef.current) {
-        // Fallback: scroll to bottom if no user message ref
         messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
       }
     }, 150);
@@ -128,12 +88,19 @@ const MedicationAssistantChat = () => {
     scrollToLastUserMessage();
   }, [messages, isLoading, scrollToLastUserMessage]);
 
-  // Initialize chat when opened
+  // Initialize chat when opened in chat mode
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (isOpen && mode === 'chat' && messages.length === 0) {
       initializeChat();
     }
-  }, [isOpen]);
+  }, [isOpen, mode]);
+
+  // Sync chat answers with context when switching modes
+  useEffect(() => {
+    if (mode === 'quiz' && Object.keys(answers).length > 0) {
+      // Answers are already synced via context
+    }
+  }, [mode, answers]);
 
   // Initialize the chat session
   const initializeChat = async () => {
@@ -158,10 +125,9 @@ const MedicationAssistantChat = () => {
         content: data.message,
         timestamp: new Date(),
       }]);
-      setCurrentQuestionIndex(0);
+      setChatQuestionIndex(0);
     } catch (err) {
       console.error('Failed to initialize chat:', err);
-      // Fallback to local welcome message
       setMessages([{
         id: Date.now(),
         role: 'assistant',
@@ -173,11 +139,10 @@ const MedicationAssistantChat = () => {
     }
   };
 
-  // Handle option selection
-  const handleOptionSelect = async (option) => {
-    const question = QUESTIONS[currentQuestionIndex];
+  // Handle option selection (chat mode)
+  const handleChatOptionSelect = async (option) => {
+    const question = QUIZ_QUESTIONS[chatQuestionIndex];
 
-    // Add user's selection to messages
     const userMessage = {
       id: Date.now(),
       role: 'user',
@@ -186,17 +151,14 @@ const MedicationAssistantChat = () => {
     };
     setMessages(prev => [...prev, userMessage]);
 
-    // Update answers
+    // Update both local and context answers
     const newAnswers = { ...answers, [question.id]: option.value };
-    setAnswers(newAnswers);
+    setAnswer(question.id, option.value);
 
-    // Check if this is the last question
-    if (currentQuestionIndex >= QUESTIONS.length - 1) {
+    if (chatQuestionIndex >= QUIZ_QUESTIONS.length - 1) {
       await generateResults(newAnswers);
     } else {
-      // Move to next question
       setIsLoading(true);
-
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
@@ -212,22 +174,20 @@ const MedicationAssistantChat = () => {
 
         const data = await response.json();
 
-        // Add assistant response
         setTimeout(() => {
           setMessages(prev => [...prev, {
             id: Date.now(),
             role: 'assistant',
-            content: data.message || QUESTIONS[currentQuestionIndex + 1]?.question || '',
+            content: data.message || QUIZ_QUESTIONS[chatQuestionIndex + 1]?.question || '',
             timestamp: new Date(),
           }]);
-          setCurrentQuestionIndex(prev => prev + 1);
+          setChatQuestionIndex(prev => prev + 1);
           setIsLoading(false);
         }, 300);
       } catch (err) {
         console.error('Failed to process answer:', err);
-        // Fallback - just show next question
         setTimeout(() => {
-          const nextQ = QUESTIONS[currentQuestionIndex + 1];
+          const nextQ = QUIZ_QUESTIONS[chatQuestionIndex + 1];
           if (nextQ) {
             setMessages(prev => [...prev, {
               id: Date.now(),
@@ -236,11 +196,31 @@ const MedicationAssistantChat = () => {
               timestamp: new Date(),
             }]);
           }
-          setCurrentQuestionIndex(prev => prev + 1);
+          setChatQuestionIndex(prev => prev + 1);
           setIsLoading(false);
         }, 300);
       }
     }
+  };
+
+  // Handle quiz option selection
+  const handleQuizOptionSelect = (option) => {
+    const question = currentQuizQuestion;
+    if (!question) return;
+
+    setAnswer(question.id, option.value);
+
+    // Auto-advance after a brief delay for visual feedback
+    setTimeout(() => {
+      if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
+        nextQuizQuestion();
+      } else {
+        // Quiz complete - generate results
+        const finalAnswers = { ...answers, [question.id]: option.value };
+        setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
+        generateResults(finalAnswers);
+      }
+    }, 200);
   };
 
   // Search medications from database
@@ -281,45 +261,52 @@ const MedicationAssistantChat = () => {
     return () => clearTimeout(timer);
   }, [medicationSearch]);
 
-  // Handle medication selection - add to list
+  // Handle medication selection
   const handleMedicationSelect = (medication) => {
-    // Check if already selected
     if (selectedMedications.find(m => m.id === medication.id)) {
       return;
     }
-    setSelectedMedications(prev => [...prev, medication]);
+    addMedication(medication);
     setMedicationSearch('');
     setMedicationResults([]);
   };
 
-  // Remove a medication from selection
+  // Handle medication removal
   const handleMedicationRemove = (medicationId) => {
-    setSelectedMedications(prev => prev.filter(m => m.id !== medicationId));
+    removeMedication(medicationId);
   };
 
   // Proceed with selected medications
   const handleMedicationsContinue = () => {
     if (selectedMedications.length === 0) {
-      // Skip - show general options
-      handleOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' });
+      if (mode === 'chat') {
+        handleChatOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' });
+      } else {
+        setAnswer('medication', 'general');
+        nextQuizQuestion();
+      }
     } else {
-      // Pass medication IDs as comma-separated string or array
       const medIds = selectedMedications.map(m => m.id);
       const medLabels = selectedMedications.map(m => `${m.brand_name} (${m.generic_name})`).join(', ');
-      handleOptionSelect({
-        value: medIds.length === 1 ? medIds[0] : medIds,
-        label: medLabels,
-      });
+
+      if (mode === 'chat') {
+        handleChatOptionSelect({
+          value: medIds.length === 1 ? medIds[0] : medIds,
+          label: medLabels,
+        });
+      } else {
+        setAnswer('medication', medIds.length === 1 ? medIds[0] : medIds);
+        nextQuizQuestion();
+      }
     }
-    setSelectedMedications([]);
     setMedicationSearch('');
     setMedicationResults([]);
   };
 
-  // Generate final results with Claude API
+  // Generate final results
   const generateResults = async (finalAnswers) => {
     setIsLoading(true);
-    setIsComplete(true);
+    setIsChatComplete(true);
 
     try {
       const response = await fetch('/api/chat', {
@@ -338,27 +325,38 @@ const MedicationAssistantChat = () => {
         throw new Error(data.error);
       }
 
-      // Add the AI-generated response with programs grouped by medication
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        role: 'assistant',
-        content: data.message,
-        programs: data.programs,
-        medicationPrograms: data.medicationPrograms, // Programs grouped by medication
-        costPlusMedications: data.costPlusMedications, // Medications available on Cost Plus
-        timestamp: new Date(),
-      }]);
+      // Store results in context
+      setResults({
+        programs: data.programs || [],
+        medicationPrograms: data.medicationPrograms || [],
+        costPlusMedications: data.costPlusMedications || [],
+        message: data.message,
+      });
+
+      // Add to chat messages if in chat mode
+      if (mode === 'chat') {
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          role: 'assistant',
+          content: data.message,
+          programs: data.programs,
+          medicationPrograms: data.medicationPrograms,
+          costPlusMedications: data.costPlusMedications,
+          timestamp: new Date(),
+        }]);
+      }
     } catch (err) {
       console.error('Failed to generate results:', err);
       setError('Sorry, I had trouble finding programs. Please try again.');
 
-      // Add error message
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        role: 'assistant',
-        content: "I apologize, but I'm having trouble connecting to our database right now. Please try again in a moment, or visit our Resources page to browse assistance programs manually.",
-        timestamp: new Date(),
-      }]);
+      if (mode === 'chat') {
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          role: 'assistant',
+          content: "I apologize, but I'm having trouble connecting to our database right now. Please try again in a moment, or visit our Resources page to browse assistance programs manually.",
+          timestamp: new Date(),
+        }]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -411,25 +409,38 @@ const MedicationAssistantChat = () => {
     }
   };
 
-  // Reset chat
-  const resetChat = () => {
+  // Reset everything
+  const handleReset = () => {
     setMessages([]);
     setConversationId(null);
-    setCurrentQuestionIndex(0);
-    setAnswers({});
-    setIsComplete(false);
+    setChatQuestionIndex(0);
+    setIsChatComplete(false);
     setError(null);
     setMedicationSearch('');
     setMedicationResults([]);
-    setSelectedMedications([]);
-    setTimeout(initializeChat, 100);
+    resetProgress();
+    setTimeout(() => {
+      if (mode === 'chat') {
+        initializeChat();
+      }
+    }, 100);
+  };
+
+  // Switch mode
+  const handleModeSwitch = (newMode) => {
+    setMode(newMode);
+    if (newMode === 'chat' && messages.length === 0) {
+      initializeChat();
+    }
   };
 
   // Print action plan
   const printActionPlan = () => {
-    // Get the last message with programs (the results message)
-    const resultsMessage = messages.find(m => m.medicationPrograms || m.programs);
-    if (!resultsMessage) return;
+    const programsData = results.medicationPrograms?.length > 0
+      ? results.medicationPrograms
+      : (messages.find(m => m.medicationPrograms)?.medicationPrograms || []);
+
+    if (programsData.length === 0 && !results.programs?.length) return;
 
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
@@ -437,65 +448,24 @@ const MedicationAssistantChat = () => {
       return;
     }
 
-    // Generate programs HTML - grouped by medication if available
     let programsHtml = '';
-
-    if (resultsMessage.medicationPrograms && resultsMessage.medicationPrograms.length > 0) {
-      // Programs grouped by medication
-      programsHtml = resultsMessage.medicationPrograms.map(medGroup => `
+    if (programsData.length > 0) {
+      programsHtml = programsData.map(medGroup => `
         <div style="border: 2px solid #334155; border-radius: 12px; margin-bottom: 24px; overflow: hidden;">
           <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #cbd5e1;">
-            <h3 style="margin: 0; color: #1e293b; font-size: 18px;">💊 ${medGroup.medication_name}</h3>
+            <h3 style="margin: 0; color: #1e293b; font-size: 18px;">${medGroup.medication_name}</h3>
             <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">${medGroup.generic_name}</p>
           </div>
-          ${medGroup.cost_plus_available ? `
-          <div style="padding: 12px 16px; border-bottom: 1px solid #cbd5e1;">
-            <div style="border: 1px solid #3b82f6; border-radius: 8px; padding: 12px; background: #eff6ff;">
-              <strong style="color: #1e40af;">Mark Cuban Cost Plus Drugs</strong>
-              <span style="background: #bfdbfe; color: #1e40af; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">Discount</span>
-              <p style="margin: 8px 0 0 0; font-size: 13px; color: #3b82f6;">Transparent pricing: Cost + 15% + $5 pharmacy fee + $5 shipping</p>
-              <p style="margin: 8px 0 0 0; font-size: 13px;"><a href="https://costplusdrugs.com" style="color: #2563eb;">https://costplusdrugs.com</a></p>
-            </div>
-          </div>
-          ` : ''}
           <div style="padding: 16px;">
-            ${medGroup.programs && medGroup.programs.length > 0 ? medGroup.programs.map(program => `
+            ${medGroup.programs?.length > 0 ? medGroup.programs.map(program => `
               <div style="border: 1px solid #10b981; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #ecfdf5;">
-                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
-                  <strong style="color: #065f46;">${program.program_name}</strong>
-                  ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 11px;">
-                    ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
-                    ${program.program_type === 'pap' ? 'Free Meds' : ''}
-                    ${program.program_type === 'foundation' ? 'Foundation' : ''}
-                    ${program.program_type === 'discount_pharmacy' ? 'Discount' : ''}
-                    ${program.program_type === 'discount_card' ? 'Discount' : ''}
-                  </span>` : ''}
-                </div>
+                <strong style="color: #065f46;">${program.program_name}</strong>
                 ${program.max_benefit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
                 ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
-                ${program.income_limit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
-                ${program.application_url ? `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply Here:</strong> <a href="${program.application_url}" style="color: #059669; word-break: break-all;">${program.application_url}</a></p>` : ''}
+                ${program.application_url ? `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
               </div>
-            `).join('') : '<p style="color: #64748b; font-style: italic;">No specific programs found. Contact your transplant center social worker.</p>'}
+            `).join('') : '<p style="color: #64748b;">Contact your transplant center social worker for assistance.</p>'}
           </div>
-        </div>
-      `).join('');
-    } else if (resultsMessage.programs && resultsMessage.programs.length > 0) {
-      // Flat programs list (fallback)
-      programsHtml = resultsMessage.programs.map(program => `
-        <div style="border: 1px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ecfdf5;">
-          <h3 style="margin: 0 0 8px 0; color: #065f46; font-size: 16px;">${program.program_name}</h3>
-          ${program.program_type ? `<span style="background: #a7f3d0; color: #065f46; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
-            ${program.program_type === 'copay_card' ? 'Copay Card' : ''}
-            ${program.program_type === 'pap' ? 'Patient Assistance (Free Meds)' : ''}
-            ${program.program_type === 'foundation' ? 'Foundation' : ''}
-            ${program.program_type === 'discount_pharmacy' ? 'Discount Pharmacy' : ''}
-            ${program.program_type === 'discount_card' ? 'Discount Card' : ''}
-          </span>` : ''}
-          ${program.max_benefit ? `<p style="margin: 8px 0 4px 0; font-size: 14px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
-          ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
-          ${program.income_limit ? `<p style="margin: 4px 0; font-size: 14px;"><strong>Income Limit:</strong> ${program.income_limit}</p>` : ''}
-          ${program.application_url ? `<p style="margin: 8px 0 0 0;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
         </div>
       `).join('');
     }
@@ -506,9 +476,6 @@ const MedicationAssistantChat = () => {
         <p style="margin: 4px 0; font-size: 14px;"><strong>Insurance:</strong> ${answers.insurance_type || 'Not specified'}</p>
         <p style="margin: 4px 0; font-size: 14px;"><strong>Transplant Stage:</strong> ${answers.transplant_stage || 'Not specified'}</p>
         <p style="margin: 4px 0; font-size: 14px;"><strong>Organ Type:</strong> ${answers.organ_type || 'Not specified'}</p>
-        <p style="margin: 4px 0; font-size: 14px;"><strong>Medication(s):</strong> ${
-          messages.find(m => m.role === 'user' && messages.indexOf(m) > 3)?.content || 'Not specified'
-        }</p>
       </div>
     `;
 
@@ -516,44 +483,22 @@ const MedicationAssistantChat = () => {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Medication Assistance Action Plan - TransplantMedicationNavigator.com</title>
+        <title>Medication Assistance Action Plan</title>
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 24px; color: #1e293b; }
           h1 { color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 12px; }
-          h2 { color: #334155; margin-top: 24px; }
-          .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-          .date { color: #64748b; font-size: 14px; }
-          .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
           @media print { body { padding: 0; } }
         </style>
       </head>
       <body>
-        <div class="header">
-          <h1>🏥 Medication Assistance Action Plan</h1>
-          <span class="date">Generated: ${new Date().toLocaleDateString()}</span>
-        </div>
-
+        <h1>Medication Assistance Action Plan</h1>
+        <p style="color: #64748b;">Generated: ${new Date().toLocaleDateString()}</p>
         ${profileHtml}
-
         <h2>Recommended Programs</h2>
-        <p style="color: #64748b; margin-bottom: 16px;">Based on your profile, here are the assistance programs you may qualify for. Click the links to apply.</p>
-
         ${programsHtml}
-
-        <h2>Next Steps</h2>
-        <ol style="line-height: 1.8;">
-          <li>Start with the programs marked as your best options for your insurance type</li>
-          <li>Gather required documents: proof of income, insurance card, prescription</li>
-          <li>Apply to multiple programs - you can use more than one!</li>
-          <li>Contact your transplant center social worker for additional help</li>
-          <li>If in crisis, call programs directly - many have expedited processing</li>
-        </ol>
-
-        <div class="footer">
+        <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">
           <p>Generated by TransplantMedicationNavigator.com</p>
-          <p>This is not medical advice. Always consult with your healthcare team about your medications.</p>
         </div>
-
         <script>window.onload = function() { window.print(); }</script>
       </body>
       </html>
@@ -570,19 +515,16 @@ const MedicationAssistantChat = () => {
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
-  // Render message content with markdown-like formatting
+  // Render message content
   const renderMessageContent = (content) => {
     if (!content) return null;
 
-    // Split by newlines and process
     const lines = content.split('\n');
 
     return lines.map((line, i) => {
-      // Bold text
       let processedLine = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      // Links
       processedLine = processedLine.replace(
         /\[([^\]]+)\]\(([^)]+)\)/g,
         '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:text-emerald-700 underline">$1</a>'
@@ -594,15 +536,11 @@ const MedicationAssistantChat = () => {
       if (line.startsWith('## ')) {
         return <h2 key={i} className="font-bold text-xl mt-4 mb-2 text-slate-900">{line.slice(3)}</h2>;
       }
-      if (line.startsWith('- ') || line.startsWith('• ')) {
-        return (
-          <li key={i} className="ml-4 mb-1" dangerouslySetInnerHTML={{ __html: processedLine.slice(2) }} />
-        );
+      if (line.startsWith('- ') || line.startsWith('* ')) {
+        return <li key={i} className="ml-4 mb-1" dangerouslySetInnerHTML={{ __html: processedLine.slice(2) }} />;
       }
       if (line.match(/^\d+\.\s/)) {
-        return (
-          <li key={i} className="ml-4 mb-1 list-decimal" dangerouslySetInnerHTML={{ __html: processedLine }} />
-        );
+        return <li key={i} className="ml-4 mb-1 list-decimal" dangerouslySetInnerHTML={{ __html: processedLine }} />;
       }
       if (line.trim() === '') {
         return <br key={i} />;
@@ -611,160 +549,396 @@ const MedicationAssistantChat = () => {
     });
   };
 
-  // Render current question options
-  const renderQuestionOptions = () => {
-    if (isComplete || isLoading) return null;
+  // Render medication search UI
+  const renderMedicationSearch = () => {
+    return (
+      <div className="p-3 bg-slate-50 rounded-xl space-y-3">
+        {selectedMedications.length > 0 && (
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
+            <div className="flex flex-wrap gap-2">
+              {selectedMedications.map((med) => (
+                <span
+                  key={med.id}
+                  className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
+                >
+                  {med.brand_name}
+                  <button
+                    onClick={() => handleMedicationRemove(med.id)}
+                    className="hover:bg-emerald-200 rounded-full p-0.5"
+                    aria-label={`Remove ${med.brand_name}`}
+                  >
+                    <X size={14} />
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
-    const question = QUESTIONS[currentQuestionIndex];
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <input
+            type="text"
+            value={medicationSearch}
+            onChange={(e) => setMedicationSearch(e.target.value)}
+            placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
+            className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+            autoFocus
+          />
+          {isSearching && (
+            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 animate-spin" size={18} />
+          )}
+        </div>
+
+        {medicationResults.length > 0 && (
+          <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
+            {medicationResults.map((med) => {
+              const isSelected = selectedMedications.find(m => m.id === med.id);
+              return (
+                <button
+                  key={med.id}
+                  onClick={() => handleMedicationSelect(med)}
+                  disabled={isSelected}
+                  className={`w-full text-left p-3 border-b border-slate-100 last:border-b-0 transition ${
+                    isSelected ? 'bg-emerald-50 opacity-50' : 'hover:bg-emerald-50'
+                  }`}
+                >
+                  <div className="font-medium text-slate-900 flex items-center gap-2">
+                    {med.brand_name}
+                    {isSelected && <Check size={16} className="text-emerald-600" />}
+                  </div>
+                  <div className="text-sm text-slate-500">{med.generic_name} {med.category && `* ${med.category}`}</div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
+          <button
+            onClick={() => handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: 'Custom entry' })}
+            className="w-full text-left p-3 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition"
+          >
+            <div className="font-medium text-emerald-700">Add "{medicationSearch}"</div>
+            <div className="text-sm text-slate-500">Add this medication to your list</div>
+          </button>
+        )}
+
+        {selectedMedications.length > 0 && (
+          <button
+            onClick={handleMedicationsContinue}
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
+          >
+            Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
+            <ChevronRight size={18} />
+          </button>
+        )}
+
+        {selectedMedications.length === 0 && (
+          <button
+            onClick={() => {
+              if (mode === 'chat') {
+                handleChatOptionSelect({ value: 'general', label: 'General assistance' });
+              } else {
+                setAnswer('medication', 'general');
+                nextQuizQuestion();
+              }
+            }}
+            className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
+          >
+            <div className="font-medium text-slate-700">Skip this step</div>
+            <div className="text-sm text-slate-500">Show general assistance programs</div>
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  // Render quiz progress indicator
+  const renderQuizProgress = () => {
+    return (
+      <div className="px-4 py-2 bg-slate-50 border-b border-slate-200">
+        <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
+          <span>Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}</span>
+          <span>{quizCompletionPercent}% complete</span>
+        </div>
+        <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-emerald-500 transition-all duration-300"
+            style={{ width: `${((quizProgress.currentQuestionIndex) / QUIZ_QUESTIONS.length) * 100}%` }}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  // Render quiz mode content
+  const renderQuizMode = () => {
+    if (quizProgress.isComplete || hasSeenResults) {
+      return renderUnifiedResults();
+    }
+
+    const question = currentQuizQuestion;
     if (!question) return null;
 
-    // Medication search
+    return (
+      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
+        {/* Question Card */}
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm mb-4">
+          <h3 className="text-lg font-bold text-slate-800 mb-1">{question.question}</h3>
+          {question.helpText && (
+            <p className="text-sm text-slate-500 mb-4">{question.helpText}</p>
+          )}
+        </div>
+
+        {/* Options or Medication Search */}
+        {question.type === 'medication_search' ? (
+          renderMedicationSearch()
+        ) : (
+          <div className="space-y-2">
+            {question.options?.map((option) => {
+              const isSelected = answers[question.id] === option.value;
+              return (
+                <button
+                  key={option.value}
+                  onClick={() => handleQuizOptionSelect(option)}
+                  className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                    isSelected
+                      ? 'border-emerald-500 bg-emerald-50'
+                      : option.urgent
+                      ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
+                      : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium text-slate-900 flex items-center gap-2">
+                        {option.label}
+                        {option.hint && (
+                          <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                            {option.hint}
+                          </span>
+                        )}
+                      </div>
+                      {option.description && (
+                        <div className="text-sm text-slate-500 mt-0.5">{option.description}</div>
+                      )}
+                    </div>
+                    {isSelected ? (
+                      <CheckCircle2 size={20} className="text-emerald-600" />
+                    ) : (
+                      <Circle size={20} className="text-slate-300" />
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Navigation */}
+        {quizProgress.currentQuestionIndex > 0 && (
+          <button
+            onClick={prevQuizQuestion}
+            className="mt-4 flex items-center gap-1 text-slate-600 hover:text-emerald-700 text-sm"
+          >
+            <ChevronLeft size={16} />
+            Previous question
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  // Render unified results
+  const renderUnifiedResults = () => {
+    const programsData = results.medicationPrograms?.length > 0
+      ? results.medicationPrograms
+      : [];
+
+    return (
+      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
+        {/* Success Header */}
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4 text-center">
+          <Sparkles className="mx-auto text-emerald-600 mb-2" size={28} />
+          <h3 className="font-bold text-emerald-800 text-lg">Your Personalized Results</h3>
+          <p className="text-sm text-emerald-600">Based on your profile, here are programs you may qualify for</p>
+        </div>
+
+        {/* Profile Summary */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+          <h4 className="font-semibold text-slate-700 mb-2 flex items-center gap-2">
+            <User size={16} />
+            Your Profile
+          </h4>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div><span className="text-slate-500">Insurance:</span> <span className="font-medium">{answers.insurance_type || '-'}</span></div>
+            <div><span className="text-slate-500">Stage:</span> <span className="font-medium">{answers.transplant_stage || '-'}</span></div>
+            <div><span className="text-slate-500">Organ:</span> <span className="font-medium">{answers.organ_type || '-'}</span></div>
+            <div><span className="text-slate-500">Cost:</span> <span className="font-medium">{answers.cost_burden || '-'}</span></div>
+          </div>
+        </div>
+
+        {/* Programs by Medication */}
+        {programsData.length > 0 ? (
+          <div className="space-y-4">
+            {programsData.map((medGroup, idx) => (
+              <div key={idx} className="border border-slate-300 rounded-xl overflow-hidden">
+                <div className="bg-slate-100 px-3 py-2 border-b border-slate-300">
+                  <div className="font-bold text-slate-800 flex items-center gap-2">
+                    <Pill size={16} className="text-emerald-600" />
+                    {medGroup.medication_name}
+                  </div>
+                  <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
+                </div>
+                <div className="p-3 space-y-2">
+                  {medGroup.programs?.length > 0 ? (
+                    medGroup.programs.map((program, pIdx) => (
+                      <div key={pIdx} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
+                          {program.program_type && (
+                            <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
+                              {program.program_type === 'copay_card' && 'Copay Card'}
+                              {program.program_type === 'pap' && 'Free Meds'}
+                              {program.program_type === 'foundation' && 'Foundation'}
+                            </span>
+                          )}
+                        </div>
+                        {program.max_benefit && (
+                          <div className="text-xs text-emerald-700 mt-1">
+                            <strong>Benefit:</strong> {program.max_benefit}
+                          </div>
+                        )}
+                        {program.application_url && (
+                          <a
+                            href={program.application_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                          >
+                            Apply <ExternalLink size={12} />
+                          </a>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-500 p-2">
+                      Contact your transplant center social worker for assistance options.
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : results.message ? (
+          <div className="bg-white border border-slate-200 rounded-xl p-4">
+            <div className="text-sm text-slate-700">{renderMessageContent(results.message)}</div>
+          </div>
+        ) : (
+          <div className="text-center py-8 text-slate-500">
+            <AlertCircle size={32} className="mx-auto mb-2 opacity-50" />
+            <p>No specific programs found. Contact your transplant center for assistance.</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Render chat options
+  const renderChatQuestionOptions = () => {
+    if (isChatComplete || isLoading) return null;
+
+    const question = QUIZ_QUESTIONS[chatQuestionIndex];
+    if (!question) return null;
+
     if (question.type === 'medication_search') {
+      return renderMedicationSearch();
+    }
+
+    return (
+      <div className="p-3 bg-slate-50 rounded-xl space-y-2">
+        {question.options?.map((option) => (
+          <button
+            key={option.value}
+            onClick={() => handleChatOptionSelect(option)}
+            className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+              option.urgent
+                ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
+                : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
+            }`}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-1">
+                <div className="font-medium text-slate-900 flex items-center gap-2">
+                  {option.label}
+                  {option.hint && (
+                    <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                      {option.hint}
+                    </span>
+                  )}
+                </div>
+                {option.description && (
+                  <div className="text-sm text-slate-500 mt-0.5">{option.description}</div>
+                )}
+              </div>
+              <ChevronRight size={18} className="text-slate-400 mt-1" />
+            </div>
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  // Render programs in messages
+  const renderMessagePrograms = (message) => {
+    if (!message.medicationPrograms?.length && !message.programs?.length) return null;
+
+    const programsData = message.medicationPrograms?.length > 0
+      ? message.medicationPrograms
+      : null;
+
+    if (programsData) {
       return (
-        <div className="p-3 bg-slate-50 rounded-xl space-y-3">
-          {/* Selected medications */}
-          {selectedMedications.length > 0 && (
-            <div className="space-y-2">
-              <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
-              <div className="flex flex-wrap gap-2">
-                {selectedMedications.map((med) => (
-                  <span
-                    key={med.id}
-                    className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
-                  >
-                    {med.brand_name}
-                    <button
-                      onClick={() => handleMedicationRemove(med.id)}
-                      className="hover:bg-emerald-200 rounded-full p-0.5"
-                      aria-label={`Remove ${med.brand_name}`}
-                    >
-                      <X size={14} />
-                    </button>
-                  </span>
-                ))}
+        <div className="mt-4 space-y-4">
+          {programsData.map((medGroup, medIdx) => (
+            <div key={medIdx} className="border border-slate-300 rounded-xl overflow-hidden">
+              <div className="bg-slate-100 px-3 py-2 border-b border-slate-300">
+                <div className="font-bold text-slate-800 flex items-center gap-2">
+                  <Pill size={16} className="text-emerald-600" />
+                  {medGroup.medication_name}
+                </div>
+                <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
+              </div>
+              <div className="p-2 space-y-2">
+                {medGroup.programs?.length > 0 ? (
+                  medGroup.programs.map((program, idx) => (
+                    <div key={idx} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                      <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
+                      {program.application_url && (
+                        <a
+                          href={program.application_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                        >
+                          Apply <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-slate-500 p-2">Contact your transplant center.</p>
+                )}
               </div>
             </div>
-          )}
-
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input
-              type="text"
-              value={medicationSearch}
-              onChange={(e) => setMedicationSearch(e.target.value)}
-              placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name (e.g., Tacrolimus, Prograf)..."}
-              className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-              autoFocus
-            />
-            {isSearching && (
-              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 animate-spin" size={18} />
-            )}
-          </div>
-
-          {/* Show database results if any */}
-          {medicationResults.length > 0 && (
-            <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
-              {medicationResults.map((med) => {
-                const isSelected = selectedMedications.find(m => m.id === med.id);
-                return (
-                  <button
-                    key={med.id}
-                    onClick={() => handleMedicationSelect(med)}
-                    disabled={isSelected}
-                    className={`w-full text-left p-3 border-b border-slate-100 last:border-b-0 transition ${
-                      isSelected ? 'bg-emerald-50 opacity-50' : 'hover:bg-emerald-50'
-                    }`}
-                  >
-                    <div className="font-medium text-slate-900 flex items-center gap-2">
-                      {med.brand_name}
-                      {isSelected && <Check size={16} className="text-emerald-600" />}
-                    </div>
-                    <div className="text-sm text-slate-500">{med.generic_name} • {med.category}</div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Use typed medication name if no DB results */}
-          {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
-            <button
-              onClick={() => {
-                handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: 'Custom entry' });
-              }}
-              className="w-full text-left p-3 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition"
-            >
-              <div className="font-medium text-emerald-700">Add "{medicationSearch}"</div>
-              <div className="text-sm text-slate-500">Add this medication to your list</div>
-            </button>
-          )}
-
-          {/* Continue button when medications selected */}
-          {selectedMedications.length > 0 && (
-            <button
-              onClick={handleMedicationsContinue}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
-            >
-              Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
-              <ChevronRight size={18} />
-            </button>
-          )}
-
-          {/* Skip option */}
-          {question.allowSkip && selectedMedications.length === 0 && (
-            <button
-              onClick={() => handleOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' })}
-              className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
-            >
-              <div className="font-medium text-slate-700">{question.skipLabel || 'Skip this step'}</div>
-              <div className="text-sm text-slate-500">Show general assistance programs</div>
-            </button>
-          )}
+          ))}
         </div>
       );
     }
 
-    // Single select options
-    return (
-      <div className="p-3 bg-slate-50 rounded-xl space-y-2">
-        {question.options.map((option) => {
-          const Icon = option.icon;
-          return (
-            <button
-              key={option.value}
-              onClick={() => handleOptionSelect(option)}
-              className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
-                option.urgent
-                  ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
-                  : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                {Icon && (
-                  <div className={`p-2 rounded-lg ${option.urgent ? 'bg-red-100' : 'bg-emerald-100'}`}>
-                    <Icon size={18} className={option.urgent ? 'text-red-600' : 'text-emerald-600'} />
-                  </div>
-                )}
-                <div className="flex-1">
-                  <div className="font-medium text-slate-900 flex items-center gap-2">
-                    {option.label}
-                    {option.hint && (
-                      <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
-                        {option.hint}
-                      </span>
-                    )}
-                  </div>
-                  {option.description && (
-                    <div className="text-sm text-slate-500 mt-0.5">{option.description}</div>
-                  )}
-                </div>
-                <ChevronRight size={18} className="text-slate-400 mt-1" />
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    );
+    return null;
   };
 
   return (
@@ -774,256 +948,133 @@ const MedicationAssistantChat = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105"
-          aria-label="Open medication assistance chat"
+          aria-label="Open medication assistance"
         >
           <MessageCircle size={24} />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">
-            Need help with medication costs?
+            {hasProgress ? 'Continue where you left off' : 'Need help with medication costs?'}
           </span>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat/Quiz Window */}
       {isOpen && (
         <div
           className="bg-white rounded-2xl shadow-2xl w-[calc(100vw-2rem)] sm:w-[420px] h-[85vh] sm:h-[650px] max-h-[700px] flex flex-col border border-slate-200 animate-in slide-in-from-bottom-5"
           role="dialog"
           aria-modal="true"
-          aria-label="Medication assistance chat"
+          aria-label="Medication assistance"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/20 p-2 rounded-xl">
-                <HeartHandshake size={22} />
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-t-2xl">
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-white/20 p-2 rounded-xl">
+                  <HeartHandshake size={22} />
+                </div>
+                <div>
+                  <h2 className="font-bold text-lg">Medication Navigator</h2>
+                  <p className="text-xs text-emerald-100">Find assistance programs</p>
+                </div>
               </div>
-              <div>
-                <h2 className="font-bold text-lg">Medication Navigator</h2>
-                <p className="text-xs text-emerald-100">Find assistance programs</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1">
-              {(messages.length > 1 || isComplete) && (
+              <div className="flex items-center gap-1">
+                {(hasProgress || messages.length > 1 || isChatComplete) && (
+                  <button
+                    onClick={handleReset}
+                    className="hover:bg-white/20 p-2 rounded-lg transition"
+                    aria-label="Start over"
+                    title="Start over"
+                  >
+                    <RefreshCw size={18} />
+                  </button>
+                )}
                 <button
-                  onClick={resetChat}
+                  onClick={() => setIsOpen(false)}
                   className="hover:bg-white/20 p-2 rounded-lg transition"
-                  aria-label="Start over"
-                  title="Start over"
+                  aria-label="Close"
                 >
-                  <RefreshCw size={18} />
+                  <X size={20} />
                 </button>
-              )}
-              <button
-                onClick={() => setIsOpen(false)}
-                className="hover:bg-white/20 p-2 rounded-lg transition"
-                aria-label="Close chat"
-              >
-                <X size={20} />
-              </button>
+              </div>
+            </div>
+
+            {/* Mode Toggle */}
+            <div className="flex bg-white/20 rounded-lg p-1">
+              {MODE_TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = mode === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleModeSwitch(tab.id)}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition ${
+                      isActive
+                        ? 'bg-white text-emerald-700'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <Icon size={16} />
+                    {tab.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Messages Area */}
-          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
-            {messages.map((message, index) => {
-              // Find the last user message to attach ref for scroll positioning
-              const isLastUserMessage = message.role === 'user' &&
-                index === messages.map((m, i) => m.role === 'user' ? i : -1).filter(i => i >= 0).pop();
+          {/* Quiz Progress Bar */}
+          {mode === 'quiz' && !quizProgress.isComplete && !hasSeenResults && renderQuizProgress()}
 
-              return (
-              <div
-                key={message.id}
-                ref={isLastUserMessage ? lastUserMessageRef : null}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-2xl p-4 ${
-                    message.role === 'user'
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-white border border-slate-200 text-slate-800 shadow-sm'
-                  }`}
-                >
-                  <div className="text-sm leading-relaxed">
-                    {renderMessageContent(message.content)}
+          {/* Content Area */}
+          {mode === 'quiz' ? (
+            renderQuizMode()
+          ) : (
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
+              {messages.map((message, index) => {
+                const isLastUserMessage = message.role === 'user' &&
+                  index === messages.map((m, i) => m.role === 'user' ? i : -1).filter(i => i >= 0).pop();
+
+                return (
+                  <div
+                    key={message.id}
+                    ref={isLastUserMessage ? lastUserMessageRef : null}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[85%] rounded-2xl p-4 ${
+                        message.role === 'user'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-white border border-slate-200 text-slate-800 shadow-sm'
+                      }`}
+                    >
+                      <div className="text-sm leading-relaxed">
+                        {renderMessageContent(message.content)}
+                      </div>
+                      {renderMessagePrograms(message)}
+                    </div>
                   </div>
+                );
+              })}
 
-                  {/* Render programs grouped by medication */}
-                  {message.medicationPrograms && message.medicationPrograms.length > 0 && (
-                    <div className="mt-4 space-y-4">
-                      {message.medicationPrograms.map((medGroup, medIdx) => (
-                        <div key={medIdx} className="border border-slate-300 rounded-xl overflow-hidden">
-                          {/* Medication Header */}
-                          <div className="bg-slate-100 px-3 py-2 border-b border-slate-300">
-                            <div className="font-bold text-slate-800 flex items-center gap-2">
-                              <Pill size={16} className="text-emerald-600" />
-                              {medGroup.medication_name}
-                            </div>
-                            <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
-                          </div>
-
-                          {/* Cost Plus Drugs option if available for this medication */}
-                          {medGroup.cost_plus_available && (
-                            <div className="p-2 border-b border-slate-200">
-                              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                                <div className="flex items-start justify-between gap-2">
-                                  <div>
-                                    <div className="font-semibold text-blue-800 text-sm">
-                                      Mark Cuban Cost Plus Drugs
-                                    </div>
-                                    <div className="text-xs text-blue-600 mt-1">
-                                      Transparent pricing: Cost + 15% + $5 pharmacy fee + $5 shipping
-                                    </div>
-                                  </div>
-                                  <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                                    Discount
-                                  </span>
-                                </div>
-                                <a
-                                  href="https://costplusdrugs.com"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
-                                >
-                                  Check Price <ExternalLink size={12} />
-                                </a>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Programs for this medication */}
-                          <div className="p-2 space-y-2">
-                            {medGroup.programs && medGroup.programs.length > 0 ? (
-                              medGroup.programs.map((program, idx) => (
-                                <div
-                                  key={idx}
-                                  className="bg-emerald-50 border border-emerald-200 rounded-lg p-3"
-                                >
-                                  <div className="flex items-start justify-between gap-2">
-                                    <div className="font-semibold text-emerald-800 text-sm">
-                                      {program.program_name}
-                                    </div>
-                                    {program.program_type && (
-                                      <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                                        {program.program_type === 'copay_card' && 'Copay Card'}
-                                        {program.program_type === 'pap' && 'Free Meds'}
-                                        {program.program_type === 'foundation' && 'Foundation'}
-                                        {program.program_type === 'discount_pharmacy' && 'Discount'}
-                                        {program.program_type === 'discount_card' && 'Discount'}
-                                      </span>
-                                    )}
-                                  </div>
-                                  {program.max_benefit && (
-                                    <div className="text-xs text-emerald-700 mt-1">
-                                      <strong>Benefit:</strong> {program.max_benefit}
-                                    </div>
-                                  )}
-                                  {program.eligibility_summary && (
-                                    <div className="text-xs text-slate-600 mt-1">
-                                      <strong>Eligibility:</strong> {program.eligibility_summary}
-                                    </div>
-                                  )}
-                                  {program.income_limit && (
-                                    <div className="text-xs text-slate-600 mt-1">
-                                      <strong>Income Limit:</strong> {program.income_limit}
-                                    </div>
-                                  )}
-                                  {program.application_url && (
-                                    <a
-                                      href={program.application_url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
-                                    >
-                                      {program.program_type === 'discount_pharmacy' ? 'Check Prices' :
-                                       program.program_type === 'pap' ? 'Apply for Free Meds' :
-                                       program.program_type === 'foundation' ? 'Check Fund Status' :
-                                       'Apply Now'} <ExternalLink size={12} />
-                                    </a>
-                                  )}
-                                </div>
-                              ))
-                            ) : (
-                              <div className="text-sm text-slate-500 p-2">
-                                No specific programs found in our database. Contact your transplant center social worker for assistance.
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div className="flex items-center gap-2 text-slate-500">
+                      <Loader2 size={18} className="animate-spin" />
+                      <span className="text-sm">Finding the best options for you...</span>
                     </div>
-                  )}
-
-                  {/* Fallback: Render flat programs list if no medicationPrograms */}
-                  {(!message.medicationPrograms || message.medicationPrograms.length === 0) && message.programs && message.programs.length > 0 && (
-                    <div className="mt-4 space-y-3">
-                      {message.programs.map((program, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-emerald-50 border border-emerald-200 rounded-xl p-3"
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="font-bold text-emerald-800 flex items-center gap-2">
-                              <Pill size={16} className="flex-shrink-0" />
-                              {program.program_name}
-                            </div>
-                            {program.program_type && (
-                              <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                                {program.program_type === 'copay_card' && 'Copay Card'}
-                                {program.program_type === 'pap' && 'Free Meds'}
-                                {program.program_type === 'foundation' && 'Foundation'}
-                                {program.program_type === 'discount_pharmacy' && 'Discount'}
-                                {program.program_type === 'discount_card' && 'Discount'}
-                              </span>
-                            )}
-                          </div>
-                          {program.max_benefit && (
-                            <div className="text-sm text-emerald-700 mt-1">
-                              <strong>Benefit:</strong> {program.max_benefit}
-                            </div>
-                          )}
-                          {program.application_url && (
-                            <a
-                              href={program.application_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-sm bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
-                            >
-                              {program.program_type === 'discount_pharmacy' ? 'Check Prices' :
-                               program.program_type === 'pap' ? 'Apply for Free Meds' :
-                               program.program_type === 'foundation' ? 'Check Fund Status' :
-                               'Apply Now'} <ExternalLink size={14} />
-                            </a>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-              );
-            })}
-
-            {/* Loading indicator */}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <Loader2 size={18} className="animate-spin" />
-                    <span className="text-sm">Finding the best options for you...</span>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Question options */}
-            {!isLoading && !isComplete && messages.length > 0 && renderQuestionOptions()}
+              {!isLoading && !isChatComplete && messages.length > 0 && renderChatQuestionOptions()}
 
-            <div ref={messagesEndRef} />
-          </div>
+              <div ref={messagesEndRef} />
+            </div>
+          )}
 
-          {/* Input Area */}
+          {/* Footer / Input Area */}
           <div className="border-t border-slate-200 p-4 bg-white rounded-b-2xl">
-            {isComplete ? (
+            {(isChatComplete || (mode === 'quiz' && (quizProgress.isComplete || hasSeenResults))) ? (
               <div className="space-y-2">
                 <button
                   onClick={printActionPlan}
@@ -1033,7 +1084,7 @@ const MedicationAssistantChat = () => {
                   Print Action Plan
                 </button>
                 <button
-                  onClick={resetChat}
+                  onClick={handleReset}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
                 >
                   <RefreshCw size={18} />
@@ -1047,7 +1098,7 @@ const MedicationAssistantChat = () => {
                   Browse All Medications
                 </a>
               </div>
-            ) : (
+            ) : mode === 'chat' ? (
               <div className="flex gap-2">
                 <input
                   ref={inputRef}
@@ -1067,6 +1118,11 @@ const MedicationAssistantChat = () => {
                 >
                   <Send size={20} />
                 </button>
+              </div>
+            ) : (
+              <div className="text-center text-sm text-slate-500">
+                <ArrowLeftRight size={16} className="inline mr-1" />
+                Switch to Chat mode to ask questions
               </div>
             )}
           </div>
