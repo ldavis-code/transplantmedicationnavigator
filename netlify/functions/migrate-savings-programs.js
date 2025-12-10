@@ -1618,7 +1618,64 @@ const savingsPrograms = [
   },
 
   // =====================================================
-  // SECTION 12: HEPATITIS B/C MEDICATIONS
+  // SECTION 12: LIVER SUPPORT MEDICATIONS
+  // =====================================================
+
+  // ----- XIFAXAN (Rifaximin) -----
+  {
+    medication_id: 'xifaxan',
+    program_name: 'Xifaxan Copay Savings Program',
+    program_type: 'copay_card',
+    commercial_eligible: true,
+    medicare_eligible: false,
+    medicaid_eligible: false,
+    uninsured_eligible: false,
+    tricare_va_eligible: false,
+    ihs_tribal_eligible: false,
+    income_limit: 'None',
+    max_benefit: 'Pay as little as $0 per prescription',
+    application_url: 'https://xifaxan.copaysavingsprogram.com/',
+    phone: '1-866-209-7604',
+    state_restrictions: 'NOT valid in CA or MA',
+    notes: 'For hepatic encephalopathy in liver disease. Commercial insurance only.',
+    is_active: true
+  },
+  {
+    medication_id: 'xifaxan',
+    program_name: 'Bausch Health Patient Assistance Program',
+    program_type: 'pap',
+    commercial_eligible: false,
+    medicare_eligible: false,
+    medicaid_eligible: false,
+    uninsured_eligible: true,
+    tricare_va_eligible: false,
+    ihs_tribal_eligible: false,
+    income_limit: '300% FPL',
+    max_benefit: 'Free medication',
+    application_url: 'https://www.bauschhealth.com/patients',
+    phone: '1-800-321-4576',
+    notes: 'For uninsured patients.',
+    is_active: true
+  },
+  {
+    medication_id: 'xifaxan',
+    program_name: 'GoodRx / SingleCare Discount',
+    program_type: 'discount_card',
+    commercial_eligible: true,
+    medicare_eligible: true,
+    medicaid_eligible: true,
+    uninsured_eligible: true,
+    tricare_va_eligible: true,
+    ihs_tribal_eligible: true,
+    income_limit: 'None',
+    max_benefit: 'Savings on brand (no generic available)',
+    application_url: 'https://www.goodrx.com/xifaxan',
+    notes: 'Brand only - no generic rifaximin currently available.',
+    is_active: true
+  },
+
+  // =====================================================
+  // SECTION 13: HEPATITIS B/C MEDICATIONS
   // =====================================================
 
   // ----- ENTECAVIR (Baraclude) -----
