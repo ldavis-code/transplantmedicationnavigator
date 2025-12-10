@@ -35,6 +35,49 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+// Known medications available on Cost Plus Drugs (fallback if DB not updated)
+// Generic names in lowercase for matching
+const COST_PLUS_MEDICATIONS = new Set([
+  'tacrolimus',        // Prograf
+  'mycophenolate',     // CellCept
+  'mycophenolate mofetil',
+  'mycophenolic acid', // Myfortic
+  'sirolimus',         // Rapamune
+  'cyclosporine',      // Neoral, Sandimmune
+  'prednisone',
+  'azathioprine',      // Imuran
+  'everolimus',        // Zortress
+  'valganciclovir',    // Valcyte
+  'acyclovir',
+  'valacyclovir',      // Valtrex
+  'fluconazole',
+  'nystatin',
+  'sulfamethoxazole',  // Bactrim
+  'trimethoprim',
+  'omeprazole',
+  'pantoprazole',
+  'famotidine',
+  'metoprolol',
+  'lisinopril',
+  'amlodipine',
+  'atorvastatin',
+  'pravastatin',
+  'metformin',
+]);
+
+// Check if a medication is available on Cost Plus (using generic name)
+const isCostPlusAvailable = (genericName) => {
+  if (!genericName) return false;
+  const normalized = genericName.toLowerCase().trim();
+  // Check exact match or partial match
+  for (const med of COST_PLUS_MEDICATIONS) {
+    if (normalized.includes(med) || med.includes(normalized)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 // System prompt for Claude
 const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant patients on TransplantMedicationNavigator.com. Your role is to help patients, carepartners, and healthcare professionals find financial assistance for transplant medications.
 
@@ -504,8 +547,11 @@ const handleAction = async (action, body) => {
             medicationDetailsList.push(details);
             medicationNames.push(`${details.brand_name} (${details.generic_name})`);
 
+            // Check Cost Plus availability - use DB value OR fallback to known list
+            const costPlusAvail = details.cost_plus_available || isCostPlusAvailable(details.generic_name);
+
             // Track if available on Cost Plus (don't add as individual program)
-            if (details.cost_plus_available) {
+            if (costPlusAvail) {
               costPlusMedications.push({
                 brand_name: details.brand_name,
                 generic_name: details.generic_name
@@ -520,7 +566,7 @@ const handleAction = async (action, body) => {
               medication_id: medId,
               medication_name: details.brand_name,
               generic_name: details.generic_name,
-              cost_plus_available: details.cost_plus_available || false,
+              cost_plus_available: costPlusAvail,
               programs: []
             };
 
@@ -537,13 +583,20 @@ const handleAction = async (action, body) => {
 
             medicationPrograms.push(medEntry);
           } else {
-            // User typed a medication name not in DB
+            // User typed a medication name not in DB - check if it's on Cost Plus
+            const customCostPlusAvail = isCostPlusAvailable(medId);
             medicationNames.push(medId);
+            if (customCostPlusAvail) {
+              costPlusMedications.push({
+                brand_name: medId,
+                generic_name: medId
+              });
+            }
             medicationPrograms.push({
               medication_id: medId,
               medication_name: medId,
-              generic_name: 'Custom entry',
-              cost_plus_available: false,
+              generic_name: medId,
+              cost_plus_available: customCostPlusAvail,
               programs: []
             });
           }
