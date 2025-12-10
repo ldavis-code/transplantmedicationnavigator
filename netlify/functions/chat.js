@@ -59,12 +59,6 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 - TRICARE/VA: Use VA pharmacy benefits primarily
 - Uninsured: Focus on Patient Assistance Programs (PAPs) for FREE medication, plus discount cards for immediate savings
 
-**Cost Plus Drugs Logic:**
-- When a medication IS available on Cost Plus Drugs, ALWAYS mention it FIRST as a price check option
-- Cost Plus pricing: Cost + 15% markup + $5 pharmacy fee + $5 shipping
-- No insurance needed - anyone can use it
-- When a medication is NOT on Cost Plus, acknowledge this and move to other options
-
 **Response Format:**
 - Use **bold** for emphasis
 - Use numbered lists for step-by-step instructions
@@ -216,22 +210,10 @@ const getMedicationDetails = async (medicationId) => {
 };
 
 // Format programs for display - ordered by insurance type
-// Now accepts costPlusAvailable from the medications table
+// Cost Plus Drugs is now handled separately in the UI, so we don't include it here
 const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = false) => {
   if (!programs || programs.length === 0) {
-    // Still show Cost Plus info even if no programs in database
-    let context = '';
-    if (costPlusAvailable) {
-      context += '\n**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n';
-      context += '- Mark Cuban Cost Plus Drugs\n';
-      context += '  Price: Cost + 15% markup + $5 pharmacy fee + $5 shipping\n';
-      context += '  URL: https://costplusdrugs.com\n';
-      context += '  (No insurance needed, transparent pricing - check this price first!)\n\n';
-    } else {
-      context += '\n**ℹ️ Cost Plus Drugs:** This medication is NOT currently available on Cost Plus Drugs.\n\n';
-    }
-    context += 'NO OTHER PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
-    return context;
+    return 'NO PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
   }
 
   let context = '';
@@ -242,18 +224,6 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
   const discountPharmacies = programs.filter(p => p.program_type === 'discount_pharmacy');
   const foundations = programs.filter(p => p.program_type === 'foundation');
   const paps = programs.filter(p => p.program_type === 'pap');
-
-  // FIRST: Check Cost Plus Drugs availability from medication table (not savings_programs)
-  if (costPlusAvailable) {
-    context += '\n**✓ COST PLUS DRUGS - THIS MEDICATION IS AVAILABLE:**\n';
-    context += '- Mark Cuban Cost Plus Drugs\n';
-    context += '  Price: Cost + 15% markup + $5 pharmacy fee + $5 shipping\n';
-    context += '  URL: https://costplusdrugs.com\n';
-    context += '  (No insurance needed, transparent pricing - check this price first!)\n';
-    context += '  **ALWAYS mention this option first and recommend the patient compare this price to their copay.**\n';
-  } else {
-    context += '\n**ℹ️ Cost Plus Drugs:** This medication is NOT currently available on Cost Plus Drugs.\n';
-  }
 
   // Order depends on insurance type
   if (insuranceType === 'commercial') {
@@ -370,13 +340,12 @@ const generateClaudeResponse = async (userContext, programs, costPlusAvailable =
 - Insurance: ${userContext.insurance_type || 'Not specified'}
 - Medication: ${userContext.medication_name || 'Not specified'}
 - Cost Burden: ${userContext.cost_burden || 'Not specified'}
-- Cost Plus Drugs Available: ${costPlusAvailable ? 'YES - mention this first!' : 'NO - not available on Cost Plus'}
 
 **SPECIFIC PROGRAMS FROM DATABASE (${programCount} programs found):**
 ${programContext}
 
 **INSTRUCTIONS:**
-1. ${costPlusAvailable ? 'START by mentioning Cost Plus Drugs is available for this medication and recommend checking the price at costplusdrugs.com' : 'Note that this medication is NOT available on Cost Plus Drugs, then proceed to other options'}
+1. DO NOT mention Cost Plus Drugs - it is displayed separately in the UI
 2. ONLY recommend the specific programs listed above from the database - do NOT make up programs or give generic advice
 3. Present programs in the order shown above (they are already sorted by priority for this insurance type)
 4. Include the specific URLs and application steps from the database
@@ -659,17 +628,10 @@ Please help them with their question about medication assistance. If they're ask
   }
 };
 
-// Fallback message if Claude API fails - now includes costPlusAvailable
+// Fallback message if Claude API fails
+// Cost Plus Drugs is handled separately in the UI
 const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAvailable = false) => {
   let message = "Based on your profile, here are your assistance options:\n\n";
-
-  // Always mention Cost Plus status first
-  if (costPlusAvailable) {
-    message += "**✓ Good news! This medication is available on Cost Plus Drugs.**\n";
-    message += "Check the price at https://costplusdrugs.com - their transparent pricing (cost + 15% + $5 pharmacy fee + $5 shipping) may be cheaper than your copay.\n\n";
-  } else {
-    message += "**Note:** This medication is not currently available on Cost Plus Drugs.\n\n";
-  }
 
   if (insuranceType === 'commercial') {
     message += "**With Commercial Insurance, you have great options:**\n\n";
@@ -684,7 +646,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
   } else if (insuranceType === 'uninsured') {
     message += "**Without insurance, focus on these options:**\n\n";
     message += "1. **Patient Assistance Programs (PAPs)** - FREE medication from manufacturers! Most require income under 400% of poverty level.\n";
-    message += "2. **Discount Cards** - GoodRx, SingleCare, and Cost Plus Drugs can save 80%+ while your PAP processes.\n\n";
+    message += "2. **Discount Cards** - GoodRx and SingleCare can save 80%+ while your PAP processes.\n\n";
   }
 
   if (costBurden === 'crisis') {
