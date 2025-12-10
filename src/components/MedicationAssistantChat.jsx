@@ -16,7 +16,7 @@ import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 // Mode toggle tabs
 const MODE_TABS = [
   { id: 'chat', label: 'Chat', icon: MessageCircle, description: 'Conversational guidance' },
-  { id: 'quiz', label: 'Quick Quiz', icon: ClipboardList, description: 'Step-by-step questions' },
+  { id: 'quiz', label: 'My Path Quiz', icon: ClipboardList, description: 'Step-by-step questions' },
 ];
 
 const MedicationAssistantChat = () => {
