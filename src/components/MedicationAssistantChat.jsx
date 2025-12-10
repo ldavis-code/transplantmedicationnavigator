@@ -106,20 +106,27 @@ const MedicationAssistantChat = () => {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
+  const lastUserMessageRef = useRef(null);
 
-  // Scroll to bottom of messages
-  const scrollToBottom = useCallback(() => {
-    // Use setTimeout to ensure DOM has updated
+  // Scroll to show the last user message at the top with answer below
+  const scrollToLastUserMessage = useCallback(() => {
     setTimeout(() => {
-      if (messagesContainerRef.current) {
+      if (lastUserMessageRef.current && messagesContainerRef.current) {
+        // Scroll to position the user's message near the top of the visible area
+        const container = messagesContainerRef.current;
+        const userMessage = lastUserMessageRef.current;
+        const offsetTop = userMessage.offsetTop - 16; // 16px padding from top
+        container.scrollTop = offsetTop;
+      } else if (messagesContainerRef.current) {
+        // Fallback: scroll to bottom if no user message ref
         messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
       }
-    }, 100);
+    }, 150);
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading, scrollToBottom]);
+    scrollToLastUserMessage();
+  }, [messages, isLoading, scrollToLastUserMessage]);
 
   // Initialize chat when opened
   useEffect(() => {
@@ -807,9 +814,15 @@ const MedicationAssistantChat = () => {
 
           {/* Messages Area */}
           <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-50 to-white">
-            {messages.map((message) => (
+            {messages.map((message, index) => {
+              // Find the last user message to attach ref for scroll positioning
+              const isLastUserMessage = message.role === 'user' &&
+                index === messages.map((m, i) => m.role === 'user' ? i : -1).filter(i => i >= 0).pop();
+
+              return (
               <div
                 key={message.id}
+                ref={isLastUserMessage ? lastUserMessageRef : null}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
@@ -952,7 +965,8 @@ const MedicationAssistantChat = () => {
                   )}
                 </div>
               </div>
-            ))}
+              );
+            })}
 
             {/* Loading indicator */}
             {isLoading && (
