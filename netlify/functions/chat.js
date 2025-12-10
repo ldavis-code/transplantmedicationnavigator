@@ -658,8 +658,8 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
 
   if (programs && programs.length > 0) {
     message += "**Specific programs I found for you:**\n";
-    programs.slice(0, 3).forEach((p, i) => {
-      message += `${i + 1}. ${p.program_name} - ${p.max_benefit || 'Savings available'}\n`;
+    programs.slice(0, 3).forEach((p) => {
+      message += `• ${p.program_name} - ${p.max_benefit || 'Savings available'}\n`;
     });
   }
 
