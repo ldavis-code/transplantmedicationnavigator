@@ -15,6 +15,8 @@ import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 import DisclaimerModal from './components/DisclaimerModal.jsx';
 // AI Medication Assistant Chat Widget
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
+// Chat Quiz Context Provider
+import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
 import {
     Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck,
     Menu, X, ShieldAlert, HeartHandshake, CheckCircle, ChevronLeft, DollarSign,
@@ -4009,27 +4011,29 @@ const PageLoadingFallback = () => (
 // App Component
 const App = () => {
     return (
-        <BrowserRouter>
-            <DisclaimerModal />
-            <GoogleAnalytics />
-            <ScrollToTop />
-            <Layout>
-                <Suspense fallback={<PageLoadingFallback />}>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/wizard" element={<Wizard />} />
-                        <Route path="/medications" element={<MedicationSearch />} />
-                        <Route path="/education" element={<Education />} />
-                        <Route path="/application-help" element={<ApplicationHelp />} />
-                        <Route path="/faq" element={<LazyFAQ />} />
-                        <Route path="/survey" element={<LazySurveyLanding />} />
-                        <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
-                        <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
-                        <Route path="*" element={<LazyNotFound />} />
-                    </Routes>
-                </Suspense>
-            </Layout>
-        </BrowserRouter>
+        <ChatQuizProvider>
+            <BrowserRouter>
+                <DisclaimerModal />
+                <GoogleAnalytics />
+                <ScrollToTop />
+                <Layout>
+                    <Suspense fallback={<PageLoadingFallback />}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/wizard" element={<Wizard />} />
+                            <Route path="/medications" element={<MedicationSearch />} />
+                            <Route path="/education" element={<Education />} />
+                            <Route path="/application-help" element={<ApplicationHelp />} />
+                            <Route path="/faq" element={<LazyFAQ />} />
+                            <Route path="/survey" element={<LazySurveyLanding />} />
+                            <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
+                            <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
+                            <Route path="*" element={<LazyNotFound />} />
+                        </Routes>
+                    </Suspense>
+                </Layout>
+            </BrowserRouter>
+        </ChatQuizProvider>
     );
 };
 
