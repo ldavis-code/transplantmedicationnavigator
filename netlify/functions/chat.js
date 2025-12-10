@@ -61,9 +61,9 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 
 **Response Format:**
 - Use **bold** for emphasis
-- Use numbered lists for step-by-step instructions
+- Use bullet points (not numbered lists) for any lists
 - Keep responses concise but complete
-- Include specific program names and websites when available`;
+- Do NOT use numbered lists - programs are displayed separately in the UI`;
 
 // Generate a unique conversation ID
 const generateConversationId = () => {
@@ -635,18 +635,18 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
 
   if (insuranceType === 'commercial') {
     message += "**With Commercial Insurance, you have great options:**\n\n";
-    message += "1. **Copay Cards** - Your best first step! Manufacturers offer cards that can reduce your copay to $0-$50/month.\n";
-    message += "2. **Discount Cards** - GoodRx and SingleCare can sometimes beat your copay.\n\n";
+    message += "• **Copay Cards** - Your best first step! Manufacturers offer cards that can reduce your copay to $0-$50/month.\n";
+    message += "• **Discount Cards** - GoodRx and SingleCare can sometimes beat your copay.\n\n";
   } else if (insuranceType === 'medicare') {
     message += "**Important for Medicare patients:**\n\n";
     message += "You cannot use manufacturer copay cards (it's prohibited), but you have other options:\n\n";
-    message += "1. **Foundations** - HealthWell, PAN Foundation, and Patient Advocate Foundation offer copay assistance.\n";
-    message += "2. **Patient Assistance Programs** - Apply directly to manufacturers for free medication.\n";
-    message += "3. **Discount Cards** - GoodRx may offer lower prices than your Part D copay.\n\n";
+    message += "• **Foundations** - HealthWell, PAN Foundation, and Patient Advocate Foundation offer copay assistance.\n";
+    message += "• **Patient Assistance Programs** - Apply directly to manufacturers for free medication.\n";
+    message += "• **Discount Cards** - GoodRx may offer lower prices than your Part D copay.\n\n";
   } else if (insuranceType === 'uninsured') {
     message += "**Without insurance, focus on these options:**\n\n";
-    message += "1. **Patient Assistance Programs (PAPs)** - FREE medication from manufacturers! Most require income under 400% of poverty level.\n";
-    message += "2. **Discount Cards** - GoodRx and SingleCare can save 80%+ while your PAP processes.\n\n";
+    message += "• **Patient Assistance Programs (PAPs)** - FREE medication from manufacturers! Most require income under 400% of poverty level.\n";
+    message += "• **Discount Cards** - GoodRx and SingleCare can save 80%+ while your PAP processes.\n\n";
   }
 
   if (costBurden === 'crisis') {
