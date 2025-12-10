@@ -501,7 +501,7 @@ const handleAction = async (action, body) => {
       // Handle medication - could be a single ID, array of IDs, typed name, or "general"
       let medicationDetailsList = [];
       let medicationNames = [];
-      let anyCostPlusAvailable = false;
+      let costPlusMedications = []; // Track medications available on Cost Plus
 
       // Structure to hold programs grouped by medication
       let medicationPrograms = [];
@@ -517,6 +517,14 @@ const handleAction = async (action, body) => {
             medicationDetailsList.push(details);
             medicationNames.push(`${details.brand_name} (${details.generic_name})`);
 
+            // Track if available on Cost Plus (don't add as individual program)
+            if (details.cost_plus_available) {
+              costPlusMedications.push({
+                brand_name: details.brand_name,
+                generic_name: details.generic_name
+              });
+            }
+
             // Get programs for this specific medication
             const medPrograms = await getSavingsPrograms(medId, insurance_type);
 
@@ -528,20 +536,6 @@ const handleAction = async (action, body) => {
               cost_plus_available: details.cost_plus_available || false,
               programs: []
             };
-
-            // Add Cost Plus Drugs first if available for this medication
-            if (details.cost_plus_available) {
-              anyCostPlusAvailable = true;
-              medEntry.programs.push({
-                id: 'cost-plus-drugs-' + medId,
-                program_name: 'Mark Cuban Cost Plus Drugs',
-                program_type: 'discount_pharmacy',
-                max_benefit: 'Cost + 15% markup + $5 pharmacy fee + $5 shipping',
-                application_url: 'https://costplusdrugs.com',
-                description: 'Transparent, low-cost pricing. No insurance needed.',
-                eligibility_summary: 'Available to everyone',
-              });
-            }
 
             // Add medication-specific programs (filter out duplicates and unwanted universal programs)
             const filteredPrograms = medPrograms.filter(p =>
@@ -596,6 +590,7 @@ const handleAction = async (action, body) => {
         : 'General transplant medications';
 
       // Build context for Claude
+      const anyCostPlusAvailable = costPlusMedications.length > 0;
       const userContext = {
         role,
         transplant_stage,
@@ -605,7 +600,7 @@ const handleAction = async (action, body) => {
         medication_name: medicationName,
         cost_burden,
         cost_plus_available: anyCostPlusAvailable,
-        cost_plus_medications: medicationDetailsList.filter(m => m.cost_plus_available).map(m => m.brand_name),
+        cost_plus_medications: costPlusMedications.map(m => m.brand_name),
       };
 
       // Flatten programs for Claude context
@@ -625,6 +620,7 @@ const handleAction = async (action, body) => {
         medicationPrograms, // Programs grouped by medication
         programs: allPrograms.slice(0, 8), // Flat list for backward compatibility
         costPlusAvailable: anyCostPlusAvailable,
+        costPlusMedications, // List of medications available on Cost Plus
       };
     }
 
