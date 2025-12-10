@@ -433,6 +433,7 @@
     "manufacturer": "Bausch Health",
     "stage": "Pre-transplant",
     "commonOrgans": ["Liver"],
+    "copayUrl": "https://xifaxan.copaysavingsprogram.com/",
     "papUrl": "https://www.bauschhealthpap.com/",
     "cost_tier": "high",
     "generic_available": false,
