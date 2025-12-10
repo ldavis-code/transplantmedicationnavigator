@@ -345,6 +345,7 @@ const MedicationAssistantChat = () => {
         content: data.message,
         programs: data.programs,
         medicationPrograms: data.medicationPrograms, // Programs grouped by medication
+        costPlusMedications: data.costPlusMedications, // Medications available on Cost Plus
         timestamp: new Date(),
       }]);
     } catch (err) {
@@ -445,7 +446,7 @@ const MedicationAssistantChat = () => {
         <div style="border: 2px solid #334155; border-radius: 12px; margin-bottom: 24px; overflow: hidden;">
           <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #cbd5e1;">
             <h3 style="margin: 0; color: #1e293b; font-size: 18px;">💊 ${medGroup.medication_name}</h3>
-            <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">${medGroup.generic_name}${medGroup.cost_plus_available ? ' • Available on Cost Plus Drugs' : ''}</p>
+            <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">${medGroup.generic_name}</p>
           </div>
           <div style="padding: 16px;">
             ${medGroup.programs && medGroup.programs.length > 0 ? medGroup.programs.map(program => `
@@ -523,6 +524,15 @@ const MedicationAssistantChat = () => {
         </div>
 
         ${profileHtml}
+
+        ${resultsMessage.costPlusMedications && resultsMessage.costPlusMedications.length > 0 ? `
+        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+          <h3 style="margin: 0 0 8px 0; color: #1e40af;">✓ ${resultsMessage.costPlusMedications.length} of your medication${resultsMessage.costPlusMedications.length > 1 ? 's' : ''} available on Cost Plus Drugs</h3>
+          <p style="margin: 0 0 12px 0; color: #3b82f6;">${resultsMessage.costPlusMedications.map(m => m.brand_name).join(', ')}</p>
+          <p style="margin: 0; font-size: 14px;"><strong>Check prices at:</strong> <a href="https://costplusdrugs.com" style="color: #2563eb;">https://costplusdrugs.com</a></p>
+          <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">Transparent pricing: Cost + 15% markup + $5 pharmacy fee + $5 shipping</p>
+        </div>
+        ` : ''}
 
         <h2>Recommended Programs</h2>
         <p style="color: #64748b; margin-bottom: 16px;">Based on your profile, here are the assistance programs you may qualify for. Click the links to apply.</p>
@@ -836,6 +846,30 @@ const MedicationAssistantChat = () => {
                     {renderMessageContent(message.content)}
                   </div>
 
+                  {/* Cost Plus Drugs Summary Banner */}
+                  {message.costPlusMedications && message.costPlusMedications.length > 0 && (
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="font-semibold text-blue-800">
+                            ✓ {message.costPlusMedications.length} of your medication{message.costPlusMedications.length > 1 ? 's' : ''} available on Cost Plus Drugs
+                          </div>
+                          <div className="text-sm text-blue-600 mt-1">
+                            {message.costPlusMedications.map(m => m.brand_name).join(', ')}
+                          </div>
+                        </div>
+                        <a
+                          href="https://costplusdrugs.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 transition whitespace-nowrap"
+                        >
+                          Check Prices <ExternalLink size={12} />
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Render programs grouped by medication */}
                   {message.medicationPrograms && message.medicationPrograms.length > 0 && (
                     <div className="mt-4 space-y-4">
@@ -846,11 +880,6 @@ const MedicationAssistantChat = () => {
                             <div className="font-bold text-slate-800 flex items-center gap-2">
                               <Pill size={16} className="text-emerald-600" />
                               {medGroup.medication_name}
-                              {medGroup.cost_plus_available && (
-                                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
-                                  Cost Plus Available
-                                </span>
-                              )}
                             </div>
                             <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
                           </div>
