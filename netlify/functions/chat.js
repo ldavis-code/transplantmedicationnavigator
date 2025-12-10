@@ -193,6 +193,19 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
       return p[eligibilityColumn] === true;
     });
 
+    // Re-sort based on insurance type
+    // For non-commercial: PAP (manufacturer) first, then foundations, then discount cards
+    // For commercial: copay cards first, then discount cards
+    const sortOrder = insuranceType === 'commercial'
+      ? { copay_card: 1, discount_card: 2, foundation: 3, pap: 4, discount_pharmacy: 5 }
+      : { pap: 1, foundation: 2, copay_card: 3, discount_card: 4, discount_pharmacy: 5 };
+
+    filteredPrograms.sort((a, b) => {
+      const orderA = sortOrder[a.program_type] || 6;
+      const orderB = sortOrder[b.program_type] || 6;
+      return orderA - orderB;
+    });
+
     return filteredPrograms;
   } catch (error) {
     console.error('Error fetching savings programs:', error);
