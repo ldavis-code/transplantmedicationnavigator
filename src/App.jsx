@@ -22,7 +22,8 @@ import {
     Trash2, Globe, List, Info, Copy, Check, Building2, LandPlot, Scale, FileText,
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, Share2, Home as HomeIcon,
-    MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2
+    MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
+    CreditCard
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -2180,10 +2181,25 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-6 fade-in">
+                        {/* Copay Card Section - For Commercial Insurance */}
+                        {med.copayUrl && (
+                            <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
+                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Manufacturer Copay Card</h3>
+                                <p className="text-sm text-slate-700 mb-3">
+                                    <strong>For Commercial/Employer Insurance:</strong> Save on your copay — often pay as little as $0-$25 per prescription.
+                                </p>
+                                <p className="text-xs text-violet-700 mb-4">
+                                    Note: Copay cards are NOT available for Medicare, Medicaid, or government insurance.
+                                </p>
+                                <a href={med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                    Get Copay Card <ExternalLink size={14} aria-hidden="true" />
+                                </a>
+                            </section>
+                        )}
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
                                 <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Manufacturer PAP</h3>
-                                <p className="text-sm text-slate-700 mb-4">Many manufacturers offer free medication if you are uninsured or have commercial insurance but can't afford copays.</p>
+                                <p className="text-sm text-slate-700 mb-4">For Medicare, Medicaid, uninsured, or if copay card doesn't cover enough — apply for free medication.</p>
                                 <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
                                 {med.supportUrl && (
                                     <a href={med.supportUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
