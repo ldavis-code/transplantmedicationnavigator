@@ -18,7 +18,7 @@ To complete your SEO setup, you need to create two social media sharing images:
 
 ### Content to Include:
 - **Main Title:** "Transplant Medication Navigator"
-- **Subtitle:** "Free Medication Assistance Guide"
+- **Subtitle:** "Medication Assistance Guide"
 - **Visual elements:**
   - Medical/healthcare imagery (pills, heart, medical cross)
   - Clean, professional design
