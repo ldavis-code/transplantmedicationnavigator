@@ -8,7 +8,7 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 
 export const seoMetadata = {
   home: {
-    title: 'Transplant Medication Navigator™ - Free Medication Assistance Guide for Transplant Patients',
+    title: 'Transplant Medication Navigator™ - Medication Assistance Guide for Transplant Patients',
     description: 'Find free medication assistance programs for transplant patients. Search Patient Assistance Programs, compare copay foundations, and get help paying for immunosuppressants.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Transplant Medication Navigator™ - Free Medication Assistance',
