@@ -13,6 +13,20 @@
   status = 200
   force = true
 
+# Admin API routes (specific routes before generic /api/*)
+[[redirects]]
+  from = "/api/admin-auth/*"
+  to = "/.netlify/functions/admin-auth/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/admin-api/*"
+  to = "/.netlify/functions/admin-api/:splat"
+  status = 200
+  force = true
+
+# Generic API route (must come AFTER specific routes)
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
