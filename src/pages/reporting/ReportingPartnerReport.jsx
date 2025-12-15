@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { useReportingAuth } from '../../context/ReportingAuthContext';
 
-const API_BASE = '/api/admin-api';
+const API_BASE = '/.netlify/functions/admin-api';
 
 export default function ReportingPartnerReport() {
     const navigate = useNavigate();

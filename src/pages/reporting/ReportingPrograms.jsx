@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { useReportingAuth } from '../../context/ReportingAuthContext';
 
-const API_BASE = '/api/admin-api';
+const API_BASE = '/.netlify/functions/admin-api';
 
 const programTypeConfig = {
     copay: { icon: CreditCard, color: 'bg-blue-100 text-blue-600', label: 'Copay Card' },
