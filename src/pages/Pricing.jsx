@@ -42,7 +42,7 @@ const Pricing = () => {
                 'Privacy-safe tracking'
             ],
             cta: 'Request a Pilot',
-            ctaLink: 'mailto:partners@transplantmedicationnavigator.com?subject=Pilot%20Partnership%20Inquiry',
+            ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Partnership%20Inquiry',
             highlighted: true
         },
         {
@@ -61,7 +61,7 @@ const Pricing = () => {
                 'SLA agreement'
             ],
             cta: 'Contact Us',
-            ctaLink: 'mailto:partners@transplantmedicationnavigator.com?subject=Enterprise%20Inquiry',
+            ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Enterprise%20Inquiry',
             highlighted: false
         }
     ];
@@ -235,7 +235,7 @@ const Pricing = () => {
                     We're happy to discuss options that work for your organization.
                 </p>
                 <a
-                    href="mailto:partners@transplantmedicationnavigator.com?subject=Pricing%20Question"
+                    href="mailto:info@transplantmedicationnavigator.com?subject=Pricing%20Question"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                 >
                     <Mail size={20} aria-hidden="true" />
