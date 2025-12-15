@@ -57,6 +57,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
 
 # Cache static assets aggressively (1 year) - Vite adds content hashes to filenames
 [[headers]]
