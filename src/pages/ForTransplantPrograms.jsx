@@ -53,7 +53,7 @@ const ForTransplantPrograms = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
-                        href="mailto:partners@transplantmedicationnavigator.com?subject=Pilot%20Program%20Request"
+                        href="mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Program%20Request"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                     >
                         <Mail size={20} aria-hidden="true" />
@@ -150,7 +150,7 @@ const ForTransplantPrograms = () => {
                     Contact us to discuss a pilot partnership and see how we can support your transplant program.
                 </p>
                 <a
-                    href="mailto:partners@transplantmedicationnavigator.com?subject=Pilot%20Program%20Inquiry"
+                    href="mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Program%20Inquiry"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                 >
                     <Mail size={20} aria-hidden="true" />

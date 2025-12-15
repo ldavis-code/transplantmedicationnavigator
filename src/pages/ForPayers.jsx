@@ -53,7 +53,7 @@ const ForPayers = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
-                        href="mailto:partners@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
+                        href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                     >
                         <Mail size={20} aria-hidden="true" />
@@ -156,7 +156,7 @@ const ForPayers = () => {
                     Contact us to schedule a demo and learn how we can help reduce medication cost burdens for your members.
                 </p>
                 <a
-                    href="mailto:partners@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
+                    href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                 >
                     <Mail size={20} aria-hidden="true" />
