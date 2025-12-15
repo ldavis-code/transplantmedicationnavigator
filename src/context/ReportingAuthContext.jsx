@@ -9,7 +9,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 const ReportingAuthContext = createContext(null);
 
 const TOKEN_STORAGE_KEY = 'tmn_reporting_admin_token';
-const API_BASE = '/api';
+const API_BASE = '/.netlify/functions';
 
 export function ReportingAuthProvider({ children }) {
     const [token, setToken] = useState(null);
