@@ -19,6 +19,25 @@
   status = 200
   force = true
 
+# Outbound redirect routes for tracking program clicks
+[[redirects]]
+  from = "/out/copay/*"
+  to = "/.netlify/functions/out-redirect"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/out/foundation/*"
+  to = "/.netlify/functions/out-redirect"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/out/pap/*"
+  to = "/.netlify/functions/out-redirect"
+  status = 200
+  force = true
+
 # SPA fallback - must come AFTER API routes
 [[redirects]]
   from = "/*"
