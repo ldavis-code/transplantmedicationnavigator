@@ -14,6 +14,15 @@ const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 
+// Reporting admin pages (lazy loaded)
+const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
+const LazyReportingDashboard = lazy(() => import('./pages/reporting/ReportingDashboard.jsx'));
+const LazyReportingPartners = lazy(() => import('./pages/reporting/ReportingPartners.jsx'));
+const LazyReportingPrograms = lazy(() => import('./pages/reporting/ReportingPrograms.jsx'));
+const LazyReportingFunnel = lazy(() => import('./pages/reporting/ReportingFunnel.jsx'));
+const LazyReportingEvents = lazy(() => import('./pages/reporting/ReportingEvents.jsx'));
+const LazyReportingPartnerReport = lazy(() => import('./pages/reporting/ReportingPartnerReport.jsx'));
+
 // Google Analytics 4 integration
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 // First-visit disclaimer modal
@@ -22,6 +31,8 @@ import DisclaimerModal from './components/DisclaimerModal.jsx';
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 // Chat Quiz Context Provider
 import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
+// Reporting Admin Auth Provider
+import { ReportingAuthProvider } from './context/ReportingAuthContext.jsx';
 import {
     Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck,
     Menu, X, ShieldAlert, HeartHandshake, CheckCircle, ChevronLeft, DollarSign,
@@ -4033,36 +4044,81 @@ const PageLoadingFallback = () => (
     </div>
 );
 
+// Wrapper component for main site layout
+const MainSiteRoutes = () => (
+    <Layout>
+        <Suspense fallback={<PageLoadingFallback />}>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/wizard" element={<Wizard />} />
+                <Route path="/medications" element={<MedicationSearch />} />
+                <Route path="/education" element={<Education />} />
+                <Route path="/application-help" element={<ApplicationHelp />} />
+                <Route path="/faq" element={<LazyFAQ />} />
+                <Route path="/survey" element={<LazySurveyLanding />} />
+                <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
+                <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
+                <Route path="/for-transplant-programs" element={<LazyForTransplantPrograms />} />
+                <Route path="/for-employers" element={<LazyForEmployers />} />
+                <Route path="/for-payers" element={<LazyForPayers />} />
+                <Route path="/pricing" element={<LazyPricing />} />
+                <Route path="/pilot" element={<LazyPilot />} />
+                <Route path="/pilot/:partner" element={<LazyPilot />} />
+                <Route path="*" element={<LazyNotFound />} />
+            </Routes>
+        </Suspense>
+    </Layout>
+);
+
+// Wrapper component for reporting admin routes (no main site layout)
+const ReportingRoutes = () => {
+    const location = useLocation();
+    const isReportingRoute = location.pathname.startsWith('/reporting');
+
+    if (!isReportingRoute) return null;
+
+    return (
+        <ReportingAuthProvider>
+            <Suspense fallback={<PageLoadingFallback />}>
+                <Routes>
+                    <Route path="/reporting/login" element={<LazyReportingLogin />} />
+                    <Route path="/reporting" element={<LazyReportingDashboard />} />
+                    <Route path="/reporting/partners" element={<LazyReportingPartners />} />
+                    <Route path="/reporting/programs" element={<LazyReportingPrograms />} />
+                    <Route path="/reporting/funnel" element={<LazyReportingFunnel />} />
+                    <Route path="/reporting/events" element={<LazyReportingEvents />} />
+                    <Route path="/reporting/report/:partner" element={<LazyReportingPartnerReport />} />
+                </Routes>
+            </Suspense>
+        </ReportingAuthProvider>
+    );
+};
+
+// Route switcher component
+const AppRoutes = () => {
+    const location = useLocation();
+    const isReportingRoute = location.pathname.startsWith('/reporting');
+
+    if (isReportingRoute) {
+        return <ReportingRoutes />;
+    }
+
+    return (
+        <>
+            <DisclaimerModal />
+            <MainSiteRoutes />
+        </>
+    );
+};
+
 // App Component
 const App = () => {
     return (
         <ChatQuizProvider>
             <BrowserRouter>
-                <DisclaimerModal />
                 <GoogleAnalytics />
                 <ScrollToTop />
-                <Layout>
-                    <Suspense fallback={<PageLoadingFallback />}>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/wizard" element={<Wizard />} />
-                            <Route path="/medications" element={<MedicationSearch />} />
-                            <Route path="/education" element={<Education />} />
-                            <Route path="/application-help" element={<ApplicationHelp />} />
-                            <Route path="/faq" element={<LazyFAQ />} />
-                            <Route path="/survey" element={<LazySurveyLanding />} />
-                            <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
-                            <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
-                            <Route path="/for-transplant-programs" element={<LazyForTransplantPrograms />} />
-                            <Route path="/for-employers" element={<LazyForEmployers />} />
-                            <Route path="/for-payers" element={<LazyForPayers />} />
-                            <Route path="/pricing" element={<LazyPricing />} />
-                            <Route path="/pilot" element={<LazyPilot />} />
-                            <Route path="/pilot/:partner" element={<LazyPilot />} />
-                            <Route path="*" element={<LazyNotFound />} />
-                        </Routes>
-                    </Suspense>
-                </Layout>
+                <AppRoutes />
             </BrowserRouter>
         </ChatQuizProvider>
     );
