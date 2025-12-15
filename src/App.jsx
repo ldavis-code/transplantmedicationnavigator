@@ -2011,8 +2011,11 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
     const isGoodRxAvailable = !GOODRX_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isSingleCareAvailable = !SINGLECARE_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
 
-    const papLink = med.papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
-    const papLinkText = med.papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
+    // Use trackable /out/ route if papProgramId exists, otherwise fallback to direct URL or drugs.com search
+    const papLink = med.papProgramId
+        ? `/out/pap/${med.papProgramId}`
+        : (med.papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`);
+    const papLinkText = med.papProgramId || med.papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
 
     // Get community price stats for each source
     const costPlusStats = getCommunityPriceStats(med.id, 'costplus');
@@ -2184,7 +2187,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-6 fade-in">
                         {/* Copay Card Section - For Commercial Insurance ONLY */}
-                        {med.copayUrl && (
+                        {(med.copayProgramId || med.copayUrl) && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
                                 <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Manufacturer Copay Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
@@ -2193,7 +2196,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 <p className="text-xs text-red-600 font-medium mb-4">
                                     ⚠️ NOT available for Medicare, Medicaid, TRICARE, VA, or IHS — see Manufacturer PAP below instead.
                                 </p>
-                                <a href={med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     Get Copay Card <ExternalLink size={14} aria-hidden="true" />
                                 </a>
                             </section>
@@ -2210,7 +2213,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
                                 <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
                                 <p className="text-sm text-slate-700 mb-4">Check HealthWell, PAN Foundation, and PAF for copay assistance.</p>
-                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
+                                <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
                         </div>
                         {/* High-cost medication PAP recommendation */}
@@ -3696,7 +3699,7 @@ const ApplicationHelp = () => {
                                     <p className="text-purple-600 font-medium text-sm">www.drugs.com</p>
                                 </a>
 
-                                <a href="https://www.healthwellfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/healthwell-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-indigo-700 mb-1">HealthWell Foundation</h3>
@@ -3710,7 +3713,7 @@ const ApplicationHelp = () => {
                                     <p className="text-indigo-600 font-medium text-sm">www.healthwellfoundation.org</p>
                                 </a>
 
-                                <a href="https://fundfinder.panfoundation.org/Home/Index" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-teal-700 mb-1">FundFinder</h3>
@@ -3724,7 +3727,7 @@ const ApplicationHelp = () => {
                                     <p className="text-teal-600 font-medium text-sm">fundfinder.panfoundation.org</p>
                                 </a>
 
-                                <a href="http://www.panfoundation.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/pan-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-cyan-700 mb-1">PAN Foundation</h3>
@@ -3738,7 +3741,7 @@ const ApplicationHelp = () => {
                                     <p className="text-cyan-600 font-medium text-sm">www.panfoundation.org</p>
                                 </a>
 
-                                <a href="https://www.patientadvocate.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-rose-200 hover:border-rose-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/paf-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-rose-200 hover:border-rose-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-rose-700 mb-1">Patient Advocate Foundation</h3>
@@ -3752,7 +3755,7 @@ const ApplicationHelp = () => {
                                     <p className="text-rose-600 font-medium text-sm">www.patientadvocate.org</p>
                                 </a>
 
-                                <a href="https://www.patientservicesinc.org" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-amber-200 hover:border-amber-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/psi-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-amber-200 hover:border-amber-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-amber-700 mb-1">Patient Services Incorporated (PSI)</h3>
@@ -3766,7 +3769,7 @@ const ApplicationHelp = () => {
                                     <p className="text-amber-600 font-medium text-sm">www.patientservicesinc.org</p>
                                 </a>
 
-                                <a href="https://rarediseases.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-violet-200 hover:border-violet-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/nord-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-violet-200 hover:border-violet-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-violet-700 mb-1">National Organization for Rare Disorders (NORD)</h3>
@@ -3780,7 +3783,7 @@ const ApplicationHelp = () => {
                                     <p className="text-violet-600 font-medium text-sm">rarediseases.org</p>
                                 </a>
 
-                                <a href="https://rxoutreach.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-lg transition">
+                                <a href="/out/foundation/rxoutreach-general" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-green-700 mb-1">Patients Rx Outreach</h3>
