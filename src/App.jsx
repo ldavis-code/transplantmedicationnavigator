@@ -8,6 +8,11 @@ const LazyNotFound = lazy(() => import('./pages/NotFound.jsx'));
 const LazySurveyLanding = lazy(() => import('./pages/SurveyLanding.jsx'));
 const LazyTransplantMedicationSurvey = lazy(() => import('./pages/TransplantMedicationSurvey.jsx'));
 const LazyGeneralMedicationSurvey = lazy(() => import('./pages/GeneralMedicationSurvey.jsx'));
+const LazyForTransplantPrograms = lazy(() => import('./pages/ForTransplantPrograms.jsx'));
+const LazyForEmployers = lazy(() => import('./pages/ForEmployers.jsx'));
+const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
+const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
+const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 
 // Google Analytics 4 integration
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
@@ -401,7 +406,8 @@ const Layout = ({ children }) => {
         { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
-        { path: '/survey', label: 'Survey', ariaLabel: 'Take the medication journey survey' },
+        { path: '/for-transplant-programs', label: 'For Partners', ariaLabel: 'Partnership opportunities for healthcare organizations' },
+        { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
 
@@ -520,10 +526,10 @@ const Home = () => {
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-                    See your medication options <span className="text-emerald-600">in one place.</span>
+                    Compare medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
                 </h1>
                 <p className="text-xl md:text-2xl font-semibold text-emerald-600 mb-4">
-                    Free. Unbiased. Patient-Led.
+                    Free. Unbiased. Patient-led.
                 </p>
                 <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
                     A free, safe guide for transplant patients and care partners to find affordable medications and assistance programs.
@@ -532,11 +538,27 @@ const Home = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
                         to="/medications"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-emerald-200 transition flex items-center justify-center gap-2"
-                        aria-label="Compare medication prices"
+                        className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2"
+                        aria-label="Search medications"
                     >
                         <Search size={20} aria-hidden="true" />
-                        Compare Prices & Meds
+                        Search Meds
+                    </Link>
+                    <Link
+                        to="/wizard"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl hover:border-emerald-300 transition flex items-center justify-center gap-2"
+                        aria-label="Start personalized medication path quiz"
+                    >
+                        <Map size={20} aria-hidden="true" />
+                        Start My Path Quiz
+                    </Link>
+                    <Link
+                        to="/application-help"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-emerald-200 transition flex items-center justify-center gap-2"
+                        aria-label="Find grants and foundations"
+                    >
+                        <HeartHandshake size={20} aria-hidden="true" />
+                        Find Grants & Foundations
                     </Link>
                 </div>
             </section>
@@ -4031,6 +4053,12 @@ const App = () => {
                             <Route path="/survey" element={<LazySurveyLanding />} />
                             <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                             <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
+                            <Route path="/for-transplant-programs" element={<LazyForTransplantPrograms />} />
+                            <Route path="/for-employers" element={<LazyForEmployers />} />
+                            <Route path="/for-payers" element={<LazyForPayers />} />
+                            <Route path="/pricing" element={<LazyPricing />} />
+                            <Route path="/pilot" element={<LazyPilot />} />
+                            <Route path="/pilot/:partner" element={<LazyPilot />} />
                             <Route path="*" element={<LazyNotFound />} />
                         </Routes>
                     </Suspense>

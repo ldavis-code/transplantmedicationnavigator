@@ -76,6 +76,56 @@ export const seoMetadata = {
     twitterTitle: 'Page Not Found',
     twitterDescription: 'This page could not be found. Visit our homepage to find medication assistance programs for transplant patients.',
   },
+
+  forTransplantPrograms: {
+    title: 'For Transplant Programs | Transplant Medication Navigator™',
+    description: 'Help your transplant patients navigate medication costs with our free, privacy-safe resource. Reduce financial barriers to adherence with verified assistance programs.',
+    canonical: `${BASE_URL}/for-transplant-programs`,
+    ogTitle: 'Transplant Program Partnerships',
+    ogDescription: 'Partner with Transplant Medication Navigator to help your patients find medication assistance programs. Privacy-safe, no PHI collected.',
+    twitterTitle: 'For Transplant Programs',
+    twitterDescription: 'Help your transplant patients navigate medication costs with our free, verified assistance program resource.',
+  },
+
+  forEmployers: {
+    title: 'For Employers | Transplant Medication Navigator™',
+    description: 'Reduce specialty drug costs for transplant employees. Connect your workforce to copay cards, manufacturer assistance, and foundation support.',
+    canonical: `${BASE_URL}/for-employers`,
+    ogTitle: 'Employer Benefits for Transplant Employees',
+    ogDescription: 'Help transplant employees find medication assistance programs. Complement existing pharmacy benefits with free, no-login resource.',
+    twitterTitle: 'For Employers',
+    twitterDescription: 'Reduce specialty drug costs for transplant employees with our free medication assistance resource.',
+  },
+
+  forPayers: {
+    title: 'For Payers | Transplant Medication Navigator™',
+    description: 'Help members access manufacturer assistance programs for transplant medications. Reduce plan spend on high-cost drugs with our privacy-safe resource.',
+    canonical: `${BASE_URL}/for-payers`,
+    ogTitle: 'Payer Partnerships for Medication Assistance',
+    ogDescription: 'Help members find manufacturer copay assistance and PAPs for transplant medications. Privacy-safe engagement tracking.',
+    twitterTitle: 'For Payers',
+    twitterDescription: 'Help members access manufacturer assistance programs for transplant medications.',
+  },
+
+  pricing: {
+    title: 'Pricing | Transplant Medication Navigator™',
+    description: 'Free for patients, partnership options for organizations. View our transparent pricing for pilot partnerships and enterprise solutions.',
+    canonical: `${BASE_URL}/pricing`,
+    ogTitle: 'Transparent Pricing',
+    ogDescription: 'Free for patients. Pilot partnerships and enterprise options for healthcare organizations. We never charge patients.',
+    twitterTitle: 'Pricing',
+    twitterDescription: 'Free for patients, partnership options for organizations. View our transparent pricing.',
+  },
+
+  pilot: {
+    title: 'Partner Pilot Program | Transplant Medication Navigator™',
+    description: 'Welcome to the pilot program. Find medication assistance programs, search transplant medications, and access verified financial resources.',
+    canonical: `${BASE_URL}/pilot`,
+    ogTitle: 'Partner Pilot Program',
+    ogDescription: 'Your healthcare provider has partnered with us to help you find medication assistance programs for transplant medications.',
+    twitterTitle: 'Partner Pilot Program',
+    twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
+  },
 };
 
 /**
