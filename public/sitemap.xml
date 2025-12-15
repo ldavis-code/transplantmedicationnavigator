@@ -31,6 +31,36 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://transplantmedicationnavigator.com/for-transplant-programs</loc>
+        <lastmod>2025-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/for-employers</loc>
+        <lastmod>2025-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/for-payers</loc>
+        <lastmod>2025-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/pricing</loc>
+        <lastmod>2025-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/pilot</loc>
+        <lastmod>2025-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://transplantmedicationnavigator.com/faq</loc>
         <lastmod>2025-12-15</lastmod>
         <changefreq>monthly</changefreq>
