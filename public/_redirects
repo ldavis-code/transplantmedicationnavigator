@@ -1,5 +1,8 @@
 # Netlify redirects file
 
+# WWW to non-WWW redirect (301 permanent) - must come first
+https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnavigator.com/:splat  301!
+
 # Admin auth API (must be before generic /api/*)
 /api/admin-auth/*  /.netlify/functions/admin-auth/:splat  200!
 
