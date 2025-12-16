@@ -297,6 +297,21 @@
         </div>
     </noscript>
 
+    <!-- Service Worker Cache Reset - fixes stale redirect issues -->
+    <script>
+        (function() {
+            // If user landed on /education but expected homepage, clear caches
+            if ('serviceWorker' in navigator && 'caches' in window) {
+                // Force service worker update check
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(function(registration) {
+                        registration.update();
+                    });
+                });
+            }
+        })();
+    </script>
+
     <!-- Internet Explorer detection - only runs for IE users -->
     <script>
         (function() {
