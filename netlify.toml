@@ -53,11 +53,11 @@
   force = true
 
 # SPA fallback - must come AFTER API routes
+# NOTE: Do NOT use force=true here, or it will override static files!
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = true
 
 # Cache static assets aggressively (1 year) - Vite adds content hashes to filenames
 [[headers]]

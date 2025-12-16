@@ -18,4 +18,5 @@
 /out/pap/*  /.netlify/functions/out-redirect  200!
 
 # SPA fallback - all other routes go to index.html
-/*  /index.html  200!
+# NOTE: Do NOT use ! (force) here, or it will override static files!
+/*  /index.html  200
