@@ -6,6 +6,14 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# WWW to non-WWW redirect (301 permanent) - must come first
+# This ensures all traffic goes to the canonical non-www domain
+[[redirects]]
+  from = "https://www.transplantmedicationnavigator.com/*"
+  to = "https://transplantmedicationnavigator.com/:splat"
+  status = 301
+  force = true
+
 # API routes - redirect to Netlify Functions (force=true ensures these take priority)
 [[redirects]]
   from = "/api/chat"
