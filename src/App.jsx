@@ -3275,6 +3275,49 @@ const Education = () => {
                             </a>
                         </div>
 
+                        <section className="bg-gradient-to-br from-teal-50 to-cyan-50 border-2 border-teal-200 rounded-2xl p-8" aria-labelledby="caregiver-support">
+                            <h3 id="caregiver-support" className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                                <Users size={28} className="text-teal-600" aria-hidden="true" />
+                                Support for Caregivers & Care Partners
+                            </h3>
+                            <p className="text-slate-700 mb-6 leading-relaxed">
+                                Caregivers and care partners are essential to the transplant journey. Your well-being matters too. Caring for a loved one can be rewarding but also physically and emotionally demanding. It's important to take care of yourself so you can continue to provide the best support.
+                            </p>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div className="bg-white/80 p-5 rounded-xl">
+                                    <h4 className="font-bold text-slate-900 mb-3">Caregiver Self-Care Tips</h4>
+                                    <ul className="space-y-2 text-sm text-slate-700">
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                            <span>Set boundaries and ask for help when you need it</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                            <span>Take breaks and maintain your own health appointments</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                            <span>Connect with other caregivers who understand your experience</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                            <span>Consider counseling or support groups for caregivers</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a href="https://www.caregiving.org/" target="_blank" rel="noreferrer" className="group block bg-white/80 p-5 rounded-xl hover:shadow-md transition" aria-label="Visit National Alliance for Caregiving (opens in new tab)">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <h4 className="font-bold text-slate-900 group-hover:text-teal-700">National Alliance for Caregiving</h4>
+                                        <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
+                                    </div>
+                                    <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                                        A national nonprofit coalition dedicated to advancing family caregiving through research, innovation, and advocacy. Find resources, research, and support for your caregiving journey.
+                                    </p>
+                                    <span className="text-xs px-2 py-1 rounded-full font-bold bg-teal-100 text-teal-700">Caregiver Resource</span>
+                                </a>
+                            </div>
+                        </section>
+
                         <aside className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg" role="note">
                             <h3 className="font-bold text-amber-900 mb-3 flex items-center gap-2">
                                 <Heart size={20} aria-hidden="true" />

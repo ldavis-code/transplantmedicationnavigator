@@ -82,5 +82,11 @@
     "url": "https://www.donatelife.net/patient-services/",
     "description": "Connects transplant recipients with local resources, events, and community support programs across the United States.",
     "category": "Support Group"
+  },
+  {
+    "name": "National Alliance for Caregiving",
+    "url": "https://www.caregiving.org/",
+    "description": "A national nonprofit coalition dedicated to advancing family caregiving through research, innovation, and advocacy. Provides resources, research, and support for caregivers and care partners.",
+    "category": "Caregiver Support"
   }
 ]
