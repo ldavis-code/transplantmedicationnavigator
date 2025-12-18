@@ -31,6 +31,8 @@ import DisclaimerModal from './components/DisclaimerModal.jsx';
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 // Chat Quiz Context Provider
 import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
+// Medications Context Provider - fetches from database with JSON fallback
+import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
 import { ReportingAuthProvider } from './context/ReportingAuthContext.jsx';
 import {
@@ -69,9 +71,10 @@ import PRICE_ESTIMATES_DATA from './data/price-estimates.json';
 import { useMetaTags } from './hooks/useMetaTags.js';
 import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
+import { fetchAllMedications } from './lib/medicationsApi.js';
 
-// Initialize data from imported JSON files
-const MEDICATIONS = MEDICATIONS_DATA;
+// Initialize data from imported JSON files - MEDICATIONS_DATA is used as fallback
+// Medications will be fetched from the database API when available
 const DIRECTORY_RESOURCES = DIRECTORY_RESOURCES_DATA;
 const STATES = STATES_DATA;
 const ASSISTANT_KNOWLEDGE_BASE = ASSISTANT_KNOWLEDGE_BASE_DATA;
@@ -831,6 +834,7 @@ const WizardHelp = ({ step, answers }) => {
 
 // Smart Suggestions Component for Medication Selection
 const MedicationSuggestions = ({ answers, onSelectMedication }) => {
+    const MEDICATIONS = useMedicationsList();
     const suggestions = getMedicationSuggestions(answers);
     const [showSuggestions, setShowSuggestions] = useState(true);
 
@@ -892,6 +896,7 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
+    const MEDICATIONS = useMedicationsList();
 
     const [step, setStep] = useState(1);
     const [answers, setAnswers] = useState({
@@ -1555,6 +1560,7 @@ if (typeof window !== 'undefined') {
 // MedicationSearch Page
 const MedicationSearch = () => {
     useMetaTags(seoMetadata.medications);
+    const MEDICATIONS = useMedicationsList();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchTerm, setSearchTerm] = useState('');
@@ -1574,7 +1580,7 @@ const MedicationSearch = () => {
         includeScore: true,
         ignoreLocation: true,
         minMatchCharLength: 2
-    }), []);
+    }), [MEDICATIONS]);
 
     useEffect(() => {
         const ids = searchParams.get('ids');
@@ -3337,6 +3343,7 @@ const Education = () => {
 // ApplicationHelp Page
 const ApplicationHelp = () => {
     useMetaTags(seoMetadata.applicationHelp);
+    const MEDICATIONS = useMedicationsList();
 
     const [activeTab, setActiveTab] = useState('START');
     const checklistItems = APPLICATION_CHECKLIST_DATA;
@@ -4157,13 +4164,15 @@ const AppRoutes = () => {
 // App Component
 const App = () => {
     return (
-        <ChatQuizProvider>
-            <BrowserRouter>
-                <GoogleAnalytics />
-                <ScrollToTop />
-                <AppRoutes />
-            </BrowserRouter>
-        </ChatQuizProvider>
+        <MedicationsProvider>
+            <ChatQuizProvider>
+                <BrowserRouter>
+                    <GoogleAnalytics />
+                    <ScrollToTop />
+                    <AppRoutes />
+                </BrowserRouter>
+            </ChatQuizProvider>
+        </MedicationsProvider>
     );
 };
 
