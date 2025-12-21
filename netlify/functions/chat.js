@@ -154,7 +154,13 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
     const db = getDb();
     let programs;
 
-    if (medicationId) {
+    // Normalize medication ID - use lowercase to ensure match
+    // The medication_id in savings_programs should be 'apixaban' (generic name, lowercase)
+    const normalizedMedId = medicationId ? medicationId.toLowerCase().trim() : null;
+
+    console.log(`[getSavingsPrograms] Looking for medication: "${normalizedMedId}", insurance: ${insuranceType}`);
+
+    if (normalizedMedId) {
       // Get programs for specific medication OR general programs
       programs = await db`
         SELECT
@@ -174,7 +180,7 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
         FROM savings_programs sp
         WHERE
           sp.is_active = true
-          AND (sp.medication_id = ${medicationId} OR sp.medication_id IS NULL)
+          AND (LOWER(sp.medication_id) = ${normalizedMedId} OR sp.medication_id IS NULL)
         ORDER BY
           CASE sp.program_type
             WHEN 'copay_card' THEN 1
@@ -186,6 +192,8 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
           END,
           sp.program_name
       `;
+
+      console.log(`[getSavingsPrograms] Found ${programs.length} programs for ${normalizedMedId}`);
     } else {
       // Get only general programs (no specific medication)
       programs = await db`
@@ -251,7 +259,8 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
 
     return filteredPrograms;
   } catch (error) {
-    console.error('Error fetching savings programs:', error);
+    console.error('[getSavingsPrograms] Error fetching savings programs:', error.message || error);
+    console.error('[getSavingsPrograms] Stack:', error.stack);
     return [];
   }
 };
@@ -260,12 +269,26 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
 const getMedicationDetails = async (medicationId) => {
   try {
     const db = getDb();
-    const [medication] = await db`
-      SELECT * FROM medications WHERE id = ${medicationId}
+    // Normalize medication ID to lowercase for consistent matching
+    const normalizedId = medicationId ? medicationId.toLowerCase().trim() : null;
+
+    console.log(`[getMedicationDetails] Looking for medication ID: "${normalizedId}"`);
+
+    const results = await db`
+      SELECT * FROM medications WHERE LOWER(id) = ${normalizedId}
     `;
+
+    const medication = results[0];
+
+    if (medication) {
+      console.log(`[getMedicationDetails] Found: ${medication.brand_name} (${medication.generic_name})`);
+    } else {
+      console.log(`[getMedicationDetails] No medication found for ID: "${normalizedId}"`);
+    }
+
     return medication;
   } catch (error) {
-    console.error('Error fetching medication:', error);
+    console.error('[getMedicationDetails] Error fetching medication:', error.message || error);
     return null;
   }
 };
@@ -436,28 +459,52 @@ Be specific and actionable. Reference the exact program names and URLs from the 
 const handleAction = async (action, body) => {
   switch (action) {
     case 'test': {
-      // Test database connection
+      // Test database connection and specifically check Apixaban/Eliquis copay cards
       try {
         const db = getDb();
-        const result = await db`
-          SELECT m.generic_name, m.brand_name, m.cost_plus_available, sp.program_name
-          FROM medications m
-          LEFT JOIN savings_programs sp ON m.id = sp.medication_id
-          WHERE m.cost_plus_available = true
-          LIMIT 5
+
+        // Check if apixaban medication exists
+        const apixabanMed = await db`
+          SELECT id, brand_name, generic_name, copay_url, copay_program_id, pap_program_id
+          FROM medications
+          WHERE LOWER(id) = 'apixaban'
         `;
+
+        // Check if Eliquis Savings Card exists in savings_programs
+        const eliquisCopay = await db`
+          SELECT id, program_name, program_type, medication_id, commercial_eligible, is_active, application_url
+          FROM savings_programs
+          WHERE LOWER(medication_id) = 'apixaban' AND program_type = 'copay_card'
+        `;
+
+        // Get all programs for apixaban
+        const allApixabanPrograms = await db`
+          SELECT program_name, program_type, medication_id, commercial_eligible, is_active
+          FROM savings_programs
+          WHERE LOWER(medication_id) = 'apixaban' OR medication_id IS NULL
+          ORDER BY program_type
+        `;
+
         return {
           success: true,
           message: 'Database connection successful!',
-          sampleData: result,
-          medicationCount: result.length,
-          note: 'Showing medications with Cost Plus availability'
+          apixabanMedication: apixabanMed[0] || 'NOT FOUND - Run migration 002',
+          eliquisCopayCard: eliquisCopay[0] || 'NOT FOUND - Run migration 004 and 010',
+          allApixabanPrograms: allApixabanPrograms,
+          programCount: allApixabanPrograms.length,
+          troubleshooting: {
+            noMedication: !apixabanMed[0] ? 'Run migration 002_medications_table.sql' : null,
+            noCopayCard: !eliquisCopay[0] ? 'Run migration 004_savings_programs_and_how_to_steps.sql and 010_fix_apixaban_copay_cards.sql' : null,
+            copayNotActive: eliquisCopay[0] && !eliquisCopay[0].is_active ? 'Eliquis copay card exists but is_active = false' : null,
+            copayNotCommercial: eliquisCopay[0] && !eliquisCopay[0].commercial_eligible ? 'Eliquis copay card exists but commercial_eligible = false' : null,
+          }
         };
       } catch (error) {
         return {
           success: false,
           error: error.message,
-          hint: 'Check DATABASE_URL environment variable'
+          hint: 'Check DATABASE_URL environment variable',
+          stack: error.stack
         };
       }
     }
