@@ -1579,6 +1579,8 @@
       "Kidney"
     ],
     "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "copayUrl": "https://www.eliquis.bmscustomerconnect.com/afib/eliquis-free-trial-and-savings",
+    "copayProgramId": "eliquis-copay",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
