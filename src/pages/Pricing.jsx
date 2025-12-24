@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { CreditCard, Users, Building2, Briefcase, CheckCircle, Heart, ArrowRight, Mail, DollarSign, HeartHandshake, Shield, TrendingUp, ShieldCheck, BarChart3, Lock, Building } from 'lucide-react';
+import { CreditCard, Users, Building2, Briefcase, CheckCircle, ArrowRight, Mail, DollarSign, HeartHandshake, Shield, TrendingUp, ShieldCheck, BarChart3, Lock, Building } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -323,17 +323,6 @@ const Pricing = () => {
                                     </div>
                                 );
                             })}
-                        </section>
-
-                        {/* Patient Promise */}
-                        <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8 text-center">
-                            <div className="flex items-center justify-center gap-2 mb-4">
-                                <Heart size={24} className="text-emerald-700" aria-hidden="true" />
-                                <h2 className="text-xl font-bold text-emerald-900">Our Promise to Patients</h2>
-                            </div>
-                            <p className="text-emerald-800 text-lg max-w-3xl mx-auto">
-                                Educational resources will always be free. Everyone deserves to understand their medication options.
-                            </p>
                         </section>
 
                         {/* FAQ Section */}
