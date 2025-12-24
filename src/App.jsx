@@ -1466,7 +1466,7 @@ const Wizard = () => {
 // --- PRICE REPORTING HELPERS ---
 const PRICE_REPORTS_KEY = 'transplant_med_price_reports';
 const PRICE_STATS_KEY = 'transplant_med_price_stats';
-const PRICE_ESTIMATES_LAST_UPDATED = '2025-12-05'; // December 2025
+const PRICE_ESTIMATES_LAST_UPDATED = '2025-12-24'; // December 24, 2025
 
 // Get cached stats from localStorage (for immediate render)
 const getCachedStats = () => {
@@ -2452,7 +2452,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                                 </div>
                                                 <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                     <Clock size={14} />
-                                                    Est. updated Dec 2025
+                                                    Est. updated Dec 24, 2025
                                                 </div>
                                             </td>
                                             <td className="p-3 no-print">
@@ -2485,7 +2485,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                                 </div>
                                                 <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                     <Clock size={14} />
-                                                    Est. updated Dec 2025
+                                                    Est. updated Dec 24, 2025
                                                 </div>
                                             </td>
                                             <td className="p-3 no-print">
@@ -2538,7 +2538,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                                 </div>
                                                 <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                     <Clock size={14} />
-                                                    Est. updated Dec 2025
+                                                    Est. updated Dec 24, 2025
                                                 </div>
                                             </td>
                                             <td className="p-3 no-print">
@@ -2562,7 +2562,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                         <div className="mt-3 space-y-2">
                             <div className="text-xs text-slate-600 italic flex items-start gap-2" role="note">
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                <p>Price estimates are approximate ranges based on general market research (last updated: December 2025). Always check live prices via the links above for current rates.</p>
+                                <p>Price estimates are approximate ranges based on general market research (last updated: December 24, 2025). Always check live prices via the links above for current rates.</p>
                             </div>
                             {isCostPlusAvailable && (
                                 <div className="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2" role="note">
