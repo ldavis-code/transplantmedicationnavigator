@@ -24,8 +24,15 @@ export default function MyMedications() {
     brand: '',
     dosage: '',
     cost: '',
-    renewal: ''
+    renewal: '',
+    renewalType: ''
   });
+
+  const renewalTypeLabels = {
+    'calendar_year': 'Calendar year',
+    'enrollment_anniversary': 'Enrollment anniversary',
+    'after_max_reached': 'After max reached'
+  };
 
   // Check for existing session on mount
   useEffect(() => {
@@ -136,14 +143,15 @@ export default function MyMedications() {
         brand_name: newMed.brand || null,
         dosage: newMed.dosage || null,
         monthly_cost: newMed.cost ? parseFloat(newMed.cost) : null,
-        renewal_date: newMed.renewal || null
+        renewal_date: newMed.renewal || null,
+        renewal_type: newMed.renewalType || null
       });
 
     if (error) {
       setMedMessage({ text: error.message, type: 'error' });
     } else {
       setMedMessage({ text: 'Medication saved!', type: 'success' });
-      setNewMed({ name: '', brand: '', dosage: '', cost: '', renewal: '' });
+      setNewMed({ name: '', brand: '', dosage: '', cost: '', renewal: '', renewalType: '' });
       loadMedications();
     }
     setMedLoading(false);
@@ -358,6 +366,19 @@ export default function MyMedications() {
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
             </div>
+            <div>
+              <label className="block text-sm text-slate-600 mb-1">Renewal type (optional)</label>
+              <select
+                value={newMed.renewalType}
+                onChange={(e) => setNewMed({ ...newMed, renewalType: e.target.value })}
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">-- Select --</option>
+                <option value="calendar_year">Calendar year (Jan 1)</option>
+                <option value="enrollment_anniversary">Enrollment anniversary</option>
+                <option value="after_max_reached">After max benefit reached</option>
+              </select>
+            </div>
           </div>
           <button
             type="submit"
@@ -395,6 +416,7 @@ export default function MyMedications() {
                     {med.dosage && <p className="text-slate-600">Dosage: {med.dosage}</p>}
                     {med.monthly_cost && <p className="text-slate-600">Monthly cost: ${med.monthly_cost}</p>}
                     {med.renewal_date && <p className="text-slate-600">Renewal: {new Date(med.renewal_date).toLocaleDateString()}</p>}
+                    {med.renewal_type && <p className="text-slate-600">Type: {renewalTypeLabels[med.renewal_type] || med.renewal_type}</p>}
                   </div>
                   <button
                     onClick={() => handleDeleteMedication(med.id)}
