@@ -56,7 +56,7 @@ async function getUser() {
 }
 
 // Save a medication
-async function saveMedication(medicationName, brandName, dosage, monthlyCost) {
+async function saveMedication(medicationName, brandName, dosage, monthlyCost, renewalDate) {
   const user = await getUser();
   if (!user) return { success: false, message: 'Not logged in' };
 
@@ -67,7 +67,8 @@ async function saveMedication(medicationName, brandName, dosage, monthlyCost) {
       medication_name: medicationName,
       brand_name: brandName,
       dosage: dosage,
-      monthly_cost: monthlyCost
+      monthly_cost: monthlyCost,
+      renewal_date: renewalDate
     });
 
   if (error) {

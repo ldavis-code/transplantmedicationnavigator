@@ -23,7 +23,8 @@ export default function MyMedications() {
     name: '',
     brand: '',
     dosage: '',
-    cost: ''
+    cost: '',
+    renewal: ''
   });
 
   // Check for existing session on mount
@@ -134,14 +135,15 @@ export default function MyMedications() {
         medication_name: newMed.name,
         brand_name: newMed.brand || null,
         dosage: newMed.dosage || null,
-        monthly_cost: newMed.cost ? parseFloat(newMed.cost) : null
+        monthly_cost: newMed.cost ? parseFloat(newMed.cost) : null,
+        renewal_date: newMed.renewal || null
       });
 
     if (error) {
       setMedMessage({ text: error.message, type: 'error' });
     } else {
       setMedMessage({ text: 'Medication saved!', type: 'success' });
-      setNewMed({ name: '', brand: '', dosage: '', cost: '' });
+      setNewMed({ name: '', brand: '', dosage: '', cost: '', renewal: '' });
       loadMedications();
     }
     setMedLoading(false);
@@ -347,6 +349,15 @@ export default function MyMedications() {
               placeholder="Monthly cost ($)"
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             />
+            <div>
+              <label className="block text-sm text-slate-600 mb-1">Renewal date (optional)</label>
+              <input
+                type="date"
+                value={newMed.renewal}
+                onChange={(e) => setNewMed({ ...newMed, renewal: e.target.value })}
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+            </div>
           </div>
           <button
             type="submit"
@@ -383,6 +394,7 @@ export default function MyMedications() {
                     {med.brand_name && <p className="text-slate-600">Brand: {med.brand_name}</p>}
                     {med.dosage && <p className="text-slate-600">Dosage: {med.dosage}</p>}
                     {med.monthly_cost && <p className="text-slate-600">Monthly cost: ${med.monthly_cost}</p>}
+                    {med.renewal_date && <p className="text-slate-600">Renewal: {new Date(med.renewal_date).toLocaleDateString()}</p>}
                   </div>
                   <button
                     onClick={() => handleDeleteMedication(med.id)}
