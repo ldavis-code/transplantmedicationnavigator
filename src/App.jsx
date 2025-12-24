@@ -421,8 +421,7 @@ const Layout = ({ children }) => {
         { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
-        { path: '/for-transplant-programs', label: 'For Partners', ariaLabel: 'Partnership opportunities for healthcare organizations' },
-        { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
+        { path: '/pricing', label: 'Pricing & Partners', ariaLabel: 'View pricing and partnership information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
 
@@ -4467,9 +4466,9 @@ const MainSiteRoutes = () => (
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
-                <Route path="/for-transplant-programs" element={<LazyForTransplantPrograms />} />
-                <Route path="/for-employers" element={<LazyForEmployers />} />
-                <Route path="/for-payers" element={<LazyForPayers />} />
+                <Route path="/for-transplant-programs" element={<Navigate to="/pricing#transplant-programs" replace />} />
+                <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
+                <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
                 <Route path="/pricing" element={<LazyPricing />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
