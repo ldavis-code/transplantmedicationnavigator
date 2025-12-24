@@ -27,6 +27,10 @@
       cursor: pointer;
     }
     button:hover { background: #1d4ed8; }
+    .secondary-btn {
+      background: #6b7280;
+    }
+    .secondary-btn:hover { background: #4b5563; }
     .error { color: red; }
     .success { color: green; }
     .medication-item {
@@ -42,76 +46,212 @@
       margin-top: 10px;
     }
     hr { margin: 30px 0; }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+    }
+    .close-btn {
+      background: none;
+      color: #666;
+      width: auto;
+      padding: 5px;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Auth Section (shown when logged out) -->
-  <div id="auth-section">
-    <h1>Transplant Medication Navigator</h1>
+  <h1>Transplant Medication Navigator</h1>
 
-    <div id="login-form">
-      <h2>Login</h2>
-      <input type="email" id="login-email" placeholder="Email">
-      <input type="password" id="login-password" placeholder="Password">
-      <button onclick="handleLogin()">Login</button>
-      <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
-    </div>
-
-    <div id="signup-form" class="hidden">
-      <h2>Sign Up</h2>
-      <input type="email" id="signup-email" placeholder="Email">
-      <input type="password" id="signup-password" placeholder="Password (min 6 characters)">
-      <button onclick="handleSignup()">Create Account</button>
-      <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-    </div>
-
-    <p id="auth-message"></p>
+  <!-- User status bar -->
+  <div id="user-bar">
+    <span id="logged-out-bar">
+      <a href="#" onclick="showAuthModal('login')">Login</a> |
+      <a href="#" onclick="showAuthModal('signup')">Sign Up</a>
+    </span>
+    <span id="logged-in-bar" class="hidden">
+      Logged in as: <span id="user-email"></span> |
+      <a href="#" onclick="handleLogout()">Logout</a>
+    </span>
   </div>
 
-  <!-- Dashboard Section (shown when logged in) -->
-  <div id="dashboard-section" class="hidden">
-    <h1>My Medications</h1>
-    <p>Logged in as: <span id="user-email"></span></p>
-    <button onclick="handleLogout()" style="width: auto;">Logout</button>
+  <hr>
 
-    <hr>
+  <!-- Main medication form - always visible -->
+  <h2>Save a Medication</h2>
+  <p>Enter as much or as little info as you have.</p>
 
-    <h2>Add a Medication</h2>
-    <input type="text" id="med-name" placeholder="Medication name (e.g., Tacrolimus)">
-    <input type="text" id="med-brand" placeholder="Brand name (e.g., Prograf)">
-    <input type="text" id="med-dosage" placeholder="Dosage (e.g., 1mg twice daily)">
-    <input type="number" id="med-cost" placeholder="Monthly cost ($)" step="0.01">
-    <button onclick="handleAddMedication()">Save Medication</button>
-    <p id="med-message"></p>
+  <input type="text" id="med-name" placeholder="Medication name (required)">
+  <input type="text" id="med-brand" placeholder="Brand name (optional)">
+  <input type="text" id="med-dosage" placeholder="Dosage (optional)">
+  <input type="number" id="med-cost" placeholder="Monthly cost $ (optional)" step="0.01">
+  <button onclick="handleSaveMedication()">Save to My List</button>
+  <p id="med-message"></p>
 
-    <hr>
+  <hr>
 
-    <h2>Saved Medications</h2>
+  <!-- Saved medications - only shows when logged in -->
+  <div id="saved-section" class="hidden">
+    <h2>My Saved Medications</h2>
     <div id="medications-list">
       <p>Loading...</p>
     </div>
   </div>
 
+  <div id="logged-out-section">
+    <p><a href="#" onclick="showAuthModal('login')">Log in</a> to see your saved medications.</p>
+  </div>
+
+  <!-- Login/Signup Modal -->
+  <div id="auth-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeAuthModal()">✕ Close</button>
+
+      <div id="modal-login">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="handleLogin()">Login</button>
+        <p>Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>
+      </div>
+
+      <div id="modal-signup" class="hidden">
+        <h2>Sign Up</h2>
+        <input type="email" id="signup-email" placeholder="Email">
+        <input type="password" id="signup-password" placeholder="Password (min 6 characters)">
+        <button onclick="handleSignup()">Create Account</button>
+        <p>Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+      </div>
+
+      <p id="auth-message"></p>
+    </div>
+  </div>
+
   <script src="supabase-auth.js"></script>
   <script>
+    // Store medication temporarily if user isn't logged in
+    let pendingMedication = null;
+
     // Check if user is already logged in on page load
     window.onload = async function() {
       const user = await getUser();
       if (user) {
-        showDashboard(user);
+        showLoggedInState(user);
       }
     };
 
-    // Toggle between login and signup forms
-    function showSignup() {
-      document.getElementById('login-form').classList.add('hidden');
-      document.getElementById('signup-form').classList.remove('hidden');
+    // Show/hide logged in state
+    function showLoggedInState(user) {
+      document.getElementById('logged-out-bar').classList.add('hidden');
+      document.getElementById('logged-in-bar').classList.remove('hidden');
+      document.getElementById('user-email').textContent = user.email;
+      document.getElementById('saved-section').classList.remove('hidden');
+      document.getElementById('logged-out-section').classList.add('hidden');
+      loadMedications();
     }
 
-    function showLogin() {
-      document.getElementById('signup-form').classList.add('hidden');
-      document.getElementById('login-form').classList.remove('hidden');
+    function showLoggedOutState() {
+      document.getElementById('logged-in-bar').classList.add('hidden');
+      document.getElementById('logged-out-bar').classList.remove('hidden');
+      document.getElementById('saved-section').classList.add('hidden');
+      document.getElementById('logged-out-section').classList.remove('hidden');
+    }
+
+    // Modal controls
+    function showAuthModal(type) {
+      document.getElementById('auth-modal').classList.remove('hidden');
+      document.getElementById('auth-message').textContent = '';
+      if (type === 'signup') {
+        switchToSignup();
+      } else {
+        switchToLogin();
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.add('hidden');
+      pendingMedication = null; // Clear pending if they cancel
+    }
+
+    function switchToSignup() {
+      document.getElementById('modal-login').classList.add('hidden');
+      document.getElementById('modal-signup').classList.remove('hidden');
+    }
+
+    function switchToLogin() {
+      document.getElementById('modal-signup').classList.add('hidden');
+      document.getElementById('modal-login').classList.remove('hidden');
+    }
+
+    // Handle save - checks login first
+    async function handleSaveMedication() {
+      const name = document.getElementById('med-name').value.trim();
+      const messageEl = document.getElementById('med-message');
+
+      if (!name) {
+        messageEl.textContent = 'Please enter a medication name';
+        messageEl.className = 'error';
+        return;
+      }
+
+      const user = await getUser();
+
+      if (!user) {
+        // Store medication and prompt login
+        pendingMedication = {
+          name: name,
+          brand: document.getElementById('med-brand').value.trim(),
+          dosage: document.getElementById('med-dosage').value.trim(),
+          cost: document.getElementById('med-cost').value
+        };
+        messageEl.textContent = 'Please log in to save medications';
+        messageEl.className = '';
+        showAuthModal('login');
+        return;
+      }
+
+      // User is logged in, save directly
+      await saveTheMedication(name);
+    }
+
+    // Actually save the medication
+    async function saveTheMedication() {
+      const name = pendingMedication ? pendingMedication.name : document.getElementById('med-name').value.trim();
+      const brand = pendingMedication ? pendingMedication.brand : document.getElementById('med-brand').value.trim();
+      const dosage = pendingMedication ? pendingMedication.dosage : document.getElementById('med-dosage').value.trim();
+      const cost = pendingMedication ? pendingMedication.cost : document.getElementById('med-cost').value;
+      const messageEl = document.getElementById('med-message');
+
+      const result = await saveMedication(name, brand || null, dosage || null, parseFloat(cost) || null);
+
+      if (result.success) {
+        messageEl.textContent = 'Medication saved!';
+        messageEl.className = 'success';
+        // Clear form
+        document.getElementById('med-name').value = '';
+        document.getElementById('med-brand').value = '';
+        document.getElementById('med-dosage').value = '';
+        document.getElementById('med-cost').value = '';
+        pendingMedication = null;
+        loadMedications();
+      } else {
+        messageEl.textContent = result.message;
+        messageEl.className = 'error';
+      }
     }
 
     // Handle login
@@ -124,7 +264,13 @@
       const result = await login(email, password);
 
       if (result.success) {
-        showDashboard(result.user);
+        closeAuthModal();
+        showLoggedInState(result.user);
+
+        // Save pending medication if there was one
+        if (pendingMedication) {
+          await saveTheMedication();
+        }
       } else {
         messageEl.textContent = result.message;
         messageEl.className = 'error';
@@ -141,7 +287,7 @@
       const result = await signUp(email, password);
 
       if (result.success) {
-        messageEl.textContent = result.message;
+        messageEl.textContent = 'Check your email for confirmation link, then come back and log in.';
         messageEl.className = 'success';
       } else {
         messageEl.textContent = result.message;
@@ -152,49 +298,7 @@
     // Handle logout
     async function handleLogout() {
       await logout();
-      document.getElementById('dashboard-section').classList.add('hidden');
-      document.getElementById('auth-section').classList.remove('hidden');
-      document.getElementById('auth-message').textContent = '';
-    }
-
-    // Show dashboard after login
-    function showDashboard(user) {
-      document.getElementById('auth-section').classList.add('hidden');
-      document.getElementById('dashboard-section').classList.remove('hidden');
-      document.getElementById('user-email').textContent = user.email;
-      loadMedications();
-    }
-
-    // Add a medication
-    async function handleAddMedication() {
-      const name = document.getElementById('med-name').value;
-      const brand = document.getElementById('med-brand').value;
-      const dosage = document.getElementById('med-dosage').value;
-      const cost = document.getElementById('med-cost').value;
-      const messageEl = document.getElementById('med-message');
-
-      if (!name) {
-        messageEl.textContent = 'Please enter a medication name';
-        messageEl.className = 'error';
-        return;
-      }
-
-      const result = await saveMedication(name, brand, dosage, parseFloat(cost) || null);
-
-      if (result.success) {
-        messageEl.textContent = 'Medication saved!';
-        messageEl.className = 'success';
-        // Clear form
-        document.getElementById('med-name').value = '';
-        document.getElementById('med-brand').value = '';
-        document.getElementById('med-dosage').value = '';
-        document.getElementById('med-cost').value = '';
-        // Reload list
-        loadMedications();
-      } else {
-        messageEl.textContent = result.message;
-        messageEl.className = 'error';
-      }
+      showLoggedOutState();
     }
 
     // Load and display medications
