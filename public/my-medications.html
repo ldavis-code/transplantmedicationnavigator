@@ -99,6 +99,15 @@
   <input type="text" id="med-brand" placeholder="Brand name (optional)">
   <input type="text" id="med-dosage" placeholder="Dosage (optional)">
   <input type="number" id="med-cost" placeholder="Monthly cost $ (optional)" step="0.01">
+  <label for="med-renewal">Renewal date (optional)</label>
+  <input type="date" id="med-renewal">
+  <label for="med-renewal-type">Renewal type (optional)</label>
+  <select id="med-renewal-type">
+    <option value="">-- Select --</option>
+    <option value="calendar_year">Calendar year (Jan 1)</option>
+    <option value="enrollment_anniversary">Enrollment anniversary</option>
+    <option value="after_max_reached">After max benefit reached</option>
+  </select>
   <button onclick="handleSaveMedication()">Save to My List</button>
   <p id="med-message"></p>
 
@@ -145,6 +154,16 @@
   <script>
     // Store medication temporarily if user isn't logged in
     let pendingMedication = null;
+
+    // Format renewal type for display
+    function formatRenewalType(type) {
+      const types = {
+        'calendar_year': 'Calendar year',
+        'enrollment_anniversary': 'Enrollment anniversary',
+        'after_max_reached': 'After max reached'
+      };
+      return types[type] || type;
+    }
 
     // Check if user is already logged in on page load
     window.onload = async function() {
@@ -216,7 +235,9 @@
           name: name,
           brand: document.getElementById('med-brand').value.trim(),
           dosage: document.getElementById('med-dosage').value.trim(),
-          cost: document.getElementById('med-cost').value
+          cost: document.getElementById('med-cost').value,
+          renewal: document.getElementById('med-renewal').value,
+          renewalType: document.getElementById('med-renewal-type').value
         };
         messageEl.textContent = 'Please log in to save medications';
         messageEl.className = '';
@@ -234,9 +255,11 @@
       const brand = pendingMedication ? pendingMedication.brand : document.getElementById('med-brand').value.trim();
       const dosage = pendingMedication ? pendingMedication.dosage : document.getElementById('med-dosage').value.trim();
       const cost = pendingMedication ? pendingMedication.cost : document.getElementById('med-cost').value;
+      const renewal = pendingMedication ? pendingMedication.renewal : document.getElementById('med-renewal').value;
+      const renewalType = pendingMedication ? pendingMedication.renewalType : document.getElementById('med-renewal-type').value;
       const messageEl = document.getElementById('med-message');
 
-      const result = await saveMedication(name, brand || null, dosage || null, parseFloat(cost) || null);
+      const result = await saveMedication(name, brand || null, dosage || null, parseFloat(cost) || null, renewal || null, renewalType || null);
 
       if (result.success) {
         messageEl.textContent = 'Medication saved!';
@@ -246,6 +269,8 @@
         document.getElementById('med-brand').value = '';
         document.getElementById('med-dosage').value = '';
         document.getElementById('med-cost').value = '';
+        document.getElementById('med-renewal').value = '';
+        document.getElementById('med-renewal-type').value = '';
         pendingMedication = null;
         loadMedications();
       } else {
@@ -317,6 +342,8 @@
           ${med.brand_name ? `<br>Brand: ${med.brand_name}` : ''}
           ${med.dosage ? `<br>Dosage: ${med.dosage}` : ''}
           ${med.monthly_cost ? `<br>Monthly cost: $${med.monthly_cost}` : ''}
+          ${med.renewal_date ? `<br>Renewal: ${new Date(med.renewal_date).toLocaleDateString()}` : ''}
+          ${med.renewal_type ? `<br>Type: ${formatRenewalType(med.renewal_type)}` : ''}
           <br><button class="delete-btn" onclick="handleDelete('${med.id}')">Delete</button>
         </div>
       `).join('');
