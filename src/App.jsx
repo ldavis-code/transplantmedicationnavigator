@@ -14,6 +14,9 @@ const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
+const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
+const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
+const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -4470,6 +4473,9 @@ const MainSiteRoutes = () => (
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
                 <Route path="/pricing" element={<LazyPricing />} />
+                <Route path="/subscribe" element={<LazySubscribe />} />
+                <Route path="/subscribe/success" element={<LazySubscribeSuccess />} />
+                <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="*" element={<LazyNotFound />} />
