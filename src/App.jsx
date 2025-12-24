@@ -2539,6 +2539,37 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                     <p><strong>Community prices</strong> are real prices reported by other users in the last 90 days. Help others by reporting prices you've paid!</p>
                                 </div>
                             )}
+
+                            {/* Deductible Trap Warning */}
+                            <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-lg p-4 mt-4">
+                                <div className="flex items-start gap-3">
+                                    <div className="bg-red-600 text-white p-2 rounded-full flex-shrink-0" aria-hidden="true">
+                                        <AlertTriangle size={16} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-red-900 text-sm mb-2">The Deductible Trap</h4>
+                                        <p className="text-xs text-red-800 mb-2">
+                                            <strong>Warning:</strong> When you use discount cards like GoodRx or SingleCare, the money you pay does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your insurance deductible or out-of-pocket maximum</span>.
+                                        </p>
+                                        <p className="text-xs text-slate-700 mb-3">
+                                            Transplant patients often reach their out-of-pocket max within a few months—after which insurance pays 100%. Using discount cards delays this, meaning you pay longer.
+                                        </p>
+                                        <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                                            <div className="bg-white/80 p-2 rounded border border-emerald-200">
+                                                <div className="font-bold text-emerald-700">✅ Using Insurance</div>
+                                                <div className="text-slate-600">Hit OOPM in 3 months → $0 rest of year</div>
+                                            </div>
+                                            <div className="bg-white/80 p-2 rounded border border-red-200">
+                                                <div className="font-bold text-red-700">❌ Discount Cards</div>
+                                                <div className="text-slate-600">Never hit OOPM → Pay all year</div>
+                                            </div>
+                                        </div>
+                                        <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
+                                            Learn more about the Deductible Trap <ArrowRight size={12} />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
