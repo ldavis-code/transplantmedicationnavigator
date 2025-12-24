@@ -546,7 +546,7 @@ const Home = () => {
                     Patient-led. Unbiased.
                 </p>
                 <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
-                    A free, safe guide for transplant patients and care partners to find affordable medications and assistance programs.
+                    A safe guide for transplant patients and care partners to find affordable medications and assistance programs.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -727,14 +727,14 @@ const Home = () => {
                     Need to Talk to Someone?
                 </h3>
                 <p className="text-slate-600 mb-4">
-                    The transplant journey can be emotionally challenging. Free, confidential support is available 24/7.
+                    The transplant journey can be emotionally challenging. Confidential support is available 24/7.
                 </p>
                 <div className="mb-4">
                     <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
                         988
                     </a>
                     <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
-                    <p className="text-sm text-slate-600 mt-1">24/7 • Free • Confidential</p>
+                    <p className="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
                 </div>
                 <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
                     Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out—there are people who want to help.
