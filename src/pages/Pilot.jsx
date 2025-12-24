@@ -142,8 +142,8 @@ const Pilot = () => {
             {/* Trust Indicators */}
             <section className="grid md:grid-cols-3 gap-4">
                 <div className="bg-white p-4 rounded-xl border border-slate-200 text-center">
-                    <p className="font-bold text-emerald-700 text-lg">Free</p>
-                    <p className="text-slate-600 text-sm">No cost to use</p>
+                    <p className="font-bold text-emerald-700 text-lg">Free Education</p>
+                    <p className="text-slate-600 text-sm">Educational resources at no cost</p>
                 </div>
                 <div className="bg-white p-4 rounded-xl border border-slate-200 text-center">
                     <p className="font-bold text-emerald-700 text-lg">No Login</p>
@@ -166,7 +166,7 @@ const Pilot = () => {
             {/* About Section */}
             <section className="text-center py-4">
                 <p className="text-slate-600 text-sm">
-                    Transplant Medication Navigator™ is a free resource built by a transplant recipient to help patients find medication assistance.
+                    Transplant Medication Navigator™ was built by a transplant recipient to help patients find medication assistance with free educational resources.
                 </p>
                 <Link to="/" className="text-emerald-700 font-medium hover:underline text-sm mt-2 inline-block">
                     Learn more about us

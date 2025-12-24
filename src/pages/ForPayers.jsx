@@ -138,7 +138,7 @@ const ForPayers = () => {
                     <h2 className="text-xl font-bold text-purple-900">What Members See</h2>
                 </div>
                 <p className="text-purple-800 mb-6 max-w-2xl mx-auto">
-                    Members get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                    Members get access to medication search, assistance programs, and free educational resources—no login required for education.
                 </p>
                 <Link
                     to="/"

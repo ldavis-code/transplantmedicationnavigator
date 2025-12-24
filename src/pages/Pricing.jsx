@@ -38,9 +38,9 @@ const Pricing = () => {
     const tiers = [
         {
             name: 'Free',
-            description: 'For individual patients',
+            description: 'Basic access for patients',
             price: '$0',
-            priceSubtext: 'Always free',
+            priceSubtext: 'Free education',
             color: 'emerald',
             icon: Users,
             features: [
@@ -254,7 +254,7 @@ const Pricing = () => {
                     Pricing & Partners
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                    Free for patients. Partnership options for organizations.
+                    Free access to education. Partnership options for organizations.
                 </p>
             </header>
 
@@ -332,7 +332,7 @@ const Pricing = () => {
                                 <h2 className="text-xl font-bold text-emerald-900">Our Promise to Patients</h2>
                             </div>
                             <p className="text-emerald-800 text-lg max-w-3xl mx-auto">
-                                We never charge patients. Our B2B partnerships keep the service free for those who need it most.
+                                Educational resources will always be free. Everyone deserves to understand their medication options.
                             </p>
                         </section>
 
@@ -464,7 +464,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-emerald-900">What Patients See</h3>
                             </div>
                             <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                                Patients get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                                Patients get access to medication search, assistance programs, and free educational resources—no login required for education.
                             </p>
                             <Link
                                 to="/"
@@ -575,7 +575,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-blue-900">What Employees See</h3>
                             </div>
                             <p className="text-blue-800 mb-6 max-w-2xl mx-auto">
-                                Employees get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                                Employees get access to medication search, assistance programs, and free educational resources—no login required for education.
                             </p>
                             <Link
                                 to="/"
@@ -689,7 +689,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-purple-900">What Members See</h3>
                             </div>
                             <p className="text-purple-800 mb-6 max-w-2xl mx-auto">
-                                Members get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                                Members get access to medication search, assistance programs, and free educational resources—no login required for education.
                             </p>
                             <Link
                                 to="/"

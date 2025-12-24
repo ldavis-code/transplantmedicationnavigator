@@ -11,8 +11,8 @@ export const seoMetadata = {
     title: 'Transplant Medication Navigator™ - Medication Assistance Guide for Transplant Patients',
     description: 'Find free medication assistance programs for transplant patients. Search Patient Assistance Programs, compare copay foundations, and get help paying for immunosuppressants.',
     canonical: `${BASE_URL}/`,
-    ogTitle: 'Transplant Medication Navigator™ - Free Medication Assistance',
-    ogDescription: 'Free guide helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants.',
+    ogTitle: 'Transplant Medication Navigator™ - Medication Assistance Guide',
+    ogDescription: 'Helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants. Free educational resources.',
     twitterTitle: 'Transplant Medication Navigator™',
     twitterDescription: 'Find free medication assistance programs for transplant patients. Search PAPs, copay foundations, and get help paying for immunosuppressants.',
   },
@@ -79,12 +79,12 @@ export const seoMetadata = {
 
   forTransplantPrograms: {
     title: 'For Transplant Programs | Transplant Medication Navigator™',
-    description: 'Help your transplant patients navigate medication costs with our free, privacy-safe resource. Reduce financial barriers to adherence with verified assistance programs.',
+    description: 'Help your transplant patients navigate medication costs with our privacy-safe resource and free educational content. Reduce financial barriers to adherence with verified assistance programs.',
     canonical: `${BASE_URL}/for-transplant-programs`,
     ogTitle: 'Transplant Program Partnerships',
     ogDescription: 'Partner with Transplant Medication Navigator to help your patients find medication assistance programs. Privacy-safe, no PHI collected.',
     twitterTitle: 'For Transplant Programs',
-    twitterDescription: 'Help your transplant patients navigate medication costs with our free, verified assistance program resource.',
+    twitterDescription: 'Help your transplant patients navigate medication costs with free educational resources and verified assistance programs.',
   },
 
   forEmployers: {
@@ -92,9 +92,9 @@ export const seoMetadata = {
     description: 'Reduce specialty drug costs for transplant employees. Connect your workforce to copay cards, manufacturer assistance, and foundation support.',
     canonical: `${BASE_URL}/for-employers`,
     ogTitle: 'Employer Benefits for Transplant Employees',
-    ogDescription: 'Help transplant employees find medication assistance programs. Complement existing pharmacy benefits with free, no-login resource.',
+    ogDescription: 'Help transplant employees find medication assistance programs. Complement existing pharmacy benefits with free educational resources.',
     twitterTitle: 'For Employers',
-    twitterDescription: 'Reduce specialty drug costs for transplant employees with our free medication assistance resource.',
+    twitterDescription: 'Reduce specialty drug costs for transplant employees with our medication assistance resource and free educational content.',
   },
 
   forPayers: {
@@ -109,12 +109,12 @@ export const seoMetadata = {
 
   pricing: {
     title: 'Pricing | Transplant Medication Navigator™',
-    description: 'Free for patients, partnership options for organizations. View our transparent pricing for pilot partnerships and enterprise solutions.',
+    description: 'Free access to education, subscription options for patients, and partnership options for organizations. View our transparent pricing.',
     canonical: `${BASE_URL}/pricing`,
     ogTitle: 'Transparent Pricing',
-    ogDescription: 'Free for patients. Pilot partnerships and enterprise options for healthcare organizations. We never charge patients.',
+    ogDescription: 'Free educational resources for all. Subscription and partnership options for patients and healthcare organizations.',
     twitterTitle: 'Pricing',
-    twitterDescription: 'Free for patients, partnership options for organizations. View our transparent pricing.',
+    twitterDescription: 'Free access to education, partnership options for organizations. View our transparent pricing.',
   },
 
   pilot: {
