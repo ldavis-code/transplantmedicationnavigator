@@ -127,6 +127,22 @@ export default function MyMedications() {
     setMedications([]);
   }
 
+  async function ensureProfile() {
+    const { data } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .eq('id', user.id)
+      .single();
+
+    if (!data) {
+      await supabase.from('user_profiles').insert({
+        id: user.id,
+        email: user.email,
+        plan: 'free'
+      });
+    }
+  }
+
   async function handleAddMedication(e) {
     e.preventDefault();
     if (!newMed.name.trim()) {
@@ -135,6 +151,10 @@ export default function MyMedications() {
     }
 
     setMedLoading(true);
+
+    // Ensure profile exists before saving medication
+    await ensureProfile();
+
     const { error } = await supabase
       .from('user_medications')
       .insert({
