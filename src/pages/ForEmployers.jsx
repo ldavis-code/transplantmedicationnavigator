@@ -135,7 +135,7 @@ const ForEmployers = () => {
                     <h2 className="text-xl font-bold text-blue-900">What Employees See</h2>
                 </div>
                 <p className="text-blue-800 mb-6 max-w-2xl mx-auto">
-                    Employees get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                    Employees get access to medication search, assistance programs, and free educational resources—no login required for education.
                 </p>
                 <Link
                     to="/"

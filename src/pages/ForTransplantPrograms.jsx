@@ -49,7 +49,7 @@ const ForTransplantPrograms = () => {
                     Help Your Patients Navigate Medication Costs
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Give transplant patients a free, trusted resource to find assistance programs and reduce financial barriers to medication adherence.
+                    Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -132,7 +132,7 @@ const ForTransplantPrograms = () => {
                     <h2 className="text-xl font-bold text-emerald-900">What Patients See</h2>
                 </div>
                 <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                    Patients get full access to medication search, assistance programs, and educational resources—completely free, no login required.
+                    Patients get access to medication search, assistance programs, and free educational resources—no login required for education.
                 </p>
                 <Link
                     to="/"
