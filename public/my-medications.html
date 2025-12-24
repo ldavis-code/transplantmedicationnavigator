@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transplant Medication Navigator</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .hidden { display: none; }
+    input, button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    .error { color: red; }
+    .success { color: green; }
+    .medication-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .delete-btn {
+      background: #dc2626;
+      width: auto;
+      padding: 5px 10px;
+      margin-top: 10px;
+    }
+    hr { margin: 30px 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Auth Section (shown when logged out) -->
+  <div id="auth-section">
+    <h1>Transplant Medication Navigator</h1>
+
+    <div id="login-form">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email">
+      <input type="password" id="login-password" placeholder="Password">
+      <button onclick="handleLogin()">Login</button>
+      <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+    </div>
+
+    <div id="signup-form" class="hidden">
+      <h2>Sign Up</h2>
+      <input type="email" id="signup-email" placeholder="Email">
+      <input type="password" id="signup-password" placeholder="Password (min 6 characters)">
+      <button onclick="handleSignup()">Create Account</button>
+      <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+
+    <p id="auth-message"></p>
+  </div>
+
+  <!-- Dashboard Section (shown when logged in) -->
+  <div id="dashboard-section" class="hidden">
+    <h1>My Medications</h1>
+    <p>Logged in as: <span id="user-email"></span></p>
+    <button onclick="handleLogout()" style="width: auto;">Logout</button>
+
+    <hr>
+
+    <h2>Add a Medication</h2>
+    <input type="text" id="med-name" placeholder="Medication name (e.g., Tacrolimus)">
+    <input type="text" id="med-brand" placeholder="Brand name (e.g., Prograf)">
+    <input type="text" id="med-dosage" placeholder="Dosage (e.g., 1mg twice daily)">
+    <input type="number" id="med-cost" placeholder="Monthly cost ($)" step="0.01">
+    <button onclick="handleAddMedication()">Save Medication</button>
+    <p id="med-message"></p>
+
+    <hr>
+
+    <h2>Saved Medications</h2>
+    <div id="medications-list">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <script src="supabase-auth.js"></script>
+  <script>
+    // Check if user is already logged in on page load
+    window.onload = async function() {
+      const user = await getUser();
+      if (user) {
+        showDashboard(user);
+      }
+    };
+
+    // Toggle between login and signup forms
+    function showSignup() {
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('signup-form').classList.remove('hidden');
+    }
+
+    function showLogin() {
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('login-form').classList.remove('hidden');
+    }
+
+    // Handle login
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const messageEl = document.getElementById('auth-message');
+
+      messageEl.textContent = 'Logging in...';
+      const result = await login(email, password);
+
+      if (result.success) {
+        showDashboard(result.user);
+      } else {
+        messageEl.textContent = result.message;
+        messageEl.className = 'error';
+      }
+    }
+
+    // Handle signup
+    async function handleSignup() {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const messageEl = document.getElementById('auth-message');
+
+      messageEl.textContent = 'Creating account...';
+      const result = await signUp(email, password);
+
+      if (result.success) {
+        messageEl.textContent = result.message;
+        messageEl.className = 'success';
+      } else {
+        messageEl.textContent = result.message;
+        messageEl.className = 'error';
+      }
+    }
+
+    // Handle logout
+    async function handleLogout() {
+      await logout();
+      document.getElementById('dashboard-section').classList.add('hidden');
+      document.getElementById('auth-section').classList.remove('hidden');
+      document.getElementById('auth-message').textContent = '';
+    }
+
+    // Show dashboard after login
+    function showDashboard(user) {
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('dashboard-section').classList.remove('hidden');
+      document.getElementById('user-email').textContent = user.email;
+      loadMedications();
+    }
+
+    // Add a medication
+    async function handleAddMedication() {
+      const name = document.getElementById('med-name').value;
+      const brand = document.getElementById('med-brand').value;
+      const dosage = document.getElementById('med-dosage').value;
+      const cost = document.getElementById('med-cost').value;
+      const messageEl = document.getElementById('med-message');
+
+      if (!name) {
+        messageEl.textContent = 'Please enter a medication name';
+        messageEl.className = 'error';
+        return;
+      }
+
+      const result = await saveMedication(name, brand, dosage, parseFloat(cost) || null);
+
+      if (result.success) {
+        messageEl.textContent = 'Medication saved!';
+        messageEl.className = 'success';
+        // Clear form
+        document.getElementById('med-name').value = '';
+        document.getElementById('med-brand').value = '';
+        document.getElementById('med-dosage').value = '';
+        document.getElementById('med-cost').value = '';
+        // Reload list
+        loadMedications();
+      } else {
+        messageEl.textContent = result.message;
+        messageEl.className = 'error';
+      }
+    }
+
+    // Load and display medications
+    async function loadMedications() {
+      const listEl = document.getElementById('medications-list');
+      const medications = await getMyMedications();
+
+      if (medications.length === 0) {
+        listEl.innerHTML = '<p>No medications saved yet.</p>';
+        return;
+      }
+
+      listEl.innerHTML = medications.map(med => `
+        <div class="medication-item">
+          <strong>${med.medication_name}</strong>
+          ${med.brand_name ? `<br>Brand: ${med.brand_name}` : ''}
+          ${med.dosage ? `<br>Dosage: ${med.dosage}` : ''}
+          ${med.monthly_cost ? `<br>Monthly cost: $${med.monthly_cost}` : ''}
+          <br><button class="delete-btn" onclick="handleDelete('${med.id}')">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    // Delete a medication
+    async function handleDelete(id) {
+      if (confirm('Delete this medication?')) {
+        await deleteMedication(id);
+        loadMedications();
+      }
+    }
+  </script>
+
+</body>
+</html>
