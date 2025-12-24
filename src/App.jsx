@@ -2305,117 +2305,258 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 )}
                 {activeTab === 'PRICE' && (
                     <div className="fade-in">
-                        <div className="overflow-x-auto rounded-lg border border-slate-200">
-                            <table className="w-full text-sm text-left min-w-[500px]">
-                                <caption className="sr-only">Price estimates for {med.brandName}</caption>
-                                <thead className="bg-slate-100 text-slate-700 font-bold">
-                                    <tr><th scope="col" className="p-3">Pharmacy / Tool</th><th scope="col" className="p-3">Est. Cash Price</th><th scope="col" className="p-3 no-print">Action</th></tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-200">
-                                    {/* Cost Plus Drugs Row - only show if medication is available */}
-                                    {isCostPlusAvailable && (
-                                    <tr className="bg-white hover:bg-slate-50">
-                                        <td className="p-3">
-                                            <div className="font-medium text-slate-900">Cost Plus Drugs (Online)</div>
-                                            {costPlusStats && (
-                                                <div className="text-xs text-emerald-700 flex items-center gap-1 mt-1">
-                                                    <Users size={14} />
-                                                    Community: ${costPlusStats.min}-${costPlusStats.max} ({costPlusStats.count} reports)
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="p-3">
-                                            <div className="text-emerald-600 font-bold">
-                                                {getPriceEstimate(med.id, med.category, 'costplus')}
-                                            </div>
-                                            <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
-                                                <Clock size={14} />
-                                                Est. updated Dec 2025
-                                            </div>
-                                        </td>
-                                        <td className="p-3 no-print">
-                                            <div className="flex flex-col gap-1">
-                                                <a href={`https://costplusdrugs.com/medications/?query=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                                <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-emerald-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    )}
-
-                                    {/* GoodRx Row - only show if medication is available */}
-                                    {isGoodRxAvailable && (
-                                    <tr className="bg-white hover:bg-slate-50">
-                                        <td className="p-3">
-                                            <div className="font-medium text-slate-900">GoodRx Coupon (Retail)</div>
-                                            {goodRxStats && (
-                                                <div className="text-xs text-emerald-700 flex items-center gap-1 mt-1">
-                                                    <Users size={14} />
-                                                    Community: ${goodRxStats.min}-${goodRxStats.max} ({goodRxStats.count} reports)
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="p-3">
-                                            <div className="text-slate-600">
-                                                {getPriceEstimate(med.id, med.category, 'goodrx')}
-                                            </div>
-                                            <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
-                                                <Clock size={14} />
-                                                Est. updated Dec 2025
-                                            </div>
-                                        </td>
-                                        <td className="p-3 no-print">
-                                            <div className="flex flex-col gap-1">
-                                                <a href={`https://www.goodrx.com/search?s=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on GoodRx for ${med.genericName} (opens in new tab)`}>
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                                <button onClick={() => openReportModal('goodrx', 'GoodRx')} className="text-emerald-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    )}
-
-                                    {/* SingleCare Row - only show if medication is available */}
-                                    {isSingleCareAvailable && (
-                                    <tr className="bg-white hover:bg-slate-50">
-                                        <td className="p-3">
-                                            <div className="font-medium text-slate-900">SingleCare</div>
-                                            {singleCareStats && (
-                                                <div className="text-xs text-emerald-700 flex items-center gap-1 mt-1">
-                                                    <Users size={14} />
-                                                    Community: ${singleCareStats.min}-${singleCareStats.max} ({singleCareStats.count} reports)
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="p-3">
-                                            <div className="text-slate-600">
-                                                {getPriceEstimate(med.id, med.category, 'singlecare')}
-                                            </div>
-                                            <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
-                                                <Clock size={14} />
-                                                Est. updated Dec 2025
-                                            </div>
-                                        </td>
-                                        <td className="p-3 no-print">
-                                            <div className="flex flex-col gap-1">
-                                                <a href={`https://www.singlecare.com/search?search=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on SingleCare for ${med.genericName} (opens in new tab)`}>
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                                <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-emerald-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                        {/* Color-Coded Legend */}
+                        <div className="mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 className="font-bold text-slate-800 mb-3 text-sm">Price Options Guide</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                                    <div>
+                                        <div className="font-semibold text-emerald-700">Copay Cards</div>
+                                        <div className="text-slate-500">Best savings: $0-$10/mo</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></span>
+                                    <div>
+                                        <div className="font-semibold text-orange-700">Patient Assistance</div>
+                                        <div className="text-slate-500">Free if eligible</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0"></span>
+                                    <div>
+                                        <div className="font-semibold text-blue-700">Discount Cards</div>
+                                        <div className="text-slate-500">GoodRx, SingleCare</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-slate-400 flex-shrink-0"></span>
+                                    <div>
+                                        <div className="font-semibold text-slate-600">Cash Price</div>
+                                        <div className="text-slate-500">Baseline comparison</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Copay Cards Section - Green (Best Savings) */}
+                        {(med.copayProgramId || med.copayUrl) && (
+                        <div className="mb-4">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                <h4 className="font-bold text-emerald-800 text-sm">Copay Cards</h4>
+                                <span className="text-xs text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">Best Savings</span>
+                            </div>
+                            <div className="overflow-x-auto rounded-lg border-2 border-emerald-200 bg-emerald-50/30">
+                                <table className="w-full text-sm text-left">
+                                    <caption className="sr-only">Copay card options for {med.brandName}</caption>
+                                    <thead className="bg-emerald-100 text-emerald-800 font-bold">
+                                        <tr><th scope="col" className="p-3">Program</th><th scope="col" className="p-3">Typical Savings</th><th scope="col" className="p-3 no-print">Action</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="bg-white hover:bg-emerald-50">
+                                            <td className="p-3">
+                                                <div className="font-medium text-slate-900">{med.manufacturer} Copay Card</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">For commercial/employer insurance</div>
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="text-emerald-600 font-bold">$0 - $10/month</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">Manufacturer savings program</div>
+                                            </td>
+                                            <td className="p-3 no-print">
+                                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                                    Get Copay Card <ExternalLink size={14} aria-hidden="true" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-2 text-xs text-red-600 flex items-center gap-1">
+                                <AlertCircle size={14} />
+                                NOT available for Medicare, Medicaid, TRICARE, VA, or IHS — see Patient Assistance below
+                            </div>
+                        </div>
+                        )}
+
+                        {/* Patient Assistance Section - Orange */}
+                        {med.papUrl && (
+                        <div className="mb-4">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="w-3 h-3 rounded-full bg-orange-500"></span>
+                                <h4 className="font-bold text-orange-800 text-sm">Patient Assistance Programs (PAP)</h4>
+                                <span className="text-xs text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full">Free If Eligible</span>
+                            </div>
+                            <div className="overflow-x-auto rounded-lg border-2 border-orange-200 bg-orange-50/30">
+                                <table className="w-full text-sm text-left">
+                                    <caption className="sr-only">Patient assistance options for {med.brandName}</caption>
+                                    <thead className="bg-orange-100 text-orange-800 font-bold">
+                                        <tr><th scope="col" className="p-3">Program</th><th scope="col" className="p-3">Benefit</th><th scope="col" className="p-3 no-print">Action</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="bg-white hover:bg-orange-50">
+                                            <td className="p-3">
+                                                <div className="font-medium text-slate-900">{med.manufacturer} PAP</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">For Medicare, Medicaid, uninsured, or underinsured</div>
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="text-orange-600 font-bold">FREE medication</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">Income requirements apply</div>
+                                            </td>
+                                            <td className="p-3 no-print">
+                                                <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : med.papUrl} target="_blank" rel="noreferrer" className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
+                                                    Apply Now <ExternalLink size={14} aria-hidden="true" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-2 text-xs text-orange-700 flex items-center gap-1">
+                                <Info size={14} />
+                                Visit the Assistance tab for detailed eligibility info, application steps, and more resources
+                            </div>
+                        </div>
+                        )}
+
+                        {/* Discount Cards Section - Blue */}
+                        {(isGoodRxAvailable || isSingleCareAvailable) && (
+                        <div className="mb-4">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+                                <h4 className="font-bold text-blue-800 text-sm">Discount Cards</h4>
+                            </div>
+                            <div className="overflow-x-auto rounded-lg border-2 border-blue-200 bg-blue-50/30">
+                                <table className="w-full text-sm text-left">
+                                    <caption className="sr-only">Discount card options for {med.brandName}</caption>
+                                    <thead className="bg-blue-100 text-blue-800 font-bold">
+                                        <tr><th scope="col" className="p-3">Discount Card</th><th scope="col" className="p-3">Est. Price</th><th scope="col" className="p-3 no-print">Action</th></tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-blue-100">
+                                        {isGoodRxAvailable && (
+                                        <tr className="bg-white hover:bg-blue-50">
+                                            <td className="p-3">
+                                                <div className="font-medium text-slate-900">GoodRx</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">Free coupons at 70,000+ pharmacies</div>
+                                                {goodRxStats && (
+                                                    <div className="text-xs text-blue-700 flex items-center gap-1 mt-1">
+                                                        <Users size={14} />
+                                                        Community: ${goodRxStats.min}-${goodRxStats.max} ({goodRxStats.count} reports)
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="text-blue-600 font-bold">
+                                                    {getPriceEstimate(med.id, med.category, 'goodrx')}
+                                                </div>
+                                                <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                                                    <Clock size={14} />
+                                                    Est. updated Dec 2025
+                                                </div>
+                                            </td>
+                                            <td className="p-3 no-print">
+                                                <div className="flex flex-col gap-1">
+                                                    <a href={`https://www.goodrx.com/search?s=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on GoodRx for ${med.genericName} (opens in new tab)`}>
+                                                        Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                    </a>
+                                                    <button onClick={() => openReportModal('goodrx', 'GoodRx')} className="text-slate-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
+                                                        <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        )}
+                                        {isSingleCareAvailable && (
+                                        <tr className="bg-white hover:bg-blue-50">
+                                            <td className="p-3">
+                                                <div className="font-medium text-slate-900">SingleCare</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">Free card at 35,000+ pharmacies</div>
+                                                {singleCareStats && (
+                                                    <div className="text-xs text-blue-700 flex items-center gap-1 mt-1">
+                                                        <Users size={14} />
+                                                        Community: ${singleCareStats.min}-${singleCareStats.max} ({singleCareStats.count} reports)
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="text-blue-600 font-bold">
+                                                    {getPriceEstimate(med.id, med.category, 'singlecare')}
+                                                </div>
+                                                <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                                                    <Clock size={14} />
+                                                    Est. updated Dec 2025
+                                                </div>
+                                            </td>
+                                            <td className="p-3 no-print">
+                                                <div className="flex flex-col gap-1">
+                                                    <a href={`https://www.singlecare.com/search?search=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on SingleCare for ${med.genericName} (opens in new tab)`}>
+                                                        Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                    </a>
+                                                    <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-slate-600 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
+                                                        <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        )}
+
+                        {/* Cash Price Section - Gray (Baseline) */}
+                        {isCostPlusAvailable && (
+                        <div className="mb-4">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="w-3 h-3 rounded-full bg-slate-400"></span>
+                                <h4 className="font-bold text-slate-700 text-sm">Cash Price</h4>
+                                <span className="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Baseline Comparison</span>
+                            </div>
+                            <div className="overflow-x-auto rounded-lg border-2 border-slate-200 bg-slate-50/30">
+                                <table className="w-full text-sm text-left">
+                                    <caption className="sr-only">Cash price options for {med.brandName}</caption>
+                                    <thead className="bg-slate-100 text-slate-700 font-bold">
+                                        <tr><th scope="col" className="p-3">Pharmacy</th><th scope="col" className="p-3">Est. Price</th><th scope="col" className="p-3 no-print">Action</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3">
+                                                <div className="font-medium text-slate-900">Cost Plus Drugs (Online)</div>
+                                                <div className="text-xs text-slate-500 mt-0.5">Transparent cost-plus pricing</div>
+                                                {costPlusStats && (
+                                                    <div className="text-xs text-slate-600 flex items-center gap-1 mt-1">
+                                                        <Users size={14} />
+                                                        Community: ${costPlusStats.min}-${costPlusStats.max} ({costPlusStats.count} reports)
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="text-slate-700 font-bold">
+                                                    {getPriceEstimate(med.id, med.category, 'costplus')}
+                                                </div>
+                                                <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                                                    <Clock size={14} />
+                                                    Est. updated Dec 2025
+                                                </div>
+                                            </td>
+                                            <td className="p-3 no-print">
+                                                <div className="flex flex-col gap-1">
+                                                    <a href={`https://costplusdrugs.com/medications/?query=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
+                                                        Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                    </a>
+                                                    <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
+                                                        <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        )}
 
                         {/* Price Info Footer */}
                         <div className="mt-3 space-y-2">
