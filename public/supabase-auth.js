@@ -55,10 +55,30 @@ async function getUser() {
   return user;
 }
 
+// Ensure user profile exists
+async function ensureProfile(user) {
+  const { data } = await supabaseClient
+    .from('user_profiles')
+    .select('id')
+    .eq('id', user.id)
+    .single();
+
+  if (!data) {
+    await supabaseClient.from('user_profiles').insert({
+      id: user.id,
+      email: user.email,
+      plan: 'free'
+    });
+  }
+}
+
 // Save a medication
 async function saveMedication(medicationName, brandName, dosage, monthlyCost, renewalDate, renewalType) {
   const user = await getUser();
   if (!user) return { success: false, message: 'Not logged in' };
+
+  // Ensure profile exists before saving medication
+  await ensureProfile(user);
 
   const { data, error } = await supabaseClient
     .from('user_medications')
