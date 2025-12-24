@@ -3240,7 +3240,7 @@ const Education = () => {
                             <h2 id="medicare-guide" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicare Guide</h2>
                             <div className="mb-8">
                                 <h3 className="font-bold text-lg text-slate-800 mb-4">Medicare Parts for Transplant Drugs</h3>
-                                <div className="grid md:grid-cols-3 gap-4">
+                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part A (Hospital)</strong>
                                         <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Induction agents</li><li>(Thymoglobulin, Simulect)</li></ul>
@@ -3248,6 +3248,10 @@ const Education = () => {
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part B (Medical)</strong>
                                         <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Immunosuppressants (if Part B-ID eligible)</li></ul>
+                                    </div>
+                                    <div className="border border-purple-200 p-4 rounded-lg bg-purple-50">
+                                        <strong className="text-purple-700 text-lg block mb-1">Part C (Medicare Advantage)</strong>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Bundles A, B, and usually D</li><li>May include extra benefits</li><li>Network restrictions apply</li></ul>
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part D (Prescription)</strong>
