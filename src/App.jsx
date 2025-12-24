@@ -13,6 +13,7 @@ const LazyForEmployers = lazy(() => import('./pages/ForEmployers.jsx'));
 const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
+const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -461,13 +462,13 @@ const Layout = ({ children }) => {
                                 {link.label}
                             </Link>
                         ))}
-                        <a
-                            href="/my-medications.html"
+                        <Link
+                            to="/my-medications"
                             aria-label="Sign in to save medications"
                             className="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
                         >
                             My Medications
-                        </a>
+                        </Link>
                     </nav>
 
                     {/* Mobile Menu Toggle */}
@@ -500,14 +501,14 @@ const Layout = ({ children }) => {
                                     {link.label}
                                 </Link>
                             ))}
-                            <a
-                                href="/my-medications.html"
+                            <Link
+                                to="/my-medications"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 aria-label="Sign in to save medications"
                                 className="px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
                             >
                                 My Medications
-                            </a>
+                            </Link>
                         </div>
                     </nav>
                 )}
@@ -4255,6 +4256,7 @@ const MainSiteRoutes = () => (
                 <Route path="/education" element={<Education />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/faq" element={<LazyFAQ />} />
+                <Route path="/my-medications" element={<LazyMyMedications />} />
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
