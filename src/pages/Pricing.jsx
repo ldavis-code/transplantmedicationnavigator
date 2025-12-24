@@ -44,53 +44,53 @@ const Pricing = () => {
             color: 'emerald',
             icon: Users,
             features: [
-                'Full access to medication search',
+                '1 My Path Quiz',
+                'Basic medication search',
                 'All assistance program links',
                 'Educational resources',
-                'My Path Quiz',
                 'No login required',
-                'No data collected'
+                'Cannot save medications'
             ],
             cta: 'Start Searching',
             ctaLink: '/medications',
             highlighted: false
         },
         {
-            name: 'Pilot Partnership',
-            description: 'For transplant programs & employers',
-            price: 'Contact Us',
-            priceSubtext: 'for pilot pricing',
+            name: 'Monthly',
+            description: 'Pro subscription',
+            price: '$8.99',
+            priceSubtext: 'per month',
             color: 'blue',
-            icon: Building2,
+            icon: CreditCard,
             features: [
-                'Branded pilot landing page',
-                '90-day engagement report',
-                'Partner-tagged analytics',
-                'Email support',
-                'All patient features included',
-                'Privacy-safe tracking'
+                'Unlimited My Path Quiz',
+                'Save medications',
+                'Share and print your list',
+                'Unlimited medications in Search Meds',
+                'Reminders on copay cards',
+                'My Medication Savings'
             ],
-            cta: 'Request a Pilot',
-            ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Partnership%20Inquiry',
+            cta: 'Subscribe Monthly',
+            ctaLink: '/subscribe?plan=monthly',
             highlighted: true
         },
         {
-            name: 'Enterprise',
-            description: 'For payers & health systems',
-            price: 'Contact Us',
-            priceSubtext: 'for enterprise pricing',
+            name: 'Yearly',
+            description: 'Pro subscription - Save 26%',
+            price: '$79.99',
+            priceSubtext: 'per year',
             color: 'purple',
-            icon: Briefcase,
+            icon: CreditCard,
             features: [
-                'Custom integration options',
-                'API access (future)',
-                'Dedicated support',
-                'Custom reporting',
-                'White-label options',
-                'SLA agreement'
+                'Unlimited My Path Quiz',
+                'Save medications',
+                'Share and print your list',
+                'Unlimited medications in Search Meds',
+                'Reminders on copay cards',
+                'My Medication Savings'
             ],
-            cta: 'Contact Us',
-            ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Enterprise%20Inquiry',
+            cta: 'Subscribe Yearly',
+            ctaLink: '/subscribe?plan=yearly',
             highlighted: false
         }
     ];
@@ -341,27 +341,27 @@ const Pricing = () => {
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Why is it free for patients?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        Our mission is to help transplant patients access medications. We fund operations through B2B partnerships with healthcare organizations, not by charging patients or selling data.
+                                        The Free plan gives you access to basic medication search, all assistance program links, educational resources, and 1 My Path Quiz. It's a great way to explore our platform.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">What's included in a Pilot Partnership?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">What's the difference between Monthly and Yearly?</h3>
                                     <p className="text-slate-600">
-                                        You get a branded landing page for your patients (e.g., /pilot/your-program), 90-day engagement analytics, and email support. Patients get the full site experience.
+                                        Both Monthly ($8.99/month) and Yearly ($79.99/year) give you the same Pro features: unlimited My Path Quiz, save medications, share and print your list, unlimited medications in Search Meds, reminders on copay cards, and My Medication Savings. The Yearly plan saves you 26%.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Do you collect patient data?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Can I upgrade from Free to Pro?</h3>
                                     <p className="text-slate-600">
-                                        No. We don't require logins, and we don't collect personal health information. Our analytics track aggregate engagement (clicks, page views) without identifying individual users.
+                                        Yes! You can upgrade to a Monthly or Yearly Pro subscription at any time to unlock unlimited features and save your medication information.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">What's the difference between Pilot and Enterprise?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Can I cancel my subscription?</h3>
                                     <p className="text-slate-600">
-                                        Pilot partnerships are designed for a 90-day proof of concept. Enterprise includes custom integrations, dedicated support, and options for larger deployments or API access.
+                                        Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period.
                                     </p>
                                 </div>
                             </div>
