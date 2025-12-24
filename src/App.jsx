@@ -2640,6 +2640,205 @@ const ExternalMedCard = ({ name, onRemove }) => {
     );
 };
 
+// Insurance Change Simulation Component
+const InsuranceChangeSimulator = () => {
+    const [currentInsurance, setCurrentInsurance] = useState('');
+    const [futureInsurance, setFutureInsurance] = useState('');
+    const [showResults, setShowResults] = useState(false);
+
+    const insuranceTypes = [
+        { id: 'commercial', label: 'Commercial/Employer Insurance' },
+        { id: 'medicare', label: 'Medicare (Part D)' },
+        { id: 'medicaid', label: 'Medicaid' },
+        { id: 'marketplace', label: 'ACA Marketplace' },
+        { id: 'uninsured', label: 'Uninsured' },
+    ];
+
+    const transitionData = {
+        'commercial_medicare': {
+            title: 'Commercial → Medicare',
+            timing: 'Common at 65 or after 24 months on SSDI',
+            changes: [
+                { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
+                { type: 'gain', icon: '✅', title: 'PAP Eligibility', desc: 'You may now qualify for Patient Assistance Programs if income-eligible (many have higher limits for Medicare patients).' },
+                { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
+                { type: 'info', icon: '📅', title: '2025 Cap', desc: 'New $2,000 annual out-of-pocket cap on Part D drugs starting 2025.' },
+            ],
+            action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
+        },
+        'commercial_medicaid': {
+            title: 'Commercial → Medicaid',
+            timing: 'Due to income change or disability',
+            changes: [
+                { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Copay cards typically cannot be used with Medicaid.' },
+                { type: 'gain', icon: '✅', title: 'Low/No Cost', desc: 'Medicaid typically has $0-$3 copays for prescriptions.' },
+                { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'Some PAPs still available as secondary assistance.' },
+                { type: 'change', icon: '🔄', title: 'Formulary', desc: 'May need to switch to Medicaid-preferred medications or get prior authorization.' },
+            ],
+            action: 'Work with your transplant coordinator to ensure your medications are on the Medicaid formulary before switching.',
+        },
+        'medicaid_medicare': {
+            title: 'Medicaid → Medicare (Dual Eligible)',
+            timing: 'At age 65 or qualifying for Medicare',
+            changes: [
+                { type: 'gain', icon: '✅', title: 'Dual Eligible Status', desc: 'You may qualify as "dual eligible" and keep some Medicaid benefits alongside Medicare.' },
+                { type: 'info', icon: '💡', title: 'Extra Help/LIS', desc: 'Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs.' },
+                { type: 'change', icon: '🔄', title: 'Primary Payer', desc: 'Medicare becomes primary, Medicaid secondary for covered services.' },
+                { type: 'gain', icon: '✅', title: 'MSP Programs', desc: 'Medicare Savings Programs can pay your Part B premium.' },
+            ],
+            action: 'Contact your State Health Insurance Assistance Program (SHIP) for free counseling on dual eligible benefits.',
+        },
+        'commercial_marketplace': {
+            title: 'Commercial → ACA Marketplace',
+            timing: 'Job loss, self-employment, or retirement before 65',
+            changes: [
+                { type: 'gain', icon: '✅', title: 'Copay Cards OK', desc: 'Manufacturer copay cards CAN be used with Marketplace plans.' },
+                { type: 'gain', icon: '✅', title: 'Subsidies Available', desc: 'Premium tax credits based on income can significantly reduce costs.' },
+                { type: 'change', icon: '🔄', title: 'Network Changes', desc: 'Check if your transplant center and pharmacy are in-network before enrolling.' },
+                { type: 'info', icon: '💡', title: 'CSR Plans', desc: 'If income <250% FPL, Silver plans offer reduced deductibles and copays.' },
+            ],
+            action: 'Use healthcare.gov to compare plans. Filter by your medications and doctors to find the best fit.',
+        },
+        'uninsured_medicare': {
+            title: 'Uninsured → Medicare',
+            timing: 'Turning 65 or qualifying through disability',
+            changes: [
+                { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with 2025 $2,000 out-of-pocket cap.' },
+                { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
+                { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B.' },
+            ],
+            action: 'Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited.',
+        },
+        'uninsured_medicaid': {
+            title: 'Uninsured → Medicaid',
+            timing: 'Income qualifies (varies by state)',
+            changes: [
+                { type: 'gain', icon: '✅', title: 'Coverage', desc: 'Comprehensive coverage including prescriptions, often $0-$3 copays.' },
+                { type: 'gain', icon: '✅', title: 'Retroactive', desc: 'Coverage can be retroactive up to 3 months before application.' },
+                { type: 'change', icon: '🔄', title: 'Formulary', desc: 'Must use Medicaid formulary - may need prior auth for some transplant drugs.' },
+            ],
+            action: 'Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant documentation.',
+        },
+        'uninsured_marketplace': {
+            title: 'Uninsured → ACA Marketplace',
+            timing: 'Open enrollment or qualifying life event',
+            changes: [
+                { type: 'gain', icon: '✅', title: 'Subsidies', desc: 'Premium assistance based on income - may get $0 premium plans.' },
+                { type: 'gain', icon: '✅', title: 'Copay Cards', desc: 'Can use manufacturer copay assistance with Marketplace plans.' },
+                { type: 'gain', icon: '✅', title: 'Pre-existing OK', desc: 'Cannot be denied or charged more for transplant history.' },
+                { type: 'info', icon: '💡', title: 'Plan Selection', desc: 'Silver plans best value if income 100-250% FPL due to cost-sharing reductions.' },
+            ],
+            action: 'Apply at healthcare.gov during Open Enrollment (Nov 1 - Jan 15) or after a qualifying event.',
+        },
+    };
+
+    const getTransitionKey = () => {
+        if (!currentInsurance || !futureInsurance || currentInsurance === futureInsurance) return null;
+        return `${currentInsurance}_${futureInsurance}`;
+    };
+
+    const transition = transitionData[getTransitionKey()];
+
+    const handleSimulate = () => {
+        if (currentInsurance && futureInsurance && currentInsurance !== futureInsurance) {
+            setShowResults(true);
+        }
+    };
+
+    return (
+        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-2xl p-6 md:p-8" aria-labelledby="insurance-simulator">
+            <div className="flex items-center gap-3 mb-4">
+                <div className="bg-indigo-600 text-white p-2 rounded-lg">
+                    <ArrowRight size={24} />
+                </div>
+                <div>
+                    <h2 id="insurance-simulator" className="text-xl md:text-2xl font-bold text-indigo-900">Insurance Change Simulator</h2>
+                    <p className="text-sm text-indigo-700">See how your medication options change when switching insurance</p>
+                </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label htmlFor="current-insurance" className="block text-sm font-bold text-slate-700 mb-2">Current Insurance</label>
+                    <select
+                        id="current-insurance"
+                        value={currentInsurance}
+                        onChange={(e) => { setCurrentInsurance(e.target.value); setShowResults(false); }}
+                        className="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        <option value="">-- Select current --</option>
+                        {insuranceTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="future-insurance" className="block text-sm font-bold text-slate-700 mb-2">Future Insurance</label>
+                    <select
+                        id="future-insurance"
+                        value={futureInsurance}
+                        onChange={(e) => { setFutureInsurance(e.target.value); setShowResults(false); }}
+                        className="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        <option value="">-- Select future --</option>
+                        {insuranceTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+                    </select>
+                </div>
+            </div>
+
+            <button
+                onClick={handleSimulate}
+                disabled={!currentInsurance || !futureInsurance || currentInsurance === futureInsurance}
+                className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg transition flex items-center justify-center gap-2"
+            >
+                <ArrowRight size={20} />
+                See What Changes
+            </button>
+
+            {showResults && transition && (
+                <div className="mt-8 space-y-6 fade-in">
+                    <div className="bg-white rounded-xl p-6 border border-indigo-100">
+                        <h3 className="text-xl font-bold text-slate-900 mb-1">{transition.title}</h3>
+                        <p className="text-sm text-slate-600 mb-6">{transition.timing}</p>
+
+                        <div className="space-y-4">
+                            {transition.changes.map((change, i) => (
+                                <div key={i} className={`flex gap-4 p-4 rounded-lg ${
+                                    change.type === 'loss' ? 'bg-red-50 border border-red-100' :
+                                    change.type === 'gain' ? 'bg-green-50 border border-green-100' :
+                                    change.type === 'change' ? 'bg-amber-50 border border-amber-100' :
+                                    'bg-blue-50 border border-blue-100'
+                                }`}>
+                                    <span className="text-2xl" aria-hidden="true">{change.icon}</span>
+                                    <div>
+                                        <h4 className="font-bold text-slate-900">{change.title}</h4>
+                                        <p className="text-sm text-slate-700">{change.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
+                            <h4 className="font-bold text-emerald-800 mb-1">📋 Recommended Action</h4>
+                            <p className="text-sm text-emerald-900">{transition.action}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showResults && !transition && currentInsurance !== futureInsurance && (
+                <div className="mt-6 p-4 bg-slate-100 rounded-lg text-center">
+                    <p className="text-slate-600">Detailed transition info for this combination coming soon. Contact your transplant coordinator for guidance.</p>
+                </div>
+            )}
+
+            {currentInsurance && futureInsurance && currentInsurance === futureInsurance && (
+                <p className="mt-4 text-sm text-indigo-600">Please select different insurance types to see the transition changes.</p>
+            )}
+        </section>
+    );
+};
+
 // Education Page
 const Education = () => {
     useMetaTags(seoMetadata.education);
@@ -3033,6 +3232,10 @@ const Education = () => {
                         <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center mb-8" role="note">
                             <p className="text-blue-900 font-medium">Each insurance type has different benefits, costs, and best strategies.</p>
                         </div>
+
+                        {/* Insurance Change Simulation */}
+                        <InsuranceChangeSimulator />
+
                         <section aria-labelledby="medicare-guide">
                             <h2 id="medicare-guide" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicare Guide</h2>
                             <div className="mb-8">
