@@ -74,6 +74,26 @@ const Pricing = () => {
             cta: 'Subscribe Monthly',
             ctaLink: '/subscribe?plan=monthly',
             highlighted: true
+        },
+        {
+            name: 'Yearly',
+            description: 'Pro subscription - Save 26%',
+            price: '$79.99',
+            priceSubtext: 'per year',
+            color: 'purple',
+            icon: CreditCard,
+            features: [
+                'Unlimited My Path Quiz',
+                'Save medications on your device',
+                'Export or print your medication list',
+                'Unlimited medications in Search Meds',
+                'Personal copay card reminders stored on your device',
+                'Track your estimated medication savings locally'
+            ],
+            importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
+            cta: 'Subscribe Yearly',
+            ctaLink: '/subscribe?plan=yearly',
+            highlighted: false
         }
     ];
 
@@ -255,7 +275,7 @@ const Pricing = () => {
                 {activeTab === 'pricing' && (
                     <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                        <section className="grid md:grid-cols-3 gap-6">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
@@ -330,7 +350,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device.
+                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>

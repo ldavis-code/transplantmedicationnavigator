@@ -1434,13 +1434,20 @@ const Wizard = () => {
                                         )
                                     })}
                                 </div>
-                                <div className="mt-4 no-print">
-                                    <Link 
+                                <div className="mt-4 space-y-2 no-print">
+                                    <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
                                         className="w-full block text-center py-2 bg-white border border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-medium text-sm"
                                         aria-label="View price estimates for your selected medications"
                                     >
                                         View Price Estimates for These Meds
+                                    </Link>
+                                    <Link
+                                        to="/application-help"
+                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
+                                        aria-label="Find savings and assistance programs"
+                                    >
+                                        Find My Savings
                                     </Link>
                                 </div>
                             </section>
