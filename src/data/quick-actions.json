@@ -7,13 +7,6 @@
     "description": "Get personalized assistance recommendations"
   },
   {
-    "id": "search-meds",
-    "label": "Search Medications",
-    "icon": "Search",
-    "link": "/medications",
-    "description": "Find pricing and assistance programs"
-  },
-  {
     "id": "find-pap",
     "label": "Find PAP Programs",
     "icon": "HeartHandshake",

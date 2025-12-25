@@ -52,7 +52,7 @@ const Pricing = () => {
                 'Medication lists are not saved'
             ],
             cta: 'Start Searching',
-            ctaLink: '/medications',
+            ctaLink: '/wizard',
             highlighted: false
         },
         {

@@ -56,10 +56,10 @@ const SubscribeSuccess = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                    to="/medications"
+                    to="/wizard"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl transition"
                 >
-                    Start Searching Medications
+                    Start My Path Quiz
                     <ArrowRight size={18} />
                 </Link>
                 <Link

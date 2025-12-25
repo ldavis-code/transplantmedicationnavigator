@@ -42,7 +42,7 @@ const SubscribeCancel = () => {
                     Back to Pricing
                 </Link>
                 <Link
-                    to="/medications"
+                    to="/wizard"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl transition"
                 >
                     Continue with Free

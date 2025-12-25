@@ -1136,11 +1136,11 @@ const MedicationAssistantChat = () => {
                   Start New Search
                 </button>
                 <a
-                  href="/medications"
+                  href="/wizard"
                   className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition block text-center"
                 >
                   <Search size={18} />
-                  Browse All Medications
+                  Start My Path Quiz
                 </a>
               </div>
             ) : mode === 'chat' ? (
