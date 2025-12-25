@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { CreditCard, Users, Building2, Briefcase, CheckCircle, Heart, ArrowRight, Mail, DollarSign, HeartHandshake, Shield, TrendingUp, ShieldCheck, BarChart3, Lock, Building } from 'lucide-react';
+import { CreditCard, Users, Building2, Briefcase, CheckCircle, ArrowRight, Mail, DollarSign, HeartHandshake, Shield, TrendingUp, ShieldCheck, BarChart3, Lock, Building } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -38,18 +38,18 @@ const Pricing = () => {
     const tiers = [
         {
             name: 'Free',
-            description: 'Basic access for patients',
+            description: 'Essential access for all patients',
             price: '$0',
-            priceSubtext: 'Free education',
+            priceSubtext: 'Always free',
             color: 'emerald',
             icon: Users,
             features: [
-                '1 My Path Quiz',
-                'Basic medication search',
-                'All assistance program links',
-                'Educational resources',
-                'No login required',
-                'Cannot save medications'
+                'Full medication search',
+                'All PAP & foundation links',
+                'All educational resources',
+                'My Medications (local storage)',
+                '2 My Path Quizzes per month',
+                '5 AI Assistant questions per month'
             ],
             cta: 'Start Searching',
             ctaLink: '/medications',
@@ -57,18 +57,18 @@ const Pricing = () => {
         },
         {
             name: 'Monthly',
-            description: 'Pro subscription',
+            description: 'Pro features for power users',
             price: '$8.99',
             priceSubtext: 'per month',
             color: 'blue',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quiz',
-                'Save medications',
-                'Share and print your list',
-                'Unlimited medications in Search Meds',
-                'Reminders on copay cards',
-                'My Medication Savings'
+                'Everything in Free, plus:',
+                'Unlimited My Path Quizzes',
+                'Unlimited AI Assistant',
+                'Renewal date reminders',
+                'Cost tracking over time',
+                'PDF reports for social workers'
             ],
             cta: 'Subscribe Monthly',
             ctaLink: '/subscribe?plan=monthly',
@@ -76,18 +76,18 @@ const Pricing = () => {
         },
         {
             name: 'Yearly',
-            description: 'Pro subscription - Save 26%',
+            description: 'Best value - Save 26%',
             price: '$79.99',
             priceSubtext: 'per year',
             color: 'purple',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quiz',
-                'Save medications',
-                'Share and print your list',
-                'Unlimited medications in Search Meds',
-                'Reminders on copay cards',
-                'My Medication Savings'
+                'Everything in Free, plus:',
+                'Unlimited My Path Quizzes',
+                'Unlimited AI Assistant',
+                'Renewal date reminders',
+                'Cost tracking over time',
+                'PDF reports for social workers'
             ],
             cta: 'Subscribe Yearly',
             ctaLink: '/subscribe?plan=yearly',
@@ -325,17 +325,6 @@ const Pricing = () => {
                             })}
                         </section>
 
-                        {/* Patient Promise */}
-                        <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8 text-center">
-                            <div className="flex items-center justify-center gap-2 mb-4">
-                                <Heart size={24} className="text-emerald-700" aria-hidden="true" />
-                                <h2 className="text-xl font-bold text-emerald-900">Our Promise to Patients</h2>
-                            </div>
-                            <p className="text-emerald-800 text-lg max-w-3xl mx-auto">
-                                Educational resources will always be free. Everyone deserves to understand their medication options.
-                            </p>
-                        </section>
-
                         {/* FAQ Section */}
                         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
@@ -343,25 +332,25 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan gives you access to basic medication search, all assistance program links, educational resources, and 1 My Path Quiz. It's a great way to explore our platform.
+                                        The Free plan includes full medication search, all links to PAPs and foundations, all educational content, My Medications (stored locally on your device), 2 My Path Quizzes per month, and 5 AI Assistant questions per month. We never paywall access to assistance programs.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">What's the difference between Monthly and Yearly?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Both Monthly ($8.99/month) and Yearly ($79.99/year) give you the same Pro features: unlimited My Path Quiz, save medications, share and print your list, unlimited medications in Search Meds, reminders on copay cards, and My Medication Savings. The Yearly plan saves you 26%.
+                                        Pro is for power users who want unlimited access to the AI Assistant and My Path Quiz, plus convenience features like renewal date reminders, cost tracking over time, and PDF reports you can share with social workers. The Yearly plan saves you 26%.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Can I upgrade from Free to Pro?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Is my medication data private?</h3>
                                     <p className="text-slate-600">
-                                        Yes! You can upgrade to a Monthly or Yearly Pro subscription at any time to unlock unlimited features and save your medication information.
+                                        Yes. Your medications are stored only on your device (in your browser), not on our servers. We never collect or store your health information. Use the Export feature to back up your data.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Can I cancel my subscription?</h3>
                                     <p className="text-slate-600">
-                                        Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period.
+                                        Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period, and you'll still have full access to the Free plan.
                                     </p>
                                 </div>
                             </div>
@@ -381,7 +370,7 @@ const Pricing = () => {
                                 Help Your Patients Navigate Medication Costs
                             </h2>
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
-                                Give transplant patients a free, trusted resource to find assistance programs and reduce financial barriers to medication adherence.
+                                Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <a
