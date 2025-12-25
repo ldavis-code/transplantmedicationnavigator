@@ -1421,20 +1421,87 @@ const Wizard = () => {
 
                     {/* Column 1 (Left): Med List & Tools */}
                     <div className="space-y-6">
-                        {answers.medications.length > 0 && (
-                            <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
-                                <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">Your Medication List</h2>
-                                <div className="flex flex-wrap gap-2">
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
+                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">Your Medication List</h2>
+                            {answers.medications.length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-4">
                                     {answers.medications.map(id => {
                                         const med = MEDICATIONS.find(m => m.id === id);
                                         return (
-                                            <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm">
+                                            <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
                                                 {med?.brandName.split('/')[0]}
+                                                <button
+                                                    onClick={() => handleMultiSelect('medications', id)}
+                                                    className="text-slate-400 hover:text-red-500 ml-1"
+                                                    aria-label={`Remove ${med?.brandName}`}
+                                                >
+                                                    <X size={14} />
+                                                </button>
                                             </span>
                                         )
                                     })}
                                 </div>
-                                <div className="mt-4 space-y-2 no-print">
+                            )}
+
+                            {/* Add More Medications */}
+                            <div className="mb-4 no-print">
+                                <div className="relative">
+                                    <label htmlFor="results-med-search" className="sr-only">Add more medications</label>
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
+                                    <input
+                                        id="results-med-search"
+                                        type="text"
+                                        placeholder="Add more medications..."
+                                        className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition text-sm"
+                                        value={medSearchTerm}
+                                        onChange={(e) => setMedSearchTerm(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Escape') { setMedSearchResult(null); setMedSearchTerm(''); }
+                                        }}
+                                    />
+                                    {medSearchTerm && (
+                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                                            <X size={16} />
+                                        </button>
+                                    )}
+                                </div>
+                                {medSearchResult && medSearchTerm && !isMedSearching && (
+                                    <div className="mt-1 bg-white border border-slate-200 rounded-lg max-h-48 overflow-y-auto shadow-sm">
+                                        {medSearchResult.length > 0 ? (
+                                            <div className="divide-y divide-slate-100">
+                                                {medSearchResult.slice(0, 6).map(med => {
+                                                    const isAlreadySelected = answers.medications.includes(med.id);
+                                                    return (
+                                                        <button
+                                                            key={med.id}
+                                                            onClick={() => addMedFromSearch(med.id)}
+                                                            disabled={isAlreadySelected}
+                                                            className="w-full text-left p-2 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                                        >
+                                                            <div>
+                                                                <span className="font-medium text-slate-900">{med.brandName}</span>
+                                                                <span className="text-slate-500 ml-1">({med.genericName})</span>
+                                                            </div>
+                                                            {isAlreadySelected ? (
+                                                                <span className="text-emerald-600 text-xs"><CheckCircle size={14} /></span>
+                                                            ) : (
+                                                                <span className="text-emerald-600 text-xs"><PlusCircle size={14} /></span>
+                                                            )}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div className="p-2 text-center text-slate-500 text-xs">
+                                                No medications found
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="space-y-2 no-print">
+                                {answers.medications.length > 0 && (
                                     <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
                                         className="w-full block text-center py-2 bg-white border border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-medium text-sm"
@@ -1442,16 +1509,16 @@ const Wizard = () => {
                                     >
                                         View Price Estimates for These Meds
                                     </Link>
-                                    <Link
-                                        to="/application-help"
-                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                        aria-label="Find savings and assistance programs"
-                                    >
-                                        Find My Savings
-                                    </Link>
-                                </div>
-                            </section>
-                        )}
+                                )}
+                                <Link
+                                    to="/application-help"
+                                    className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
+                                    aria-label="Find savings and assistance programs"
+                                >
+                                    Find My Savings
+                                </Link>
+                            </div>
+                        </section>
 
                         <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
                             <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">Helpful Tools</h2>
@@ -1800,10 +1867,6 @@ const MedicationSearch = () => {
                     </div>
                     {hasItems && (
                         <div className="flex gap-2 no-print">
-                            <button onClick={handleShare} className="flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-bold hover:bg-indigo-100 transition border border-indigo-200" aria-label="Share your medication list">
-                                {linkCopied ? <Check size={18} aria-hidden="true" /> : <Share2 size={18} aria-hidden="true" />}
-                                {linkCopied ? "Link Copied!" : "Share List"}
-                            </button>
                             <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-bold hover:bg-slate-200 transition border border-slate-200" aria-label="Print your medication list">
                                 <Printer size={18} aria-hidden="true" /> Print
                             </button>
@@ -2660,12 +2723,6 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <p>Price estimates are approximate ranges based on general market research (last updated: December 24, 2025). Always check live prices via the links above for current rates.</p>
                             </div>
-                            {isCostPlusAvailable && (
-                                <div className="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2" role="note">
-                                    <DollarSign size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                    <p><strong>Cost Plus Drugs Pricing Note:</strong> Cost Plus Drugs operates as a cash-based pharmacy. When dealing with insurance deductibles, cash payments will not count toward your deductible. However, your medications may be cheaper paying cash than running through insurance.</p>
-                                </div>
-                            )}
                             {(costPlusStats || goodRxStats || singleCareStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">
                                     <Users size={14} className="flex-shrink-0 mt-0.5" />
@@ -2673,27 +2730,32 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                                 </div>
                             )}
 
-                            {/* Deductible Trap Warning */}
+                            {/* Deductible Trap with Discount Cards & Cash Warning */}
                             <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-lg p-4 mt-4">
                                 <div className="flex items-start gap-3">
                                     <div className="bg-red-600 text-white p-2 rounded-full flex-shrink-0" aria-hidden="true">
                                         <AlertTriangle size={16} />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-red-900 text-sm mb-2">The Deductible Trap</h4>
+                                        <h4 className="font-bold text-red-900 text-sm mb-2">The Deductible Trap with Discount Cards & Cash</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>Warning:</strong> When you use discount cards like GoodRx or SingleCare, the money you pay does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your insurance deductible or out-of-pocket maximum</span>.
+                                            <strong>Warning:</strong> When you use discount cards (GoodRx, SingleCare) or cash-based pharmacies like Cost Plus Drugs, the money you pay does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your insurance deductible or out-of-pocket maximum</span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
-                                            Transplant patients often reach their out-of-pocket max within a few months—after which insurance pays 100%. Using discount cards delays this, meaning you pay longer.
+                                            Transplant patients often reach their out-of-pocket max within a few months—after which insurance pays 100%. Using discount cards or paying cash delays this, meaning you pay longer.
                                         </p>
+                                        {isCostPlusAvailable && (
+                                            <div className="bg-amber-100 border border-amber-300 rounded p-2 mb-3 text-xs text-amber-900">
+                                                <strong>Cost Plus Drugs Note:</strong> Cost Plus Drugs operates as a cash-based pharmacy. Cash payments will not count toward your deductible. However, your medications may be cheaper paying cash than running through insurance—weigh this carefully.
+                                            </div>
+                                        )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                                             <div className="bg-white/80 p-2 rounded border border-emerald-200">
                                                 <div className="font-bold text-emerald-700">✅ Using Insurance</div>
                                                 <div className="text-slate-600">Hit OOPM in 3 months → $0 rest of year</div>
                                             </div>
                                             <div className="bg-white/80 p-2 rounded border border-red-200">
-                                                <div className="font-bold text-red-700">❌ Discount Cards</div>
+                                                <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
                                                 <div className="text-slate-600">Never hit OOPM → Pay all year</div>
                                             </div>
                                         </div>
