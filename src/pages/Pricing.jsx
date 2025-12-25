@@ -56,10 +56,10 @@ const Pricing = () => {
             highlighted: false
         },
         {
-            name: 'Monthly',
+            name: 'Yearly',
             description: 'Pro subscription',
-            price: '$8.99',
-            priceSubtext: 'per month',
+            price: '$79.99',
+            priceSubtext: 'per year',
             color: 'blue',
             icon: CreditCard,
             features: [
@@ -71,8 +71,8 @@ const Pricing = () => {
                 'Track your estimated medication savings locally'
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
-            cta: 'Subscribe Monthly',
-            ctaLink: '/subscribe?plan=monthly',
+            cta: 'Subscribe Yearly',
+            ctaLink: '/subscribe?plan=yearly',
             highlighted: true
         }
     ];
@@ -330,7 +330,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device.
+                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device. At $79.99/year, that's less than $7/month.
                                     </p>
                                 </div>
                                 <div>
