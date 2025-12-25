@@ -14,6 +14,7 @@ const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
+const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
 const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
@@ -4477,6 +4478,7 @@ const MainSiteRoutes = () => (
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/faq" element={<LazyFAQ />} />
                 <Route path="/my-medications" element={<LazyMyMedications />} />
+                <Route path="/savings-tracker" element={<LazySavingsTracker />} />
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />

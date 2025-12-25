@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Trash2, Plus, AlertTriangle, Download, Upload } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Trash2, Plus, AlertTriangle, Download, Upload, TrendingUp } from 'lucide-react';
 
 const STORAGE_KEY = 'tmn_my_medications';
 
@@ -131,6 +132,20 @@ export default function MyMedications() {
           </div>
         </div>
       </div>
+
+      {/* Savings Tracker CTA */}
+      <Link
+        to="/savings-tracker"
+        className="block bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-4 mb-6 text-white hover:from-emerald-700 hover:to-teal-700 transition-all"
+      >
+        <div className="flex items-center gap-3">
+          <TrendingUp size={24} />
+          <div>
+            <div className="font-semibold">Track Your Savings</div>
+            <div className="text-emerald-100 text-sm">Log prescription fills and see how much you're saving</div>
+          </div>
+        </div>
+      </Link>
 
       {/* Header with Export/Import */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
