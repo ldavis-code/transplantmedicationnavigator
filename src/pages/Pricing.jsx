@@ -38,18 +38,18 @@ const Pricing = () => {
     const tiers = [
         {
             name: 'Free',
-            description: 'Essential access for all patients',
+            description: 'For individual patients',
             price: '$0',
-            priceSubtext: 'Always free',
+            priceSubtext: '— always free',
             color: 'emerald',
             icon: Users,
             features: [
-                'Full medication search',
-                'All PAP & foundation links',
-                'All educational resources',
-                'My Medications (local storage)',
-                '2 My Path Quizzes per month',
-                '5 AI Assistant questions per month'
+                '2 My Path Quiz',
+                'Basic medication search',
+                'All assistance program links',
+                'Educational resources',
+                'No login required',
+                'Medication lists are not saved'
             ],
             cta: 'Start Searching',
             ctaLink: '/medications',
@@ -57,41 +57,23 @@ const Pricing = () => {
         },
         {
             name: 'Monthly',
-            description: 'Pro features for power users',
+            description: 'Pro subscription',
             price: '$8.99',
             priceSubtext: 'per month',
             color: 'blue',
             icon: CreditCard,
             features: [
-                'Everything in Free, plus:',
-                'Unlimited My Path Quizzes',
-                'Unlimited AI Assistant',
-                'Renewal date reminders',
-                'Cost tracking over time',
-                'PDF reports for social workers'
+                'Unlimited My Path Quiz',
+                'Save medications on your device',
+                'Export or print your medication list',
+                'Unlimited medications in Search Meds',
+                'Personal copay card reminders stored on your device',
+                'Track your estimated medication savings locally'
             ],
+            importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
             cta: 'Subscribe Monthly',
             ctaLink: '/subscribe?plan=monthly',
             highlighted: true
-        },
-        {
-            name: 'Yearly',
-            description: 'Best value - Save 26%',
-            price: '$79.99',
-            priceSubtext: 'per year',
-            color: 'purple',
-            icon: CreditCard,
-            features: [
-                'Everything in Free, plus:',
-                'Unlimited My Path Quizzes',
-                'Unlimited AI Assistant',
-                'Renewal date reminders',
-                'Cost tracking over time',
-                'PDF reports for social workers'
-            ],
-            cta: 'Subscribe Yearly',
-            ctaLink: '/subscribe?plan=yearly',
-            highlighted: false
         }
     ];
 
@@ -273,7 +255,7 @@ const Pricing = () => {
                 {activeTab === 'pricing' && (
                     <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-3 gap-6">
+                        <section className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
@@ -295,7 +277,7 @@ const Pricing = () => {
                                             <span className="text-3xl font-bold text-slate-900">{tier.price}</span>
                                             <span className="text-slate-500 text-sm ml-2">{tier.priceSubtext}</span>
                                         </div>
-                                        <ul className="space-y-3 mb-8 flex-grow">
+                                        <ul className="space-y-3 mb-6 flex-grow">
                                             {tier.features.map((feature, fIndex) => (
                                                 <li key={fIndex} className="flex items-start gap-2">
                                                     <CheckCircle size={18} className={`${colors.check} flex-shrink-0 mt-0.5`} aria-hidden="true" />
@@ -303,6 +285,11 @@ const Pricing = () => {
                                                 </li>
                                             ))}
                                         </ul>
+                                        {tier.importantNote && (
+                                            <p className="text-xs text-slate-500 mb-6 italic">
+                                                {tier.importantNote}
+                                            </p>
+                                        )}
                                         {tier.ctaLink.startsWith('mailto:') ? (
                                             <a
                                                 href={tier.ctaLink}
@@ -325,6 +312,11 @@ const Pricing = () => {
                             })}
                         </section>
 
+                        {/* Medical Disclaimer */}
+                        <p className="text-center text-sm text-slate-500 max-w-2xl mx-auto">
+                            This tool is designed to help you organize and understand your medications. It does not replace medical advice. Always review medication changes with your transplant team.
+                        </p>
+
                         {/* FAQ Section */}
                         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
@@ -332,19 +324,19 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan includes full medication search, all links to PAPs and foundations, all educational content, My Medications (stored locally on your device), 2 My Path Quizzes per month, and 5 AI Assistant questions per month. We never paywall access to assistance programs.
+                                        The Free plan includes 2 My Path Quizzes, basic medication search, all assistance program links, educational resources, and no login required. Medication lists are not saved in the free plan.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro is for power users who want unlimited access to the AI Assistant and My Path Quiz, plus convenience features like renewal date reminders, cost tracking over time, and PDF reports you can share with social workers. The Yearly plan saves you 26%.
+                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Is my medication data private?</h3>
                                     <p className="text-slate-600">
-                                        Yes. Your medications are stored only on your device (in your browser), not on our servers. We never collect or store your health information. Use the Export feature to back up your data.
+                                        Yes. With Pro, your medications are stored only on your device (in your browser), not on our servers. Transplant Medication Navigator does not store or access your medication list.
                                     </p>
                                 </div>
                                 <div>
