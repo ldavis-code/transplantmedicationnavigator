@@ -422,7 +422,6 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
-        { path: '/medications', label: 'Search Meds', ariaLabel: 'Search for medications' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing & Partners', ariaLabel: 'View pricing and partnership information' },
@@ -570,24 +569,16 @@ const Home = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
-                        to="/medications"
+                        to="/wizard"
                         className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2"
-                        aria-label="Search medications"
+                        aria-label="Start My Path Quiz"
                     >
                         <Search size={20} aria-hidden="true" />
-                        Search Meds
-                    </Link>
-                    <Link
-                        to="/wizard"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl hover:border-emerald-300 transition flex items-center justify-center gap-2"
-                        aria-label="Start personalized medication path quiz"
-                    >
-                        <Map size={20} aria-hidden="true" />
                         Start My Path Quiz
                     </Link>
                     <Link
                         to="/application-help"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-emerald-200 transition flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl hover:border-emerald-300 transition flex items-center justify-center gap-2"
                         aria-label="Find grants and foundations"
                     >
                         <HeartHandshake size={20} aria-hidden="true" />
@@ -928,6 +919,57 @@ const Wizard = () => {
         financialStatus: null,
     });
 
+    // Search state for Step 5
+    const [medSearchTerm, setMedSearchTerm] = useState('');
+    const [medSearchResult, setMedSearchResult] = useState(null);
+    const [isMedSearching, setIsMedSearching] = useState(false);
+
+    // Fuse.js instance for fuzzy medication search
+    const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
+        keys: ['brandName', 'genericName'],
+        threshold: 0.4,
+        includeScore: true,
+        ignoreLocation: true,
+        minMatchCharLength: 2
+    }), [MEDICATIONS]);
+
+    // Handle medication search
+    const handleMedSearch = useCallback(() => {
+        if (!medSearchTerm.trim()) {
+            setMedSearchResult(null);
+            setIsMedSearching(false);
+            return;
+        }
+        const fuseResults = medFuse.search(medSearchTerm.trim());
+        const matches = fuseResults.map(result => result.item);
+        setMedSearchResult(matches);
+        setIsMedSearching(false);
+    }, [medSearchTerm, medFuse]);
+
+    // Debounced search effect
+    useEffect(() => {
+        if (medSearchTerm.trim()) {
+            setIsMedSearching(true);
+        } else {
+            setMedSearchResult(null);
+            setIsMedSearching(false);
+        }
+        const timer = setTimeout(() => {
+            if (medSearchTerm.trim()) handleMedSearch();
+            else setMedSearchResult(null);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [medSearchTerm, handleMedSearch]);
+
+    // Add medication from search
+    const addMedFromSearch = (medId) => {
+        if (!answers.medications.includes(medId)) {
+            setAnswers({ ...answers, medications: [...answers.medications, medId] });
+        }
+        setMedSearchTerm('');
+        setMedSearchResult(null);
+    };
+
     const handleSingleSelect = (key, value) => {
         setAnswers({ ...answers, [key]: value });
     };
@@ -1099,6 +1141,71 @@ const Wizard = () => {
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
+
+                {/* Medication Search Box */}
+                <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                    <div className="flex items-center gap-2 mb-3">
+                        <Search size={18} className="text-emerald-600" />
+                        <h3 className="font-bold text-slate-800">Search Medications</h3>
+                    </div>
+                    <div className="relative">
+                        <label htmlFor="wizard-med-search" className="sr-only">Search for medications</label>
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
+                        <input
+                            id="wizard-med-search"
+                            type="text"
+                            placeholder="Type medication name (e.g. Prograf, tacrolimus)..."
+                            className="w-full pl-10 pr-10 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition"
+                            value={medSearchTerm}
+                            onChange={(e) => setMedSearchTerm(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Escape') { setMedSearchResult(null); setMedSearchTerm(''); }
+                            }}
+                        />
+                        {isMedSearching ? (
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                <Loader2 size={18} className="text-emerald-600 animate-spin" aria-label="Searching" />
+                            </div>
+                        ) : medSearchTerm && (
+                            <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                                <X size={18} />
+                            </button>
+                        )}
+                    </div>
+                    {medSearchResult && medSearchTerm && !isMedSearching && (
+                        <div className="mt-2 bg-slate-50 border border-slate-200 rounded-lg max-h-60 overflow-y-auto">
+                            {medSearchResult.length > 0 ? (
+                                <div className="divide-y divide-slate-100">
+                                    {medSearchResult.slice(0, 8).map(med => {
+                                        const isAlreadySelected = answers.medications.includes(med.id);
+                                        return (
+                                            <button
+                                                key={med.id}
+                                                onClick={() => addMedFromSearch(med.id)}
+                                                disabled={isAlreadySelected}
+                                                className="w-full text-left p-3 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <div>
+                                                    <span className="font-bold text-slate-900">{med.brandName}</span>
+                                                    <span className="text-sm text-slate-600 ml-2">({med.genericName})</span>
+                                                </div>
+                                                {isAlreadySelected ? (
+                                                    <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> Added</span>
+                                                ) : (
+                                                    <span className="text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1"><PlusCircle size={12} /> Add</span>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="p-4 text-center text-slate-500 text-sm">
+                                    No medications found. Try a different spelling or browse the list below.
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
 
                 <MedicationSuggestions
                     answers={answers}
