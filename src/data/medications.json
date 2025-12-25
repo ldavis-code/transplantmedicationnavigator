@@ -1584,7 +1584,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
-    "papProgramId": "bms-pap"
+    "papProgramId": "bms-pap",
+    "medicare2026Negotiated": true,
+    "medicare2026Note": "Medicare negotiated price: $231/month (56% reduction from $521 list price) effective January 2026"
   },
   {
     "id": "rivaroxaban",
@@ -1694,7 +1696,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
-    "papProgramId": "merck-pap"
+    "papProgramId": "merck-pap",
+    "medicare2026Negotiated": true,
+    "medicare2026Note": "Medicare negotiated price: $113/month (79% reduction from $527 list price) effective January 2026"
   },
   {
     "id": "insulin-glargine",

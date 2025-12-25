@@ -85,25 +85,28 @@
       "singlecare": { "min": 480, "max": 850 }
     },
     "entresto": {
-      "note": "Sacubitril/Valsartan - expensive heart failure medication",
+      "note": "Sacubitril/Valsartan - expensive heart failure medication. One of 10 drugs with Medicare negotiated prices for 2026",
       "costplus": { "min": 150, "max": 250 },
       "walmart": { "min": 250, "max": 450 },
       "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 }
+      "singlecare": { "min": 200, "max": 380 },
+      "medicare2026Negotiated": true
     },
     "jardiance": {
-      "note": "Empagliflozin - brand name SGLT2 inhibitor",
+      "note": "Empagliflozin - brand name SGLT2 inhibitor for diabetes/heart/kidney. One of 10 drugs with Medicare negotiated prices for 2026",
       "costplus": { "min": 150, "max": 250 },
       "walmart": { "min": 250, "max": 450 },
       "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 }
+      "singlecare": { "min": 200, "max": 380 },
+      "medicare2026Negotiated": true
     },
     "farxiga": {
-      "note": "Dapagliflozin - brand name SGLT2 inhibitor",
+      "note": "Dapagliflozin - brand name SGLT2 inhibitor for diabetes/heart/kidney. One of 10 drugs with Medicare negotiated prices for 2026",
       "costplus": { "min": 150, "max": 250 },
       "walmart": { "min": 250, "max": 450 },
       "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 }
+      "singlecare": { "min": 200, "max": 380 },
+      "medicare2026Negotiated": true
     },
     "creon": {
       "note": "Pancrelipase - expensive enzyme replacement",
@@ -113,11 +116,12 @@
       "singlecare": { "min": 280, "max": 600 }
     },
     "eliquis": {
-      "note": "Apixaban - brand name anticoagulant",
+      "note": "Apixaban - brand name anticoagulant. Medicare 2026 negotiated price: $231/month (down from $521 list price, 56% reduction)",
       "costplus": { "min": 200, "max": 350 },
       "walmart": { "min": 300, "max": 550 },
       "goodrx": { "min": 220, "max": 500 },
-      "singlecare": { "min": 240, "max": 480 }
+      "singlecare": { "min": 240, "max": 480 },
+      "medicare2026": { "negotiated": 231, "listPrice": 521, "reduction": "56%" }
     },
     "xarelto": {
       "note": "Rivaroxaban - brand name anticoagulant",
@@ -125,6 +129,14 @@
       "walmart": { "min": 300, "max": 550 },
       "goodrx": { "min": 220, "max": 500 },
       "singlecare": { "min": 240, "max": 480 }
+    },
+    "januvia": {
+      "note": "Sitagliptin - brand name DPP-4 inhibitor for diabetes. Medicare 2026 negotiated price: $113/month (down from $527 list price, 79% reduction)",
+      "costplus": { "min": 100, "max": 200 },
+      "walmart": { "min": 200, "max": 400 },
+      "goodrx": { "min": 120, "max": 350 },
+      "singlecare": { "min": 140, "max": 320 },
+      "medicare2026": { "negotiated": 113, "listPrice": 527, "reduction": "79%" }
     },
     "semaglutide": {
       "note": "Ozempic/Wegovy - very expensive GLP-1 agonist",
@@ -169,5 +181,5 @@
       "singlecare": { "min": 25, "max": 65 }
     }
   },
-  "lastUpdated": "2025-12-24"
+  "lastUpdated": "2025-12-25"
 }

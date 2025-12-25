@@ -14,6 +14,7 @@ const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
+const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
 const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
@@ -2665,7 +2666,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'gain', icon: '✅', title: 'PAP Eligibility', desc: 'You may now qualify for Patient Assistance Programs if income-eligible (many have higher limits for Medicare patients).' },
                 { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
                 { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
-                { type: 'info', icon: '📅', title: '2025 Cap', desc: 'New $2,000 annual out-of-pocket cap on Part D drugs starting 2025.' },
+                { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
             ],
             action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
         },
@@ -2706,7 +2707,7 @@ const InsuranceChangeSimulator = () => {
             title: 'Uninsured → Medicare',
             timing: 'Turning 65 or qualifying through disability',
             changes: [
-                { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with 2025 $2,000 out-of-pocket cap.' },
+                { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with $2,100 out-of-pocket cap (2026).' },
                 { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
                 { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
                 { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B.' },
@@ -2926,12 +2927,23 @@ const Education = () => {
                              </section>
                              <section className="bg-purple-50 p-6 rounded-xl border border-purple-100">
                                  <div className="flex items-center gap-2 mb-3">
-                                    <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Coming in 2026</span>
+                                    <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Effective January 2026</span>
                                     <h3 className="font-bold text-purple-900">Medicare Drug Price Negotiation</h3>
                                  </div>
-                                 <p className="text-sm text-purple-900 mb-4 font-medium">A landmark change allowing Medicare to negotiate drug prices for the first time.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">For the first time ever, Medicare will directly negotiate the price for some of the highest-cost drugs. The first negotiated prices will take effect in 2026, which should lead to lower out-of-pocket costs for patients on these specific medications.</p>
-                                 <p className="text-slate-700 text-sm">The first 10 drugs selected for negotiation include medications for heart failure (Entresto), diabetes (Jardiance, Farxiga), and autoimmune conditions (Stelara), which are highly relevant for many transplant patients.</p>
+                                 <p className="text-sm text-purple-900 mb-4 font-medium">For the first time in history, Medicare has directly negotiated drug prices with manufacturers.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first negotiated prices take effect January 1, 2026, delivering substantial savings. Key examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% reduction), and <strong>Januvia</strong> drops from $527 to $113/month (79% reduction). This is projected to save Medicare beneficiaries $1.5 billion in out-of-pocket costs in 2026 alone.</p>
+                                 <p className="text-slate-700 text-sm mb-4">The first 10 drugs selected include medications for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clot prevention (Eliquis, Xarelto), autoimmune conditions (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
+                                 <p className="text-slate-700 text-sm italic">Approximately 8.8 million Medicare Part D enrollees used these medications in 2023. The program will expand to 15 additional drugs for 2027.</p>
+                             </section>
+                             <section className="bg-teal-50 p-6 rounded-xl border border-teal-100">
+                                 <div className="flex items-center gap-2 mb-3">
+                                    <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded">New in Mid-2026</span>
+                                    <h3 className="font-bold text-teal-900">Medicare GLP-1 Coverage for Weight Loss</h3>
+                                 </div>
+                                 <p className="text-sm text-teal-900 mb-4 font-medium">A historic policy shift: Medicare will cover anti-obesity medications.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will begin covering certain GLP-1 receptor agonists for weight loss—reversing a long-standing policy that excluded anti-obesity medications from Part D coverage.</p>
+                                 <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy (semaglutide) and Zepbound (tirzepatide) will be covered for patients with obesity-related health conditions. Expected copay is approximately <strong>$50/month</strong> after deductible is met.</p>
+                                 <p className="text-slate-700 text-sm italic">This follows agreements with manufacturers Eli Lilly and Novo Nordisk to provide these drugs at reduced prices for Medicare beneficiaries.</p>
                              </section>
                         </div>
 
@@ -2945,7 +2957,7 @@ const Education = () => {
                                     <ul className="space-y-2 text-slate-700 text-sm">
                                         <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Works with any Medicare-accepting provider</span></li>
                                         <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Separate deductible and premium</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>$2,000 out-of-pocket cap (2025)</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span></li>
                                     </ul>
                                 </section>
                                 <section className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
@@ -2954,7 +2966,7 @@ const Education = () => {
                                     <ul className="space-y-2 text-slate-700 text-sm">
                                         <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Often lower or $0 premiums</span></li>
                                         <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Provider networks may be limited</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>$2,000 out-of-pocket cap (2025)</span></li>
+                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span></li>
                                     </ul>
                                 </section>
                             </div>
@@ -2974,14 +2986,14 @@ const Education = () => {
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Compare Total Costs</h4>
-                                            <p className="text-slate-600 text-sm">Look at premiums, deductibles, copays/coinsurance, and pharmacy networks. Include the $2,000 out-of-pocket cap in your calculations.</p>
+                                            <p className="text-slate-600 text-sm">Look at premiums, deductibles, copays/coinsurance, and pharmacy networks. Include the $2,100 out-of-pocket cap (2026) in your calculations.</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Consider Extra Help</h4>
-                                            <p className="text-slate-600 text-sm mb-2">If you have limited income, the Extra Help program can lower costs for both Part D and MA-PD plans, eliminating premiums and deductibles and capping copays (e.g., $4.90 for generics, $12.15 for brand-name drugs in 2025).</p>
+                                            <p className="text-slate-600 text-sm mb-2">If you have limited income, the Extra Help program can lower costs for both Part D and MA-PD plans, eliminating premiums and deductibles (which is $615 in 2026) and capping copays for generics and brand-name drugs.</p>
                                             <a href="https://www.ssa.gov/medicare/prescriptionhelp" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
@@ -3267,11 +3279,11 @@ const Education = () => {
                                     <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
                                         <div className="p-6">
                                             <h4 className="font-bold text-indigo-700 text-lg mb-2">Part D (Traditional)</h4>
-                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Works with any Medicare-accepting provider</li><li>Separate deductible and premium</li><li>$2,000 out-of-pocket cap (2025)</li></ul>
+                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Works with any Medicare-accepting provider</li><li>Separate deductible and premium</li><li>$2,100 out-of-pocket cap (2026)</li></ul>
                                         </div>
                                         <div className="p-6">
                                             <h4 className="font-bold text-indigo-700 text-lg mb-2">Medicare Advantage (MA-PD)</h4>
-                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Often lower or $0 premiums</li><li>Provider networks may be limited</li><li>$2,000 out-of-pocket cap (2025)</li></ul>
+                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Often lower or $0 premiums</li><li>Provider networks may be limited</li><li>$2,100 out-of-pocket cap (2026)</li></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -3414,14 +3426,14 @@ const Education = () => {
                                     <ul className="space-y-3 text-slate-700">
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Month 1-3:</span>
-                                            <span>Pay $2,000 out-of-pocket (reaching your deductible/OOPM)</span>
+                                            <span>Pay $2,100 out-of-pocket (reaching your deductible/OOPM)</span>
                                         </li>
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Month 4-12:</span>
                                             <span>Insurance pays 100% = $0 out-of-pocket</span>
                                         </li>
                                         <li className="pt-3 border-t-2 border-emerald-200">
-                                            <span className="font-bold text-emerald-700 text-xl">Total Annual Cost: $2,000</span>
+                                            <span className="font-bold text-emerald-700 text-xl">Total Annual Cost: $2,100</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -4466,6 +4478,7 @@ const MainSiteRoutes = () => (
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/faq" element={<LazyFAQ />} />
                 <Route path="/my-medications" element={<LazyMyMedications />} />
+                <Route path="/savings-tracker" element={<LazySavingsTracker />} />
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
