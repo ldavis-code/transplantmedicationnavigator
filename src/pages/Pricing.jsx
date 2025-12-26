@@ -44,8 +44,7 @@ const Pricing = () => {
             color: 'emerald',
             icon: Users,
             features: [
-                '3 My Path Quizzes per month',
-                '3 medication searches',
+                '3 My Path Quizzes',
                 'All assistance program links',
                 'Educational resources',
                 'No login required',
@@ -344,7 +343,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan includes 3 My Path Quizzes per month, 3 medication searches, all assistance program links, educational resources, and no login required. Medication lists are not saved in the free plan.
+                                        The Free plan includes 3 My Path Quizzes, all assistance program links, educational resources, and no login required. Medication lists are not saved in the free plan.
                                     </p>
                                 </div>
                                 <div>
