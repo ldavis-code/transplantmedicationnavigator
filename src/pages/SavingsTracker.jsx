@@ -42,7 +42,7 @@ export default function SavingsTracker() {
                         className="text-white/80 hover:text-white flex items-center gap-1 text-sm"
                     >
                         <ArrowLeft size={16} />
-                        My Medications
+                        Track Your Savings
                     </Link>
                 </div>
                 <div className="flex items-center gap-3">
