@@ -1044,7 +1044,7 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <h1 className="text-2xl font-bold mb-6">Step 1: Who are you?</h1>
+                <h1 className="text-2xl font-bold mb-6">Who am I helping today?</h1>
                 <WizardHelp step={step} answers={answers} />
                 <div className="space-y-3" role="radiogroup" aria-label="Select your role">
                     {Object.values(Role).map((r) => (
@@ -1072,7 +1072,7 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-6">Step 2: Where are you in the process?</h1>
+                <h1 className="text-2xl font-bold mb-6">Where are you in the transplant process?</h1>
                 <WizardHelp step={step} answers={answers} />
                 <div className="space-y-3" role="radiogroup" aria-label="Select your transplant status">
                     {Object.values(TransplantStatus).map((s) => (
@@ -1100,8 +1100,8 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">Step 3: Organ Type</h1>
-                <p className="text-slate-600 mb-6">Select all that apply.</p>
+                <h1 className="text-2xl font-bold mb-2">What type of transplant?</h1>
+                <p className="text-slate-600 mb-6">Select organ(s) - choose all that apply.</p>
                 <WizardHelp step={step} answers={answers} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label="Select organ types">
                     {Object.values(OrganType).map((o) => (
@@ -1133,25 +1133,78 @@ const Wizard = () => {
 
     // Step 4: Insurance
     if (step === 4) {
+        const insuranceOptions = [
+            {
+                value: InsuranceType.COMMERCIAL,
+                label: 'Commercial / Employer',
+                highlight: 'Copay cards available!',
+                description: 'Private insurance through work or marketplace'
+            },
+            {
+                value: InsuranceType.MEDICARE,
+                label: 'Medicare',
+                highlight: 'Foundations & PAPs available',
+                description: 'Federal program (65+ or disability)'
+            },
+            {
+                value: InsuranceType.MEDICAID,
+                label: 'Medicaid',
+                highlight: 'Usually well covered',
+                description: 'State program based on income'
+            },
+            {
+                value: InsuranceType.TRICARE_VA,
+                label: 'TRICARE / VA',
+                highlight: null,
+                description: 'Military or veterans benefits'
+            },
+            {
+                value: InsuranceType.IHS,
+                label: 'Indian Health Service',
+                highlight: null,
+                description: 'Tribal health programs'
+            },
+            {
+                value: InsuranceType.UNINSURED,
+                label: 'Uninsured / Self-pay',
+                highlight: 'PAPs can provide FREE meds',
+                description: 'No current insurance'
+            },
+            {
+                value: InsuranceType.OTHER,
+                label: 'Other / Not Sure',
+                highlight: null,
+                description: "We'll show all available options"
+            }
+        ];
+
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-6">Step 4: Primary Insurance</h1>
+                <h1 className="text-2xl font-bold mb-6">What's your insurance type?</h1>
                 <WizardHelp step={step} answers={answers} />
                 <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
-                    {Object.values(InsuranceType).map((i) => (
+                    {insuranceOptions.map((option) => (
                         <button
-                            key={i}
-                            onClick={() => { handleSingleSelect('insurance', i); handleNextFromInsurance(); }}
-                            className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                answers.insurance === i ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                            key={option.value}
+                            onClick={() => { handleSingleSelect('insurance', option.value); handleNextFromInsurance(); }}
+                            className={`w-full p-4 text-left rounded-xl border-2 transition ${
+                                answers.insurance === option.value ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
                             }`}
                             role="radio"
-                            aria-checked={answers.insurance === i}
+                            aria-checked={answers.insurance === option.value}
                         >
-                            <span className="font-medium text-lg">{i}</span>
-                            {answers.insurance === i && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <div className="font-bold text-lg text-slate-900">{option.label}</div>
+                                    {option.highlight && (
+                                        <div className="text-emerald-600 font-medium text-sm mt-1">{option.highlight}</div>
+                                    )}
+                                    <div className="text-slate-500 text-sm mt-1">{option.description}</div>
+                                </div>
+                                {answers.insurance === option.value && <CheckCircle className="text-emerald-600 flex-shrink-0" aria-hidden="true" />}
+                            </div>
                         </button>
                     ))}
                 </div>
@@ -1168,7 +1221,7 @@ const Wizard = () => {
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold mb-2">Step 5: Medications</h1>
+                    <h1 className="text-2xl font-bold mb-2">Which medications do you take?</h1>
                     <p className="text-slate-600">
                         Showing medications relevant for: <strong className="text-emerald-700">{isPreTransplant ? 'Pre-Transplant' : 'Post-Transplant'}</strong>
                     </p>
@@ -1546,9 +1599,9 @@ const Wizard = () => {
                                 <Link
                                     to="/application-help"
                                     className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                    aria-label="Find savings and assistance programs"
+                                    aria-label="Get application help and education"
                                 >
-                                    Find My Savings
+                                    Get Application Help
                                 </Link>
                             </div>
                         </section>
@@ -2078,7 +2131,7 @@ const MedicationSearch = () => {
                 )}
             </div>
 
-            {/* Find My Savings Button */}
+            {/* Get Application Help Button */}
             {hasItems && !showSavings && (
                 <div className="flex justify-center no-print">
                     <button
@@ -2091,7 +2144,7 @@ const MedicationSearch = () => {
                         }}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2"
                     >
-                        Find My Savings
+                        Get Application Help
                     </button>
                 </div>
             )}
