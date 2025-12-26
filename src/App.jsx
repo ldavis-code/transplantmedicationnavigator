@@ -635,6 +635,35 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Real Patient Savings Story */}
+            <section className="max-w-4xl mx-auto" aria-labelledby="savings-story-heading">
+                <div className="bg-gradient-to-br from-emerald-50 to-sky-50 rounded-2xl border-2 border-emerald-200 p-8 md:p-10 shadow-lg">
+                    <div className="text-center mb-6">
+                        <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
+                            <DollarSign size={16} aria-hidden="true" />
+                            Real Patient Story
+                        </span>
+                    </div>
+
+                    <blockquote className="text-center">
+                        <p className="text-xl md:text-2xl text-slate-800 leading-relaxed mb-6">
+                            "My prescription was <span className="line-through text-slate-500">$624</span>. With insurance it dropped to <span className="line-through text-slate-500">$195</span>.
+                            But nobody told me about copay cards. I found one myself and now I pay just <strong className="text-emerald-700">$10</strong>."
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6">
+                            <div className="bg-white rounded-xl px-6 py-4 shadow-sm border border-emerald-100">
+                                <div className="text-3xl font-extrabold text-emerald-600">$2,220</div>
+                                <div className="text-sm text-slate-600 font-medium">Saved Per Year</div>
+                            </div>
+                            <div className="text-slate-600 text-sm max-w-xs">
+                                This is why we built this tool — so no patient misses out on savings their pharmacy never mentioned.
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </section>
+
             {/* Mission & Vision Section */}
             <section className="bg-emerald-900 rounded-3xl overflow-hidden shadow-2xl text-white my-16 max-w-6xl mx-auto" aria-labelledby="mission-heading">
 
