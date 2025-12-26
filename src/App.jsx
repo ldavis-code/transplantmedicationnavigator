@@ -211,8 +211,14 @@ const getMedicationSuggestions = (answers) => {
 
         suggestions.push({
             category: 'Anti-viral Prophylaxis',
-            medications: ['valcyte', 'bactrim'],
-            reason: 'Prevent infections after transplant'
+            medications: ['valcyte'],
+            reason: 'Prevent CMV and other viral infections'
+        });
+
+        suggestions.push({
+            category: 'Antibiotic Prophylaxis',
+            medications: ['bactrim'],
+            reason: 'Prevent PCP (pneumocystis) infection'
         });
 
         if (isLiver) {
