@@ -1599,9 +1599,9 @@ const Wizard = () => {
                                 <Link
                                     to="/application-help"
                                     className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                    aria-label="Get application help and education"
+                                    aria-label="Find savings for your medications"
                                 >
-                                    Get Application Help
+                                    Find My Savings
                                 </Link>
                             </div>
                         </section>
