@@ -6,6 +6,12 @@
     "category": "Search Engine"
   },
   {
+    "name": "Drugs.com",
+    "url": "https://www.drugs.com/",
+    "description": "Look up and identify medications, find manufacturers, and connect directly to their specific Patient Assistance Programs.",
+    "category": "Medication Database"
+  },
+  {
     "name": "American Kidney Fund (AKF)",
     "url": "https://www.kidneyfund.org/",
     "description": "Provides treatment-related financial assistance to dialysis and transplant patients who meet eligibility criteria.",
@@ -52,6 +58,12 @@
     "url": "https://rarediseases.org/",
     "description": "Since 1987, provides assistance programs for life-saving medications, financial assistance with insurance premiums and co-pays, diagnostic testing for rare diseases.",
     "category": "Foundation"
+  },
+  {
+    "name": "Rx Outreach",
+    "url": "https://rxoutreach.org/",
+    "description": "Non-profit pharmacy providing affordable medications. Since 2010, saved patients more than $822 million in prescription medication costs.",
+    "category": "Low-Cost Pharmacy"
   },
   {
     "name": "Cost Plus Drugs",
