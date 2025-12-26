@@ -4023,7 +4023,7 @@ const ApplicationHelp = () => {
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /></div></nav>
+            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /><TabButton id="RESOURCES" label="Resources" icon={ExternalLink} /></div></nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
@@ -4098,7 +4098,128 @@ const ApplicationHelp = () => {
                             <h2 className="font-bold text-amber-900 mb-4 flex items-center gap-2"><AlertOctagon size={20} aria-hidden="true" /> Important Reminders</h2>
                             <div className="grid md:grid-cols-2 gap-6 text-amber-800 text-sm"><div><strong className="block text-amber-900">Apply Once Only</strong>Multiple submissions to the same foundation slow down approval.</div><div><strong className="block text-amber-900">Apply Anytime</strong>There is no "season." Apply when cost becomes a barrier.</div><div><strong className="block text-amber-900">People Want to Help</strong>Most PAP and foundation teams are kind and patient.</div><div><strong className="block text-amber-900">Fax is Still Used</strong>Faxed forms go directly to a secure, dedicated team.</div></div>
                         </aside>
+                    </div>
+                )}
+                {activeTab === 'INCOME' && (
+                    <div className="space-y-10 max-w-4xl mx-auto">
+                        <div><h2 className="text-2xl font-bold text-slate-900 mb-4">Understanding Income Eligibility</h2><p className="text-lg text-slate-600 mb-2">Most pharmaceutical companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r" role="note"><p className="text-red-800 font-bold">Don't Self-Disqualify: Many programs have much higher income limits than you might expect.</p></div></div>
+                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-lg mb-3">How Income Limits Work</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-lg mb-3">Where to Find Guidelines</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={20} aria-hidden="true" /> Quick Income Checker</h3><p className="text-slate-600 mb-4">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={16} aria-hidden="true" /></a><a href="https://medicineassistancetool.org/" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit MAT.org to search by medication (opens in new tab)">MAT.org (Search by Med) <ExternalLink size={16} aria-hidden="true" /></a></div></section>
+                    </div>
+                )}
+                {activeTab === 'STEPS' && (
+                    <div className="max-w-3xl mx-auto">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-6">Apply These Principles to Both PAPs and Foundations</h2>
+                        <section className="bg-white p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm" aria-labelledby="requirements-heading">
+                            <h3 id="requirements-heading" className="font-bold text-lg text-slate-900 mb-4">Both require:</h3>
+                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-3"><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Your name and contact info</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Doctor / coordinator contact</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Income and household size</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Diagnosis + medication list</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Insurance information</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Patient history</li></ul>
+                        </section>
+                    </div>
+                )}
+                {activeTab === 'CHECKLIST' && (
+                    <div className="max-w-4xl mx-auto">
+                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl font-bold text-slate-900">"Before You Apply" Checklist</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-bold" aria-label="Print checklist"><Printer size={18} aria-hidden="true" /> Print</button></div>
+                        <div className="grid lg:grid-cols-5 gap-8">
+                            <div className="lg:col-span-3 space-y-6">
+                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-sm font-bold text-slate-700">Your Responsibility</span><span className="text-sm font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-3" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-3 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-600 text-xs mt-2 italic">Gather these items before you apply. Click to check them off.</p></section>
+                                <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={20} /> : <Square size={20} />}</div><span className={`font-medium text-sm md:text-base ${isChecked ? 'text-slate-900' : 'text-slate-600'}`}>{item}</span></button> ); })}</div>
+                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center fade-in" role="alert" aria-live="polite"><span className="font-bold">🎉 You have everything you need! Time to apply.</span></div> )}
+                            </div>
+                            <aside className="lg:col-span-2 space-y-6">
+                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={20} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-xs text-slate-600 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-indigo-400 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
+                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={20} aria-hidden="true" /> Crucial Step</h3><p className="text-sm text-amber-900 leading-relaxed">It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program.</p></aside>
+                            </aside>
+                        </div>
+                    </div>
+                )}
+                {activeTab === 'TEMPLATES' && (
+                    <div className="max-w-3xl mx-auto space-y-8">
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Phone Scripts</h2>
+                            <p className="text-slate-600 mb-6">Use these scripts when calling manufacturers and foundations.</p>
+                            <div className="space-y-4">
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">Calling Manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">Calling Foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
+                            </div>
+                        </div>
 
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Letter Templates</h2>
+                            <p className="text-slate-600 mb-6">Use these templates when writing to manufacturers, foundations, or your doctor.</p>
+                            <div className="space-y-4">
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="pap-letter">
+                                    <div className="bg-indigo-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-indigo-800"><FileText size={18} aria-hidden="true" /> <span id="pap-letter">Patient Assistance Program Appeal Letter</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear <span className="bg-yellow-100 px-1">[Program Name]</span> Team,
+
+I am writing to request reconsideration of my application for the Patient Assistance Program for <span className="bg-yellow-100 px-1">[medication name]</span>.
+
+I am a <span className="bg-yellow-100 px-1">[organ type]</span> transplant recipient and require this medication to prevent organ rejection. My current financial situation makes it difficult to afford the full cost of this medication.
+
+<span className="bg-yellow-100 px-1">[Explain your specific circumstances: job loss, medical expenses, fixed income, etc.]</span>
+
+I have attached updated documentation including <span className="bg-yellow-100 px-1">[list documents: tax return, pay stubs, bank statements, etc.]</span>.
+
+Thank you for reconsidering my application. Please contact me at <span className="bg-yellow-100 px-1">[phone number]</span> or <span className="bg-yellow-100 px-1">[email]</span> if you need additional information.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span></p>
+                                    </div>
+                                </section>
+
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="doctor-letter">
+                                    <div className="bg-emerald-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-emerald-800"><FileText size={18} aria-hidden="true" /> <span id="doctor-letter">Letter Requesting Doctor's Support</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear Dr. <span className="bg-yellow-100 px-1">[Doctor's Name]</span>,
+
+I am applying for Patient Assistance Programs to help cover the cost of my transplant medications. Several programs require a letter from my physician confirming my medical necessity.
+
+Could you please provide a letter on your letterhead stating:
+• My diagnosis and transplant date
+• The medications I require and why they are medically necessary
+• That these medications are essential to prevent organ rejection
+
+Programs I am applying to: <span className="bg-yellow-100 px-1">[list programs]</span>
+
+I have attached the application forms that require your signature. Please let me know if you need any additional information.
+
+Thank you for your support.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span>
+<span className="bg-yellow-100 px-1">[Date of Birth]</span>
+<span className="bg-yellow-100 px-1">[Phone Number]</span></p>
+                                    </div>
+                                </section>
+
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="hardship-letter">
+                                    <div className="bg-amber-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-amber-800"><FileText size={18} aria-hidden="true" /> <span id="hardship-letter">Financial Hardship Statement</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">To Whom It May Concern,
+
+I am writing to explain my current financial hardship and request assistance with my transplant medication costs.
+
+I received a <span className="bg-yellow-100 px-1">[organ type]</span> transplant on <span className="bg-yellow-100 px-1">[date]</span>. Since my transplant, I have faced significant financial challenges including:
+
+<span className="bg-yellow-100 px-1">[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]</span>
+
+My monthly medication costs total approximately $<span className="bg-yellow-100 px-1">[amount]</span>, which represents <span className="bg-yellow-100 px-1">[percentage]</span>% of my monthly income.
+
+Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
+
+I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span>
+<span className="bg-yellow-100 px-1">[Date]</span></p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {activeTab === 'RESOURCES' && (
+                    <div className="space-y-8">
                         <div>
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Medication Resources</h2>
 
@@ -4243,124 +4364,6 @@ const ApplicationHelp = () => {
                                 Your transplant center's financial counselor or social worker can also help you navigate these programs and determine which ones you may qualify for.
                             </p>
                         </aside>
-                    </div>
-                )}
-                {activeTab === 'INCOME' && (
-                    <div className="space-y-10 max-w-4xl mx-auto">
-                        <div><h2 className="text-2xl font-bold text-slate-900 mb-4">Understanding Income Eligibility</h2><p className="text-lg text-slate-600 mb-2">Most pharmaceutical companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r" role="note"><p className="text-red-800 font-bold">Don't Self-Disqualify: Many programs have much higher income limits than you might expect.</p></div></div>
-                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-lg mb-3">How Income Limits Work</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-lg mb-3">Where to Find Guidelines</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
-                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={20} aria-hidden="true" /> Quick Income Checker</h3><p className="text-slate-600 mb-4">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={16} aria-hidden="true" /></a><a href="https://medicineassistancetool.org/" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit MAT.org to search by medication (opens in new tab)">MAT.org (Search by Med) <ExternalLink size={16} aria-hidden="true" /></a></div></section>
-                    </div>
-                )}
-                {activeTab === 'STEPS' && (
-                    <div className="max-w-3xl mx-auto">
-                        <h2 className="text-2xl font-bold text-slate-900 mb-6">Apply These Principles to Both PAPs and Foundations</h2>
-                        <section className="bg-white p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm" aria-labelledby="requirements-heading">
-                            <h3 id="requirements-heading" className="font-bold text-lg text-slate-900 mb-4">Both require:</h3>
-                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-3"><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Your name and contact info</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Doctor / coordinator contact</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Income and household size</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Diagnosis + medication list</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Insurance information</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Patient history</li></ul>
-                        </section>
-                    </div>
-                )}
-                {activeTab === 'CHECKLIST' && (
-                    <div className="max-w-4xl mx-auto">
-                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl font-bold text-slate-900">"Before You Apply" Checklist</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-bold" aria-label="Print checklist"><Printer size={18} aria-hidden="true" /> Print</button></div>
-                        <div className="grid lg:grid-cols-5 gap-8">
-                            <div className="lg:col-span-3 space-y-6">
-                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-sm font-bold text-slate-700">Your Responsibility</span><span className="text-sm font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-3" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-3 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-600 text-xs mt-2 italic">Gather these items before you apply. Click to check them off.</p></section>
-                                <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={20} /> : <Square size={20} />}</div><span className={`font-medium text-sm md:text-base ${isChecked ? 'text-slate-900' : 'text-slate-600'}`}>{item}</span></button> ); })}</div>
-                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center fade-in" role="alert" aria-live="polite"><span className="font-bold">🎉 You have everything you need! Time to apply.</span></div> )}
-                            </div>
-                            <aside className="lg:col-span-2 space-y-6">
-                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={20} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-xs text-slate-600 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-indigo-400 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
-                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={20} aria-hidden="true" /> Crucial Step</h3><p className="text-sm text-amber-900 leading-relaxed">It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program.</p></aside>
-                            </aside>
-                        </div>
-                    </div>
-                )}
-                {activeTab === 'TEMPLATES' && (
-                    <div className="max-w-3xl mx-auto space-y-8">
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Phone Scripts</h2>
-                            <p className="text-slate-600 mb-6">Use these scripts when calling manufacturers and foundations.</p>
-                            <div className="space-y-4">
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">Calling Manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">Calling Foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Letter Templates</h2>
-                            <p className="text-slate-600 mb-6">Use these templates when writing to manufacturers, foundations, or your doctor.</p>
-                            <div className="space-y-4">
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="pap-letter">
-                                    <div className="bg-indigo-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-indigo-800"><FileText size={18} aria-hidden="true" /> <span id="pap-letter">Patient Assistance Program Appeal Letter</span></div>
-                                    <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear <span className="bg-yellow-100 px-1">[Program Name]</span> Team,
-
-I am writing to request reconsideration of my application for the Patient Assistance Program for <span className="bg-yellow-100 px-1">[medication name]</span>.
-
-I am a <span className="bg-yellow-100 px-1">[organ type]</span> transplant recipient and require this medication to prevent organ rejection. My current financial situation makes it difficult to afford the full cost of this medication.
-
-<span className="bg-yellow-100 px-1">[Explain your specific circumstances: job loss, medical expenses, fixed income, etc.]</span>
-
-I have attached updated documentation including <span className="bg-yellow-100 px-1">[list documents: tax return, pay stubs, bank statements, etc.]</span>.
-
-Thank you for reconsidering my application. Please contact me at <span className="bg-yellow-100 px-1">[phone number]</span> or <span className="bg-yellow-100 px-1">[email]</span> if you need additional information.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span></p>
-                                    </div>
-                                </section>
-
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="doctor-letter">
-                                    <div className="bg-emerald-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-emerald-800"><FileText size={18} aria-hidden="true" /> <span id="doctor-letter">Letter Requesting Doctor's Support</span></div>
-                                    <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear Dr. <span className="bg-yellow-100 px-1">[Doctor's Name]</span>,
-
-I am applying for Patient Assistance Programs to help cover the cost of my transplant medications. Several programs require a letter from my physician confirming my medical necessity.
-
-Could you please provide a letter on your letterhead stating:
-• My diagnosis and transplant date
-• The medications I require and why they are medically necessary
-• That these medications are essential to prevent organ rejection
-
-Programs I am applying to: <span className="bg-yellow-100 px-1">[list programs]</span>
-
-I have attached the application forms that require your signature. Please let me know if you need any additional information.
-
-Thank you for your support.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span>
-<span className="bg-yellow-100 px-1">[Date of Birth]</span>
-<span className="bg-yellow-100 px-1">[Phone Number]</span></p>
-                                    </div>
-                                </section>
-
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="hardship-letter">
-                                    <div className="bg-amber-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-amber-800"><FileText size={18} aria-hidden="true" /> <span id="hardship-letter">Financial Hardship Statement</span></div>
-                                    <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">To Whom It May Concern,
-
-I am writing to explain my current financial hardship and request assistance with my transplant medication costs.
-
-I received a <span className="bg-yellow-100 px-1">[organ type]</span> transplant on <span className="bg-yellow-100 px-1">[date]</span>. Since my transplant, I have faced significant financial challenges including:
-
-<span className="bg-yellow-100 px-1">[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]</span>
-
-My monthly medication costs total approximately $<span className="bg-yellow-100 px-1">[amount]</span>, which represents <span className="bg-yellow-100 px-1">[percentage]</span>% of my monthly income.
-
-Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
-
-I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span>
-<span className="bg-yellow-100 px-1">[Date]</span></p>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
                     </div>
                 )}
             </div>
