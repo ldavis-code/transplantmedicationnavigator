@@ -383,22 +383,13 @@ const Pricing = () => {
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
                                 Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a
-                                    href="mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Program%20Request"
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
-                                >
-                                    <Mail size={20} aria-hidden="true" />
-                                    Request a Pilot
-                                </a>
-                                <button
-                                    onClick={() => handleTabChange('pricing')}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl transition"
-                                >
-                                    View Pricing
-                                    <ArrowRight size={18} aria-hidden="true" />
-                                </button>
-                            </div>
+                            <a
+                                href="mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Program%20Request"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+                            >
+                                <Mail size={20} aria-hidden="true" />
+                                Request a Pilot
+                            </a>
                         </section>
 
                         {/* Value Props */}
@@ -491,22 +482,13 @@ const Pricing = () => {
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
                                 Connect employees to copay cards, manufacturer assistance programs, and foundations—complementing your existing pharmacy benefits.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a
-                                    href="mailto:info@transplantmedicationnavigator.com?subject=Employer%20Partnership%20Inquiry"
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
-                                >
-                                    <Mail size={20} aria-hidden="true" />
-                                    Learn More
-                                </a>
-                                <button
-                                    onClick={() => handleTabChange('pricing')}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl transition"
-                                >
-                                    View Pricing
-                                    <ArrowRight size={18} aria-hidden="true" />
-                                </button>
-                            </div>
+                            <a
+                                href="mailto:info@transplantmedicationnavigator.com?subject=Employer%20Partnership%20Inquiry"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+                            >
+                                <Mail size={20} aria-hidden="true" />
+                                Learn More
+                            </a>
                         </section>
 
                         {/* Value Props */}
@@ -602,22 +584,13 @@ const Pricing = () => {
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
                                 Reduce plan spend on high-cost transplant medications by connecting members to manufacturer programs and foundations.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a
-                                    href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
-                                >
-                                    <Mail size={20} aria-hidden="true" />
-                                    Request Demo
-                                </a>
-                                <button
-                                    onClick={() => handleTabChange('pricing')}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-purple-700 border-2 border-purple-200 font-bold rounded-xl transition"
-                                >
-                                    View Pricing
-                                    <ArrowRight size={18} aria-hidden="true" />
-                                </button>
-                            </div>
+                            <a
+                                href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+                            >
+                                <Mail size={20} aria-hidden="true" />
+                                Request Demo
+                            </a>
                         </section>
 
                         {/* Value Props */}
