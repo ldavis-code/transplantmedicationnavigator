@@ -1340,7 +1340,7 @@ const Wizard = () => {
 
                             return (
                                 <div key={cat}>
-                                    <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-2">{cat}s</h2>
+                                <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-2">{cat.endsWith('s') ? cat : `${cat}s`}</h2>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3" role="group" aria-label={`${cat} medications`}>
                                          {medsInCat.map((m) => (
                                             <button
@@ -4023,311 +4023,8 @@ const ApplicationHelp = () => {
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="MEDGUIDE" label="Medication Guide" icon={Pill} /><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /></div></nav>
+            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /></div></nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
-                {activeTab === 'MEDGUIDE' && (
-                    <div className="max-w-4xl mx-auto space-y-6">
-                        <div className="text-center mb-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-3">Search for Your Medication</h2>
-                            <p className="text-lg text-slate-600">Find clear, step-by-step instructions for accessing assistance programs</p>
-                        </div>
-
-                        {/* Search Input */}
-                        <div className="relative">
-                            <label htmlFor="med-search" className="sr-only">Search for medication by generic or brand name</label>
-                            <div className="relative">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
-                                <input
-                                    id="med-search"
-                                    type="text"
-                                    placeholder="Search by generic or brand name (e.g., Tacrolimus, Prograf)"
-                                    className="w-full pl-12 pr-4 py-4 text-lg border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                    value={searchTerm}
-                                    onChange={(e) => {
-                                        setSearchTerm(e.target.value);
-                                        setSelectedMedication(null);
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Escape') { setSearchTerm(''); setSelectedMedication(null); }
-                                    }}
-                                    aria-autocomplete="list"
-                                    aria-controls="medication-results"
-                                    aria-expanded={!!(searchTerm && !selectedMedication)}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Search Results */}
-                        {searchTerm && !selectedMedication && (
-                            <div id="medication-results" className="space-y-2" role="listbox" aria-label="Medication search results">
-                                {filteredMedications.length > 0 ? (
-                                    filteredMedications.slice(0, 10).map((med) => (
-                                        <button
-                                            key={med.id}
-                                            onClick={() => {
-                                                setSelectedMedication(med);
-                                                setSearchTerm(med.genericName);
-                                            }}
-                                            className="w-full p-4 border border-slate-200 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 transition text-left min-h-[44px]"
-                                            role="option"
-                                            aria-selected={false}
-                                            aria-label={`Select ${med.genericName} (${med.brandName})`}
-                                        >
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div>
-                                                    <div className="font-bold text-slate-900">{med.genericName}</div>
-                                                    <div className="text-sm text-slate-600">{med.brandName}</div>
-                                                </div>
-                                                <span className="text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold whitespace-nowrap">
-                                                    {med.category}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    ))
-                                ) : (
-                                    <div className="p-6 text-center text-slate-600 bg-slate-50 rounded-lg">
-                                        <p className="font-medium mb-2">No medications found</p>
-                                        <p className="text-sm">Try searching by generic name (e.g., Tacrolimus) or brand name (e.g., Prograf)</p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Selected Medication Details */}
-                        {selectedMedication && (
-                            <div className="space-y-6 fade-in">
-                                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-xl p-6">
-                                    <div className="flex items-start justify-between gap-4 mb-4">
-                                        <div>
-                                            <h3 className="text-2xl font-bold text-slate-900 mb-1">{selectedMedication.genericName}</h3>
-                                            <p className="text-lg text-slate-700">{selectedMedication.brandName}</p>
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                setSelectedMedication(null);
-                                                setSearchTerm("");
-                                            }}
-                                            className="text-slate-400 hover:text-slate-600 transition"
-                                            aria-label="Clear selection and search again"
-                                        >
-                                            <X size={24} />
-                                        </button>
-                                    </div>
-                                    <div className="flex flex-wrap gap-2">
-                                        <span className="px-3 py-1 bg-white border border-emerald-200 rounded-full text-sm font-medium text-slate-700">
-                                            {selectedMedication.category}
-                                        </span>
-                                        <span className="px-3 py-1 bg-white border border-emerald-200 rounded-full text-sm font-medium text-slate-700">
-                                            {selectedMedication.manufacturer}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Step-by-Step Instructions */}
-                                <div className="bg-white border-2 border-indigo-200 rounded-xl overflow-hidden">
-                                    <div className="bg-indigo-600 text-white px-6 py-4">
-                                        <h3 className="text-xl font-bold flex items-center gap-2">
-                                            <ClipboardList size={24} aria-hidden="true" />
-                                            How to Access Assistance Programs
-                                        </h3>
-                                    </div>
-                                    <div className="p-6 space-y-6">
-                                        {/* Step 1: Check Insurance Type */}
-                                        <section className="border-l-4 border-emerald-500 pl-6 py-2">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <div className="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold" aria-hidden="true">1</div>
-                                                <h4 className="text-lg font-bold text-slate-900">Check Your Insurance Type</h4>
-                                            </div>
-                                            <div className="space-y-2 text-slate-700">
-                                                <p className="font-medium">Different programs are available based on your insurance:</p>
-                                                <ul className="list-disc pl-5 space-y-1 text-sm">
-                                                    <li><strong>Commercial Insurance:</strong> You can use manufacturer Patient Assistance Programs (PAPs) and copay cards</li>
-                                                    <li><strong>Medicare:</strong> Use copay foundations (manufacturer PAPs usually don't accept Medicare due to federal law)</li>
-                                                    <li><strong>Medicaid:</strong> Contact your state program for coverage options</li>
-                                                    <li><strong>Uninsured:</strong> Manufacturer PAPs are your best option</li>
-                                                </ul>
-                                            </div>
-                                        </section>
-
-                                        {/* Step 2: Manufacturer PAP */}
-                                        {selectedMedication.papUrl ? (
-                                            <section className="border-l-4 border-indigo-500 pl-6 py-2">
-                                                <div className="flex items-center gap-2 mb-3">
-                                                    <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold" aria-hidden="true">2</div>
-                                                    <h4 className="text-lg font-bold text-slate-900">Apply to Manufacturer's Program</h4>
-                                                </div>
-                                                <div className="space-y-3 text-slate-700">
-                                                    <p><strong>Manufacturer:</strong> {selectedMedication.manufacturer}</p>
-                                                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-                                                        <p className="font-bold text-indigo-900 mb-2">What you'll need:</p>
-                                                        <ul className="list-disc pl-5 space-y-1 text-sm text-indigo-900">
-                                                            <li>Basic information (name, DOB, address, email)</li>
-                                                            <li>Insurance card photos (front and back)</li>
-                                                            <li>Proof of income (tax return, pay stubs, or SS letter)</li>
-                                                            <li>Prescription information (medication name, dose, pharmacy)</li>
-                                                            <li>Doctor's signature on application form</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a
-                                                        href={selectedMedication.papUrl}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-lg transition shadow-md"
-                                                        aria-label={`Visit ${selectedMedication.manufacturer} Patient Assistance Program (opens in new tab)`}
-                                                    >
-                                                        <ExternalLink size={18} aria-hidden="true" />
-                                                        Visit {selectedMedication.manufacturer} PAP
-                                                    </a>
-                                                    {selectedMedication.supportUrl && (
-                                                        <a
-                                                            href={selectedMedication.supportUrl}
-                                                            target="_blank"
-                                                            rel="noreferrer"
-                                                            className="inline-flex items-center gap-2 bg-white border-2 border-indigo-600 text-indigo-700 hover:bg-indigo-50 font-bold px-6 py-3 rounded-lg transition shadow-md"
-                                                            aria-label={`Visit ${selectedMedication.manufacturer} Patient Support Services (opens in new tab)`}
-                                                        >
-                                                            <ExternalLink size={18} aria-hidden="true" />
-                                                            Patient Support Services
-                                                        </a>
-                                                    )}
-                                                    <p className="text-xs text-slate-600 italic">Approval typically takes 2-4 weeks</p>
-                                                </div>
-                                            </section>
-                                        ) : (
-                                            <section className="border-l-4 border-amber-500 pl-6 py-2">
-                                                <div className="flex items-center gap-2 mb-3">
-                                                    <div className="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold" aria-hidden="true">2</div>
-                                                    <h4 className="text-lg font-bold text-slate-900">Check for Generic Alternatives</h4>
-                                                </div>
-                                                <div className="space-y-3 text-slate-700">
-                                                    <p>This medication is typically available as a generic. Check these resources for affordable pricing:</p>
-                                                    <div className="grid md:grid-cols-2 gap-3">
-                                                        <a href="https://costplusdrugs.com/" target="_blank" rel="noreferrer" className="flex items-center gap-2 p-3 bg-sky-50 border border-sky-200 rounded-lg hover:border-sky-400 transition text-sm">
-                                                            <ExternalLink size={16} aria-hidden="true" />
-                                                            <span className="font-medium">Cost Plus Drugs</span>
-                                                        </a>
-                                                        <a href="https://www.goodrx.com/" target="_blank" rel="noreferrer" className="flex items-center gap-2 p-3 bg-sky-50 border border-sky-200 rounded-lg hover:border-sky-400 transition text-sm">
-                                                            <ExternalLink size={16} aria-hidden="true" />
-                                                            <span className="font-medium">GoodRx</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        )}
-
-                                        {/* Step 3: Copay Foundations */}
-                                        <section className="border-l-4 border-rose-500 pl-6 py-2">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <div className="w-8 h-8 bg-rose-600 text-white rounded-full flex items-center justify-center font-bold" aria-hidden="true">3</div>
-                                                <h4 className="text-lg font-bold text-slate-900">Apply to Copay Foundations</h4>
-                                            </div>
-                                            <div className="space-y-3 text-slate-700">
-                                                <p>Foundations help cover copays, deductibles, and premiums. They work with <strong>all insurance types including Medicare</strong>.</p>
-                                                <div className="bg-rose-50 border border-rose-200 rounded-lg p-4">
-                                                    <p className="font-bold text-rose-900 mb-2">Recommended Foundations for Transplant Medications:</p>
-                                                    <ul className="space-y-2 text-sm text-rose-900">
-                                                        <li className="flex items-start gap-2">
-                                                            <CheckCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                                            <span><strong>HealthWell Foundation</strong> - Transplant fund often available</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-2">
-                                                            <CheckCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                                            <span><strong>Patient Advocate Foundation</strong> - Helps with copays and premiums</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-2">
-                                                            <CheckCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                                            <span><strong>National Kidney Foundation</strong> - If this is a kidney transplant medication</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-2">
-                                                            <CheckCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                                            <span><strong>American Liver Foundation</strong> - If this is a liver transplant medication</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <Link
-                                                    to="/education"
-                                                    className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold px-6 py-3 rounded-lg transition shadow-md"
-                                                    aria-label="View full directory of foundations"
-                                                >
-                                                    <Search size={18} aria-hidden="true" />
-                                                    View Full Directory
-                                                </Link>
-                                                <p className="text-xs text-slate-600 italic">Approval typically takes 1-3 weeks</p>
-                                            </div>
-                                        </section>
-
-                                        {/* Step 4: Follow Up */}
-                                        <section className="border-l-4 border-purple-500 pl-6 py-2">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold" aria-hidden="true">4</div>
-                                                <h4 className="text-lg font-bold text-slate-900">Follow Up & Stay Organized</h4>
-                                            </div>
-                                            <div className="space-y-2 text-slate-700 text-sm">
-                                                <ul className="list-disc pl-5 space-y-1">
-                                                    <li>Call to confirm your application was received (typically within 3-5 business days)</li>
-                                                    <li>Follow up with your doctor's office to ensure they submitted their portion</li>
-                                                    <li>Keep copies of all documents you submit</li>
-                                                    <li>Mark your calendar to reapply before your approval expires (usually annually)</li>
-                                                </ul>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-
-                                {/* Additional Resources */}
-                                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
-                                    <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2">
-                                        <Lightbulb size={20} aria-hidden="true" />
-                                        Need More Help?
-                                    </h3>
-                                    <div className="space-y-3 text-sm text-emerald-900">
-                                        <p>Your transplant center's social worker or financial coordinator can help you apply to these programs.</p>
-                                        <div className="flex flex-col sm:flex-row gap-3">
-                                            <button
-                                                onClick={() => setActiveTab('START')}
-                                                className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-lg transition text-center justify-center"
-                                            >
-                                                <FileText size={16} aria-hidden="true" />
-                                                View Getting Started
-                                            </button>
-                                            <Link
-                                                to="/faq"
-                                                className="inline-flex items-center gap-2 bg-white hover:bg-emerald-100 border-2 border-emerald-600 text-emerald-700 font-bold px-4 py-2 rounded-lg transition text-center justify-center"
-                                            >
-                                                <HelpCircle size={16} aria-hidden="true" />
-                                                Read FAQs
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Getting Started Prompt */}
-                        {!searchTerm && !selectedMedication && (
-                            <div className="text-center py-12">
-                                <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mb-6" aria-hidden="true">
-                                    <Pill size={40} className="text-emerald-600" />
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">Start by searching for your medication above</h3>
-                                <p className="text-slate-600 max-w-xl mx-auto mb-6">
-                                    Enter the generic name (like Tacrolimus) or brand name (like Prograf) to get personalized, step-by-step instructions for accessing assistance programs.
-                                </p>
-                                <div className="inline-flex flex-wrap gap-2 justify-center">
-                                    {['Tacrolimus', 'Mycophenolate', 'Valcyte', 'Prednisone'].map((name) => (
-                                        <button
-                                            key={name}
-                                            onClick={() => setSearchTerm(name)}
-                                            className="px-4 py-2 bg-slate-100 hover:bg-emerald-100 border border-slate-300 hover:border-emerald-400 rounded-lg text-sm font-medium text-slate-700 hover:text-emerald-700 transition"
-                                        >
-                                            Try "{name}"
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                )}
                 {activeTab === 'START' && (
                     <div className="space-y-8">
                         <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-lg mb-2 flex items-center gap-2"><CheckCircle size={20} aria-hidden="true" /> Good News</h2><ul className="list-disc pl-5 text-emerald-900 space-y-1"><li><strong>PAPs and Foundations ask for the same information.</strong></li><li>Gather documents once → apply to multiple programs.</li></ul></aside>
@@ -4582,9 +4279,88 @@ const ApplicationHelp = () => {
                 )}
                 {activeTab === 'TEMPLATES' && (
                     <div className="max-w-3xl mx-auto space-y-8">
-                        <h2 className="text-2xl font-bold text-slate-900">Phone Scripts & Templates</h2>
-                        <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">calling manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
-                        <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">calling foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Phone Scripts</h2>
+                            <p className="text-slate-600 mb-6">Use these scripts when calling manufacturers and foundations.</p>
+                            <div className="space-y-4">
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">Calling Manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">Calling Foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Letter Templates</h2>
+                            <p className="text-slate-600 mb-6">Use these templates when writing to manufacturers, foundations, or your doctor.</p>
+                            <div className="space-y-4">
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="pap-letter">
+                                    <div className="bg-indigo-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-indigo-800"><FileText size={18} aria-hidden="true" /> <span id="pap-letter">Patient Assistance Program Appeal Letter</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear <span className="bg-yellow-100 px-1">[Program Name]</span> Team,
+
+I am writing to request reconsideration of my application for the Patient Assistance Program for <span className="bg-yellow-100 px-1">[medication name]</span>.
+
+I am a <span className="bg-yellow-100 px-1">[organ type]</span> transplant recipient and require this medication to prevent organ rejection. My current financial situation makes it difficult to afford the full cost of this medication.
+
+<span className="bg-yellow-100 px-1">[Explain your specific circumstances: job loss, medical expenses, fixed income, etc.]</span>
+
+I have attached updated documentation including <span className="bg-yellow-100 px-1">[list documents: tax return, pay stubs, bank statements, etc.]</span>.
+
+Thank you for reconsidering my application. Please contact me at <span className="bg-yellow-100 px-1">[phone number]</span> or <span className="bg-yellow-100 px-1">[email]</span> if you need additional information.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span></p>
+                                    </div>
+                                </section>
+
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="doctor-letter">
+                                    <div className="bg-emerald-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-emerald-800"><FileText size={18} aria-hidden="true" /> <span id="doctor-letter">Letter Requesting Doctor's Support</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear Dr. <span className="bg-yellow-100 px-1">[Doctor's Name]</span>,
+
+I am applying for Patient Assistance Programs to help cover the cost of my transplant medications. Several programs require a letter from my physician confirming my medical necessity.
+
+Could you please provide a letter on your letterhead stating:
+• My diagnosis and transplant date
+• The medications I require and why they are medically necessary
+• That these medications are essential to prevent organ rejection
+
+Programs I am applying to: <span className="bg-yellow-100 px-1">[list programs]</span>
+
+I have attached the application forms that require your signature. Please let me know if you need any additional information.
+
+Thank you for your support.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span>
+<span className="bg-yellow-100 px-1">[Date of Birth]</span>
+<span className="bg-yellow-100 px-1">[Phone Number]</span></p>
+                                    </div>
+                                </section>
+
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="hardship-letter">
+                                    <div className="bg-amber-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-amber-800"><FileText size={18} aria-hidden="true" /> <span id="hardship-letter">Financial Hardship Statement</span></div>
+                                    <div className="p-6 bg-white">
+                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">To Whom It May Concern,
+
+I am writing to explain my current financial hardship and request assistance with my transplant medication costs.
+
+I received a <span className="bg-yellow-100 px-1">[organ type]</span> transplant on <span className="bg-yellow-100 px-1">[date]</span>. Since my transplant, I have faced significant financial challenges including:
+
+<span className="bg-yellow-100 px-1">[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]</span>
+
+My monthly medication costs total approximately $<span className="bg-yellow-100 px-1">[amount]</span>, which represents <span className="bg-yellow-100 px-1">[percentage]</span>% of my monthly income.
+
+Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
+
+I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
+
+Sincerely,
+<span className="bg-yellow-100 px-1">[Your Name]</span>
+<span className="bg-yellow-100 px-1">[Date]</span></p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
