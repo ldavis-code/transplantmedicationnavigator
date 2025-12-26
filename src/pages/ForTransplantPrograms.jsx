@@ -59,13 +59,6 @@ const ForTransplantPrograms = () => {
                         <Mail size={20} aria-hidden="true" />
                         Request a Pilot
                     </a>
-                    <Link
-                        to="/pricing"
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl transition"
-                    >
-                        View Pricing
-                        <ArrowRight size={18} aria-hidden="true" />
-                    </Link>
                 </div>
             </header>
 
