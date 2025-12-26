@@ -4008,6 +4008,113 @@ const ApplicationHelp = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedMedication, setSelectedMedication] = useState(null);
 
+    // Letter builder states
+    const [letterType, setLetterType] = useState("appeal");
+    const [patientName, setPatientName] = useState("");
+    const [medicationName, setMedicationName] = useState("");
+    const [appealReason, setAppealReason] = useState("Financial Hardship");
+    const [transplantType, setTransplantType] = useState("");
+    const [transplantDate, setTransplantDate] = useState("");
+    const [doctorName, setDoctorName] = useState("");
+    const [programName, setProgramName] = useState("");
+    const [hardshipDetails, setHardshipDetails] = useState("");
+    const [generatedLetter, setGeneratedLetter] = useState("");
+    const [copied, setCopied] = useState(false);
+
+    const generateLetter = () => {
+        const date = new Date().toLocaleDateString();
+        let text = "";
+
+        if (letterType === "appeal") {
+            text = `Date: ${date}
+
+To Whom It May Concern:
+
+I am writing to appeal the coverage denial or specialty pharmacy requirement for my medication, ${medicationName || "[Medication Name]"}.
+
+Patient Name: ${patientName || "[Your Name]"}
+Medication: ${medicationName || "[Medication Name]"}
+
+Reason for Appeal: ${appealReason}
+
+This medication is medically necessary for my transplant care. The current requirement creates a significant barrier to my adherence and health outcomes because ${
+                appealReason === 'Financial Hardship'
+                ? 'the cost at the required pharmacy is unaffordable compared to available alternatives, putting me at risk of missing doses.'
+                : appealReason === 'Access Issues'
+                ? 'the required pharmacy cannot deliver the medication in a timely manner consistent with my medical needs.'
+                : 'I have been stable on this specific regimen from my current pharmacy and disrupting this care poses a clinical risk.'
+            }
+
+Please review this appeal and allow me to access my medication at my pharmacy of choice.
+
+Sincerely,
+${patientName || "[Your Name]"}`;
+        } else if (letterType === "pap") {
+            text = `Date: ${date}
+
+Dear ${programName || "[Program Name]"} Team,
+
+I am writing to request reconsideration of my application for the Patient Assistance Program for ${medicationName || "[Medication Name]"}.
+
+I am a ${transplantType || "[Organ Type]"} transplant recipient and require this medication to prevent organ rejection. My current financial situation makes it difficult to afford the full cost of this medication.
+
+${hardshipDetails || "[Explain your specific circumstances: job loss, medical expenses, fixed income, etc.]"}
+
+I have attached updated documentation to support my application.
+
+Thank you for reconsidering my application. Please contact me if you need additional information.
+
+Sincerely,
+${patientName || "[Your Name]"}`;
+        } else if (letterType === "doctor") {
+            text = `Date: ${date}
+
+Dear Dr. ${doctorName || "[Doctor's Name]"},
+
+I am applying for Patient Assistance Programs to help cover the cost of my transplant medications. Several programs require a letter from my physician confirming my medical necessity.
+
+Could you please provide a letter on your letterhead stating:
+• My diagnosis and transplant date
+• The medications I require and why they are medically necessary
+• That these medications are essential to prevent organ rejection
+
+Programs I am applying to: ${programName || "[List programs]"}
+
+I have attached the application forms that require your signature. Please let me know if you need any additional information.
+
+Thank you for your support.
+
+Sincerely,
+${patientName || "[Your Name]"}`;
+        } else if (letterType === "hardship") {
+            text = `Date: ${date}
+
+To Whom It May Concern,
+
+I am writing to explain my current financial hardship and request assistance with my transplant medication costs.
+
+I received a ${transplantType || "[Organ Type]"} transplant${transplantDate ? ` on ${transplantDate}` : ""}. Since my transplant, I have faced significant financial challenges including:
+
+${hardshipDetails || "[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]"}
+
+Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
+
+I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
+
+Sincerely,
+${patientName || "[Your Name]"}`;
+        }
+
+        setGeneratedLetter(text);
+        setCopied(false);
+    };
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(generatedLetter);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     // Filter medications based on search term
     const filteredMedications = MEDICATIONS.filter(med =>
         med.genericName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -4023,7 +4130,7 @@ const ApplicationHelp = () => {
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="TEMPLATES" label="Templates" icon={FileText} /><TabButton id="RESOURCES" label="Resources" icon={ExternalLink} /></div></nav>
+            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="LETTERS" label="Letters" icon={FileText} /><TabButton id="RESOURCES" label="Resources" icon={ExternalLink} /></div></nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
@@ -4132,86 +4239,124 @@ const ApplicationHelp = () => {
                         </div>
                     </div>
                 )}
-                {activeTab === 'TEMPLATES' && (
-                    <div className="max-w-3xl mx-auto space-y-8">
+                {activeTab === 'LETTERS' && (
+                    <div className="max-w-4xl mx-auto space-y-8">
+                        {/* Letter Builder */}
+                        <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100" aria-labelledby="letter-builder">
+                            <div className="flex items-center gap-2 mb-4">
+                                <FileText className="text-indigo-600" size={24} aria-hidden="true" />
+                                <h2 id="letter-builder" className="text-xl font-bold text-indigo-900">Letter Builder</h2>
+                            </div>
+                            <p className="text-sm text-indigo-800 mb-6">Select a letter type, fill in your details, and generate a professional letter you can copy and use.</p>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <label htmlFor="letter-type" className="block text-sm font-bold text-slate-700 mb-2">Letter Type</label>
+                                    <select id="letter-type" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={letterType} onChange={(e) => { setLetterType(e.target.value); setGeneratedLetter(""); }}>
+                                        <option value="appeal">Insurance Appeal Letter</option>
+                                        <option value="pap">PAP Reconsideration Letter</option>
+                                        <option value="doctor">Request Doctor's Support</option>
+                                        <option value="hardship">Financial Hardship Statement</option>
+                                    </select>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label htmlFor="patient-name" className="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
+                                        <input id="patient-name" type="text" placeholder="Your full name" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="medication-name" className="block text-sm font-bold text-slate-700 mb-2">Medication Name</label>
+                                        <input id="medication-name" type="text" placeholder="e.g., Tacrolimus" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
+                                    </div>
+                                </div>
+
+                                {letterType === "appeal" && (
+                                    <div>
+                                        <label htmlFor="appeal-reason" className="block text-sm font-bold text-slate-700 mb-2">Reason for Appeal</label>
+                                        <select id="appeal-reason" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={appealReason} onChange={(e) => setAppealReason(e.target.value)}>
+                                            <option value="Financial Hardship">Financial Hardship</option>
+                                            <option value="Access Issues">Access Issues (Timing/Delivery)</option>
+                                            <option value="Clinical Stability">Clinical Stability (Already stable)</option>
+                                        </select>
+                                    </div>
+                                )}
+
+                                {(letterType === "pap" || letterType === "hardship") && (
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label htmlFor="transplant-type" className="block text-sm font-bold text-slate-700 mb-2">Transplant Type</label>
+                                            <input id="transplant-type" type="text" placeholder="e.g., Kidney, Liver, Heart" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantType} onChange={(e) => setTransplantType(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="transplant-date" className="block text-sm font-bold text-slate-700 mb-2">Transplant Date (optional)</label>
+                                            <input id="transplant-date" type="text" placeholder="e.g., January 2023" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantDate} onChange={(e) => setTransplantDate(e.target.value)} />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {letterType === "doctor" && (
+                                    <div>
+                                        <label htmlFor="doctor-name" className="block text-sm font-bold text-slate-700 mb-2">Doctor's Name</label>
+                                        <input id="doctor-name" type="text" placeholder="e.g., Smith" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
+                                    </div>
+                                )}
+
+                                {(letterType === "pap" || letterType === "doctor") && (
+                                    <div>
+                                        <label htmlFor="program-name" className="block text-sm font-bold text-slate-700 mb-2">Program Name(s)</label>
+                                        <input id="program-name" type="text" placeholder="e.g., Astellas Patient Assistance" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={programName} onChange={(e) => setProgramName(e.target.value)} />
+                                    </div>
+                                )}
+
+                                {(letterType === "pap" || letterType === "hardship") && (
+                                    <div>
+                                        <label htmlFor="hardship-details" className="block text-sm font-bold text-slate-700 mb-2">Describe Your Situation</label>
+                                        <textarea id="hardship-details" rows={3} placeholder="Briefly describe your financial circumstances..." className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={hardshipDetails} onChange={(e) => setHardshipDetails(e.target.value)} />
+                                    </div>
+                                )}
+
+                                <button onClick={generateLetter} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition flex items-center gap-2">
+                                    <FileText size={18} aria-hidden="true" />
+                                    Generate Letter
+                                </button>
+
+                                {generatedLetter && (
+                                    <div className="mt-6 bg-white p-6 rounded-xl border border-indigo-200 relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-sm font-bold text-slate-600 uppercase">Generated Letter:</h3>
+                                            <button onClick={copyToClipboard} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold transition">
+                                                {copied ? <Check size={16} className="text-green-600" aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+                                                {copied ? 'Copied!' : 'Copy Text'}
+                                            </button>
+                                        </div>
+                                        <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-indigo-200 pl-4">{generatedLetter}</pre>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+
+                        {/* Phone Scripts */}
                         <div>
                             <h2 className="text-2xl font-bold text-slate-900 mb-2">Phone Scripts</h2>
                             <p className="text-slate-600 mb-6">Use these scripts when calling manufacturers and foundations.</p>
                             <div className="space-y-4">
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><Phone size={18} aria-hidden="true" /> <span id="manufacturer-script">Calling Manufacturers</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p></div></section>
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script"><div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700"><HeartHandshake size={18} aria-hidden="true" /> <span id="foundation-script">Calling Foundations</span></div><div className="p-6 bg-white"><p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p></div></section>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Letter Templates</h2>
-                            <p className="text-slate-600 mb-6">Use these templates when writing to manufacturers, foundations, or your doctor.</p>
-                            <div className="space-y-4">
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="pap-letter">
-                                    <div className="bg-indigo-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-indigo-800"><FileText size={18} aria-hidden="true" /> <span id="pap-letter">Patient Assistance Program Appeal Letter</span></div>
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script">
+                                    <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700">
+                                        <Phone size={18} aria-hidden="true" />
+                                        <span id="manufacturer-script">Calling Manufacturers</span>
+                                    </div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear <span className="bg-yellow-100 px-1">[Program Name]</span> Team,
-
-I am writing to request reconsideration of my application for the Patient Assistance Program for <span className="bg-yellow-100 px-1">[medication name]</span>.
-
-I am a <span className="bg-yellow-100 px-1">[organ type]</span> transplant recipient and require this medication to prevent organ rejection. My current financial situation makes it difficult to afford the full cost of this medication.
-
-<span className="bg-yellow-100 px-1">[Explain your specific circumstances: job loss, medical expenses, fixed income, etc.]</span>
-
-I have attached updated documentation including <span className="bg-yellow-100 px-1">[list documents: tax return, pay stubs, bank statements, etc.]</span>.
-
-Thank you for reconsidering my application. Please contact me at <span className="bg-yellow-100 px-1">[phone number]</span> or <span className="bg-yellow-100 px-1">[email]</span> if you need additional information.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span></p>
+                                        <p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p>
                                     </div>
                                 </section>
-
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="doctor-letter">
-                                    <div className="bg-emerald-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-emerald-800"><FileText size={18} aria-hidden="true" /> <span id="doctor-letter">Letter Requesting Doctor's Support</span></div>
-                                    <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">Dear Dr. <span className="bg-yellow-100 px-1">[Doctor's Name]</span>,
-
-I am applying for Patient Assistance Programs to help cover the cost of my transplant medications. Several programs require a letter from my physician confirming my medical necessity.
-
-Could you please provide a letter on your letterhead stating:
-• My diagnosis and transplant date
-• The medications I require and why they are medically necessary
-• That these medications are essential to prevent organ rejection
-
-Programs I am applying to: <span className="bg-yellow-100 px-1">[list programs]</span>
-
-I have attached the application forms that require your signature. Please let me know if you need any additional information.
-
-Thank you for your support.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span>
-<span className="bg-yellow-100 px-1">[Date of Birth]</span>
-<span className="bg-yellow-100 px-1">[Phone Number]</span></p>
+                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script">
+                                    <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700">
+                                        <HeartHandshake size={18} aria-hidden="true" />
+                                        <span id="foundation-script">Calling Foundations</span>
                                     </div>
-                                </section>
-
-                                <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="hardship-letter">
-                                    <div className="bg-amber-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-amber-800"><FileText size={18} aria-hidden="true" /> <span id="hardship-letter">Financial Hardship Statement</span></div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-slate-800 leading-relaxed whitespace-pre-line text-sm">To Whom It May Concern,
-
-I am writing to explain my current financial hardship and request assistance with my transplant medication costs.
-
-I received a <span className="bg-yellow-100 px-1">[organ type]</span> transplant on <span className="bg-yellow-100 px-1">[date]</span>. Since my transplant, I have faced significant financial challenges including:
-
-<span className="bg-yellow-100 px-1">[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]</span>
-
-My monthly medication costs total approximately $<span className="bg-yellow-100 px-1">[amount]</span>, which represents <span className="bg-yellow-100 px-1">[percentage]</span>% of my monthly income.
-
-Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
-
-I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
-
-Sincerely,
-<span className="bg-yellow-100 px-1">[Your Name]</span>
-<span className="bg-yellow-100 px-1">[Date]</span></p>
+                                        <p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p>
                                     </div>
                                 </section>
                             </div>
