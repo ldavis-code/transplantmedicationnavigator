@@ -783,8 +783,6 @@ const Home = () => {
 
 // Contextual Help Component for Wizard
 const WizardHelp = ({ step, answers }) => {
-    const [showHelp, setShowHelp] = useState(false);
-
     const helpContent = {
         1: {
             title: "Choosing Your Role",
@@ -819,25 +817,28 @@ const WizardHelp = ({ step, answers }) => {
     const help = helpContent[step];
     if (!help) return null;
 
-    return (
-        <div className="mb-4">
-            <button
-                onClick={() => setShowHelp(!showHelp)}
-                className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 text-sm font-medium transition"
-            >
-                <HelpCircle size={18} />
-                {showHelp ? 'Hide Help' : 'Need help with this step?'}
-            </button>
+    // Parse markdown-style bold text
+    const parseContent = (text) => {
+        const parts = text.split(/(\*\*[^*]+\*\*)/g);
+        return parts.map((part, i) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={i}>{part.slice(2, -2)}</strong>;
+            }
+            return part;
+        });
+    };
 
-            {showHelp && (
-                <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4 animate-in slide-in-from-top-2">
-                    <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                        <Lightbulb size={18} className="text-blue-600" />
-                        {help.title}
-                    </h3>
-                    <p className="text-sm text-blue-800 whitespace-pre-wrap">{help.content}</p>
+    return (
+        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+                <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
+                    <Lightbulb size={20} className="text-blue-600" />
                 </div>
-            )}
+                <div>
+                    <h3 className="font-bold text-blue-900 mb-2">{help.title}</h3>
+                    <p className="text-sm text-blue-800 whitespace-pre-wrap leading-relaxed">{parseContent(help.content)}</p>
+                </div>
+            </div>
         </div>
     );
 };
@@ -997,12 +998,44 @@ const Wizard = () => {
     const handleNextFromSpecialty = () => setStep(7);
     const handleNextFromFinancial = () => setStep(8);
 
+    const stepLabels = ['Role', 'Status', 'Organ', 'Insurance', 'Medications'];
+    const totalVisibleSteps = 5; // Main 5 steps the user sees
+
     const renderProgress = () => (
-        <div className="w-full bg-slate-200 h-2 rounded-full mb-8 no-print" role="progressbar" aria-valuenow={(step / 8) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Step ${step} of 8`}>
-            <div 
-                className="bg-emerald-500 h-2 rounded-full transition-all duration-300" 
-                style={{ width: `${(step / 8) * 100}%` }}
-            ></div>
+        <div className="mb-8 no-print">
+            {/* Step indicators */}
+            <div className="flex justify-between items-center mb-3">
+                {stepLabels.map((label, index) => {
+                    const stepNum = index + 1;
+                    const isCompleted = step > stepNum;
+                    const isCurrent = step === stepNum;
+                    const isFuture = step < stepNum;
+
+                    return (
+                        <div key={label} className="flex flex-col items-center flex-1">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                                isCompleted ? 'bg-emerald-500 text-white' :
+                                isCurrent ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' :
+                                'bg-slate-200 text-slate-500'
+                            }`}>
+                                {isCompleted ? <CheckCircle size={16} /> : stepNum}
+                            </div>
+                            <span className={`text-xs mt-1 hidden sm:block ${
+                                isCurrent ? 'text-emerald-700 font-bold' :
+                                isCompleted ? 'text-emerald-600' :
+                                'text-slate-400'
+                            }`}>{label}</span>
+                        </div>
+                    );
+                })}
+            </div>
+            {/* Progress bar */}
+            <div className="w-full bg-slate-200 h-2 rounded-full" role="progressbar" aria-valuenow={(Math.min(step, totalVisibleSteps) / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Step ${Math.min(step, totalVisibleSteps)} of ${totalVisibleSteps}`}>
+                <div
+                    className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${(Math.min(step, totalVisibleSteps) / totalVisibleSteps) * 100}%` }}
+                ></div>
+            </div>
         </div>
     );
 
