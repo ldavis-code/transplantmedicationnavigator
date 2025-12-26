@@ -1466,10 +1466,18 @@ const Wizard = () => {
 
         return (
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
+                {/* Back Button */}
+                <button
+                    onClick={() => setStep(7)}
+                    className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
+                    aria-label="Go back to previous step"
+                >
+                    <ChevronLeft size={16} aria-hidden="true" /> Back
+                </button>
                 {/* Header */}
                 <div className={`p-8 rounded-2xl shadow-xl text-white flex justify-between items-start ${
-                    financial === FinancialStatus.CRISIS || financial === FinancialStatus.UNAFFORDABLE 
-                    ? 'bg-indigo-900' 
+                    financial === FinancialStatus.CRISIS || financial === FinancialStatus.UNAFFORDABLE
+                    ? 'bg-indigo-900'
                     : 'bg-emerald-900'
                 }`}>
                     <div>
@@ -1590,19 +1598,12 @@ const Wizard = () => {
                                 {answers.medications.length > 0 && (
                                     <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
-                                        className="w-full block text-center py-2 bg-white border border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-medium text-sm"
+                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
                                         aria-label="View price estimates for your selected medications"
                                     >
                                         View Price Estimates for These Meds
                                     </Link>
                                 )}
-                                <Link
-                                    to="/application-help"
-                                    className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                    aria-label="Find savings for your medications"
-                                >
-                                    Find My Savings
-                                </Link>
                             </div>
                         </section>
 
@@ -2079,7 +2080,7 @@ const MedicationSearch = () => {
             )}
 
             {hasItems && showSavings && (
-                <nav id="medication-tabs" className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
+                <nav id="medication-tabs" className="flex overflow-x-auto gap-1 pb-0 no-print bg-slate-100 p-1 rounded-lg" role="tablist" aria-label="Medication information tabs">
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
                         { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
@@ -2092,9 +2093,13 @@ const MedicationSearch = () => {
                             role="tab"
                             aria-selected={activeTab === tab.id}
                             aria-controls={`${tab.id}-panel`}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-t-lg font-bold text-base whitespace-nowrap transition min-h-[48px] ${activeTab === tab.id ? 'bg-emerald-700 text-white shadow-sm' : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700'}`}
+                            className={`flex items-center gap-2 px-4 py-3 rounded-lg font-bold text-sm whitespace-nowrap transition min-h-[48px] ${
+                                activeTab === tab.id
+                                    ? 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-500 ring-offset-1'
+                                    : 'bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200'
+                            }`}
                         >
-                            <tab.icon size={20} aria-hidden="true" /> {tab.label}
+                            <tab.icon size={18} aria-hidden="true" /> {tab.label}
                         </button>
                     ))}
                 </nav>
@@ -2547,7 +2552,7 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
                                 <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
                                 <p className="text-sm text-slate-700 mb-4">Check HealthWell, PAN Foundation, and PAF for copay assistance.</p>
-                                <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
+                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
                         </div>
                         {/* High-cost medication PAP recommendation */}
@@ -4443,7 +4448,7 @@ const ApplicationHelp = () => {
                                     <p className="text-indigo-600 font-medium text-sm">www.healthwellfoundation.org</p>
                                 </a>
 
-                                <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
+                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-teal-200 hover:border-teal-400 hover:shadow-lg transition">
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <h3 className="font-bold text-xl text-slate-900 group-hover:text-teal-700 mb-1">FundFinder</h3>
