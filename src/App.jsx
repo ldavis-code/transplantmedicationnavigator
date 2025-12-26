@@ -2066,6 +2066,19 @@ const MedicationSearch = () => {
             </section>
 
             {hasItems && showSavings && (
+                <div className="flex items-center justify-between mb-4 no-print">
+                    <button
+                        onClick={() => setShowSavings(false)}
+                        className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]"
+                        aria-label="Go back to medication list"
+                    >
+                        <ChevronLeft size={16} aria-hidden="true" /> Back to Medications
+                    </button>
+                    <h2 className="text-lg font-bold text-emerald-700">My Medication Savings</h2>
+                </div>
+            )}
+
+            {hasItems && showSavings && (
                 <nav id="medication-tabs" className="flex overflow-x-auto gap-2 pb-2 border-b border-slate-200 no-print" role="tablist" aria-label="Medication information tabs">
                     {[
                         { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
@@ -2131,7 +2144,7 @@ const MedicationSearch = () => {
                 )}
             </div>
 
-            {/* Get Application Help Button */}
+            {/* My Medication Savings Button */}
             {hasItems && !showSavings && (
                 <div className="flex justify-center no-print">
                     <button
@@ -2144,7 +2157,7 @@ const MedicationSearch = () => {
                         }}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2"
                     >
-                        Get Application Help
+                        My Medication Savings
                     </button>
                 </div>
             )}
