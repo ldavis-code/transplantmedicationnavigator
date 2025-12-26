@@ -1860,7 +1860,6 @@ const MedicationSearch = () => {
     const [searchResult, setSearchResult] = useState(null);
     const [myListIds, setMyListIds] = useState([]);
     const [myCustomMeds, setMyCustomMeds] = useState([]);
-    const [activeTab, setActiveTab] = useState('PRICE');
     const [linkCopied, setLinkCopied] = useState(false);
     const [priceReportRefresh, setPriceReportRefresh] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
@@ -2085,33 +2084,7 @@ const MedicationSearch = () => {
                 </div>
             )}
 
-            {hasItems && showSavings && (
-                <nav id="medication-tabs" className="flex overflow-x-auto gap-1 pb-0 no-print bg-slate-100 p-1 rounded-lg" role="tablist" aria-label="Medication information tabs">
-                    {[
-                        { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
-                        { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
-                        { id: 'OVERVIEW', label: 'Overview', icon: Info },
-                        { id: 'PRINT', label: 'Print Summary', icon: Printer },
-                    ].map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            role="tab"
-                            aria-selected={activeTab === tab.id}
-                            aria-controls={`${tab.id}-panel`}
-                            className={`flex items-center gap-2 px-4 py-3 rounded-lg font-bold text-sm whitespace-nowrap transition min-h-[48px] ${
-                                activeTab === tab.id
-                                    ? 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-500 ring-offset-1'
-                                    : 'bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200'
-                            }`}
-                        >
-                            <tab.icon size={18} aria-hidden="true" /> {tab.label}
-                        </button>
-                    ))}
-                </nav>
-            )}
-
-            <div className="space-y-6 pb-12" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+            <div className="space-y-6 pb-12">
                 {!hasItems ? (
                     <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                         <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
@@ -2146,7 +2119,7 @@ const MedicationSearch = () => {
                 ) : (
                     <>
                         {displayListInternal.map(med => (
-                            <MedicationCard key={med.id} med={med} activeTab={activeTab} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} />
+                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} />
                         ))}
                         {myCustomMeds.map((name, idx) => (
                             <ExternalMedCard key={`${name}-${idx}`} name={name} onRemove={() => removeCustomFromList(name)} />
@@ -2161,9 +2134,8 @@ const MedicationSearch = () => {
                     <button
                         onClick={() => {
                             setShowSavings(true);
-                            setActiveTab('PRICE');
                             setTimeout(() => {
-                                document.getElementById('medication-tabs')?.scrollIntoView({ behavior: 'smooth' });
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
                             }, 100);
                         }}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2"
@@ -2346,7 +2318,8 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
+const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
+    const [activeTab, setActiveTab] = useState('PRICE');
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
 
@@ -2432,7 +2405,32 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                 <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
             </header>
 
-            <div className="p-6">
+            {/* Per-card tab navigation */}
+            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={`Information tabs for ${med.brandName}`}>
+                {[
+                    { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
+                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
+                    { id: 'OVERVIEW', label: 'Overview', icon: Info },
+                    { id: 'PRINT', label: 'Print Summary', icon: Printer },
+                ].map(tab => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        role="tab"
+                        aria-selected={activeTab === tab.id}
+                        aria-controls={`${med.id}-${tab.id}-panel`}
+                        className={`flex items-center gap-1.5 px-3 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition ${
+                            activeTab === tab.id
+                                ? 'bg-emerald-700 text-white shadow-sm'
+                                : 'bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200'
+                        }`}
+                    >
+                        <tab.icon size={16} aria-hidden="true" /> {tab.label}
+                    </button>
+                ))}
+            </nav>
+
+            <div className="p-6" role="tabpanel" id={`${med.id}-${activeTab}-panel`}>
                 {activeTab === 'OVERVIEW' && (
                     <div className="space-y-6 fade-in">
                         <p className="text-slate-700 leading-relaxed">
@@ -2879,8 +2877,120 @@ const MedicationCard = ({ med, activeTab, onRemove, onPriceReportSubmit }) => {
                     </div>
                 )}
                 {activeTab === 'PRINT' && (
-                    <div className="fade-in">
-                        <p className="text-slate-900 text-base">{med.brandName}</p>
+                    <div className="fade-in space-y-4 print-friendly">
+                        {/* Medication Summary for Print */}
+                        <div className="border-b border-slate-200 pb-4">
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Medication Details</h3>
+                            <div className="grid grid-cols-2 gap-2 text-sm">
+                                <div><span className="text-slate-600">Brand Name:</span> <strong>{med.brandName}</strong></div>
+                                <div><span className="text-slate-600">Generic Name:</span> <strong>{med.genericName}</strong></div>
+                                <div><span className="text-slate-600">Category:</span> <strong>{med.category}</strong></div>
+                                <div><span className="text-slate-600">Manufacturer:</span> <strong>{med.manufacturer}</strong></div>
+                                <div><span className="text-slate-600">Organs:</span> <strong>{med.commonOrgans.join(', ')}</strong></div>
+                                <div><span className="text-slate-600">Stage:</span> <strong>{med.stage || 'N/A'}</strong></div>
+                            </div>
+                        </div>
+
+                        {/* Price Estimates Summary */}
+                        <div className="border-b border-slate-200 pb-4">
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Price Estimates</h3>
+                            <div className="space-y-1 text-sm">
+                                {(med.copayProgramId || med.copayUrl) && (
+                                    <div className="flex justify-between">
+                                        <span>Manufacturer Copay Card:</span>
+                                        <strong className="text-emerald-600">$0 - $10/month</strong>
+                                    </div>
+                                )}
+                                {med.papUrl && (
+                                    <div className="flex justify-between">
+                                        <span>Patient Assistance (PAP):</span>
+                                        <strong className="text-orange-600">FREE (if eligible)</strong>
+                                    </div>
+                                )}
+                                {isGoodRxAvailable && (
+                                    <div className="flex justify-between">
+                                        <span>GoodRx:</span>
+                                        <strong className="text-blue-600">{getPriceEstimate(med.id, med.category, 'goodrx')}</strong>
+                                    </div>
+                                )}
+                                {isSingleCareAvailable && (
+                                    <div className="flex justify-between">
+                                        <span>SingleCare:</span>
+                                        <strong className="text-blue-600">{getPriceEstimate(med.id, med.category, 'singlecare')}</strong>
+                                    </div>
+                                )}
+                                {isCostPlusAvailable && (
+                                    <div className="flex justify-between">
+                                        <span>Cost Plus Drugs:</span>
+                                        <strong className="text-slate-600">{getPriceEstimate(med.id, med.category, 'costplus')}</strong>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Assistance Programs Summary */}
+                        <div className="border-b border-slate-200 pb-4">
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Assistance Programs</h3>
+                            <div className="space-y-2 text-sm">
+                                {(med.copayProgramId || med.copayUrl) && (
+                                    <div className="p-2 bg-violet-50 rounded">
+                                        <strong className="text-violet-800">Copay Card Available</strong>
+                                        <p className="text-slate-600 text-xs">For commercial/employer insurance only. NOT for Medicare/Medicaid.</p>
+                                    </div>
+                                )}
+                                {med.papUrl && (
+                                    <div className="p-2 bg-emerald-50 rounded">
+                                        <strong className="text-emerald-800">Patient Assistance Program (PAP)</strong>
+                                        <p className="text-slate-600 text-xs">For Medicare, Medicaid, uninsured, or underinsured patients.</p>
+                                    </div>
+                                )}
+                                <div className="p-2 bg-sky-50 rounded">
+                                    <strong className="text-sky-800">Foundation Grants</strong>
+                                    <p className="text-slate-600 text-xs">Check PAN Foundation, HealthWell, and Patient Advocate Foundation.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action Items Checklist */}
+                        <div>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Action Checklist</h3>
+                            <ul className="space-y-1 text-sm">
+                                {(med.copayProgramId || med.copayUrl) && (
+                                    <li className="flex items-center gap-2">
+                                        <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
+                                        Apply for {med.manufacturer} Copay Card (if commercial insurance)
+                                    </li>
+                                )}
+                                {med.papUrl && (
+                                    <li className="flex items-center gap-2">
+                                        <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
+                                        Apply for {med.manufacturer} Patient Assistance Program
+                                    </li>
+                                )}
+                                <li className="flex items-center gap-2">
+                                    <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
+                                    Check foundation eligibility (PAN, HealthWell, PAF)
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
+                                    Compare prices on GoodRx and SingleCare
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
+                                    Ask transplant team about generic alternatives
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Print Button */}
+                        <div className="pt-4 no-print">
+                            <button
+                                onClick={() => window.print()}
+                                className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg flex items-center justify-center gap-2"
+                            >
+                                <Printer size={18} /> Print This Summary
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
