@@ -18,7 +18,10 @@ const headers = {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
-    'Cache-Control': 'public, max-age=300' // Cache for 5 minutes
+    // Aggressive caching: medications rarely change
+    // max-age: browser cache (1 hour), s-maxage: CDN cache (6 hours)
+    // stale-while-revalidate: serve stale content while fetching fresh (24 hours)
+    'Cache-Control': 'public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400'
 };
 
 // Transform database row to frontend format (snake_case to camelCase)
