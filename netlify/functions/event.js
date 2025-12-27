@@ -175,21 +175,31 @@ export async function handler(event) {
             }
         }
 
-        const db = getDb();
+        // Fire-and-forget: Start the DB write but don't await it
+        // This makes analytics non-blocking under high load
+        const writeEvent = async () => {
+            try {
+                const db = getDb();
+                await db`
+                    INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json)
+                    VALUES (
+                        ${event_name},
+                        ${sanitizedPartner},
+                        ${sanitizedPageSource},
+                        ${null},
+                        ${null},
+                        ${sanitizedMeta ? JSON.stringify(sanitizedMeta) : null}
+                    )
+                `;
+            } catch (err) {
+                // Log but don't fail - analytics should never block user experience
+                console.error('Analytics write failed:', err.message);
+            }
+        };
 
-        // Insert the event
-        // For front-end events without program context, program_type and program_id are null
-        await db`
-            INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json)
-            VALUES (
-                ${event_name},
-                ${sanitizedPartner},
-                ${sanitizedPageSource},
-                ${null},
-                ${null},
-                ${sanitizedMeta ? JSON.stringify(sanitizedMeta) : null}
-            )
-        `;
+        // Start the write without awaiting (fire-and-forget)
+        // Netlify functions will still complete the write before cold shutdown
+        writeEvent();
 
         return {
             statusCode: 200,
