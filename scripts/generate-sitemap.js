@@ -8,19 +8,20 @@ const __dirname = dirname(__filename);
 const SITE_URL = 'https://transplantmedicationnavigator.com';
 
 // Define all routes with their SEO metadata
+// Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), and confirmation pages
 const routes = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
     { path: '/wizard', changefreq: 'monthly', priority: 0.9 },
     { path: '/medications', changefreq: 'monthly', priority: 0.9 },
     { path: '/education', changefreq: 'monthly', priority: 0.8 },
     { path: '/application-help', changefreq: 'monthly', priority: 0.8 },
-    { path: '/for-transplant-programs', changefreq: 'monthly', priority: 0.8 },
-    { path: '/for-employers', changefreq: 'monthly', priority: 0.7 },
-    { path: '/for-payers', changefreq: 'monthly', priority: 0.7 },
     { path: '/pricing', changefreq: 'monthly', priority: 0.8 },
-    { path: '/pilot', changefreq: 'monthly', priority: 0.6 },
+    { path: '/my-medications', changefreq: 'monthly', priority: 0.8 },
+    { path: '/savings-tracker', changefreq: 'monthly', priority: 0.8 },
+    { path: '/subscribe', changefreq: 'monthly', priority: 0.8 },
     { path: '/faq', changefreq: 'monthly', priority: 0.7 },
     { path: '/survey', changefreq: 'monthly', priority: 0.7 },
+    { path: '/pilot', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/transplant', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/general', changefreq: 'monthly', priority: 0.6 },
 ];
