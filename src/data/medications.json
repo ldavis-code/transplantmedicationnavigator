@@ -530,7 +530,7 @@
     "commonOrgans": [
       "Liver"
     ],
-    "papUrl": "https://www.grifols.com/en/patient-support",
+    "papUrl": "https://www.grifolspatientcare.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -630,7 +630,7 @@
       "Pancreas",
       "Lung"
     ],
-    "papUrl": "https://www.creon.com/savings-support",
+    "papUrl": "https://www.creoninfo.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
@@ -828,7 +828,7 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.janssencarepath.com/",
+    "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 4,
@@ -862,7 +862,7 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.janssencarepath.com/",
+    "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -879,7 +879,7 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.adempas.com/savings-support",
+    "papUrl": "https://www.adempas-us.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -896,7 +896,7 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.janssencarepath.com/",
+    "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -946,7 +946,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.janssencarepath.com/",
+    "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": "Specialty",
@@ -962,7 +962,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.amgenfirststep.com/",
+    "papUrl": "https://www.amgensupportplus.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -978,7 +978,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.viforpharma.com/en/patient-support",
+    "papUrl": "https://www.cslvifor.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1088,7 +1088,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.amgenfirststep.com/",
+    "papUrl": "https://www.amgensupportplus.com/",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
@@ -1104,7 +1104,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.amgenfirststep.com/",
+    "papUrl": "https://www.amgensupportplus.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1120,7 +1120,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.auryxia.com/phosphate-binder/savings-support",
+    "papUrl": "https://www.akebiacares.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
@@ -1599,7 +1599,7 @@
       "Heart",
       "Kidney"
     ],
-    "papUrl": "https://www.janssencarepath.com/",
+    "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
@@ -2007,7 +2007,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "papUrl": "https://www.organonhelps.com/",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
@@ -2055,7 +2055,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "papUrl": "https://www.organonhelps.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
@@ -2286,7 +2286,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "papUrl": "https://www.organon.com/usa/patient-resources/",
+    "papUrl": "https://www.organonhelps.com/",
     "cost_tier": "low",
     "generic_available": true,
     "typical_copay_tier": 1,

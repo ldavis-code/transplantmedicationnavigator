@@ -27,12 +27,12 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Bayer (Adempas)
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('bayer-adempas-pap', 'pap', 'Adempas Savings & Support', 'https://www.adempas.com/savings-support', true)
+VALUES ('bayer-adempas-pap', 'pap', 'Adempas Aim Patient Support', 'https://www.adempas-us.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- Amgen
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('amgen-pap', 'pap', 'Amgen First Step', 'https://www.amgenfirststep.com/', true)
+VALUES ('amgen-pap', 'pap', 'Amgen SupportPlus', 'https://www.amgensupportplus.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- Astellas (Prograf, Astagraf XL)
@@ -42,7 +42,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Akebia (Auryxia)
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('akebia-auryxia-pap', 'pap', 'Auryxia Savings & Support', 'https://www.auryxia.com/phosphate-binder/savings-support', true)
+VALUES ('akebia-auryxia-pap', 'pap', 'AkebiaCares', 'https://www.akebiacares.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- AstraZeneca
@@ -67,7 +67,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- AbbVie (Creon)
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('abbvie-creon-pap', 'pap', 'Creon Savings & Support', 'https://www.creon.com/savings-support', true)
+VALUES ('abbvie-creon-pap', 'pap', 'CREON Complete', 'https://www.creoninfo.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- DSI (Dermatology)
@@ -102,7 +102,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Grifols
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('grifols-pap', 'pap', 'Grifols Patient Support', 'https://www.grifols.com/en/patient-support', true)
+VALUES ('grifols-pap', 'pap', 'Grifols Patient Care Programs', 'https://www.grifolspatientcare.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- GSK
@@ -112,7 +112,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Janssen (J&J)
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('janssen-pap', 'pap', 'Janssen CarePath', 'https://www.janssencarepath.com/', true)
+VALUES ('janssen-pap', 'pap', 'J&J withMe', 'https://www.jnjwithme.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- Eli Lilly
@@ -137,7 +137,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Organon
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('organon-pap', 'pap', 'Organon Patient Resources', 'https://www.organon.com/usa/patient-resources/', true)
+VALUES ('organon-pap', 'pap', 'Organon Helps', 'https://www.organonhelps.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- Pfizer (Rapamune, ATGAM, Solu-Medrol)
@@ -172,7 +172,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Vifor Pharma
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('vifor-pap', 'pap', 'Vifor Pharma Patient Support', 'https://www.viforpharma.com/en/patient-support', true)
+VALUES ('vifor-pap', 'pap', 'CSL Vifor Patient Support', 'https://www.cslvifor.com/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- ============================================
@@ -210,7 +210,7 @@ ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, nam
 
 -- Patient Services Inc (PSI)
 INSERT INTO programs (program_id, program_type, name, official_url, active)
-VALUES ('psi-general', 'foundation', 'Patient Services Incorporated', 'https://www.patientservicesinc.org', true)
+VALUES ('psi-general', 'foundation', 'Accessia Health', 'https://www.accessiahealth.org/', true)
 ON CONFLICT (program_id) DO UPDATE SET official_url = EXCLUDED.official_url, name = EXCLUDED.name;
 
 -- NORD (National Organization for Rare Disorders)
