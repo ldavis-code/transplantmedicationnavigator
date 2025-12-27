@@ -15,6 +15,7 @@ export const seoMetadata = {
     ogDescription: 'Helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants. Free educational resources.',
     twitterTitle: 'Transplant Medication Navigator™',
     twitterDescription: 'Find free medication assistance programs for transplant patients. Search PAPs, copay foundations, and get help paying for immunosuppressants.',
+    breadcrumbName: 'Home',
   },
 
   wizard: {
@@ -25,6 +26,7 @@ export const seoMetadata = {
     ogDescription: 'Answer a few questions to get personalized recommendations for Patient Assistance Programs and copay support tailored to your transplant journey.',
     twitterTitle: 'Personalized Medication Assistance Quiz',
     twitterDescription: 'Take our free quiz to discover the best medication assistance programs for your transplant needs. Get tailored recommendations in minutes.',
+    breadcrumbName: 'My Path Quiz',
   },
 
   medications: {
@@ -35,6 +37,7 @@ export const seoMetadata = {
     ogDescription: 'Comprehensive database of transplant medications with pricing, manufacturer PAPs, and copay foundation eligibility. Find help paying for your medications.',
     twitterTitle: 'Search Transplant Medications',
     twitterDescription: 'Search transplant medications, compare prices, and find Patient Assistance Programs. Get help paying for tacrolimus, mycophenolate, and more.',
+    breadcrumbName: 'Medications',
   },
 
   education: {
@@ -45,6 +48,7 @@ export const seoMetadata = {
     ogDescription: 'Comprehensive guides on insurance, Medicare, Medicaid, copay foundations, specialty pharmacies, and financial assistance for transplant medications.',
     twitterTitle: 'Transplant Medication Resources',
     twitterDescription: 'Learn about insurance, copay foundations, specialty pharmacies, and medication assistance options for transplant patients.',
+    breadcrumbName: 'Resources & Education',
   },
 
   applicationHelp: {
@@ -55,6 +59,7 @@ export const seoMetadata = {
     ogDescription: 'Complete guide to applying for medication assistance. Get templates, checklists, and step-by-step instructions for Patient Assistance Program applications.',
     twitterTitle: 'Patient Assistance Program Grants & Foundations',
     twitterDescription: 'Step-by-step guide to applying for Patient Assistance Programs. Learn what documents you need and how to get approval faster.',
+    breadcrumbName: 'Grants & Foundations',
   },
 
   faq: {
@@ -65,6 +70,7 @@ export const seoMetadata = {
     ogDescription: 'Get answers to common questions about medication assistance, Patient Assistance Programs, copay support, and financial help for transplant patients.',
     twitterTitle: 'Medication Assistance FAQs',
     twitterDescription: 'Answers to common questions about Patient Assistance Programs, copay foundations, and financial help for transplant patients.',
+    breadcrumbName: 'FAQ',
   },
 
   notFound: {
@@ -75,6 +81,7 @@ export const seoMetadata = {
     ogDescription: 'This page could not be found. Visit Transplant Medication Navigator™ to find medication assistance programs for transplant patients.',
     twitterTitle: 'Page Not Found',
     twitterDescription: 'This page could not be found. Visit our homepage to find medication assistance programs for transplant patients.',
+    breadcrumbName: 'Page Not Found',
   },
 
   forTransplantPrograms: {
@@ -85,6 +92,7 @@ export const seoMetadata = {
     ogDescription: 'Partner with Transplant Medication Navigator to help your patients find medication assistance programs. Privacy-safe, no PHI collected.',
     twitterTitle: 'For Transplant Programs',
     twitterDescription: 'Help your transplant patients navigate medication costs with free educational resources and verified assistance programs.',
+    breadcrumbName: 'For Transplant Programs',
   },
 
   forEmployers: {
@@ -95,6 +103,7 @@ export const seoMetadata = {
     ogDescription: 'Help transplant employees find medication assistance programs. Complement existing pharmacy benefits with free educational resources.',
     twitterTitle: 'For Employers',
     twitterDescription: 'Reduce specialty drug costs for transplant employees with our medication assistance resource and free educational content.',
+    breadcrumbName: 'For Employers',
   },
 
   forPayers: {
@@ -105,6 +114,7 @@ export const seoMetadata = {
     ogDescription: 'Help members find manufacturer copay assistance and PAPs for transplant medications. Privacy-safe engagement tracking.',
     twitterTitle: 'For Payers',
     twitterDescription: 'Help members access manufacturer assistance programs for transplant medications.',
+    breadcrumbName: 'For Payers',
   },
 
   pricing: {
@@ -115,6 +125,7 @@ export const seoMetadata = {
     ogDescription: 'Free educational resources for all. Subscription and partnership options for patients and healthcare organizations.',
     twitterTitle: 'Pricing',
     twitterDescription: 'Free access to education, partnership options for organizations. View our transparent pricing.',
+    breadcrumbName: 'Pricing & Partners',
   },
 
   pilot: {
@@ -125,6 +136,7 @@ export const seoMetadata = {
     ogDescription: 'Your healthcare provider has partnered with us to help you find medication assistance programs for transplant medications.',
     twitterTitle: 'Partner Pilot Program',
     twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
+    breadcrumbName: 'Pilot Program',
   },
 };
 

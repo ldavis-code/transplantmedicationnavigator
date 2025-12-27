@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+const BASE_URL = 'https://transplantmedicationnavigator.com';
+
 /**
  * Custom hook for managing dynamic meta tags for SEO
  * @param {Object} config - Meta tag configuration
@@ -13,6 +15,7 @@ import { useEffect } from 'react';
  * @param {string} [config.twitterTitle] - Twitter card title (defaults to title)
  * @param {string} [config.twitterDescription] - Twitter card description (defaults to description)
  * @param {string} [config.twitterImage] - Twitter card image URL
+ * @param {string} [config.breadcrumbName] - Name for breadcrumb (if different from title)
  */
 export function useMetaTags(config) {
   useEffect(() => {
@@ -27,6 +30,7 @@ export function useMetaTags(config) {
       twitterTitle,
       twitterDescription,
       twitterImage = '/twitter-image.png',
+      breadcrumbName,
     } = config;
 
     // Update document title
@@ -84,9 +88,48 @@ export function useMetaTags(config) {
     updateMetaTag('meta[name="twitter:description"]', 'content', twitterDescription || description);
     updateMetaTag('meta[name="twitter:image"]', 'content', twitterImage);
 
-    // Cleanup function - restore default values
+    // Add BreadcrumbList structured data for non-home pages
+    const existingBreadcrumb = document.querySelector('script[data-breadcrumb="true"]');
+    if (existingBreadcrumb) {
+      existingBreadcrumb.remove();
+    }
+
+    // Only add breadcrumb for non-home pages
+    if (canonical && canonical !== `${BASE_URL}/`) {
+      const pageName = breadcrumbName || title?.split(' | ')[0] || 'Page';
+      const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': `${BASE_URL}/`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': pageName,
+            'item': canonical
+          }
+        ]
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-breadcrumb', 'true');
+      script.textContent = JSON.stringify(breadcrumbSchema);
+      document.head.appendChild(script);
+    }
+
+    // Cleanup function - restore default values and remove breadcrumb
     return () => {
       document.title = 'Transplant Medication Navigator - Medication Assistance Guide for Transplant Patients';
+      const breadcrumbScript = document.querySelector('script[data-breadcrumb="true"]');
+      if (breadcrumbScript) {
+        breadcrumbScript.remove();
+      }
     };
   }, [config]);
 }
