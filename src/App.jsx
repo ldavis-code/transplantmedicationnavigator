@@ -3340,16 +3340,6 @@ const Education = () => {
                             <p className="text-lg text-slate-700">Most transplant patients have to mix and match different types of coverage to afford their medication. It is like a puzzle.</p>
                         </div>
                         <div className="grid md:grid-cols-2 gap-6">
-                             <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-                                 <div className="flex items-center gap-2 mb-3">
-                                    <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">New for 2025</span>
-                                    <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
-                                 </div>
-                                 <p className="text-sm text-indigo-900 mb-4 font-medium">A major change from the Inflation Reduction Act</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting in 2025, Medicare Part D enrollees can choose this option to spread out their prescription drug costs over the course of the year instead of paying large amounts up front (like when hitting the donut hole/coverage gap).</p>
-                                 <p className="text-slate-700 text-sm mb-4">This "smoothing" program helps make your out-of-pocket costs more predictable and manageable.</p>
-                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about enrolling in the Medicare Prescription Payment Plan during open enrollment.</p>
-                             </section>
                              <section className="bg-purple-50 p-6 rounded-xl border border-purple-100">
                                  <div className="flex items-center gap-2 mb-3">
                                     <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Effective January 2026</span>
@@ -3369,6 +3359,15 @@ const Education = () => {
                                  <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will begin covering certain GLP-1 receptor agonists for weight loss—reversing a long-standing policy that excluded anti-obesity medications from Part D coverage.</p>
                                  <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy (semaglutide) and Zepbound (tirzepatide) will be covered for patients with obesity-related health conditions. Expected copay is approximately <strong>$50/month</strong> after deductible is met.</p>
                                  <p className="text-slate-700 text-sm italic">This follows agreements with manufacturers Eli Lilly and Novo Nordisk to provide these drugs at reduced prices for Medicare beneficiaries.</p>
+                             </section>
+                             <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                                 <div className="flex items-center gap-2 mb-3">
+                                    <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
+                                 </div>
+                                 <p className="text-sm text-indigo-900 mb-4 font-medium">A major change from the Inflation Reduction Act</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting in 2025, Medicare Part D enrollees can choose this option to spread out their prescription drug costs over the course of the year instead of paying large amounts up front (like when hitting the donut hole/coverage gap).</p>
+                                 <p className="text-slate-700 text-sm mb-4">This "smoothing" program helps make your out-of-pocket costs more predictable and manageable.</p>
+                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about enrolling in the Medicare Prescription Payment Plan during open enrollment.</p>
                              </section>
                         </div>
 
