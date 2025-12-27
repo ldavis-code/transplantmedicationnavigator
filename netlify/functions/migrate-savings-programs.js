@@ -1462,7 +1462,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: false,
     income_limit: 'None',
     max_benefit: 'Pay $0 copay',
-    application_url: 'https://www.janssencarepath.com/',
+    application_url: 'https://www.jnjwithme.com/',
     phone: '1-800-652-6227',
     state_restrictions: 'NOT valid in CA or MA',
     notes: 'For anemia. Injection medication.',
@@ -1480,7 +1480,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: false,
     income_limit: '500% FPL',
     max_benefit: 'Free medication',
-    application_url: 'https://www.janssencarepath.com/',
+    application_url: 'https://www.jnjwithme.com/',
     phone: '1-800-652-6227',
     notes: 'For uninsured patients.',
     is_active: true

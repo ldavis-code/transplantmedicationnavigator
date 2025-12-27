@@ -80,7 +80,7 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 ('baraclude', 'Baraclude', 'Entecavir', '404879', 'Hepatitis B', 'Bristol Myers Squibb', 'Both (Pre & Post)', ARRAY['Liver'], 'https://www.bmsaccesssupport.bmscustomerconnect.com/'),
 ('vemlidy', 'Vemlidy', 'Tenofovir Alafenamide', NULL, 'Hepatitis B', 'Gilead', 'Both (Pre & Post)', ARRAY['Liver','Kidney'], 'https://www.gileadadvancingaccess.com/'),
 ('viread', 'Viread', 'Tenofovir Disoproxil', '318473', 'Hepatitis B', 'Gilead', 'Both (Pre & Post)', ARRAY['Liver','Kidney'], 'https://www.gileadadvancingaccess.com/'),
-('hbig', 'HepaGam B / HyperHEP B', 'Hepatitis B Immune Globulin', NULL, 'Hepatitis B', 'Saol / Grifols', 'Both (Pre & Post)', ARRAY['Liver'], 'https://www.grifols.com/en/patient-support'),
+('hbig', 'HepaGam B / HyperHEP B', 'Hepatitis B Immune Globulin', NULL, 'Hepatitis B', 'Saol / Grifols', 'Both (Pre & Post)', ARRAY['Liver'], 'https://www.grifolspatientcare.com/'),
 
 -- Hepatitis C
 ('epclusa', 'Epclusa', 'Sofosbuvir/Velpatasvir', '1716964', 'Hepatitis C', 'Gilead', 'Both (Pre & Post)', ARRAY['Liver','Kidney'], 'https://www.gileadadvancingaccess.com/'),
@@ -92,7 +92,7 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 ('ursodiol', 'Urso / Actigall', 'Ursodiol', '10904', 'Liver Support', 'Generic', 'Both (Pre & Post)', ARRAY['Liver'], NULL),
 
 -- Enzymes
-('creon', 'Creon / Zenpep', 'Pancrelipase', NULL, 'Enzymes', 'AbbVie / Nestle', 'Both (Pre & Post)', ARRAY['Pancreas','Lung'], 'https://www.creon.com/savings-support'),
+('creon', 'Creon / Zenpep', 'Pancrelipase', NULL, 'Enzymes', 'AbbVie / Nestle', 'Both (Pre & Post)', ARRAY['Pancreas','Lung'], 'https://www.creoninfo.com/'),
 
 -- Heart Support
 ('entresto', 'Entresto', 'Sacubitril/Valsartan', NULL, 'Heart Failure', 'Novartis', 'Pre-transplant', ARRAY['Heart'], 'https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance'),
@@ -125,18 +125,18 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 
 -- Pulmonary Hypertension
 ('revatio', 'Revatio / Viagra', 'Sildenafil', NULL, 'Pulmonary Hypertension', 'Pfizer', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.pfizerrxpathways.com/'),
-('tracleer', 'Tracleer', 'Bosentan', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.janssencarepath.com/'),
+('tracleer', 'Tracleer', 'Bosentan', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.jnjwithme.com/'),
 ('letairis', 'Letairis', 'Ambrisentan', NULL, 'Pulmonary Hypertension', 'Gilead', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.gileadadvancingaccess.com/'),
-('opsumit', 'Opsumit', 'Macitentan', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.janssencarepath.com/'),
-('adempas', 'Adempas', 'Riociguat', NULL, 'Pulmonary Hypertension', 'Bayer', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.adempas.com/savings-support'),
-('uptravi', 'Uptravi', 'Selexipag', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.janssencarepath.com/'),
+('opsumit', 'Opsumit', 'Macitentan', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.jnjwithme.com/'),
+('adempas', 'Adempas', 'Riociguat', NULL, 'Pulmonary Hypertension', 'Bayer', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.adempas-us.com/'),
+('uptravi', 'Uptravi', 'Selexipag', NULL, 'Pulmonary Hypertension', 'Actelion/Janssen', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.jnjwithme.com/'),
 ('flolan', 'Flolan', 'Epoprostenol', NULL, 'Pulmonary Hypertension', 'GlaxoSmithKline', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://www.gskforyou.com/'),
 ('remodulin', 'Remodulin', 'Treprostinil', NULL, 'Pulmonary Hypertension', 'United Therapeutics', 'Pre-transplant', ARRAY['Lung','Heart'], 'https://unitedtherapeuticscares.com/'),
 
 -- Anemia (ESRD)
-('procrit', 'Procrit / Epogen', 'Epoetin Alfa', NULL, 'Anemia (ESRD)', 'Janssen / Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.janssencarepath.com/'),
-('aranesp', 'Aranesp', 'Darbepoetin Alfa', NULL, 'Anemia (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgenfirststep.com/'),
-('mircera', 'Mircera', 'Methoxy Polyethylene Glycol-Epoetin Beta', NULL, 'Anemia (ESRD)', 'Vifor Pharma', 'Pre-transplant', ARRAY['Kidney'], 'https://www.viforpharma.com/en/patient-support'),
+('procrit', 'Procrit / Epogen', 'Epoetin Alfa', NULL, 'Anemia (ESRD)', 'Janssen / Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.jnjwithme.com/'),
+('aranesp', 'Aranesp', 'Darbepoetin Alfa', NULL, 'Anemia (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgensupportplus.com/'),
+('mircera', 'Mircera', 'Methoxy Polyethylene Glycol-Epoetin Beta', NULL, 'Anemia (ESRD)', 'Vifor Pharma', 'Pre-transplant', ARRAY['Kidney'], 'https://www.cslvifor.com/'),
 
 -- Iron Supplements (ESRD)
 ('venofer', 'Venofer', 'Iron Sucrose', NULL, 'Iron Supplement (ESRD)', 'American Regent', 'Pre-transplant', ARRAY['Kidney'], 'https://www.venofer.com/venaccess'),
@@ -149,11 +149,11 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 ('hectorol', 'Hectorol', 'Doxercalciferol', NULL, 'Vitamin D (ESRD)', 'Sanofi', 'Pre-transplant', ARRAY['Kidney'], 'https://www.sanofipatientconnection.com/'),
 
 -- Hyperparathyroidism (ESRD)
-('sensipar', 'Sensipar', 'Cinacalcet', NULL, 'Hyperparathyroidism (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgenfirststep.com/'),
-('parsabiv', 'Parsabiv', 'Etelcalcetide', NULL, 'Hyperparathyroidism (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgenfirststep.com/'),
+('sensipar', 'Sensipar', 'Cinacalcet', NULL, 'Hyperparathyroidism (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgensupportplus.com/'),
+('parsabiv', 'Parsabiv', 'Etelcalcetide', NULL, 'Hyperparathyroidism (ESRD)', 'Amgen', 'Pre-transplant', ARRAY['Kidney'], 'https://www.amgensupportplus.com/'),
 
 -- Phosphate Binders (ESRD)
-('auryxia', 'Auryxia', 'Ferric Citrate', NULL, 'Phosphate Binder (ESRD)', 'Akebia', 'Pre-transplant', ARRAY['Kidney'], 'https://www.auryxia.com/phosphate-binder/savings-support'),
+('auryxia', 'Auryxia', 'Ferric Citrate', NULL, 'Phosphate Binder (ESRD)', 'Akebia', 'Pre-transplant', ARRAY['Kidney'], 'https://www.akebiacares.com/'),
 ('phoslo', 'PhosLo', 'Calcium Acetate', NULL, 'Phosphate Binder (ESRD)', 'Generic', 'Pre-transplant', ARRAY['Kidney'], NULL),
 
 -- Acute Rejection
@@ -195,7 +195,7 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 -- Anticoagulants
 ('warfarin', 'Coumadin', 'Warfarin', NULL, 'Anticoagulant', 'Generic', 'Both (Pre & Post)', ARRAY['Heart','Lung','Liver'], NULL),
 ('apixaban', 'Eliquis', 'Apixaban', NULL, 'Anticoagulant', 'Bristol Myers Squibb', 'Both (Pre & Post)', ARRAY['Heart','Kidney'], 'https://www.bmsaccesssupport.bmscustomerconnect.com/'),
-('rivaroxaban', 'Xarelto', 'Rivaroxaban', NULL, 'Anticoagulant', 'Janssen', 'Both (Pre & Post)', ARRAY['Heart','Kidney'], 'https://www.janssencarepath.com/'),
+('rivaroxaban', 'Xarelto', 'Rivaroxaban', NULL, 'Anticoagulant', 'Janssen', 'Both (Pre & Post)', ARRAY['Heart','Kidney'], 'https://www.jnjwithme.com/'),
 
 -- Cardiac Glycoside
 ('digoxin', 'Lanoxin', 'Digoxin', NULL, 'Cardiac Glycoside', 'Generic', 'Both (Pre & Post)', ARRAY['Heart'], NULL),
@@ -231,13 +231,13 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 ('budesonide-formoterol', 'Symbicort', 'Budesonide/Formoterol', NULL, 'Respiratory', 'AstraZeneca', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.azandmeapp.com/'),
 ('montelukast', 'Singulair', 'Montelukast', NULL, 'Respiratory', 'Generic', 'Both (Pre & Post)', ARRAY['Lung'], NULL),
 ('fluticasone-vilanterol', 'Breo Ellipta', 'Fluticasone/Vilanterol', NULL, 'Respiratory', 'GlaxoSmithKline', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.gskforyou.com/'),
-('mometasone-formoterol', 'Dulera', 'Mometasone/Formoterol', NULL, 'Respiratory', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organon.com/usa/patient-resources/'),
+('mometasone-formoterol', 'Dulera', 'Mometasone/Formoterol', NULL, 'Respiratory', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organonhelps.com/'),
 
 -- Inhaled Corticosteroids
 ('fluticasone', 'Flovent', 'Fluticasone', NULL, 'Inhaled Corticosteroid', 'GlaxoSmithKline', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.gskforyou.com/'),
 ('budesonide-inhaled', 'Pulmicort', 'Budesonide', NULL, 'Inhaled Corticosteroid', 'AstraZeneca', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.azandmeapp.com/'),
 ('beclomethasone', 'QVAR', 'Beclomethasone', NULL, 'Inhaled Corticosteroid', 'Teva', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.tevausa.com/patient-resources/'),
-('mometasone-inhaled', 'Asmanex', 'Mometasone', NULL, 'Inhaled Corticosteroid', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organon.com/usa/patient-resources/'),
+('mometasone-inhaled', 'Asmanex', 'Mometasone', NULL, 'Inhaled Corticosteroid', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organonhelps.com/'),
 ('ciclesonide', 'Alvesco', 'Ciclesonide', NULL, 'Inhaled Corticosteroid', 'Sunovion', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.sunovion.com/patient-support'),
 
 -- Asthma Biologics
@@ -260,7 +260,7 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 
 -- Nasal Corticosteroids
 ('fluticasone-nasal', 'Flonase', 'Fluticasone Nasal', NULL, 'Nasal Corticosteroid', 'GlaxoSmithKline', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.gskforyou.com/'),
-('mometasone-nasal', 'Nasonex', 'Mometasone Nasal', NULL, 'Nasal Corticosteroid', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organon.com/usa/patient-resources/'),
+('mometasone-nasal', 'Nasonex', 'Mometasone Nasal', NULL, 'Nasal Corticosteroid', 'Organon', 'Both (Pre & Post)', ARRAY['Lung'], 'https://www.organonhelps.com/'),
 ('triamcinolone-nasal', 'Nasacort', 'Triamcinolone Nasal', NULL, 'Nasal Corticosteroid', 'Generic', 'Both (Pre & Post)', ARRAY['Lung'], NULL),
 
 -- Nasal Antihistamines

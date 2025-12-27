@@ -96,7 +96,7 @@ INSERT INTO savings_programs (program_name, program_type, commercial_eligible, m
 ('NORD RareCare', 'foundation', true, true, false, true, false, false, 'Varies', 'Varies by program', 'https://rarediseases.org/patients-and-families/help-access-medications/', '1-800-999-6673', 'For rare disease patients'),
 
 -- Patient Services Inc (PSI)
-('Patient Services Inc (PSI)', 'foundation', true, true, false, false, false, false, '500% FPL', 'Varies by fund', 'https://www.patientservicesinc.org/', '1-800-366-7741', 'Multiple disease-specific funds available')
+('Patient Services Inc (PSI)', 'foundation', true, true, false, false, false, false, '500% FPL', 'Varies by fund', 'https://www.accessiahealth.org/', '1-800-366-7741', 'Multiple disease-specific funds available')
 
 ON CONFLICT DO NOTHING;
 
@@ -158,7 +158,7 @@ INSERT INTO savings_programs (program_name, program_type, medication_id, manufac
 ('Eliquis Savings Card', 'copay_card', 'apixaban', 'Bristol Myers Squibb', true, false, false, false, false, false, 'none', 'Pay as little as $10', 'https://www.eliquis.bmscustomerconnect.com/afib/eliquis-free-trial-and-savings', '1-855-354-7847', 'Commercial insurance only'),
 
 -- Xarelto (Janssen)
-('Xarelto Savings Program', 'copay_card', 'rivaroxaban', 'Janssen', true, false, false, false, false, false, 'none', 'Pay as little as $10', 'https://www.janssencarepath.com/patient/xarelto/cost-support', '1-800-526-7736', 'Commercial insurance only')
+('Xarelto Savings Program', 'copay_card', 'rivaroxaban', 'Janssen', true, false, false, false, false, false, 'none', 'Pay as little as $10', 'https://www.jnjwithme.com/', '1-800-526-7736', 'Commercial insurance only')
 
 ON CONFLICT DO NOTHING;
 
