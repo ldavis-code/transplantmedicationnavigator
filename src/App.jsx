@@ -625,7 +625,7 @@ const Home = () => {
                     <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <Search size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Resources & Directory</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">Resources & Education</h2>
                     <p className="text-slate-600 mb-4">
                         Direct, safe links to manufacturer programs, foundations, and government sites. No scams.
                     </p>
@@ -3325,11 +3325,11 @@ const Education = () => {
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
                 <div className="flex min-w-max">
                     <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
-                    <TabButton id="OOP" label="Out-of-Pocket" icon={DollarSign} />
-                    <TabButton id="INSURANCE" label="Insurance(s)" icon={Shield} />
-                    <TabButton id="SPECIALTY" label="Specialty Pharmacy" icon={Stethoscope} />
-                    <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
+                    <TabButton id="INSURANCE" label="Insurance(s)" icon={Shield} />
+                    <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
+                    <TabButton id="OOP" label="Out-of-Pocket" icon={DollarSign} />
+                    <TabButton id="SPECIALTY" label="Specialty Pharmacy" icon={Stethoscope} />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
