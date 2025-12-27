@@ -440,7 +440,7 @@ const Layout = ({ children }) => {
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
                     <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    Official assistance programs NEVER ask for payment. If a site asks for money, leave immediately.
+                    Patient Assistance Programs provide FREE medication—never pay to apply. We help you find them.
                 </span>
             </div>
 

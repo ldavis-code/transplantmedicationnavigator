@@ -8,11 +8,15 @@
       },
       {
         "q": "Is this site free to use?",
-        "a": "Our educational resources are always free! We offer a Free plan with basic access and educational content, plus Pro subscriptions for additional features. We never ask for personal financial information. All official assistance programs we link to are also free—if any site asks you for money, leave immediately."
+        "a": "Our core features—finding assistance programs, educational content, and the My Path quiz—are always free. Pro subscriptions ($8.99/month or $79.99/year) add convenience features like saving medications and unlimited searches. We're a navigation tool, not a Patient Assistance Program. The PAPs and foundations we link to provide FREE medication or financial help—never pay to apply for assistance. If a site claims to be a PAP but charges fees, it's a scam."
       },
       {
         "q": "Who should use this site?",
         "a": "This site is designed for transplant patients, care partners, family members, social workers, and transplant coordinators who need help navigating medication costs and finding financial assistance."
+      },
+      {
+        "q": "If assistance programs are free, why does this site have a subscription?",
+        "a": "Great question! Patient Assistance Programs (PAPs) and foundations provide FREE medication and financial help—you should never pay to apply for them. TransplantMedicationNavigator.com is a separate service: we're a navigation tool that helps you FIND and understand these free programs. Our Free plan gives you access to program links and educational resources. Pro subscriptions support the site and add convenience features like saving your medication list and unlimited searches. Think of it like a map app—the destinations are free, but the tool that helps you find them has optional premium features."
       },
       {
         "q": "Is my information kept private?",
