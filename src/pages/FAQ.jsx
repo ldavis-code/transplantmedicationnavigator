@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Info, ChevronDown } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
@@ -9,6 +9,40 @@ const FAQ = () => {
     useMetaTags(seoMetadata.faq);
 
     const [openIndex, setOpenIndex] = useState(null);
+
+    // Add FAQPage structured data for AI discoverability
+    useEffect(() => {
+        // Flatten all FAQs for schema
+        const allFaqs = FAQS_DATA.flatMap(section =>
+            section.questions.map(faq => ({
+                '@type': 'Question',
+                'name': faq.q,
+                'acceptedAnswer': {
+                    '@type': 'Answer',
+                    'text': faq.a
+                }
+            }))
+        );
+
+        const faqSchema = {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            'mainEntity': allFaqs
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-faq-schema', 'true');
+        script.textContent = JSON.stringify(faqSchema);
+        document.head.appendChild(script);
+
+        return () => {
+            const existingScript = document.querySelector('script[data-faq-schema="true"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+        };
+    }, []);
 
     const toggleQuestion = (index) => {
         setOpenIndex(openIndex === index ? null : index);
