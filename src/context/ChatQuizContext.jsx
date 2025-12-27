@@ -2,9 +2,19 @@
  * Chat Quiz Context
  * Shared state management for integrated chat and quiz functionality
  * Enables seamless switching between chat and quiz modes with progress persistence
+ * Syncs usage tracking with Supabase for authenticated users
  */
 
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  supabase,
+  getCurrentUser,
+  getUserProfile,
+  getUsageTracking,
+  incrementSearchCount as supabaseIncrementSearch,
+  incrementQuizCompletions as supabaseIncrementQuiz,
+  onAuthStateChange,
+} from '../lib/supabase';
 
 const ChatQuizContext = createContext(null);
 
@@ -179,6 +189,86 @@ function saveToStorage(state) {
 export function ChatQuizProvider({ children }) {
   const [state, setState] = useState(() => loadFromStorage());
 
+  // Auth state for Supabase integration
+  const [user, setUser] = useState(null);
+  const [userPlan, setUserPlan] = useState('free'); // 'free', 'pro', 'monthly', 'yearly'
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  // Check if user has Pro plan (unlimited searches)
+  const isPro = useMemo(() => {
+    return userPlan === 'pro' || userPlan === 'monthly' || userPlan === 'yearly';
+  }, [userPlan]);
+
+  // Load auth state and usage from Supabase
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+
+        if (currentUser) {
+          // Get user profile for plan info
+          const profile = await getUserProfile(currentUser.id);
+          if (profile) {
+            setUserPlan(profile.plan || 'free');
+          }
+
+          // Get usage tracking from Supabase
+          const usage = await getUsageTracking(currentUser.id);
+          if (usage) {
+            setState(prev => ({
+              ...prev,
+              usageTracking: {
+                searchCount: usage.search_count,
+                quizCompletionsCount: usage.quiz_completions,
+                searchLimitReached: usage.search_count >= MAX_FREE_SEARCHES,
+                lastResetDate: usage.period_start,
+              },
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsAuthLoading(false);
+      }
+    };
+
+    initAuth();
+
+    // Subscribe to auth changes
+    const { data: { subscription } } = onAuthStateChange(async (event, session) => {
+      const currentUser = session?.user || null;
+      setUser(currentUser);
+
+      if (currentUser) {
+        const profile = await getUserProfile(currentUser.id);
+        if (profile) {
+          setUserPlan(profile.plan || 'free');
+        }
+
+        const usage = await getUsageTracking(currentUser.id);
+        if (usage) {
+          setState(prev => ({
+            ...prev,
+            usageTracking: {
+              searchCount: usage.search_count,
+              quizCompletionsCount: usage.quiz_completions,
+              searchLimitReached: usage.search_count >= MAX_FREE_SEARCHES,
+              lastResetDate: usage.period_start,
+            },
+          }));
+        }
+      } else {
+        setUserPlan('free');
+      }
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
+  }, []);
+
   // Save to localStorage whenever relevant state changes
   useEffect(() => {
     saveToStorage(state);
@@ -334,7 +424,8 @@ export function ChatQuizProvider({ children }) {
   }, []);
 
   // Increment search count and check limit
-  const incrementSearchCount = useCallback(() => {
+  const incrementSearchCount = useCallback(async () => {
+    // Update local state
     setState(prev => {
       const newSearchCount = prev.usageTracking.searchCount + 1;
       const searchLimitReached = newSearchCount >= MAX_FREE_SEARCHES;
@@ -347,10 +438,20 @@ export function ChatQuizProvider({ children }) {
         },
       };
     });
-  }, []);
+
+    // Sync with Supabase if logged in
+    if (user) {
+      try {
+        await supabaseIncrementSearch(user.id);
+      } catch (error) {
+        console.error('Error syncing search count to Supabase:', error);
+      }
+    }
+  }, [user]);
 
   // Increment quiz completion count
-  const incrementQuizCompletions = useCallback(() => {
+  const incrementQuizCompletions = useCallback(async () => {
+    // Update local state
     setState(prev => ({
       ...prev,
       usageTracking: {
@@ -358,12 +459,22 @@ export function ChatQuizProvider({ children }) {
         quizCompletionsCount: prev.usageTracking.quizCompletionsCount + 1,
       },
     }));
-  }, []);
 
-  // Check if search limit is reached
+    // Sync with Supabase if logged in
+    if (user) {
+      try {
+        await supabaseIncrementQuiz(user.id);
+      } catch (error) {
+        console.error('Error syncing quiz completions to Supabase:', error);
+      }
+    }
+  }, [user]);
+
+  // Check if search limit is reached (Pro users have unlimited)
   const isSearchLimitReached = useMemo(() => {
+    if (isPro) return false; // Pro users have unlimited searches
     return state.usageTracking.searchCount >= MAX_FREE_SEARCHES;
-  }, [state.usageTracking.searchCount]);
+  }, [state.usageTracking.searchCount, isPro]);
 
   // Get remaining searches
   const remainingSearches = useMemo(() => {
@@ -414,6 +525,12 @@ export function ChatQuizProvider({ children }) {
     hasSeenResults: state.hasSeenResults,
     usageTracking: state.usageTracking,
 
+    // Auth state
+    user,
+    userPlan,
+    isPro,
+    isAuthLoading,
+
     // Computed values
     hasProgress,
     currentQuizQuestion,
@@ -443,6 +560,10 @@ export function ChatQuizProvider({ children }) {
     incrementQuizCompletions,
   }), [
     state,
+    user,
+    userPlan,
+    isPro,
+    isAuthLoading,
     hasProgress,
     currentQuizQuestion,
     quizCompletionPercent,
