@@ -8,8 +8,8 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 
 export const seoMetadata = {
   home: {
-    title: 'Transplant Medication Navigator™ - Medication Assistance Guide for Transplant Patients',
-    description: 'Find free medication assistance programs for transplant patients. Search Patient Assistance Programs, compare copay foundations, and get help paying for immunosuppressants.',
+    title: 'Transplant Medication Navigator™ | Free Assistance Guide',
+    description: 'Find free medication assistance for transplant patients. Search Patient Assistance Programs, copay foundations, and help paying for immunosuppressants.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Transplant Medication Navigator™ - Medication Assistance Guide',
     ogDescription: 'Helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants. Free educational resources.',
@@ -86,7 +86,7 @@ export const seoMetadata = {
 
   forTransplantPrograms: {
     title: 'For Transplant Programs | Transplant Medication Navigator™',
-    description: 'Help your transplant patients navigate medication costs with our privacy-safe resource and free educational content. Reduce financial barriers to adherence with verified assistance programs.',
+    description: 'Help transplant patients navigate medication costs with our privacy-safe resource. Reduce financial barriers to adherence with verified assistance programs.',
     canonical: `${BASE_URL}/for-transplant-programs`,
     ogTitle: 'Transplant Program Partnerships',
     ogDescription: 'Partner with Transplant Medication Navigator to help your patients find medication assistance programs. Privacy-safe, no PHI collected.',
