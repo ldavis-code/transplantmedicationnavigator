@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
-  User, Building2, Heart, AlertCircle, Printer,
+  User, Building2, Heart, AlertCircle, Printer, Lock,
   ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
@@ -46,6 +46,13 @@ const MedicationAssistantChat = () => {
     questions,
     resetProgress,
     hasSeenResults,
+    // Usage tracking
+    usageTracking,
+    isSearchLimitReached,
+    remainingSearches,
+    maxFreeSearches,
+    incrementSearchCount,
+    incrementQuizCompletions,
   } = useChatQuiz();
 
   // Local chat state (kept separate for API communication)
@@ -230,6 +237,12 @@ const MedicationAssistantChat = () => {
       return;
     }
 
+    // Check if search limit has been reached
+    if (isSearchLimitReached) {
+      setMedicationResults([]);
+      return;
+    }
+
     setIsSearching(true);
     try {
       const response = await fetch('/api/chat', {
@@ -243,6 +256,9 @@ const MedicationAssistantChat = () => {
 
       const data = await response.json();
       setMedicationResults(data.medications || []);
+
+      // Increment search count after successful search
+      incrementSearchCount();
     } catch (err) {
       console.error('Medication search failed:', err);
       setMedicationResults([]);
@@ -324,6 +340,9 @@ const MedicationAssistantChat = () => {
       if (data.error) {
         throw new Error(data.error);
       }
+
+      // Track quiz completion
+      incrementQuizCompletions();
 
       // Store results in context
       setResults({
@@ -551,8 +570,92 @@ const MedicationAssistantChat = () => {
 
   // Render medication search UI
   const renderMedicationSearch = () => {
+    // Show search limit reached UI
+    if (isSearchLimitReached) {
+      return (
+        <div className="p-3 bg-slate-50 rounded-xl space-y-3">
+          {/* Search Limit Reached Banner */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
+            <Lock className="mx-auto text-amber-600 mb-2" size={28} />
+            <h4 className="font-bold text-amber-800 text-sm mb-1">Search Limit Reached</h4>
+            <p className="text-xs text-amber-700 mb-3">
+              You've used all {maxFreeSearches} free medication searches.
+            </p>
+            <a
+              href="/pricing"
+              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition"
+            >
+              Upgrade for Unlimited Searches
+            </a>
+          </div>
+
+          {/* Still allow continuing with selected medications or skipping */}
+          {selectedMedications.length > 0 && (
+            <>
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedMedications.map((med) => (
+                    <span
+                      key={med.id}
+                      className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
+                    >
+                      {med.brand_name}
+                      <button
+                        onClick={() => handleMedicationRemove(med.id)}
+                        className="hover:bg-emerald-200 rounded-full p-0.5"
+                        aria-label={`Remove ${med.brand_name}`}
+                      >
+                        <X size={14} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <button
+                onClick={handleMedicationsContinue}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
+              >
+                Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+
+          <button
+            onClick={() => {
+              if (mode === 'chat') {
+                handleChatOptionSelect({ value: 'general', label: 'General assistance' });
+              } else {
+                setAnswer('medication', 'general');
+                nextQuizQuestion();
+              }
+            }}
+            className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
+          >
+            <div className="font-medium text-slate-700">Skip this step</div>
+            <div className="text-sm text-slate-500">Show general assistance programs</div>
+          </button>
+        </div>
+      );
+    }
+
     return (
       <div className="p-3 bg-slate-50 rounded-xl space-y-3">
+        {/* Search Usage Indicator */}
+        {remainingSearches <= maxFreeSearches && remainingSearches > 0 && (
+          <div className={`text-xs px-3 py-1.5 rounded-lg flex items-center justify-between ${
+            remainingSearches <= 1 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-600'
+          }`}>
+            <span>
+              {remainingSearches === 1 ? '⚠️ Last free search remaining' : `${remainingSearches} searches remaining`}
+            </span>
+            <a href="/pricing" className="underline hover:no-underline font-medium">
+              Upgrade
+            </a>
+          </div>
+        )}
+
         {selectedMedications.length > 0 && (
           <div className="space-y-2">
             <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>

@@ -11,6 +11,9 @@ const ChatQuizContext = createContext(null);
 // Storage key for localStorage persistence
 const STORAGE_KEY = 'medication_navigator_progress';
 
+// Maximum number of medication searches allowed in free tier
+const MAX_FREE_SEARCHES = 4;
+
 // Question definitions for the quiz mode
 const QUIZ_QUESTIONS = [
   {
@@ -89,6 +92,14 @@ const initialState = {
   // User profile answers (shared between chat and quiz)
   answers: {},
 
+  // Usage tracking for free tier limits
+  usageTracking: {
+    searchCount: 0,           // Number of medication searches performed
+    quizCompletionsCount: 0,  // Number of completed quizzes
+    searchLimitReached: false, // Whether the user has hit the search limit
+    lastResetDate: null,      // For potential monthly reset functionality
+  },
+
   // Quiz-specific state
   quizProgress: {
     currentQuestionIndex: 0,
@@ -157,6 +168,7 @@ function saveToStorage(state) {
       results: state.results,
       hasSeenResults: state.hasSeenResults,
       mode: state.mode,
+      usageTracking: state.usageTracking,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   } catch (e) {
@@ -170,7 +182,7 @@ export function ChatQuizProvider({ children }) {
   // Save to localStorage whenever relevant state changes
   useEffect(() => {
     saveToStorage(state);
-  }, [state.answers, state.quizProgress, state.selectedMedications, state.results, state.hasSeenResults, state.mode]);
+  }, [state.answers, state.quizProgress, state.selectedMedications, state.results, state.hasSeenResults, state.mode, state.usageTracking]);
 
   // Set mode (chat or quiz)
   const setMode = useCallback((mode) => {
@@ -311,14 +323,52 @@ export function ChatQuizProvider({ children }) {
     }));
   }, []);
 
-  // Reset all progress
+  // Reset all progress (but preserve usage tracking)
   const resetProgress = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setState({
+    setState(prev => ({
       ...initialState,
       isOpen: true, // Keep widget open after reset
+      // Preserve usage tracking across resets
+      usageTracking: prev.usageTracking,
+    }));
+  }, []);
+
+  // Increment search count and check limit
+  const incrementSearchCount = useCallback(() => {
+    setState(prev => {
+      const newSearchCount = prev.usageTracking.searchCount + 1;
+      const searchLimitReached = newSearchCount >= MAX_FREE_SEARCHES;
+      return {
+        ...prev,
+        usageTracking: {
+          ...prev.usageTracking,
+          searchCount: newSearchCount,
+          searchLimitReached,
+        },
+      };
     });
   }, []);
+
+  // Increment quiz completion count
+  const incrementQuizCompletions = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      usageTracking: {
+        ...prev.usageTracking,
+        quizCompletionsCount: prev.usageTracking.quizCompletionsCount + 1,
+      },
+    }));
+  }, []);
+
+  // Check if search limit is reached
+  const isSearchLimitReached = useMemo(() => {
+    return state.usageTracking.searchCount >= MAX_FREE_SEARCHES;
+  }, [state.usageTracking.searchCount]);
+
+  // Get remaining searches
+  const remainingSearches = useMemo(() => {
+    return Math.max(0, MAX_FREE_SEARCHES - state.usageTracking.searchCount);
+  }, [state.usageTracking.searchCount]);
 
   // Check if user has any saved progress
   const hasProgress = useMemo(() => {
@@ -362,6 +412,7 @@ export function ChatQuizProvider({ children }) {
     selectedMedications: state.selectedMedications,
     results: state.results,
     hasSeenResults: state.hasSeenResults,
+    usageTracking: state.usageTracking,
 
     // Computed values
     hasProgress,
@@ -369,6 +420,9 @@ export function ChatQuizProvider({ children }) {
     quizCompletionPercent,
     profileSummary,
     questions: QUIZ_QUESTIONS,
+    isSearchLimitReached,
+    remainingSearches,
+    maxFreeSearches: MAX_FREE_SEARCHES,
 
     // Actions
     setMode,
@@ -385,12 +439,16 @@ export function ChatQuizProvider({ children }) {
     removeMedication,
     setResults,
     resetProgress,
+    incrementSearchCount,
+    incrementQuizCompletions,
   }), [
     state,
     hasProgress,
     currentQuizQuestion,
     quizCompletionPercent,
     profileSummary,
+    isSearchLimitReached,
+    remainingSearches,
     setMode,
     setIsOpen,
     setAnswer,
@@ -405,6 +463,8 @@ export function ChatQuizProvider({ children }) {
     removeMedication,
     setResults,
     resetProgress,
+    incrementSearchCount,
+    incrementQuizCompletions,
   ]);
 
   return (
