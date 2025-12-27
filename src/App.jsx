@@ -457,7 +457,7 @@ const Layout = ({ children }) => {
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-4" aria-label="Main navigation">
                         <Link
-                            to="/my-medications"
+                            to="/savings-tracker"
                             aria-label="Track your medication savings"
                             className="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
                         >
@@ -495,7 +495,7 @@ const Layout = ({ children }) => {
                     <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label="Mobile navigation">
                         <div className="flex flex-col p-4 space-y-2">
                             <Link
-                                to="/my-medications"
+                                to="/savings-tracker"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 aria-label="Track your medication savings"
                                 className="px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
