@@ -4,7 +4,7 @@
     "questions": [
       {
         "q": "What is Transplant Med Navigator?",
-        "a": "Transplant Med Navigator is a trusted guide for transplant patients and care partners to find affordable medications and assistance programs. We offer free educational resources to help you navigate patient assistance programs (PAPs), copay foundations, and other resources to reduce medication costs."
+        "a": "Transplant Med Navigator helps transplant patients and caregivers find affordable medications. We offer free resources to help you find Patient Assistance Programs (PAPs), which give free or low-cost medications, and copay foundations, which help pay what you owe at the pharmacy."
       },
       {
         "q": "Is this site free to use?",
@@ -29,11 +29,11 @@
     "questions": [
       {
         "q": "What is a Patient Assistance Program (PAP)?",
-        "a": "Patient Assistance Programs are offered directly by pharmaceutical manufacturers to provide free or low-cost medications to people who cannot afford them. Each drug manufacturer has its own program with specific eligibility requirements."
+        "a": "Patient Assistance Programs (PAPs) are run by drug companies. They give free or low-cost medications to people who cannot afford them. Each drug company has its own program with different rules about who can apply."
       },
       {
         "q": "Who qualifies for Patient Assistance Programs?",
-        "a": "Eligibility varies by program but typically includes income limits (often 300-500% of federal poverty level), insurance status requirements, and U.S. residency. Some programs are only for uninsured patients, while others accept insured patients who face high out-of-pocket costs."
+        "a": "Rules vary by program, but most look at: your income (many accept people earning up to 3-5 times the poverty level), whether you have insurance, and if you live in the U.S. Some programs are only for people without insurance. Others also help people with insurance who still pay too much out of pocket."
       },
       {
         "q": "How do I apply for a PAP?",
@@ -41,11 +41,11 @@
       },
       {
         "q": "What's the difference between PAPs and copay cards?",
-        "a": "Copay cards help cover your copayment if you have commercial insurance. PAPs provide free medication if you're uninsured or underinsured. Copay cards are typically easy to get and work instantly, while PAPs require applications and income documentation."
+        "a": "Copay cards help lower what you pay at the pharmacy if you have private insurance from a job or the marketplace. PAPs give free medication if you have no insurance or not enough coverage. Copay cards are easy to get and work right away. PAPs need an application and proof of your income."
       },
       {
         "q": "Can I use a PAP if I have Medicare?",
-        "a": "Most manufacturer PAPs do NOT accept Medicare patients due to federal anti-kickback laws. However, Medicare patients can use copay foundations (see below) and should explore Medicare Extra Help and state pharmaceutical assistance programs."
+        "a": "Most drug company PAPs do NOT help Medicare patients. This is because of federal laws that prevent drug companies from giving discounts to people on government insurance. But Medicare patients CAN get help from copay foundations, Medicare Extra Help (a program that lowers drug costs for people with limited income), and state drug assistance programs."
       },
       {
         "q": "Do I need to renew my PAP application every year?",
@@ -58,19 +58,19 @@
     "questions": [
       {
         "q": "What is a copay foundation?",
-        "a": "Copay foundations are independent nonprofit organizations that provide financial assistance to help patients pay insurance premiums, copays, and deductibles. Unlike manufacturer PAPs, foundations can help Medicare patients."
+        "a": "Copay foundations are nonprofit groups that help pay your medical costs. They can help with insurance premiums (what you pay monthly for insurance), copays (what you pay at the pharmacy), and deductibles (what you pay before insurance starts covering costs). Unlike drug company programs, these foundations CAN help Medicare patients."
       },
       {
         "q": "What's the difference between a foundation and a PAP?",
-        "a": "Foundations are independent nonprofits funded by multiple sources and can serve Medicare patients. PAPs are run by drug manufacturers, often cannot serve Medicare patients, but may provide free medication directly."
+        "a": "Foundations are independent nonprofits. They get money from many sources and CAN help Medicare patients. PAPs are run by drug companies. They often CANNOT help Medicare patients, but they may give you free medication if you qualify."
       },
       {
         "q": "How do I know if a foundation is legitimate?",
-        "a": "Legitimate foundations NEVER ask you to pay to apply. They have 501(c)(3) nonprofit status. Check the National Organization for Rare Disorders (NORD) or HealthWell Foundation as examples of trusted organizations."
+        "a": "Real foundations NEVER charge you to apply. They are registered nonprofits. If someone asks you to pay to apply for help, it is a scam. HealthWell Foundation and NORD (National Organization for Rare Disorders) are examples of trusted groups."
       },
       {
         "q": "Do foundations have waiting lists?",
-        "a": "Yes, many foundations have limited funding and may close enrollment when funds run out. They typically reopen when new funding becomes available. Apply as early as possible and check multiple foundations."
+        "a": "Yes, many foundations have limited money and may stop taking new people when funds run out. They usually reopen when they get more money. Apply as early as you can. Check several foundations in case one is closed."
       }
     ]
   },
@@ -79,23 +79,23 @@
     "questions": [
       {
         "q": "What is a Specialty Pharmacy?",
-        "a": "Specialty pharmacies handle complex, high-cost medications like transplant drugs. Most commercial insurance plans require you to use a specific specialty pharmacy (often mail-order) instead of your local retail pharmacy like CVS or Walgreens."
+        "a": "Specialty pharmacies handle complex, high-cost medications like transplant drugs. They often ship medications to your home. Most private insurance plans require you to use a specific specialty pharmacy. You usually cannot fill these prescriptions at your local CVS or Walgreens."
       },
       {
         "q": "Can I use my copay card with Medicare?",
-        "a": "No. Federal law prohibits using manufacturer copay cards with Medicare. However, Medicare patients can use copay foundations for assistance with out-of-pocket costs."
+        "a": "No. Federal law does not allow drug company copay cards to be used with Medicare. But Medicare patients CAN use copay foundations to help pay what they owe."
       },
       {
         "q": "What is the Medicare donut hole?",
-        "a": "The Medicare Part D \"donut hole\" (coverage gap) is when you're temporarily responsible for a larger share of drug costs after reaching a certain spending threshold. Thanks to the Inflation Reduction Act, the gap has been significantly reduced, and in 2025-2026 the annual out-of-pocket cap provides real relief. For 2026: the Part D deductible is $615 and the annual out-of-pocket cap is $2,100."
+        "a": "The Medicare Part D \"donut hole\" is a coverage gap. After you spend a certain amount on drugs, you pay more out of pocket for a while. Good news: the Inflation Reduction Act has made this gap much smaller. In 2026, the most you will pay out of pocket is $2,100 for the whole year. The deductible (what you pay before coverage starts) is $615."
       },
       {
         "q": "What is Medicare Extra Help?",
-        "a": "Medicare Extra Help (Low-Income Subsidy or LIS) helps people with limited income pay Medicare prescription drug costs. It can eliminate or reduce premiums, deductibles, and copays. Eligibility is based on income and resources."
+        "a": "Medicare Extra Help (also called Low-Income Subsidy) helps people with limited income pay for prescription drugs. It can lower or get rid of your monthly premiums, deductibles, and copays. Whether you qualify depends on your income and savings."
       },
       {
         "q": "Do drug tiers vary by insurance plan?",
-        "a": "Yes. Each insurance plan creates its own formulary (list of covered drugs) and decides which tier to place each medication on. This means the same drug can be on Tier 2 with one plan and Tier 4 with another—even within the same insurance company. This matters because tier placement directly affects what you pay. A medication on Tier 2 might cost you $25, while that same medication on Tier 4 could cost $150 or more. When comparing plans, don't just check if your medications are covered—look up which tier they're on and what the cost-sharing is at that tier."
+        "a": "Yes. Each insurance plan has its own formulary (the list of drugs it covers). The plan decides which tier to put each drug on. The same drug can be on Tier 2 with one plan and Tier 4 with another—even from the same company. This matters because tier affects your cost. A Tier 2 drug might cost $25. The same drug on Tier 4 could cost $150 or more. When comparing plans, check which tier your drugs are on—not just if they're covered."
       },
       {
         "q": "My pharmacy switched my generic medication to a different manufacturer. Is this a problem?",
@@ -112,23 +112,23 @@
     "questions": [
       {
         "q": "Why do drug prices seem to change randomly?",
-        "a": "Drug prices aren't random—they follow a calendar! Understanding two key cycles can help you avoid 'sticker shock' at the pharmacy counter: the 'Twice-a-Year' cycle for brand-name drugs and insurance changes, and the 'Monthly' cycle for generic drugs and cash prices."
+        "a": "Drug prices follow patterns! They usually change at set times. Brand-name drugs often go up in January and July. Generic drug prices change every month. Knowing when prices change can help you avoid surprises at the pharmacy."
       },
       {
         "q": "When do brand-name drug prices change?",
-        "a": "Brand-name drugs follow a 'Twice-a-Year' cycle, primarily in January and July. Drug companies typically raise the 'list price' of brand-name medications during these months. Additionally, your insurance plan updates its Formulary (the list of drugs they cover) on January 1st—this is when your copay might change, or a drug might move to a more expensive tier."
+        "a": "Brand-name drug prices usually go up in January and July. These are when drug companies raise their prices. Your insurance also updates its drug list (called a formulary) on January 1st. This is when your copay might change, or a drug might move to a more expensive tier."
       },
       {
         "q": "What should I do before January each year?",
-        "a": "Always check your insurance coverage in December (during open enrollment) to see if your transplant meds will still be covered the same way in the New Year. Your copay might change, or a drug might move to a different tier, so it's important to plan ahead."
+        "a": "Check your insurance coverage every December during open enrollment. See if your transplant medications will still be covered the same way in the new year. Your copay might change. A drug might move to a different tier. Plan ahead."
       },
       {
         "q": "Why does my generic medication price fluctuate so much?",
-        "a": "Generic drugs follow a 'Monthly' cycle. The cost pharmacies pay to buy generic drugs (like tacrolimus, mycophenolate, or sirolimus) is updated weekly in a national database. The biggest changes often hit during the 3rd or 4th week of the month. If you pay with cash or use a discount card (like GoodRx), your price is tied to these updates—you might pay $40 one month and $65 the next because of a backend update."
+        "a": "Generic drug prices change monthly. The price pharmacies pay is updated weekly. The biggest changes often happen in the 3rd or 4th week of the month. If you pay with cash or a discount card like GoodRx, your price is tied to these updates. You might pay $40 one month and $65 the next."
       },
       {
         "q": "How can I get better prices on generic medications?",
-        "a": "If you're paying cash, check the price online a few days before you refill. If the price spiked, check a different pharmacy—prices vary wildly from store to store! Also consider asking your doctor for a 90-day supply, which 'locks in' the current price for three months, protecting you from monthly price fluctuations."
+        "a": "If you pay cash, check the price online a few days before you refill. If the price went up, try a different pharmacy—prices vary a lot from store to store! Also ask your doctor for a 90-day supply. This locks in the current price for three months and protects you from monthly price changes."
       }
     ]
   },
@@ -137,27 +137,27 @@
     "questions": [
       {
         "q": "What are GoodRx and its competitors?",
-        "a": "GoodRx, SingleCare, Blink Health, Optum Perks, and similar services are prescription discount card companies—NOT insurance. They negotiate lower \"cash prices\" with pharmacies and Pharmacy Benefit Managers (PBMs). When you use their coupon or card, you pay the discounted cash price instead of using your insurance. While this might save money on a single prescription, it can cost transplant patients significantly more over time."
+        "a": "GoodRx, SingleCare, Blink Health, and Optum Perks are discount card companies—NOT insurance. They get lower cash prices at pharmacies. When you use their coupon, you pay a discounted cash price instead of using your insurance. This might save money on one prescription. But for transplant patients, it can cost you more over time. Read on to learn why."
       },
       {
         "q": "What is the \"Deductible Trap\" with discount cards?",
-        "a": "This is the critical issue for transplant patients: When you use a discount card like GoodRx or SingleCare, the money you pay does NOT count toward your insurance deductible or out-of-pocket maximum (OOPM). Transplant patients typically have high medication costs that help them reach their OOPM within a few months—after which insurance pays 100% of covered costs for the rest of the year. Using discount cards delays reaching your OOPM, meaning you pay out-of-pocket for much longer. A small savings today can lead to thousands of dollars in extra costs over the year."
+        "a": "This is key for transplant patients: When you use a discount card like GoodRx, the money you pay does NOT count toward your deductible or out-of-pocket max. Most transplant patients have high drug costs. They reach their out-of-pocket max within a few months. After that, insurance pays 100% for the rest of the year. Discount cards delay when you hit that max. You end up paying out of pocket longer. A small savings today can cost you thousands more over the year."
       },
       {
         "q": "Can I use a discount card AND my insurance at the same time?",
-        "a": "No. You cannot use a discount card and your insurance simultaneously. It's an either/or choice. If you choose the discount card route, you forfeit the benefit of having that payment count toward your annual deductible and out-of-pocket maximum."
+        "a": "No. You must choose one or the other. If you use a discount card, that payment does NOT count toward your deductible or out-of-pocket max."
       },
       {
         "q": "When should transplant patients use discount cards?",
-        "a": "Discount cards should only be used in very specific, limited scenarios: (1) For a drug NOT covered by your insurance and with no generic alternative available, (2) For non-transplant-related, one-time, low-cost medications (like a short antibiotic course) where the discount price is cheaper than your copay, (3) If you have an extremely high deductible AND the cash price is lower—but even then, carefully weigh the cost of not reaching your out-of-pocket maximum. NEVER use discount cards for your chronic, lifelong transplant immunosuppressants like Tacrolimus, Mycophenolate, or Cyclosporine."
+        "a": "Only use discount cards in limited cases: (1) For a drug your insurance does not cover and has no generic option, (2) For a one-time, low-cost medication (like a short antibiotic) where the discount price is cheaper than your copay, (3) If you have a very high deductible AND the cash price is lower—but think carefully about not reaching your out-of-pocket max. NEVER use discount cards for your daily transplant medications like Tacrolimus, Mycophenolate, or Cyclosporine."
       },
       {
         "q": "What are better alternatives to discount cards for transplant patients?",
-        "a": "For high-cost transplant medications, these alternatives are far superior: (1) Patient Assistance Programs (PAPs)—pharmaceutical manufacturers offer free or deeply discounted medications based on income. These are the gold standard for uninsured/underinsured patients. (2) Copay Assistance Foundations—nonprofits like HealthWell Foundation and American Transplant Foundation help pay insurance copays, coinsurance, and deductibles, and these payments often DO count toward your out-of-pocket maximum. (3) Medicare Extra Help—for Medicare beneficiaries with limited income. Search our medication database or check NeedyMeds.org and the Partnership for Prescription Assistance to find programs for your specific drugs."
+        "a": "For high-cost transplant medications, these options are much better: (1) Patient Assistance Programs (PAPs)—drug companies give free or low-cost medications based on your income. Best for people without insurance or with not enough coverage. (2) Copay Foundations—nonprofits like HealthWell Foundation help pay your copays and deductibles. This money often DOES count toward your out-of-pocket max. (3) Medicare Extra Help—for Medicare patients with limited income. Search our medication database or check NeedyMeds.org to find programs for your specific drugs."
       },
       {
         "q": "Why is hitting my out-of-pocket maximum so important?",
-        "a": "Once you hit your annual out-of-pocket maximum (OOPM), your insurance pays 100% of covered costs for the rest of the year. For transplant patients on expensive immunosuppressants, this typically happens within the first few months of the year. After that, your medications are essentially free. The goal is not the lowest price today—it's the lowest total cost for the entire year. Every dollar spent via discount cards is a dollar that doesn't bring you closer to free medications for the rest of the year."
+        "a": "Once you hit your out-of-pocket max, your insurance pays 100% for the rest of the year. For transplant patients on expensive medications, this usually happens in the first few months. After that, your medications are basically free. The goal is not the lowest price today—it's the lowest total cost for the whole year. Every dollar spent with discount cards does NOT bring you closer to free medications."
       }
     ]
   },
@@ -166,19 +166,19 @@
     "questions": [
       {
         "q": "What are the direct coupon competitors to GoodRx?",
-        "a": "Several apps and cards work exactly like GoodRx—you show them to the pharmacist and pay a discounted cash price. They are free to use: (1) SingleCare—the biggest direct rival to GoodRx, sometimes offering lower prices on specific drugs. Always compare both apps before filling. (2) Optum Perks—owned by UnitedHealth Group, giving them strong negotiating power for deeper discounts on certain medications. (3) ScriptSave WellRx—works at roughly 65,000 pharmacies and often highlights 'grocery rewards' at supermarket pharmacies. (4) BuzzRx—partners with nonprofits and makes a donation to charity (like ASPCA or Make-A-Wish) every time you fill a prescription. Note: RxSaver was acquired by GoodRx in 2021 and is now part of the same company."
+        "a": "Several free apps work like GoodRx. You show them to the pharmacist and pay a discounted cash price: (1) SingleCare—the biggest rival to GoodRx. Sometimes has lower prices. Compare both before you fill. (2) Optum Perks—owned by a large insurance company, so they often get good discounts. (3) ScriptSave WellRx—works at about 65,000 pharmacies. (4) BuzzRx—donates to charity each time you fill a prescription. Note: Always compare prices across apps. Prices vary a lot."
       },
       {
         "q": "What are 'Cost-Plus' and mail order pharmacies?",
-        "a": "These are actual pharmacies that ship drugs to your door, often bypassing middlemen to offer lower prices on generics: (1) Mark Cuban Cost Plus Drug Company—sells generic drugs for cost of manufacturing + 15% markup + pharmacy fee + shipping. Best for maintenance medications where you want the absolute lowest transparent price. (2) Amazon Pharmacy—Prime members get 'RxPass' or Prime savings, with many common generics for a flat monthly fee (e.g., $5/month) or deep discounts with 2-day delivery. (3) Blink Health—a hybrid model where you pay online first to lock in the price, then pick up at the pharmacy or have it shipped. Best for avoiding surprises at the counter."
+        "a": "These are real pharmacies that ship drugs to you. They often have lower prices on generics: (1) Mark Cuban Cost Plus Drug Company—sells generic drugs at cost plus a small markup and shipping. Great for medications you take every day when you want the lowest price. (2) Amazon Pharmacy—Prime members get savings on many common generics with 2-day delivery. (3) Blink Health—you pay online first, then pick up at a pharmacy or have it shipped. Good for knowing exactly what you'll pay before you go."
       },
       {
         "q": "What pharmacy membership programs compete with discount cards?",
-        "a": "Large retail chains have their own membership 'clubs' that can beat GoodRx prices: (1) Costco Member Prescription Program—you often don't need a Costco membership to use their pharmacy, but members get extra discounts. Their cash prices are historically some of the lowest in the industry. (2) Kroger Rx Savings Club—a paid annual membership (approx. $36/year for an individual) that offers hundreds of common generics for free or very low cost. (3) Walgreens Prescription Savings Club—a paid membership offering discounts on thousands of brand and generic medications."
+        "a": "Large stores have membership programs that can beat discount card prices: (1) Costco Pharmacy—you often don't need a Costco membership to use their pharmacy. Their cash prices are very low. (2) Kroger Rx Savings Club—a paid membership (about $36/year) that offers hundreds of common generics for free or low cost. (3) Walgreens Prescription Savings Club—a paid membership with discounts on many medications."
       },
       {
         "q": "Which discount option should I use?",
-        "a": "It depends on your needs: For speed (same-day pickup)—check GoodRx, SingleCare, and Optum Perks apps to compare prices at your local store. For cheapest generics (mail order)—check Mark Cuban Cost Plus Drug Company. For Amazon Prime members—check Amazon Pharmacy first. Remember: For transplant patients, these discount options should only be used in limited scenarios (see 'When should transplant patients use discount cards?' in the Prescription Discount Cards section). Always prioritize hitting your insurance out-of-pocket maximum for long-term savings."
+        "a": "It depends on what you need: For same-day pickup—compare GoodRx, SingleCare, and Optum Perks prices at your local pharmacy. For cheapest generics by mail—check Mark Cuban Cost Plus Drug Company. For Amazon Prime members—check Amazon Pharmacy first. Remember: Transplant patients should only use these in limited cases. Usually, you should use your insurance to reach your out-of-pocket max faster."
       }
     ]
   },
@@ -232,7 +232,7 @@
     "questions": [
       {
         "q": "How does the \"My Path\" quiz work?",
-        "a": "The quiz asks about your role, transplant status, organ type, insurance, and medications. Based on your answers, it provides personalized recommendations for assistance programs that match your situation."
+        "a": "The quiz asks about you: your role (patient, caregiver, etc.), transplant status, organ type, insurance, and medications. Based on your answers, it gives you a list of assistance programs that may help you."
       },
       {
         "q": "Can I search for a specific medication?",
@@ -269,15 +269,15 @@
     "questions": [
       {
         "q": "I'm overwhelmed. Where do I start?",
-        "a": "Start with the \"My Path\" quiz—it will guide you step-by-step and provide personalized recommendations. If you need hands-on help, contact your transplant center's social worker or financial coordinator."
+        "a": "Start with the \"My Path\" quiz. It will guide you step by step and give you a list of programs that may help. If you need more help, contact your transplant center's social worker or financial counselor."
       },
       {
         "q": "Can you help me fill out applications?",
-        "a": "While we can't fill out applications for you, our Grants & Foundations page breaks down each step. Your transplant center's social worker or financial coordinator can provide hands-on assistance."
+        "a": "We cannot fill out applications for you. But our Grants & Foundations page explains each step. Your transplant center's social worker or financial counselor can help you fill out forms."
       },
       {
         "q": "What if I'm denied by a program?",
-        "a": "Don't give up! Many programs have appeal processes. Also, try applying to other foundations—each has different eligibility criteria and funding. Consider asking your social worker for assistance."
+        "a": "Don't give up! Many programs let you appeal. Also, try other foundations—each has different rules and money available. Ask your social worker for help."
       },
       {
         "q": "I applied for assistance but was told I don't qualify. Should I give up?",
@@ -285,7 +285,7 @@
       },
       {
         "q": "Who can I contact for more help?",
-        "a": "Contact your transplant center's social worker or financial coordinator—they specialize in helping patients navigate these programs. You can also reach out to organizations like the National Kidney Foundation, American Liver Foundation, or other organ-specific groups."
+        "a": "Contact your transplant center's social worker or financial counselor. They know these programs well. You can also reach out to groups like the National Kidney Foundation, American Liver Foundation, or other organ-specific groups."
       }
     ]
   },

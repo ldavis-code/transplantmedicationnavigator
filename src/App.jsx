@@ -531,8 +531,8 @@ const Layout = ({ children }) => {
             <footer className="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
                 <div className="container mx-auto px-4 text-center">
                     <p className="mb-4">
-                        <strong>Disclaimer:</strong> This tool is for educational purposes only. It does not provide medical advice.
-                        Prices are estimates. Always verify with your provider and pharmacist.
+                        <strong>Disclaimer:</strong> This tool is for learning only. It is not medical advice.
+                        Prices are estimates. Always check with your doctor and pharmacist.
                     </p>
                     <p className="mb-4 text-slate-400 text-sm max-w-3xl mx-auto">
                         This product uses publicly available data from the U.S. National Library of Medicine (NLM), National Institutes of Health, Department of Health and Human Services; NLM is not responsible for the product and does not endorse or recommend this or any other product.
@@ -601,7 +601,7 @@ const Home = () => {
                     </div>
                     <h2 className="text-xl font-bold text-slate-900 mb-2">Learn the Process</h2>
                     <p className="text-slate-600 mb-4">
-                        Understand how to fill out Patient Assistance Program (PAP) applications yourself, without paying anyone.
+                        Learn how to fill out Patient Assistance Program (PAP) applications yourself—for free.
                     </p>
                     <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="View application guide">
                         View Guide <ArrowRight size={16} aria-hidden="true" />
@@ -614,7 +614,7 @@ const Home = () => {
                     </div>
                     <h2 className="text-xl font-bold text-slate-900 mb-2">Coverage Education</h2>
                     <p className="text-slate-600 mb-4">
-                        Navigate Insurance, Medicare (including Part B-ID for kidney), Medicaid, and IHS benefits.
+                        Learn about Insurance, Medicare (including Part B-ID for kidney patients), Medicaid, and IHS benefits.
                     </p>
                     <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="Learn about coverage options">
                         Learn About Coverage <ArrowRight size={16} aria-hidden="true" />
