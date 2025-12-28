@@ -130,7 +130,8 @@
     "commonOrgans": [
       "Kidney",
       "Liver",
-      "Heart"
+      "Heart",
+      "Lung"
     ],
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
@@ -165,7 +166,8 @@
     "stage": "Post-transplant",
     "commonOrgans": [
       "Kidney",
-      "Liver"
+      "Liver",
+      "Heart"
     ],
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
@@ -302,7 +304,8 @@
     "commonOrgans": [
       "Kidney",
       "Liver",
-      "Heart"
+      "Heart",
+      "Lung"
     ],
     "cost_tier": "low",
     "generic_available": true,
@@ -318,7 +321,9 @@
     "stage": "Post-transplant",
     "commonOrgans": [
       "Kidney",
-      "Liver"
+      "Liver",
+      "Heart",
+      "Lung"
     ],
     "cost_tier": "low",
     "generic_available": true,
@@ -334,7 +339,9 @@
     "stage": "Post-transplant",
     "commonOrgans": [
       "Kidney",
-      "Heart"
+      "Heart",
+      "Liver",
+      "Lung"
     ],
     "papUrl": "https://www.merckhelps.com/",
     "cost_tier": "high",
@@ -352,7 +359,8 @@
     "commonOrgans": [
       "Kidney",
       "Heart",
-      "Lung"
+      "Lung",
+      "Liver"
     ],
     "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/",
     "cost_tier": "high",
