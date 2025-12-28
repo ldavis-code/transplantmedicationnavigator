@@ -1257,8 +1257,11 @@ const Wizard = () => {
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold mb-2">Which medications do you take?</h1>
-                    <p className="text-slate-600">
-                        Showing medications relevant for: <strong className="text-emerald-700">{isPreTransplant ? 'Pre-Transplant' : 'Post-Transplant'}</strong>
+                    <p className="text-slate-600 mb-3">
+                        Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
+                    </p>
+                    <p className="text-sm text-slate-500">
+                        First select your core immunosuppressants, then add any other transplant-related medications you take.
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
@@ -2858,7 +2861,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         <div className="mt-3 space-y-2">
                             <div className="text-xs text-slate-600 italic flex items-start gap-2" role="note">
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                <p>Price estimates are approximate ranges based on general market research (last updated: December 24, 2025). Always check live prices via the links above for current rates.</p>
+                                <p>Prices shown are for a typical 30-day supply. Actual savings may vary by quantity—check directly with pharmacy for exact pricing. Estimates are approximate ranges based on general market research (last updated: December 24, 2025).</p>
                             </div>
                             {(costPlusStats || goodRxStats || singleCareStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">
