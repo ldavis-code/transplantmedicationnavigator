@@ -49,7 +49,7 @@ INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufact
 ('atgam', 'ATGAM', 'Anti-thymocyte globulin (Equine)', '1011', 'Induction', 'Pfizer', 'Post-transplant', ARRAY['Kidney'], 'https://www.pfizerrxpathways.com/'),
 
 -- Steroids
-('prednisone', 'Deltasone', 'Prednisone', '8640', 'Steroid', 'Generic', 'Post-transplant', ARRAY['Kidney','Liver','Heart','Lung','Pancreas'], NULL),
+('prednisone', 'Prednisone', 'Prednisone', '8640', 'Steroid', 'Generic', 'Post-transplant', ARRAY['Kidney','Liver','Heart','Lung','Pancreas'], NULL),
 ('solumedrol', 'Solu-Medrol', 'Methylprednisolone', '6902', 'Steroid', 'Pfizer', 'Post-transplant', ARRAY['Kidney','Liver','Heart','Lung'], 'https://www.pfizerrxpathways.com/'),
 
 -- Anti-virals
