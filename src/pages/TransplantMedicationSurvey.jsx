@@ -46,9 +46,9 @@ export default function TransplantMedicationSurvey() {
       icon: Pill,
       description: "Challenges specific to your anti-rejection medications",
       questions: [
-        { id: 'generic_switch_forced', label: 'Have you ever been switched from brand to generic (or vice versa) without your input?', type: 'yesno' },
-        { id: 'generic_switch_problems', label: 'If switched, did you experience level fluctuations or side effects?', type: 'yesno_na' },
-        { id: 'trough_timing_issues', label: 'Have you had difficulty coordinating lab timing with medication doses?', type: 'yesno' },
+        { id: 'generic_switch_forced', label: 'Were you ever switched from brand to generic (or generic to brand) without being asked?', type: 'yesno' },
+        { id: 'generic_switch_problems', label: 'If switched, did you have changes in your blood levels or side effects?', type: 'yesno_na' },
+        { id: 'trough_timing_issues', label: 'Have you had trouble timing your blood tests with when you take your medication?', type: 'yesno' },
         { id: 'dose_change_delay', label: 'After a dose adjustment, how long until you received the new prescription?', type: 'select',
           options: ['Same day', '1-2 days', '3-5 days', 'More than 5 days', 'Had to use old dose while waiting'] },
         { id: 'ever_missed_immunosuppressant', label: 'Have you ever missed a dose of anti-rejection medication due to access issues (not forgetfulness)?', type: 'yesno' },
@@ -82,10 +82,10 @@ export default function TransplantMedicationSurvey() {
       questions: [
         { id: 'insurance_changed_post_tx', label: 'Has your insurance changed since your transplant?', type: 'yesno' },
         { id: 'coverage_gap_experienced', label: 'Have you experienced a gap in insurance coverage post-transplant?', type: 'yesno' },
-        { id: 'medicare_36_month_aware', label: 'Are you aware that Medicare coverage for immunosuppressants was limited to 36 months (before the 2020 change)?', type: 'select',
+        { id: 'medicare_36_month_aware', label: 'Did you know that Medicare only covered anti-rejection drugs for 36 months (before the 2020 change)?', type: 'select',
           options: ['Yes, it affected me', 'Yes, but didn\'t affect me', 'No, wasn\'t aware', 'Not on Medicare'] },
         { id: 'prior_auth_immunosuppressants', label: 'Have you needed prior authorization for immunosuppressant medications?', type: 'yesno' },
-        { id: 'step_therapy_post_tx', label: 'Has insurance ever required you to try a different immunosuppressant than what your transplant center prescribed?', type: 'yesno' },
+        { id: 'step_therapy_post_tx', label: 'Has insurance ever made you try a different anti-rejection drug than the one your transplant center prescribed?', type: 'yesno' },
         { id: 'annual_oop_range', label: 'What is your approximate annual out-of-pocket cost for transplant medications?', type: 'select',
           options: ['Under $500', '$500-$1,000', '$1,000-$2,500', '$2,500-$5,000', '$5,000-$10,000', 'Over $10,000'] },
       ]
@@ -120,7 +120,7 @@ export default function TransplantMedicationSurvey() {
         { id: 'pap_found_how', label: 'How did you first learn about assistance programs?', type: 'select',
           options: ['Transplant center', 'Social worker', 'Peer/support group', 'Found online myself', 'Pharmacy', 'Never learned - found out now'] },
         { id: 'pap_gap_experienced', label: 'Have you ever had a gap between assistance program renewals that affected your access?', type: 'yesno' },
-        { id: 'pap_application_burden', label: 'How would you describe the burden of applying for and maintaining assistance?', type: 'select',
+        { id: 'pap_application_burden', label: 'How hard is it to apply for and keep your assistance programs?', type: 'select',
           options: ['Easy - minimal effort', 'Moderate - some paperwork', 'Difficult - significant time', 'Overwhelming - nearly gave up', 'Haven\'t applied'] },
       ]
     },
