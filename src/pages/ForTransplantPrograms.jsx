@@ -14,7 +14,7 @@ const ForTransplantPrograms = () => {
         },
         {
             icon: ShieldCheck,
-            title: 'Verified Assistance Programs, Not Scams',
+            title: 'Verified Help Programs, Not Scams',
             description: 'Every program listed is vetted. We link directly to official manufacturer and foundation sites—no third-party schemes.'
         },
         {
@@ -46,10 +46,10 @@ const ForTransplantPrograms = () => {
                     <Building2 size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-                    Help Your Patients Navigate Medication Costs
+                    Help Your Patients Find Affordable Medications
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
+                    Give transplant patients a trusted resource with free educational content to find help programs and reduce money problems that prevent them from taking medications.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a

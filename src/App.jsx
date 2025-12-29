@@ -240,7 +240,7 @@ const ChatWidget = () => {
         {
             id: 1,
             type: 'assistant',
-            text: "👋 Hi! I'm your Transplant Medication Navigator™ assistant. I can help you find medication assistance, understand insurance, and navigate our tools.\n\nWhat can I help you with today?",
+            text: "👋 Hi! I'm your Transplant Medication Navigator™ assistant. I can help you find medication assistance, understand insurance, and use our tools.\n\nWhat can I help you with today?",
             timestamp: new Date()
         }
     ]);
@@ -837,8 +837,8 @@ const WizardHelp = ({ step, answers }) => {
             content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\n💡 If you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
         },
         6: {
-            title: "Specialty Pharmacy",
-            content: "**Why this matters:**\n\nCommercial insurance often requires transplant meds be filled at a designated specialty pharmacy (not your local CVS/Walgreens).\n\n**If you use the wrong pharmacy:**\n• Insurance won't cover it\n• You'll pay full price ($1000s)\n\n**What to do:**\nCall your insurance and ask: 'Which specialty pharmacy must I use for my transplant medications?'\n\nCommon ones: Accredo, CVS Specialty, Walgreens Specialty, Optum"
+            title: "Mail-Order Pharmacy",
+            content: "**Why this matters:**\n\nCommercial insurance often requires transplant meds be filled at a designated mail-order pharmacy (not your local CVS/Walgreens).\n\n**If you use the wrong pharmacy:**\n• Insurance won't cover it\n• You'll pay full price ($1000s)\n\n**What to do:**\nCall your insurance and ask: 'Which mail-order pharmacy must I use for my transplant medications?'\n\nCommon ones: Accredo, CVS Specialty, Walgreens Specialty, Optum"
         },
         7: {
             title: "Financial Status",
@@ -1351,14 +1351,14 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-4">Specialty Pharmacy Check</h1>
+                <h1 className="text-2xl font-bold mb-4">Mail-Order Pharmacy Check</h1>
                 <WizardHelp step={step} answers={answers} />
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6" role="note">
                     <p className="text-blue-800">
-                        Most commercial insurance plans require transplant medications to be filled at a specific "Specialty Pharmacy" (mail order), not a local retail pharmacy like CVS or Walgreens.
+                        Most commercial insurance plans require transplant medications to be filled at a specific mail-order pharmacy (sometimes called a "specialty pharmacy"), not a local retail pharmacy like CVS or Walgreens.
                     </p>
                 </div>
-                <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific Specialty Pharmacy?</h2>
+                <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific mail-order pharmacy?</h2>
                 
                 <div className="space-y-3 mb-8" role="radiogroup" aria-label="Specialty pharmacy requirement">
                     {['Yes', 'No', 'Not Sure'].map(opt => (
@@ -3137,7 +3137,7 @@ const InsuranceChangeSimulator = () => {
             timing: 'Common at 65 or after 24 months on SSDI',
             changes: [
                 { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
-                { type: 'gain', icon: '✅', title: 'PAP Eligibility', desc: 'You may now qualify for Patient Assistance Programs if income-eligible (many have higher limits for Medicare patients).' },
+                { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients).' },
                 { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
                 { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
                 { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
@@ -3151,9 +3151,9 @@ const InsuranceChangeSimulator = () => {
                 { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Copay cards typically cannot be used with Medicaid.' },
                 { type: 'gain', icon: '✅', title: 'Low/No Cost', desc: 'Medicaid typically has $0-$3 copays for prescriptions.' },
                 { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'Some PAPs still available as secondary assistance.' },
-                { type: 'change', icon: '🔄', title: 'Formulary', desc: 'May need to switch to Medicaid-preferred medications or get prior authorization.' },
+                { type: 'change', icon: '🔄', title: 'Covered Medicines', desc: 'May need to switch to Medicaid-preferred medications or get prior authorization.' },
             ],
-            action: 'Work with your transplant coordinator to ensure your medications are on the Medicaid formulary before switching.',
+            action: 'Work with your transplant coordinator to ensure your medications are on the Medicaid covered medicines list before switching.',
         },
         'medicaid_medicare': {
             title: 'Medicaid → Medicare (Dual Eligible)',
@@ -3194,16 +3194,16 @@ const InsuranceChangeSimulator = () => {
             changes: [
                 { type: 'gain', icon: '✅', title: 'Coverage', desc: 'Comprehensive coverage including prescriptions, often $0-$3 copays.' },
                 { type: 'gain', icon: '✅', title: 'Retroactive', desc: 'Coverage can be retroactive up to 3 months before application.' },
-                { type: 'change', icon: '🔄', title: 'Formulary', desc: 'Must use Medicaid formulary - may need prior auth for some transplant drugs.' },
+                { type: 'change', icon: '🔄', title: 'Covered Medicines', desc: 'Must use Medicaid covered medicines list - may need prior approval for some transplant drugs.' },
             ],
-            action: 'Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant documentation.',
+            action: 'Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant papers.',
         },
         'uninsured_marketplace': {
             title: 'Uninsured → ACA Marketplace',
             timing: 'Open enrollment or qualifying life event',
             changes: [
-                { type: 'gain', icon: '✅', title: 'Subsidies', desc: 'Premium assistance based on income - may get $0 premium plans.' },
-                { type: 'gain', icon: '✅', title: 'Copay Cards', desc: 'Can use manufacturer copay assistance with Marketplace plans.' },
+                { type: 'gain', icon: '✅', title: 'Subsidies', desc: 'Help paying for insurance based on income - may get $0 premium plans.' },
+                { type: 'gain', icon: '✅', title: 'Copay Cards', desc: 'Can use drug company help with what you owe on Marketplace plans.' },
                 { type: 'gain', icon: '✅', title: 'Pre-existing OK', desc: 'Cannot be denied or charged more for transplant history.' },
                 { type: 'info', icon: '💡', title: 'Plan Selection', desc: 'Silver plans best value if income 100-250% FPL due to cost-sharing reductions.' },
             ],
@@ -3564,12 +3564,12 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Out-of-Pocket Maximum</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Spending Limit (Out-of-Pocket Maximum)</h3>
                                         <p className="text-slate-700 text-sm">The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Formulary</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Covered Medicines List (Formulary)</h3>
                                         <p className="text-slate-700 text-sm">The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.</p>
                                     </div>
 
@@ -3680,8 +3680,8 @@ const Education = () => {
                                     <ul className="text-emerald-900 space-y-2 ml-6 list-disc">
                                         <li>What tier are my transplant medicines?</li>
                                         <li>How much is my deductible?</li>
-                                        <li>When do I reach my out-of-pocket maximum?</li>
-                                        <li>Are my medicines on the formulary?</li>
+                                        <li>When do I reach my yearly spending limit?</li>
+                                        <li>Are my medicines on the covered medicines list?</li>
                                         <li>Can I use mail order to save money?</li>
                                     </ul>
                                 </div>
@@ -3882,8 +3882,8 @@ const Education = () => {
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
                                 <h3 className="font-bold text-red-900 text-xl mb-3">The Problem:</h3>
-                                <p className="text-red-900 text-lg leading-relaxed mb-4">When you use a discount card, <span className="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your insurance deductible or out-of-pocket maximum (OOPM)</span>.</p>
-                                <p className="text-slate-800 leading-relaxed">Transplant patients typically have high medication costs that help them reach their OOPM within a few months—after which insurance pays 100% of covered costs for the rest of the year. Using discount cards delays reaching your OOPM, meaning you pay out-of-pocket for much longer.</p>
+                                <p className="text-red-900 text-lg leading-relaxed mb-4">When you use a discount card, <span className="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your insurance deductible or yearly spending limit</span>.</p>
+                                <p className="text-slate-800 leading-relaxed">Transplant patients typically have high medication costs that help them reach their yearly limit within a few months—after which insurance pays 100% of covered costs for the rest of the year. Using discount cards delays reaching your yearly limit, meaning you pay out-of-pocket for much longer.</p>
                             </div>
                         </div>
 
@@ -3899,7 +3899,7 @@ const Education = () => {
                                     <ul className="space-y-3 text-slate-700">
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Month 1-3:</span>
-                                            <span>Pay $2,100 out-of-pocket (reaching your deductible/OOPM)</span>
+                                            <span>Pay $2,100 out-of-pocket (reaching your yearly limit)</span>
                                         </li>
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Month 4-12:</span>
@@ -3916,11 +3916,11 @@ const Education = () => {
                                     <ul className="space-y-3 text-slate-700">
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Month 1-12:</span>
-                                            <span>Pay discounted price (~$200/month) but NONE counts toward OOPM</span>
+                                            <span>Pay discounted price (~$200/month) but NONE counts toward yearly limit</span>
                                         </li>
                                         <li className="flex items-start gap-2">
                                             <span className="font-bold text-slate-900">Result:</span>
-                                            <span>You NEVER reach your OOPM, so you pay all year long</span>
+                                            <span>You NEVER reach your yearly limit, so you pay all year long</span>
                                         </li>
                                         <li className="pt-3 border-t-2 border-red-200">
                                             <span className="font-bold text-red-700 text-xl">Total Annual Cost: $2,400</span>
@@ -3941,7 +3941,7 @@ const Education = () => {
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 1: Drug NOT Covered by Insurance
                                     </h3>
-                                    <p className="text-slate-700 text-sm">For a medication NOT on your insurance formulary with no generic alternative available.</p>
+                                    <p className="text-slate-700 text-sm">For a medication NOT on your insurance's covered medicines list with no generic alternative available.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
@@ -3955,7 +3955,7 @@ const Education = () => {
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 3: Extremely High Deductible
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If you have an extremely high deductible AND the cash price is significantly lower—but even then, carefully weigh the cost of not reaching your OOPM.</p>
+                                    <p className="text-slate-700 text-sm">If you have an extremely high deductible AND the cash price is significantly lower—but even then, carefully weigh the cost of not reaching your yearly limit.</p>
                                 </div>
                             </div>
                             <div className="mt-6 bg-red-100 border-2 border-red-300 rounded-lg p-6">
@@ -3963,7 +3963,7 @@ const Education = () => {
                                     🛑 NEVER Use Discount Cards For:
                                 </h3>
                                 <p className="text-red-900 font-bold text-lg">Your chronic, lifelong transplant immunosuppressants like Tacrolimus, Mycophenolate, or Cyclosporine.</p>
-                                <p className="text-red-800 mt-2">These are the medications that will help you reach your OOPM quickly.</p>
+                                <p className="text-red-800 mt-2">These are the medications that will help you reach your yearly limit quickly.</p>
                             </div>
                         </section>
 
@@ -3976,17 +3976,17 @@ const Education = () => {
                                 <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-200">
                                     <h3 className="font-bold text-emerald-900 text-lg mb-3">Patient Assistance Programs (PAPs)</h3>
                                     <p className="text-slate-700 text-sm mb-4">Free or low-cost medications directly from drug manufacturers.</p>
-                                    <p className="text-emerald-800 font-bold text-sm">✅ Counts toward your OOPM</p>
+                                    <p className="text-emerald-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
                                     <h3 className="font-bold text-blue-900 text-lg mb-3">Co-pay Foundations</h3>
                                     <p className="text-slate-700 text-sm mb-4">Non-profit organizations that help cover copays and deductibles.</p>
-                                    <p className="text-blue-800 font-bold text-sm">✅ Counts toward your OOPM</p>
+                                    <p className="text-blue-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                                 <div className="bg-purple-50 p-6 rounded-xl border border-purple-200">
                                     <h3 className="font-bold text-purple-900 text-lg mb-3">Manufacturer Copay Cards</h3>
                                     <p className="text-slate-700 text-sm mb-4">Drug company assistance for brand-name medications (not available for Medicare).</p>
-                                    <p className="text-purple-800 font-bold text-sm">✅ Counts toward your OOPM</p>
+                                    <p className="text-purple-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                             </div>
                         </section>
@@ -3996,7 +3996,7 @@ const Education = () => {
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Your goal every year is to hit your out-of-pocket maximum (OOPM).</span> Once you reach it, insurance pays 100% for the rest of the year.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Your goal every year is to hit your yearly spending limit (the most you pay each year).</span> Once you reach it, insurance pays 100% for the rest of the year.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
@@ -4004,11 +4004,11 @@ const Education = () => {
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Always prioritize PAPs and co-pay foundations.</span> These programs help you pay for medications AND help you reach your OOPM faster.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Always prioritize PAPs and co-pay foundations.</span> These programs help you pay for medications AND help you reach your yearly limit faster.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Talk to your transplant team.</span> They can connect you with financial counselors who understand these programs and can help you navigate the system.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Talk to your transplant team.</span> They can connect you with financial counselors who understand these programs and can help you find your way through the system.</p>
                                 </li>
                             </ul>
                         </section>
@@ -4346,7 +4346,7 @@ ${patientName || "[Your Name]"}`;
                         <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8" aria-labelledby="pap-definition">
                             <h3 id="pap-definition" className="text-xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
                             <p className="text-slate-700 leading-relaxed mb-4">
-                                Patient Assistance Programs (PAPs) are programs created by pharmaceutical and medical supply manufacturers to help patients access affordable medications. These programs provide prescription medications at no cost or minimal fee for individuals who need help affording their medications.
+                                Patient Assistance Programs (PAPs) are programs created by drug companies and medical supply makers to help patients access affordable medications. These programs provide prescription medications at no cost or low cost for individuals who need help affording their medications.
                             </p>
                             <p className="text-slate-700 leading-relaxed font-medium">
                                 <strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs.
@@ -4368,9 +4368,9 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
                                     <DollarSign size={24} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-purple-900 text-lg mb-3">Copay Assistance</h3>
+                                <h3 className="font-bold text-purple-900 text-lg mb-3">Help Paying What You Owe</h3>
                                 <p className="text-slate-700 text-sm leading-relaxed">
-                                    Ask the pharmaceutical company or foundation to assist with the amount you pay after your insurance company has paid for qualifying medications.
+                                    Ask the drug company or foundation to help pay what you owe after your insurance company has paid for qualifying medications.
                                 </p>
                             </section>
 
@@ -4378,9 +4378,9 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
                                     <Shield size={24} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-indigo-900 text-lg mb-3">Premium Assistance</h3>
+                                <h3 className="font-bold text-indigo-900 text-lg mb-3">Help Paying for Insurance</h3>
                                 <p className="text-slate-700 text-sm leading-relaxed">
-                                    Ask the foundation to assist with the amount you pay to your insurance company to have medical or prescription coverage.
+                                    Ask the foundation to help pay what you owe to your insurance company to keep your medical or prescription coverage.
                                 </p>
                             </section>
                         </div>
@@ -4388,7 +4388,7 @@ ${patientName || "[Your Name]"}`;
                         <div className="grid md:grid-cols-2 gap-8">
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-emerald-300 transition-colors" aria-labelledby="pap-heading">
                                 <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg" aria-hidden="true"><FileText size={24} /></div><div><h2 id="pap-heading" className="font-bold text-lg text-slate-900">Patient Assistance Program (PAP)</h2><p className="text-xs text-slate-600">Direct from Manufacturer</p></div></div>
-                                <p className="text-slate-600 mb-4 text-sm min-h-[40px]">Free or low-cost medications provided directly by the pharmaceutical company.</p>
+                                <p className="text-slate-600 mb-4 text-sm min-h-[40px]">Free or low-cost medications provided directly by the drug company.</p>
                                 <div className="space-y-3 text-sm"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-600"><li>Commercial insurance</li><li>Uninsured</li><li>Underinsured</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-600">Approval Time</span><span className="font-medium text-emerald-700">2–4 weeks</span></div></div>
                             </section>
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-sky-300 transition-colors" aria-labelledby="foundation-heading">
@@ -4416,7 +4416,7 @@ ${patientName || "[Your Name]"}`;
                 )}
                 {activeTab === 'INCOME' && (
                     <div className="space-y-10 max-w-4xl mx-auto">
-                        <div><h2 className="text-2xl font-bold text-slate-900 mb-4">Understanding Income Eligibility</h2><p className="text-lg text-slate-600 mb-2">Most pharmaceutical companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r" role="note"><p className="text-red-800 font-bold">Don't Self-Disqualify: Many programs have much higher income limits than you might expect.</p></div></div>
+                        <div><h2 className="text-2xl font-bold text-slate-900 mb-4">Who Can Get Help</h2><p className="text-lg text-slate-600 mb-2">Most drug companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r" role="note"><p className="text-red-800 font-bold">Don't Count Yourself Out: Many programs have much higher income limits than you might expect.</p></div></div>
                         <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-lg mb-3">How Income Limits Work</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-lg mb-3">Where to Find Guidelines</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
                         <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={20} aria-hidden="true" /> Quick Income Checker</h3><p className="text-slate-600 mb-4">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={16} aria-hidden="true" /></a><a href="https://medicineassistancetool.org/" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit MAT.org to search by medication (opens in new tab)">MAT.org (Search by Med) <ExternalLink size={16} aria-hidden="true" /></a></div></section>
                     </div>
