@@ -9,33 +9,33 @@ const ForPayers = () => {
     const valueProps = [
         {
             icon: DollarSign,
-            title: 'Reduce Plan Spend on High-Cost Medications',
-            description: 'Help members access manufacturer assistance programs that offset costs, potentially reducing claims for expensive immunosuppressants.'
+            title: 'Lower Drug Costs for Members',
+            description: 'Help members find free drug programs. This can lower what they pay and cut claims for costly drugs.'
         },
         {
             icon: Users,
-            title: 'Patient-Friendly Resource',
-            description: 'Members can access medication assistance information without downloading an app, creating an account, or calling a support line.'
+            title: 'Easy for Members to Use',
+            description: 'Members can get help without an app, an account, or a phone call. Just open the website.'
         },
         {
             icon: BarChart3,
-            title: 'Privacy-Safe Engagement Tracking',
-            description: 'Understand how members engage with resources without collecting PHI. Get aggregate engagement data for pilot reporting.'
+            title: 'See How Members Use It',
+            description: 'Track how members use the tool. No private health info is stored. Get reports on usage.'
         },
         {
             icon: Lock,
-            title: 'No App Download Required',
-            description: 'A mobile-responsive web tool that works instantly on any device. No friction for members seeking help with medication costs.'
+            title: 'No App Needed',
+            description: 'Works on any phone or computer. Members get help fast. No downloads needed.'
         }
     ];
 
     const outcomes = [
-        'Members find manufacturer copay assistance',
-        'Members access Patient Assistance Programs (PAPs)',
-        'Reduced member out-of-pocket costs',
-        'Potential claims offsets from manufacturer programs',
-        'Improved member satisfaction with benefits',
-        'Educational content on insurance navigation'
+        'Members find copay help from drug makers',
+        'Members find free drug programs',
+        'Members pay less for their drugs',
+        'Lower claims from free drug programs',
+        'Members are happier with their plan',
+        'Helpful info on how insurance works'
     ];
 
     return (
@@ -46,10 +46,10 @@ const ForPayers = () => {
                     <Building size={32} className="text-purple-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-                    Help Members Access Manufacturer Assistance
+                    Help Members Find Drug Help Programs
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Reduce plan spend on high-cost transplant medications by connecting members to manufacturer programs and foundations.
+                    Lower costs for transplant drugs. Help members find free programs and grants from drug makers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -94,18 +94,18 @@ const ForPayers = () => {
                 <div className="grid md:grid-cols-3 gap-8">
                     <div className="text-center">
                         <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">1</div>
-                        <h3 className="font-bold text-slate-900 mb-2">Integrate as a Resource</h3>
-                        <p className="text-slate-600 text-sm">Add the link to member portals, EOBs, or care management communications</p>
+                        <h3 className="font-bold text-slate-900 mb-2">Add the Link</h3>
+                        <p className="text-slate-600 text-sm">Add the link to your member website or mailings</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">2</div>
-                        <h3 className="font-bold text-slate-900 mb-2">Members Self-Serve</h3>
-                        <p className="text-slate-600 text-sm">Members search medications, find assistance programs, and access applications directly</p>
+                        <h3 className="font-bold text-slate-900 mb-2">Members Search</h3>
+                        <p className="text-slate-600 text-sm">Members search for their drugs and find help programs on their own</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
-                        <h3 className="font-bold text-slate-900 mb-2">Measure Impact</h3>
-                        <p className="text-slate-600 text-sm">Receive engagement reports showing member utilization and programs accessed</p>
+                        <h3 className="font-bold text-slate-900 mb-2">See the Results</h3>
+                        <p className="text-slate-600 text-sm">Get reports that show how members use the tool and which programs they find</p>
                     </div>
                 </div>
             </section>
@@ -114,13 +114,13 @@ const ForPayers = () => {
             <section className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-2xl p-8">
                 <div className="flex items-center gap-3 mb-4">
                     <Shield size={24} className="text-purple-700" aria-hidden="true" />
-                    <h2 className="text-xl font-bold text-slate-900">Privacy & Compliance</h2>
+                    <h2 className="text-xl font-bold text-slate-900">Privacy & Safety</h2>
                 </div>
                 <p className="text-slate-700 leading-relaxed mb-4">
-                    We do not collect, store, or transmit PHI. Members use the tool anonymously—no accounts, no personal information required. All tracking is aggregate and privacy-safe.
+                    We do not store any private health info. Members use the tool without making an account. No personal info is needed.
                 </p>
                 <p className="text-slate-700 leading-relaxed">
-                    The tool provides educational information and links to official manufacturer programs. Members apply directly with manufacturers, not through our platform.
+                    The tool gives helpful info and links to real drug maker programs. Members apply with drug makers, not through us.
                 </p>
             </section>
 
@@ -131,7 +131,7 @@ const ForPayers = () => {
                     <h2 className="text-xl font-bold text-purple-900">What Members See</h2>
                 </div>
                 <p className="text-purple-800 mb-6 max-w-2xl mx-auto">
-                    Members get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Members can search for drugs, find help programs, and learn for free. No login needed.
                 </p>
                 <Link
                     to="/"
@@ -146,7 +146,7 @@ const ForPayers = () => {
             <section className="text-center py-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Ready to Support Your Members?</h2>
                 <p className="text-slate-600 mb-6 max-w-xl mx-auto">
-                    Contact us to schedule a demo and learn how we can help reduce medication cost burdens for your members.
+                    Email us to see a demo and learn how we can help your members pay less for their drugs.
                 </p>
                 <a
                     href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"

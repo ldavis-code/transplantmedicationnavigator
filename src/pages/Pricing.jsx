@@ -151,23 +151,23 @@ const Pricing = () => {
     const transplantProgramsValueProps = [
         {
             icon: TrendingUp,
-            title: 'Reduce Financial Barriers to Adherence',
-            description: 'Help patients find manufacturer assistance, copay cards, and foundation support before cost becomes a reason for non-adherence.'
+            title: 'Help Patients Afford Their Medicine',
+            description: 'Help patients find free medicine programs, copay cards, and grants before cost makes them skip doses.'
         },
         {
             icon: ShieldCheck,
-            title: 'Verified Assistance Programs, Not Scams',
-            description: 'Every program listed is vetted. We link directly to official manufacturer and foundation sites—no third-party schemes.'
+            title: 'Real Programs, Not Scams',
+            description: 'Every program is checked. We link to real company and foundation sites only. No scams.'
         },
         {
             icon: BarChart3,
-            title: 'Privacy-Safe Engagement Analytics',
-            description: 'Track how patients engage with resources without collecting PHI. See which programs are most accessed and measure pilot impact.'
+            title: 'See How Patients Use It',
+            description: 'Track which programs patients click on. No private health info is collected. See what works.'
         },
         {
             icon: Lock,
-            title: 'No PHI Collected',
-            description: 'Patients use the tool without creating accounts or entering protected health information. Zero compliance burden for your program.'
+            title: 'No Patient Data Stored',
+            description: 'Patients do not need to log in or give private health info. No extra work for your team.'
         }
     ];
 
@@ -183,65 +183,65 @@ const Pricing = () => {
     const employerValueProps = [
         {
             icon: DollarSign,
-            title: 'Reduce Specialty Drug Costs',
-            description: 'Connect employees to copay cards and manufacturer programs that offset out-of-pocket costs for expensive transplant medications.'
+            title: 'Lower Drug Costs',
+            description: 'Help workers find copay cards and free drug programs. This cuts what they pay for costly transplant drugs.'
         },
         {
             icon: HeartHandshake,
-            title: 'Connect to Copay Cards & Foundations',
-            description: 'Help employees access legitimate assistance programs that can cover copays, coinsurance, and even full medication costs.'
+            title: 'Find Copay Cards & Grants',
+            description: 'Help workers get real help programs. These can pay for copays or even full drug costs.'
         },
         {
             icon: Shield,
-            title: 'Complement Existing Pharmacy Benefits',
-            description: 'Works alongside your PBM and specialty pharmacy. We help employees find additional savings programs, not replace your benefits.'
+            title: 'Works With Your Current Plan',
+            description: 'This works with your drug plan. We help workers find extra savings. We do not replace your benefits.'
         },
         {
             icon: Lock,
-            title: 'No Login Required for Employees',
-            description: 'Employees access resources instantly—no accounts, no app downloads, no personal information required. Frictionless support.'
+            title: 'No Login Needed',
+            description: 'Workers get help right away. No accounts, no apps, no private info asked. Easy to use.'
         }
     ];
 
     const employerBenefits = [
-        'Reduced employee out-of-pocket medication costs',
-        'Lower claims for specialty medications through manufacturer programs',
-        'Improved medication adherence for transplant employees',
-        'Privacy-safe—no employee health data collected',
-        'No integration required with existing benefits',
-        'Easy to communicate via benefits portal or HR'
+        'Workers pay less for their drugs',
+        'Lower drug costs through free programs',
+        'Workers take their drugs as they should',
+        'No worker health data is stored',
+        'No setup needed with your current plan',
+        'Easy to share through HR or your benefits site'
     ];
 
     const payerValueProps = [
         {
             icon: DollarSign,
-            title: 'Reduce Plan Spend on High-Cost Medications',
-            description: 'Help members access manufacturer assistance programs that offset costs, potentially reducing claims for expensive immunosuppressants.'
+            title: 'Lower Drug Costs for Members',
+            description: 'Help members find free drug programs. This can lower what they pay and cut claims for costly drugs.'
         },
         {
             icon: Users,
-            title: 'Patient-Friendly Resource',
-            description: 'Members can access medication assistance information without downloading an app, creating an account, or calling a support line.'
+            title: 'Easy for Members to Use',
+            description: 'Members can get help without an app, an account, or a phone call. Just open the website.'
         },
         {
             icon: BarChart3,
-            title: 'Privacy-Safe Engagement Tracking',
-            description: 'Understand how members engage with resources without collecting PHI. Get aggregate engagement data for pilot reporting.'
+            title: 'See How Members Use It',
+            description: 'Track how members use the tool. No private health info is stored. Get reports on usage.'
         },
         {
             icon: Lock,
-            title: 'No App Download Required',
-            description: 'A mobile-responsive web tool that works instantly on any device. No friction for members seeking help with medication costs.'
+            title: 'No App Needed',
+            description: 'Works on any phone or computer. Members get help fast. No downloads needed.'
         }
     ];
 
     const payerOutcomes = [
-        'Members find manufacturer copay assistance',
-        'Members access Patient Assistance Programs (PAPs)',
-        'Reduced member out-of-pocket costs',
-        'Potential claims offsets from manufacturer programs',
-        'Improved member satisfaction with benefits',
-        'Educational content on insurance navigation'
+        'Members find copay help from drug makers',
+        'Members find free drug programs',
+        'Members pay less for their drugs',
+        'Lower claims from free drug programs',
+        'Members are happier with their plan',
+        'Helpful info on how insurance works'
     ];
 
     return (
@@ -333,7 +333,7 @@ const Pricing = () => {
 
                         {/* Medical Disclaimer */}
                         <p className="text-center text-sm text-slate-500 max-w-2xl mx-auto">
-                            This tool is designed to help you organize and understand your medications. It does not replace medical advice. Always review medication changes with your transplant team.
+                            This tool helps you find and track your drugs. It does not replace your doctor. Always talk to your transplant team about drug changes.
                         </p>
 
                         {/* FAQ Section */}
@@ -341,27 +341,27 @@ const Pricing = () => {
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">What do I get for free?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan includes 4 My Path Quizzes, all assistance program links, educational resources, and no login required. Medication lists are not saved in the free plan.
+                                        Free gives you 4 My Path Quizzes, all help program links, and things to read and learn. No login needed. Drug lists are not saved.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Why pay for Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
+                                        Pro gives you unlimited quizzes. You can save your drug list on your phone or computer. You can print or export your list. You get reminders for copay cards and can track your savings. Pick Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Is my medication data private?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Is my drug info private?</h3>
                                     <p className="text-slate-600">
-                                        Yes. With Pro, your medications are stored only on your device (in your browser), not on our servers. Transplant Medication Navigator does not store or access your medication list.
+                                        Yes. With Pro, your drugs are saved only on your device, not on our servers. We do not store or see your drug list.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Can I cancel my subscription?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Can I cancel?</h3>
                                     <p className="text-slate-600">
-                                        Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period, and you'll still have full access to the Free plan.
+                                        Yes, you can cancel any time. You keep Pro features until your paid time ends. Then you still have full access to the Free plan.
                                     </p>
                                 </div>
                             </div>
@@ -378,10 +378,10 @@ const Pricing = () => {
                                 <Building2 size={32} className="text-emerald-700" aria-hidden="true" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">
-                                Help Your Patients Navigate Medication Costs
+                                Help Your Patients Pay for Medicine
                             </h2>
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
-                                Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
+                                Give transplant patients a free, trusted tool to find help programs. Make it easier for them to afford their drugs.
                             </p>
                             <a
                                 href="mailto:info@transplantmedicationnavigator.com?subject=Pilot%20Program%20Request"
@@ -455,7 +455,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-emerald-900">What Patients See</h3>
                             </div>
                             <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                                Patients get access to medication search, assistance programs, and free educational resources—no login required for education.
+                                Patients can search for drugs, find help programs, and learn for free. No login needed.
                             </p>
                             <Link
                                 to="/"
@@ -477,10 +477,10 @@ const Pricing = () => {
                                 <Briefcase size={32} className="text-blue-700" aria-hidden="true" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">
-                                Reduce Specialty Drug Costs for Your Transplant Employees
+                                Help Workers Pay Less for Transplant Drugs
                             </h2>
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
-                                Connect employees to copay cards, manufacturer assistance programs, and foundations—complementing your existing pharmacy benefits.
+                                Help workers find copay cards, free drug programs, and grants. This works with your current drug plan.
                             </p>
                             <a
                                 href="mailto:info@transplantmedicationnavigator.com?subject=Employer%20Partnership%20Inquiry"
@@ -524,29 +524,29 @@ const Pricing = () => {
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">1</div>
                                     <h4 className="font-bold text-slate-900 mb-2">Share the Resource</h4>
-                                    <p className="text-slate-600 text-sm">Add the link to your benefits portal, open enrollment materials, or HR communications</p>
+                                    <p className="text-slate-600 text-sm">Add the link to your benefits website or HR emails</p>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">2</div>
                                     <h4 className="font-bold text-slate-900 mb-2">Employees Search</h4>
-                                    <p className="text-slate-600 text-sm">Employees search for their transplant medications and find applicable assistance programs</p>
+                                    <p className="text-slate-600 text-sm">Workers search for their drugs and find help programs</p>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
                                     <h4 className="font-bold text-slate-900 mb-2">Lower Costs</h4>
-                                    <p className="text-slate-600 text-sm">Employees apply for copay cards and PAPs, reducing their costs and potentially plan spend</p>
+                                    <p className="text-slate-600 text-sm">Workers apply for copay cards and free programs. This lowers costs for them and for you.</p>
                                 </div>
                             </div>
                         </section>
 
                         {/* Use Case */}
                         <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-8">
-                            <h3 className="text-xl font-bold text-slate-900 mb-4">Real Impact for Transplant Employees</h3>
+                            <h3 className="text-xl font-bold text-slate-900 mb-4">Real Help for Transplant Workers</h3>
                             <p className="text-slate-700 leading-relaxed mb-4">
-                                Transplant recipients typically take 3-5 medications daily for life. Immunosuppressants like tacrolimus and mycophenolate can cost hundreds to thousands per month. Even with good insurance, copays add up.
+                                Transplant patients take 3-5 drugs every day for life. These drugs can cost hundreds or thousands per month. Even with good insurance, copays add up fast.
                             </p>
                             <p className="text-slate-700 leading-relaxed">
-                                By connecting employees to manufacturer copay cards and Patient Assistance Programs, you help them save money while potentially reducing high-cost claims. It's a win-win for employees and your benefits program.
+                                By helping workers find copay cards and free drug programs, you help them save money. This also lowers costs for your company. Everyone wins.
                             </p>
                         </section>
 
@@ -557,7 +557,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-blue-900">What Employees See</h3>
                             </div>
                             <p className="text-blue-800 mb-6 max-w-2xl mx-auto">
-                                Employees get access to medication search, assistance programs, and free educational resources—no login required for education.
+                                Workers can search for drugs, find help programs, and learn for free. No login needed.
                             </p>
                             <Link
                                 to="/"
@@ -579,10 +579,10 @@ const Pricing = () => {
                                 <Building size={32} className="text-purple-700" aria-hidden="true" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">
-                                Help Members Access Manufacturer Assistance
+                                Help Members Find Drug Help Programs
                             </h2>
                             <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
-                                Reduce plan spend on high-cost transplant medications by connecting members to manufacturer programs and foundations.
+                                Lower costs for transplant drugs. Help members find free programs and grants from drug makers.
                             </p>
                             <a
                                 href="mailto:info@transplantmedicationnavigator.com?subject=Payer%20Demo%20Request"
@@ -625,18 +625,18 @@ const Pricing = () => {
                             <div className="grid md:grid-cols-3 gap-8">
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">1</div>
-                                    <h4 className="font-bold text-slate-900 mb-2">Integrate as a Resource</h4>
-                                    <p className="text-slate-600 text-sm">Add the link to member portals, EOBs, or care management communications</p>
+                                    <h4 className="font-bold text-slate-900 mb-2">Add the Link</h4>
+                                    <p className="text-slate-600 text-sm">Add the link to your member website or mailings</p>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">2</div>
-                                    <h4 className="font-bold text-slate-900 mb-2">Members Self-Serve</h4>
-                                    <p className="text-slate-600 text-sm">Members search medications, find assistance programs, and access applications directly</p>
+                                    <h4 className="font-bold text-slate-900 mb-2">Members Search</h4>
+                                    <p className="text-slate-600 text-sm">Members search for their drugs and find help programs on their own</p>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 bg-purple-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
-                                    <h4 className="font-bold text-slate-900 mb-2">Measure Impact</h4>
-                                    <p className="text-slate-600 text-sm">Receive engagement reports showing member utilization and programs accessed</p>
+                                    <h4 className="font-bold text-slate-900 mb-2">See the Results</h4>
+                                    <p className="text-slate-600 text-sm">Get reports that show how members use the tool and which programs they find</p>
                                 </div>
                             </div>
                         </section>
@@ -645,13 +645,13 @@ const Pricing = () => {
                         <section className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-2xl p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <Shield size={24} className="text-purple-700" aria-hidden="true" />
-                                <h3 className="text-xl font-bold text-slate-900">Privacy & Compliance</h3>
+                                <h3 className="text-xl font-bold text-slate-900">Privacy & Safety</h3>
                             </div>
                             <p className="text-slate-700 leading-relaxed mb-4">
-                                We do not collect, store, or transmit PHI. Members use the tool anonymously—no accounts, no personal information required. All tracking is aggregate and privacy-safe.
+                                We do not store any private health info. Members use the tool without making an account. No personal info is needed.
                             </p>
                             <p className="text-slate-700 leading-relaxed">
-                                The tool provides educational information and links to official manufacturer programs. Members apply directly with manufacturers, not through our platform.
+                                The tool gives helpful info and links to real drug maker programs. Members apply with drug makers, not through us.
                             </p>
                         </section>
 
@@ -662,7 +662,7 @@ const Pricing = () => {
                                 <h3 className="text-xl font-bold text-purple-900">What Members See</h3>
                             </div>
                             <p className="text-purple-800 mb-6 max-w-2xl mx-auto">
-                                Members get access to medication search, assistance programs, and free educational resources—no login required for education.
+                                Members can search for drugs, find help programs, and learn for free. No login needed.
                             </p>
                             <Link
                                 to="/"

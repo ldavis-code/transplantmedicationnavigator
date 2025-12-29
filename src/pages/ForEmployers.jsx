@@ -9,33 +9,33 @@ const ForEmployers = () => {
     const valueProps = [
         {
             icon: DollarSign,
-            title: 'Reduce Specialty Drug Costs',
-            description: 'Connect employees to copay cards and manufacturer programs that offset out-of-pocket costs for expensive transplant medications.'
+            title: 'Lower Drug Costs',
+            description: 'Help workers find copay cards and free drug programs. This cuts what they pay for costly transplant drugs.'
         },
         {
             icon: HeartHandshake,
-            title: 'Connect to Copay Cards & Foundations',
-            description: 'Help employees access legitimate assistance programs that can cover copays, coinsurance, and even full medication costs.'
+            title: 'Find Copay Cards & Grants',
+            description: 'Help workers get real help programs. These can pay for copays or even full drug costs.'
         },
         {
             icon: Shield,
-            title: 'Complement Existing Pharmacy Benefits',
-            description: 'Works alongside your PBM and specialty pharmacy. We help employees find additional savings programs, not replace your benefits.'
+            title: 'Works With Your Current Plan',
+            description: 'This works with your drug plan. We help workers find extra savings. We do not replace your benefits.'
         },
         {
             icon: Lock,
-            title: 'No Login Required for Employees',
-            description: 'Employees access resources instantly—no accounts, no app downloads, no personal information required. Frictionless support.'
+            title: 'No Login Needed',
+            description: 'Workers get help right away. No accounts, no apps, no private info asked. Easy to use.'
         }
     ];
 
     const benefits = [
-        'Reduced employee out-of-pocket medication costs',
-        'Lower claims for specialty medications through manufacturer programs',
-        'Improved medication adherence for transplant employees',
-        'Privacy-safe—no employee health data collected',
-        'No integration required with existing benefits',
-        'Easy to communicate via benefits portal or HR'
+        'Workers pay less for their drugs',
+        'Lower drug costs through free programs',
+        'Workers take their drugs as they should',
+        'No worker health data is stored',
+        'No setup needed with your current plan',
+        'Easy to share through HR or your benefits site'
     ];
 
     return (
@@ -46,10 +46,10 @@ const ForEmployers = () => {
                     <Briefcase size={32} className="text-blue-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-                    Reduce Specialty Drug Costs for Your Transplant Employees
+                    Help Workers Pay Less for Transplant Drugs
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Connect employees to copay cards, manufacturer assistance programs, and foundations—complementing your existing pharmacy benefits.
+                    Help workers find copay cards, free drug programs, and grants. This works with your current drug plan.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -95,29 +95,29 @@ const ForEmployers = () => {
                     <div className="text-center">
                         <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">1</div>
                         <h3 className="font-bold text-slate-900 mb-2">Share the Resource</h3>
-                        <p className="text-slate-600 text-sm">Add the link to your benefits portal, open enrollment materials, or HR communications</p>
+                        <p className="text-slate-600 text-sm">Add the link to your benefits website or HR emails</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">2</div>
                         <h3 className="font-bold text-slate-900 mb-2">Employees Search</h3>
-                        <p className="text-slate-600 text-sm">Employees search for their transplant medications and find applicable assistance programs</p>
+                        <p className="text-slate-600 text-sm">Workers search for their drugs and find help programs</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
                         <h3 className="font-bold text-slate-900 mb-2">Lower Costs</h3>
-                        <p className="text-slate-600 text-sm">Employees apply for copay cards and PAPs, reducing their costs and potentially plan spend</p>
+                        <p className="text-slate-600 text-sm">Workers apply for copay cards and free programs. This lowers costs for them and for you.</p>
                     </div>
                 </div>
             </section>
 
             {/* Use Case */}
             <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-8">
-                <h2 className="text-xl font-bold text-slate-900 mb-4">Real Impact for Transplant Employees</h2>
+                <h2 className="text-xl font-bold text-slate-900 mb-4">Real Help for Transplant Workers</h2>
                 <p className="text-slate-700 leading-relaxed mb-4">
-                    Transplant recipients typically take 3-5 medications daily for life. Immunosuppressants like tacrolimus and mycophenolate can cost hundreds to thousands per month. Even with good insurance, copays add up.
+                    Transplant patients take 3-5 drugs every day for life. These drugs can cost hundreds or thousands per month. Even with good insurance, copays add up fast.
                 </p>
                 <p className="text-slate-700 leading-relaxed">
-                    By connecting employees to manufacturer copay cards and Patient Assistance Programs, you help them save money while potentially reducing high-cost claims. It's a win-win for employees and your benefits program.
+                    By helping workers find copay cards and free drug programs, you help them save money. This also lowers costs for your company. Everyone wins.
                 </p>
             </section>
 
@@ -128,7 +128,7 @@ const ForEmployers = () => {
                     <h2 className="text-xl font-bold text-blue-900">What Employees See</h2>
                 </div>
                 <p className="text-blue-800 mb-6 max-w-2xl mx-auto">
-                    Employees get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Workers can search for drugs, find help programs, and learn for free. No login needed.
                 </p>
                 <Link
                     to="/"
@@ -143,7 +143,7 @@ const ForEmployers = () => {
             <section className="text-center py-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Ready to Support Your Transplant Employees?</h2>
                 <p className="text-slate-600 mb-6 max-w-xl mx-auto">
-                    Contact us to learn how we can help your employees find medication assistance programs.
+                    Email us to learn how we can help your workers find drug help programs.
                 </p>
                 <a
                     href="mailto:info@transplantmedicationnavigator.com?subject=Employer%20Partnership%20Inquiry"

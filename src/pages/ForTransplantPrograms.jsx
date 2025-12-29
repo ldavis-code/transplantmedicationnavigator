@@ -9,23 +9,23 @@ const ForTransplantPrograms = () => {
     const valueProps = [
         {
             icon: TrendingUp,
-            title: 'Reduce Financial Barriers to Adherence',
-            description: 'Help patients find manufacturer assistance, copay cards, and foundation support before cost becomes a reason for non-adherence.'
+            title: 'Help Patients Afford Their Medicine',
+            description: 'Help patients find free medicine programs, copay cards, and grants before cost makes them skip doses.'
         },
         {
             icon: ShieldCheck,
-            title: 'Verified Assistance Programs, Not Scams',
-            description: 'Every program listed is vetted. We link directly to official manufacturer and foundation sites—no third-party schemes.'
+            title: 'Real Programs, Not Scams',
+            description: 'Every program is checked. We link to real company and foundation sites only. No scams.'
         },
         {
             icon: BarChart3,
-            title: 'Privacy-Safe Engagement Analytics',
-            description: 'Track how patients engage with resources without collecting PHI. See which programs are most accessed and measure pilot impact.'
+            title: 'See How Patients Use It',
+            description: 'Track which programs patients click on. No private health info is collected. See what works.'
         },
         {
             icon: Lock,
-            title: 'No PHI Collected',
-            description: 'Patients use the tool without creating accounts or entering protected health information. Zero compliance burden for your program.'
+            title: 'No Patient Data Stored',
+            description: 'Patients do not need to log in or give private health info. No extra work for your team.'
         }
     ];
 
@@ -46,10 +46,10 @@ const ForTransplantPrograms = () => {
                     <Building2 size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-                    Help Your Patients Navigate Medication Costs
+                    Help Your Patients Pay for Medicine
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Give transplant patients a trusted resource with free educational content to find assistance programs and reduce financial barriers to medication adherence.
+                    Give transplant patients a free, trusted tool to find help programs. Make it easier for them to afford their drugs.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -125,7 +125,7 @@ const ForTransplantPrograms = () => {
                     <h2 className="text-xl font-bold text-emerald-900">What Patients See</h2>
                 </div>
                 <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                    Patients get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Patients can search for drugs, find help programs, and learn for free. No login needed.
                 </p>
                 <Link
                     to="/"
