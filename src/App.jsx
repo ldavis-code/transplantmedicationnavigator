@@ -34,6 +34,8 @@ import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 import DisclaimerModal from './components/DisclaimerModal.jsx';
 // AI Medication Assistant Chat Widget
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
+// Term Tooltip for inline definitions
+import TermTooltip, { DefineInline, GlossaryLink } from './components/TermTooltip.jsx';
 // Chat Quiz Context Provider
 import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
@@ -1614,7 +1616,7 @@ const Wizard = () => {
                                         <li className="flex gap-3 items-start">
                                             <div className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Priority recommendation">Priority</div>
                                             <div>
-                                                <strong>Use Manufacturer Copay Cards.</strong>
+                                                <strong>Use Manufacturer <TermTooltip term="copay">Copay</TermTooltip> Cards.</strong>
                                                 <p className="text-sm text-slate-600 mt-1">Even if you can afford the copay, these cards can lower it to as little as $0. Look up each of your brand name meds.</p>
                                             </div>
                                         </li>
@@ -1630,14 +1632,14 @@ const Wizard = () => {
                                         <li className="flex gap-3 items-start">
                                             <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Verification step">Verify</div>
                                             <div>
-                                                <strong>Specialty Pharmacy.</strong>
+                                                <strong><TermTooltip term="specialty-pharmacy">Specialty Pharmacy</TermTooltip>.</strong>
                                                 <p className="text-sm text-slate-600 mt-1">Ensure you are using the mandated pharmacy to avoid surprise full-price bills.</p>
                                             </div>
                                         </li>
                                     )}
                                 </ul>
                                 <div className="mt-6 pt-4 border-t border-slate-100">
-                                    <p className="text-sm text-slate-600 italic">Tip: You may still qualify for PAPs based on income, even if costs feel manageable right now.</p>
+                                    <p className="text-sm text-slate-600 italic">Tip: You may still qualify for <TermTooltip term="pap">PAPs</TermTooltip> based on income, even if costs feel manageable right now.</p>
                                 </div>
                             </section>
                         )}
@@ -1658,7 +1660,7 @@ const Wizard = () => {
                                     <li className="flex gap-3 items-start">
                                         <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step two">Step 2</div>
                                         <div>
-                                            <strong>Apply to Foundations.</strong>
+                                            <strong>Apply to <TermTooltip term="foundation-grant">Foundations</TermTooltip>.</strong>
                                             <p className="text-sm text-slate-600 mt-1">Organizations like HealthWell or PAN Foundation help pay for copays. Apply to them for your specific disease fund.</p>
                                         </div>
                                     </li>
@@ -2471,7 +2473,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         {med.generic_available && (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                                 <CheckCircle size={12} aria-hidden="true" />
-                                Generic Available
+                                <TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Available
                             </span>
                         )}
                     </div>
@@ -2606,7 +2608,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         {/* Copay Card Section - For Commercial Insurance ONLY */}
                         {(med.copayProgramId || med.copayUrl) && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
-                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Copay Card</h3>
+                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> <TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
                                     <strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.
                                 </p>
@@ -2628,7 +2630,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                 )}
                             </section>
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
-                                <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
+                                <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> <TermTooltip term="foundation-grant" showIcon={false}>Foundations</TermTooltip> & Grants</h3>
                                 <p className="text-sm text-slate-700 mb-4">These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.</p>
                                 <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
@@ -2927,7 +2929,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                     <div>
                                         <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your deductible</span>.
+                                            <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
                                             If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.
@@ -3379,7 +3381,7 @@ const Education = () => {
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
                     <TabButton id="INSURANCE" label="Insurance(s)" icon={Shield} />
                     <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
-                    <TabButton id="OOP" label="Out-of-Pocket" icon={DollarSign} />
+                    <TabButton id="OOP" label="Out-of-Pocket Max" icon={DollarSign} />
                     <TabButton id="SPECIALTY" label="Specialty Pharmacy" icon={Stethoscope} />
                 </div>
             </nav>
@@ -3551,27 +3553,27 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Deductible</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="deductible" showIcon={false}>Deductible</TermTooltip></h3>
                                         <p className="text-slate-700 text-sm">The amount you must pay yourself before your insurance starts helping. If your deductible is $500, you pay the first $500 of medicine costs. After that, insurance helps pay.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Copay (or Co-payment)</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> (or Co-payment)</h3>
                                         <p className="text-slate-700 text-sm">A fixed amount you pay each time you get medicine. Example: You might pay $10 for each prescription, and insurance pays the rest.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Coinsurance</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="coinsurance" showIcon={false}>Coinsurance</TermTooltip></h3>
                                         <p className="text-slate-700 text-sm">The percentage you pay after meeting your deductible. If you have 20% coinsurance, you pay $20 for every $100 of medicine cost. Insurance pays the other $80.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Spending Limit (Out-of-Pocket Maximum)</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Spending Limit (<TermTooltip term="out-of-pocket-maximum" showIcon={false}>Out-of-Pocket Maximum</TermTooltip>)</h3>
                                         <p className="text-slate-700 text-sm">The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Covered Medicines List (Formulary)</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Covered Medicines List (<TermTooltip term="formulary" showIcon={false}>Formulary</TermTooltip>)</h3>
                                         <p className="text-slate-700 text-sm">The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.</p>
                                     </div>
 
@@ -3586,12 +3588,12 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Prior Authorization</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="prior-authorization" showIcon={false}>Prior Authorization</TermTooltip></h3>
                                         <p className="text-slate-700 text-sm">When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Generic Medicine</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Medicine</h3>
                                         <p className="text-slate-700 text-sm">A medicine that works the same as a brand name but costs less. Like store-brand cereal versus name-brand - same thing, different package.</p>
                                     </div>
 
@@ -3601,7 +3603,7 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Specialty Medication</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="specialty-pharmacy" showIcon={false}>Specialty</TermTooltip> Medication</h3>
                                         <p className="text-slate-700 text-sm">Expensive medicines that need special handling or monitoring. Most transplant medicines are specialty medications. They often cost $600+ per month.</p>
                                     </div>
 
@@ -3636,7 +3638,7 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Patient Assistance Program (PAP)</h3>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Patient Assistance Program (<TermTooltip term="pap" showIcon={false}>PAP</TermTooltip>)</h3>
                                         <p className="text-slate-700 text-sm">Free or low-cost medicine programs run by drug companies. If you can't afford your medicine, these programs might help.</p>
                                     </div>
 
