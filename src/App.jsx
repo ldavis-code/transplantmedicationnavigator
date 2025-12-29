@@ -698,9 +698,7 @@ const Home = () => {
                         </div>
 
                         <p className="text-lg text-emerald-100 leading-relaxed">
-                            We help you get the medicine you need.
-                            <br/><br/>
-                            We show you how to find help paying for your medicine. We give you clear, honest information. We help you take control so you can focus on staying healthy.
+                            We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.
                         </p>
                     </div>
                     <div className="p-8 md:p-12 md:pt-8 flex flex-col justify-center bg-emerald-800/50">
@@ -709,9 +707,7 @@ const Home = () => {
                             <h2 className="text-2xl font-bold tracking-tight">Our Vision</h2>
                         </div>
                         <p className="text-lg text-emerald-100 leading-relaxed">
-                            Every transplant patient deserves a fair chance.
-                            <br/><br/>
-                            We believe no one should lose their health because medicine costs too much. We want every patient to know how to speak up for what they need.
+                            Every transplant patient deserves a fair chance. No one should lose their health because medicine costs too much.
                         </p>
                     </div>
                 </div>
