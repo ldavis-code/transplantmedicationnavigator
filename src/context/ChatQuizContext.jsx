@@ -56,14 +56,12 @@ const QUIZ_QUESTIONS = [
     helpText: "This helps us find the right programs for you.",
     type: 'single',
     options: [
-      { value: 'commercial', label: 'From my job or my spouse\'s job', description: 'Insurance through work', hint: 'Copay cards available!' },
-      { value: 'marketplace', label: 'I bought it myself', description: 'From Healthcare.gov or an insurance company', hint: 'Copay cards available!' },
-      { value: 'medicare', label: 'Medicare', description: 'The program for people 65+ or with disabilities', hint: 'Foundations & PAPs available' },
-      { value: 'medicaid', label: 'Medicaid', description: 'State program for people with lower income', hint: 'Usually well covered' },
+      { value: 'commercial', label: 'Commercial Insurance', description: 'From my job, my spouse\'s job, or I bought it myself' },
+      { value: 'medicare', label: 'Medicare', description: 'The program for people 65+ or with disabilities' },
+      { value: 'medicaid', label: 'Medicaid', description: 'State program for people with lower income' },
       { value: 'tricare_va', label: 'Military or VA (Veterans)', description: 'TRICARE or Veterans benefits' },
       { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
-      { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage', hint: 'Free meds may be available!' },
-      { value: 'other', label: 'I\'m not sure', description: 'We\'ll show all available options' },
+      { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage' },
     ],
   },
   {

@@ -1171,27 +1171,21 @@ const Wizard = () => {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
-                label: 'From my job or my spouse\'s job',
-                highlight: 'Copay cards available!',
-                description: 'Insurance through work'
+                label: 'Commercial Insurance',
+                highlight: null,
+                description: 'From my job, my spouse\'s job, or I bought it myself'
             },
             {
                 value: InsuranceType.MEDICARE,
                 label: 'Medicare',
-                highlight: 'Foundations & PAPs available',
+                highlight: null,
                 description: 'The program for people 65+ or with disabilities'
             },
             {
                 value: InsuranceType.MEDICAID,
                 label: 'Medicaid',
-                highlight: 'Usually well covered',
+                highlight: null,
                 description: 'State program for people with lower income'
-            },
-            {
-                value: InsuranceType.MARKETPLACE,
-                label: 'I bought it myself',
-                highlight: 'Copay cards available!',
-                description: 'From Healthcare.gov or an insurance company'
             },
             {
                 value: InsuranceType.TRICARE_VA,
@@ -1208,14 +1202,8 @@ const Wizard = () => {
             {
                 value: InsuranceType.UNINSURED,
                 label: 'I don\'t have insurance',
-                highlight: 'Free meds may be available!',
+                highlight: null,
                 description: 'No current insurance coverage'
-            },
-            {
-                value: InsuranceType.OTHER,
-                label: 'I\'m not sure',
-                highlight: 'That\'s okay!',
-                description: "We'll help you figure it out and show all options"
             }
         ];
 
