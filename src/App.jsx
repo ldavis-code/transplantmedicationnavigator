@@ -698,9 +698,9 @@ const Home = () => {
                         </div>
 
                         <p className="text-lg text-emerald-100 leading-relaxed">
-                            To bridge the critical gap between <strong>prescription</strong> and <strong>possession</strong>.
+                            We help you get the medicine you need.
                             <br/><br/>
-                            We provide a safe, unbiased, and transparent navigator for medication access, empowering transplant patients to overcome financial toxicity and focus on living their lives.
+                            We show you how to find help paying for your medicine. We give you clear, honest information. We help you take control so you can focus on staying healthy.
                         </p>
                     </div>
                     <div className="p-8 md:p-12 md:pt-8 flex flex-col justify-center bg-emerald-800/50">
@@ -709,9 +709,9 @@ const Home = () => {
                             <h2 className="text-2xl font-bold tracking-tight">Our Vision</h2>
                         </div>
                         <p className="text-lg text-emerald-100 leading-relaxed">
-                            Health equity for every transplant recipient.
+                            Every transplant patient deserves a fair chance.
                             <br/><br/>
-                            We envision a world where the gift of life is never compromised by the cost of medication, and where every patient has the knowledge to advocate for their own care.
+                            We believe no one should lose their health because medicine costs too much. We want every patient to know how to speak up for what they need.
                         </p>
                     </div>
                 </div>
@@ -721,16 +721,16 @@ const Home = () => {
                     <h3 className="text-center font-bold text-emerald-100 uppercase tracking-wider text-sm mb-8">Why We Built This</h3>
                     <div className="grid md:grid-cols-3 gap-8 text-center">
                         <div>
-                            <h4 className="font-bold text-white text-lg mb-2">Eliminating "Brain Fog"</h4>
-                            <p className="text-emerald-100 text-sm">We simplify complex applications into step-by-step guides, because navigating care shouldn't require a degree.</p>
+                            <h4 className="font-bold text-white text-lg mb-2">Easy to Understand</h4>
+                            <p className="text-emerald-100 text-sm">We break down hard forms into easy steps. You should not need a college degree to get help with your medicine.</p>
                         </div>
                         <div>
-                            <h4 className="font-bold text-white text-lg mb-2">A Safe Harbor</h4>
-                            <p className="text-emerald-100 text-sm">We are a neutral space. We do not sell data, we do not favor pharmacies, and information could protect you from predatory scams.</p>
+                            <h4 className="font-bold text-white text-lg mb-2">A Safe Place</h4>
+                            <p className="text-emerald-100 text-sm">We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.</p>
                         </div>
                         <div>
-                            <h4 className="font-bold text-white text-lg mb-2">Financial Control</h4>
-                            <p className="text-emerald-100 text-sm">By comparing cash prices, PAPs, and foundations side-by-side, we put the power of choice back in your hands.</p>
+                            <h4 className="font-bold text-white text-lg mb-2">Save Money</h4>
+                            <p className="text-emerald-100 text-sm">We show you prices and free medicine programs all in one place. You can pick what works best for you.</p>
                         </div>
                     </div>
                 </div>
@@ -759,7 +759,7 @@ const Home = () => {
                     </h2>
                 </div>
                 <p className="text-slate-700 leading-relaxed">
-                    <strong className="text-slate-900">Lorrinda Gray-Davis</strong> — liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO) — built this tool from lived experience. She serves as Vice Chair on the OPTN Patient Affairs Committee, is a Harrison Fellow with the Fatty Liver Foundation, and has received an HRSA Commendation Letter for her work on the Transitional Nominating Committee. Her peer support research is published in <em>Hepatology Communications</em>, where she is co-first author on "Enhancing Care in Alcohol-Associated Liver Disease Through Peer Support for Alcohol Use Disorder."
+                    <strong className="text-slate-900">Lorrinda Gray-Davis</strong> built this tool. She is a liver cancer survivor and liver transplant patient. She knows what you are going through because she has been there. Lorrinda works with patient groups to help transplant patients across the country. She has won awards for her work helping patients.
                 </p>
             </section>
 
@@ -772,7 +772,7 @@ const Home = () => {
                     Need to Talk to Someone?
                 </h3>
                 <p className="text-slate-600 mb-4">
-                    The transplant journey can be emotionally challenging. Confidential support is available 24/7.
+                    Being a transplant patient can be hard on your feelings. Free, private help is here for you any time, day or night.
                 </p>
                 <div className="mb-4">
                     <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
@@ -782,7 +782,7 @@ const Home = () => {
                     <p className="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
                 </div>
                 <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                    Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out—there are people who want to help.
+                    Asking for help is a sign of strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. If you are having a hard time, please reach out. People want to help you.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
                     <div className="bg-white/80 p-3 rounded-lg">
@@ -801,10 +801,10 @@ const Home = () => {
             {/* Privacy Note */}
             <section className="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
                 <div className="flex justify-center mb-2 text-slate-400" aria-hidden="true"><Lock size={20}/></div>
-                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">Your Privacy is Our Priority</h3>
+                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">We Keep Your Info Safe</h3>
                 <p className="text-slate-600 text-sm">
-                    We do not store your data. We do not ask for your social security number.
-                    We do not sell your information. This is a purely educational tool.
+                    We do not save your info. We do not ask for your social security number.
+                    We do not sell your info. This tool is only here to teach you about your options.
                 </p>
             </section>
 
