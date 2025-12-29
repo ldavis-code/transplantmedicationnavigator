@@ -432,7 +432,7 @@ const Layout = ({ children }) => {
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
-        { path: '/pricing', label: 'Pricing & Partners', ariaLabel: 'View pricing and partnership information' },
+        { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
     ];
 
