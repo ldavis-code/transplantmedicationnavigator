@@ -1172,38 +1172,38 @@ const Wizard = () => {
             {
                 value: InsuranceType.COMMERCIAL,
                 label: 'Commercial Insurance',
-                highlight: null,
-                description: 'From my job, my spouse\'s job, or I bought it myself'
+                description: 'From my job, my spouse\'s job, or I bought it myself',
+                helpText: 'Can use manufacturer copay cards + PAPs'
             },
             {
                 value: InsuranceType.MEDICARE,
                 label: 'Medicare',
-                highlight: null,
-                description: 'The program for people 65+ or with disabilities'
+                description: 'The program for people 65+ or with disabilities',
+                helpText: 'Part B-ID important for kidney patients; can use PAPs but NOT copay cards'
             },
             {
                 value: InsuranceType.MEDICAID,
                 label: 'Medicaid',
-                highlight: null,
-                description: 'State program for people with lower income'
+                description: 'State program for people with lower income',
+                helpText: 'May have full coverage; check state formulary'
             },
             {
                 value: InsuranceType.TRICARE_VA,
                 label: 'Military or VA (Veterans)',
-                highlight: null,
-                description: 'TRICARE or Veterans benefits'
+                description: 'TRICARE or Veterans benefits',
+                helpText: null
             },
             {
                 value: InsuranceType.IHS,
                 label: 'Indian Health Service',
-                highlight: null,
-                description: 'Tribal health programs'
+                description: 'Tribal health programs',
+                helpText: null
             },
             {
                 value: InsuranceType.UNINSURED,
                 label: 'I don\'t have insurance',
-                highlight: null,
-                description: 'No current insurance coverage'
+                description: 'No current insurance coverage',
+                helpText: 'Manufacturer PAPs are your primary option'
             }
         ];
 
@@ -1211,7 +1211,11 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-6">What's your insurance type?</h1>
+                <h1 className="text-2xl font-bold mb-2">What's your insurance type?</h1>
+                <div className="flex items-center gap-2 mb-6 text-slate-700">
+                    <Lightbulb className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
+                    <p className="text-sm"><strong>Having insurance doesn't mean you can't get additional help!</strong></p>
+                </div>
                 <WizardHelp step={step} answers={answers} />
                 <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
                     {insuranceOptions.map((option) => (
@@ -1227,24 +1231,18 @@ const Wizard = () => {
                             <div className="flex justify-between items-start">
                                 <div>
                                     <div className="font-bold text-lg text-blue-700">{option.label}</div>
-                                    {option.highlight && (
-                                        <div className="text-emerald-600 font-medium text-sm mt-1">{option.highlight}</div>
-                                    )}
                                     <div className="text-slate-500 text-sm mt-1">{option.description}</div>
+                                    {option.helpText && (
+                                        <div className="text-emerald-700 text-sm mt-2 flex items-center gap-1">
+                                            <Lightbulb className="text-amber-500" size={14} aria-hidden="true" />
+                                            {option.helpText}
+                                        </div>
+                                    )}
                                 </div>
                                 {answers.insurance === option.value && <CheckCircle className="text-emerald-600 flex-shrink-0" aria-hidden="true" />}
                             </div>
                         </button>
                     ))}
-                </div>
-                {/* Insurance help hint */}
-                <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                    <div className="flex items-start gap-3">
-                        <Lightbulb className="text-amber-500 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <p className="text-blue-800 text-sm">
-                            <strong>Having insurance doesn't mean you can't get additional help.</strong> Many programs are available regardless of your insurance type.
-                        </p>
-                    </div>
                 </div>
             </div>
         );
