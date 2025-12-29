@@ -86,12 +86,12 @@ export const seoMetadata = {
 
   forTransplantPrograms: {
     title: 'For Transplant Programs | Transplant Medication Navigator™',
-    description: 'Help transplant patients navigate medication costs with our privacy-safe resource. Reduce financial barriers to adherence with verified assistance programs.',
+    description: 'Help transplant patients find affordable medications with our privacy-safe resource. Reduce financial barriers to adherence with verified help programs.',
     canonical: `${BASE_URL}/for-transplant-programs`,
     ogTitle: 'Transplant Program Partnerships',
     ogDescription: 'Partner with Transplant Medication Navigator to help your patients find medication assistance programs. Privacy-safe, no PHI collected.',
     twitterTitle: 'For Transplant Programs',
-    twitterDescription: 'Help your transplant patients navigate medication costs with free educational resources and verified assistance programs.',
+    twitterDescription: 'Help your transplant patients find affordable medications with free educational resources and verified help programs.',
     breadcrumbName: 'For Transplant Programs',
   },
 
@@ -119,12 +119,12 @@ export const seoMetadata = {
 
   pricing: {
     title: 'Pricing | Transplant Medication Navigator™',
-    description: 'Free access to education, subscription options for patients, and partnership options for organizations. View our transparent pricing.',
+    description: 'Free access to education, subscription options for patients, and partnership options for organizations. View our clear pricing.',
     canonical: `${BASE_URL}/pricing`,
-    ogTitle: 'Transparent Pricing',
+    ogTitle: 'Clear Pricing',
     ogDescription: 'Free educational resources for all. Subscription and partnership options for patients and healthcare organizations.',
     twitterTitle: 'Pricing',
-    twitterDescription: 'Free access to education, partnership options for organizations. View our transparent pricing.',
+    twitterDescription: 'Free access to education, partnership options for organizations. View our clear pricing.',
     breadcrumbName: 'Pricing & Partners',
   },
 
