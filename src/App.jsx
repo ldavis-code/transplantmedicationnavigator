@@ -1186,15 +1186,15 @@ const Wizard = () => {
             },
             {
                 value: InsuranceType.TRICARE_VA,
-                label: 'Military or VA (Veterans)',
-                description: 'TRICARE or Veterans benefits',
-                helpText: null
+                label: 'TRICARE or VA (Veterans)',
+                description: 'Military or Veterans benefits',
+                helpText: 'Gov\'t insurance can use assistance programs'
             },
             {
                 value: InsuranceType.IHS,
                 label: 'Indian Health Service',
                 description: 'Tribal health programs',
-                helpText: null
+                helpText: 'Can use assistance programs'
             },
             {
                 value: InsuranceType.UNINSURED,
