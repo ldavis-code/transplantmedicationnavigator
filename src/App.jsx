@@ -2160,13 +2160,10 @@ const MedicationSearch = () => {
                             <p className="text-blue-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
                             <ul className="text-blue-700 text-sm mt-2 ml-4 list-disc space-y-1">
                                 <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
-                                <li><strong>Price</strong> - Compare prices at different pharmacies</li>
+                                <li><strong>Price</strong> - <span className="text-amber-700">Prices are ESTIMATES and vary by the number of pills prescribed or dosage</span></li>
                                 <li><strong>Overview</strong> - Basic info about the medication</li>
                                 <li><strong>Print</strong> - Print-friendly summary</li>
                             </ul>
-                            <p className="text-amber-700 text-sm mt-3 font-medium">
-                                <strong>Prices are ESTIMATES</strong> and vary by the number of pills prescribed or dosage.
-                            </p>
                         </div>
                     </div>
                 </div>
