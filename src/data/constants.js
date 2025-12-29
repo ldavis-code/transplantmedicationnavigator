@@ -30,6 +30,7 @@ export const OrganType = {
 // Insurance types
 export const InsuranceType = {
     COMMERCIAL: 'Commercial / Employer',
+    MARKETPLACE: 'Marketplace / Self-purchased',
     MEDICARE: 'Medicare',
     MEDICAID: 'Medicaid (State)',
     TRICARE_VA: 'TRICARE / VA',

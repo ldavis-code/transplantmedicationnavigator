@@ -53,15 +53,17 @@ const QUIZ_QUESTIONS = [
   {
     id: 'insurance_type',
     question: "What's your primary insurance?",
-    helpText: "This determines which assistance programs you're eligible for.",
+    helpText: "This helps us find the right programs for you.",
     type: 'single',
     options: [
-      { value: 'commercial', label: 'Commercial / Employer', description: 'Private insurance through work or marketplace', hint: 'Copay cards available!' },
-      { value: 'medicare', label: 'Medicare', description: 'Federal program (65+ or disability)', hint: 'Foundations & PAPs available' },
-      { value: 'medicaid', label: 'Medicaid', description: 'State program based on income', hint: 'Usually well covered' },
-      { value: 'tricare_va', label: 'TRICARE / VA', description: 'Military or veterans benefits' },
+      { value: 'commercial', label: 'From my job or my spouse\'s job', description: 'Insurance through work', hint: 'Copay cards available!' },
+      { value: 'marketplace', label: 'I bought it myself', description: 'From Healthcare.gov or an insurance company', hint: 'Copay cards available!' },
+      { value: 'medicare', label: 'Medicare', description: 'The program for people 65+ or with disabilities', hint: 'Foundations & PAPs available' },
+      { value: 'medicaid', label: 'Medicaid', description: 'State program for people with lower income', hint: 'Usually well covered' },
+      { value: 'tricare_va', label: 'Military or VA (Veterans)', description: 'TRICARE or Veterans benefits' },
       { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
-      { value: 'uninsured', label: 'Uninsured / Self-pay', description: 'No current insurance', hint: 'PAPs can provide FREE meds' },
+      { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage', hint: 'Free meds may be available!' },
+      { value: 'other', label: 'I\'m not sure', description: 'We\'ll show all available options' },
     ],
   },
   {
