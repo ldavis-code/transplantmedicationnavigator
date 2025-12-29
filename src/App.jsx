@@ -1024,7 +1024,7 @@ const Wizard = () => {
     // Navigation Logic
     const handleNextFromInsurance = () => setStep(5);
     const handleNextFromMeds = () => {
-        if (answers.insurance === InsuranceType.COMMERCIAL) {
+        if (answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) {
             setStep(6);
         } else {
             setStep(7);
@@ -1171,27 +1171,33 @@ const Wizard = () => {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
-                label: 'Commercial / Employer',
+                label: 'From my job or my spouse\'s job',
                 highlight: 'Copay cards available!',
-                description: 'Private insurance through work or marketplace'
+                description: 'Insurance through work'
             },
             {
                 value: InsuranceType.MEDICARE,
                 label: 'Medicare',
                 highlight: 'Foundations & PAPs available',
-                description: 'Federal program (65+ or disability)'
+                description: 'The program for people 65+ or with disabilities'
             },
             {
                 value: InsuranceType.MEDICAID,
                 label: 'Medicaid',
                 highlight: 'Usually well covered',
-                description: 'State program based on income'
+                description: 'State program for people with lower income'
+            },
+            {
+                value: InsuranceType.MARKETPLACE,
+                label: 'I bought it myself',
+                highlight: 'Copay cards available!',
+                description: 'From Healthcare.gov or an insurance company'
             },
             {
                 value: InsuranceType.TRICARE_VA,
-                label: 'TRICARE / VA',
+                label: 'Military or VA (Veterans)',
                 highlight: null,
-                description: 'Military or veterans benefits'
+                description: 'TRICARE or Veterans benefits'
             },
             {
                 value: InsuranceType.IHS,
@@ -1201,13 +1207,13 @@ const Wizard = () => {
             },
             {
                 value: InsuranceType.UNINSURED,
-                label: 'Uninsured / Self-pay',
-                highlight: 'PAPs can provide FREE meds',
-                description: 'No current insurance'
+                label: 'I don\'t have insurance',
+                highlight: 'Free meds may be available!',
+                description: 'No current insurance coverage'
             },
             {
                 value: InsuranceType.OTHER,
-                label: 'Other / Not Sure',
+                label: 'I\'m not sure',
                 highlight: null,
                 description: "We'll show all available options"
             }
@@ -1387,7 +1393,7 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={() => setStep(answers.insurance === InsuranceType.COMMERCIAL ? 6 : 5)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={() => setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 6 : 5)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
@@ -1427,7 +1433,7 @@ const Wizard = () => {
     if (step === 8) {
         const isKidney = answers.organs.includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
-        const isCommercial = answers.insurance === InsuranceType.COMMERCIAL;
+        const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
         const isUninsured = answers.insurance === InsuranceType.UNINSURED;
         const financial = answers.financialStatus;
 
@@ -2493,12 +2499,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         {/* Copay Card Section - For Commercial Insurance ONLY */}
                         {(med.copayProgramId || med.copayUrl) && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
-                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Manufacturer Copay Card</h3>
+                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> Copay Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
-                                    <strong>For Commercial/Employer Insurance ONLY:</strong> Save on your copay — often pay as little as $0-$25 per prescription.
+                                    <strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.
                                 </p>
                                 <p className="text-xs text-red-600 font-medium mb-4">
-                                    ⚠️ NOT available for Medicare, Medicaid, TRICARE, VA, or IHS — see Manufacturer PAP below instead.
+                                    ⚠️ NOT for Medicare, Medicaid, TRICARE, VA, or IHS. Use the Free Medicine Program below instead.
                                 </p>
                                 <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     Get Copay Card <ExternalLink size={14} aria-hidden="true" />
@@ -2507,8 +2513,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         )}
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
-                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Manufacturer PAP</h3>
-                                <p className="text-sm text-slate-700 mb-4">For Medicare, Medicaid, uninsured, or if copay card doesn't cover enough — apply for free medication.</p>
+                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Free Medicine Program</h3>
+                                <p className="text-sm text-slate-700 mb-4">For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company.</p>
                                 <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
                                 {med.supportUrl && (
                                     <a href={med.supportUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
@@ -2516,7 +2522,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                             </section>
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
                                 <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Foundations & Grants</h3>
-                                <p className="text-sm text-slate-700 mb-4">Check HealthWell, PAN Foundation, and PAF for copay assistance.</p>
+                                <p className="text-sm text-slate-700 mb-4">These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.</p>
                                 <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
                         </div>
@@ -2529,14 +2535,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                     </div>
                                     <div className="flex-grow">
                                         <h4 className="font-bold text-amber-900 mb-1 flex items-center gap-2">
-                                            High-Cost Medication — Strong PAP Recommended
+                                            This Medicine Costs a Lot — Apply for Free Medicine!
                                         </h4>
                                         <p className="text-sm text-slate-700 mb-2">
-                                            <strong>{med.brandName}</strong> is a high-cost medication, but the manufacturer offers a Patient Assistance Program that can provide it <strong>free or at significantly reduced cost</strong> if you qualify.
-                                            {med.typical_copay_tier === 'Specialty' && " As a specialty tier drug, this is often the best path to affordable access."}
+                                            <strong>{med.brandName}</strong> costs a lot, but the drug company may give it to you for <strong>free or at a lower price</strong> if you qualify.
+                                            {med.typical_copay_tier === 'Specialty' && " For specialty drugs like this, the free medicine program is often the best way to get it."}
                                         </p>
                                         <p className="text-sm text-amber-800 font-medium">
-                                            We strongly recommend applying — many patients who think they won't qualify are surprised to find they do.
+                                            We suggest you apply. Many people who think they won't qualify are surprised when they do!
                                         </p>
                                     </div>
                                 </div>
@@ -2549,10 +2555,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                 </div>
                                 <div className="flex-grow">
                                     <h4 className="font-bold text-indigo-900 mb-1 flex items-center gap-2">
-                                        Need Help Filling Out the Application?
+                                        Need Help Filling Out the Forms?
                                     </h4>
                                     <p className="text-sm text-slate-700 mb-3">
-                                        Our comprehensive guide walks you through the entire application process with templates, checklists, and step-by-step instructions.
+                                        Our guide shows you step-by-step how to fill out the forms. We have checklists and examples to help you.
                                     </p>
                                     <Link
                                         to="/application-help"
@@ -2605,6 +2611,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                             </div>
                         </div>
 
+                        {/* Price Estimates Notice */}
+                        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-800 flex items-start gap-2">
+                            <AlertCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <p><strong>These are estimates only.</strong> Your actual price may be different. Always check with the pharmacy for the real price.</p>
+                        </div>
+
                         {/* Unified Price Estimates Table */}
                         <div className="overflow-x-auto rounded-lg border border-slate-200">
                             <table className="w-full text-sm text-left min-w-[500px]">
@@ -2612,7 +2624,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                 <thead className="bg-slate-100 text-slate-700 font-bold">
                                     <tr>
                                         <th scope="col" className="p-3">Pharmacy / Tool</th>
-                                        <th scope="col" className="p-3">Est. Price</th>
+                                        <th scope="col" className="p-3">Estimated Price</th>
                                         <th scope="col" className="p-3 no-print">Action</th>
                                     </tr>
                                 </thead>
@@ -2625,7 +2637,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-emerald-600">{med.manufacturer} Copay Card</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For commercial/employer insurance only</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Only for insurance from jobs or bought yourself</div>
                                         </td>
                                         <td className="p-3">
                                             <div className="text-emerald-600 font-bold">$0 - $10/month</div>
@@ -2647,11 +2659,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                                 <span className="w-2.5 h-2.5 rounded-full bg-orange-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-orange-600">{med.manufacturer} PAP</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Medicare, Medicaid, uninsured, underinsured</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For Medicare, Medicaid, or no insurance</div>
                                         </td>
                                         <td className="p-3">
                                             <div className="text-orange-600 font-bold">FREE</div>
-                                            <div className="text-xs text-slate-500 mt-0.5">Income requirements apply</div>
+                                            <div className="text-xs text-slate-500 mt-0.5">You must meet income rules</div>
                                         </td>
                                         <td className="p-3 no-print">
                                             <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : med.papUrl} target="_blank" rel="noreferrer" className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
@@ -2745,7 +2757,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                                 <span className="w-2.5 h-2.5 rounded-full bg-slate-400 flex-shrink-0"></span>
                                                 <div className="font-bold text-slate-500">Cost Plus Drugs</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Online pharmacy, transparent pricing</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Online pharmacy with low prices</div>
                                             {costPlusStats && (
                                                 <div className="text-xs text-slate-500 flex items-center gap-1 mt-1 ml-4.5">
                                                     <Users size={14} />
@@ -2782,7 +2794,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         {(med.copayProgramId || med.copayUrl) && (
                             <div className="mt-2 text-xs text-red-600 flex items-center gap-1">
                                 <AlertCircle size={14} />
-                                Copay cards NOT available for Medicare, Medicaid, TRICARE, VA, or IHS
+                                Copay cards are NOT for Medicare, Medicaid, TRICARE, VA, or IHS
                             </div>
                         )}
 
@@ -2790,12 +2802,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         <div className="mt-3 space-y-2">
                             <div className="text-xs text-slate-600 italic flex items-start gap-2" role="note">
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                <p>Prices shown are for a typical 30-day supply. Actual savings may vary by quantity—check directly with pharmacy for exact pricing. Estimates are approximate ranges based on general market research (last updated: December 24, 2025).</p>
+                                <p>These prices are for a 30-day supply. Your price may be different. Call the pharmacy to get your exact price. (Last updated: December 24, 2025)</p>
                             </div>
                             {(costPlusStats || goodRxStats || singleCareStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">
                                     <Users size={14} className="flex-shrink-0 mt-0.5" />
-                                    <p><strong>Community prices</strong> are real prices reported by other users in the last 90 days. Help others by reporting prices you've paid!</p>
+                                    <p><strong>Community prices</strong> are real prices that other people paid in the last 90 days. Help others by telling us what you paid!</p>
                                 </div>
                             )}
 
@@ -2806,30 +2818,30 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                         <AlertTriangle size={16} />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-red-900 text-sm mb-2">The Deductible Trap with Discount Cards & Cash</h4>
+                                        <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>Warning:</strong> When you use discount cards (GoodRx, SingleCare) or cash-based pharmacies like Cost Plus Drugs, the money you pay does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your insurance deductible or out-of-pocket maximum</span>.
+                                            <strong>Warning:</strong> When you use discount cards (GoodRx, SingleCare) or pay cash at Cost Plus Drugs, that money does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your yearly deductible or out-of-pocket max</span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
-                                            Transplant patients often reach their out-of-pocket max within a few months—after which insurance pays 100%. Using discount cards or paying cash delays this, meaning you pay longer.
+                                            Many transplant patients hit their out-of-pocket max in a few months. After that, insurance pays 100%. If you use discount cards instead, you may end up paying more all year.
                                         </p>
                                         {isCostPlusAvailable && (
                                             <div className="bg-amber-100 border border-amber-300 rounded p-2 mb-3 text-xs text-amber-900">
-                                                <strong>Cost Plus Drugs Note:</strong> Cost Plus Drugs operates as a cash-based pharmacy. Cash payments will not count toward your deductible. However, your medications may be cheaper paying cash than running through insurance—weigh this carefully.
+                                                <strong>About Cost Plus Drugs:</strong> This is a cash pharmacy. What you pay there does not count toward your deductible. But the price might still be lower than your insurance copay. Compare before you decide!
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                                             <div className="bg-white/80 p-2 rounded border border-emerald-200">
                                                 <div className="font-bold text-emerald-700">✅ Using Insurance</div>
-                                                <div className="text-slate-600">Hit OOPM in 3 months → $0 rest of year</div>
+                                                <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
                                             </div>
                                             <div className="bg-white/80 p-2 rounded border border-red-200">
                                                 <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
-                                                <div className="text-slate-600">Never hit OOPM → Pay all year</div>
+                                                <div className="text-slate-600">Pay less each time → but pay all year long</div>
                                             </div>
                                         </div>
                                         <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
-                                            Learn more about the Deductible Trap <ArrowRight size={12} />
+                                            Learn more <ArrowRight size={12} />
                                         </Link>
                                     </div>
                                 </div>

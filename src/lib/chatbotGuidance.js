@@ -22,6 +22,7 @@ export const getEligibilityFlags = (insuranceType) => {
 
   switch (insuranceType) {
     case InsuranceType.COMMERCIAL:
+    case InsuranceType.MARKETPLACE:
       flags.copayCards = true;
       break;
     case InsuranceType.MEDICARE:
@@ -61,6 +62,7 @@ export const getPriorityOrder = (insuranceType, financialStatus) => {
 
   switch (insuranceType) {
     case InsuranceType.COMMERCIAL:
+    case InsuranceType.MARKETPLACE:
       return isUrgent
         ? ['copayCards', 'foundations', 'manufacturerPAPs', 'discountCards']
         : ['copayCards', 'discountCards', 'foundations', 'manufacturerPAPs'];
@@ -202,6 +204,7 @@ export const generateGuidanceSummary = (answers, medications) => {
   // Generate key messages based on insurance
   switch (insurance) {
     case InsuranceType.COMMERCIAL:
+    case InsuranceType.MARKETPLACE:
       summary.keyMessages.push({
         type: 'success',
         title: 'Copay Cards Can Help',
