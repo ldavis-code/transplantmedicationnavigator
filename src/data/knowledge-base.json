@@ -1,38 +1,38 @@
 {
   "greeting": {
     "keywords": ["hello", "hi", "hey", "help"],
-    "response": "Hello! I'm here to help you find affordable transplant medications. I can help you:\n\n• Understand your insurance coverage\n• Find programs that give free or low-cost medications\n• Use the My Path quiz\n• Learn about specific medications\n\nWhat would you like to know?"
+    "response": "Hi! I am here to help you find ways to pay for your transplant medicine. I can help you:\n\n• Learn about your insurance\n• Find programs that give free or low-cost medicine\n• Take the My Path quiz\n• Learn about specific drugs\n\nWhat would you like to know?"
   },
   "insurance": {
     "keywords": ["insurance", "medicare", "medicaid", "commercial", "coverage"],
-    "response": "**Insurance Coverage Options:**\n\n• **Medicare**: Kidney transplant patients can get Part B coverage for anti-rejection drugs (called Part B-ID)\n• **Medicaid**: Coverage varies by state. Check your state's program.\n• **Private insurance (from a job or marketplace)**: Use specialty pharmacies and copay cards to save money\n• **No insurance**: Apply for free medications from drug company programs (called PAPs)\n\nNeed help with a specific insurance type?"
+    "response": "**Insurance Options:**\n\n• **Medicare**: Kidney patients can get Part B coverage for anti-rejection drugs\n• **Medicaid**: Coverage varies by state. Check your state's program.\n• **Private insurance (from a job)**: Use specialty pharmacies and copay cards to save money\n• **No insurance**: Apply for free medicine from drug companies (called PAPs)\n\nNeed help with your insurance type?"
   },
   "pap": {
     "keywords": ["pap", "patient assistance", "free medication", "afford", "cost"],
-    "response": "**Patient Assistance Programs (PAPs):**\n\nDrug companies give free or low-cost medications to people who qualify. Here's how to apply:\n\n1. Find your medication's PAP link (use our Search Meds tool)\n2. Check income rules (most allow 2-5 times the poverty level)\n3. Have your doctor fill out the forms\n4. Send proof of your income\n\nMost applications take 2-4 weeks. Need help finding a specific program?"
+    "response": "**Free Medicine Programs (PAPs):**\n\nDrug companies give free or low-cost medicine to people who qualify. Here is how to apply:\n\n1. Find your drug's program link (use our Search Meds tool)\n2. Check income rules (most allow 2-5 times the poverty level)\n3. Have your doctor fill out the forms\n4. Send proof of your income\n\nMost take 2-4 weeks. Need help finding a program?"
   },
   "foundation": {
     "keywords": ["foundation", "healthwell", "pan", "copay"],
-    "response": "**Copay Assistance Foundations:**\n\nThese nonprofit groups help pay what you owe at the pharmacy:\n\n• **HealthWell Foundation**: Has funds for specific diseases\n• **PAN Foundation**: Helps with many long-term conditions\n• **Patient Advocate Foundation**: Helps with paperwork and money\n• **American Kidney Fund**: For kidney patients only\n\nThese funds run out fast. Apply as early as you can!"
+    "response": "**Help From Foundations:**\n\nThese nonprofit groups help pay what you owe at the pharmacy:\n\n• **HealthWell Foundation**: Has funds for specific diseases\n• **PAN Foundation**: Helps with many long-term conditions\n• **Patient Advocate Foundation**: Helps with paperwork and money\n• **American Kidney Fund**: For kidney patients only\n\nThese funds run out fast. Apply as early as you can!"
   },
   "specialtyPharmacy": {
     "keywords": ["specialty pharmacy", "mail order", "cvs", "walgreens"],
-    "response": "**Specialty Pharmacy Info:**\n\nMost private insurance makes you fill transplant drugs at a specific specialty pharmacy (not your local store).\n\n**Common specialty pharmacies:**\n• Accredo\n• CVS Specialty\n• Walgreens Specialty\n• Briova/Optum\n\n**Important:** If you use the wrong pharmacy, you may pay full price! Call your insurance to find out which pharmacy you must use."
+    "response": "**Specialty Pharmacy Info:**\n\nMost private insurance makes you fill transplant drugs at a specific pharmacy (not your local store).\n\n**Common specialty pharmacies:**\n• Accredo\n• CVS Specialty\n• Walgreens Specialty\n• Briova/Optum\n\n**Important:** If you use the wrong pharmacy, you may pay full price! Call your insurance to find out which pharmacy you must use."
   },
   "medications": {
     "keywords": ["tacrolimus", "prograf", "cyclosporine", "mycophenolate", "cellcept", "medication"],
-    "response": "**Common Transplant Medications:**\n\n**Anti-rejection drugs** (keep your body from rejecting the organ):\n• Tacrolimus (Prograf)\n• Cyclosporine (Neoral)\n• Mycophenolate (CellCept)\n\n**Anti-viral drugs** (prevent infections):\n• Valganciclovir (Valcyte)\n• Acyclovir (Zovirax)\n\nUse our **Search Meds** tool to find prices and assistance programs for your specific medications."
+    "response": "**Common Transplant Drugs:**\n\n**Anti-rejection drugs** (keep your body from rejecting the organ):\n• Tacrolimus (Prograf)\n• Cyclosporine (Neoral)\n• Mycophenolate (CellCept)\n\n**Anti-virus drugs** (prevent infections):\n• Valganciclovir (Valcyte)\n• Acyclovir (Zovirax)\n\nUse our **Search Meds** tool to find prices and help programs for your drugs."
   },
   "wizard": {
     "keywords": ["my path", "wizard", "quiz", "start"],
-    "response": "**My Path Quiz Guide:**\n\nThe quiz helps you find assistance programs that fit your needs. It asks about:\n\n1. Your role (patient, caregiver, or social worker)\n2. Transplant status (before or after transplant)\n3. Organ type\n4. Insurance type\n5. Medications you take\n6. Your financial situation\n\nIt takes about 3-5 minutes. Your answers stay on your device—we don't save them. Ready to start?"
+    "response": "**My Path Quiz Guide:**\n\nThe quiz helps you find programs that fit your needs. It asks about:\n\n1. Who you are (patient, caregiver, or social worker)\n2. If you have had your transplant yet\n3. Your organ type\n4. Your insurance\n5. Your medicines\n6. How you are doing with costs\n\nIt takes about 3-5 minutes. Your answers stay on your device. We do not save them. Ready to start?"
   },
   "application": {
     "keywords": ["apply", "application", "how to apply", "documents", "forms"],
-    "response": "**How to Apply for Assistance:**\n\n**What you need:**\n• Recent tax return or pay stubs\n• Insurance card (if you have insurance)\n• Prescription from your doctor\n\n**Steps:**\n1. Create an account on the program's website\n2. Fill out your part of the form\n3. Send the form to your doctor to complete\n4. Upload your income documents\n5. Wait 2-4 weeks for a decision\n\nCheck our **Grants & Foundations** page for more help!"
+    "response": "**How to Apply for Help:**\n\n**What you need:**\n• Recent tax return or pay stubs\n• Insurance card (if you have insurance)\n• Prescription from your doctor\n\n**Steps:**\n1. Create an account on the program's website\n2. Fill out your part of the form\n3. Send the form to your doctor to complete\n4. Upload your income documents\n5. Wait 2-4 weeks for a decision\n\nCheck our **Grants & Foundations** page for more help!"
   },
   "faq": {
     "keywords": ["faq", "questions", "common"],
-    "response": "**Frequently Asked Questions:**\n\nCheck our FAQ page for answers to common questions about:\n\n• Eligibility requirements\n• Application timelines\n• Renewal processes\n• Generic vs brand medications\n• Insurance appeals\n\nWhat specific question do you have?"
+    "response": "**Common Questions:**\n\nCheck our FAQ page for answers about:\n\n• Who can apply\n• How long it takes\n• How to renew\n• Generic vs brand drugs\n• Insurance appeals\n\nWhat question do you have?"
   }
 }

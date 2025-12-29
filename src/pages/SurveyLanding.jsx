@@ -33,7 +33,7 @@ export default function SurveyLanding() {
               </h2>
             </div>
             <p className="text-slate-600 mb-4">
-              For transplant recipients navigating immunosuppressants, specialty pharmacies, and insurance challenges.
+              For transplant patients dealing with anti-rejection drugs, pharmacies, and insurance.
             </p>
             <p className="text-sm text-slate-500 mb-6">
               8 topic areas - complete only the ones relevant to you
@@ -57,7 +57,7 @@ export default function SurveyLanding() {
               </h2>
             </div>
             <p className="text-slate-600 mb-4">
-              For anyone managing chronic conditions and facing medication access or affordability challenges.
+              For anyone who has trouble getting or paying for medicine.
             </p>
             <p className="text-sm text-slate-500 mb-6">
               5 topic areas - takes about 5 minutes
@@ -78,9 +78,7 @@ export default function SurveyLanding() {
             Why We're Asking
           </h3>
           <blockquote className="text-slate-600 italic mb-4 border-l-4 border-emerald-200 pl-4">
-            "Every experience you share helps another patient navigate their journey. Together, we're building
-            something that didn't exist for us — a roadmap through the medication maze, and the evidence we need
-            to fix a broken system."
+            "When you share your story, you help other patients. Together, we are building a guide that we wish we had. Your voice helps us fix a broken system."
           </blockquote>
           <p className="text-sm text-slate-500">
             — Lorrinda, TRIO President & Liver Transplant Recipient
