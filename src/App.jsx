@@ -831,10 +831,7 @@ const WizardHelp = ({ step, answers }) => {
             title: "Selecting Your Organ",
             content: "Choose all organs that apply to your situation:\n\n• **Single organ**: We'll show medications specific to that organ\n• **Multi-organ**: Select all relevant organs\n• **Other/Not listed**: Shows general transplant medications\n\nThis filters the medication list to show only relevant options."
         },
-        4: {
-            title: "Insurance Type",
-            content: "Your insurance determines which assistance programs you can use:\n\n• **Commercial**: Can use manufacturer copay cards + PAPs\n• **Medicare**: Part B-ID important for kidney patients; can use PAPs but NOT copay cards\n• **Medicaid**: May have full coverage; check state formulary\n• **Uninsured**: Manufacturer PAPs are your primary option\n\n💡 Having insurance doesn't mean you can't get additional help!"
-        },
+        4: null,
         5: {
             title: "Selecting Medications",
             content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\n💡 If you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
@@ -1189,15 +1186,15 @@ const Wizard = () => {
             },
             {
                 value: InsuranceType.TRICARE_VA,
-                label: 'Military or VA (Veterans)',
-                description: 'TRICARE or Veterans benefits',
-                helpText: null
+                label: 'TRICARE or VA (Veterans)',
+                description: 'Military or Veterans benefits',
+                helpText: 'Gov\'t insurance can use assistance programs'
             },
             {
                 value: InsuranceType.IHS,
                 label: 'Indian Health Service',
                 description: 'Tribal health programs',
-                helpText: null
+                helpText: 'Can use assistance programs'
             },
             {
                 value: InsuranceType.UNINSURED,

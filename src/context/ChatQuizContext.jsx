@@ -59,7 +59,7 @@ const QUIZ_QUESTIONS = [
       { value: 'commercial', label: 'Commercial Insurance', description: 'From my job, my spouse\'s job, or I bought it myself' },
       { value: 'medicare', label: 'Medicare', description: 'The program for people 65+ or with disabilities' },
       { value: 'medicaid', label: 'Medicaid', description: 'State program for people with lower income' },
-      { value: 'tricare_va', label: 'Military or VA (Veterans)', description: 'TRICARE or Veterans benefits' },
+      { value: 'tricare_va', label: 'TRICARE or VA (Veterans)', description: 'Military or Veterans benefits' },
       { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
       { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage' },
     ],
