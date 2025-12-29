@@ -1214,8 +1214,8 @@ const Wizard = () => {
             {
                 value: InsuranceType.OTHER,
                 label: 'I\'m not sure',
-                highlight: null,
-                description: "We'll show all available options"
+                highlight: 'That\'s okay!',
+                description: "We'll help you figure it out and show all options"
             }
         ];
 
@@ -1918,19 +1918,14 @@ const MedicationSearch = () => {
 
     return (
         <article className="max-w-5xl mx-auto space-y-8">
+            {/* Show full search section only when no items OR when showSavings is false and user wants to add more */}
+            {!hasItems && (
             <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Search Medications</h1>
                         <p className="text-slate-600">Search for your medications to build a shareable price list.</p>
                     </div>
-                    {hasItems && (
-                        <div className="flex gap-2 no-print">
-                            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-bold hover:bg-slate-200 transition border border-slate-200" aria-label="Print your medication list">
-                                <Printer size={18} aria-hidden="true" /> Print
-                            </button>
-                        </div>
-                    )}
                 </div>
 
                 {/* Important Safety Warning */}
@@ -2037,6 +2032,148 @@ const MedicationSearch = () => {
                     )}
                 </div>
             </section>
+            )}
+
+            {/* When user has medications - show confirmation prompt and guidance */}
+            {hasItems && !showSavings && (
+                <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                        <div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Your Medications</h1>
+                            <p className="text-slate-600">Here are the medications you selected.</p>
+                        </div>
+                        <div className="flex gap-2 no-print">
+                            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-bold hover:bg-slate-200 transition border border-slate-200" aria-label="Print your medication list">
+                                <Printer size={18} aria-hidden="true" /> Print
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Are these all your medications prompt */}
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="status">
+                        <div className="flex items-start gap-3">
+                            <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                            <div>
+                                <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
+                                <p className="text-amber-700 text-sm">If you take other medications, you can add them using the search box below.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Simple add more medications search */}
+                    <div className="relative z-20 no-print mb-6">
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <div className="flex-grow relative">
+                                <label htmlFor="med-search-add" className="sr-only">Add more medications</label>
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
+                                <input
+                                    id="med-search-add"
+                                    type="text"
+                                    placeholder="Add another medication..."
+                                    className="w-full pl-12 pr-12 py-3 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none text-base transition shadow-sm"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') handleSearch();
+                                        if (e.key === 'Escape') { setSearchResult(null); setSearchTerm(''); }
+                                    }}
+                                    aria-expanded={!!(searchResult && searchTerm && !isSearching)}
+                                />
+                                {searchTerm && (
+                                    <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Clear search">
+                                        <X size={20} />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        {searchResult && searchTerm && !isSearching && (
+                            <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[40vh] overflow-y-auto z-50" role="listbox">
+                                {searchResult.internal.length > 0 && (
+                                    <div className="space-y-1 mb-2">
+                                        {searchResult.internal.map(med => {
+                                            const isAlreadyIn = myListIds.includes(med.id);
+                                            return (
+                                                <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50" role="option" aria-selected={isAlreadyIn}>
+                                                    <div>
+                                                        <span className="font-bold text-slate-900 block">{med.brandName}</span>
+                                                        <span className="text-sm text-slate-600">{med.genericName}</span>
+                                                    </div>
+                                                    {isAlreadyIn ? (
+                                                        <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> Added</span>
+                                                    ) : (
+                                                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1"><PlusCircle size={16} /> Add</span>
+                                                    )}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                                {searchResult.showExternalOption && (
+                                    <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center border-t border-slate-100">
+                                        <span className="font-bold text-indigo-900">Add "{searchTerm}" as custom medication</span>
+                                        <span className="text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full text-sm font-bold"><PlusCircle size={16} className="inline" /> Add</span>
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Medication list */}
+                    <div className="space-y-3 mb-6">
+                        {displayListInternal.map(med => (
+                            <div key={med.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                <div>
+                                    <span className="font-bold text-slate-900">{med.brandName}</span>
+                                    <span className="text-slate-600 ml-2">({med.genericName})</span>
+                                </div>
+                                <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${med.brandName}`}>
+                                    <X size={18} />
+                                </button>
+                            </div>
+                        ))}
+                        {myCustomMeds.map((name, idx) => (
+                            <div key={`${name}-${idx}`} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                <span className="font-bold text-slate-900">{name}</span>
+                                <button onClick={() => removeCustomFromList(name)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${name}`}>
+                                    <X size={18} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Guidance to click My Medication Savings */}
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 no-print">
+                        <div className="flex items-start gap-3">
+                            <DollarSign className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                            <div>
+                                <p className="font-bold text-emerald-800 mb-1">Ready to find savings?</p>
+                                <p className="text-emerald-700 text-sm">Click the <strong>"My Medication Savings"</strong> button below to see where you can save money on each medication. We'll show you copay cards, patient assistance programs, discount pharmacies, and more.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {hasItems && showSavings && (
+                <>
+                {/* How to use medication cards explanation */}
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4 no-print">
+                    <div className="flex items-start gap-3">
+                        <Info className="text-blue-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <div>
+                            <p className="font-bold text-blue-800 mb-1">How to use these cards</p>
+                            <p className="text-blue-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
+                            <ul className="text-blue-700 text-sm mt-2 ml-4 list-disc space-y-1">
+                                <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
+                                <li><strong>Price</strong> - Compare prices at different pharmacies</li>
+                                <li><strong>Overview</strong> - Basic info about the medication</li>
+                                <li><strong>Print</strong> - Print-friendly summary</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                </>
+            )}
 
             {hasItems && showSavings && (
                 <div className="flex items-center justify-between mb-4 no-print">
@@ -2052,38 +2189,14 @@ const MedicationSearch = () => {
             )}
 
             <div className="space-y-6 pb-12">
-                {!hasItems ? (
+                {!hasItems && (
                     <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                         <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
                         <h2 className="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
                         <p className="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
                     </div>
-                ) : !showSavings ? (
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-                        <h2 className="text-lg font-bold text-slate-900 mb-4">Your Medications</h2>
-                        <div className="space-y-3">
-                            {displayListInternal.map(med => (
-                                <div key={med.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                                    <div>
-                                        <span className="font-bold text-slate-900">{med.brandName}</span>
-                                        <span className="text-slate-600 ml-2">({med.genericName})</span>
-                                    </div>
-                                    <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${med.brandName}`}>
-                                        <X size={18} />
-                                    </button>
-                                </div>
-                            ))}
-                            {myCustomMeds.map((name, idx) => (
-                                <div key={`${name}-${idx}`} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                                    <span className="font-bold text-slate-900">{name}</span>
-                                    <button onClick={() => removeCustomFromList(name)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${name}`}>
-                                        <X size={18} />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ) : (
+                )}
+                {hasItems && showSavings && (
                     <>
                         {displayListInternal.map(med => (
                             <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} />
