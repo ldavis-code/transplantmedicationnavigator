@@ -200,6 +200,12 @@ const getMedicationSuggestions = (answers) => {
                 reason: 'Common for heart/lung candidates'
             });
         }
+        // Preview of post-transplant medications for pre-transplant users
+        suggestions.push({
+            category: 'After Transplant (Preview)',
+            medications: ['tacrolimus', 'mycophenolate', 'prednisone'],
+            reason: 'Core anti-rejection medications you\'ll likely need after transplant'
+        });
     }
 
     // Post-transplant suggestions
