@@ -709,7 +709,7 @@ const Home = () => {
                             <h2 className="text-2xl font-bold tracking-tight">Our Vision</h2>
                         </div>
                         <p className="text-lg text-emerald-100 leading-relaxed">
-                            Every transplant patient deserves a fair chance. No one should lose their health because medicine costs too much.
+                            Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.
                         </p>
                     </div>
                 </div>
@@ -720,7 +720,7 @@ const Home = () => {
                     <div className="grid md:grid-cols-3 gap-8 text-center">
                         <div>
                             <h4 className="font-bold text-white text-lg mb-2">Easy to Understand</h4>
-                            <p className="text-emerald-100 text-sm">We break down hard forms into easy steps. You should not need a college degree to get help with your medicine.</p>
+                            <p className="text-emerald-100 text-sm">We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.</p>
                         </div>
                         <div>
                             <h4 className="font-bold text-white text-lg mb-2">A Safe Place</h4>
@@ -770,7 +770,7 @@ const Home = () => {
                     Need to Talk to Someone?
                 </h3>
                 <p className="text-slate-600 mb-4">
-                    Being a transplant patient can be hard on your feelings. Free, private help is here for you any time, day or night.
+                    Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.
                 </p>
                 <div className="mb-4">
                     <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
@@ -780,7 +780,7 @@ const Home = () => {
                     <p className="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
                 </div>
                 <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                    Asking for help is a sign of strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. If you are having a hard time, please reach out. People want to help you.
+                    Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
                     <div className="bg-white/80 p-3 rounded-lg">
@@ -3197,7 +3197,7 @@ const InsuranceChangeSimulator = () => {
             timing: 'Income qualifies (varies by state)',
             changes: [
                 { type: 'gain', icon: '✅', title: 'Coverage', desc: 'Comprehensive coverage including prescriptions, often $0-$3 copays.' },
-                { type: 'gain', icon: '✅', title: 'Retroactive', desc: 'Coverage can be retroactive up to 3 months before application.' },
+                { type: 'gain', icon: '✅', title: 'Retroactive', desc: 'Coverage goes back up to 3 months before you apply.' },
                 { type: 'change', icon: '🔄', title: 'Covered Medicines', desc: 'Must use Medicaid covered medicines list - may need prior approval for some transplant drugs.' },
             ],
             action: 'Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant papers.',
@@ -4137,7 +4137,7 @@ const Education = () => {
                                 Support for Caregivers & Care Partners
                             </h3>
                             <p className="text-slate-700 mb-6 leading-relaxed">
-                                Caregivers and care partners are essential to the transplant journey. Your well-being matters too. Caring for a loved one can be rewarding but also physically and emotionally demanding. It's important to take care of yourself so you can continue to provide the best support.
+                                You are essential to the transplant journey. Your well-being matters too. Caring for a loved one can feel rewarding but also physically and emotionally demanding. Take care of yourself so you can keep providing the best support.
                             </p>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-white/80 p-5 rounded-xl">
@@ -4273,8 +4273,8 @@ I am applying for Patient Assistance Programs to help cover the cost of my trans
 
 Could you please provide a letter on your letterhead stating:
 • My diagnosis and transplant date
-• The medications I require and why they are medically necessary
-• That these medications are essential to prevent organ rejection
+• The medications I need and why I must take them
+• That I need these medications to prevent organ rejection
 
 Programs I am applying to: ${programName || "[List programs]"}
 
@@ -4295,7 +4295,7 @@ I received a ${transplantType || "[Organ Type]"} transplant${transplantDate ? ` 
 
 ${hardshipDetails || "[Describe your situation: reduced work hours, disability, high medical bills, loss of income, etc.]"}
 
-Without financial assistance, I am at risk of not being able to afford the medications that are essential to keeping my transplanted organ functioning.
+Without financial help, I may not be able to afford the medications I need to keep my transplanted organ working.
 
 I am committed to following my treatment plan and taking my medications as prescribed. Any assistance you can provide would be greatly appreciated.
 
@@ -4409,7 +4409,7 @@ ${patientName || "[Your Name]"}`;
                                 Important Safety Notice
                             </h3>
                             <p className="text-rose-900 font-bold leading-relaxed">
-                                Remember: These organizations will NEVER ask for payment information. If someone asks for payment or credit card details, it is a scam.
+                                Remember: Real organizations NEVER ask for payment. If someone asks for payment or credit card details, that's a scam.
                             </p>
                         </aside>
 

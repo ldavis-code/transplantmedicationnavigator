@@ -8,7 +8,7 @@
       },
       {
         "q": "Is this site free to use?",
-        "a": "Yes! You can use our main tools for free. We have a Pro plan with extra features if you want them, which costs $8.99 a month or $79.99 a year. The drug programs we link to are always free. Never pay to apply for help. If a site asks for money, it is a scam."
+        "a": "Yes! You can use our main tools for free. We have a Pro plan with extra features if you want them, which costs $8.99 a month or $79.99 a year. The drug programs we link to are always free. Never pay to apply for help. If a site asks for money, that's a scam."
       },
       {
         "q": "Who should use this site?",
@@ -66,7 +66,7 @@
       },
       {
         "q": "How do I know if a foundation is real?",
-        "a": "Real foundations NEVER charge you to apply. They are registered nonprofits.\n\nIf someone asks you to pay to get help, it is a scam.\n\nExamples of real groups:\n• HealthWell Foundation\n• PAN Foundation\n• NORD"
+        "a": "Real foundations NEVER charge you to apply. They are registered nonprofits.\n\nIf someone asks you to pay to get help, that's a scam.\n\nExamples of real groups:\n• HealthWell Foundation\n• PAN Foundation\n• NORD"
       },
       {
         "q": "Do foundations have waiting lists?",
@@ -120,7 +120,7 @@
       },
       {
         "q": "What should I do before January each year?",
-        "a": "Check your insurance during open enrollment (usually in the fall). See if your transplant drugs will still be covered the same way in the new year."
+        "a": "Check your insurance during open enrollment (usually in the fall). Make sure your plan still covers your transplant drugs the same way in the new year."
       },
       {
         "q": "Why does my generic medicine cost different amounts each month?",
@@ -174,7 +174,7 @@
       },
       {
         "q": "What pharmacy membership programs exist?",
-        "a": "Large stores have programs that can beat discount cards:\n• **Costco Pharmacy** - Very low cash prices (often no membership needed)\n• **Kroger Rx Savings Club** - About $36/year for discounts\n• **Walgreens Prescription Savings Club** - Paid membership with discounts"
+        "a": "Large stores have programs that beat discount cards:\n• **Costco Pharmacy** - Very low cash prices (often no membership needed)\n• **Kroger Rx Savings Club** - About $36/year for discounts\n• **Walgreens Prescription Savings Club** - Paid membership with discounts"
       },
       {
         "q": "Which discount option should I use?",
@@ -219,7 +219,7 @@
       },
       {
         "q": "How do I deal with side effects from my drugs?",
-        "a": "Anti-rejection drugs have side effects. Here are common ones and what to do:\n\n**Tacrolimus:**\n• Shaking hands - Tell your team. Limit caffeine.\n• Headaches - Stay hydrated. Ask about safe pain medicine.\n• High blood sugar - Check your levels often.\n\n**Mycophenolate (CellCept):**\n• Upset stomach, nausea, diarrhea - Take with food. Tell your team if it is bad.\n\n**Prednisone:**\n• Weight gain, mood changes, trouble sleeping - Usually gets better as the dose goes down.\n\n**Important:** Never stop or change your drugs on your own. Talk to your transplant team first."
+        "a": "Anti-rejection drugs have side effects. Here are common ones and what to do:\n\n**Tacrolimus:**\n• Shaking hands - Tell your team. Limit caffeine.\n• Headaches - Stay hydrated. Ask about safe pain medicine.\n• High blood sugar - Check your levels often.\n\n**Mycophenolate (CellCept):**\n• Upset stomach, nausea, diarrhea - Take with food. Tell your team if you feel bad.\n\n**Prednisone:**\n• Weight gain, mood changes, trouble sleeping - Usually gets better as the dose goes down.\n\n**Important:** Never stop or change your drugs on your own. Talk to your transplant team first."
       },
       {
         "q": "Are medicine needs different for each organ type?",
@@ -232,7 +232,7 @@
     "questions": [
       {
         "q": "How does the \"My Path\" quiz work?",
-        "a": "The quiz asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that can help."
+        "a": "The quiz asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that help you pay for your medicine."
       },
       {
         "q": "Can I search for a specific medicine?",

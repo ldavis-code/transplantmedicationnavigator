@@ -145,7 +145,7 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
       type: 'generic',
       priority: 3,
       title: 'Generic Version Available',
-      description: `${medication.genericName} has a generic version that may cost less. Ask your doctor if it is right for you.`,
+      description: `${medication.genericName} has a generic version that often costs less. Ask your doctor if you can use the generic safely.`,
       steps: [
         'Ask your transplant doctor if the generic is OK for you',
         'Check if your insurance covers the generic (it often costs less)',
