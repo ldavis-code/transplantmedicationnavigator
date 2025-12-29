@@ -111,8 +111,11 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 <h3 className="text-lg font-bold text-slate-900">Log Your Savings</h3>
             </div>
 
-            <p className="text-sm text-slate-600 mb-6">
+            <p className="text-sm text-slate-600 mb-4">
                 Did you just fill a prescription using an assistance program? Log it here to track your savings!
+            </p>
+            <p className="text-xs text-slate-500 mb-6">
+                <strong>Anonymous tracking:</strong> Your data is stored locally on your device only.
             </p>
 
             {message.text && (

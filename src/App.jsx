@@ -1226,7 +1226,7 @@ const Wizard = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="font-bold text-lg text-slate-900">{option.label}</div>
+                                    <div className="font-bold text-lg text-blue-700">{option.label}</div>
                                     {option.highlight && (
                                         <div className="text-emerald-600 font-medium text-sm mt-1">{option.highlight}</div>
                                     )}
@@ -1236,6 +1236,15 @@ const Wizard = () => {
                             </div>
                         </button>
                     ))}
+                </div>
+                {/* Insurance help hint */}
+                <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                        <Lightbulb className="text-amber-500 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <p className="text-blue-800 text-sm">
+                            <strong>Having insurance doesn't mean you can't get additional help.</strong> Many programs are available regardless of your insurance type.
+                        </p>
+                    </div>
                 </div>
             </div>
         );
@@ -2157,6 +2166,9 @@ const MedicationSearch = () => {
                                 <li><strong>Overview</strong> - Basic info about the medication</li>
                                 <li><strong>Print</strong> - Print-friendly summary</li>
                             </ul>
+                            <p className="text-amber-700 text-sm mt-3 font-medium">
+                                <strong>Prices are ESTIMATES</strong> and vary by the number of pills prescribed or dosage.
+                            </p>
                         </div>
                     </div>
                 </div>

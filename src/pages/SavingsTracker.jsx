@@ -50,7 +50,10 @@ export default function SavingsTracker() {
                     <div>
                         <h1 className="text-2xl font-bold">Savings Tracker</h1>
                         <p className="text-emerald-100">
-                            Log your medication savings and track your progress over time
+                            Log your medication savings anonymously and track your progress over time
+                        </p>
+                        <p className="text-emerald-200 text-xs mt-1">
+                            Your data stays on your device - no personal information collected
                         </p>
                     </div>
                 </div>
