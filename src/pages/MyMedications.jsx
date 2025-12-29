@@ -142,7 +142,7 @@ export default function MyMedications() {
           <TrendingUp size={24} />
           <div>
             <div className="font-semibold">Track Your Savings</div>
-            <div className="text-emerald-100 text-sm">Log prescription fills and see how much you're saving</div>
+            <div className="text-emerald-100 text-sm">Log prescription fills anonymously and see how much you're saving</div>
           </div>
         </div>
       </Link>
