@@ -108,13 +108,13 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
       type: 'copayCard',
       priority: 1,
       title: `${medication.brandName} Copay Card`,
-      description: `Check if ${medication.manufacturer} offers a copay assistance card. These can reduce your copay to $0-$50/month.`,
+      description: `Check if ${medication.manufacturer} has a savings card. It can lower what you pay to $0-$50/month.`,
       link: medication.papUrl || null,
       steps: [
-        `Visit the ${medication.manufacturer} patient website`,
+        `Go to the ${medication.manufacturer} website`,
         'Look for "Copay Card" or "Savings Program"',
-        'Register with your prescription info',
-        'Show card at your specialty pharmacy',
+        'Sign up with your prescription info',
+        'Show the card at your pharmacy',
       ],
     });
   }
@@ -124,15 +124,15 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
     guidance.actions.push({
       type: 'pap',
       priority: insuranceType === InsuranceType.UNINSURED ? 1 : 2,
-      title: `${medication.manufacturer} Patient Assistance Program`,
-      description: `Apply for free medication directly from the manufacturer. Income limits typically 200-500% of Federal Poverty Level.`,
+      title: `${medication.manufacturer} Free Medicine Program`,
+      description: `Apply for free medicine from the drug company. They look at your income to see if you qualify.`,
       link: medication.papUrl,
       steps: [
-        'Visit the PAP website and download the application',
-        'Complete the patient section of the form',
-        'Send to your doctor to complete the medical section',
+        'Go to the program website and download the form',
+        'Fill out your part of the form',
+        'Have your doctor fill out their part',
         'Attach proof of income (tax return or pay stubs)',
-        'Submit and wait 2-4 weeks for approval',
+        'Send it in and wait 2-4 weeks',
       ],
     });
   }
@@ -142,12 +142,12 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
     guidance.actions.push({
       type: 'generic',
       priority: 3,
-      title: 'Generic Alternative Available',
-      description: `${medication.genericName} is available as a generic. Ask your doctor if switching could save money while maintaining efficacy.`,
+      title: 'Generic Version Available',
+      description: `${medication.genericName} has a generic version that may cost less. Ask your doctor if it is right for you.`,
       steps: [
-        'Ask your transplant doctor if generic is appropriate',
-        'Check if your insurance prefers the generic (often Tier 1)',
-        'Monitor your labs closely after any medication change',
+        'Ask your transplant doctor if the generic is OK for you',
+        'Check if your insurance covers the generic (it often costs less)',
+        'Get blood tests after any medicine change',
       ],
     });
   }
@@ -158,17 +158,17 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
       type: 'discountCard',
       priority: insuranceType === InsuranceType.UNINSURED ? 2 : 4,
       title: 'Compare Discount Card Prices',
-      description: 'GoodRx, SingleCare, and Cost Plus Drugs can offer significant savings, especially for generics.',
+      description: 'GoodRx, SingleCare, and Cost Plus Drugs can save you money, especially on generics.',
       links: [
         { name: 'GoodRx', url: `https://www.goodrx.com/` },
         { name: 'SingleCare', url: 'https://www.singlecare.com/' },
         { name: 'Cost Plus Drugs', url: 'https://costplusdrugs.com/' },
       ],
       steps: [
-        'Compare prices across all three platforms',
-        'Check if your pharmacy accepts the discount card',
-        'Compare discount price to your insurance copay',
-        'Use whichever is lower!',
+        'Compare prices on all three sites',
+        'Check if your pharmacy takes the discount card',
+        'Compare the discount price to what your insurance charges',
+        'Use whichever is cheaper!',
       ],
     });
   }
@@ -204,27 +204,27 @@ export const generateGuidanceSummary = (answers, medications) => {
     case InsuranceType.COMMERCIAL:
       summary.keyMessages.push({
         type: 'success',
-        title: 'Copay Cards Available',
-        message: 'With commercial insurance, you can use manufacturer copay cards to significantly reduce costs. Start here!',
+        title: 'Copay Cards Can Help',
+        message: 'With private insurance, you can use drug company copay cards to lower your costs. Start here!',
       });
       summary.keyMessages.push({
         type: 'warning',
-        title: 'Specialty Pharmacy Required',
-        message: 'Most commercial plans require transplant meds be filled at a designated specialty pharmacy. Using the wrong pharmacy = full price!',
+        title: 'Use the Right Pharmacy',
+        message: 'Most plans make you use a specific specialty pharmacy for transplant drugs. Using the wrong one can cost you full price!',
       });
       break;
 
     case InsuranceType.MEDICARE:
       summary.keyMessages.push({
         type: 'warning',
-        title: 'No Copay Cards Allowed',
-        message: 'Medicare beneficiaries cannot use manufacturer copay cards (Anti-Kickback Statute). Focus on foundations and PAPs instead.',
+        title: 'Copay Cards Not Allowed',
+        message: 'Medicare patients cannot use drug company copay cards. But you can use foundations and free medicine programs instead.',
       });
       if (organs?.includes('Kidney')) {
         summary.keyMessages.push({
           type: 'info',
-          title: 'Part B-ID for Immunosuppressants',
-          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers immunosuppressants even after losing other Medicare coverage.',
+          title: 'Special Kidney Coverage',
+          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers anti-rejection drugs.',
         });
       }
       break;
@@ -232,37 +232,37 @@ export const generateGuidanceSummary = (answers, medications) => {
     case InsuranceType.MEDICAID:
       summary.keyMessages.push({
         type: 'success',
-        title: 'Comprehensive Coverage',
-        message: 'Medicaid typically covers transplant medications with low or no copay. Check your state\'s formulary for covered drugs.',
+        title: 'Good Coverage',
+        message: 'Medicaid usually covers transplant drugs with low or no copay. Check which drugs your state covers.',
       });
       break;
 
     case InsuranceType.UNINSURED:
       summary.keyMessages.push({
         type: 'urgent',
-        title: 'Focus on PAPs',
-        message: 'Without insurance, manufacturer Patient Assistance Programs (PAPs) are your best option for FREE medications. Apply immediately!',
+        title: 'Apply for Free Medicine',
+        message: 'Without insurance, free medicine programs from drug companies are your best option. Apply right away!',
       });
       summary.keyMessages.push({
         type: 'info',
-        title: 'Dramatic Discount Card Savings',
-        message: 'For generics, discount cards (GoodRx, Cost Plus) can save 80-90% off retail price while your PAP is processing.',
+        title: 'Discount Cards Can Save Money',
+        message: 'For generics, discount cards (GoodRx, Cost Plus) can save 80-90% while you wait for your free medicine application.',
       });
       break;
 
     case InsuranceType.TRICARE_VA:
       summary.keyMessages.push({
         type: 'info',
-        title: 'VA Pharmacy Benefits',
-        message: 'VA pharmacy can often fill transplant medications at very low cost. Contact your VA pharmacy team.',
+        title: 'VA Pharmacy Help',
+        message: 'VA pharmacies often fill transplant drugs at very low cost. Call your VA pharmacy team.',
       });
       break;
 
     case InsuranceType.IHS:
       summary.keyMessages.push({
         type: 'info',
-        title: 'IHS Resources Available',
-        message: 'Indian Health Service facilities may provide transplant medications. Contact your IHS pharmacy.',
+        title: 'IHS Can Help',
+        message: 'Indian Health Service may provide transplant drugs. Call your IHS pharmacy.',
       });
       break;
   }
@@ -270,12 +270,12 @@ export const generateGuidanceSummary = (answers, medications) => {
   // Add financial-status-specific messages
   if (financialStatus === FinancialStatus.CRISIS) {
     summary.urgentActions.push({
-      title: 'Immediate Steps',
+      title: 'Do This Now',
       actions: [
         'Call your transplant center social worker TODAY',
-        'Ask about emergency medication supplies',
-        'Apply for manufacturer PAPs immediately (many offer bridge supplies)',
-        'Contact HealthWell Foundation or PAN Foundation for emergency assistance',
+        'Ask about emergency medicine supplies',
+        'Apply for free medicine programs right away (many can help fast)',
+        'Call HealthWell Foundation or PAN Foundation for emergency help',
       ],
     });
   }
@@ -459,12 +459,12 @@ export const getChatQuestions = () => [
   {
     id: 1,
     key: 'role',
-    question: "Who am I helping today?",
+    question: "Who are you?",
     type: 'single',
     options: [
       { value: 'Patient', label: 'Patient', icon: '🙋' },
-      { value: 'Carepartner / Family', label: 'Carepartner / Family', icon: '👨‍👩‍👧' },
-      { value: 'Social Worker / Coordinator', label: 'Social Worker / Coordinator', icon: '👩‍⚕️' },
+      { value: 'Carepartner / Family', label: 'Family or Caregiver', icon: '👨‍👩‍👧' },
+      { value: 'Social Worker / Coordinator', label: 'Social Worker or Coordinator', icon: '👩‍⚕️' },
     ],
   },
   {
@@ -473,16 +473,16 @@ export const getChatQuestions = () => [
     question: "Where are you in the transplant process?",
     type: 'single',
     options: [
-      { value: 'Pre-transplant (Evaluation/Waitlist)', label: 'Pre-transplant (Evaluation/Waitlist)', icon: '📋' },
-      { value: 'Post-transplant (Within 1st year)', label: 'Post-transplant (Within 1st year)', icon: '🏥' },
-      { value: 'Post-transplant (1+ years)', label: 'Post-transplant (1+ years)', icon: '🏠' },
+      { value: 'Pre-transplant (Evaluation/Waitlist)', label: 'Before transplant (waiting)', icon: '📋' },
+      { value: 'Post-transplant (Within 1st year)', label: 'After transplant (first year)', icon: '🏥' },
+      { value: 'Post-transplant (1+ years)', label: 'After transplant (1+ years)', icon: '🏠' },
     ],
   },
   {
     id: 3,
     key: 'organs',
-    question: "What type of transplant?",
-    subtitle: "Select all that apply",
+    question: "What kind of transplant?",
+    subtitle: "Pick all that apply",
     type: 'multi',
     options: [
       { value: 'Kidney', label: 'Kidney', icon: '🫘' },
@@ -490,43 +490,43 @@ export const getChatQuestions = () => [
       { value: 'Heart', label: 'Heart', icon: '❤️' },
       { value: 'Lung', label: 'Lung', icon: '🫁' },
       { value: 'Pancreas', label: 'Pancreas', icon: '🥞' },
-      { value: 'Multi-organ', label: 'Multi-organ', icon: '🔄' },
+      { value: 'Multi-organ', label: 'More than one', icon: '🔄' },
       { value: 'Other', label: 'Other', icon: '➕' },
     ],
   },
   {
     id: 4,
     key: 'insurance',
-    question: "What's your primary insurance?",
+    question: "What is your insurance?",
     type: 'single',
-    helpText: "This determines which assistance programs you're eligible for.",
+    helpText: "This helps us find the right programs for you.",
     options: [
-      { value: 'Commercial / Employer', label: 'Commercial / Employer', icon: '🏢', hint: 'Copay cards available!' },
-      { value: 'Medicare', label: 'Medicare', icon: '🏛️', hint: 'No copay cards, but PAPs & foundations work' },
-      { value: 'Medicaid (State)', label: 'Medicaid (State)', icon: '🏥', hint: 'Usually well covered' },
-      { value: 'TRICARE / VA', label: 'TRICARE / VA', icon: '🎖️', hint: 'VA pharmacy programs' },
-      { value: 'Indian Health Service / Tribal', label: 'Indian Health Service / Tribal', icon: '🪶', hint: 'IHS resources available' },
-      { value: 'Uninsured / Self-pay', label: 'Uninsured / Self-pay', icon: '💳', hint: 'PAPs can provide FREE meds' },
+      { value: 'Commercial / Employer', label: 'From my job', icon: '🏢', hint: 'Copay cards can help!' },
+      { value: 'Medicare', label: 'Medicare', icon: '🏛️', hint: 'Foundations and free programs can help' },
+      { value: 'Medicaid (State)', label: 'Medicaid', icon: '🏥', hint: 'Usually good coverage' },
+      { value: 'TRICARE / VA', label: 'TRICARE / VA', icon: '🎖️', hint: 'VA pharmacy can help' },
+      { value: 'Indian Health Service / Tribal', label: 'Indian Health Service', icon: '🪶', hint: 'IHS can help' },
+      { value: 'Uninsured / Self-pay', label: 'No insurance', icon: '💳', hint: 'Free medicine programs can help' },
     ],
   },
   {
     id: 5,
     key: 'medications',
-    question: "Which medication do you need help with?",
-    subtitle: "Select all that apply, or search by name",
+    question: "Which medicine do you need help with?",
+    subtitle: "Pick all that apply, or search by name",
     type: 'medication-select',
     searchable: true,
   },
   {
     id: 6,
     key: 'financialStatus',
-    question: "How would you describe your current medication costs?",
+    question: "How are you doing with medicine costs?",
     type: 'single',
     options: [
-      { value: 'Manageable', label: 'Manageable', icon: '✅', description: 'I can afford my medications' },
-      { value: 'Challenging', label: 'Challenging', icon: '😓', description: 'It\'s tight, but I manage' },
-      { value: 'Unaffordable', label: 'Unaffordable', icon: '😰', description: 'I struggle to pay for meds' },
-      { value: 'Crisis', label: 'Crisis', icon: '🆘', description: 'I\'ve skipped or rationed doses' },
+      { value: 'Manageable', label: 'OK', icon: '✅', description: 'I can afford my medicine' },
+      { value: 'Challenging', label: 'Tight', icon: '😓', description: 'It is hard, but I manage' },
+      { value: 'Unaffordable', label: 'Too much', icon: '😰', description: 'I have trouble paying' },
+      { value: 'Crisis', label: 'Urgent', icon: '🆘', description: 'I have skipped doses to save money' },
     ],
   },
 ];
