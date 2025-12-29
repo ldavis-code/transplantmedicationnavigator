@@ -535,7 +535,7 @@ const Layout = ({ children }) => {
                         Prices are estimates. Always check with your doctor and pharmacist.
                     </p>
                     <p className="mb-4 text-slate-400 text-sm max-w-3xl mx-auto">
-                        This product uses publicly available data from the U.S. National Library of Medicine (NLM), National Institutes of Health, Department of Health and Human Services; NLM is not responsible for the product and does not endorse or recommend this or any other product.
+                        We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
@@ -834,7 +834,7 @@ const WizardHelp = ({ step, answers }) => {
         },
         6: {
             title: "Mail-Order Pharmacy",
-            content: "**Why this matters:**\n\nCommercial insurance often requires transplant meds be filled at a designated mail-order pharmacy (not your local CVS/Walgreens).\n\n**If you use the wrong pharmacy:**\n• Insurance won't cover it\n• You'll pay full price ($1000s)\n\n**What to do:**\nCall your insurance and ask: 'Which mail-order pharmacy must I use for my transplant medications?'\n\nCommon ones: Accredo, CVS Specialty, Walgreens Specialty, Optum"
+            content: "**Important:** Your insurance may make you use one special pharmacy for transplant meds.\n\n**If you use the wrong pharmacy:**\n• Your insurance won't pay\n• You pay full price (over $1,000)\n\n**What to do:**\nCall your insurance. Ask: 'Which pharmacy must I use for my transplant medicine?'\n\nCommon ones: Accredo, CVS Specialty, Walgreens Specialty, Optum"
         },
         7: {
             title: "Financial Status",
@@ -1350,9 +1350,15 @@ const Wizard = () => {
                 <h1 className="text-2xl font-bold mb-4">Mail-Order Pharmacy Check</h1>
                 <WizardHelp step={step} answers={answers} />
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6" role="note">
-                    <p className="text-blue-800">
-                        Most commercial insurance plans require transplant medications to be filled at a specific mail-order pharmacy (sometimes called a "specialty pharmacy"), not a local retail pharmacy like CVS or Walgreens.
-                    </p>
+                    <div className="text-blue-800">
+                        <p className="font-bold mb-2">Important: Your insurance may make you use one special pharmacy for transplant meds.</p>
+                        <p className="mb-2">If you use the wrong pharmacy:</p>
+                        <ul className="list-disc ml-5 mb-2">
+                            <li>Your insurance won't pay</li>
+                            <li>You pay full price (over $1,000)</li>
+                        </ul>
+                        <p className="text-sm">Common specialty pharmacies: Accredo, CVS Specialty, Walgreens Specialty, Optum</p>
+                    </div>
                 </div>
                 <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific mail-order pharmacy?</h2>
                 
@@ -2921,10 +2927,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                     <div>
                                         <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>Warning:</strong> When you use discount cards (GoodRx, SingleCare) or pay cash at Cost Plus Drugs, that money does <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your yearly deductible or out-of-pocket max</span>.
+                                            <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your deductible</span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
-                                            Many transplant patients hit their out-of-pocket max in a few months. After that, insurance pays 100%. If you use discount cards instead, you may end up paying more all year.
+                                            If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.
                                         </p>
                                         {isCostPlusAvailable && (
                                             <div className="bg-amber-100 border border-amber-300 rounded p-2 mb-3 text-xs text-amber-900">
@@ -3877,9 +3883,10 @@ const Education = () => {
                                 </div>
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
-                                <h3 className="font-bold text-red-900 text-xl mb-3">The Problem:</h3>
-                                <p className="text-red-900 text-lg leading-relaxed mb-4">When you use a discount card, <span className="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your insurance deductible or yearly spending limit</span>.</p>
-                                <p className="text-slate-800 leading-relaxed">Transplant patients typically have high medication costs that help them reach their yearly limit within a few months—after which insurance pays 100% of covered costs for the rest of the year. Using discount cards delays reaching your yearly limit, meaning you pay out-of-pocket for much longer.</p>
+                                <h3 className="font-bold text-red-900 text-xl mb-3">Watch out for the "deductible trap." Here's what happens:</h3>
+                                <p className="text-red-900 text-lg leading-relaxed mb-4">If you use a discount card, <span className="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your deductible</span>.</p>
+                                <p className="text-slate-800 leading-relaxed mb-3">You still have to pay your full deductible later. This can cost you more money over the year.</p>
+                                <p className="text-slate-700 font-medium">What to do: Ask your insurance company when to start using discount cards.</p>
                             </div>
                         </div>
 
