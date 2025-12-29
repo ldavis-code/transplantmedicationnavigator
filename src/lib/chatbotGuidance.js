@@ -513,7 +513,7 @@ export const getChatQuestions = () => [
     id: 5,
     key: 'medications',
     question: "Which medicine do you need help with?",
-    subtitle: "Pick all that apply, or search by name",
+    subtitle: "Pick from common drugs for your transplant, or search for others",
     type: 'medication-select',
     searchable: true,
   },

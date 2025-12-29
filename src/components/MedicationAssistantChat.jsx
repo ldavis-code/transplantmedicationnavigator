@@ -67,6 +67,7 @@ const MedicationAssistantChat = () => {
   const [medicationSearch, setMedicationSearch] = useState('');
   const [medicationResults, setMedicationResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [suggestedMedications, setSuggestedMedications] = useState([]);
 
   // Free text input
   const [inputValue, setInputValue] = useState('');
@@ -276,6 +277,47 @@ const MedicationAssistantChat = () => {
     }, 300);
     return () => clearTimeout(timer);
   }, [medicationSearch]);
+
+  // Fetch smart medication suggestions based on user profile
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      // Get organ type and transplant stage from answers
+      const organType = answers.organ_type;
+      const transplantStage = answers.transplant_stage;
+
+      if (!organType) return;
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'getSuggestions',
+            organType,
+            transplantStage,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.suggestions) {
+          setSuggestedMedications(data.suggestions);
+        }
+      } catch (err) {
+        console.error('Failed to fetch medication suggestions:', err);
+        // Fallback to common post-transplant medications
+        if (transplantStage !== 'pre') {
+          setSuggestedMedications([
+            { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
+            { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate', category: 'Anti-rejection' },
+            { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
+            { id: 'valcyte', brand_name: 'Valcyte', generic_name: 'Valganciclovir', category: 'Anti-viral' },
+          ]);
+        }
+      }
+    };
+
+    fetchSuggestions();
+  }, [answers.organ_type, answers.transplant_stage]);
 
   // Handle medication selection
   const handleMedicationSelect = (medication) => {
@@ -642,23 +684,10 @@ const MedicationAssistantChat = () => {
 
     return (
       <div className="p-3 bg-slate-50 rounded-xl space-y-3">
-        {/* Search Usage Indicator */}
-        {remainingSearches <= maxFreeSearches && remainingSearches > 0 && (
-          <div className={`text-xs px-3 py-1.5 rounded-lg flex items-center justify-between ${
-            remainingSearches <= 1 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-600'
-          }`}>
-            <span>
-              {remainingSearches === 1 ? '⚠️ Last free search remaining' : `${remainingSearches} searches remaining`}
-            </span>
-            <a href="/pricing" className="underline hover:no-underline font-medium">
-              Upgrade
-            </a>
-          </div>
-        )}
-
+        {/* Selected Medications */}
         {selectedMedications.length > 0 && (
           <div className="space-y-2">
-            <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
+            <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected:</div>
             <div className="flex flex-wrap gap-2">
               {selectedMedications.map((med) => (
                 <span
@@ -679,21 +708,65 @@ const MedicationAssistantChat = () => {
           </div>
         )}
 
+        {/* Smart Suggestions Based on Profile */}
+        {suggestedMedications.length > 0 && selectedMedications.length === 0 && (
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+              Common for your transplant type:
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {suggestedMedications.map((med) => {
+                const isSelected = selectedMedications.find(m => m.id === med.id);
+                return (
+                  <button
+                    key={med.id}
+                    onClick={() => handleMedicationSelect(med)}
+                    disabled={isSelected}
+                    className={`px-3 py-2 rounded-lg border-2 text-sm transition-all ${
+                      isSelected
+                        ? 'bg-emerald-100 border-emerald-400 text-emerald-800'
+                        : 'bg-white border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
+                    }`}
+                  >
+                    <div className="font-medium">{med.brand_name}</div>
+                    <div className="text-xs text-slate-500">{med.category}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Search Box */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             type="text"
             value={medicationSearch}
             onChange={(e) => setMedicationSearch(e.target.value)}
-            placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
+            placeholder={selectedMedications.length > 0 ? "Search for another..." : "Or search by name..."}
             className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-            autoFocus
           />
           {isSearching && (
             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 animate-spin" size={18} />
           )}
         </div>
 
+        {/* Search Usage Indicator */}
+        {remainingSearches <= maxFreeSearches && remainingSearches > 0 && medicationSearch && (
+          <div className={`text-xs px-3 py-1.5 rounded-lg flex items-center justify-between ${
+            remainingSearches <= 1 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-600'
+          }`}>
+            <span>
+              {remainingSearches === 1 ? 'Last free search' : `${remainingSearches} searches left`}
+            </span>
+            <a href="/pricing" className="underline hover:no-underline font-medium">
+              Upgrade
+            </a>
+          </div>
+        )}
+
+        {/* Search Results */}
         {medicationResults.length > 0 && (
           <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
             {medicationResults.map((med) => {
