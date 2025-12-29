@@ -125,7 +125,7 @@ export const seoMetadata = {
     ogDescription: 'Free educational resources for all. Subscription and partnership options for patients and healthcare organizations.',
     twitterTitle: 'Pricing',
     twitterDescription: 'Free access to education, partnership options for organizations. View our clear pricing.',
-    breadcrumbName: 'Pricing & Partners',
+    breadcrumbName: 'Pricing',
   },
 
   pilot: {
