@@ -35,14 +35,19 @@ function transformMedication(row) {
         manufacturer: row.manufacturer,
         stage: row.stage,
         commonOrgans: row.common_organs || [],
-        papUrl: row.pap_url,
+        // Legacy flat fields (for backwards compatibility)
+        papUrl: row.pap_program?.url || row.pap_url,
         papProgramId: row.pap_program_id,
-        copayUrl: row.copay_url,
+        copayUrl: row.copay_program?.url || row.copay_url,
         copayProgramId: row.copay_program_id,
         supportUrl: row.support_url,
         cost_tier: row.cost_tier,
         generic_available: row.generic_available,
-        typical_copay_tier: row.typical_copay_tier
+        typical_copay_tier: row.typical_copay_tier,
+        // New nested program structure
+        copayProgram: row.copay_program || null,
+        papProgram: row.pap_program || null,
+        medicarePartD: row.medicare_partd || null
     };
 }
 

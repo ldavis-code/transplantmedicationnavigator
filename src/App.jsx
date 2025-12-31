@@ -2419,11 +2419,22 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const isGoodRxAvailable = !GOODRX_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isSingleCareAvailable = !SINGLECARE_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
 
+    // Extract program info from new nested structure or legacy flat fields
+    const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: `${med.manufacturer} Copay Card` } : null);
+    const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: `${med.manufacturer} Patient Assistance` } : null);
+    const medicarePartD = med.medicarePartD || (med.medicarePartDUrl ? { url: med.medicarePartDUrl, notes: med.medicare2026Note } : null);
+
+    // Determine URLs for copay and PAP programs
+    const copayUrl = copayProgram?.url || med.copayUrl;
+    const papUrl = papProgram?.url || med.papUrl;
+    const hasCopayProgram = !!(copayProgram || med.copayProgramId || med.copayUrl);
+    const hasPapProgram = !!(papProgram || med.papProgramId || med.papUrl);
+
     // Use trackable /out/ route if papProgramId exists, otherwise fallback to direct URL or drugs.com search
     const papLink = med.papProgramId
         ? `/out/pap/${med.papProgramId}`
-        : (med.papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`);
-    const papLinkText = med.papProgramId || med.papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
+        : (papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`);
+    const papLinkText = med.papProgramId || papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
 
     // Get community price stats for each source
     const costPlusStats = getCommunityPriceStats(med.id, 'costplus');
@@ -2620,24 +2631,24 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-6 fade-in">
                         {/* Copay Card Section - For Commercial Insurance ONLY */}
-                        {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                        {showCopayCards && hasCopayProgram && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
                                 <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> <TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
-                                    <strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.
+                                    {copayProgram?.eligibility_notes || <><strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.</>}
                                 </p>
-                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
-                                    Get Copay Card <ExternalLink size={14} aria-hidden="true" />
+                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                    {copayProgram?.name ? `Get ${copayProgram.name}` : 'Get Copay Card'} <ExternalLink size={14} aria-hidden="true" />
                                 </a>
                             </section>
                         )}
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
-                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Free Medicine Program (Patient Assistance)</h3>
+                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> {papProgram?.name || 'Free Medicine Program (Patient Assistance)'}</h3>
                                 <p className="text-sm text-slate-700 mb-4">
-                                    {showCopayCards
+                                    {papProgram?.eligibility_notes || (showCopayCards
                                         ? "For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company."
-                                        : "Apply for free medicine from the drug company. You may qualify based on income."}
+                                        : "Apply for free medicine from the drug company. You may qualify based on income.")}
                                 </p>
                                 <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
                                 {med.supportUrl && (
@@ -2651,14 +2662,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                             </section>
                         </div>
                         {/* Medicare Part D Information */}
-                        {med.medicarePartDUrl && (
+                        {medicarePartD && (
                             <section className="border-2 border-blue-200 rounded-xl p-5 bg-gradient-to-r from-blue-50 to-indigo-50">
                                 <h3 className="font-bold text-blue-800 mb-2 flex items-center gap-2"><Shield size={18} aria-hidden="true" /> Medicare Part D Information</h3>
                                 <p className="text-sm text-slate-700 mb-3">
                                     Learn about Medicare Part D coverage changes and savings options for {med.brandName}.
-                                    {med.medicare2026Note && <span className="block mt-2 text-blue-700 font-medium">{med.medicare2026Note}</span>}
+                                    {(medicarePartD.notes || med.medicare2026Note) && <span className="block mt-2 text-blue-700 font-medium">{medicarePartD.notes || med.medicare2026Note}</span>}
                                 </p>
-                                <a href={med.medicarePartDUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
+                                <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="w-full block text-center bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
                                     View Medicare Part D Details <ExternalLink size={14} aria-hidden="true" />
                                 </a>
                             </section>
@@ -2769,12 +2780,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
                                     {/* Copay Card Row - Green - Only show for commercial insurance */}
-                                    {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                                    {showCopayCards && hasCopayProgram && (
                                     <tr className="bg-emerald-50/50 hover:bg-emerald-50">
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
-                                                <div className="font-bold text-emerald-600">{med.manufacturer} Copay Card</div>
+                                                <div className="font-bold text-emerald-600">{copayProgram?.name || `${med.manufacturer} Copay Card`}</div>
                                             </div>
                                             <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For commercial/employer insurance</div>
                                         </td>
@@ -2783,7 +2794,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-xs text-slate-500 mt-0.5">Manufacturer program</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                            <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : copayUrl} target="_blank" rel="noreferrer" className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                                 Get Card <ExternalLink size={14} aria-hidden="true" />
                                             </a>
                                         </td>
@@ -2791,12 +2802,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                     )}
 
                                     {/* Patient Assistance Row - Orange */}
-                                    {med.papUrl && (
+                                    {hasPapProgram && (
                                     <tr className="bg-orange-50/50 hover:bg-orange-50">
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-orange-500 flex-shrink-0"></span>
-                                                <div className="font-bold text-orange-600">{med.manufacturer} PAP</div>
+                                                <div className="font-bold text-orange-600">{papProgram?.name || `${med.manufacturer} PAP`}</div>
                                             </div>
                                             <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For Medicare, Medicaid, or no insurance</div>
                                         </td>
@@ -2805,7 +2816,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-xs text-slate-500 mt-0.5">You must meet income rules</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : med.papUrl} target="_blank" rel="noreferrer" className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
+                                            <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : papUrl} target="_blank" rel="noreferrer" className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
                                                 Apply <ExternalLink size={14} aria-hidden="true" />
                                             </a>
                                         </td>
@@ -2930,7 +2941,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         </div>
 
                         {/* Copay Card Warning - Only show when copay cards are displayed */}
-                        {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                        {showCopayCards && hasCopayProgram && (
                             <div className="mt-2 text-xs text-red-600 flex items-center gap-1">
                                 <AlertCircle size={14} />
                                 Copay cards are for commercial/employer insurance only
@@ -3007,15 +3018,15 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Price Estimates</h3>
                             <div className="space-y-1 text-sm">
-                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && hasCopayProgram && (
                                     <div className="flex justify-between">
-                                        <span>Manufacturer Copay Card:</span>
+                                        <span>{copayProgram?.name || 'Manufacturer Copay Card'}:</span>
                                         <strong className="text-emerald-600">$0 - $10/month</strong>
                                     </div>
                                 )}
-                                {med.papUrl && (
+                                {hasPapProgram && (
                                     <div className="flex justify-between">
-                                        <span>Patient Assistance (PAP):</span>
+                                        <span>{papProgram?.name || 'Patient Assistance (PAP)'}:</span>
                                         <strong className="text-orange-600">FREE (if eligible)</strong>
                                     </div>
                                 )}
@@ -3044,16 +3055,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Assistance Programs</h3>
                             <div className="space-y-2 text-sm">
-                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && hasCopayProgram && (
                                     <div className="p-2 bg-violet-50 rounded">
-                                        <strong className="text-violet-800">Copay Card Available</strong>
-                                        <p className="text-slate-600 text-xs">For commercial/employer insurance only.</p>
+                                        <strong className="text-violet-800">{copayProgram?.name || 'Copay Card Available'}</strong>
+                                        <p className="text-slate-600 text-xs">{copayProgram?.eligibility_notes || 'For commercial/employer insurance only.'}</p>
                                     </div>
                                 )}
-                                {med.papUrl && (
+                                {hasPapProgram && (
                                     <div className="p-2 bg-emerald-50 rounded">
-                                        <strong className="text-emerald-800">Patient Assistance Program (PAP)</strong>
-                                        <p className="text-slate-600 text-xs">For Medicare, Medicaid, uninsured, or underinsured patients.</p>
+                                        <strong className="text-emerald-800">{papProgram?.name || 'Patient Assistance Program (PAP)'}</strong>
+                                        <p className="text-slate-600 text-xs">{papProgram?.eligibility_notes || 'For Medicare, Medicaid, uninsured, or underinsured patients.'}</p>
                                     </div>
                                 )}
                                 <div className="p-2 bg-sky-50 rounded">
@@ -3067,16 +3078,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         <div>
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Action Checklist</h3>
                             <ul className="space-y-1 text-sm">
-                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && hasCopayProgram && (
                                     <li className="flex items-center gap-2">
                                         <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                        Apply for {med.manufacturer} Copay Card
+                                        Apply for {copayProgram?.name || `${med.manufacturer} Copay Card`}
                                     </li>
                                 )}
-                                {med.papUrl && (
+                                {hasPapProgram && (
                                     <li className="flex items-center gap-2">
                                         <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                        Apply for {med.manufacturer} Patient Assistance Program
+                                        Apply for {papProgram?.name || `${med.manufacturer} Patient Assistance Program`}
                                     </li>
                                 )}
                                 <li className="flex items-center gap-2">
