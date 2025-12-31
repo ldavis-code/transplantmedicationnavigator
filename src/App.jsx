@@ -37,7 +37,7 @@ import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 // Term Tooltip for inline definitions
 import TermTooltip, { DefineInline, GlossaryLink } from './components/TermTooltip.jsx';
 // Chat Quiz Context Provider
-import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
+import { ChatQuizProvider, useChatQuiz } from './context/ChatQuizContext.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -1823,6 +1823,14 @@ if (typeof window !== 'undefined') {
 const MedicationSearch = () => {
     useMetaTags(seoMetadata.medications);
     const MEDICATIONS = useMedicationsList();
+    const { answers: quizAnswers } = useChatQuiz();
+
+    // Determine if copay cards should be shown based on insurance type from quiz
+    // Copay cards are only for commercial/employer insurance
+    // If insurance type is not set (user hasn't completed quiz), default to showing copay cards
+    const insuranceType = quizAnswers?.insurance_type;
+    const isCommercialInsurance = insuranceType === 'commercial' || !insuranceType;
+    const showCopayCards = isCommercialInsurance;
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchTerm, setSearchTerm] = useState('');
@@ -2201,7 +2209,7 @@ const MedicationSearch = () => {
                 {hasItems && showSavings && (
                     <>
                         {displayListInternal.map(med => (
-                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} />
+                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} showCopayCards={showCopayCards} />
                         ))}
                         {myCustomMeds.map((name, idx) => (
                             <ExternalMedCard key={`${name}-${idx}`} name={name} onRemove={() => removeCustomFromList(name)} />
@@ -2400,7 +2408,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
+const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true }) => {
     const [activeTab, setActiveTab] = useState('PRICE');
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
@@ -2612,14 +2620,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-6 fade-in">
                         {/* Copay Card Section - For Commercial Insurance ONLY */}
-                        {(med.copayProgramId || med.copayUrl) && (
+                        {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                             <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
                                 <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> <TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> Card</h3>
                                 <p className="text-sm text-slate-700 mb-3">
                                     <strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.
-                                </p>
-                                <p className="text-xs text-red-600 font-medium mb-4">
-                                    ⚠️ NOT for Medicare, Medicaid, TRICARE, VA, or IHS. Use the Free Medicine Program below instead.
                                 </p>
                                 <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : med.copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     Get Copay Card <ExternalLink size={14} aria-hidden="true" />
@@ -2628,8 +2633,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         )}
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
-                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Free Medicine Program</h3>
-                                <p className="text-sm text-slate-700 mb-4">For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company.</p>
+                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> Free Medicine Program (Patient Assistance)</h3>
+                                <p className="text-sm text-slate-700 mb-4">
+                                    {showCopayCards
+                                        ? "For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company."
+                                        : "Apply for free medicine from the drug company. You may qualify based on income."}
+                                </p>
                                 <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
                                 {med.supportUrl && (
                                     <a href={med.supportUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
@@ -2694,14 +2703,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         {/* Color-Coded Legend */}
                         <div className="mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
                             <h4 className="font-bold text-slate-800 mb-3 text-sm">Price Options Guide</h4>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                                <div className="flex items-center gap-2">
-                                    <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
-                                    <div>
-                                        <div className="font-semibold text-emerald-600">Copay Cards</div>
-                                        <div className="text-slate-500">Best savings: $0-$10/mo</div>
+                            <div className={`grid grid-cols-2 ${showCopayCards ? 'md:grid-cols-4' : 'md:grid-cols-3'} gap-3 text-xs`}>
+                                {showCopayCards && (
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                                        <div>
+                                            <div className="font-semibold text-emerald-600">Copay Cards</div>
+                                            <div className="text-slate-500">Best savings: $0-$10/mo</div>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                                 <div className="flex items-center gap-2">
                                     <span className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></span>
                                     <div>
@@ -2744,15 +2755,15 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
-                                    {/* Copay Card Row - Green */}
-                                    {(med.copayProgramId || med.copayUrl) && (
+                                    {/* Copay Card Row - Green - Only show for commercial insurance */}
+                                    {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                                     <tr className="bg-emerald-50/50 hover:bg-emerald-50">
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-emerald-600">{med.manufacturer} Copay Card</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Only for insurance from jobs or bought yourself</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For commercial/employer insurance</div>
                                         </td>
                                         <td className="p-3">
                                             <div className="text-emerald-600 font-bold">$0 - $10/month</div>
@@ -2905,11 +2916,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                             </table>
                         </div>
 
-                        {/* Copay Card Warning */}
-                        {(med.copayProgramId || med.copayUrl) && (
+                        {/* Copay Card Warning - Only show when copay cards are displayed */}
+                        {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                             <div className="mt-2 text-xs text-red-600 flex items-center gap-1">
                                 <AlertCircle size={14} />
-                                Copay cards are NOT for Medicare, Medicaid, TRICARE, VA, or IHS
+                                Copay cards are for commercial/employer insurance only
                             </div>
                         )}
 
@@ -2983,7 +2994,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Price Estimates</h3>
                             <div className="space-y-1 text-sm">
-                                {(med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                                     <div className="flex justify-between">
                                         <span>Manufacturer Copay Card:</span>
                                         <strong className="text-emerald-600">$0 - $10/month</strong>
@@ -3020,10 +3031,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Assistance Programs</h3>
                             <div className="space-y-2 text-sm">
-                                {(med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                                     <div className="p-2 bg-violet-50 rounded">
                                         <strong className="text-violet-800">Copay Card Available</strong>
-                                        <p className="text-slate-600 text-xs">For commercial/employer insurance only. NOT for Medicare/Medicaid.</p>
+                                        <p className="text-slate-600 text-xs">For commercial/employer insurance only.</p>
                                     </div>
                                 )}
                                 {med.papUrl && (
@@ -3043,10 +3054,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit }) => {
                         <div>
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Action Checklist</h3>
                             <ul className="space-y-1 text-sm">
-                                {(med.copayProgramId || med.copayUrl) && (
+                                {showCopayCards && (med.copayProgramId || med.copayUrl) && (
                                     <li className="flex items-center gap-2">
                                         <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                        Apply for {med.manufacturer} Copay Card (if commercial insurance)
+                                        Apply for {med.manufacturer} Copay Card
                                     </li>
                                 )}
                                 {med.papUrl && (
