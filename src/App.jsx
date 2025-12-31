@@ -2415,7 +2415,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
 
     // Pharmacy availability - exclude medications not carried by each pharmacy
     // Excluded: Injectable biologics, IV formulations, hospital-only medications
-    const isCostPlusAvailable = !COST_PLUS_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
+    // Cost Plus Drugs only carries generics - only show if generic_available is true
+    const isCostPlusAvailable = med.generic_available === true && !COST_PLUS_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isGoodRxAvailable = !GOODRX_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isSingleCareAvailable = !SINGLECARE_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
 
