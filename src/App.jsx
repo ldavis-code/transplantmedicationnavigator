@@ -2650,6 +2650,19 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
                             </section>
                         </div>
+                        {/* Medicare Part D Information */}
+                        {med.medicarePartDUrl && (
+                            <section className="border-2 border-blue-200 rounded-xl p-5 bg-gradient-to-r from-blue-50 to-indigo-50">
+                                <h3 className="font-bold text-blue-800 mb-2 flex items-center gap-2"><Shield size={18} aria-hidden="true" /> Medicare Part D Information</h3>
+                                <p className="text-sm text-slate-700 mb-3">
+                                    Learn about Medicare Part D coverage changes and savings options for {med.brandName}.
+                                    {med.medicare2026Note && <span className="block mt-2 text-blue-700 font-medium">{med.medicare2026Note}</span>}
+                                </p>
+                                <a href={med.medicarePartDUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
+                                    View Medicare Part D Details <ExternalLink size={14} aria-hidden="true" />
+                                </a>
+                            </section>
+                        )}
                         {/* High-cost medication PAP recommendation */}
                         {med.cost_tier === 'high' && med.papUrl && (
                             <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl p-5 shadow-sm">
