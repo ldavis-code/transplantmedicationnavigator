@@ -547,8 +547,10 @@ const handleAction = async (action, body) => {
             medicationDetailsList.push(details);
             medicationNames.push(`${details.brand_name} (${details.generic_name})`);
 
-            // Check Cost Plus availability - use DB value OR fallback to known list
-            const costPlusAvail = details.cost_plus_available || isCostPlusAvailable(details.generic_name);
+            // Check Cost Plus availability - ONLY if generic is available (Cost Plus only carries generics)
+            // Use DB value OR fallback to known list, but always require generic_available = true
+            const costPlusAvail = details.generic_available === true &&
+              (details.cost_plus_available || isCostPlusAvailable(details.generic_name));
 
             // Track if available on Cost Plus (don't add as individual program)
             if (costPlusAvail) {
@@ -566,6 +568,7 @@ const handleAction = async (action, body) => {
               medication_id: medId,
               medication_name: details.brand_name,
               generic_name: details.generic_name,
+              generic_available: details.generic_available === true,
               cost_plus_available: costPlusAvail,
               programs: []
             };
