@@ -223,6 +223,9 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
     // Filter by insurance eligibility
     // Always include: discount_pharmacy, discount_card (cash-pay options for everyone)
     // Always include: PAP programs for non-commercial insurance (manufacturer assistance)
+    // Copay cards included for commercial insurance when commercial_eligible is truthy
+    console.log(`[getSavingsPrograms] Filtering ${programs.length} programs for insurance: ${insuranceType}, eligibility column: ${eligibilityColumn}`);
+
     const filteredPrograms = programs.filter(p => {
       // Always include discount pharmacies (Cost Plus Drugs, etc) and discount cards
       if (p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
@@ -232,8 +235,16 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
       if (p.program_type === 'pap' && insuranceType !== 'commercial') {
         return true;
       }
-      // For other program types, check insurance eligibility
-      return p[eligibilityColumn] === true;
+      // For copay cards with commercial insurance, check commercial_eligible
+      // Use truthy check instead of strict === true for database compatibility
+      const isEligible = Boolean(p[eligibilityColumn]);
+
+      // Debug logging for copay cards
+      if (p.program_type === 'copay_card') {
+        console.log(`[getSavingsPrograms] Copay card "${p.program_name}": ${eligibilityColumn}=${p[eligibilityColumn]} (${typeof p[eligibilityColumn]}), isEligible=${isEligible}`);
+      }
+
+      return isEligible;
     });
 
     // Re-sort based on insurance type
@@ -436,28 +447,82 @@ Be specific and actionable. Reference the exact program names and URLs from the 
 const handleAction = async (action, body) => {
   switch (action) {
     case 'test': {
-      // Test database connection
+      // Test database connection and show copay card availability
       try {
         const db = getDb();
+
+        // Get medications with their savings programs (copay cards for commercial)
         const result = await db`
-          SELECT m.generic_name, m.brand_name, m.cost_plus_available, sp.program_name
+          SELECT m.id, m.generic_name, m.brand_name, m.generic_available,
+                 sp.program_name, sp.program_type, sp.commercial_eligible
           FROM medications m
-          LEFT JOIN savings_programs sp ON m.id = sp.medication_id
-          WHERE m.cost_plus_available = true
-          LIMIT 5
+          LEFT JOIN savings_programs sp ON m.id = sp.medication_id AND sp.program_type = 'copay_card'
+          WHERE sp.id IS NOT NULL
+          ORDER BY m.brand_name
+          LIMIT 10
         `;
+
+        // Count total copay cards
+        const [copayCount] = await db`
+          SELECT COUNT(*) as count FROM savings_programs WHERE program_type = 'copay_card' AND is_active = true
+        `;
+
         return {
           success: true,
           message: 'Database connection successful!',
           sampleData: result,
-          medicationCount: result.length,
-          note: 'Showing medications with Cost Plus availability'
+          totalCopayCards: copayCount?.count || 0,
+          note: 'Showing medications with copay cards'
         };
       } catch (error) {
         return {
           success: false,
           error: error.message,
           hint: 'Check DATABASE_URL environment variable'
+        };
+      }
+    }
+
+    case 'debug_copay': {
+      // Debug copay card availability for a medication
+      const { medication_id = 'apixaban', insurance_type = 'commercial' } = body;
+      try {
+        const db = getDb();
+
+        // Get all savings programs for this medication
+        const allPrograms = await db`
+          SELECT id, program_name, program_type, medication_id,
+                 commercial_eligible, medicare_eligible, medicaid_eligible,
+                 uninsured_eligible, is_active
+          FROM savings_programs
+          WHERE medication_id = ${medication_id} OR medication_id IS NULL
+          ORDER BY program_type, program_name
+        `;
+
+        // Get copay cards specifically
+        const copayCards = await db`
+          SELECT * FROM savings_programs
+          WHERE medication_id = ${medication_id}
+          AND program_type = 'copay_card'
+        `;
+
+        // Also check what getSavingsPrograms returns
+        const filteredPrograms = await getSavingsPrograms(medication_id, insurance_type);
+
+        return {
+          success: true,
+          medication_id,
+          insurance_type,
+          total_programs_in_db: allPrograms.length,
+          all_programs: allPrograms,
+          copay_cards_in_db: copayCards,
+          filtered_programs_returned: filteredPrograms,
+          note: 'Check if copay cards exist and have correct eligibility flags'
+        };
+      } catch (error) {
+        return {
+          success: false,
+          error: error.message
         };
       }
     }
