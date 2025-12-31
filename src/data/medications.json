@@ -14,11 +14,12 @@
       "Lung",
       "Pancreas"
     ],
-    "papUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "papUrl": "https://www.astellaspharmasupportsolutions.com",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "astellas-pap"
+    "papProgramId": "astellas-pap",
+    "copayUrl": "https://www.prograf.com/savings-information"
   },
   {
     "id": "cyclosporine",
@@ -38,7 +39,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novartis-pap"
+    "papProgramId": "novartis-pap",
+    "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
   },
   {
     "id": "mycophenolate",
@@ -55,11 +57,12 @@
       "Lung",
       "Pancreas"
     ],
-    "papUrl": "https://www.genentech-access.com/patient.html",
+    "papUrl": "https://www.genentech-access.com/patient/brands/cellcept.html",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.cellcept.com/patient/cost-and-financial-support.html"
   },
   {
     "id": "myfortic",
@@ -80,7 +83,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novartis-pap"
+    "papProgramId": "novartis-pap",
+    "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance"
   },
   {
     "id": "imuran",
@@ -117,7 +121,8 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/"
   },
   {
     "id": "everolimus",
@@ -133,7 +138,7 @@
       "Heart",
       "Lung"
     ],
-    "copayUrl": "https://www.zortress.com/transplant/savings-and-support",
+    "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "copayProgramId": "zortress-copay",
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
@@ -152,9 +157,9 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "copayUrl": "https://www.bmsaccesssupport.com/patient",
+    "copayUrl": "https://www.bms.com/patient-and-caregiver/get-help-paying-for-your-medicines.html",
     "copayProgramId": "nulojix-copay",
-    "papUrl": "https://www.bmspaf.org/",
+    "papUrl": "https://www.bms.com/patient-and-caregiver/get-help-paying-for-your-medicines.html",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -274,7 +279,7 @@
       "Lung",
       "Pancreas"
     ],
-    "papUrl": "https://www.genentech-access.com/patient.html",
+    "papUrl": "https://www.h2-pharma.com/patient-support/",
     "supportUrl": "https://www.gene.com/patients/patient-support-services",
     "cost_tier": "high",
     "generic_available": true,
@@ -295,7 +300,7 @@
       "Heart",
       "Lung"
     ],
-    "papUrl": "https://www.genentech-access.com/patient.html",
+    "papUrl": "https://www.h2-pharma.com/patient-support/",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
@@ -351,11 +356,12 @@
       "Liver",
       "Lung"
     ],
-    "papUrl": "https://www.merckhelps.com/",
+    "papUrl": "https://www.merckaccessprogram-prevymis.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "merck-pap"
+    "papProgramId": "merck-pap",
+    "copayUrl": "https://www.merckaccessprogram-prevymis.com/"
   },
   {
     "id": "livtencity",
@@ -370,11 +376,12 @@
       "Lung",
       "Liver"
     ],
-    "papUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/",
+    "papUrl": "https://www.livtencityhcp.com/patient-support",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "takeda-pap"
+    "papProgramId": "takeda-pap",
+    "copayUrl": "https://www.livtencityhcp.com/patient-support"
   },
   {
     "id": "bactrim",
@@ -444,11 +451,12 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.merckhelps.com/",
+    "papUrl": "https://www.merckaccessprogram-noxafil.com/",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "merck-pap"
+    "papProgramId": "merck-pap",
+    "copayUrl": "https://www.merckaccessprogram-noxafil.com/"
   },
   {
     "id": "vfend",
@@ -465,7 +473,8 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/"
   },
   {
     "id": "cresemba",
@@ -478,9 +487,9 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "copayUrl": "https://www.cresemba.com/savings",
     "copayProgramId": "cresemba-copay",
-    "papUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "papUrl": "https://www.astellaspharmasupportsolutions.com",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -497,11 +506,12 @@
     "commonOrgans": [
       "Liver"
     ],
-    "papUrl": "https://www.bmspaf.org/",
+    "papUrl": "https://www.bms.com/patient-and-caregiver/get-help-paying-for-your-medicines.html",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "bms-pap"
+    "papProgramId": "bms-pap",
+    "copayUrl": "https://www.bms.com/patient-and-caregiver/get-help-paying-for-your-medicines.html"
   },
   {
     "id": "vemlidy",
@@ -514,9 +524,9 @@
       "Liver",
       "Kidney"
     ],
-    "copayUrl": "https://www.gileadadvancingaccess.com/",
+    "copayUrl": "https://www.gilead.com/purpose/medication-assistance",
     "copayProgramId": "vemlidy-copay",
-    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "papUrl": "https://www.gilead.com/purpose/medication-assistance",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
@@ -538,7 +548,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "gilead-pap"
+    "papProgramId": "gilead-pap",
+    "copayUrl": "https://www.gileadadvancingaccess.com/"
   },
   {
     "id": "hbig",
@@ -568,9 +579,9 @@
       "Liver",
       "Kidney"
     ],
-    "copayUrl": "https://www.gileadadvancingaccess.com/",
+    "copayUrl": "https://www.gilead.com/purpose/medication-assistance",
     "copayProgramId": "epclusa-copay",
-    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "papUrl": "https://www.gilead.com/purpose/medication-assistance",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -588,7 +599,7 @@
       "Liver",
       "Kidney"
     ],
-    "copayUrl": "https://www.mavyret.com/savings",
+    "copayUrl": "https://www.mavyret.com/savings-and-support",
     "copayProgramId": "mavyret-copay",
     "papUrl": "https://www.abbvie.com/patients/patient-assistance.html",
     "cost_tier": "high",
@@ -606,8 +617,8 @@
     "commonOrgans": [
       "Liver"
     ],
-    "copayUrl": "https://xifaxan.copaysavingsprogram.com/",
-    "papUrl": "https://www.bauschhealthpap.com/",
+    "copayUrl": "https://xifaxan.copaysavingsprogram.com",
+    "papUrl": "https://www.bauschhealthpap.com",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
@@ -654,7 +665,7 @@
       "Pancreas",
       "Lung"
     ],
-    "copayUrl": "https://www.creoninfo.com/savings/",
+    "copayUrl": "https://www.creon.com/savings-and-support",
     "copayProgramId": "creon-copay",
     "papUrl": "https://www.creoninfo.com/",
     "cost_tier": "high",
@@ -672,7 +683,7 @@
     "commonOrgans": [
       "Heart"
     ],
-    "copayUrl": "https://www.entresto.com/savings-and-support",
+    "copayUrl": "https://www.entresto.com/heart-failure/paying-for-entresto",
     "copayProgramId": "entresto-copay",
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
@@ -732,7 +743,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "sanofi-pap"
+    "papProgramId": "sanofi-pap",
+    "copayUrl": "https://www.renvela.com/savings-card"
   },
   {
     "id": "lasix",
@@ -847,7 +859,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/"
   },
   {
     "id": "tracleer",
@@ -860,11 +873,12 @@
       "Lung",
       "Heart"
     ],
-    "papUrl": "https://www.jnjwithme.com/",
+    "papUrl": "https://www.janssenprescriptionassistance.com/",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 4,
-    "papProgramId": "janssen-pap"
+    "papProgramId": "janssen-pap",
+    "copayUrl": "https://www.janssenprescriptionassistance.com/"
   },
   {
     "id": "letairis",
@@ -881,7 +895,8 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 4,
-    "papProgramId": "gilead-pap"
+    "papProgramId": "gilead-pap",
+    "copayUrl": "https://www.letairis.com/patient/copay-savings-card"
   },
   {
     "id": "opsumit",
@@ -894,7 +909,7 @@
       "Lung",
       "Heart"
     ],
-    "copayUrl": "https://www.opsumit.com/support",
+    "copayUrl": "https://www.opsumit.com/patient/getting-opsumit/opsumit-financial-assistance",
     "copayProgramId": "opsumit-copay",
     "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
@@ -913,7 +928,7 @@
       "Lung",
       "Heart"
     ],
-    "copayUrl": "https://www.adempas-us.com/cteph/financial-support",
+    "copayUrl": "https://www.adempas-us.com/patient/financial-support",
     "copayProgramId": "adempas-copay",
     "papUrl": "https://www.adempas-us.com/",
     "cost_tier": "high",
@@ -932,7 +947,7 @@
       "Lung",
       "Heart"
     ],
-    "copayUrl": "https://www.uptravi.com/support",
+    "copayUrl": "https://www.uptravi.com/patient/getting-uptravi/financial-support",
     "copayProgramId": "uptravi-copay",
     "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
@@ -990,7 +1005,8 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "janssen-pap"
+    "papProgramId": "janssen-pap",
+    "copayUrl": "https://www.jnjwithme.com/"
   },
   {
     "id": "aranesp",
@@ -1002,11 +1018,12 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.amgensupportplus.com/",
+    "papUrl": "https://www.amgen.com/patients/about-amgen-safety-net-foundation",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "amgen-pap"
+    "papProgramId": "amgen-pap",
+    "copayUrl": "https://www.aranesp.com/savings"
   },
   {
     "id": "mircera",
@@ -1070,7 +1087,8 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "dsi-pap"
+    "papProgramId": "dsi-pap",
+    "copayUrl": "https://www.injectafer.com/iron-deficiency-anemia/patient-support/"
   },
   {
     "id": "calcitriol",
@@ -1128,11 +1146,12 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.amgensupportplus.com/",
+    "papUrl": "https://www.amgen.com/patients/about-amgen-safety-net-foundation",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "amgen-pap"
+    "papProgramId": "amgen-pap",
+    "copayUrl": "https://www.amgen.com/patients/about-amgen-safety-net-foundation"
   },
   {
     "id": "parsabiv",
@@ -1160,9 +1179,9 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "copayUrl": "https://www.akebiacares.com/",
+    "copayUrl": "https://www.auryxiahcp.com/patient-support",
     "copayProgramId": "auryxia-copay",
-    "papUrl": "https://www.akebiacares.com/",
+    "papUrl": "https://www.auryxiahcp.com/patient-support",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
@@ -1212,11 +1231,12 @@
       "Liver",
       "Heart"
     ],
-    "papUrl": "https://www.genentech-access.com/patient.html",
+    "papUrl": "https://www.genentech-access.com/patient/brands/rituxan.html",
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.genentech-access.com/patient/brands/rituxan.html"
   },
   {
     "id": "ivig",
@@ -1620,8 +1640,8 @@
       "Heart",
       "Kidney"
     ],
-    "papUrl": "https://www.bmspaf.org/",
-    "copayUrl": "https://www.eliquis.bmscustomerconnect.com/savings",
+    "papUrl": "https://www.bms.com/patient-and-caregiver/get-help-paying-for-your-medicines.html",
+    "copayUrl": "https://www.eliquis.com/savings",
     "copayProgramId": "eliquis-copay",
     "supportUrl": "https://www.eliquis.bmscustomerconnect.com/",
     "medicarePartDUrl": "https://www.eliquis.bmscustomerconnect.com/medicare-part-d-changes",
@@ -1643,7 +1663,7 @@
       "Heart",
       "Kidney"
     ],
-    "copayUrl": "https://www.xarelto-us.com/savings",
+    "copayUrl": "https://www.xareltohcp.com/janssen-carepath-savings-program",
     "copayProgramId": "xarelto-copay",
     "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
@@ -1738,7 +1758,7 @@
       "Kidney",
       "Pancreas"
     ],
-    "copayUrl": "https://www.januvia.com/savings-and-resources/",
+    "copayUrl": "https://www.januvia.com/savings/",
     "copayProgramId": "januvia-copay",
     "papUrl": "https://www.merckhelps.com/",
     "cost_tier": "high",
@@ -1764,7 +1784,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "sanofi-pap"
+    "papProgramId": "sanofi-pap",
+    "copayUrl": "https://www.lantus.com/sign-up-for-savings"
   },
   {
     "id": "insulin-lispro",
@@ -1782,7 +1803,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "lilly-pap"
+    "papProgramId": "lilly-pap",
+    "copayUrl": "https://www.humalog.com/savings-card"
   },
   {
     "id": "insulin-aspart",
@@ -1796,11 +1818,12 @@
       "Liver",
       "Pancreas"
     ],
-    "papUrl": "https://www.novocare.com/",
+    "papUrl": "https://www.novocare.com/pap.html",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novo-nordisk-pap"
+    "papProgramId": "novo-nordisk-pap",
+    "copayUrl": "https://www.novocare.com/insulin/novolog/savings-card.html"
   },
   {
     "id": "semaglutide",
@@ -1814,7 +1837,7 @@
       "Heart",
       "Pancreas"
     ],
-    "copayUrl": "https://www.ozempic.com/savings-and-resources/save-on-ozempic.html",
+    "copayUrl": "https://www.ozempic.com/savings-and-resources/save-on-ozempic",
     "copayProgramId": "ozempic-copay",
     "papUrl": "https://www.novocare.com/",
     "cost_tier": "high",
@@ -1838,7 +1861,8 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
-    "papProgramId": "lilly-pap"
+    "papProgramId": "lilly-pap",
+    "copayUrl": "https://www.trulicity.com/savings-resources/savings-card"
   },
   {
     "id": "levothyroxine",
@@ -1903,7 +1927,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "gsk-pap"
+    "papProgramId": "gsk-pap",
+    "copayUrl": "https://www.advair.com/savings-and-support/"
   },
   {
     "id": "budesonide-formoterol",
@@ -1919,7 +1944,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "astrazeneca-pap"
+    "papProgramId": "astrazeneca-pap",
+    "copayUrl": "https://www.symbicort.com/savings-and-support/symbicort-savings-card"
   },
   {
     "id": "montelukast",
@@ -1945,7 +1971,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.spiriva.com/copd-resources/savings",
+    "copayUrl": "https://www.spiriva.com/copd/get-spiriva/savings",
     "copayProgramId": "spiriva-copay",
     "papUrl": "https://www.boehringer-ingelheim.com/us/patient-assistance",
     "cost_tier": "high",
@@ -2091,7 +2117,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.breoellipta.com/savings/",
+    "copayUrl": "https://www.mybreo.com/savings-and-coupons/",
     "copayProgramId": "breo-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2127,7 +2153,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.anoro.com/savings-and-support/",
+    "copayUrl": "https://www.anoro.com/savings-support/",
     "copayProgramId": "anoro-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2145,7 +2171,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.xolair.com/allergic-asthma/financial-support.html",
+    "copayUrl": "https://www.xolair.com/allergic-asthma/xolair-support/financial-assistance",
     "copayProgramId": "xolair-copay",
     "papUrl": "https://www.genentech-access.com/patient.html",
     "cost_tier": "high",
@@ -2163,7 +2189,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.nucala.com/severe-eosinophilic-asthma/nucala-costs/",
+    "copayUrl": "https://www.nucala.com/severe-asthma/nucala-support/",
     "copayProgramId": "nucala-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2199,7 +2225,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.dupixent.com/support-savings/dupixent-my-way",
+    "copayUrl": "https://www.dupixent.com/support-savings/copay-card",
     "copayProgramId": "dupixent-copay",
     "papUrl": "https://www.dupixent.com/support-savings/dupixent-my-way",
     "cost_tier": "high",
@@ -2217,7 +2243,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.tezspire.com/savings/",
+    "copayUrl": "https://www.tezspire.com/savings-and-support/",
     "copayProgramId": "tezspire-copay",
     "papUrl": "https://www.azandmeapp.com/",
     "cost_tier": "high",
@@ -2587,7 +2613,8 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.lyrica.com/savings"
   },
   {
     "id": "meloxicam",
@@ -3068,7 +3095,7 @@
     "commonOrgans": [
       "Liver"
     ],
-    "copayUrl": "https://madrigalpatientsupport.com/",
+    "copayUrl": "https://www.rezdiffra.com/",
     "copayProgramId": "rezdiffra-copay",
     "papUrl": "https://madrigalpatientsupport.com/",
     "cost_tier": "high",
