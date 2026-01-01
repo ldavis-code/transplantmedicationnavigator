@@ -154,20 +154,30 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
     });
   }
 
-  // Discount card guidance
+  // Discount card guidance - Cost Plus first for generics (often lowest price)
   if (eligibilityFlags.discountCards) {
+    // Build links array with Cost Plus first for generic medications
+    const discountLinks = medication.generic_available
+      ? [
+          { name: 'Cost Plus Drugs', url: 'https://costplusdrugs.com/' },
+          { name: 'GoodRx', url: 'https://www.goodrx.com/' },
+          { name: 'SingleCare', url: 'https://www.singlecare.com/' },
+        ]
+      : [
+          { name: 'GoodRx', url: 'https://www.goodrx.com/' },
+          { name: 'SingleCare', url: 'https://www.singlecare.com/' },
+        ];
+
     guidance.actions.push({
       type: 'discountCard',
       priority: insuranceType === InsuranceType.UNINSURED ? 2 : 4,
       title: 'Compare Discount Card Prices',
-      description: 'GoodRx, SingleCare, and Cost Plus Drugs can save you money, especially on generics.',
-      links: [
-        { name: 'GoodRx', url: `https://www.goodrx.com/` },
-        { name: 'SingleCare', url: 'https://www.singlecare.com/' },
-        { name: 'Cost Plus Drugs', url: 'https://costplusdrugs.com/' },
-      ],
+      description: medication.generic_available
+        ? 'Cost Plus Drugs, GoodRx, and SingleCare can save you money on generics.'
+        : 'GoodRx and SingleCare can help you find savings.',
+      links: discountLinks,
       steps: [
-        'Compare prices on all three sites',
+        'Compare prices on all sites',
         'Check if your pharmacy takes the discount card',
         'Compare the discount price to what your insurance charges',
         'Use whichever is cheaper!',
@@ -249,7 +259,7 @@ export const generateGuidanceSummary = (answers, medications) => {
       summary.keyMessages.push({
         type: 'info',
         title: 'Discount Cards Can Save Money',
-        message: 'For generics, discount cards (GoodRx, Cost Plus) can save 80-90% while you wait for your free medicine application.',
+        message: 'For generics, Cost Plus Drugs often has the lowest prices. GoodRx and SingleCare can save 80-90% while you wait for your free medicine application.',
       });
       break;
 
@@ -355,18 +365,18 @@ export const getRelevantResources = (insuranceType, organs = []) => {
     }
   }
 
-  // Discount cards
+  // Discount cards - Cost Plus first (often lowest for generics)
   resources.push({
-    name: 'GoodRx',
-    url: 'https://www.goodrx.com/',
-    description: 'Compare pharmacy prices and get free coupons',
+    name: 'Cost Plus Drugs',
+    url: 'https://costplusdrugs.com/',
+    description: 'Low-cost online pharmacy for generics',
     category: 'Discount',
   });
 
   resources.push({
-    name: 'Cost Plus Drugs',
-    url: 'https://costplusdrugs.com/',
-    description: 'Low-cost online pharmacy',
+    name: 'GoodRx',
+    url: 'https://www.goodrx.com/',
+    description: 'Compare pharmacy prices and get free coupons',
     category: 'Discount',
   });
 
