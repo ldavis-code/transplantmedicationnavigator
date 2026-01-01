@@ -9,7 +9,7 @@ import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
   User, Building2, Heart, AlertCircle, Printer, Lock,
-  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle
+  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 
@@ -648,7 +648,7 @@ const MedicationAssistantChat = () => {
             remainingSearches <= 1 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-600'
           }`}>
             <span>
-              {remainingSearches === 1 ? '⚠️ Last free search remaining' : `${remainingSearches} searches remaining`}
+              {remainingSearches === 1 ? 'Last free search remaining' : `${remainingSearches} searches remaining`}
             </span>
             <a href="/pricing" className="underline hover:no-underline font-medium">
               Upgrade
@@ -711,7 +711,7 @@ const MedicationAssistantChat = () => {
                     {med.brand_name}
                     {isSelected && <Check size={16} className="text-emerald-600" />}
                   </div>
-                  <div className="text-sm text-slate-500">{med.generic_name} {med.category && `* ${med.category}`}</div>
+                  <div className="text-sm text-slate-500">{med.generic_name} {med.category && `· ${med.category}`}</div>
                 </button>
               );
             })}
@@ -791,7 +791,7 @@ const MedicationAssistantChat = () => {
         <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm mb-4">
           <h3 className="text-lg font-bold text-slate-800 mb-1">{question.question}</h3>
           {question.helpText && (
-            <p className="text-sm text-slate-500 mb-4">{question.helpText}</p>
+            <p className="text-sm text-slate-500">{question.helpText}</p>
           )}
         </div>
 
@@ -837,6 +837,18 @@ const MedicationAssistantChat = () => {
                 </button>
               );
             })}
+          </div>
+        )}
+
+        {/* Blue Lightbulb Tip Section - Below Options */}
+        {question.tip && (
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 mt-0.5">
+                <Lightbulb size={18} className="text-blue-600" />
+              </div>
+              <p className="text-sm text-blue-800 leading-relaxed">{question.tip}</p>
+            </div>
           </div>
         )}
 
