@@ -2625,7 +2625,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 <p className="text-sm text-slate-700 mb-3">
                                     {copayProgram?.eligibility_notes || <><strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.</>}
                                 </p>
-                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                <a href={copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     {copayProgram?.name ? `Get ${copayProgram.name}` : 'Get Copay Card'} <ExternalLink size={14} aria-hidden="true" />
                                 </a>
                             </section>
@@ -2638,9 +2638,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         ? "For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company."
                                         : "Apply for free medicine from the drug company. You may qualify based on income.")}
                                 </p>
-                                <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
+                                <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
                                 {hasPapProgram && (
-                                    <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
+                                    <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
                                 )}
                             </section>
                             <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
