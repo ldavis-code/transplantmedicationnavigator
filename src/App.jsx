@@ -865,7 +865,7 @@ const WizardHelp = ({ step, answers }) => {
     };
 
     return (
-        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
+        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-md p-4">
             <div className="flex items-start gap-3">
                 <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
                     <Lightbulb size={20} className="text-blue-600" />
