@@ -2781,11 +2781,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-emerald-600 font-bold">$0 - $10/month</div>
                                             <div className="text-xs text-slate-500 mt-0.5">Manufacturer program</div>
                                         </td>
-                                        <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Copay Card details for ${med.brandName}`}>
-                                                Get Card <ArrowRight size={14} aria-hidden="true" />
-                                            </button>
-                                        </td>
+                                        <td className="p-3 no-print"></td>
                                     </tr>
                                     )}
 
@@ -2803,11 +2799,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-orange-600 font-bold">FREE</div>
                                             <div className="text-xs text-slate-500 mt-0.5">You must meet income rules</div>
                                         </td>
-                                        <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Patient Assistance details for ${med.brandName}`}>
-                                                Apply <ArrowRight size={14} aria-hidden="true" />
-                                            </button>
-                                        </td>
+                                        <td className="p-3 no-print"></td>
                                     </tr>
                                     )}
 
