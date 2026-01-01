@@ -101,7 +101,7 @@
       "name": "BMS Access Support - Copay Card",
       "manufacturer": "Bristol Myers Squibb",
       "medications": ["belatacept", "apixaban"],
-      "url": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+      "url": "https://www.bmscopay.com/",
       "phone": "1-800-721-8909",
       "fax": "1-855-898-0296",
       "address": {
@@ -341,7 +341,7 @@
       "name": "Eliquis Savings Card",
       "manufacturer": "Bristol Myers Squibb",
       "medications": ["apixaban"],
-      "url": "https://www.eliquis.bmscustomerconnect.com/",
+      "url": "https://www.bmscopay.com/",
       "phone": "1-855-354-7847",
       "fax": "1-855-898-0296",
       "address": {
