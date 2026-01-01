@@ -841,8 +841,8 @@ const WizardHelp = ({ step, answers }) => {
             content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\n💡 If you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
         },
         6: {
-            title: "Mail-Order Pharmacy",
-            content: "**Important:** Your insurance may make you use one special pharmacy for transplant meds.\n\n**If you use the wrong pharmacy:**\n• Your insurance won't pay\n• You pay full price (over $1,000)\n\n**What to do:**\nCall your insurance. Ask: 'Which pharmacy must I use for my transplant medicine?'\n\nCommon ones: Accredo, CVS Specialty, Walgreens Specialty, Optum"
+            title: "Specialty Pharmacy Check",
+            content: "**Important:** Your insurance may require you to use a specific specialty pharmacy for transplant medications.\n\n**If you use the wrong pharmacy:**\n• Your insurance won't pay\n• You pay full price (over $1,000)\n\n**What to do:** Call your insurance and ask: 'Which pharmacy must I use for my transplant medicine?'\n\n**Common specialty pharmacies:** Accredo, CVS Specialty, Walgreens Specialty, Optum"
         },
         7: {
             title: "Financial Status",
@@ -1355,20 +1355,9 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-4">Mail-Order Pharmacy Check</h1>
+                <h1 className="text-2xl font-bold mb-4">Specialty Pharmacy Check</h1>
                 <WizardHelp step={step} answers={answers} />
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6" role="note">
-                    <div className="text-blue-800">
-                        <p className="font-bold mb-2">Important: Your insurance may make you use one special pharmacy for transplant meds.</p>
-                        <p className="mb-2">If you use the wrong pharmacy:</p>
-                        <ul className="list-disc ml-5 mb-2">
-                            <li>Your insurance won't pay</li>
-                            <li>You pay full price (over $1,000)</li>
-                        </ul>
-                        <p className="text-sm">Common specialty pharmacies: Accredo, CVS Specialty, Walgreens Specialty, Optum</p>
-                    </div>
-                </div>
-                <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific mail-order pharmacy?</h2>
+                <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific specialty pharmacy?</h2>
                 
                 <div className="space-y-3 mb-8" role="radiogroup" aria-label="Specialty pharmacy requirement">
                     {['Yes', 'No', 'Not Sure'].map(opt => (
