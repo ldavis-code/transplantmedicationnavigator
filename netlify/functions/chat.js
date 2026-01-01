@@ -131,7 +131,7 @@ const searchMedications = async (query) => {
   try {
     const db = getDb();
     const medications = await db`
-      SELECT id, brand_name, generic_name, category, manufacturer, stage, cost_plus_available
+      SELECT id, brand_name, generic_name, category, manufacturer, stage
       FROM medications
       WHERE
         LOWER(brand_name) LIKE LOWER(${'%' + query + '%'})
@@ -139,7 +139,11 @@ const searchMedications = async (query) => {
       ORDER BY brand_name
       LIMIT 10
     `;
-    return medications;
+    // Add Cost Plus availability using the fallback function
+    return medications.map(med => ({
+      ...med,
+      cost_plus_available: isCostPlusAvailable(med.generic_name)
+    }));
   } catch (error) {
     console.error('Error searching medications:', error);
     return [];
@@ -257,7 +261,7 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
   }
 };
 
-// Get medication details including cost_plus_available
+// Get medication details from database
 const getMedicationDetails = async (medicationId) => {
   try {
     const db = getDb();
@@ -441,18 +445,22 @@ const handleAction = async (action, body) => {
       try {
         const db = getDb();
         const result = await db`
-          SELECT m.generic_name, m.brand_name, m.cost_plus_available, sp.program_name
+          SELECT m.generic_name, m.brand_name, sp.program_name
           FROM medications m
           LEFT JOIN savings_programs sp ON m.id = sp.medication_id
-          WHERE m.cost_plus_available = true
           LIMIT 5
         `;
+        // Add Cost Plus availability using the fallback function
+        const withCostPlus = result.map(row => ({
+          ...row,
+          cost_plus_available: isCostPlusAvailable(row.generic_name)
+        }));
         return {
           success: true,
           message: 'Database connection successful!',
-          sampleData: result,
+          sampleData: withCostPlus,
           medicationCount: result.length,
-          note: 'Showing medications with Cost Plus availability'
+          note: 'Showing sample medications with program data'
         };
       } catch (error) {
         return {
