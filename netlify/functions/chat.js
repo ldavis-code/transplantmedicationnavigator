@@ -222,14 +222,15 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
 
     // Filter by insurance eligibility
     // Always include: discount_pharmacy, discount_card (cash-pay options for everyone)
-    // Always include: PAP programs for non-commercial insurance (manufacturer assistance)
+    // Always include: PAP programs for ALL insurance types (as backup option for commercial users)
     const filteredPrograms = programs.filter(p => {
       // Always include discount pharmacies (Cost Plus Drugs, etc) and discount cards
       if (p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
         return true;
       }
-      // Always include PAP programs for non-commercial insurance
-      if (p.program_type === 'pap' && insuranceType !== 'commercial') {
+      // Always include PAP programs for ALL insurance types
+      // Commercial users get copay cards first, but PAPs are backup if copay isn't enough
+      if (p.program_type === 'pap') {
         return true;
       }
       // For other program types, check insurance eligibility
