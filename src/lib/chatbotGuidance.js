@@ -111,7 +111,7 @@ export const getMedicationGuidance = (medication, eligibilityFlags, insuranceTyp
       priority: 1,
       title: `${medication.brandName} Copay Card`,
       description: `Check if ${medication.manufacturer} has a savings card. It can lower what you pay to $0-$50/month.`,
-      link: medication.papUrl || null,
+      link: medication.copayUrl || null,
       steps: [
         `Go to the ${medication.manufacturer} website`,
         'Look for "Copay Card" or "Savings Program"',
