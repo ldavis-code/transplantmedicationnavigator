@@ -355,7 +355,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "merck-pap"
+    "papProgramId": "merck-pap",
+    "copayUrl": "https://www.merckhelps.com/",
+    "copayProgramId": "prevymis-copay"
   },
   {
     "id": "livtencity",
@@ -374,7 +376,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "takeda-pap"
+    "papProgramId": "takeda-pap",
+    "copayUrl": "https://www.takeda.com/en-us/what-we-do/patient-services/",
+    "copayProgramId": "livtencity-copay"
   },
   {
     "id": "bactrim",
@@ -1838,7 +1842,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
-    "papProgramId": "lilly-pap"
+    "papProgramId": "lilly-pap",
+    "copayUrl": "https://www.trulicity.com/savings-and-resources",
+    "copayProgramId": "trulicity-copay"
   },
   {
     "id": "levothyroxine",
@@ -2587,7 +2593,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "lyrica-copay"
   },
   {
     "id": "meloxicam",
