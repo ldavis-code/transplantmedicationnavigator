@@ -1233,6 +1233,244 @@
       "incomeLimit": "350% FPL",
       "maxBenefit": "Free medication",
       "notes": "Covers Breo Ellipta, Anoro Ellipta, Trelegy, Nucala and other GSK medications."
+    },
+    "alexion-pap": {
+      "programId": "alexion-pap",
+      "name": "Alexion OneSource",
+      "manufacturer": "Alexion",
+      "medications": ["soliris", "ultomiris"],
+      "url": "https://alexion.com/our-patients",
+      "phone": "1-888-765-4747",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "500% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Soliris, Ultomiris for complement-mediated diseases."
+    },
+    "madrigal-pap": {
+      "programId": "madrigal-pap",
+      "name": "Madrigal Patient Support",
+      "manufacturer": "Madrigal",
+      "medications": ["resmetirom"],
+      "url": "https://madrigalpatientsupport.com/",
+      "phone": "1-877-591-0871",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Rezdiffra for NASH/liver disease."
+    },
+    "united-therapeutics-pap": {
+      "programId": "united-therapeutics-pap",
+      "name": "United Therapeutics Cares",
+      "manufacturer": "United Therapeutics",
+      "medications": ["remodulin", "tyvaso", "orenitram"],
+      "url": "https://unitedtherapeuticscares.com/",
+      "phone": "1-877-864-8437",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "500% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Remodulin, Tyvaso, Orenitram for pulmonary arterial hypertension."
+    },
+    "amgen-pap": {
+      "programId": "amgen-pap",
+      "name": "Amgen Safety Net Foundation",
+      "manufacturer": "Amgen",
+      "medications": ["aranesp", "epogen", "sensipar", "parsabiv"],
+      "url": "https://www.amgensupportplus.com/",
+      "phone": "1-888-762-6436",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Aranesp, Epogen, Sensipar, Parsabiv and other Amgen medications."
+    },
+    "akebia-pap": {
+      "programId": "akebia-pap",
+      "name": "AkebiaCares",
+      "manufacturer": "Akebia",
+      "medications": ["auryxia"],
+      "url": "https://www.akebiacares.com/",
+      "phone": "1-844-445-3799",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Auryxia for iron deficiency anemia and hyperphosphatemia."
+    },
+    "bausch-pap": {
+      "programId": "bausch-pap",
+      "name": "Bausch Health Patient Assistance",
+      "manufacturer": "Bausch Health",
+      "medications": ["xifaxan"],
+      "url": "https://www.bauschhealthpap.com/",
+      "phone": "1-800-605-5333",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "300% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Xifaxan and other Bausch Health medications."
+    },
+    "organon-pap": {
+      "programId": "organon-pap",
+      "name": "Organon Helps",
+      "manufacturer": "Organon",
+      "medications": ["dulera", "nasonex"],
+      "url": "https://www.organonhelps.com/",
+      "phone": "1-866-621-8617",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Dulera, Nasonex and other Organon medications."
+    },
+    "sunovion-pap": {
+      "programId": "sunovion-pap",
+      "name": "Sunovion Patient Assistance",
+      "manufacturer": "Sunovion",
+      "medications": ["xopenex", "alvesco"],
+      "url": "https://www.sunovion.com/patient-support",
+      "phone": "1-877-850-0819",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Xopenex, Alvesco and other Sunovion respiratory medications."
+    },
+    "teva-pap": {
+      "programId": "teva-pap",
+      "name": "Teva Cares Foundation",
+      "manufacturer": "Teva",
+      "medications": ["qvar", "proair"],
+      "url": "https://www.tevausa.com/patient-resources/",
+      "phone": "1-877-832-7276",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers QVAR, ProAir and other Teva medications."
+    },
+    "grifols-pap": {
+      "programId": "grifols-pap",
+      "name": "Grifols Patient Care Programs",
+      "manufacturer": "Grifols",
+      "medications": ["hbig", "gamunex"],
+      "url": "https://www.grifolspatientcare.com/",
+      "phone": "1-800-520-2807",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "500% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers HepaGam B, Gamunex and other Grifols biologics."
+    },
+    "vifor-pap": {
+      "programId": "vifor-pap",
+      "name": "CSL Vifor Patient Support",
+      "manufacturer": "CSL Vifor",
+      "medications": ["mircera", "ferinject"],
+      "url": "https://www.cslvifor.com/",
+      "phone": "1-888-847-7477",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Mircera, Ferinject and other CSL Vifor iron/anemia medications."
+    },
+    "american-regent-pap": {
+      "programId": "american-regent-pap",
+      "name": "American Regent Patient Assistance",
+      "manufacturer": "American Regent",
+      "medications": ["venofer", "injectafer"],
+      "url": "https://www.venofer.com/venaccess",
+      "phone": "1-800-645-1706",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Venofer, Injectafer for iron deficiency anemia."
+    },
+    "bayer-pap": {
+      "programId": "bayer-pap",
+      "name": "Bayer Patient Assistance Foundation",
+      "manufacturer": "Bayer",
+      "medications": ["adempas"],
+      "url": "https://www.adempas-us.com/",
+      "phone": "1-855-423-3672",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Adempas for pulmonary hypertension."
+    },
+    "regeneron-pap": {
+      "programId": "regeneron-pap",
+      "name": "Regeneron Patient Assistance",
+      "manufacturer": "Regeneron",
+      "medications": ["dupixent", "eylea"],
+      "url": "https://www.dupixent.com/support-savings/dupixent-my-way",
+      "phone": "1-844-387-4936",
+      "eligibility": {
+        "commercial": false,
+        "medicare": true,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "400% FPL",
+      "maxBenefit": "Free medication",
+      "notes": "Covers Dupixent and other Regeneron medications."
     }
   },
   "foundationPrograms": {
