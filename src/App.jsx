@@ -2420,11 +2420,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const hasCopayProgram = !!(copayProgram || med.copayProgramId || med.copayUrl);
     const hasPapProgram = !!(papProgram || med.papProgramId || med.papUrl);
 
-    // Use trackable /out/ route if papProgramId exists, otherwise fallback to direct URL or drugs.com search
-    const papLink = med.papProgramId
-        ? `/out/pap/${med.papProgramId}`
-        : (papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`);
-    const papLinkText = med.papProgramId || papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
+    // Use direct URL from JSON data (bypasses database lookup for reliability)
+    const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
+    const papLinkText = papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
 
     // Get community price stats for each source
     const costPlusStats = getCommunityPriceStats(med.id, 'costplus');
@@ -2627,7 +2625,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 <p className="text-sm text-slate-700 mb-3">
                                     {copayProgram?.eligibility_notes || <><strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.</>}
                                 </p>
-                                <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                <a href={copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                     {copayProgram?.name ? `Get ${copayProgram.name}` : 'Get Copay Card'} <ExternalLink size={14} aria-hidden="true" />
                                 </a>
                             </section>
