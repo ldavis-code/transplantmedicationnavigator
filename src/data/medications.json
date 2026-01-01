@@ -18,7 +18,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "astellas-pap"
+    "papProgramId": "astellas-pap",
+    "copayUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "copayProgramId": "astellas-copay"
   },
   {
     "id": "cyclosporine",
@@ -38,7 +40,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novartis-pap"
+    "papProgramId": "novartis-pap",
+    "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "copayProgramId": "novartis-copay"
   },
   {
     "id": "mycophenolate",
@@ -59,7 +63,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.genentech-access.com/patient.html",
+    "copayProgramId": "genentech-copay"
   },
   {
     "id": "myfortic",
@@ -80,7 +86,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novartis-pap"
+    "papProgramId": "novartis-pap",
+    "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
+    "copayProgramId": "novartis-copay"
   },
   {
     "id": "imuran",
@@ -117,7 +125,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "pfizer-copay"
   },
   {
     "id": "everolimus",
@@ -218,7 +228,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "pfizer-copay"
   },
   {
     "id": "prednisone",
@@ -279,7 +291,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.genentech-access.com/patient.html",
+    "copayProgramId": "genentech-copay"
   },
   {
     "id": "cytovene",
@@ -299,7 +313,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.genentech-access.com/patient.html",
+    "copayProgramId": "genentech-copay"
   },
   {
     "id": "zovirax",
@@ -416,7 +432,9 @@
     "cost_tier": "low",
     "generic_available": true,
     "typical_copay_tier": 1,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "pfizer-copay"
   },
   {
     "id": "nystatin",
@@ -452,7 +470,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "merck-pap"
+    "papProgramId": "merck-pap",
+    "copayUrl": "https://www.merckhelps.com/",
+    "copayProgramId": "merck-copay"
   },
   {
     "id": "vfend",
@@ -469,7 +489,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": 3,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "pfizer-copay"
   },
   {
     "id": "cresemba",
@@ -736,7 +758,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "sanofi-pap"
+    "papProgramId": "sanofi-pap",
+    "copayUrl": "https://www.sanofipatientconnection.com/",
+    "copayProgramId": "sanofi-copay"
   },
   {
     "id": "lasix",
@@ -851,7 +875,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "copayUrl": "https://www.pfizerrxpathways.com/",
+    "copayProgramId": "pfizer-copay"
   },
   {
     "id": "tracleer",
@@ -1202,7 +1228,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "sanofi-pap"
+    "papProgramId": "sanofi-pap",
+    "copayUrl": "https://www.sanofipatientconnection.com/",
+    "copayProgramId": "sanofi-copay"
   },
   {
     "id": "rituxan",
@@ -1220,7 +1248,9 @@
     "cost_tier": "high",
     "generic_available": true,
     "typical_copay_tier": "Specialty",
-    "papProgramId": "genentech-pap"
+    "papProgramId": "genentech-pap",
+    "copayUrl": "https://www.genentech-access.com/patient.html",
+    "copayProgramId": "genentech-copay"
   },
   {
     "id": "ivig",
