@@ -137,7 +137,7 @@
     "copayProgramId": "zortress-copay",
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
-    "generic_available": false,
+    "generic_available": true,
     "typical_copay_tier": 4,
     "papProgramId": "novartis-pap"
   },
