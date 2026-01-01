@@ -125,8 +125,8 @@
       "name": "Nulojix Co-Pay Assistance",
       "manufacturer": "Bristol Myers Squibb",
       "medications": ["belatacept"],
-      "url": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
-      "phone": "1-800-721-8909",
+      "url": "https://www.bmscopay.com/",
+      "phone": "1-800-861-0048",
       "fax": "1-855-898-0296",
       "address": {
         "street": "Bristol Myers Squibb Access Support",
@@ -466,15 +466,15 @@
       "name": "Bristol Myers Squibb Patient Assistance Foundation",
       "manufacturer": "Bristol Myers Squibb",
       "medications": ["belatacept", "apixaban"],
-      "url": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
-      "phone": "1-800-861-0048",
-      "fax": "1-855-898-0296",
+      "url": "https://www.bmspaf.org/",
+      "phone": "1-800-736-0003",
+      "fax": "1-800-736-1611",
       "address": {
         "street": "Bristol Myers Squibb Patient Assistance Foundation",
-        "line2": "P.O. Box 1000",
-        "city": "Palatine",
-        "state": "IL",
-        "zip": "60078-1000"
+        "line2": "P.O. Box 220769",
+        "city": "Charlotte",
+        "state": "NC",
+        "zip": "28222-0769"
       },
       "eligibility": {
         "commercial": false,

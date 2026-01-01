@@ -152,9 +152,9 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "copayUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "copayUrl": "https://www.bmscopay.com/",
     "copayProgramId": "nulojix-copay",
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "papUrl": "https://www.bmspaf.org/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -501,7 +501,7 @@
     "commonOrgans": [
       "Liver"
     ],
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "papUrl": "https://www.bmspaf.org/",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
@@ -1624,7 +1624,7 @@
       "Heart",
       "Kidney"
     ],
-    "papUrl": "https://www.bmsaccesssupport.bmscustomerconnect.com/",
+    "papUrl": "https://www.bmspaf.org/",
     "copayUrl": "https://www.eliquis.bmscustomerconnect.com/afib/eliquis-free-trial-and-savings",
     "copayProgramId": "eliquis-copay",
     "supportUrl": "https://www.eliquis.bmscustomerconnect.com/",
