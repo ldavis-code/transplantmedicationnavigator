@@ -19,7 +19,28 @@ export function MedicationsProvider({ children }) {
                 const dbMedications = await fetchAllMedications();
 
                 if (!cancelled && dbMedications && dbMedications.length > 0) {
-                    setMedications(dbMedications);
+                    // Merge database data with JSON fallback to ensure all fields are present
+                    // This fixes issues where database may be missing copay/PAP program data
+                    const mergedMedications = dbMedications.map(dbMed => {
+                        const fallbackMed = MEDICATIONS_FALLBACK.find(m => m.id === dbMed.id);
+                        if (fallbackMed) {
+                            // Database values take priority, but use fallback for missing/null fields
+                            return {
+                                ...fallbackMed,
+                                ...dbMed,
+                                // Explicit fallbacks for critical program fields
+                                copayUrl: dbMed.copayUrl || fallbackMed.copayUrl,
+                                copayProgramId: dbMed.copayProgramId || fallbackMed.copayProgramId,
+                                papUrl: dbMed.papUrl || fallbackMed.papUrl,
+                                papProgramId: dbMed.papProgramId || fallbackMed.papProgramId,
+                                supportUrl: dbMed.supportUrl || fallbackMed.supportUrl,
+                                medicarePartDUrl: dbMed.medicarePartDUrl || fallbackMed.medicarePartDUrl,
+                                medicare2026Note: dbMed.medicare2026Note || fallbackMed.medicare2026Note,
+                            };
+                        }
+                        return dbMed;
+                    });
+                    setMedications(mergedMedications);
                     setSource('database');
                     setError(null);
                 }
