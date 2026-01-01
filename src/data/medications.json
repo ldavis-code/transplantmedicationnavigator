@@ -1038,7 +1038,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.venofer.com/venaccess",
+    "papUrl": "https://www.venofer.com/arassist",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 3,
@@ -1054,7 +1054,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.feraheme.com/support",
+    "papUrl": "https://feraheme.com/patient-support/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1251,7 +1251,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://alexion.com/our-patients",
+    "papUrl": "https://alexion.com/patient-support-services",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1267,7 +1267,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://alexion.com/our-patients",
+    "papUrl": "https://alexion.com/patient-support-services",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
