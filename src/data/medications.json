@@ -1798,7 +1798,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "sanofi-pap"
+    "papProgramId": "sanofi-pap",
+    "copayUrl": "https://www.lantus.com/sign-up-for-savings",
+    "copayProgramId": "lantus-copay"
   },
   {
     "id": "insulin-lispro",
@@ -1816,7 +1818,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "lilly-pap"
+    "papProgramId": "lilly-pap",
+    "copayUrl": "https://www.humalog.com/savings-support",
+    "copayProgramId": "humalog-copay"
   },
   {
     "id": "insulin-aspart",
@@ -1834,7 +1838,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "novo-nordisk-pap"
+    "papProgramId": "novo-nordisk-pap",
+    "copayUrl": "https://www.novolog.com/savings-card",
+    "copayProgramId": "novolog-copay"
   },
   {
     "id": "semaglutide",
@@ -1939,7 +1945,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "gsk-pap"
+    "papProgramId": "gsk-pap",
+    "copayUrl": "https://www.advair.com/savings-and-support/",
+    "copayProgramId": "advair-copay"
   },
   {
     "id": "budesonide-formoterol",
@@ -1955,7 +1963,9 @@
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
-    "papProgramId": "astrazeneca-pap"
+    "papProgramId": "astrazeneca-pap",
+    "copayUrl": "https://www.symbicort.com/savings-and-support",
+    "copayProgramId": "symbicort-copay"
   },
   {
     "id": "montelukast",
