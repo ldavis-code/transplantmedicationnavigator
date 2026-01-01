@@ -25,6 +25,7 @@ const QUIZ_QUESTIONS = [
       { value: 'carepartner', label: 'Carepartner / Family', description: "I'm helping a loved one" },
       { value: 'social_worker', label: 'Social Worker / Coordinator', description: "I'm a healthcare professional" },
     ],
+    tip: "Social workers and carepartners can complete this quiz on behalf of a patient to find assistance programs.",
   },
   {
     id: 'transplant_stage',
@@ -35,6 +36,7 @@ const QUIZ_QUESTIONS = [
       { value: 'post_1yr', label: 'Post-transplant (< 1 year)', description: 'Within the first year' },
       { value: 'post_1yr_plus', label: 'Post-transplant (1+ years)', description: 'More than a year post-transplant' },
     ],
+    tip: "Some programs have different eligibility based on how long since transplant. The first year often has the most options.",
   },
   {
     id: 'organ_type',
@@ -49,11 +51,11 @@ const QUIZ_QUESTIONS = [
       { value: 'multi', label: 'Multi-organ' },
       { value: 'other', label: 'Other' },
     ],
+    tip: "For multi-organ transplants, you may qualify for assistance from multiple organ-specific foundations.",
   },
   {
     id: 'insurance_type',
     question: "What's your primary insurance?",
-    helpText: "This helps us find the right programs for you.",
     type: 'single',
     options: [
       { value: 'commercial', label: 'Commercial Insurance', description: 'From my job, my spouse\'s job, or I bought it myself' },
@@ -63,6 +65,7 @@ const QUIZ_QUESTIONS = [
       { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
       { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage' },
     ],
+    tip: "Copay cards work best with commercial insurance. Medicare and Medicaid patients often have access to Patient Assistance Programs (PAPs) for free medications.",
   },
   {
     id: 'medication',
@@ -70,6 +73,7 @@ const QUIZ_QUESTIONS = [
     type: 'medication_search',
     allowSkip: true,
     skipLabel: "I'm not sure / Show all options",
+    tip: "Search for your brand name medication (like Prograf or Envarsus) or generic name (like tacrolimus). You can add multiple medications.",
   },
   {
     id: 'cost_burden',
@@ -81,6 +85,7 @@ const QUIZ_QUESTIONS = [
       { value: 'unaffordable', label: 'Unaffordable', description: "I struggle to pay for meds" },
       { value: 'crisis', label: 'Crisis', description: "I've skipped or rationed doses", urgent: true },
     ],
+    tip: "If you're in crisis, reach out to your transplant center social worker immediately. Never skip doses—there are emergency options available.",
   },
 ];
 
