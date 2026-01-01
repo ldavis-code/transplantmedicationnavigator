@@ -1019,8 +1019,14 @@ const Wizard = () => {
         setAnswers({ ...answers, [key]: updated });
     };
 
-    const nextStep = () => setStep(step + 1);
-    const prevStep = () => setStep(step - 1);
+    const nextStep = () => {
+        setStep(step + 1);
+        window.scrollTo(0, 0);
+    };
+    const prevStep = () => {
+        setStep(step - 1);
+        window.scrollTo(0, 0);
+    };
 
     // Navigation Logic
     // New order: Insurance(4) -> Specialty(5, if commercial) -> Financial(6) -> Medications(7) -> Results(8)
@@ -1030,10 +1036,20 @@ const Wizard = () => {
         } else {
             setStep(6); // Skip Specialty, go to Financial/Find Your Best Options
         }
+        window.scrollTo(0, 0);
     };
-    const handleNextFromSpecialty = () => setStep(6); // Go to Financial/Find Your Best Options
-    const handleNextFromFinancial = () => setStep(7); // Go to Medications
-    const handleNextFromMeds = () => setStep(8); // Go to Results
+    const handleNextFromSpecialty = () => {
+        setStep(6); // Go to Financial/Find Your Best Options
+        window.scrollTo(0, 0);
+    };
+    const handleNextFromFinancial = () => {
+        setStep(7); // Go to Medications
+        window.scrollTo(0, 0);
+    };
+    const handleNextFromMeds = () => {
+        setStep(8); // Go to Results
+        window.scrollTo(0, 0);
+    };
 
     const stepLabels = ['Role', 'Status', 'Organ', 'Insurance', 'Options'];
     const totalVisibleSteps = 5; // Main 5 steps the user sees
@@ -1385,7 +1401,7 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={() => setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 5 : 4)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={() => { setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 5 : 4); window.scrollTo(0, 0); }} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
@@ -1433,7 +1449,7 @@ const Wizard = () => {
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
                 {/* Back Button */}
                 <button
-                    onClick={() => setStep(7)}
+                    onClick={() => { setStep(7); window.scrollTo(0, 0); }}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
                     aria-label="Go back to previous step"
                 >
@@ -1707,7 +1723,7 @@ const Wizard = () => {
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
-                    <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
+                    <button onClick={() => { setStep(1); window.scrollTo(0, 0); }} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
                 </div>
             </article>
         );
