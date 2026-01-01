@@ -2782,9 +2782,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-xs text-slate-500 mt-0.5">Manufacturer program</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <a href={med.copayProgramId ? `/out/copay/${med.copayProgramId}` : copayUrl} target="_blank" rel="noreferrer" className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
-                                                Get Card <ExternalLink size={14} aria-hidden="true" />
-                                            </a>
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Copay Card details for ${med.brandName}`}>
+                                                Get Card <ArrowRight size={14} aria-hidden="true" />
+                                            </button>
                                         </td>
                                     </tr>
                                     )}
@@ -2804,9 +2804,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-xs text-slate-500 mt-0.5">You must meet income rules</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <a href={med.papProgramId ? `/out/pap/${med.papProgramId}` : papUrl} target="_blank" rel="noreferrer" className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
-                                                Apply <ExternalLink size={14} aria-hidden="true" />
-                                            </a>
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Patient Assistance details for ${med.brandName}`}>
+                                                Apply <ArrowRight size={14} aria-hidden="true" />
+                                            </button>
                                         </td>
                                     </tr>
                                     )}
