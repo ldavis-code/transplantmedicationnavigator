@@ -2731,10 +2731,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0"></span>
+                                    <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
                                     <div>
-                                        <div className="font-semibold text-blue-600">Discount Cards</div>
-                                        <div className="text-slate-500">GoodRx, SingleCare</div>
+                                        <div className="font-semibold text-emerald-600">Discount Cards</div>
+                                        <div className="text-slate-500">Cost Plus, GoodRx, SingleCare</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -2809,6 +2809,44 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                     </tr>
                                     )}
 
+                                    {/* Cost Plus Drugs Row - First for generics (often lowest price) */}
+                                    {isCostPlusAvailable && (
+                                    <tr className="bg-emerald-50/50 hover:bg-emerald-50">
+                                        <td className="p-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                                                <div className="font-bold text-emerald-600">Cost Plus Drugs</div>
+                                            </div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Online pharmacy - often lowest price for generics</div>
+                                            {costPlusStats && (
+                                                <div className="text-xs text-emerald-600 flex items-center gap-1 mt-1 ml-4.5">
+                                                    <Users size={14} />
+                                                    Community: ${costPlusStats.min}-${costPlusStats.max} ({costPlusStats.count} reports)
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td className="p-3">
+                                            <div className="text-emerald-600 font-bold">
+                                                {getPriceEstimate(med.id, med.category, 'costplus')}
+                                            </div>
+                                            <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                                                <Clock size={14} />
+                                                Est. updated Dec 24, 2025
+                                            </div>
+                                        </td>
+                                        <td className="p-3 no-print">
+                                            <div className="flex flex-col gap-1">
+                                                <a href={`https://costplusdrugs.com/medications/?query=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
+                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                </a>
+                                                <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
+                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )}
+
                                     {/* GoodRx Row - Blue */}
                                     {isGoodRxAvailable && (
                                     <tr className="bg-blue-50/50 hover:bg-blue-50">
@@ -2878,44 +2916,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                                     Check Live <ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    )}
-
-                                    {/* Cost Plus Drugs Row - Gray */}
-                                    {isCostPlusAvailable && (
-                                    <tr className="bg-slate-50/50 hover:bg-slate-100">
-                                        <td className="p-3">
-                                            <div className="flex items-center gap-2">
-                                                <span className="w-2.5 h-2.5 rounded-full bg-slate-400 flex-shrink-0"></span>
-                                                <div className="font-bold text-slate-500">Cost Plus Drugs</div>
-                                            </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Online pharmacy with low prices</div>
-                                            {costPlusStats && (
-                                                <div className="text-xs text-slate-500 flex items-center gap-1 mt-1 ml-4.5">
-                                                    <Users size={14} />
-                                                    Community: ${costPlusStats.min}-${costPlusStats.max} ({costPlusStats.count} reports)
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="p-3">
-                                            <div className="text-slate-600 font-bold">
-                                                {getPriceEstimate(med.id, med.category, 'costplus')}
-                                            </div>
-                                            <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
-                                                <Clock size={14} />
-                                                Est. updated Dec 24, 2025
-                                            </div>
-                                        </td>
-                                        <td className="p-3 no-print">
-                                            <div className="flex flex-col gap-1">
-                                                <a href={`https://costplusdrugs.com/medications/?query=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
-                                                </a>
-                                                <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
                                                     <TrendingUp size={14} aria-hidden="true" /> Report Price
                                                 </button>
                                             </div>
@@ -3016,6 +3016,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         <strong className="text-orange-600">FREE (if eligible)</strong>
                                     </div>
                                 )}
+                                {isCostPlusAvailable && (
+                                    <div className="flex justify-between">
+                                        <span>Cost Plus Drugs:</span>
+                                        <strong className="text-emerald-600">{getPriceEstimate(med.id, med.category, 'costplus')}</strong>
+                                    </div>
+                                )}
                                 {isGoodRxAvailable && (
                                     <div className="flex justify-between">
                                         <span>GoodRx:</span>
@@ -3026,12 +3032,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                     <div className="flex justify-between">
                                         <span>SingleCare:</span>
                                         <strong className="text-blue-600">{getPriceEstimate(med.id, med.category, 'singlecare')}</strong>
-                                    </div>
-                                )}
-                                {isCostPlusAvailable && (
-                                    <div className="flex justify-between">
-                                        <span>Cost Plus Drugs:</span>
-                                        <strong className="text-slate-600">{getPriceEstimate(med.id, med.category, 'costplus')}</strong>
                                     </div>
                                 )}
                             </div>
@@ -3082,7 +3082,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                    Compare prices on GoodRx and SingleCare
+                                    Compare prices on Cost Plus Drugs, GoodRx, and SingleCare
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>

@@ -114,7 +114,7 @@ const generateKeyMessages = (insuranceType, organs = [], financialStatus) => {
             messages.push({
                 type: 'info',
                 title: 'Discount Card Savings',
-                message: 'For generics, discount cards (GoodRx, Cost Plus) can save 80-90% off retail.',
+                message: 'For generics, Cost Plus Drugs often has the lowest prices. GoodRx can also save 80-90% off retail.',
             });
             break;
 
@@ -213,7 +213,7 @@ const getMedicationsGuidance = async (medicationIds, insuranceType) => {
                     type: 'discountCard',
                     priority: 4,
                     title: 'Compare Discount Prices',
-                    description: 'GoodRx, SingleCare, and Cost Plus may offer savings.',
+                    description: 'Cost Plus Drugs, GoodRx, and SingleCare may offer savings.',
                 });
             }
 
@@ -268,18 +268,18 @@ const getResources = (insuranceType, organs = []) => {
         });
     }
 
-    // Discount cards
+    // Discount cards - Cost Plus first (often lowest for generics)
     resources.push({
-        name: 'GoodRx',
-        url: 'https://www.goodrx.com/',
-        description: 'Free prescription coupons',
+        name: 'Cost Plus Drugs',
+        url: 'https://costplusdrugs.com/',
+        description: 'Low-cost online pharmacy for generics',
         category: 'Discount',
     });
 
     resources.push({
-        name: 'Cost Plus Drugs',
-        url: 'https://costplusdrugs.com/',
-        description: 'Low-cost online pharmacy',
+        name: 'GoodRx',
+        url: 'https://www.goodrx.com/',
+        description: 'Free prescription coupons',
         category: 'Discount',
     });
 
