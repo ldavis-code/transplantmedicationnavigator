@@ -837,16 +837,16 @@ const WizardHelp = ({ step, answers }) => {
         },
         4: null,
         5: {
-            title: "Selecting Medications",
-            content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\n💡 If you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
-        },
-        6: {
             title: "Specialty Pharmacy Check",
             content: "**Important:** Your insurance may require you to use a specific specialty pharmacy for transplant medications.\n\n**If you use the wrong pharmacy:**\n• Your insurance won't pay\n• You pay full price (over $1,000)\n\n**What to do:** Call your insurance and ask: 'Which pharmacy must I use for my transplant medicine?'\n\n**Common specialty pharmacies:** Accredo, CVS Specialty, Walgreens Specialty, Optum"
         },
-        7: {
+        6: {
             title: "Financial Status",
             content: "**Be honest - this helps us prioritize the best help for you:**\n\n• **Manageable**: We'll show copay savings tips\n• **Challenging**: Focus on PAPs and foundations\n• **Unaffordable**: Urgent PAP applications recommended\n• **Crisis**: Immediate assistance pathways\n\nYour answer is NEVER stored or shared. Many people qualify for help even if costs seem manageable now."
+        },
+        7: {
+            title: "Selecting Medications",
+            content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\nIf you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
         }
     };
 
@@ -1023,18 +1023,19 @@ const Wizard = () => {
     const prevStep = () => setStep(step - 1);
 
     // Navigation Logic
-    const handleNextFromInsurance = () => setStep(5);
-    const handleNextFromMeds = () => {
+    // New order: Insurance(4) -> Specialty(5, if commercial) -> Financial(6) -> Medications(7) -> Results(8)
+    const handleNextFromInsurance = () => {
         if (answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) {
-            setStep(6);
+            setStep(5); // Go to Specialty Pharmacy
         } else {
-            setStep(7);
+            setStep(6); // Skip Specialty, go to Financial/Find Your Best Options
         }
     };
-    const handleNextFromSpecialty = () => setStep(7);
-    const handleNextFromFinancial = () => setStep(8);
+    const handleNextFromSpecialty = () => setStep(6); // Go to Financial/Find Your Best Options
+    const handleNextFromFinancial = () => setStep(7); // Go to Medications
+    const handleNextFromMeds = () => setStep(8); // Go to Results
 
-    const stepLabels = ['Role', 'Status', 'Organ', 'Insurance', 'Medications'];
+    const stepLabels = ['Role', 'Status', 'Organ', 'Insurance', 'Options'];
     const totalVisibleSteps = 5; // Main 5 steps the user sees
 
     const renderProgress = () => (
@@ -1249,8 +1250,8 @@ const Wizard = () => {
         );
     }
 
-    // Step 5: Meds
-    if (step === 5) {
+    // Step 7: Meds (moved after Financial/Options)
+    if (step === 7) {
         const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
 
         return (
@@ -1349,8 +1350,8 @@ const Wizard = () => {
         );
     }
 
-    // Step 6: Specialty Pharmacy
-    if (step === 6) {
+    // Step 5: Specialty Pharmacy (only shown for commercial/marketplace insurance)
+    if (step === 5) {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
@@ -1379,12 +1380,12 @@ const Wizard = () => {
         );
     }
 
-    // Step 7: Financial Status
-    if (step === 7) {
+    // Step 6: Financial Status / Find Your Best Options
+    if (step === 6) {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={() => setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 6 : 5)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={() => setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 5 : 4)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
