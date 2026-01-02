@@ -1832,10 +1832,9 @@ const MedicationSearch = () => {
     const { answers: quizAnswers } = useChatQuiz();
 
     // Determine if copay cards should be shown based on insurance type from quiz
-    // Copay cards are only for commercial/employer insurance
-    // If insurance type is not set (user hasn't completed quiz), default to showing copay cards
+    // Copay cards are ONLY for commercial/employer insurance
     const insuranceType = quizAnswers?.insurance_type;
-    const isCommercialInsurance = insuranceType === 'commercial' || !insuranceType;
+    const isCommercialInsurance = insuranceType === 'commercial';
     const showCopayCards = isCommercialInsurance;
 
     const [searchParams, setSearchParams] = useSearchParams();
