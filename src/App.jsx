@@ -748,6 +748,52 @@ const Home = () => {
 
 // Contextual Help Component for Wizard
 const WizardHelp = ({ step, answers }) => {
+    // Organ-specific medication regimen suggestions
+    const organRegimens = {
+        Heart: {
+            title: "Typical Heart Transplant Medications",
+            content: "**Heart transplant patients typically receive:**\n\n• **Tacrolimus or Cyclosporine** - Calcineurin inhibitor (mainstay therapy)\n• **Mycophenolate or Azathioprine** - Antimetabolite (additional immune suppression)\n• **Prednisone** - Corticosteroid (often tapered over time)\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis"
+        },
+        Kidney: {
+            title: "Typical Kidney Transplant Medications",
+            content: "**Kidney transplant patients typically receive:**\n\n• **Tacrolimus or Cyclosporine** - Calcineurin inhibitor (standard of care)\n• **Mycophenolate** - Antimetabolite (commonly used with CNI)\n• **Prednisone** - Corticosteroid (some centers aim for steroid-free)\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Belatacept (Nulojix) is an alternative to CNIs for certain patients."
+        },
+        Liver: {
+            title: "Typical Liver Transplant Medications",
+            content: "**Liver transplant patients typically receive:**\n\n• **Tacrolimus** - Most commonly used calcineurin inhibitor\n• **Mycophenolate** - Antimetabolite (often used with CNI)\n• **Prednisone** - Usually tapered and discontinued within first few months\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Liver patients often require lower immunosuppression over time."
+        },
+        Lung: {
+            title: "Typical Lung Transplant Medications",
+            content: "**Lung transplant patients typically receive:**\n\n• **Tacrolimus** - Preferred calcineurin inhibitor for lung\n• **Mycophenolate** - Antimetabolite (used with tacrolimus)\n• **Prednisone** - Maintained at low dose long-term\n• **Valcyte** - Antiviral for CMV protection\n• **Vfend or Noxafil** - Stronger antifungal often needed\n\n**Note:** Lung patients require the most intensive immunosuppression due to higher rejection risk."
+        },
+        Pancreas: {
+            title: "Typical Pancreas Transplant Medications",
+            content: "**Pancreas transplant patients typically receive:**\n\n• **Tacrolimus** - Standard calcineurin inhibitor\n• **Mycophenolate** - Antimetabolite (used with tacrolimus)\n• **Prednisone** - Often tapered to low dose over time\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Often combined with kidney transplant, using similar regimens."
+        }
+    };
+
+    // Get organ-specific help for step 7
+    const getStep7Help = () => {
+        if (!answers?.organs || answers.organs.length === 0) {
+            return {
+                title: "Typical Transplant Medications",
+                content: "**Most post-transplant patients receive:**\n\n• **Immunosuppressants** (Tacrolimus, Mycophenolate) - Prevent rejection\n• **Prednisone** - Corticosteroid for inflammation\n• **Valcyte** - Antiviral for CMV/BK virus protection\n• **Fluconazole** - Antifungal prophylaxis\n\nWe've pre-selected common medications. Adjust based on your prescriptions."
+            };
+        }
+
+        // For single organ, show that organ's regimen
+        if (answers.organs.length === 1 && organRegimens[answers.organs[0]]) {
+            return organRegimens[answers.organs[0]];
+        }
+
+        // For multiple organs, show combined info
+        const organList = answers.organs.filter(o => organRegimens[o]).join(' & ');
+        return {
+            title: `Typical ${organList} Transplant Medications`,
+            content: "**Most post-transplant patients receive:**\n\n• **Tacrolimus** - Calcineurin inhibitor (prevents rejection)\n• **Mycophenolate** - Antimetabolite (additional immune suppression)\n• **Prednisone** - Corticosteroid\n• **Valcyte** - Antiviral for CMV/BK virus protection\n• **Fluconazole** - Antifungal prophylaxis\n\nWe've pre-selected common medications. Adjust based on your prescriptions."
+        };
+    };
+
     const helpContent = {
         1: {
             title: "Choosing Your Role",
@@ -770,10 +816,7 @@ const WizardHelp = ({ step, answers }) => {
             title: "Financial Status",
             content: "**Be honest - this helps us prioritize the best help for you:**\n\n• **Manageable**: We'll show copay savings tips\n• **Challenging**: Focus on PAPs and foundations\n• **Unaffordable**: Urgent PAP applications recommended\n• **Crisis**: Immediate assistance pathways\n\nYour answer is NEVER stored or shared. Many people qualify for help even if costs seem manageable now."
         },
-        7: {
-            title: "Input your Medication",
-            content: "Search for your medications using the search box below."
-        }
+        7: getStep7Help()
     };
 
     const help = helpContent[step];
@@ -1344,6 +1387,24 @@ const Wizard = () => {
                     </div>
                 )}
 
+                {/* Important disclaimer for post-transplant patients */}
+                {!isPreTransplant && (
+                    <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                            <Info size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                                <h3 className="font-bold text-amber-900 mb-1">Important Note</h3>
+                                <p className="text-sm text-amber-800 leading-relaxed">
+                                    Post-transplant medication regimens are complex and require careful management by your specialized transplant team. Lifelong adherence to these medications is crucial for the long-term success of your transplant.
+                                </p>
+                                <p className="text-sm text-amber-800 leading-relaxed mt-2">
+                                    <strong>Always consult your transplant team</strong> before making any changes to your medication regimen or taking any new medications, including over-the-counter drugs and supplements.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow-md"
@@ -1387,6 +1448,59 @@ const Wizard = () => {
 
     // Step 6: Financial Status / Find Your Best Options
     if (step === 6) {
+        const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
+
+        // Organ-specific medication regimens for smart suggestion
+        const organMedRegimens = {
+            Heart: {
+                title: "Heart Transplant",
+                meds: [
+                    { name: "Tacrolimus or Cyclosporine", type: "Calcineurin Inhibitor", note: "Mainstay therapy" },
+                    { name: "Mycophenolate or Azathioprine", type: "Antimetabolite", note: "Additional immune suppression" },
+                    { name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
+                ]
+            },
+            Kidney: {
+                title: "Kidney Transplant",
+                meds: [
+                    { name: "Tacrolimus or Cyclosporine", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                    { name: "Mycophenolate", type: "Antimetabolite", note: "Commonly used with CNI" },
+                    { name: "Prednisone", type: "Corticosteroid", note: "Some centers aim for steroid-free" },
+                ],
+                extra: "Belatacept (Nulojix) is an alternative for some patients"
+            },
+            Liver: {
+                title: "Liver Transplant",
+                meds: [
+                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Most commonly used" },
+                    { name: "Mycophenolate", type: "Antimetabolite", note: "Often used with CNI" },
+                    { name: "Prednisone", type: "Corticosteroid", note: "Usually discontinued early" },
+                ],
+                extra: "Liver patients often need lower immunosuppression over time"
+            },
+            Lung: {
+                title: "Lung Transplant",
+                meds: [
+                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Preferred for lung" },
+                    { name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                    { name: "Prednisone", type: "Corticosteroid", note: "Maintained long-term" },
+                ],
+                extra: "Lung patients require the most intensive immunosuppression"
+            },
+            Pancreas: {
+                title: "Pancreas Transplant",
+                meds: [
+                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                    { name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                    { name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
+                ],
+                extra: "Often combined with kidney transplant"
+            }
+        };
+
+        // Get regimen for selected organ(s)
+        const selectedOrganRegimen = answers.organs.length === 1 ? organMedRegimens[answers.organs[0]] : null;
+
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
@@ -1394,6 +1508,80 @@ const Wizard = () => {
                 <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
+
+                {/* Smart Suggestion: Organ-specific medication regimen */}
+                {!isPreTransplant && selectedOrganRegimen && (
+                    <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-xl p-5 shadow-sm">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Pill size={20} className="text-emerald-600" />
+                            <h3 className="font-bold text-emerald-900">Commonly Prescribed: {selectedOrganRegimen.title}</h3>
+                        </div>
+                        <p className="text-sm text-emerald-800 mb-4">
+                            Based on your {answers.organs[0].toLowerCase()} transplant, here are the medications hospitals typically prescribe:
+                        </p>
+                        <div className="space-y-2">
+                            {selectedOrganRegimen.meds.map((med, idx) => (
+                                <div key={idx} className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        <span className="font-semibold text-slate-900">{med.name}</span>
+                                        <span className="text-emerald-700 text-sm ml-2">({med.type})</span>
+                                        <p className="text-sm text-slate-600">{med.note}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        {selectedOrganRegimen.extra && (
+                            <p className="text-sm text-emerald-700 mt-3 italic">{selectedOrganRegimen.extra}</p>
+                        )}
+                        <p className="text-xs text-slate-500 mt-4">
+                            We'll pre-select these on the next step. You can adjust based on your actual prescriptions.
+                        </p>
+                    </div>
+                )}
+
+                {/* Multi-organ or generic suggestion */}
+                {!isPreTransplant && !selectedOrganRegimen && answers.organs.length > 0 && (
+                    <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-xl p-5 shadow-sm">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Pill size={20} className="text-emerald-600" />
+                            <h3 className="font-bold text-emerald-900">Commonly Prescribed Transplant Medications</h3>
+                        </div>
+                        <p className="text-sm text-emerald-800 mb-4">
+                            Most post-transplant patients receive these core medications:
+                        </p>
+                        <div className="space-y-2">
+                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                                <div>
+                                    <span className="font-semibold text-slate-900">Tacrolimus</span>
+                                    <span className="text-emerald-700 text-sm ml-2">(Calcineurin Inhibitor)</span>
+                                    <p className="text-sm text-slate-600">Primary immunosuppressant</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                                <div>
+                                    <span className="font-semibold text-slate-900">Mycophenolate</span>
+                                    <span className="text-emerald-700 text-sm ml-2">(Antimetabolite)</span>
+                                    <p className="text-sm text-slate-600">Secondary immunosuppressant</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                                <div>
+                                    <span className="font-semibold text-slate-900">Prednisone</span>
+                                    <span className="text-emerald-700 text-sm ml-2">(Corticosteroid)</span>
+                                    <p className="text-sm text-slate-600">Anti-inflammatory steroid</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-4">
+                            We'll pre-select common medications on the next step. You can adjust based on your actual prescriptions.
+                        </p>
+                    </div>
+                )}
+
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
                 </div>
