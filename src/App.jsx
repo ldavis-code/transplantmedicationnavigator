@@ -748,6 +748,52 @@ const Home = () => {
 
 // Contextual Help Component for Wizard
 const WizardHelp = ({ step, answers }) => {
+    // Organ-specific medication regimen suggestions
+    const organRegimens = {
+        Heart: {
+            title: "Typical Heart Transplant Medications",
+            content: "**Heart transplant patients typically receive:**\n\n• **Tacrolimus or Cyclosporine** - Calcineurin inhibitor (mainstay therapy)\n• **Mycophenolate or Azathioprine** - Antimetabolite (additional immune suppression)\n• **Prednisone** - Corticosteroid (often tapered over time)\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis"
+        },
+        Kidney: {
+            title: "Typical Kidney Transplant Medications",
+            content: "**Kidney transplant patients typically receive:**\n\n• **Tacrolimus or Cyclosporine** - Calcineurin inhibitor (standard of care)\n• **Mycophenolate** - Antimetabolite (commonly used with CNI)\n• **Prednisone** - Corticosteroid (some centers aim for steroid-free)\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Belatacept (Nulojix) is an alternative to CNIs for certain patients."
+        },
+        Liver: {
+            title: "Typical Liver Transplant Medications",
+            content: "**Liver transplant patients typically receive:**\n\n• **Tacrolimus** - Most commonly used calcineurin inhibitor\n• **Mycophenolate** - Antimetabolite (often used with CNI)\n• **Prednisone** - Usually tapered and discontinued within first few months\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Liver patients often require lower immunosuppression over time."
+        },
+        Lung: {
+            title: "Typical Lung Transplant Medications",
+            content: "**Lung transplant patients typically receive:**\n\n• **Tacrolimus** - Preferred calcineurin inhibitor for lung\n• **Mycophenolate** - Antimetabolite (used with tacrolimus)\n• **Prednisone** - Maintained at low dose long-term\n• **Valcyte** - Antiviral for CMV protection\n• **Vfend or Noxafil** - Stronger antifungal often needed\n\n**Note:** Lung patients require the most intensive immunosuppression due to higher rejection risk."
+        },
+        Pancreas: {
+            title: "Typical Pancreas Transplant Medications",
+            content: "**Pancreas transplant patients typically receive:**\n\n• **Tacrolimus** - Standard calcineurin inhibitor\n• **Mycophenolate** - Antimetabolite (used with tacrolimus)\n• **Prednisone** - Often tapered to low dose over time\n• **Valcyte** - Antiviral for CMV protection\n• **Fluconazole** - Antifungal prophylaxis\n\n**Note:** Often combined with kidney transplant, using similar regimens."
+        }
+    };
+
+    // Get organ-specific help for step 7
+    const getStep7Help = () => {
+        if (!answers?.organs || answers.organs.length === 0) {
+            return {
+                title: "Typical Transplant Medications",
+                content: "**Most post-transplant patients receive:**\n\n• **Immunosuppressants** (Tacrolimus, Mycophenolate) - Prevent rejection\n• **Prednisone** - Corticosteroid for inflammation\n• **Valcyte** - Antiviral for CMV/BK virus protection\n• **Fluconazole** - Antifungal prophylaxis\n\nWe've pre-selected common medications. Adjust based on your prescriptions."
+            };
+        }
+
+        // For single organ, show that organ's regimen
+        if (answers.organs.length === 1 && organRegimens[answers.organs[0]]) {
+            return organRegimens[answers.organs[0]];
+        }
+
+        // For multiple organs, show combined info
+        const organList = answers.organs.filter(o => organRegimens[o]).join(' & ');
+        return {
+            title: `Typical ${organList} Transplant Medications`,
+            content: "**Most post-transplant patients receive:**\n\n• **Tacrolimus** - Calcineurin inhibitor (prevents rejection)\n• **Mycophenolate** - Antimetabolite (additional immune suppression)\n• **Prednisone** - Corticosteroid\n• **Valcyte** - Antiviral for CMV/BK virus protection\n• **Fluconazole** - Antifungal prophylaxis\n\nWe've pre-selected common medications. Adjust based on your prescriptions."
+        };
+    };
+
     const helpContent = {
         1: {
             title: "Choosing Your Role",
@@ -770,10 +816,7 @@ const WizardHelp = ({ step, answers }) => {
             title: "Financial Status",
             content: "**Be honest - this helps us prioritize the best help for you:**\n\n• **Manageable**: We'll show copay savings tips\n• **Challenging**: Focus on PAPs and foundations\n• **Unaffordable**: Urgent PAP applications recommended\n• **Crisis**: Immediate assistance pathways\n\nYour answer is NEVER stored or shared. Many people qualify for help even if costs seem manageable now."
         },
-        7: {
-            title: "Input your Medication",
-            content: "Search for your medications using the search box below."
-        }
+        7: getStep7Help()
     };
 
     const help = helpContent[step];
