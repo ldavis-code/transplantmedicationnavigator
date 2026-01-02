@@ -149,6 +149,28 @@ export const seoMetadata = {
     twitterDescription: 'Terms and Conditions for using Transplant Medication Navigator, an educational resource for transplant patients.',
     breadcrumbName: 'Terms and Conditions',
   },
+
+  privacyPolicy: {
+    title: 'Privacy Policy | Transplant Medication Navigator™',
+    description: 'Read our Privacy Policy to understand how Transplant Medication Navigator collects, uses, and protects your personal information.',
+    canonical: `${BASE_URL}/privacy`,
+    ogTitle: 'Privacy Policy - Transplant Medication Navigator™',
+    ogDescription: 'Learn how Transplant Medication Navigator collects, uses, and safeguards your personal information.',
+    twitterTitle: 'Privacy Policy',
+    twitterDescription: 'Privacy Policy for Transplant Medication Navigator - how we collect, use, and protect your data.',
+    breadcrumbName: 'Privacy Policy',
+  },
+
+  account: {
+    title: 'My Account | Transplant Medication Navigator™',
+    description: 'Manage your Transplant Medication Navigator account, view subscription status, and update billing information.',
+    canonical: `${BASE_URL}/account`,
+    ogTitle: 'My Account - Transplant Medication Navigator™',
+    ogDescription: 'Manage your account and subscription for Transplant Medication Navigator.',
+    twitterTitle: 'My Account',
+    twitterDescription: 'Manage your Transplant Medication Navigator account and subscription.',
+    breadcrumbName: 'My Account',
+  },
 };
 
 /**
