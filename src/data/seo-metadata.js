@@ -138,6 +138,17 @@ export const seoMetadata = {
     twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
     breadcrumbName: 'Pilot Program',
   },
+
+  termsAndConditions: {
+    title: 'Terms and Conditions | Transplant Medication Navigator™',
+    description: 'Read the Terms and Conditions for using the Transplant Medication Navigator website. Understand your rights, responsibilities, and our disclaimer about medical advice.',
+    canonical: `${BASE_URL}/terms-and-conditions`,
+    ogTitle: 'Terms and Conditions - Transplant Medication Navigator™',
+    ogDescription: 'Terms and Conditions governing the use of Transplant Medication Navigator, an educational resource for transplant patients and caregivers.',
+    twitterTitle: 'Terms and Conditions',
+    twitterDescription: 'Terms and Conditions for using Transplant Medication Navigator, an educational resource for transplant patients.',
+    breadcrumbName: 'Terms and Conditions',
+  },
 };
 
 /**
