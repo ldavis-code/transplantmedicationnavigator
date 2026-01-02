@@ -1208,6 +1208,66 @@ const Wizard = () => {
                     )}
                 </div>
 
+                {/* Common medications for organ/stage */}
+                {(() => {
+                    const stageFilter = isPreTransplant ? 'Pre-transplant' : 'Post-transplant';
+                    const commonMeds = MEDICATIONS.filter(med =>
+                        med.stage === stageFilter &&
+                        med.commonOrgans &&
+                        answers.organs.some(organ => med.commonOrgans.includes(organ))
+                    );
+
+                    if (commonMeds.length === 0) return null;
+
+                    // Group by category
+                    const byCategory = commonMeds.reduce((acc, med) => {
+                        const cat = med.category || 'Other';
+                        if (!acc[cat]) acc[cat] = [];
+                        acc[cat].push(med);
+                        return acc;
+                    }, {});
+
+                    return (
+                        <div className="mb-6 bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-4">
+                            <div className="flex items-center gap-2 mb-3">
+                                <Pill size={18} className="text-emerald-600" />
+                                <h3 className="font-bold text-slate-800">
+                                    Common {isPreTransplant ? 'Pre-Transplant' : 'Post-Transplant'} Medications
+                                </h3>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-4">
+                                Tap to add common medications for {answers.organs.join(' & ')} transplant patients.
+                            </p>
+                            <div className="space-y-4">
+                                {Object.entries(byCategory).map(([category, meds]) => (
+                                    <div key={category}>
+                                        <p className="text-xs font-bold text-slate-500 uppercase mb-2">{category}</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {meds.map(med => {
+                                                const isSelected = answers.medications.includes(med.id);
+                                                return (
+                                                    <button
+                                                        key={med.id}
+                                                        onClick={() => handleMultiSelect('medications', med.id)}
+                                                        className={`text-sm px-3 py-2 rounded-lg border transition flex items-center gap-1 ${
+                                                            isSelected
+                                                                ? 'bg-emerald-600 text-white border-emerald-600'
+                                                                : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-400 hover:bg-emerald-50'
+                                                        }`}
+                                                    >
+                                                        {isSelected && <Check size={14} />}
+                                                        {med.brandName.split('/')[0].trim()}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })()}
+
                 {/* Selected medications display */}
                 {answers.medications.length > 0 && (
                     <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
