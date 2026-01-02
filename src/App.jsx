@@ -149,7 +149,7 @@ const getAssistantResponse = (userMessage, context = {}) => {
     // Context-aware responses based on wizard state
     if (context.wizardStep) {
         if (context.wizardStep === 5) {
-            return "**Selecting Medications:**\n\nChoose all medications you currently take or expect to take. Don't worry if you're not sure - you can always update this later.\n\n💡 **Tip:** If you select medications, we'll show you direct links to their manufacturer assistance programs in your results.";
+            return "**Input your Medication:**\n\nSearch for your medications using the search box.";
         }
         if (context.wizardStep === 6) {
             return ASSISTANT_KNOWLEDGE_BASE.specialtyPharmacy.response;
@@ -767,8 +767,8 @@ const WizardHelp = ({ step, answers }) => {
             content: "**Be honest - this helps us prioritize the best help for you:**\n\n• **Manageable**: We'll show copay savings tips\n• **Challenging**: Focus on PAPs and foundations\n• **Unaffordable**: Urgent PAP applications recommended\n• **Crisis**: Immediate assistance pathways\n\nYour answer is NEVER stored or shared. Many people qualify for help even if costs seem manageable now."
         },
         7: {
-            title: "Selecting Medications",
-            content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\nIf you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
+            title: "Input your Medication",
+            content: "Search for your medications using the search box below."
         }
     };
 
@@ -1239,16 +1239,6 @@ const Wizard = () => {
                     </div>
                 )}
 
-                {/* Are these all your medications prompt */}
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6" role="status">
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <div>
-                            <p className="font-bold text-red-800">Are these all of your medications?</p>
-                        </div>
-                    </div>
-                </div>
-
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow-md"
@@ -1574,7 +1564,7 @@ const Wizard = () => {
                                         <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step three">Step 3</div>
                                         <div>
                                             <strong>Compare vs. Cash.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Sometimes the cash price (e.g. Cost Plus Drugs) is cheaper than your insurance copay.</p>
+                                            <p className="text-sm text-slate-600 mt-1">Sometimes the cash price (e.g. Cost Plus Drugs) is cheaper than your insurance copay. Click the "My Medication Savings" button below to see where you can save money on each medication. We'll show you copay cards, patient assistance programs, discount pharmacies, and more.</p>
                                         </div>
                                     </li>
                                 </ul>
