@@ -879,6 +879,203 @@ const WizardHelp = ({ step, answers }) => {
     );
 };
 
+// Organ-specific medication data
+const ORGAN_MEDICATIONS = {
+    Heart: {
+        title: 'Heart Transplant',
+        description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
+        medications: [
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy.' },
+            { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
+            { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
+        ]
+    },
+    Kidney: {
+        title: 'Kidney Transplant',
+        description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
+        medications: [
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
+            { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers aim for steroid-free regimens to reduce long-term side effects.' },
+            { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative to CNIs for certain patients.' }
+        ]
+    },
+    Liver: {
+        title: 'Liver Transplant',
+        description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
+        medications: [
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used CNI in liver transplantation.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
+        ]
+    },
+    Lung: {
+        title: 'Lung Transplant',
+        description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
+        medications: [
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant patients.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
+        ]
+    },
+    Pancreas: {
+        title: 'Pancreas Transplant',
+        description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
+        medications: [
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
+        ]
+    }
+};
+
+// Organ icons mapping
+const organIcons = {
+    Heart: Heart,
+    Kidney: LandPlot,
+    Liver: Shield,
+    Lung: Stethoscope,
+    Pancreas: Scale
+};
+
+// Organ-Specific Medication Guide Component
+const OrganMedicationGuide = ({ answers, onSelectMedication }) => {
+    const [expandedOrgan, setExpandedOrgan] = useState(null);
+    const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
+
+    const handleOrganClick = (organ) => {
+        setExpandedOrgan(expandedOrgan === organ ? null : organ);
+    };
+
+    return (
+        <div className="mb-6">
+            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                    <Pill size={18} className="text-emerald-600" />
+                    <h3 className="font-bold text-slate-800">Common Medications by Organ Type</h3>
+                </div>
+                <p className="text-sm text-slate-600 mb-4">
+                    Click on an organ type to see typical medications. You can still use the search bar below to find any medication.
+                </p>
+
+                {/* Organ Type Tabs */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {organTypes.map(organ => {
+                        const IconComponent = organIcons[organ];
+                        const isExpanded = expandedOrgan === organ;
+                        const isSelected = answers.organs.includes(organ);
+                        return (
+                            <button
+                                key={organ}
+                                onClick={() => handleOrganClick(organ)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition font-medium text-sm ${
+                                    isExpanded
+                                        ? 'bg-emerald-600 text-white border-emerald-600'
+                                        : isSelected
+                                            ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:border-emerald-400'
+                                            : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50'
+                                }`}
+                            >
+                                <IconComponent size={16} />
+                                {organ}
+                                {isSelected && !isExpanded && <CheckCircle size={14} className="text-emerald-600" />}
+                                <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* Expanded Organ Section */}
+                {expandedOrgan && ORGAN_MEDICATIONS[expandedOrgan] && (
+                    <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 animate-in slide-in-from-top-2 duration-200">
+                        <div className="flex items-start gap-3 mb-4">
+                            {(() => {
+                                const IconComponent = organIcons[expandedOrgan];
+                                return <IconComponent size={24} className="text-emerald-600 flex-shrink-0 mt-1" />;
+                            })()}
+                            <div>
+                                <h4 className="font-bold text-lg text-slate-900">{ORGAN_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{ORGAN_MEDICATIONS[expandedOrgan].description}</p>
+                            </div>
+                        </div>
+
+                        {/* Medications Table */}
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-slate-300">
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Class</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Notes</th>
+                                        <th className="text-center py-2 px-3 font-bold text-slate-700">Add</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-200">
+                                    {ORGAN_MEDICATIONS[expandedOrgan].medications.map(med => {
+                                        const isSelected = answers.medications.includes(med.id);
+                                        return (
+                                            <tr key={med.id} className={`${isSelected ? 'bg-emerald-50' : 'hover:bg-white'}`}>
+                                                <td className="py-3 px-3">
+                                                    <div>
+                                                        <span className="font-bold text-slate-900">{med.brand}</span>
+                                                        <span className="text-slate-500 ml-1">({med.name})</span>
+                                                    </div>
+                                                </td>
+                                                <td className="py-3 px-3 text-slate-600">{med.class}</td>
+                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-center">
+                                                    <button
+                                                        onClick={() => onSelectMedication(med.id)}
+                                                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold transition ${
+                                                            isSelected
+                                                                ? 'bg-emerald-600 text-white'
+                                                                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                                                        }`}
+                                                    >
+                                                        {isSelected ? (
+                                                            <>
+                                                                <Check size={12} /> Added
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <PlusCircle size={12} /> Add
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Disclaimer */}
+            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                    <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-amber-800">
+                        <p className="font-bold mb-2">Important Medical Information</p>
+                        <p>
+                            Post-transplant medication regimens are complex and require careful management by a specialized transplant team.
+                            Lifelong adherence to these medications is crucial for the long-term success of the transplant and the health of the patient.
+                            Patients should always consult their transplant team before making any changes to their medication regimen or taking any new medications,
+                            including over-the-counter drugs and supplements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 // Smart Suggestions Component for Medication Selection
 const MedicationSuggestions = ({ answers, onSelectMedication }) => {
     const MEDICATIONS = useMedicationsList();
@@ -1267,6 +1464,12 @@ const Wizard = () => {
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
+
+                {/* Organ-Specific Medication Guide */}
+                <OrganMedicationGuide
+                    answers={answers}
+                    onSelectMedication={(medId) => handleMultiSelect('medications', medId)}
+                />
 
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
