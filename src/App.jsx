@@ -20,6 +20,7 @@ const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
 const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx'));
 const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
+const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -4968,6 +4969,7 @@ const MainSiteRoutes = () => (
                 <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />
+                <Route path="/account" element={<LazyAccount />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="*" element={<LazyNotFound />} />

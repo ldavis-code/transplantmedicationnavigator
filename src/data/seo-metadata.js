@@ -160,6 +160,17 @@ export const seoMetadata = {
     twitterDescription: 'Privacy Policy for Transplant Medication Navigator - how we collect, use, and protect your data.',
     breadcrumbName: 'Privacy Policy',
   },
+
+  account: {
+    title: 'My Account | Transplant Medication Navigator™',
+    description: 'Manage your Transplant Medication Navigator account, view subscription status, and update billing information.',
+    canonical: `${BASE_URL}/account`,
+    ogTitle: 'My Account - Transplant Medication Navigator™',
+    ogDescription: 'Manage your account and subscription for Transplant Medication Navigator.',
+    twitterTitle: 'My Account',
+    twitterDescription: 'Manage your Transplant Medication Navigator account and subscription.',
+    breadcrumbName: 'My Account',
+  },
 };
 
 /**
