@@ -933,8 +933,19 @@ const MedicationAssistantChat = () => {
                       </a>
                     </div>
                   )}
-                  {medGroup.programs?.length > 0 ? (
-                    medGroup.programs.map((program, pIdx) => (
+                  {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
+                  {(() => {
+                    const filteredPrograms = medGroup.programs?.filter(p => {
+                      // Commercial insurance: show copay cards and PAPs
+                      if (answers.insurance_type === 'commercial') {
+                        return p.program_type === 'copay_card' || p.program_type === 'pap';
+                      }
+                      // Non-commercial: show PAPs and foundations, but NEVER copay cards
+                      return p.program_type !== 'copay_card';
+                    }) || [];
+
+                    return filteredPrograms.length > 0 ? (
+                      filteredPrograms.map((program, pIdx) => (
                       <div key={pIdx} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
@@ -968,11 +979,12 @@ const MedicationAssistantChat = () => {
                         )}
                       </div>
                     ))
-                  ) : (answers.insurance_type === 'commercial' || !medGroup.cost_plus_available || medGroup.generic_available === false) && (
+                  ) : (
                     <p className="text-sm text-slate-500 p-2">
                       Contact your transplant center social worker for assistance options.
                     </p>
-                  )}
+                  );
+                  })()}
                 </div>
               </div>
             ))}
@@ -1072,25 +1084,37 @@ const MedicationAssistantChat = () => {
                     </a>
                   </div>
                 )}
-                {medGroup.programs?.length > 0 ? (
-                  medGroup.programs.map((program, idx) => (
-                    <div key={idx} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-                      <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
-                      {program.application_url && (
-                        <a
-                          href={program.application_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
-                        >
-                          Apply <ExternalLink size={12} />
-                        </a>
-                      )}
-                    </div>
-                  ))
-                ) : (answers.insurance_type === 'commercial' || !medGroup.cost_plus_available || medGroup.generic_available === false) && (
-                  <p className="text-sm text-slate-500 p-2">Contact your transplant center.</p>
-                )}
+                {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
+                {(() => {
+                  const filteredPrograms = medGroup.programs?.filter(p => {
+                    // Commercial insurance: show copay cards and PAPs
+                    if (answers.insurance_type === 'commercial') {
+                      return p.program_type === 'copay_card' || p.program_type === 'pap';
+                    }
+                    // Non-commercial: show PAPs and foundations, but NEVER copay cards
+                    return p.program_type !== 'copay_card';
+                  }) || [];
+
+                  return filteredPrograms.length > 0 ? (
+                    filteredPrograms.map((program, idx) => (
+                      <div key={idx} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                        <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
+                        {program.application_url && (
+                          <a
+                            href={program.application_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                          >
+                            Apply <ExternalLink size={12} />
+                          </a>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-500 p-2">Contact your transplant center.</p>
+                  );
+                })()}
               </div>
             </div>
           ))}
