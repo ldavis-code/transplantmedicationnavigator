@@ -1137,11 +1137,8 @@ const Wizard = () => {
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold mb-2">Which medications do you take?</h1>
-                    <p className="text-slate-600 mb-3">
+                    <p className="text-slate-600">
                         Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
-                    </p>
-                    <p className="text-sm text-slate-500">
-                        Input your medications using the search box below.
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
@@ -1241,6 +1238,16 @@ const Wizard = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Are these all your medications prompt */}
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6" role="status">
+                    <div className="flex items-start gap-3">
+                        <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <div>
+                            <p className="font-bold text-red-800">Are these all of your medications?</p>
+                        </div>
+                    </div>
+                </div>
 
                 <button
                     onClick={handleNextFromMeds}
@@ -2124,19 +2131,6 @@ const MedicationSearch = () => {
                     >
                         My Medication Savings
                     </button>
-                </div>
-            )}
-
-            {/* Are these all your medications prompt */}
-            {hasItems && !showSavings && (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 no-print" role="status">
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <div>
-                            <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
-                            <p className="text-amber-700 text-sm">If you take other medications, you can add them using the search box above.</p>
-                        </div>
-                    </div>
                 </div>
             )}
 
