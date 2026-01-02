@@ -908,8 +908,8 @@ const MedicationAssistantChat = () => {
                   <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
                 </div>
                 <div className="p-3 space-y-2">
-                  {/* Cost Plus Drugs - show only if generic is available (Cost Plus only carries generics) */}
-                  {medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                  {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                  {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
@@ -968,7 +968,7 @@ const MedicationAssistantChat = () => {
                         )}
                       </div>
                     ))
-                  ) : (!medGroup.cost_plus_available || medGroup.generic_available === false) && (
+                  ) : (answers.insurance_type === 'commercial' || !medGroup.cost_plus_available || medGroup.generic_available === false) && (
                     <p className="text-sm text-slate-500 p-2">
                       Contact your transplant center social worker for assistance options.
                     </p>
@@ -1057,8 +1057,8 @@ const MedicationAssistantChat = () => {
                 <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
               </div>
               <div className="p-2 space-y-2">
-                {/* Cost Plus Drugs - show only if generic is available (Cost Plus only carries generics) */}
-                {medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
                     <p className="text-xs text-blue-600 mt-1">Low-cost transparent pricing</p>
@@ -1088,7 +1088,7 @@ const MedicationAssistantChat = () => {
                       )}
                     </div>
                   ))
-                ) : (!medGroup.cost_plus_available || medGroup.generic_available === false) && (
+                ) : (answers.insurance_type === 'commercial' || !medGroup.cost_plus_available || medGroup.generic_available === false) && (
                   <p className="text-sm text-slate-500 p-2">Contact your transplant center.</p>
                 )}
               </div>
