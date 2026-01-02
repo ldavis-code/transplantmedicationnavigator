@@ -907,7 +907,41 @@ const Wizard = () => {
         setStep(6); // Go to Financial/Find Your Best Options
         window.scrollTo(0, 0);
     };
+    // Get default hospital-common medications based on organ and transplant stage
+    const getDefaultMedications = useCallback((organs, status) => {
+        const isPreTransplant = status === TransplantStatus.PRE_EVAL;
+        if (isPreTransplant) return []; // Pre-transplant patients don't have standard post-transplant meds
+
+        // Core medications that virtually all post-transplant patients receive:
+        // 1. Immunosuppressants: Tacrolimus (calcineurin inhibitor) + Mycophenolate (antimetabolite)
+        // 2. Steroid: Prednisone
+        // 3. Antiviral: Valcyte (valganciclovir) for CMV prophylaxis
+        // 4. Antifungal: Fluconazole or Nystatin for fungal prophylaxis
+        const corePostTransplantMeds = [
+            'tacrolimus',     // Prograf - primary immunosuppressant
+            'mycophenolate',  // CellCept - secondary immunosuppressant
+            'prednisone',     // Steroid
+            'valcyte',        // Antiviral for CMV/BK virus protection
+            'fluconazole',    // Antifungal prophylaxis
+        ];
+
+        // Filter to only include meds that are valid for the patient's organs
+        return corePostTransplantMeds.filter(medId => {
+            const med = MEDICATIONS.find(m => m.id === medId);
+            if (!med) return false;
+            // Check if this medication is applicable for any of the patient's organs
+            return med.commonOrgans && organs.some(organ => med.commonOrgans.includes(organ));
+        });
+    }, [MEDICATIONS]);
+
     const handleNextFromFinancial = () => {
+        // Pre-populate with common hospital medications if none selected yet
+        if (answers.medications.length === 0) {
+            const defaultMeds = getDefaultMedications(answers.organs, answers.status);
+            if (defaultMeds.length > 0) {
+                setAnswers(prev => ({ ...prev, medications: defaultMeds }));
+            }
+        }
         setStep(7); // Go to Medications
         window.scrollTo(0, 0);
     };
@@ -1142,7 +1176,11 @@ const Wizard = () => {
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold mb-2">Which medications do you take?</h1>
                     <p className="text-slate-600">
-                        Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
+                        {!isPreTransplant && answers.medications.length > 0 ? (
+                            <>We've pre-selected the <strong className="text-emerald-700">common medications</strong> that hospitals typically prescribe for <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant patients. Review and adjust based on your actual prescriptions.</>
+                        ) : (
+                            <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
+                        )}
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
@@ -1277,8 +1315,11 @@ const Wizard = () => {
                     <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                             <Pill size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Selected Medications</h3>
+                            <h3 className="font-bold text-slate-800">Your Medications</h3>
                         </div>
+                        <p className="text-sm text-slate-500 mb-3">
+                            Tap the X to remove any medications you don't take. Use the search or common medications above to add others.
+                        </p>
                         <div className="space-y-2">
                             {answers.medications.map(medId => {
                                 const med = MEDICATIONS.find(m => m.id === medId);
