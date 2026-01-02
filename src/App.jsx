@@ -18,6 +18,7 @@ const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
 const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
+const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -5132,6 +5133,7 @@ const MainSiteRoutes = () => (
                 <Route path="/subscribe" element={<LazySubscribe />} />
                 <Route path="/subscribe/success" element={<LazySubscribeSuccess />} />
                 <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
+                <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="*" element={<LazyNotFound />} />

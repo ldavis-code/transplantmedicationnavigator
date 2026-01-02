@@ -213,7 +213,7 @@ const Subscribe = () => {
             {/* Terms */}
             <p className="text-center text-slate-500 text-sm">
                 By subscribing, you agree to our{' '}
-                <Link to="/terms" className="text-emerald-700 hover:underline">Terms of Service</Link>
+                <Link to="/terms-and-conditions" className="text-emerald-700 hover:underline">Terms of Service</Link>
                 {' '}and{' '}
                 <Link to="/privacy" className="text-emerald-700 hover:underline">Privacy Policy</Link>.
                 Cancel anytime from your account settings.
