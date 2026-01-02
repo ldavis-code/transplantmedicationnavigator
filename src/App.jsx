@@ -943,7 +943,7 @@ const organIcons = {
 };
 
 // Organ-Specific Medication Guide Component
-const OrganMedicationGuide = ({ answers, onSelectMedication }) => {
+const OrganMedicationGuide = ({ answers }) => {
     const [expandedOrgan, setExpandedOrgan] = useState(null);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
 
@@ -1011,14 +1011,12 @@ const OrganMedicationGuide = ({ answers, onSelectMedication }) => {
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Medication</th>
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Class</th>
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Notes</th>
-                                        <th className="text-center py-2 px-3 font-bold text-slate-700">Add</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
                                     {ORGAN_MEDICATIONS[expandedOrgan].medications.map(med => {
-                                        const isSelected = answers.medications.includes(med.id);
                                         return (
-                                            <tr key={med.id} className={`${isSelected ? 'bg-emerald-50' : 'hover:bg-white'}`}>
+                                            <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
                                                     <div>
                                                         <span className="font-bold text-slate-900">{med.brand}</span>
@@ -1027,26 +1025,6 @@ const OrganMedicationGuide = ({ answers, onSelectMedication }) => {
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
-                                                <td className="py-3 px-3 text-center">
-                                                    <button
-                                                        onClick={() => onSelectMedication(med.id)}
-                                                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold transition ${
-                                                            isSelected
-                                                                ? 'bg-emerald-600 text-white'
-                                                                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                                                        }`}
-                                                    >
-                                                        {isSelected ? (
-                                                            <>
-                                                                <Check size={12} /> Added
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <PlusCircle size={12} /> Add
-                                                            </>
-                                                        )}
-                                                    </button>
-                                                </td>
                                             </tr>
                                         );
                                     })}
@@ -1055,22 +1033,6 @@ const OrganMedicationGuide = ({ answers, onSelectMedication }) => {
                         </div>
                     </div>
                 )}
-            </div>
-
-            {/* Disclaimer */}
-            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                    <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                    <div className="text-sm text-amber-800">
-                        <p className="font-bold mb-2">Important Medical Information</p>
-                        <p>
-                            Post-transplant medication regimens are complex and require careful management by a specialized transplant team.
-                            Lifelong adherence to these medications is crucial for the long-term success of the transplant and the health of the patient.
-                            Patients should always consult their transplant team before making any changes to their medication regimen or taking any new medications,
-                            including over-the-counter drugs and supplements.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     );
@@ -1466,10 +1428,7 @@ const Wizard = () => {
                 <WizardHelp step={step} answers={answers} />
 
                 {/* Organ-Specific Medication Guide */}
-                <OrganMedicationGuide
-                    answers={answers}
-                    onSelectMedication={(medId) => handleMultiSelect('medications', medId)}
-                />
+                <OrganMedicationGuide answers={answers} />
 
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
@@ -1540,6 +1499,22 @@ const Wizard = () => {
                     answers={answers}
                     onSelectMedication={(medId) => handleMultiSelect('medications', medId)}
                 />
+
+                {/* Important Medical Information */}
+                <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                        <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-amber-800">
+                            <p className="font-bold mb-2">Important Medical Information</p>
+                            <p>
+                                Post-transplant medication regimens are complex and require careful management by a specialized transplant team.
+                                Lifelong adherence to these medications is crucial for the long-term success of the transplant and the health of the patient.
+                                Patients should always consult their transplant team before making any changes to their medication regimen or taking any new medications,
+                                including over-the-counter drugs and supplements.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <button
                     onClick={handleNextFromMeds}
