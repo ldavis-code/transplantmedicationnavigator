@@ -1141,7 +1141,7 @@ const Wizard = () => {
                         Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
                     </p>
                     <p className="text-sm text-slate-500">
-                        First select your core immunosuppressants, then add any other transplant-related medications you take.
+                        Input your medications using the search box below.
                     </p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
@@ -1241,17 +1241,6 @@ const Wizard = () => {
                         </div>
                     </div>
                 )}
-
-                {/* Are these all your medications prompt */}
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="status">
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <div>
-                            <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
-                            <p className="text-amber-700 text-sm">If you take other medications, use the search box above to add them before continuing.</p>
-                        </div>
-                    </div>
-                </div>
 
                 <button
                     onClick={handleNextFromMeds}
@@ -2135,6 +2124,19 @@ const MedicationSearch = () => {
                     >
                         My Medication Savings
                     </button>
+                </div>
+            )}
+
+            {/* Are these all your medications prompt */}
+            {hasItems && !showSavings && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 no-print" role="status">
+                    <div className="flex items-start gap-3">
+                        <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <div>
+                            <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
+                            <p className="text-amber-700 text-sm">If you take other medications, you can add them using the search box above.</p>
+                        </div>
+                    </div>
                 </div>
             )}
 
