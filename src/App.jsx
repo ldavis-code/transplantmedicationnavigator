@@ -1228,6 +1228,121 @@ const Wizard = () => {
                 </div>
                 <WizardHelp step={step} answers={answers} />
 
+                {/* Smart Suggestion: Organ-specific medication regimen */}
+                {!isPreTransplant && (() => {
+                    // Organ-specific medication regimens with clickable medications
+                    const organMedRegimens = {
+                        Heart: {
+                            title: "Heart Transplant",
+                            meds: [
+                                { id: "tacrolimus", name: "Tacrolimus", altId: "cyclosporine", altName: "Cyclosporine", type: "Calcineurin Inhibitor", note: "Mainstay therapy" },
+                                { id: "mycophenolate", name: "Mycophenolate", altId: "imuran", altName: "Azathioprine", type: "Antimetabolite", note: "Additional immune suppression" },
+                                { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
+                            ]
+                        },
+                        Kidney: {
+                            title: "Kidney Transplant",
+                            meds: [
+                                { id: "tacrolimus", name: "Tacrolimus", altId: "cyclosporine", altName: "Cyclosporine", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Commonly used with CNI" },
+                                { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Some centers aim for steroid-free" },
+                            ],
+                            extra: { id: "belatacept", name: "Belatacept (Nulojix)", note: "Alternative for some patients" }
+                        },
+                        Liver: {
+                            title: "Liver Transplant",
+                            meds: [
+                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Most commonly used" },
+                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Often used with CNI" },
+                                { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Usually discontinued early" },
+                            ]
+                        },
+                        Lung: {
+                            title: "Lung Transplant",
+                            meds: [
+                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Preferred for lung" },
+                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                                { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Maintained long-term" },
+                            ]
+                        },
+                        Pancreas: {
+                            title: "Pancreas Transplant",
+                            meds: [
+                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                                { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
+                            ]
+                        }
+                    };
+
+                    const selectedOrganRegimen = answers.organs.length === 1 ? organMedRegimens[answers.organs[0]] : null;
+                    if (!selectedOrganRegimen) return null;
+
+                    return (
+                        <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-xl p-5 shadow-sm">
+                            <div className="flex items-center gap-2 mb-3">
+                                <Pill size={20} className="text-emerald-600" />
+                                <h3 className="font-bold text-emerald-900">Commonly Prescribed: {selectedOrganRegimen.title}</h3>
+                            </div>
+                            <p className="text-sm text-emerald-800 mb-4">
+                                Tap to add medications typically prescribed for {answers.organs[0].toLowerCase()} transplant:
+                            </p>
+                            <div className="space-y-2">
+                                {selectedOrganRegimen.meds.map((med, idx) => {
+                                    const isSelected = answers.medications.includes(med.id);
+                                    const altSelected = med.altId && answers.medications.includes(med.altId);
+                                    return (
+                                        <div key={idx} className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => handleMultiSelect('medications', med.id)}
+                                                className={`flex-1 flex items-center gap-3 rounded-lg p-3 border transition ${
+                                                    isSelected
+                                                        ? 'bg-emerald-600 text-white border-emerald-600'
+                                                        : 'bg-white/60 border-emerald-100 hover:border-emerald-300 hover:bg-white'
+                                                }`}
+                                            >
+                                                {isSelected ? <Check size={16} /> : <PlusCircle size={16} className="text-emerald-600" />}
+                                                <div className="text-left">
+                                                    <span className={`font-semibold ${isSelected ? 'text-white' : 'text-slate-900'}`}>{med.name}</span>
+                                                    <span className={`text-sm ml-2 ${isSelected ? 'text-emerald-100' : 'text-emerald-700'}`}>({med.type})</span>
+                                                    <p className={`text-sm ${isSelected ? 'text-emerald-100' : 'text-slate-600'}`}>{med.note}</p>
+                                                </div>
+                                            </button>
+                                            {med.altId && (
+                                                <button
+                                                    onClick={() => handleMultiSelect('medications', med.altId)}
+                                                    className={`px-3 py-2 rounded-lg border text-sm font-medium transition ${
+                                                        altSelected
+                                                            ? 'bg-emerald-600 text-white border-emerald-600'
+                                                            : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
+                                                    }`}
+                                                    title={`Alternative: ${med.altName}`}
+                                                >
+                                                    {altSelected ? <Check size={14} /> : 'or'} {med.altName}
+                                                </button>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            {selectedOrganRegimen.extra && (
+                                <button
+                                    onClick={() => handleMultiSelect('medications', selectedOrganRegimen.extra.id)}
+                                    className={`mt-3 w-full flex items-center gap-2 p-3 rounded-lg border transition ${
+                                        answers.medications.includes(selectedOrganRegimen.extra.id)
+                                            ? 'bg-emerald-600 text-white border-emerald-600'
+                                            : 'bg-white/60 border-emerald-200 hover:border-emerald-400 text-slate-700'
+                                    }`}
+                                >
+                                    {answers.medications.includes(selectedOrganRegimen.extra.id) ? <Check size={16} /> : <PlusCircle size={16} className="text-emerald-600" />}
+                                    <span className="font-medium">{selectedOrganRegimen.extra.name}</span>
+                                    <span className="text-sm opacity-75">- {selectedOrganRegimen.extra.note}</span>
+                                </button>
+                            )}
+                        </div>
+                    );
+                })()}
+
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
@@ -1448,59 +1563,6 @@ const Wizard = () => {
 
     // Step 6: Financial Status / Find Your Best Options
     if (step === 6) {
-        const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
-
-        // Organ-specific medication regimens for smart suggestion
-        const organMedRegimens = {
-            Heart: {
-                title: "Heart Transplant",
-                meds: [
-                    { name: "Tacrolimus or Cyclosporine", type: "Calcineurin Inhibitor", note: "Mainstay therapy" },
-                    { name: "Mycophenolate or Azathioprine", type: "Antimetabolite", note: "Additional immune suppression" },
-                    { name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
-                ]
-            },
-            Kidney: {
-                title: "Kidney Transplant",
-                meds: [
-                    { name: "Tacrolimus or Cyclosporine", type: "Calcineurin Inhibitor", note: "Standard of care" },
-                    { name: "Mycophenolate", type: "Antimetabolite", note: "Commonly used with CNI" },
-                    { name: "Prednisone", type: "Corticosteroid", note: "Some centers aim for steroid-free" },
-                ],
-                extra: "Belatacept (Nulojix) is an alternative for some patients"
-            },
-            Liver: {
-                title: "Liver Transplant",
-                meds: [
-                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Most commonly used" },
-                    { name: "Mycophenolate", type: "Antimetabolite", note: "Often used with CNI" },
-                    { name: "Prednisone", type: "Corticosteroid", note: "Usually discontinued early" },
-                ],
-                extra: "Liver patients often need lower immunosuppression over time"
-            },
-            Lung: {
-                title: "Lung Transplant",
-                meds: [
-                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Preferred for lung" },
-                    { name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
-                    { name: "Prednisone", type: "Corticosteroid", note: "Maintained long-term" },
-                ],
-                extra: "Lung patients require the most intensive immunosuppression"
-            },
-            Pancreas: {
-                title: "Pancreas Transplant",
-                meds: [
-                    { name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Standard of care" },
-                    { name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
-                    { name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
-                ],
-                extra: "Often combined with kidney transplant"
-            }
-        };
-
-        // Get regimen for selected organ(s)
-        const selectedOrganRegimen = answers.organs.length === 1 ? organMedRegimens[answers.organs[0]] : null;
-
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
@@ -1508,79 +1570,6 @@ const Wizard = () => {
                 <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
-
-                {/* Smart Suggestion: Organ-specific medication regimen */}
-                {!isPreTransplant && selectedOrganRegimen && (
-                    <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-xl p-5 shadow-sm">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Pill size={20} className="text-emerald-600" />
-                            <h3 className="font-bold text-emerald-900">Commonly Prescribed: {selectedOrganRegimen.title}</h3>
-                        </div>
-                        <p className="text-sm text-emerald-800 mb-4">
-                            Based on your {answers.organs[0].toLowerCase()} transplant, here are the medications hospitals typically prescribe:
-                        </p>
-                        <div className="space-y-2">
-                            {selectedOrganRegimen.meds.map((med, idx) => (
-                                <div key={idx} className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
-                                    <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                                    <div>
-                                        <span className="font-semibold text-slate-900">{med.name}</span>
-                                        <span className="text-emerald-700 text-sm ml-2">({med.type})</span>
-                                        <p className="text-sm text-slate-600">{med.note}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        {selectedOrganRegimen.extra && (
-                            <p className="text-sm text-emerald-700 mt-3 italic">{selectedOrganRegimen.extra}</p>
-                        )}
-                        <p className="text-xs text-slate-500 mt-4">
-                            We'll pre-select these on the next step. You can adjust based on your actual prescriptions.
-                        </p>
-                    </div>
-                )}
-
-                {/* Multi-organ or generic suggestion */}
-                {!isPreTransplant && !selectedOrganRegimen && answers.organs.length > 0 && (
-                    <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-xl p-5 shadow-sm">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Pill size={20} className="text-emerald-600" />
-                            <h3 className="font-bold text-emerald-900">Commonly Prescribed Transplant Medications</h3>
-                        </div>
-                        <p className="text-sm text-emerald-800 mb-4">
-                            Most post-transplant patients receive these core medications:
-                        </p>
-                        <div className="space-y-2">
-                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                                <div>
-                                    <span className="font-semibold text-slate-900">Tacrolimus</span>
-                                    <span className="text-emerald-700 text-sm ml-2">(Calcineurin Inhibitor)</span>
-                                    <p className="text-sm text-slate-600">Primary immunosuppressant</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                                <div>
-                                    <span className="font-semibold text-slate-900">Mycophenolate</span>
-                                    <span className="text-emerald-700 text-sm ml-2">(Antimetabolite)</span>
-                                    <p className="text-sm text-slate-600">Secondary immunosuppressant</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start gap-3 bg-white/60 rounded-lg p-3 border border-emerald-100">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                                <div>
-                                    <span className="font-semibold text-slate-900">Prednisone</span>
-                                    <span className="text-emerald-700 text-sm ml-2">(Corticosteroid)</span>
-                                    <p className="text-sm text-slate-600">Anti-inflammatory steroid</p>
-                                </div>
-                            </div>
-                        </div>
-                        <p className="text-xs text-slate-500 mt-4">
-                            We'll pre-select common medications on the next step. You can adjust based on your actual prescriptions.
-                        </p>
-                    </div>
-                )}
 
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
