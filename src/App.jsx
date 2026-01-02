@@ -49,7 +49,7 @@ import {
     Trash2, Globe, List, Info, Copy, Check, Building2, LandPlot, Scale, FileText,
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, Share2, Home as HomeIcon,
-    MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
+    MessageCircle, Send, HelpCircle, Lightbulb, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
     CreditCard, Sparkles
 } from 'lucide-react';
 
@@ -161,84 +161,6 @@ const getAssistantResponse = (userMessage, context = {}) => {
 
     // Default helpful response
     return "I'm here to help! Here are some things I can assist with:\n\n• **Insurance questions** - Medicare, Medicaid, commercial coverage\n• **Patient Assistance Programs (PAPs)** - How to get free medication\n• **Copay foundations** - Organizations that help pay for medications\n• **Application help** - Step-by-step guidance\n• **Medication information** - Pricing and assistance programs\n\nTry asking about any of these topics, or use the Quick Actions below!";
-};
-
-// Smart medication suggestions based on context
-const getMedicationSuggestions = (answers) => {
-    const suggestions = [];
-
-    if (!answers.organs || answers.organs.length === 0) {
-        return suggestions;
-    }
-
-    const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
-    const isKidney = answers.organs.includes(OrganType.KIDNEY);
-    const isLiver = answers.organs.includes(OrganType.LIVER);
-    const isHeart = answers.organs.includes(OrganType.HEART);
-    const isLung = answers.organs.includes(OrganType.LUNG);
-
-    // Pre-transplant suggestions
-    if (isPreTransplant) {
-        if (isKidney) {
-            suggestions.push({
-                category: 'ESRD Support',
-                medications: ['procrit', 'renvela', 'sensipar'],
-                reason: 'Common for kidney patients on dialysis'
-            });
-        }
-        if (isLiver) {
-            suggestions.push({
-                category: 'Liver Support',
-                medications: ['xifaxan', 'lactulose'],
-                reason: 'Help manage liver disease symptoms'
-            });
-        }
-        if (isHeart || isLung) {
-            suggestions.push({
-                category: 'Pulmonary Hypertension',
-                medications: ['revatio', 'tracleer'],
-                reason: 'Common for heart/lung candidates'
-            });
-        }
-        // Preview of post-transplant medications for pre-transplant users
-        suggestions.push({
-            category: 'After Transplant (Preview)',
-            medications: ['tacrolimus', 'mycophenolate', 'prednisone'],
-            reason: 'Core anti-rejection medications you\'ll likely need after transplant'
-        });
-    }
-
-    // Post-transplant suggestions
-    if (!isPreTransplant) {
-        // Universal post-transplant
-        suggestions.push({
-            category: 'Immunosuppressants',
-            medications: ['tacrolimus', 'mycophenolate', 'prednisone'],
-            reason: 'Core anti-rejection medications for all transplants'
-        });
-
-        suggestions.push({
-            category: 'Anti-viral Prophylaxis',
-            medications: ['valcyte'],
-            reason: 'Prevent CMV and other viral infections'
-        });
-
-        suggestions.push({
-            category: 'Antibiotic Prophylaxis',
-            medications: ['bactrim'],
-            reason: 'Prevent PCP (pneumocystis) infection'
-        });
-
-        if (isLiver) {
-            suggestions.push({
-                category: 'Hepatitis Management',
-                medications: ['baraclude', 'vemlidy'],
-                reason: 'May be needed for liver transplant patients'
-            });
-        }
-    }
-
-    return suggestions;
 };
 
 // Chat Widget Component
@@ -879,67 +801,6 @@ const WizardHelp = ({ step, answers }) => {
     );
 };
 
-// Smart Suggestions Component for Medication Selection
-const MedicationSuggestions = ({ answers, onSelectMedication }) => {
-    const MEDICATIONS = useMedicationsList();
-    const suggestions = getMedicationSuggestions(answers);
-    const [showSuggestions, setShowSuggestions] = useState(true);
-
-    if (suggestions.length === 0) return null;
-
-    return (
-        <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
-            <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <Zap size={20} className="text-indigo-600" />
-                    <h3 className="font-bold text-indigo-900">Smart Suggestions Based on Your Profile</h3>
-                </div>
-                <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="text-indigo-600 hover:text-indigo-700 text-xs"
-                >
-                    {showSuggestions ? 'Hide' : 'Show'}
-                </button>
-            </div>
-
-            {showSuggestions && (
-                <div className="space-y-3">
-                    {suggestions.map((suggestion, idx) => (
-                        <div key={idx} className="bg-white rounded-lg p-3 border border-indigo-100">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Pill size={16} className="text-indigo-600" />
-                                <span className="font-bold text-sm text-indigo-900">{suggestion.category}</span>
-                            </div>
-                            <p className="text-xs text-slate-600 mb-2">{suggestion.reason}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {suggestion.medications.map(medId => {
-                                    const med = MEDICATIONS.find(m => m.id === medId);
-                                    if (!med) return null;
-                                    const isSelected = answers.medications.includes(medId);
-                                    return (
-                                        <button
-                                            key={medId}
-                                            onClick={() => onSelectMedication(medId)}
-                                            className={`text-xs px-3 py-1 rounded-full border transition ${
-                                                isSelected
-                                                    ? 'bg-indigo-600 text-white border-indigo-600'
-                                                    : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
-                                            }`}
-                                        >
-                                            {isSelected && <Check size={12} className="inline mr-1" />}
-                                            {med.brandName.split('/')[0]}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
-
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
@@ -1350,10 +1211,47 @@ const Wizard = () => {
                     )}
                 </div>
 
-                <MedicationSuggestions
-                    answers={answers}
-                    onSelectMedication={(medId) => handleMultiSelect('medications', medId)}
-                />
+                {/* Selected medications display */}
+                {answers.medications.length > 0 && (
+                    <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Pill size={18} className="text-emerald-600" />
+                            <h3 className="font-bold text-slate-800">Your Selected Medications</h3>
+                        </div>
+                        <div className="space-y-2">
+                            {answers.medications.map(medId => {
+                                const med = MEDICATIONS.find(m => m.id === medId);
+                                if (!med) return null;
+                                return (
+                                    <div key={medId} className="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-100">
+                                        <div>
+                                            <span className="font-bold text-slate-900">{med.brandName}</span>
+                                            <span className="text-slate-600 ml-2 text-sm">({med.genericName})</span>
+                                        </div>
+                                        <button
+                                            onClick={() => handleMultiSelect('medications', medId)}
+                                            className="text-red-600 hover:text-red-700 p-1"
+                                            aria-label={`Remove ${med.brandName}`}
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/* Are these all your medications prompt */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="status">
+                    <div className="flex items-start gap-3">
+                        <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <div>
+                            <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
+                            <p className="text-amber-700 text-sm">If you take other medications, use the search box above to add them before continuing.</p>
+                        </div>
+                    </div>
+                </div>
 
                 <button
                     onClick={handleNextFromMeds}
