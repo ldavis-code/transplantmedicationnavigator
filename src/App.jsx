@@ -1230,46 +1230,46 @@ const Wizard = () => {
 
                 {/* Smart Suggestion: Organ-specific medication regimen */}
                 {!isPreTransplant && (() => {
-                    // Organ-specific medication regimens with clickable medications
+                    // Organ-specific medication regimens with clickable medications (using brand names)
                     const organMedRegimens = {
                         Heart: {
                             title: "Heart Transplant",
                             meds: [
-                                { id: "tacrolimus", name: "Tacrolimus", altId: "cyclosporine", altName: "Cyclosporine", type: "Calcineurin Inhibitor", note: "Mainstay therapy" },
-                                { id: "mycophenolate", name: "Mycophenolate", altId: "imuran", altName: "Azathioprine", type: "Antimetabolite", note: "Additional immune suppression" },
+                                { id: "tacrolimus", name: "Prograf", generic: "Tacrolimus", altId: "cyclosporine", altName: "Neoral", type: "Calcineurin Inhibitor", note: "Mainstay therapy" },
+                                { id: "mycophenolate", name: "CellCept", generic: "Mycophenolate", altId: "imuran", altName: "Imuran", type: "Antimetabolite", note: "Additional immune suppression" },
                                 { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
                             ]
                         },
                         Kidney: {
                             title: "Kidney Transplant",
                             meds: [
-                                { id: "tacrolimus", name: "Tacrolimus", altId: "cyclosporine", altName: "Cyclosporine", type: "Calcineurin Inhibitor", note: "Standard of care" },
-                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Commonly used with CNI" },
+                                { id: "tacrolimus", name: "Prograf", generic: "Tacrolimus", altId: "cyclosporine", altName: "Neoral", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                                { id: "mycophenolate", name: "CellCept", generic: "Mycophenolate", type: "Antimetabolite", note: "Commonly used with CNI" },
                                 { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Some centers aim for steroid-free" },
                             ],
-                            extra: { id: "belatacept", name: "Belatacept (Nulojix)", note: "Alternative for some patients" }
+                            extra: { id: "belatacept", name: "Nulojix", generic: "Belatacept", note: "Alternative for some patients" }
                         },
                         Liver: {
                             title: "Liver Transplant",
                             meds: [
-                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Most commonly used" },
-                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Often used with CNI" },
+                                { id: "tacrolimus", name: "Prograf", generic: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Most commonly used" },
+                                { id: "mycophenolate", name: "CellCept", generic: "Mycophenolate", type: "Antimetabolite", note: "Often used with CNI" },
                                 { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Usually discontinued early" },
                             ]
                         },
                         Lung: {
                             title: "Lung Transplant",
                             meds: [
-                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Preferred for lung" },
-                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                                { id: "tacrolimus", name: "Prograf", generic: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Preferred for lung" },
+                                { id: "mycophenolate", name: "CellCept", generic: "Mycophenolate", type: "Antimetabolite", note: "Used with Prograf" },
                                 { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Maintained long-term" },
                             ]
                         },
                         Pancreas: {
                             title: "Pancreas Transplant",
                             meds: [
-                                { id: "tacrolimus", name: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Standard of care" },
-                                { id: "mycophenolate", name: "Mycophenolate", type: "Antimetabolite", note: "Used with tacrolimus" },
+                                { id: "tacrolimus", name: "Prograf", generic: "Tacrolimus", type: "Calcineurin Inhibitor", note: "Standard of care" },
+                                { id: "mycophenolate", name: "CellCept", generic: "Mycophenolate", type: "Antimetabolite", note: "Used with Prograf" },
                                 { id: "prednisone", name: "Prednisone", type: "Corticosteroid", note: "Often tapered over time" },
                             ]
                         }
@@ -1304,7 +1304,8 @@ const Wizard = () => {
                                                 {isSelected ? <Check size={16} /> : <PlusCircle size={16} className="text-emerald-600" />}
                                                 <div className="text-left">
                                                     <span className={`font-semibold ${isSelected ? 'text-white' : 'text-slate-900'}`}>{med.name}</span>
-                                                    <span className={`text-sm ml-2 ${isSelected ? 'text-emerald-100' : 'text-emerald-700'}`}>({med.type})</span>
+                                                    {med.generic && <span className={`text-sm ml-1 ${isSelected ? 'text-emerald-100' : 'text-slate-500'}`}>({med.generic})</span>}
+                                                    <span className={`text-sm ml-2 ${isSelected ? 'text-emerald-100' : 'text-emerald-700'}`}>• {med.type}</span>
                                                     <p className={`text-sm ${isSelected ? 'text-emerald-100' : 'text-slate-600'}`}>{med.note}</p>
                                                 </div>
                                             </button>
@@ -1336,6 +1337,7 @@ const Wizard = () => {
                                 >
                                     {answers.medications.includes(selectedOrganRegimen.extra.id) ? <Check size={16} /> : <PlusCircle size={16} className="text-emerald-600" />}
                                     <span className="font-medium">{selectedOrganRegimen.extra.name}</span>
+                                    {selectedOrganRegimen.extra.generic && <span className="text-sm opacity-75">({selectedOrganRegimen.extra.generic})</span>}
                                     <span className="text-sm opacity-75">- {selectedOrganRegimen.extra.note}</span>
                                 </button>
                             )}
@@ -1408,97 +1410,28 @@ const Wizard = () => {
                     )}
                 </div>
 
-                {/* Common medications for organ/stage */}
-                {(() => {
-                    const stageFilter = isPreTransplant ? 'Pre-transplant' : 'Post-transplant';
-                    const commonMeds = MEDICATIONS.filter(med =>
-                        med.stage === stageFilter &&
-                        med.commonOrgans &&
-                        answers.organs.some(organ => med.commonOrgans.includes(organ))
-                    );
-
-                    if (commonMeds.length === 0) return null;
-
-                    // Group by category
-                    const byCategory = commonMeds.reduce((acc, med) => {
-                        const cat = med.category || 'Other';
-                        if (!acc[cat]) acc[cat] = [];
-                        acc[cat].push(med);
-                        return acc;
-                    }, {});
-
-                    return (
-                        <div className="mb-6 bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-3">
-                                <Pill size={18} className="text-emerald-600" />
-                                <h3 className="font-bold text-slate-800">
-                                    Common {isPreTransplant ? 'Pre-Transplant' : 'Post-Transplant'} Medications
-                                </h3>
-                            </div>
-                            <p className="text-sm text-slate-600 mb-4">
-                                Tap to add common medications for {answers.organs.join(' & ')} transplant patients.
-                            </p>
-                            <div className="space-y-4">
-                                {Object.entries(byCategory).map(([category, meds]) => (
-                                    <div key={category}>
-                                        <p className="text-xs font-bold text-slate-500 uppercase mb-2">{category}</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {meds.map(med => {
-                                                const isSelected = answers.medications.includes(med.id);
-                                                return (
-                                                    <button
-                                                        key={med.id}
-                                                        onClick={() => handleMultiSelect('medications', med.id)}
-                                                        className={`text-sm px-3 py-2 rounded-lg border transition flex items-center gap-1 ${
-                                                            isSelected
-                                                                ? 'bg-emerald-600 text-white border-emerald-600'
-                                                                : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-400 hover:bg-emerald-50'
-                                                        }`}
-                                                    >
-                                                        {isSelected && <Check size={14} />}
-                                                        {med.brandName.split('/')[0].trim()}
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    );
-                })()}
-
                 {/* Selected medications display */}
                 {answers.medications.length > 0 && (
                     <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                             <Pill size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Medications</h3>
+                            <h3 className="font-bold text-slate-800">Your Medications ({answers.medications.length})</h3>
                         </div>
-                        <p className="text-sm text-slate-500 mb-3">
-                            Tap the X to remove any medications you don't take. Use the search or common medications above to add others.
-                        </p>
-                        <div className="space-y-2">
+                        <div className="flex flex-wrap gap-2">
                             {answers.medications.map(medId => {
                                 const med = MEDICATIONS.find(m => m.id === medId);
                                 if (!med) return null;
                                 return (
-                                    <div key={medId} className="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-100">
-                                        <div>
-                                            <span className="font-bold text-slate-900">{med.brandName}</span>
-                                            <span className="text-slate-600 ml-2 text-sm">({med.genericName})</span>
-                                        </div>
-                                        <button
-                                            onClick={() => handleMultiSelect('medications', medId)}
-                                            className="text-red-600 hover:text-red-700 p-1"
-                                            aria-label={`Remove ${med.brandName}`}
-                                        >
-                                            <X size={16} />
-                                        </button>
+                                    <div key={medId} className="flex items-center gap-1 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium">
+                                        <Check size={14} />
+                                        <span>{med.brandName.split('/')[0].trim()}</span>
                                     </div>
                                 );
                             })}
                         </div>
+                        <p className="text-xs text-slate-500 mt-3">
+                            You can edit your medications on the next step.
+                        </p>
                     </div>
                 )}
 
