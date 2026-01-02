@@ -225,16 +225,21 @@ const getSavingsPrograms = async (medicationId, insuranceType) => {
     }
 
     // Filter by insurance eligibility
-    // Always include: discount_pharmacy, discount_card (cash-pay options for everyone)
-    // Always include: PAP programs for ALL insurance types (as backup option for commercial users)
+    // Commercial insurance: Only copay cards + PAPs (NO foundations, NO discount cards/pharmacies)
+    // All other insurance types: PAPs + Foundations + Discount cards/pharmacies (price estimates)
     const filteredPrograms = programs.filter(p => {
-      // Always include discount pharmacies (Cost Plus Drugs, etc) and discount cards
-      if (p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
-        return true;
+      // For commercial insurance: ONLY copay cards and PAPs
+      if (insuranceType === 'commercial') {
+        return p.program_type === 'copay_card' || p.program_type === 'pap';
       }
-      // Always include PAP programs for ALL insurance types
-      // Commercial users get copay cards first, but PAPs are backup if copay isn't enough
-      if (p.program_type === 'pap') {
+
+      // For non-commercial: Include PAPs, foundations, discount cards/pharmacies
+      // But NOT copay cards (they can't use them anyway)
+      if (p.program_type === 'copay_card') {
+        return false; // Non-commercial can't use copay cards
+      }
+      if (p.program_type === 'pap' || p.program_type === 'foundation' ||
+          p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
         return true;
       }
       // For other program types, check insurance eligibility
@@ -293,7 +298,7 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
 
   // Order depends on insurance type
   if (insuranceType === 'commercial') {
-    // Commercial: Copay cards FIRST, then discount cards, then foundations, then PAPs
+    // Commercial: Copay cards FIRST, then PAPs only (NO discount cards, NO foundations)
     if (copayCards.length > 0) {
       context += '\n**🥇 BEST OPTION - COPAY CARDS (for Commercial Insurance):**\n';
       copayCards.forEach(p => {
@@ -309,11 +314,12 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
         }
       });
     }
-    // Then discount cards
-    if (discountCards.length > 0) {
-      context += '\n**DISCOUNT CARDS (compare prices):**\n';
-      discountCards.forEach(p => {
-        context += `- ${p.program_name}: ${p.max_benefit || 'Savings vary'}\n`;
+    // Then PAPs as backup option
+    if (paps.length > 0) {
+      context += '\n**PATIENT ASSISTANCE PROGRAMS (if copay cards not enough):**\n';
+      paps.forEach(p => {
+        context += `- ${p.program_name}\n`;
+        context += `  Income Limit: ${p.income_limit || 'Varies'}\n`;
         context += `  URL: ${p.application_url || 'N/A'}\n`;
       });
     }
@@ -719,7 +725,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
   if (insuranceType === 'commercial') {
     message += "**With Commercial Insurance, you have great options:**\n\n";
     message += "• **Copay Cards** - Your best first step! Manufacturers offer cards that can reduce your copay to $0-$50/month.\n";
-    message += "• **Discount Cards** - For generics, Cost Plus Drugs often has the lowest prices. GoodRx and SingleCare can also beat your copay.\n\n";
+    message += "• **Patient Assistance Programs** - If copay cards aren't enough, you may qualify for free medication from manufacturers.\n\n";
   } else if (insuranceType === 'medicare') {
     message += "**Important for Medicare patients:**\n\n";
     message += "You cannot use manufacturer copay cards (it's prohibited), but you have other options:\n\n";

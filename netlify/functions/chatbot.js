@@ -36,7 +36,11 @@ const getEligibilityFlags = (insuranceType) => {
 
     switch (insuranceType) {
         case InsuranceType.COMMERCIAL:
+            // Commercial insurance: ONLY copay cards + PAPs
+            // NO foundations, NO discount cards/price estimates
             flags.copayCards = true;
+            flags.foundations = false;
+            flags.discountCards = false;
             break;
         case InsuranceType.MEDICARE:
             flags.copayCards = false;
@@ -74,6 +78,11 @@ const generateKeyMessages = (insuranceType, organs = [], financialStatus) => {
                 type: 'success',
                 title: 'Copay Cards Available',
                 message: 'With commercial insurance, you can use manufacturer copay cards to reduce costs to $0-$50/month.',
+            });
+            messages.push({
+                type: 'info',
+                title: 'Patient Assistance Available',
+                message: 'If copay cards aren\'t enough, you may also qualify for manufacturer Patient Assistance Programs for free medication.',
             });
             messages.push({
                 type: 'warning',

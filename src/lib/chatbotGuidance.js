@@ -23,7 +23,11 @@ export const getEligibilityFlags = (insuranceType) => {
   switch (insuranceType) {
     case InsuranceType.COMMERCIAL:
     case InsuranceType.MARKETPLACE:
+      // Commercial insurance: ONLY copay cards + PAPs
+      // NO foundations, NO discount cards/price estimates
       flags.copayCards = true;
+      flags.foundations = false;
+      flags.discountCards = false;
       break;
     case InsuranceType.MEDICARE:
       flags.copayCards = false; // Medicare patients cannot use copay cards
@@ -63,9 +67,10 @@ export const getPriorityOrder = (insuranceType, financialStatus) => {
   switch (insuranceType) {
     case InsuranceType.COMMERCIAL:
     case InsuranceType.MARKETPLACE:
+      // Commercial: Only copay cards + PAPs (no foundations, no discount cards)
       return isUrgent
-        ? ['copayCards', 'foundations', 'manufacturerPAPs', 'discountCards']
-        : ['copayCards', 'discountCards', 'foundations', 'manufacturerPAPs'];
+        ? ['copayCards', 'manufacturerPAPs']
+        : ['copayCards', 'manufacturerPAPs'];
 
     case InsuranceType.MEDICARE:
       return isUrgent
@@ -219,6 +224,11 @@ export const generateGuidanceSummary = (answers, medications) => {
         type: 'success',
         title: 'Copay Cards Can Help',
         message: 'With private insurance, you can use drug company copay cards to lower your costs. Start here!',
+      });
+      summary.keyMessages.push({
+        type: 'info',
+        title: 'Patient Assistance Available',
+        message: 'If copay cards aren\'t enough, you may also qualify for manufacturer Patient Assistance Programs.',
       });
       summary.keyMessages.push({
         type: 'warning',
