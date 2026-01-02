@@ -933,6 +933,64 @@ const ORGAN_MEDICATIONS = {
     }
 };
 
+// Pre-transplant medication data by organ type
+const PRE_TRANSPLANT_MEDICATIONS = {
+    Heart: {
+        title: 'Heart Transplant',
+        description: 'For patients awaiting a heart transplant, the primary goal is to manage advanced heart failure and maintain hemodynamic stability. This is often referred to as "bridge to transplantation."',
+        medications: [
+            { id: 'lisinopril', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Standard Heart Failure Therapy', notes: 'Reduce afterload and improve cardiac function.' },
+            { id: 'carvedilol', name: 'Carvedilol, Metoprolol', brand: 'Beta-Blockers', class: 'Standard Heart Failure Therapy', notes: 'Improve survival and reduce the workload on the heart.' },
+            { id: 'furosemide', name: 'Furosemide, Bumetanide', brand: 'Diuretics', class: 'Standard Heart Failure Therapy', notes: 'Manage fluid overload and congestion.' },
+            { id: 'spironolactone-hf', name: 'Spironolactone, Eplerenone', brand: 'Mineralocorticoid Receptor Antagonists', class: 'Standard Heart Failure Therapy', notes: 'Block the effects of aldosterone, reducing fibrosis and improving survival.' },
+            { id: 'milrinone', name: 'Milrinone, Dobutamine', brand: 'Intravenous Inotropes', class: 'Inotropic Support', notes: 'Provide temporary circulatory support for decompensated patients.' },
+            { id: 'amiodarone', name: 'Amiodarone', brand: 'Amiodarone', class: 'Antiarrhythmics', notes: 'Control arrhythmias, though its use is debated due to potential post-transplant complications.' }
+        ]
+    },
+    Kidney: {
+        title: 'Kidney Transplant',
+        description: 'Patients with end-stage renal disease (ESRD) awaiting a kidney transplant require management of various complications arising from kidney failure, most commonly through dialysis.',
+        medications: [
+            { id: 'epoetin', name: 'Epoetin alfa, Darbepoetin alfa', brand: 'Erythropoiesis-Stimulating Agents (ESAs)', class: 'Anemia Management', notes: 'Stimulate red blood cell production to treat anemia.' },
+            { id: 'iron-supplements', name: 'IV Iron, Oral Iron', brand: 'Iron Supplements', class: 'Anemia Management', notes: 'Replenish iron stores necessary for red blood cell formation.' },
+            { id: 'sevelamer', name: 'Sevelamer, Calcium Acetate', brand: 'Phosphate Binders', class: 'Mineral and Bone Disorder', notes: 'Control high phosphorus levels in the blood.' },
+            { id: 'calcitriol', name: 'Calcitriol, Paricalcitol', brand: 'Vitamin D Analogs', class: 'Mineral and Bone Disorder', notes: 'Suppress parathyroid hormone (PTH) and manage calcium/phosphorus balance.' },
+            { id: 'antihypertensives', name: 'ACE Inhibitors, ARBs, Calcium Channel Blockers', brand: 'Antihypertensives', class: 'Blood Pressure Control', notes: 'Manage hypertension, a common complication of ESRD.' }
+        ]
+    },
+    Liver: {
+        title: 'Liver Transplant',
+        description: 'Pre-transplant management for liver transplant candidates focuses on managing the complications of cirrhosis and portal hypertension.',
+        medications: [
+            { id: 'spironolactone-ascites', name: 'Spironolactone, Furosemide', brand: 'Diuretics', class: 'Ascites Management', notes: 'Remove excess fluid from the body.' },
+            { id: 'lactulose', name: 'Lactulose, Rifaximin', brand: 'Ammonia-reducing Agents', class: 'Hepatic Encephalopathy', notes: 'Reduce the buildup of toxins in the blood that affect the brain.' },
+            { id: 'propranolol', name: 'Propranolol, Nadolol', brand: 'Non-selective Beta-Blockers', class: 'Variceal Bleeding Prevention', notes: 'Reduce pressure in the portal vein to prevent bleeding from varices.' },
+            { id: 'norfloxacin', name: 'Norfloxacin, Ciprofloxacin', brand: 'Antibiotics', class: 'Infection Prevention (SBP)', notes: 'Prevent spontaneous bacterial peritonitis in high-risk patients.' },
+            { id: 'calcium-vitd', name: 'Calcium, Vitamin D', brand: 'Supplements', class: 'Bone Health', notes: 'Prevent or treat osteoporosis, which is common in cirrhosis.' }
+        ],
+        warning: 'It is crucial for patients with cirrhosis to avoid certain medications, such as Nonsteroidal Anti-Inflammatory Drugs (NSAIDs), which can increase the risk of kidney injury and bleeding.'
+    },
+    Lung: {
+        title: 'Lung Transplant',
+        description: 'Medication management for lung transplant candidates is tailored to their specific underlying lung disease, such as idiopathic pulmonary fibrosis (IPF), chronic obstructive pulmonary disease (COPD), or pulmonary hypertension.',
+        medications: [
+            { id: 'pirfenidone', name: 'Pirfenidone, Nintedanib', brand: 'Antifibrotics', class: 'Idiopathic Pulmonary Fibrosis (IPF)', notes: 'Slow the progression of lung scarring.' },
+            { id: 'albuterol', name: 'Albuterol, Tiotropium, Fluticasone', brand: 'Bronchodilators / Inhaled Corticosteroids', class: 'COPD', notes: 'Improve airflow and reduce inflammation.' },
+            { id: 'epoprostenol', name: 'Epoprostenol, Sildenafil, Bosentan', brand: 'Vasodilators', class: 'Pulmonary Hypertension', notes: 'Reduce high blood pressure in the lungs.' },
+            { id: 'oxygen-diuretics', name: 'Oxygen, Diuretics', brand: 'Supportive Care', class: 'General Supportive Care', notes: 'Improve oxygenation and manage fluid retention.' }
+        ]
+    },
+    Pancreas: {
+        title: 'Pancreas Transplant',
+        description: 'For patients awaiting a pancreas transplant, who typically have type 1 diabetes, the focus is on intensive glycemic control and managing diabetes-related complications.',
+        medications: [
+            { id: 'insulin', name: 'Basal (Glargine), Bolus (Lispro)', brand: 'Insulin', class: 'Glycemic Control', notes: 'Maintain blood glucose levels within a target range.' },
+            { id: 'ace-arb-pancreas', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Complication Management', notes: 'Provide kidney protection.' },
+            { id: 'statins', name: 'Atorvastatin, Simvastatin', brand: 'Statins', class: 'Complication Management', notes: 'Manage cholesterol and reduce cardiovascular risk.' }
+        ]
+    }
+};
+
 // Organ icons mapping
 const organIcons = {
     Heart: Heart,
@@ -1031,6 +1089,112 @@ const OrganMedicationGuide = ({ answers }) => {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+// Pre-Transplant Medication Guide Component
+const PreTransplantMedicationGuide = ({ answers }) => {
+    const [expandedOrgan, setExpandedOrgan] = useState(null);
+    const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
+
+    const handleOrganClick = (organ) => {
+        setExpandedOrgan(expandedOrgan === organ ? null : organ);
+    };
+
+    return (
+        <div className="mb-6">
+            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                    <Pill size={18} className="text-blue-600" />
+                    <h3 className="font-bold text-slate-800">Common Medications Pre-Transplant by Organ Type</h3>
+                </div>
+                <p className="text-sm text-slate-600 mb-4">
+                    Click on an organ type to see typical pre-transplant medications for managing your condition while awaiting transplant.
+                </p>
+
+                {/* Organ Type Tabs */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {organTypes.map(organ => {
+                        const IconComponent = organIcons[organ];
+                        const isExpanded = expandedOrgan === organ;
+                        const isSelected = answers.organs.includes(organ);
+                        return (
+                            <button
+                                key={organ}
+                                onClick={() => handleOrganClick(organ)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition font-medium text-sm ${
+                                    isExpanded
+                                        ? 'bg-blue-600 text-white border-blue-600'
+                                        : isSelected
+                                            ? 'bg-blue-50 text-blue-700 border-blue-300 hover:border-blue-400'
+                                            : 'bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:bg-blue-50'
+                                }`}
+                            >
+                                <IconComponent size={16} />
+                                {organ}
+                                {isSelected && !isExpanded && <CheckCircle size={14} className="text-blue-600" />}
+                                <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* Expanded Organ Section */}
+                {expandedOrgan && PRE_TRANSPLANT_MEDICATIONS[expandedOrgan] && (
+                    <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 animate-in slide-in-from-top-2 duration-200">
+                        <div className="flex items-start gap-3 mb-4">
+                            {(() => {
+                                const IconComponent = organIcons[expandedOrgan];
+                                return <IconComponent size={24} className="text-blue-600 flex-shrink-0 mt-1" />;
+                            })()}
+                            <div>
+                                <h4 className="font-bold text-lg text-slate-900">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].description}</p>
+                            </div>
+                        </div>
+
+                        {/* Medications Table */}
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-slate-300">
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication Class</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Examples</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-200">
+                                    {PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].medications.map(med => {
+                                        return (
+                                            <tr key={med.id} className="hover:bg-white">
+                                                <td className="py-3 px-3">
+                                                    <div>
+                                                        <span className="font-bold text-slate-900">{med.brand}</span>
+                                                        <div className="text-xs text-slate-500 mt-0.5">{med.class}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-3 px-3 text-slate-600">{med.name}</td>
+                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Warning for specific organs (like liver) */}
+                        {PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning && (
+                            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                                <div className="flex items-start gap-2">
+                                    <AlertTriangle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                                    <p className="text-sm text-amber-800">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -1427,8 +1591,12 @@ const Wizard = () => {
                 </div>
                 <WizardHelp step={step} answers={answers} />
 
-                {/* Organ-Specific Medication Guide */}
-                <OrganMedicationGuide answers={answers} />
+                {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
+                {isPreTransplant ? (
+                    <PreTransplantMedicationGuide answers={answers} />
+                ) : (
+                    <OrganMedicationGuide answers={answers} />
+                )}
 
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
