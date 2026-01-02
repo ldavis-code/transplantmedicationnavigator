@@ -906,6 +906,33 @@ const Wizard = () => {
         return () => clearTimeout(timer);
     }, [medSearchTerm, handleMedSearch]);
 
+    // Get default hospital-common medications based on organ and transplant stage
+    const getDefaultMedications = useCallback((organs, status) => {
+        const isPreTransplant = status === TransplantStatus.PRE_EVAL;
+        if (isPreTransplant) return []; // Pre-transplant patients don't have standard post-transplant meds
+
+        // Core medications that virtually all post-transplant patients receive:
+        // 1. Immunosuppressants: Tacrolimus (calcineurin inhibitor) + Mycophenolate (antimetabolite)
+        // 2. Steroid: Prednisone
+        // 3. Antiviral: Valcyte (valganciclovir) for CMV prophylaxis
+        // 4. Antifungal: Fluconazole or Nystatin for fungal prophylaxis
+        const corePostTransplantMeds = [
+            'tacrolimus',     // Prograf - primary immunosuppressant
+            'mycophenolate',  // CellCept - secondary immunosuppressant
+            'prednisone',     // Steroid
+            'valcyte',        // Antiviral for CMV/BK virus protection
+            'fluconazole',    // Antifungal prophylaxis
+        ];
+
+        // Filter to only include meds that are valid for the patient's organs
+        return corePostTransplantMeds.filter(medId => {
+            const med = MEDICATIONS.find(m => m.id === medId);
+            if (!med) return false;
+            // Check if this medication is applicable for any of the patient's organs
+            return med.commonOrgans && organs.some(organ => med.commonOrgans.includes(organ));
+        });
+    }, [MEDICATIONS]);
+
     // Pre-populate medications when entering step 6 (medications step)
     useEffect(() => {
         if (step === 6 && answers.medications.length === 0 && answers.status !== TransplantStatus.PRE_EVAL) {
@@ -952,32 +979,6 @@ const Wizard = () => {
         setStep(5); // Go to Financial Status
         window.scrollTo(0, 0);
     };
-    // Get default hospital-common medications based on organ and transplant stage
-    const getDefaultMedications = useCallback((organs, status) => {
-        const isPreTransplant = status === TransplantStatus.PRE_EVAL;
-        if (isPreTransplant) return []; // Pre-transplant patients don't have standard post-transplant meds
-
-        // Core medications that virtually all post-transplant patients receive:
-        // 1. Immunosuppressants: Tacrolimus (calcineurin inhibitor) + Mycophenolate (antimetabolite)
-        // 2. Steroid: Prednisone
-        // 3. Antiviral: Valcyte (valganciclovir) for CMV prophylaxis
-        // 4. Antifungal: Fluconazole or Nystatin for fungal prophylaxis
-        const corePostTransplantMeds = [
-            'tacrolimus',     // Prograf - primary immunosuppressant
-            'mycophenolate',  // CellCept - secondary immunosuppressant
-            'prednisone',     // Steroid
-            'valcyte',        // Antiviral for CMV/BK virus protection
-            'fluconazole',    // Antifungal prophylaxis
-        ];
-
-        // Filter to only include meds that are valid for the patient's organs
-        return corePostTransplantMeds.filter(medId => {
-            const med = MEDICATIONS.find(m => m.id === medId);
-            if (!med) return false;
-            // Check if this medication is applicable for any of the patient's organs
-            return med.commonOrgans && organs.some(organ => med.commonOrgans.includes(organ));
-        });
-    }, [MEDICATIONS]);
 
     const handleNextFromFinancial = () => {
         // Pre-populate with common hospital medications if none selected yet
