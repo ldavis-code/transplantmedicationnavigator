@@ -1344,6 +1344,24 @@ const Wizard = () => {
                     </div>
                 )}
 
+                {/* Important disclaimer for post-transplant patients */}
+                {!isPreTransplant && (
+                    <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                            <Info size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                                <h3 className="font-bold text-amber-900 mb-1">Important Note</h3>
+                                <p className="text-sm text-amber-800 leading-relaxed">
+                                    Post-transplant medication regimens are complex and require careful management by your specialized transplant team. Lifelong adherence to these medications is crucial for the long-term success of your transplant.
+                                </p>
+                                <p className="text-sm text-amber-800 leading-relaxed mt-2">
+                                    <strong>Always consult your transplant team</strong> before making any changes to your medication regimen or taking any new medications, including over-the-counter drugs and supplements.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow-md"

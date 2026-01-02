@@ -228,6 +228,35 @@
     ]
   },
   {
+    "category": "Medication Regimens by Transplant Type",
+    "questions": [
+      {
+        "q": "What medications do heart transplant patients typically take?",
+        "a": "Heart transplant recipients typically receive a combination of three types of medications:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• Mainstay of maintenance therapy\n• Prevents your immune system from attacking the new heart\n\n**Antimetabolite (Mycophenolate Mofetil or Azathioprine)**\n• Used in combination with the calcineurin inhibitor\n• Provides additional immune suppression\n\n**Corticosteroid (Prednisone)**\n• Often tapered to a low dose or discontinued over time\n• Helps control inflammation"
+      },
+      {
+        "q": "What medications do kidney transplant patients typically take?",
+        "a": "Kidney transplant immunosuppression is similar to heart transplants, with a focus on balancing efficacy and minimizing side effects:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• Standard of care for maintenance therapy\n\n**Antimetabolite (Mycophenolate Mofetil or Mycophenolic Acid)**\n• Commonly used in combination with a CNI\n\n**Corticosteroid (Prednisone)**\n• Many centers aim for steroid-free regimens to reduce long-term side effects\n\n**Belatacept (Nulojix)**\n• A biologic alternative to calcineurin inhibitors for certain patients"
+      },
+      {
+        "q": "What medications do liver transplant patients typically take?",
+        "a": "Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver's unique immunological properties:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• The most commonly used CNI in liver transplantation\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Often used in combination with a CNI\n\n**Corticosteroid (Prednisone)**\n• Typically tapered and discontinued within the first few months post-transplant"
+      },
+      {
+        "q": "What medications do lung transplant patients typically take?",
+        "a": "Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• Preferred CNI for lung transplant patients\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Used in combination with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Maintained at a low dose long-term\n\nLung transplant patients typically require the most intensive immunosuppression due to the higher rejection risk."
+      },
+      {
+        "q": "What medications do pancreas transplant patients typically take?",
+        "a": "Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• Standard of care for maintenance therapy\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Used in combination with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Often tapered to a low dose or discontinued over time"
+      },
+      {
+        "q": "Important: What should I know about managing my transplant medications?",
+        "a": "Post-transplant medication regimens are complex and require careful management by a specialized transplant team.\n\n**Key points to remember:**\n• Lifelong adherence to these medications is crucial for the long-term success of your transplant and your health\n• Never change your medication regimen without consulting your transplant team first\n• This includes stopping, adjusting doses, or adding new medications\n• Even over-the-counter drugs and supplements can interact with your transplant medications\n\n**Always consult your transplant team before:**\n• Making any changes to your medication schedule\n• Starting any new medications\n• Taking over-the-counter drugs\n• Using herbal supplements or vitamins\n\nYour transplant team is your best resource for medication questions."
+      }
+    ]
+  },
+  {
     "category": "Using This Site",
     "questions": [
       {
