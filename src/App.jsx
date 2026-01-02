@@ -18,6 +18,7 @@ const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
 const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
+const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -475,6 +476,9 @@ const Layout = ({ children }) => {
                     <p className="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
+                    </p>
+                    <p className="mt-4 text-slate-400 text-sm">
+                        <Link to="/terms-and-conditions" className="text-emerald-400 hover:text-emerald-300 underline">Terms and Conditions</Link>
                     </p>
                 </div>
             </footer>
@@ -4745,6 +4749,7 @@ const MainSiteRoutes = () => (
                 <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
+                <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="*" element={<LazyNotFound />} />
             </Routes>
         </Suspense>
