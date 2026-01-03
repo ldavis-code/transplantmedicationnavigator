@@ -995,7 +995,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
                                                     <button
-                                                        onClick={() => onMedicationClick && onMedicationClick(med.brand)}
+                                                        onClick={() => onMedicationClick && onMedicationClick(med.id)}
                                                         className="text-left hover:text-emerald-700 transition-colors group"
                                                     >
                                                         <span className="font-bold text-slate-900 group-hover:text-emerald-700 underline decoration-dotted underline-offset-2">{med.brand}</span>
@@ -1579,7 +1579,7 @@ const Wizard = () => {
                 {isPreTransplant ? (
                     <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
                 ) : (
-                    <OrganMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
+                    <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
 
                 {/* Medication Search Box */}
