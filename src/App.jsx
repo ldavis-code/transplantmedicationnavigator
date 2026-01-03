@@ -51,9 +51,9 @@ import {
     Shield, AlertTriangle, AlertCircle, Printer, ExternalLink, Building, PlusCircle,
     Trash2, Globe, List, Info, Copy, Check, Building2, LandPlot, Scale, FileText,
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
-    AlertOctagon, Calendar, Pill, ChevronDown, Share2, Home as HomeIcon,
+    AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles
+    CreditCard, Sparkles, Star, Filter
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -2499,7 +2499,7 @@ const MedicationSearch = () => {
                 {hasItems && showSavings && (
                     <>
                         {displayListInternal.map(med => (
-                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} showCopayCards={showCopayCards} />
+                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} showCopayCards={showCopayCards} quizAnswers={quizAnswers} />
                         ))}
                         {myCustomMeds.map((name, idx) => (
                             <ExternalMedCard key={`${name}-${idx}`} name={name} onRemove={() => removeCustomFromList(name)} />
@@ -2698,10 +2698,12 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true }) => {
-    const [activeTab, setActiveTab] = useState('PRICE');
+const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true, quizAnswers = {} }) => {
+    const [activeTab, setActiveTab] = useState('ASSISTANCE');
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
+    const [deductibleWarningOpen, setDeductibleWarningOpen] = useState(false);
+    const [activeFilter, setActiveFilter] = useState('all');
 
     // Pharmacy availability - exclude medications not carried by each pharmacy
     // Excluded: Injectable biologics, IV formulations, hospital-only medications
@@ -2758,48 +2760,154 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
         )}
 
         <article className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition hover:shadow-md break-inside-avoid" aria-labelledby={`med-${med.id}-title`}>
+            {/* User Context Banner - Shows quiz answers */}
+            {(quizAnswers?.insurance_type || quizAnswers?.organ_type || quizAnswers?.cost_burden) && (
+                <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 no-print">
+                    <div className="flex flex-wrap items-center gap-4 text-sm">
+                        {quizAnswers?.insurance_type && (
+                            <div className="flex items-center gap-2">
+                                <span className="text-slate-500">Insurance:</span>
+                                <span className="font-medium text-slate-800">
+                                    {quizAnswers.insurance_type === 'commercial' ? 'Commercial / Employer' :
+                                     quizAnswers.insurance_type === 'medicare' ? 'Medicare' :
+                                     quizAnswers.insurance_type === 'medicaid' ? 'Medicaid' :
+                                     quizAnswers.insurance_type === 'tricare' ? 'TRICARE' :
+                                     quizAnswers.insurance_type === 'ihs' ? 'Indian Health Service' :
+                                     quizAnswers.insurance_type === 'uninsured' ? 'Uninsured' :
+                                     quizAnswers.insurance_type}
+                                </span>
+                            </div>
+                        )}
+                        {quizAnswers?.organ_type && (
+                            <div className="flex items-center gap-2">
+                                <span className="text-slate-500">Transplant:</span>
+                                <span className="font-medium text-slate-800">
+                                    {quizAnswers.organ_type.charAt(0).toUpperCase() + quizAnswers.organ_type.slice(1)}
+                                    {quizAnswers?.transplant_stage && ` (${quizAnswers.transplant_stage === 'post_1yr' ? '1+ years' : '<1 year'})`}
+                                </span>
+                            </div>
+                        )}
+                        {quizAnswers?.cost_burden && (
+                            <div className="flex items-center gap-2">
+                                <span className="text-slate-500">Situation:</span>
+                                <span className={`font-medium ${
+                                    quizAnswers.cost_burden === 'struggling' ? 'text-red-700' :
+                                    quizAnswers.cost_burden === 'challenging' ? 'text-amber-700' :
+                                    'text-emerald-700'
+                                }`}>
+                                    {quizAnswers.cost_burden === 'struggling' ? 'Struggling' :
+                                     quizAnswers.cost_burden === 'challenging' ? 'Challenging' :
+                                     quizAnswers.cost_burden === 'managing' ? 'Managing' :
+                                     quizAnswers.cost_burden}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
             <header className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex justify-between items-start md:items-center">
-                <div>
-                    <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{med.brandName}</h2>
-                    <p className="text-slate-600 font-medium text-sm">{med.genericName} • <span className="text-emerald-600">{med.category}</span></p>
-                    {/* Cost Tier Badges */}
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        {med.cost_tier && (
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                med.cost_tier === 'low' ? 'bg-green-100 text-green-800' :
-                                med.cost_tier === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                                'bg-red-100 text-red-800'
-                            }`}>
-                                <DollarSign size={12} aria-hidden="true" />
-                                {med.cost_tier === 'low' ? 'Low Cost' : med.cost_tier === 'medium' ? 'Medium Cost' : 'High Cost'}
-                            </span>
-                        )}
-                        {med.typical_copay_tier && (
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                med.typical_copay_tier === 'Specialty' ? 'bg-purple-100 text-purple-800' :
-                                med.typical_copay_tier <= 2 ? 'bg-blue-100 text-blue-800' :
-                                'bg-orange-100 text-orange-800'
-                            }`}>
-                                <Pill size={12} aria-hidden="true" />
-                                {med.typical_copay_tier === 'Specialty' ? 'Specialty Tier' : `Tier ${med.typical_copay_tier}`}
-                            </span>
-                        )}
-                        {med.generic_available && (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
-                                <CheckCircle size={12} aria-hidden="true" />
-                                <TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Available
-                            </span>
-                        )}
+                <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+                        <Pill size={20} className="text-white" aria-hidden="true" />
+                    </div>
+                    <div>
+                        <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{med.brandName}</h2>
+                        <p className="text-slate-600 font-medium text-sm">{med.genericName} • <span className="text-emerald-600">{med.category}</span></p>
+                        {/* Cost Tier Badges */}
+                        <div className="flex flex-wrap gap-2 mt-2">
+                            {med.cost_tier && (
+                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                    med.cost_tier === 'low' ? 'bg-green-100 text-green-800' :
+                                    med.cost_tier === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-red-100 text-red-800'
+                                }`}>
+                                    <DollarSign size={12} aria-hidden="true" />
+                                    {med.cost_tier === 'low' ? 'Low Cost' : med.cost_tier === 'medium' ? 'Medium Cost' : 'High Cost'}
+                                </span>
+                            )}
+                            {med.typical_copay_tier && (
+                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                    med.typical_copay_tier === 'Specialty' ? 'bg-purple-100 text-purple-800' :
+                                    med.typical_copay_tier <= 2 ? 'bg-blue-100 text-blue-800' :
+                                    'bg-orange-100 text-orange-800'
+                                }`}>
+                                    <Pill size={12} aria-hidden="true" />
+                                    {med.typical_copay_tier === 'Specialty' ? 'Specialty Tier' : `Tier ${med.typical_copay_tier}`}
+                                </span>
+                            )}
+                            {med.generic_available && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                    <CheckCircle size={12} aria-hidden="true" />
+                                    <TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Available
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
             </header>
 
-            {/* Per-card tab navigation */}
+            {/* Savings Summary Card - Shows potential savings at a glance */}
+            {showCopayCards && hasCopayProgram && (
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-4 border-b border-emerald-100">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-emerald-600 text-white p-2 rounded-lg" aria-hidden="true">
+                                <DollarSign size={20} />
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-emerald-800">Your Potential Savings</p>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                    <span className="text-slate-500 line-through text-sm">Without Help</span>
+                                    <span className="text-red-600 font-bold line-through">${med.cost_tier === 'high' ? '550' : med.cost_tier === 'medium' ? '250' : '75'}/mo</span>
+                                    <ArrowRight size={16} className="text-slate-400" aria-hidden="true" />
+                                    <span className="text-emerald-700 text-sm">With Copay Card</span>
+                                    <span className="text-emerald-700 font-bold text-lg">$10/mo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-emerald-700">Annual Savings</p>
+                            <p className="text-2xl font-bold text-emerald-700">~${(med.cost_tier === 'high' ? 540 : med.cost_tier === 'medium' ? 240 : 65) * 12}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Quick Filters */}
+            <div className="bg-white px-6 py-3 border-b border-slate-200 no-print">
+                <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm text-slate-500 flex items-center gap-1">
+                        <Filter size={14} aria-hidden="true" />
+                        Filter:
+                    </span>
+                    {[
+                        { id: 'all', label: 'All Options' },
+                        { id: 'eligible', label: '✓ Eligible Only' },
+                        { id: 'free', label: 'Free Options' },
+                        { id: 'under50', label: 'Under $50' },
+                    ].map(filter => (
+                        <button
+                            key={filter.id}
+                            onClick={() => setActiveFilter(filter.id)}
+                            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
+                                activeFilter === filter.id
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                            }`}
+                        >
+                            {filter.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Per-card tab navigation - Reordered: Assistance first */}
             <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={`Information tabs for ${med.brandName}`}>
                 {[
+                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Heart },
                     { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
-                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Building },
                     { id: 'OVERVIEW', label: 'Overview', icon: Info },
                     { id: 'PRINT', label: 'Print Summary', icon: Printer },
                 ].map(tab => (
@@ -2918,73 +3026,187 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                     </div>
                 )}
                 {activeTab === 'ASSISTANCE' && (
-                    <div className="space-y-6 fade-in">
-                        {/* Copay Card Section - For Commercial Insurance ONLY */}
-                        {showCopayCards && hasCopayProgram && (
-                            <section className="border-2 border-violet-200 rounded-xl p-5 bg-gradient-to-r from-violet-50 to-purple-50">
-                                <h3 className="font-bold text-violet-800 mb-2 flex items-center gap-2"><CreditCard size={18} aria-hidden="true" /> <TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> Card</h3>
-                                <p className="text-sm text-slate-700 mb-3">
-                                    {copayProgram?.eligibility_notes || <><strong>Only for insurance from your job or bought yourself:</strong> This card can lower your cost to $0-$25.</>}
-                                </p>
-                                <a href={copayUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-violet-700 hover:bg-violet-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
-                                    {copayProgram?.name ? `Get ${copayProgram.name}` : 'Get Copay Card'} <ExternalLink size={14} aria-hidden="true" />
-                                </a>
-                            </section>
-                        )}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <section className="border border-emerald-100 rounded-lg p-4 bg-emerald-50/30">
-                                <h3 className="font-bold text-emerald-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> {papProgram?.name || 'Free Medicine Program (Patient Assistance)'}</h3>
-                                <p className="text-sm text-slate-700 mb-4">
-                                    {papProgram?.eligibility_notes || (showCopayCards
-                                        ? "For Medicare, Medicaid, no insurance, or if the copay card isn't enough. Apply for free medicine from the drug company."
-                                        : "Apply for free medicine from the drug company. You may qualify based on income.")}
-                                </p>
-                                <a href={papLink} target="_blank" rel="noreferrer" className="w-full block text-center bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`${papLinkText} for ${med.brandName} (opens in new tab)`}>{papLinkText} <ExternalLink size={14} aria-hidden="true" /></a>
-                                {med.supportUrl && (
-                                    <a href={med.supportUrl} target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-emerald-600 text-emerald-700 hover:bg-emerald-50 py-2 rounded-lg text-sm font-medium transition no-print mt-2" aria-label={`Visit ${med.manufacturer} Patient Support Services (opens in new tab)`}>Patient Support Services</a>
-                                )}
-                            </section>
-                            <section className="border border-sky-100 rounded-lg p-4 bg-sky-50/30">
-                                <h3 className="font-bold text-sky-800 mb-2 flex items-center gap-2"><Building size={18} aria-hidden="true" /> <TermTooltip term="foundation-grant" showIcon={false}>Foundations</TermTooltip> & Grants</h3>
-                                <p className="text-sm text-slate-700 mb-4">These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.</p>
-                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="w-full block text-center bg-white border border-sky-600 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">Check FundFinder Tool</a>
-                            </section>
-                        </div>
-                        {/* Medicare Part D Information */}
-                        {medicarePartD && (
-                            <section className="border-2 border-blue-200 rounded-xl p-5 bg-gradient-to-r from-blue-50 to-indigo-50">
-                                <h3 className="font-bold text-blue-800 mb-2 flex items-center gap-2"><Shield size={18} aria-hidden="true" /> Medicare Part D Information</h3>
-                                <p className="text-sm text-slate-700 mb-3">
-                                    Learn about Medicare Part D coverage changes and savings options for {med.brandName}.
-                                    {(medicarePartD.notes || med.medicare2026Note) && <span className="block mt-2 text-blue-700 font-medium">{medicarePartD.notes || med.medicare2026Note}</span>}
-                                </p>
-                                <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="w-full block text-center bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
-                                    View Medicare Part D Details <ExternalLink size={14} aria-hidden="true" />
-                                </a>
-                            </section>
-                        )}
-                        {/* High-cost medication PAP recommendation */}
-                        {med.cost_tier === 'high' && med.papUrl && (
-                            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl p-5 shadow-sm">
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-amber-500 text-white p-2.5 rounded-lg flex-shrink-0" aria-hidden="true">
-                                        <Lightbulb size={20} />
+                    <div className="space-y-4 fade-in">
+                        {/* Copay Card Section - RECOMMENDED FOR YOU - For Commercial Insurance ONLY */}
+                        {showCopayCards && hasCopayProgram && (activeFilter === 'all' || activeFilter === 'eligible' || activeFilter === 'under50') && (
+                            <section className="border-2 border-emerald-400 rounded-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 shadow-md">
+                                <div className="bg-emerald-600 px-4 py-1.5">
+                                    <span className="text-white text-xs font-bold flex items-center gap-1">
+                                        <Star size={12} className="fill-current" aria-hidden="true" />
+                                        RECOMMENDED FOR YOU
+                                    </span>
+                                </div>
+                                <div className="p-5">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex items-start gap-3">
+                                            <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0 mt-1.5"></span>
+                                            <div>
+                                                <h3 className="font-bold text-emerald-800 flex items-center gap-2">
+                                                    {copayProgram?.name || `${med.brandName} Co-Pay Card`}
+                                                </h3>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                                                        <CheckCircle size={12} aria-hidden="true" />
+                                                        You're Eligible
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-slate-600 mt-2">
+                                                    For commercial/employer insurance • Manufacturer program
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right flex-shrink-0">
+                                            <div className="text-emerald-700 font-bold text-lg">$0 - $10</div>
+                                            <div className="text-xs text-slate-500">/month</div>
+                                        </div>
                                     </div>
-                                    <div className="flex-grow">
-                                        <h4 className="font-bold text-amber-900 mb-1 flex items-center gap-2">
-                                            This Medicine Costs a Lot — Apply for Free Medicine!
-                                        </h4>
-                                        <p className="text-sm text-slate-700 mb-2">
-                                            <strong>{med.brandName}</strong> costs a lot, but the drug company may give it to you for <strong>free or at a lower price</strong> if you qualify.
-                                            {med.typical_copay_tier === 'Specialty' && " For specialty drugs like this, the free medicine program is often the best way to get it."}
-                                        </p>
-                                        <p className="text-sm text-amber-800 font-medium">
-                                            We suggest you apply. Many people who think they won't qualify are surprised when they do!
-                                        </p>
+                                    <a href={copayUrl} target="_blank" rel="noreferrer" className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                        Get Card <ArrowRight size={14} aria-hidden="true" />
+                                    </a>
+                                </div>
+                            </section>
+                        )}
+
+                        {/* Patient Assistance Program (PAP) - Income Based */}
+                        {hasPapProgram && (activeFilter === 'all' || activeFilter === 'free') && (
+                            <section className="border border-amber-200 rounded-xl p-5 bg-gradient-to-r from-amber-50/50 to-orange-50/50">
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex items-start gap-3">
+                                        <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0 mt-1.5"></span>
+                                        <div>
+                                            <h3 className="font-bold text-amber-800 flex items-center gap-2">
+                                                {papProgram?.name || `${med.manufacturer} Patient Assistance Program`}
+                                            </h3>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                                                    <HelpCircle size={12} aria-hidden="true" />
+                                                    Income-Based
+                                                </span>
+                                            </div>
+                                            <p className="text-sm text-slate-600 mt-2">
+                                                For Medicare, Medicaid, or no insurance • Income ≤400% FPL
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right flex-shrink-0">
+                                        <div className="text-amber-700 font-bold text-lg">FREE</div>
+                                        <div className="text-xs text-slate-500">if eligible</div>
                                     </div>
                                 </div>
-                            </div>
+                                <a href={papLink} target="_blank" rel="noreferrer" className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
+                                    Apply <ArrowRight size={14} aria-hidden="true" />
+                                </a>
+                            </section>
                         )}
+
+                        {/* Foundation Grants - Open Now */}
+                        {(activeFilter === 'all' || activeFilter === 'free') && (
+                            <section className="border border-sky-200 rounded-xl p-5 bg-gradient-to-r from-sky-50/50 to-blue-50/50">
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex items-start gap-3">
+                                        <span className="w-3 h-3 rounded-full bg-sky-500 flex-shrink-0 mt-1.5"></span>
+                                        <div>
+                                            <h3 className="font-bold text-sky-800 flex items-center gap-2">
+                                                American Kidney Fund
+                                            </h3>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-700">
+                                                    <CheckCircle size={12} aria-hidden="true" />
+                                                    Open Now
+                                                </span>
+                                            </div>
+                                            <p className="text-sm text-slate-600 mt-2">
+                                                Grants for kidney patients • Income ≤400% FPL
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right flex-shrink-0">
+                                        <div className="text-sky-700 font-bold text-lg">Up to $5,000</div>
+                                        <div className="text-xs text-slate-500">/year</div>
+                                    </div>
+                                </div>
+                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="mt-4 w-full block text-center bg-white border-2 border-sky-500 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label="Learn more about foundation grants (opens in new tab)">
+                                    Learn More <ArrowRight size={14} aria-hidden="true" />
+                                </a>
+                            </section>
+                        )}
+
+                        {/* Medicare Part D Information */}
+                        {medicarePartD && (activeFilter === 'all') && (
+                            <section className="border border-blue-200 rounded-xl p-5 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
+                                <div className="flex items-start gap-3">
+                                    <span className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0 mt-1.5"></span>
+                                    <div className="flex-grow">
+                                        <h3 className="font-bold text-blue-800 flex items-center gap-2">
+                                            <Shield size={18} aria-hidden="true" />
+                                            Medicare Part D Information
+                                        </h3>
+                                        <p className="text-sm text-slate-600 mt-2">
+                                            Learn about Medicare Part D coverage changes and savings options for {med.brandName}.
+                                            {(medicarePartD.notes || med.medicare2026Note) && <span className="block mt-2 text-blue-700 font-medium">{medicarePartD.notes || med.medicare2026Note}</span>}
+                                        </p>
+                                        <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 font-medium text-sm" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
+                                            View Details <ExternalLink size={14} aria-hidden="true" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {/* Collapsible Deductible Warning */}
+                        <div className="border border-amber-300 rounded-xl overflow-hidden bg-amber-50">
+                            <button
+                                onClick={() => setDeductibleWarningOpen(!deductibleWarningOpen)}
+                                className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-amber-100 transition"
+                                aria-expanded={deductibleWarningOpen}
+                            >
+                                <div className="flex items-center gap-2">
+                                    <AlertTriangle size={18} className="text-amber-600" aria-hidden="true" />
+                                    <span className="font-bold text-amber-800 text-sm">Important: Discount Cards Don't Help Your Insurance</span>
+                                </div>
+                                <span className="text-amber-600 text-sm flex items-center gap-1">
+                                    {deductibleWarningOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                    {deductibleWarningOpen ? 'Hide' : 'Learn Why'}
+                                </span>
+                            </button>
+                            {deductibleWarningOpen && (
+                                <div className="px-4 pb-4 border-t border-amber-200">
+                                    <p className="text-xs text-amber-800 mt-3 mb-3">
+                                        <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2 text-xs">
+                                        <div className="bg-white p-3 rounded-lg border border-emerald-200">
+                                            <div className="font-bold text-emerald-700 flex items-center gap-1">
+                                                <CheckCircle size={14} aria-hidden="true" />
+                                                Using Insurance
+                                            </div>
+                                            <div className="text-slate-600 mt-1">Pay more early → then $0 the rest of the year</div>
+                                        </div>
+                                        <div className="bg-white p-3 rounded-lg border border-red-200">
+                                            <div className="font-bold text-red-700 flex items-center gap-1">
+                                                <X size={14} aria-hidden="true" />
+                                                Discount Cards & Cash
+                                            </div>
+                                            <div className="text-slate-600 mt-1">Pay less each time → but pay all year long</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer Notes */}
+                        <div className="text-xs text-slate-500 space-y-1 pt-2">
+                            <p className="flex items-center gap-1">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                                Copay cards are for commercial/employer insurance only
+                            </p>
+                            <p className="flex items-center gap-1">
+                                <Info size={12} aria-hidden="true" />
+                                Prices are for a 30 day supply. Your price may be different. Call the pharmacy for exact pricing.
+                            </p>
+                        </div>
+
+                        {/* Help with Forms */}
                         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-5 shadow-sm no-print">
                             <div className="flex items-start gap-4">
                                 <div className="bg-indigo-600 text-white p-2.5 rounded-lg flex-shrink-0" aria-hidden="true">
@@ -3250,15 +3472,25 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 </div>
                             )}
 
-                            {/* Deductible Trap with Discount Cards & Cash Warning */}
-                            <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-lg p-4 mt-4">
-                                <div className="flex items-start gap-3">
-                                    <div className="bg-red-600 text-white p-2 rounded-full flex-shrink-0" aria-hidden="true">
-                                        <AlertTriangle size={16} />
+                            {/* Collapsible Deductible Warning */}
+                            <div className="border border-amber-300 rounded-xl overflow-hidden bg-amber-50 mt-4">
+                                <button
+                                    onClick={() => setDeductibleWarningOpen(!deductibleWarningOpen)}
+                                    className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-amber-100 transition"
+                                    aria-expanded={deductibleWarningOpen}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <AlertTriangle size={18} className="text-amber-600" aria-hidden="true" />
+                                        <span className="font-bold text-amber-800 text-sm">Important: Discount Cards Don't Help Your Insurance</span>
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
-                                        <p className="text-xs text-red-800 mb-2">
+                                    <span className="text-amber-600 text-sm flex items-center gap-1">
+                                        {deductibleWarningOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                        {deductibleWarningOpen ? 'Hide' : 'Learn Why'}
+                                    </span>
+                                </button>
+                                {deductibleWarningOpen && (
+                                    <div className="px-4 pb-4 border-t border-amber-200">
+                                        <p className="text-xs text-amber-800 mt-3 mb-2">
                                             <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
@@ -3270,20 +3502,26 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
-                                            <div className="bg-white/80 p-2 rounded border border-emerald-200">
-                                                <div className="font-bold text-emerald-700">✅ Using Insurance</div>
-                                                <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
+                                            <div className="bg-white p-3 rounded-lg border border-emerald-200">
+                                                <div className="font-bold text-emerald-700 flex items-center gap-1">
+                                                    <CheckCircle size={14} aria-hidden="true" />
+                                                    Using Insurance
+                                                </div>
+                                                <div className="text-slate-600 mt-1">Pay more early → then $0 the rest of the year</div>
                                             </div>
-                                            <div className="bg-white/80 p-2 rounded border border-red-200">
-                                                <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
-                                                <div className="text-slate-600">Pay less each time → but pay all year long</div>
+                                            <div className="bg-white p-3 rounded-lg border border-red-200">
+                                                <div className="font-bold text-red-700 flex items-center gap-1">
+                                                    <X size={14} aria-hidden="true" />
+                                                    Discount Cards & Cash
+                                                </div>
+                                                <div className="text-slate-600 mt-1">Pay less each time → but pay all year long</div>
                                             </div>
                                         </div>
-                                        <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
+                                        <Link to="/education" className="text-amber-700 hover:text-amber-800 font-bold text-xs inline-flex items-center gap-1">
                                             Learn more <ArrowRight size={12} />
                                         </Link>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>
