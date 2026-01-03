@@ -93,18 +93,21 @@ export default function SavingsDashboard({ refreshTrigger }) {
                     <div className="flex gap-2">
                         <button
                             onClick={loadData}
-                            className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors"
+                            className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            aria-label="Refresh savings data"
                             title="Refresh"
                         >
-                            <RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />
+                            <RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} aria-hidden="true" />
+                            {isLoading && <span className="sr-only">Loading...</span>}
                         </button>
                         {totalSaved > 0 && (
                             <button
                                 onClick={handleShare}
-                                className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors"
+                                className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                                aria-label="Share your savings on social media"
                                 title="Share your savings"
                             >
-                                <Share2 size={18} />
+                                <Share2 size={18} aria-hidden="true" />
                             </button>
                         )}
                     </div>

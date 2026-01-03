@@ -118,31 +118,46 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 <strong>Anonymous tracking:</strong> Your data is stored locally on your device only.
             </p>
 
-            {message.text && (
-                <div className={`mb-4 p-3 rounded-lg flex items-center gap-2 ${
+            {/* Status message with aria-live for screen reader announcements */}
+            <div
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+                id="form-message"
+                className={message.text ? `mb-4 p-3 rounded-lg flex items-center gap-2 ${
                     message.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' :
                     message.type === 'warning' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
                     'bg-red-50 text-red-800 border border-red-200'
-                }`}>
-                    {message.type === 'success' ? <Check size={18} /> : <AlertCircle size={18} />}
-                    <span className="text-sm">{message.text}</span>
-                </div>
-            )}
+                }` : 'sr-only'}
+            >
+                {message.text && (
+                    <>
+                        {message.type === 'success' ? <Check size={18} aria-hidden="true" /> : <AlertCircle size={18} aria-hidden="true" />}
+                        <span className="text-sm">{message.text}</span>
+                    </>
+                )}
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" aria-describedby={message.type === 'error' ? 'form-message' : undefined}>
                 {/* Medication Name */}
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Medication Name *
+                    <label htmlFor="medicationName" className="block text-sm font-medium text-slate-700 mb-1">
+                        Medication Name <span aria-hidden="true">*</span>
+                        <span className="sr-only">(required)</span>
                     </label>
                     <input
                         type="text"
+                        id="medicationName"
                         name="medicationName"
                         value={formData.medicationName}
                         onChange={handleChange}
                         placeholder="e.g., Tacrolimus, Eliquis"
                         className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         list="medication-suggestions"
+                        required
+                        aria-required="true"
+                        aria-invalid={message.type === 'error' && message.text.includes('medication') ? 'true' : undefined}
+                        aria-describedby={message.type === 'error' && message.text.includes('medication') ? 'form-message' : undefined}
                     />
                     {medications.length > 0 && (
                         <datalist id="medication-suggestions">
@@ -189,13 +204,15 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Pricing */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
-                            Original Price * <span className="text-slate-500 font-normal">(without assistance)</span>
+                        <label htmlFor="originalPrice" className="block text-sm font-medium text-slate-700 mb-1">
+                            Original Price <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">(without assistance)</span>
+                            <span className="sr-only">(required)</span>
                         </label>
                         <div className="relative">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" aria-hidden="true">$</span>
                             <input
                                 type="number"
+                                id="originalPrice"
                                 name="originalPrice"
                                 value={formData.originalPrice}
                                 onChange={handleChange}
@@ -203,17 +220,22 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                                 step="0.01"
                                 placeholder="0.00"
                                 className="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                required
+                                aria-required="true"
+                                aria-invalid={message.type === 'error' && message.text.includes('original') ? 'true' : undefined}
                             />
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
-                            What You Paid * <span className="text-slate-500 font-normal">(after assistance)</span>
+                        <label htmlFor="paidPrice" className="block text-sm font-medium text-slate-700 mb-1">
+                            What You Paid <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">(after assistance)</span>
+                            <span className="sr-only">(required)</span>
                         </label>
                         <div className="relative">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" aria-hidden="true">$</span>
                             <input
                                 type="number"
+                                id="paidPrice"
                                 name="paidPrice"
                                 value={formData.paidPrice}
                                 onChange={handleChange}
@@ -221,6 +243,9 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                                 step="0.01"
                                 placeholder="0.00"
                                 className="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                required
+                                aria-required="true"
+                                aria-invalid={message.type === 'error' && message.text.includes('paid') ? 'true' : undefined}
                             />
                         </div>
                     </div>

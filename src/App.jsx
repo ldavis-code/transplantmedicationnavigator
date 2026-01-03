@@ -413,6 +413,14 @@ const Layout = ({ children }) => {
                 </span>
             </div>
 
+            {/* Skip to Main Content Link - Accessibility */}
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg"
+            >
+                Skip to main content
+            </a>
+
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -503,7 +511,7 @@ const Layout = ({ children }) => {
                         <strong>Disclaimer:</strong> This tool is for learning only. It is not medical advice.
                         Prices are estimates. Always check with your doctor and pharmacist.
                     </p>
-                    <p className="mb-4 text-slate-400 text-sm max-w-3xl mx-auto">
+                    <p className="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">
                         We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
