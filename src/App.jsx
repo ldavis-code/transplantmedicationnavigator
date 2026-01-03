@@ -168,52 +168,38 @@ const getAssistantResponse = (userMessage, context = {}) => {
 
 // Smart medication suggestions based on organ-specific medication guides
 const getMedicationSuggestions = (answers) => {
-    const suggestions = [];
-
     if (!answers.organs || answers.organs.length === 0) {
-        return suggestions;
+        return [];
     }
 
     const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
-
-    // Use the curated organ medication data
     const medicationData = isPreTransplant ? PRE_TRANSPLANT_MEDICATIONS : ORGAN_MEDICATIONS;
 
-    // Group medications by class for each selected organ
-    const classMedications = {};
+    // Collect all medications for the selected organs (no duplicates)
+    const medications = [];
+    const seenIds = new Set();
 
     for (const organ of answers.organs) {
         const organData = medicationData[organ];
         if (!organData || !organData.medications) continue;
 
         for (const med of organData.medications) {
-            const classKey = med.class || 'Other';
-            if (!classMedications[classKey]) {
-                classMedications[classKey] = {
-                    category: classKey,
-                    medications: [],
-                    reason: isPreTransplant
-                        ? `Common ${classKey.toLowerCase()} for ${organ.toLowerCase()} patients awaiting transplant`
-                        : `Common ${classKey.toLowerCase()} for ${organ.toLowerCase()} transplant recipients`
-                };
-            }
-            // Add medication if not already in list
-            if (!classMedications[classKey].medications.includes(med.id)) {
-                classMedications[classKey].medications.push(med.id);
+            if (!seenIds.has(med.id)) {
+                seenIds.add(med.id);
+                medications.push(med.id);
             }
         }
     }
 
-    // Convert to array and limit to 3 medications per category
-    for (const classKey of Object.keys(classMedications)) {
-        const suggestion = classMedications[classKey];
-        suggestion.medications = suggestion.medications.slice(0, 3);
-        if (suggestion.medications.length > 0) {
-            suggestions.push(suggestion);
-        }
-    }
+    if (medications.length === 0) return [];
 
-    return suggestions;
+    // Return all medications in one group
+    return [{
+        medications: medications,
+        reason: isPreTransplant
+            ? 'Common medications while awaiting transplant'
+            : 'Common medications after transplant'
+    }];
 };
 
 // Chat Widget Component
@@ -1184,9 +1170,10 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
     const suggestions = getMedicationSuggestions(answers);
     const [showSuggestions, setShowSuggestions] = useState(true);
 
-    if (suggestions.length === 0) return null;
+    if (suggestions.length === 0 || !suggestions[0].medications.length) return null;
 
     const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
+    const medicationIds = suggestions[0].medications;
 
     return (
         <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
@@ -1210,37 +1197,26 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
             </p>
 
             {showSuggestions && (
-                <div className="space-y-3">
-                    {suggestions.map((suggestion, idx) => (
-                        <div key={idx} className="bg-white rounded-lg p-3 border border-indigo-100">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Pill size={16} className="text-indigo-600" />
-                                <span className="font-bold text-sm text-indigo-900">{suggestion.category}</span>
-                            </div>
-                            <p className="text-xs text-slate-600 mb-2">{suggestion.reason}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {suggestion.medications.map(medId => {
-                                    const med = MEDICATIONS.find(m => m.id === medId);
-                                    if (!med) return null;
-                                    const isSelected = answers.medications.includes(medId);
-                                    return (
-                                        <button
-                                            key={medId}
-                                            onClick={() => onSelectMedication(medId)}
-                                            className={`text-xs px-3 py-1 rounded-full border transition ${
-                                                isSelected
-                                                    ? 'bg-indigo-600 text-white border-indigo-600'
-                                                    : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
-                                            }`}
-                                        >
-                                            {isSelected && <Check size={12} className="inline mr-1" />}
-                                            {med.brandName.split('/')[0]}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ))}
+                <div className="flex flex-wrap gap-2">
+                    {medicationIds.map(medId => {
+                        const med = MEDICATIONS.find(m => m.id === medId);
+                        if (!med) return null;
+                        const isSelected = answers.medications.includes(medId);
+                        return (
+                            <button
+                                key={medId}
+                                onClick={() => onSelectMedication(medId)}
+                                className={`text-sm px-3 py-1.5 rounded-full border transition ${
+                                    isSelected
+                                        ? 'bg-indigo-600 text-white border-indigo-600'
+                                        : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
+                                }`}
+                            >
+                                {isSelected && <Check size={12} className="inline mr-1" />}
+                                {med.brandName.split('/')[0]}
+                            </button>
+                        );
+                    })}
                 </div>
             )}
         </div>
