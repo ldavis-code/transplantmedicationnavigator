@@ -1,25 +1,25 @@
 {
   "categoryDefaults": {
     "Immunosuppressant": {
-      "costplus": { "min": 15, "max": 40 },
-      "walmart": { "min": 35, "max": 90 },
-      "goodrx": { "min": 40, "max": 100 },
-      "singlecare": { "min": 35, "max": 95 }
+      "costplus": { "min": 15, "max": 45 },
+      "walmart": { "min": 30, "max": 85 },
+      "goodrx": { "min": 35, "max": 95 },
+      "singlecare": { "min": 30, "max": 90 }
     },
     "default": {
       "costplus": { "min": 10, "max": 25 },
       "walmart": { "min": 4, "max": 40 },
-      "goodrx": { "min": 20, "max": 50 },
-      "singlecare": { "min": 15, "max": 45 }
+      "goodrx": { "min": 15, "max": 50 },
+      "singlecare": { "min": 12, "max": 45 }
     }
   },
   "medicationOverrides": {
     "valcyte": {
-      "note": "Valganciclovir is an expensive antiviral - generic still costs $150-500+/month",
-      "costplus": { "min": 150, "max": 300 },
-      "walmart": { "min": 250, "max": 500 },
-      "goodrx": { "min": 150, "max": 450 },
-      "singlecare": { "min": 180, "max": 400 }
+      "note": "Valganciclovir is an expensive antiviral - generic now available at $100-150/month with coupons, retail ~$3,125",
+      "costplus": { "min": 100, "max": 180 },
+      "walmart": { "min": 150, "max": 300 },
+      "goodrx": { "min": 100, "max": 250 },
+      "singlecare": { "min": 120, "max": 280 }
     },
     "cytovene": {
       "note": "Ganciclovir IV - specialty medication",
@@ -29,11 +29,11 @@
       "singlecare": { "min": 220, "max": 480 }
     },
     "prevymis": {
-      "note": "Letermovir - newer CMV prophylaxis, very expensive",
-      "costplus": { "min": 500, "max": 800 },
-      "walmart": { "min": 700, "max": 1200 },
-      "goodrx": { "min": 500, "max": 1100 },
-      "singlecare": { "min": 550, "max": 950 }
+      "note": "Letermovir - newer CMV prophylaxis, very expensive. Monthly cost ~$7,000-8,500 without assistance. Patient assistance may reduce to $15/Rx",
+      "costplus": { "min": 6500, "max": 8500 },
+      "walmart": { "min": 7000, "max": 9000 },
+      "goodrx": { "min": 6900, "max": 8700 },
+      "singlecare": { "min": 7000, "max": 8500 }
     },
     "livtencity": {
       "note": "Maribavir - specialty antiviral for resistant CMV",
@@ -50,11 +50,11 @@
       "singlecare": { "min": 480, "max": 850 }
     },
     "vfend": {
-      "note": "Voriconazole - expensive antifungal",
-      "costplus": { "min": 100, "max": 200 },
-      "walmart": { "min": 180, "max": 350 },
-      "goodrx": { "min": 120, "max": 320 },
-      "singlecare": { "min": 140, "max": 280 }
+      "note": "Voriconazole - expensive antifungal, generic available",
+      "costplus": { "min": 80, "max": 180 },
+      "walmart": { "min": 150, "max": 320 },
+      "goodrx": { "min": 100, "max": 280 },
+      "singlecare": { "min": 120, "max": 260 }
     },
     "cresemba": {
       "note": "Isavuconazonium - newer expensive antifungal",
@@ -63,8 +63,36 @@
       "goodrx": { "min": 900, "max": 2000 },
       "singlecare": { "min": 950, "max": 1700 }
     },
+    "tacrolimus": {
+      "note": "Generic immunosuppressant - prices vary by dose. GoodRx as low as $40 for common version, retail ~$420",
+      "costplus": { "min": 20, "max": 50 },
+      "walmart": { "min": 35, "max": 100 },
+      "goodrx": { "min": 35, "max": 95 },
+      "singlecare": { "min": 30, "max": 90 }
+    },
+    "prograf": {
+      "note": "Brand tacrolimus - significantly more expensive than generic. Generic recommended at $40-100/month",
+      "costplus": { "min": 300, "max": 500 },
+      "walmart": { "min": 400, "max": 725 },
+      "goodrx": { "min": 350, "max": 700 },
+      "singlecare": { "min": 380, "max": 650 }
+    },
+    "mycophenolate": {
+      "note": "Generic CellCept - as low as $17 with GoodRx Gold",
+      "costplus": { "min": 15, "max": 40 },
+      "walmart": { "min": 25, "max": 70 },
+      "goodrx": { "min": 17, "max": 65 },
+      "singlecare": { "min": 20, "max": 60 }
+    },
+    "sirolimus": {
+      "note": "Generic Rapamune - GoodRx as low as $79 for 90 tablets, retail ~$1,444",
+      "costplus": { "min": 60, "max": 120 },
+      "walmart": { "min": 80, "max": 180 },
+      "goodrx": { "min": 70, "max": 160 },
+      "singlecare": { "min": 75, "max": 150 }
+    },
     "epclusa": {
-      "note": "Hepatitis C cure - extremely expensive",
+      "note": "Hepatitis C cure - extremely expensive, typically covered by specialty pharmacy programs",
       "costplus": { "min": 8000, "max": 15000 },
       "walmart": { "min": 12000, "max": 25000 },
       "goodrx": { "min": 9000, "max": 22000 },
@@ -85,28 +113,28 @@
       "singlecare": { "min": 480, "max": 850 }
     },
     "entresto": {
-      "note": "Sacubitril/Valsartan - expensive heart failure medication. One of 10 drugs with Medicare negotiated prices for 2026",
-      "costplus": { "min": 150, "max": 250 },
-      "walmart": { "min": 250, "max": 450 },
-      "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 },
-      "medicare2026Negotiated": true
+      "note": "Sacubitril/Valsartan - heart failure medication. Medicare 2026 negotiated price: $295/month (down from $628, 53% reduction). Generic approved July 2025",
+      "costplus": { "min": 140, "max": 240 },
+      "walmart": { "min": 220, "max": 420 },
+      "goodrx": { "min": 160, "max": 380 },
+      "singlecare": { "min": 180, "max": 360 },
+      "medicare2026": { "negotiated": 295, "listPrice": 628, "reduction": "53%" }
     },
     "jardiance": {
-      "note": "Empagliflozin - brand name SGLT2 inhibitor for diabetes/heart/kidney. One of 10 drugs with Medicare negotiated prices for 2026",
-      "costplus": { "min": 150, "max": 250 },
-      "walmart": { "min": 250, "max": 450 },
-      "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 },
-      "medicare2026Negotiated": true
+      "note": "Empagliflozin - SGLT2 inhibitor for diabetes/heart/kidney. Medicare 2026 negotiated price: $197/month (down from $573, 66% reduction)",
+      "costplus": { "min": 140, "max": 240 },
+      "walmart": { "min": 220, "max": 420 },
+      "goodrx": { "min": 160, "max": 380 },
+      "singlecare": { "min": 180, "max": 360 },
+      "medicare2026": { "negotiated": 197, "listPrice": 573, "reduction": "66%" }
     },
     "farxiga": {
-      "note": "Dapagliflozin - brand name SGLT2 inhibitor for diabetes/heart/kidney. One of 10 drugs with Medicare negotiated prices for 2026",
-      "costplus": { "min": 150, "max": 250 },
-      "walmart": { "min": 250, "max": 450 },
-      "goodrx": { "min": 180, "max": 400 },
-      "singlecare": { "min": 200, "max": 380 },
-      "medicare2026Negotiated": true
+      "note": "Dapagliflozin - SGLT2 inhibitor for diabetes/heart/kidney. Medicare 2026 negotiated price: $178/month (down from $556, 68% reduction)",
+      "costplus": { "min": 130, "max": 230 },
+      "walmart": { "min": 200, "max": 400 },
+      "goodrx": { "min": 150, "max": 360 },
+      "singlecare": { "min": 170, "max": 340 },
+      "medicare2026": { "negotiated": 178, "listPrice": 556, "reduction": "68%" }
     },
     "creon": {
       "note": "Pancrelipase - expensive enzyme replacement",
@@ -116,70 +144,70 @@
       "singlecare": { "min": 280, "max": 600 }
     },
     "eliquis": {
-      "note": "Apixaban - brand name anticoagulant. Medicare 2026 negotiated price: $231/month (down from $521 list price, 56% reduction)",
-      "costplus": { "min": 200, "max": 350 },
-      "walmart": { "min": 300, "max": 550 },
-      "goodrx": { "min": 220, "max": 500 },
-      "singlecare": { "min": 240, "max": 480 },
+      "note": "Apixaban - anticoagulant. Medicare 2026 negotiated price: $231/month (down from $521, 56% reduction)",
+      "costplus": { "min": 180, "max": 320 },
+      "walmart": { "min": 280, "max": 520 },
+      "goodrx": { "min": 200, "max": 480 },
+      "singlecare": { "min": 220, "max": 460 },
       "medicare2026": { "negotiated": 231, "listPrice": 521, "reduction": "56%" }
     },
     "xarelto": {
-      "note": "Rivaroxaban - brand name anticoagulant",
-      "costplus": { "min": 200, "max": 350 },
-      "walmart": { "min": 300, "max": 550 },
-      "goodrx": { "min": 220, "max": 500 },
-      "singlecare": { "min": 240, "max": 480 }
+      "note": "Rivaroxaban - anticoagulant. One of 15 drugs selected for Medicare 2027 price negotiation",
+      "costplus": { "min": 180, "max": 320 },
+      "walmart": { "min": 280, "max": 520 },
+      "goodrx": { "min": 200, "max": 480 },
+      "singlecare": { "min": 220, "max": 460 }
     },
     "januvia": {
-      "note": "Sitagliptin - brand name DPP-4 inhibitor for diabetes. Medicare 2026 negotiated price: $113/month (down from $527 list price, 79% reduction)",
-      "costplus": { "min": 100, "max": 200 },
-      "walmart": { "min": 200, "max": 400 },
-      "goodrx": { "min": 120, "max": 350 },
-      "singlecare": { "min": 140, "max": 320 },
+      "note": "Sitagliptin - DPP-4 inhibitor for diabetes. Medicare 2026 negotiated price: $113/month (down from $527, 79% reduction)",
+      "costplus": { "min": 80, "max": 160 },
+      "walmart": { "min": 150, "max": 350 },
+      "goodrx": { "min": 100, "max": 300 },
+      "singlecare": { "min": 120, "max": 280 },
       "medicare2026": { "negotiated": 113, "listPrice": 527, "reduction": "79%" }
     },
     "semaglutide": {
-      "note": "Ozempic/Wegovy - very expensive GLP-1 agonist",
-      "costplus": { "min": 300, "max": 500 },
-      "walmart": { "min": 500, "max": 900 },
-      "goodrx": { "min": 350, "max": 800 },
-      "singlecare": { "min": 380, "max": 720 }
+      "note": "Ozempic/Wegovy - GLP-1 agonist. List ~$1,000/month. Cash-pay programs: $349-499/month. GoodRx as low as $199. Medicare/TrumpRx: $245-350/month",
+      "costplus": { "min": 280, "max": 450 },
+      "walmart": { "min": 450, "max": 850 },
+      "goodrx": { "min": 199, "max": 500 },
+      "singlecare": { "min": 320, "max": 680 }
     },
     "dulaglutide": {
-      "note": "Trulicity - expensive GLP-1 agonist",
-      "costplus": { "min": 300, "max": 500 },
-      "walmart": { "min": 500, "max": 900 },
-      "goodrx": { "min": 350, "max": 800 },
-      "singlecare": { "min": 380, "max": 720 }
+      "note": "Trulicity - GLP-1 agonist",
+      "costplus": { "min": 280, "max": 480 },
+      "walmart": { "min": 480, "max": 880 },
+      "goodrx": { "min": 320, "max": 780 },
+      "singlecare": { "min": 360, "max": 700 }
     },
     "symbicort": {
-      "note": "Budesonide/Formoterol - brand name respiratory",
-      "costplus": { "min": 150, "max": 250 },
-      "walmart": { "min": 250, "max": 400 },
-      "goodrx": { "min": 180, "max": 380 },
-      "singlecare": { "min": 200, "max": 340 }
+      "note": "Budesonide/Formoterol - respiratory inhaler",
+      "costplus": { "min": 140, "max": 240 },
+      "walmart": { "min": 240, "max": 390 },
+      "goodrx": { "min": 170, "max": 370 },
+      "singlecare": { "min": 190, "max": 330 }
     },
     "advair": {
-      "note": "Fluticasone/Salmeterol - brand name respiratory",
-      "costplus": { "min": 150, "max": 250 },
-      "walmart": { "min": 250, "max": 400 },
-      "goodrx": { "min": 180, "max": 380 },
-      "singlecare": { "min": 200, "max": 340 }
+      "note": "Fluticasone/Salmeterol - respiratory inhaler, generics available",
+      "costplus": { "min": 80, "max": 160 },
+      "walmart": { "min": 150, "max": 300 },
+      "goodrx": { "min": 100, "max": 280 },
+      "singlecare": { "min": 120, "max": 260 }
     },
     "spiriva": {
-      "note": "Tiotropium - brand name COPD inhaler",
-      "costplus": { "min": 200, "max": 350 },
-      "walmart": { "min": 300, "max": 500 },
-      "goodrx": { "min": 220, "max": 480 },
-      "singlecare": { "min": 240, "max": 420 }
+      "note": "Tiotropium - COPD inhaler",
+      "costplus": { "min": 180, "max": 330 },
+      "walmart": { "min": 280, "max": 480 },
+      "goodrx": { "min": 200, "max": 460 },
+      "singlecare": { "min": 220, "max": 400 }
     },
     "lyrica": {
-      "note": "Pregabalin - brand name nerve pain medication",
-      "costplus": { "min": 20, "max": 50 },
-      "walmart": { "min": 25, "max": 70 },
-      "goodrx": { "min": 20, "max": 60 },
-      "singlecare": { "min": 25, "max": 65 }
+      "note": "Pregabalin - nerve pain medication, generic available at much lower cost",
+      "costplus": { "min": 15, "max": 40 },
+      "walmart": { "min": 20, "max": 60 },
+      "goodrx": { "min": 15, "max": 50 },
+      "singlecare": { "min": 18, "max": 55 }
     }
   },
-  "lastUpdated": "2025-12-25"
+  "lastUpdated": "2026-01-01"
 }
