@@ -2702,7 +2702,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
-    const [deductibleWarningOpen, setDeductibleWarningOpen] = useState(false);
     const [activeFilter, setActiveFilter] = useState('all');
 
     // Pharmacy availability - exclude medications not carried by each pharmacy
@@ -3099,35 +3098,23 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                             </section>
                         )}
 
-                        {/* Foundation Grants - Open Now */}
+                        {/* Foundations & Grants */}
                         {(activeFilter === 'all' || activeFilter === 'free') && (
                             <section className="border border-sky-200 rounded-xl p-5 bg-gradient-to-r from-sky-50/50 to-blue-50/50">
-                                <div className="flex items-start justify-between gap-4">
-                                    <div className="flex items-start gap-3">
-                                        <span className="w-3 h-3 rounded-full bg-sky-500 flex-shrink-0 mt-1.5"></span>
-                                        <div>
-                                            <h3 className="font-bold text-sky-800 flex items-center gap-2">
-                                                American Kidney Fund
-                                            </h3>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-700">
-                                                    <CheckCircle size={12} aria-hidden="true" />
-                                                    Open Now
-                                                </span>
-                                            </div>
-                                            <p className="text-sm text-slate-600 mt-2">
-                                                Grants for kidney patients • Income ≤400% FPL
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="text-right flex-shrink-0">
-                                        <div className="text-sky-700 font-bold text-lg">Up to $5,000</div>
-                                        <div className="text-xs text-slate-500">/year</div>
+                                <div className="flex items-start gap-3">
+                                    <span className="w-3 h-3 rounded-full bg-sky-500 flex-shrink-0 mt-1.5"></span>
+                                    <div className="flex-grow">
+                                        <h3 className="font-bold text-sky-800 flex items-center gap-2">
+                                            <TermTooltip term="foundation-grant" showIcon={false}>Foundations</TermTooltip> & Grants
+                                        </h3>
+                                        <p className="text-sm text-slate-600 mt-2">
+                                            These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.
+                                        </p>
+                                        <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">
+                                            Check FundFinder Tool <ExternalLink size={14} aria-hidden="true" />
+                                        </a>
                                     </div>
                                 </div>
-                                <a href="https://fundfinder.panfoundation.org/" target="_blank" rel="noreferrer" className="mt-4 w-full block text-center bg-white border-2 border-sky-500 text-sky-700 hover:bg-sky-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label="Learn more about foundation grants (opens in new tab)">
-                                    Learn More <ArrowRight size={14} aria-hidden="true" />
-                                </a>
                             </section>
                         )}
 
@@ -3153,45 +3140,35 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                             </section>
                         )}
 
-                        {/* Collapsible Deductible Warning */}
-                        <div className="border border-amber-300 rounded-xl overflow-hidden bg-amber-50">
-                            <button
-                                onClick={() => setDeductibleWarningOpen(!deductibleWarningOpen)}
-                                className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-amber-100 transition"
-                                aria-expanded={deductibleWarningOpen}
-                            >
-                                <div className="flex items-center gap-2">
-                                    <AlertTriangle size={18} className="text-amber-600" aria-hidden="true" />
-                                    <span className="font-bold text-amber-800 text-sm">Important: Discount Cards Don't Help Your Insurance</span>
+                        {/* Deductible Warning */}
+                        <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-lg p-4">
+                            <div className="flex items-start gap-3">
+                                <div className="bg-red-600 text-white p-2 rounded-full flex-shrink-0" aria-hidden="true">
+                                    <AlertTriangle size={16} />
                                 </div>
-                                <span className="text-amber-600 text-sm flex items-center gap-1">
-                                    {deductibleWarningOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                                    {deductibleWarningOpen ? 'Hide' : 'Learn Why'}
-                                </span>
-                            </button>
-                            {deductibleWarningOpen && (
-                                <div className="px-4 pb-4 border-t border-amber-200">
-                                    <p className="text-xs text-amber-800 mt-3 mb-3">
+                                <div>
+                                    <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
+                                    <p className="text-xs text-red-800 mb-2">
                                         <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
                                     </p>
-                                    <div className="grid grid-cols-2 gap-2 text-xs">
-                                        <div className="bg-white p-3 rounded-lg border border-emerald-200">
-                                            <div className="font-bold text-emerald-700 flex items-center gap-1">
-                                                <CheckCircle size={14} aria-hidden="true" />
-                                                Using Insurance
-                                            </div>
-                                            <div className="text-slate-600 mt-1">Pay more early → then $0 the rest of the year</div>
+                                    <p className="text-xs text-slate-700 mb-3">
+                                        If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                                        <div className="bg-white/80 p-2 rounded border border-emerald-200">
+                                            <div className="font-bold text-emerald-700">✅ Using Insurance</div>
+                                            <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
                                         </div>
-                                        <div className="bg-white p-3 rounded-lg border border-red-200">
-                                            <div className="font-bold text-red-700 flex items-center gap-1">
-                                                <X size={14} aria-hidden="true" />
-                                                Discount Cards & Cash
-                                            </div>
-                                            <div className="text-slate-600 mt-1">Pay less each time → but pay all year long</div>
+                                        <div className="bg-white/80 p-2 rounded border border-red-200">
+                                            <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
+                                            <div className="text-slate-600">Pay less each time → but pay all year long</div>
                                         </div>
                                     </div>
+                                    <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
+                                        Learn more <ArrowRight size={12} />
+                                    </Link>
                                 </div>
-                            )}
+                            </div>
                         </div>
 
                         {/* Footer Notes */}
@@ -3472,25 +3449,15 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 </div>
                             )}
 
-                            {/* Collapsible Deductible Warning */}
-                            <div className="border border-amber-300 rounded-xl overflow-hidden bg-amber-50 mt-4">
-                                <button
-                                    onClick={() => setDeductibleWarningOpen(!deductibleWarningOpen)}
-                                    className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-amber-100 transition"
-                                    aria-expanded={deductibleWarningOpen}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <AlertTriangle size={18} className="text-amber-600" aria-hidden="true" />
-                                        <span className="font-bold text-amber-800 text-sm">Important: Discount Cards Don't Help Your Insurance</span>
+                            {/* Deductible Trap with Discount Cards & Cash Warning */}
+                            <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-lg p-4 mt-4">
+                                <div className="flex items-start gap-3">
+                                    <div className="bg-red-600 text-white p-2 rounded-full flex-shrink-0" aria-hidden="true">
+                                        <AlertTriangle size={16} />
                                     </div>
-                                    <span className="text-amber-600 text-sm flex items-center gap-1">
-                                        {deductibleWarningOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                                        {deductibleWarningOpen ? 'Hide' : 'Learn Why'}
-                                    </span>
-                                </button>
-                                {deductibleWarningOpen && (
-                                    <div className="px-4 pb-4 border-t border-amber-200">
-                                        <p className="text-xs text-amber-800 mt-3 mb-2">
+                                    <div>
+                                        <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
+                                        <p className="text-xs text-red-800 mb-2">
                                             <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
@@ -3502,26 +3469,20 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
-                                            <div className="bg-white p-3 rounded-lg border border-emerald-200">
-                                                <div className="font-bold text-emerald-700 flex items-center gap-1">
-                                                    <CheckCircle size={14} aria-hidden="true" />
-                                                    Using Insurance
-                                                </div>
-                                                <div className="text-slate-600 mt-1">Pay more early → then $0 the rest of the year</div>
+                                            <div className="bg-white/80 p-2 rounded border border-emerald-200">
+                                                <div className="font-bold text-emerald-700">✅ Using Insurance</div>
+                                                <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
                                             </div>
-                                            <div className="bg-white p-3 rounded-lg border border-red-200">
-                                                <div className="font-bold text-red-700 flex items-center gap-1">
-                                                    <X size={14} aria-hidden="true" />
-                                                    Discount Cards & Cash
-                                                </div>
-                                                <div className="text-slate-600 mt-1">Pay less each time → but pay all year long</div>
+                                            <div className="bg-white/80 p-2 rounded border border-red-200">
+                                                <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
+                                                <div className="text-slate-600">Pay less each time → but pay all year long</div>
                                             </div>
                                         </div>
-                                        <Link to="/education" className="text-amber-700 hover:text-amber-800 font-bold text-xs inline-flex items-center gap-1">
+                                        <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
                                             Learn more <ArrowRight size={12} />
                                         </Link>
                                     </div>
-                                )}
+                                </div>
                             </div>
                         </div>
                     </div>
