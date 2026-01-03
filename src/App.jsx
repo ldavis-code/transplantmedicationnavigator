@@ -166,7 +166,7 @@ const getAssistantResponse = (userMessage, context = {}) => {
     return "I'm here to help! Here are some things I can assist with:\n\n• **Insurance questions** - Medicare, Medicaid, commercial coverage\n• **Patient Assistance Programs (PAPs)** - How to get free medication\n• **Copay foundations** - Organizations that help pay for medications\n• **Application help** - Step-by-step guidance\n• **Medication information** - Pricing and assistance programs\n\nTry asking about any of these topics, or use the Quick Actions below!";
 };
 
-// Smart medication suggestions based on context
+// Smart medication suggestions based on organ-specific medication guides
 const getMedicationSuggestions = (answers) => {
     const suggestions = [];
 
@@ -175,69 +175,41 @@ const getMedicationSuggestions = (answers) => {
     }
 
     const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
-    const isKidney = answers.organs.includes(OrganType.KIDNEY);
-    const isLiver = answers.organs.includes(OrganType.LIVER);
-    const isHeart = answers.organs.includes(OrganType.HEART);
-    const isLung = answers.organs.includes(OrganType.LUNG);
 
-    // Pre-transplant suggestions
-    if (isPreTransplant) {
-        if (isKidney) {
-            suggestions.push({
-                category: 'ESRD Support',
-                medications: ['procrit', 'renvela', 'sensipar'],
-                reason: 'Common for kidney patients on dialysis'
-            });
+    // Use the curated organ medication data
+    const medicationData = isPreTransplant ? PRE_TRANSPLANT_MEDICATIONS : ORGAN_MEDICATIONS;
+
+    // Group medications by class for each selected organ
+    const classMedications = {};
+
+    for (const organ of answers.organs) {
+        const organData = medicationData[organ];
+        if (!organData || !organData.medications) continue;
+
+        for (const med of organData.medications) {
+            const classKey = med.class || 'Other';
+            if (!classMedications[classKey]) {
+                classMedications[classKey] = {
+                    category: classKey,
+                    medications: [],
+                    reason: isPreTransplant
+                        ? `Common ${classKey.toLowerCase()} for ${organ.toLowerCase()} patients awaiting transplant`
+                        : `Common ${classKey.toLowerCase()} for ${organ.toLowerCase()} transplant recipients`
+                };
+            }
+            // Add medication if not already in list
+            if (!classMedications[classKey].medications.includes(med.id)) {
+                classMedications[classKey].medications.push(med.id);
+            }
         }
-        if (isLiver) {
-            suggestions.push({
-                category: 'Liver Support',
-                medications: ['xifaxan', 'lactulose'],
-                reason: 'Help manage liver disease symptoms'
-            });
-        }
-        if (isHeart || isLung) {
-            suggestions.push({
-                category: 'Pulmonary Hypertension',
-                medications: ['revatio', 'tracleer'],
-                reason: 'Common for heart/lung candidates'
-            });
-        }
-        // Preview of post-transplant medications for pre-transplant users
-        suggestions.push({
-            category: 'After Transplant (Preview)',
-            medications: ['tacrolimus', 'mycophenolate', 'prednisone'],
-            reason: 'Core anti-rejection medications you\'ll likely need after transplant'
-        });
     }
 
-    // Post-transplant suggestions
-    if (!isPreTransplant) {
-        // Universal post-transplant
-        suggestions.push({
-            category: 'Immunosuppressants',
-            medications: ['tacrolimus', 'mycophenolate', 'prednisone'],
-            reason: 'Core anti-rejection medications for all transplants'
-        });
-
-        suggestions.push({
-            category: 'Anti-viral Prophylaxis',
-            medications: ['valcyte'],
-            reason: 'Prevent CMV and other viral infections'
-        });
-
-        suggestions.push({
-            category: 'Antibiotic Prophylaxis',
-            medications: ['bactrim'],
-            reason: 'Prevent PCP (pneumocystis) infection'
-        });
-
-        if (isLiver) {
-            suggestions.push({
-                category: 'Hepatitis Management',
-                medications: ['baraclude', 'vemlidy'],
-                reason: 'May be needed for liver transplant patients'
-            });
+    // Convert to array and limit to 3 medications per category
+    for (const classKey of Object.keys(classMedications)) {
+        const suggestion = classMedications[classKey];
+        suggestion.medications = suggestion.medications.slice(0, 3);
+        if (suggestion.medications.length > 0) {
+            suggestions.push(suggestion);
         }
     }
 
@@ -1205,72 +1177,16 @@ const PreTransplantMedicationGuide = ({ answers }) => {
     );
 };
 
-// Smart Suggestions Component for Medication Selection (AI-Powered)
+// Smart Suggestions Component for Medication Selection
+// Uses curated organ-specific medication data from ORGAN_MEDICATIONS and PRE_TRANSPLANT_MEDICATIONS
 const MedicationSuggestions = ({ answers, onSelectMedication }) => {
     const MEDICATIONS = useMedicationsList();
-    const [suggestions, setSuggestions] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const suggestions = getMedicationSuggestions(answers);
     const [showSuggestions, setShowSuggestions] = useState(true);
-    const [source, setSource] = useState('local');
-
-    // Fetch AI-powered suggestions on mount or when organs/status change
-    useEffect(() => {
-        const fetchAISuggestions = async () => {
-            if (!answers.organs || answers.organs.length === 0) {
-                setSuggestions([]);
-                setIsLoading(false);
-                return;
-            }
-
-            setIsLoading(true);
-
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'getMedicationSuggestions',
-                        organs: answers.organs,
-                        transplant_stage: answers.status === TransplantStatus.PRE_EVAL ? 'pre' : 'post',
-                        insurance_type: answers.insurance
-                    })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.suggestions && data.suggestions.length > 0) {
-                        setSuggestions(data.suggestions);
-                        setSource(data.source || 'ai');
-                        setIsLoading(false);
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.log('AI suggestions unavailable, using fallback:', error);
-            }
-
-            // Fallback to local static suggestions
-            const localSuggestions = getMedicationSuggestions(answers);
-            setSuggestions(localSuggestions);
-            setSource('local');
-            setIsLoading(false);
-        };
-
-        fetchAISuggestions();
-    }, [answers.organs, answers.status, answers.insurance]);
-
-    if (isLoading) {
-        return (
-            <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
-                <div className="flex items-center gap-2">
-                    <Loader2 size={20} className="text-indigo-600 animate-spin" />
-                    <span className="text-indigo-900 text-sm">Loading smart suggestions...</span>
-                </div>
-            </div>
-        );
-    }
 
     if (suggestions.length === 0) return null;
+
+    const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
 
     return (
         <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
@@ -1278,8 +1194,7 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
                 <div className="flex items-center gap-2">
                     <Zap size={20} className="text-indigo-600" />
                     <h3 className="font-bold text-indigo-900">
-                        Smart Suggestions Based on Your Profile
-                        {source === 'ai' && <span className="ml-2 text-xs font-normal text-indigo-500">(AI-powered)</span>}
+                        {isPreTransplant ? 'Common Pre-Transplant Medications' : 'Common Post-Transplant Medications'}
                     </h3>
                 </div>
                 <button
@@ -1289,6 +1204,10 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
                     {showSuggestions ? 'Hide' : 'Show'}
                 </button>
             </div>
+
+            <p className="text-xs text-slate-600 mb-3">
+                Based on your {answers.organs.join(', ')} transplant. Click to add to your list.
+            </p>
 
             {showSuggestions && (
                 <div className="space-y-3">
