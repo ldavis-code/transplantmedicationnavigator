@@ -1,6 +1,6 @@
 // Last updated date - Update this when content changes
 // Format: "Month Day, Year" (e.g., "November 24, 2025")
-export const LAST_UPDATED = "December 27, 2025";
+export const LAST_UPDATED = "January 3, 2026";
 
 // User roles
 export const Role = {
