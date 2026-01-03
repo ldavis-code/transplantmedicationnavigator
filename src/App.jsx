@@ -919,7 +919,7 @@ const organIcons = {
 };
 
 // Organ-Specific Medication Guide Component
-const OrganMedicationGuide = ({ answers }) => {
+const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
     const [expandedOrgan, setExpandedOrgan] = useState(null);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
 
@@ -994,10 +994,13 @@ const OrganMedicationGuide = ({ answers }) => {
                                         return (
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <div>
-                                                        <span className="font-bold text-slate-900">{med.brand}</span>
+                                                    <button
+                                                        onClick={() => onMedicationClick && onMedicationClick(med.brand)}
+                                                        className="text-left hover:text-emerald-700 transition-colors group"
+                                                    >
+                                                        <span className="font-bold text-slate-900 group-hover:text-emerald-700 underline decoration-dotted underline-offset-2">{med.brand}</span>
                                                         <span className="text-slate-500 ml-1">({med.name})</span>
-                                                    </div>
+                                                    </button>
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
@@ -1015,7 +1018,7 @@ const OrganMedicationGuide = ({ answers }) => {
 };
 
 // Pre-Transplant Medication Guide Component
-const PreTransplantMedicationGuide = ({ answers }) => {
+const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
     const [expandedOrgan, setExpandedOrgan] = useState(null);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
 
@@ -1095,7 +1098,19 @@ const PreTransplantMedicationGuide = ({ answers }) => {
                                                         <div className="text-xs text-slate-500 mt-0.5">{med.class}</div>
                                                     </div>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600">{med.name}</td>
+                                                <td className="py-3 px-3">
+                                                    {med.name.split(', ').map((example, idx) => (
+                                                        <span key={idx}>
+                                                            {idx > 0 && ', '}
+                                                            <button
+                                                                onClick={() => onMedicationClick && onMedicationClick(example.trim())}
+                                                                className="text-slate-600 hover:text-blue-700 underline decoration-dotted underline-offset-2 transition-colors"
+                                                            >
+                                                                {example.trim()}
+                                                            </button>
+                                                        </span>
+                                                    ))}
+                                                </td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
                                             </tr>
                                         );
@@ -1562,9 +1577,9 @@ const Wizard = () => {
 
                 {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
                 {isPreTransplant ? (
-                    <PreTransplantMedicationGuide answers={answers} />
+                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
                 ) : (
-                    <OrganMedicationGuide answers={answers} />
+                    <OrganMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
                 )}
 
                 {/* Medication Search Box */}
