@@ -515,6 +515,11 @@ const Layout = ({ children }) => {
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
                     </p>
+                    <div className="mt-4 flex justify-center gap-4 text-sm">
+                        <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">Terms of Service</Link>
+                        <span className="text-slate-600">|</span>
+                        <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
+                    </div>
                 </div>
             </footer>
 
