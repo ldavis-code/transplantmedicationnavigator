@@ -1109,66 +1109,6 @@ const PreTransplantMedicationGuide = ({ answers }) => {
     );
 };
 
-// Smart Suggestions Component for Medication Selection
-// Uses curated organ-specific medication data from ORGAN_MEDICATIONS and PRE_TRANSPLANT_MEDICATIONS
-const MedicationSuggestions = ({ answers, onSelectMedication }) => {
-    const MEDICATIONS = useMedicationsList();
-    const suggestions = getMedicationSuggestions(answers);
-    const [showSuggestions, setShowSuggestions] = useState(true);
-
-    if (suggestions.length === 0 || !suggestions[0].medications.length) return null;
-
-    const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
-    const medicationIds = suggestions[0].medications;
-
-    return (
-        <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
-            <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <Zap size={20} className="text-indigo-600" />
-                    <h3 className="font-bold text-indigo-900">
-                        {isPreTransplant ? 'Common Pre-Transplant Medications' : 'Common Post-Transplant Medications'}
-                    </h3>
-                </div>
-                <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="text-indigo-600 hover:text-indigo-700 text-xs"
-                >
-                    {showSuggestions ? 'Hide' : 'Show'}
-                </button>
-            </div>
-
-            <p className="text-xs text-slate-600 mb-3">
-                Based on your {answers.organs.join(', ')} transplant. Click to add to your list.
-            </p>
-
-            {showSuggestions && (
-                <div className="flex flex-wrap gap-2">
-                    {medicationIds.map(medId => {
-                        const med = MEDICATIONS.find(m => m.id === medId);
-                        if (!med) return null;
-                        const isSelected = answers.medications.includes(medId);
-                        return (
-                            <button
-                                key={medId}
-                                onClick={() => onSelectMedication(medId)}
-                                className={`text-sm px-3 py-1.5 rounded-full border transition ${
-                                    isSelected
-                                        ? 'bg-indigo-600 text-white border-indigo-600'
-                                        : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
-                                }`}
-                            >
-                                {isSelected && <Check size={12} className="inline mr-1" />}
-                                {med.brandName.split('/')[0]}
-                            </button>
-                        );
-                    })}
-                </div>
-            )}
-        </div>
-    );
-};
-
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
@@ -1708,11 +1648,6 @@ const Wizard = () => {
                         </div>
                     </div>
                 )}
-
-                <MedicationSuggestions
-                    answers={answers}
-                    onSelectMedication={(medId) => handleMultiSelect('medications', medId)}
-                />
 
                 {/* Important Medical Information */}
                 <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
@@ -2521,16 +2456,16 @@ const MedicationSearch = () => {
 
             {hasItems && showSavings && (
                 <>
-                {/* How to use medication cards explanation */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4 no-print">
+                {/* Your Options - medication cards explanation */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4 no-print">
                     <div className="flex items-start gap-3">
-                        <Info className="text-blue-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <Info className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <div>
-                            <p className="font-bold text-blue-800 mb-1">How to use these cards</p>
-                            <p className="text-blue-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
-                            <ul className="text-blue-700 text-sm mt-2 ml-4 list-disc space-y-1">
+                            <p className="font-bold text-emerald-800 mb-1">Your Options</p>
+                            <p className="text-emerald-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
+                            <ul className="text-emerald-700 text-sm mt-2 ml-4 list-disc space-y-1">
                                 <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
-                                <li><strong>Price</strong> - <span className="text-amber-700">Prices are ESTIMATES and vary by the number of pills prescribed or dosage</span></li>
+                                <li><strong>Price</strong> - Prices are ESTIMATES and vary by the number of pills prescribed or dosage</li>
                                 <li><strong>Overview</strong> - Basic info about the medication</li>
                                 <li><strong>Print</strong> - Print-friendly summary</li>
                             </ul>
