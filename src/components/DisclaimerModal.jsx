@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { AlertTriangle, Phone } from 'lucide-react';
 
 const STORAGE_KEY = 'disclaimer_accepted';
@@ -8,24 +8,89 @@ const STORAGE_KEY = 'disclaimer_accepted';
  *
  * Shows a medical disclaimer on first visit that must be acknowledged
  * before using the site. Stores acceptance in localStorage.
+ *
+ * Accessibility features:
+ * - Focus trap to keep keyboard focus within modal
+ * - Auto-focus on accept button
+ * - ARIA attributes for screen readers
+ * - Escape key does NOT close (intentional - must explicitly accept)
  */
 const DisclaimerModal = () => {
   const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef(null);
+  const acceptButtonRef = useRef(null);
+  const previousActiveElement = useRef(null);
 
   useEffect(() => {
     // Check if user has already accepted the disclaimer
     const hasAccepted = localStorage.getItem(STORAGE_KEY);
     if (!hasAccepted) {
+      // Store the previously focused element
+      previousActiveElement.current = document.activeElement;
       setShowModal(true);
       // Prevent scrolling when modal is open
       document.body.style.overflow = 'hidden';
     }
   }, []);
 
+  // Focus the accept button when modal opens
+  useEffect(() => {
+    if (showModal && acceptButtonRef.current) {
+      // Small delay for animation
+      setTimeout(() => {
+        acceptButtonRef.current?.focus();
+      }, 100);
+    }
+  }, [showModal]);
+
+  // Focus trap handler
+  const handleKeyDown = useCallback((e) => {
+    if (!showModal || !modalRef.current) return;
+
+    // Focus trap - keep focus within modal
+    if (e.key === 'Tab') {
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+
+      if (focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+
+    // Note: We intentionally do NOT allow Escape to close this modal
+    // User must explicitly click "I Agree" to acknowledge the disclaimer
+  }, [showModal]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
   const handleAccept = () => {
     localStorage.setItem(STORAGE_KEY, 'true');
     setShowModal(false);
     document.body.style.overflow = '';
+
+    // Restore focus to previously focused element
+    if (previousActiveElement.current) {
+      previousActiveElement.current.focus();
+    }
   };
 
   if (!showModal) return null;
@@ -38,7 +103,10 @@ const DisclaimerModal = () => {
       aria-labelledby="disclaimer-title"
       aria-describedby="disclaimer-description"
     >
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200">
+      <div
+        ref={modalRef}
+        className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200"
+      >
         {/* Icon */}
         <div className="flex justify-center mb-6">
           <div className="bg-amber-100 p-4 rounded-full">
@@ -75,9 +143,9 @@ const DisclaimerModal = () => {
 
         {/* Accept Button */}
         <button
+          ref={acceptButtonRef}
           onClick={handleAccept}
-          className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
-          autoFocus
+          className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]"
         >
           I Agree
         </button>

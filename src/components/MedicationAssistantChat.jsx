@@ -71,6 +71,9 @@ const MedicationAssistantChat = () => {
   // Free text input
   const [inputValue, setInputValue] = useState('');
 
+  // Popup blocked warning state (replaces browser alert)
+  const [popupBlockedWarning, setPopupBlockedWarning] = useState(false);
+
   // Refs
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -463,7 +466,9 @@ const MedicationAssistantChat = () => {
 
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('Please allow popups to print your action plan');
+      setPopupBlockedWarning(true);
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => setPopupBlockedWarning(false), 5000);
       return;
     }
 
@@ -1421,11 +1426,32 @@ const MedicationAssistantChat = () => {
           <div className="border-t border-slate-200 p-4 bg-white rounded-b-2xl">
             {(isChatComplete || (mode === 'quiz' && (quizProgress.isComplete || hasSeenResults))) ? (
               <div className="space-y-2">
+                {/* Popup blocked warning - accessible alternative to browser alert */}
+                {popupBlockedWarning && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm flex items-start gap-2"
+                  >
+                    <AlertCircle size={18} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <div>
+                      <p className="font-medium">Popup blocked</p>
+                      <p className="text-amber-700">Please allow popups in your browser settings to print your action plan.</p>
+                    </div>
+                    <button
+                      onClick={() => setPopupBlockedWarning(false)}
+                      className="ml-auto p-1 hover:bg-amber-100 rounded min-w-[32px] min-h-[32px] flex items-center justify-center"
+                      aria-label="Dismiss warning"
+                    >
+                      <X size={16} aria-hidden="true" />
+                    </button>
+                  </div>
+                )}
                 <button
                   onClick={printActionPlan}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition min-h-[44px]"
                 >
-                  <Printer size={18} />
+                  <Printer size={18} aria-hidden="true" />
                   Print Action Plan
                 </button>
                 <button

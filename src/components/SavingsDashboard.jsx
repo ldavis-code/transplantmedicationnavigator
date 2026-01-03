@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, Calendar, Pill, DollarSign, Trash2, RefreshCw, Share2, Award } from 'lucide-react';
 import { fetchSavingsSummary, fetchSavingsEntries, deleteSavingsEntry, programTypeLabels } from '../lib/savingsApi';
+import { useConfirmDialog } from './ConfirmDialog';
 
 export default function SavingsDashboard({ refreshTrigger }) {
     const [summary, setSummary] = useState(null);
@@ -8,6 +9,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
     const [isLoading, setIsLoading] = useState(true);
     const [showEntries, setShowEntries] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null);
+    const { showConfirm, showAlert, DialogComponent } = useConfirmDialog();
 
     useEffect(() => {
         loadData();
@@ -30,20 +32,32 @@ export default function SavingsDashboard({ refreshTrigger }) {
     }
 
     async function handleDelete(entryId) {
-        if (!confirm('Delete this savings entry?')) return;
+        const confirmed = await showConfirm({
+            title: 'Delete Entry',
+            message: 'Are you sure you want to delete this savings entry? This cannot be undone.',
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'confirm'
+        });
+        if (!confirmed) return;
+
         setDeleteLoading(entryId);
         try {
             await deleteSavingsEntry(entryId);
             setEntries(prev => prev.filter(e => e.id !== entryId));
             loadData(); // Refresh totals
         } catch (error) {
-            alert('Failed to delete entry');
+            await showAlert({
+                title: 'Error',
+                message: 'Failed to delete entry. Please try again.',
+                type: 'error'
+            });
         } finally {
             setDeleteLoading(null);
         }
     }
 
-    function handleShare() {
+    async function handleShare() {
         const total = summary?.summary?.total_saved || 0;
         const text = `I've saved $${parseFloat(total).toFixed(2)} on my medications with Transplant Med Navigator! Track your savings too: transplantmednavigator.com`;
 
@@ -51,7 +65,12 @@ export default function SavingsDashboard({ refreshTrigger }) {
             navigator.share({ text });
         } else {
             navigator.clipboard.writeText(text);
-            alert('Copied to clipboard!');
+            await showAlert({
+                title: 'Copied!',
+                message: 'Your savings summary has been copied to clipboard.',
+                type: 'success',
+                confirmText: 'OK'
+            });
         }
     }
 
@@ -82,7 +101,9 @@ export default function SavingsDashboard({ refreshTrigger }) {
     const nextMilestone = milestones.find(m => totalSaved < m.amount);
 
     return (
-        <div className="space-y-6">
+        <>
+            {DialogComponent}
+            <div className="space-y-6">
             {/* Main Stats Card */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200 p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -278,6 +299,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                     </p>
                 </div>
             )}
-        </div>
+            </div>
+        </>
     );
 }

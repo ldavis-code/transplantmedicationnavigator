@@ -20,6 +20,7 @@ const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
 const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
 const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx'));
 const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
+const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 
 // Reporting admin pages (lazy loaded)
@@ -523,10 +524,12 @@ const Layout = ({ children }) => {
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
                     </p>
-                    <div className="mt-4 flex justify-center gap-4 text-sm">
+                    <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
                         <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">Terms of Service</Link>
-                        <span className="text-slate-600">|</span>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility</Link>
                     </div>
                 </div>
             </footer>
@@ -2567,11 +2570,14 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     const [location, setLocation] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [submitting, setSubmitting] = useState(false);
+    const [formError, setFormError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setFormError('');
+
         if (!price || parseFloat(price) <= 0) {
-            alert('Please enter a valid price');
+            setFormError('Please enter a valid price greater than $0');
             return;
         }
 
@@ -2583,12 +2589,20 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
             setPrice('');
             setLocation('');
             setDate(new Date().toISOString().split('T')[0]);
+            setFormError('');
             onClose();
         } else {
-            alert('Error saving price report. Please try again.');
+            setFormError('Error saving price report. Please try again.');
         }
         setSubmitting(false);
     };
+
+    // Clear error when modal closes
+    useEffect(() => {
+        if (!isOpen) {
+            setFormError('');
+        }
+    }, [isOpen]);
 
     // Handle Escape key to close modal
     useEffect(() => {
@@ -2628,7 +2642,19 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Error message for accessibility */}
+                {formError && (
+                    <div
+                        role="alert"
+                        aria-live="assertive"
+                        className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm flex items-center gap-2"
+                    >
+                        <AlertTriangle size={16} className="flex-shrink-0" aria-hidden="true" />
+                        {formError}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4" aria-describedby={formError ? "price-form-error" : undefined}>
                     <div>
                         <label htmlFor="price" className="block text-sm font-medium text-slate-700 mb-1">
                             Price Paid (USD) <span className="text-red-500">*</span>
@@ -5296,6 +5322,7 @@ const MainSiteRoutes = () => (
                 <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />
+                <Route path="/accessibility" element={<LazyAccessibility />} />
                 <Route path="/account" element={<LazyAccount />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />

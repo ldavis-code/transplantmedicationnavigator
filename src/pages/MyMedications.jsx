@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, AlertTriangle, Download, Upload, TrendingUp } from 'lucide-react';
+import { useConfirmDialog } from '../components/ConfirmDialog';
 
 const STORAGE_KEY = 'tmn_my_medications';
 
@@ -20,6 +21,7 @@ export default function MyMedications() {
     renewal: '',
     renewalType: ''
   });
+  const { showConfirm, DialogComponent } = useConfirmDialog();
 
   const renewalTypeLabels = {
     'calendar_year': 'Calendar year',
@@ -74,8 +76,15 @@ export default function MyMedications() {
     setTimeout(() => setMedMessage({ text: '', type: '' }), 3000);
   }
 
-  function handleDeleteMedication(id) {
-    if (!confirm('Delete this medication?')) return;
+  async function handleDeleteMedication(id) {
+    const confirmed = await showConfirm({
+      title: 'Delete Medication',
+      message: 'Are you sure you want to delete this medication from your list?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      type: 'confirm'
+    });
+    if (!confirmed) return;
     setMedications(prev => prev.filter(med => med.id !== id));
   }
 
@@ -118,11 +127,13 @@ export default function MyMedications() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <>
+      {DialogComponent}
+      <div className="max-w-2xl mx-auto">
       {/* Privacy Notice */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="alert">
         <div className="flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <div>
             <p className="text-amber-800 font-medium">Your data stays on this device</p>
             <p className="text-amber-700 text-sm mt-1">
@@ -180,44 +191,90 @@ export default function MyMedications() {
 
       {/* Add Medication Form */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
-        <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-          <Plus className="w-5 h-5 text-emerald-600" />
+        <h2 id="add-medication-heading" className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+          <Plus className="w-5 h-5 text-emerald-600" aria-hidden="true" />
           Add a Medication
         </h2>
-        <form onSubmit={handleAddMedication} className="space-y-4">
+
+        {/* Form status message for screen readers */}
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          id="form-status"
+          className={medMessage.text ? `mb-4 p-3 rounded-lg text-center ${medMessage.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}` : 'sr-only'}
+        >
+          {medMessage.text || 'Form ready'}
+        </div>
+
+        <form onSubmit={handleAddMedication} className="space-y-4" aria-labelledby="add-medication-heading" aria-describedby="form-status">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              value={newMed.name}
-              onChange={(e) => setNewMed({ ...newMed, name: e.target.value })}
-              placeholder="Medication name (e.g., Tacrolimus)"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            />
-            <input
-              type="text"
-              value={newMed.brand}
-              onChange={(e) => setNewMed({ ...newMed, brand: e.target.value })}
-              placeholder="Brand name (e.g., Prograf)"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            />
-            <input
-              type="text"
-              value={newMed.dosage}
-              onChange={(e) => setNewMed({ ...newMed, dosage: e.target.value })}
-              placeholder="Dosage (e.g., 1mg twice daily)"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            />
-            <input
-              type="number"
-              step="0.01"
-              value={newMed.cost}
-              onChange={(e) => setNewMed({ ...newMed, cost: e.target.value })}
-              placeholder="Monthly cost ($)"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            />
             <div>
-              <label className="block text-sm text-slate-600 mb-1">Renewal date (optional)</label>
+              <label htmlFor="med-name" className="block text-sm font-medium text-slate-700 mb-1">
+                Medication name <span className="text-red-500" aria-hidden="true">*</span>
+                <span className="sr-only">(required)</span>
+              </label>
               <input
+                id="med-name"
+                type="text"
+                value={newMed.name}
+                onChange={(e) => setNewMed({ ...newMed, name: e.target.value })}
+                placeholder="e.g., Tacrolimus"
+                aria-required="true"
+                aria-describedby="med-name-hint"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+              <p id="med-name-hint" className="sr-only">Enter the generic or brand name of your medication</p>
+            </div>
+            <div>
+              <label htmlFor="med-brand" className="block text-sm font-medium text-slate-700 mb-1">
+                Brand name <span className="text-slate-400">(optional)</span>
+              </label>
+              <input
+                id="med-brand"
+                type="text"
+                value={newMed.brand}
+                onChange={(e) => setNewMed({ ...newMed, brand: e.target.value })}
+                placeholder="e.g., Prograf"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="med-dosage" className="block text-sm font-medium text-slate-700 mb-1">
+                Dosage <span className="text-slate-400">(optional)</span>
+              </label>
+              <input
+                id="med-dosage"
+                type="text"
+                value={newMed.dosage}
+                onChange={(e) => setNewMed({ ...newMed, dosage: e.target.value })}
+                placeholder="e.g., 1mg twice daily"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="med-cost" className="block text-sm font-medium text-slate-700 mb-1">
+                Monthly cost ($) <span className="text-slate-400">(optional)</span>
+              </label>
+              <input
+                id="med-cost"
+                type="number"
+                step="0.01"
+                min="0"
+                value={newMed.cost}
+                onChange={(e) => setNewMed({ ...newMed, cost: e.target.value })}
+                placeholder="e.g., 150.00"
+                aria-describedby="med-cost-hint"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+              <p id="med-cost-hint" className="sr-only">Enter the amount in US dollars</p>
+            </div>
+            <div>
+              <label htmlFor="med-renewal" className="block text-sm font-medium text-slate-700 mb-1">
+                Renewal date <span className="text-slate-400">(optional)</span>
+              </label>
+              <input
+                id="med-renewal"
                 type="date"
                 value={newMed.renewal}
                 onChange={(e) => setNewMed({ ...newMed, renewal: e.target.value })}
@@ -225,8 +282,11 @@ export default function MyMedications() {
               />
             </div>
             <div>
-              <label className="block text-sm text-slate-600 mb-1">Renewal type (optional)</label>
+              <label htmlFor="med-renewal-type" className="block text-sm font-medium text-slate-700 mb-1">
+                Renewal type <span className="text-slate-400">(optional)</span>
+              </label>
               <select
+                id="med-renewal-type"
                 value={newMed.renewalType}
                 onChange={(e) => setNewMed({ ...newMed, renewalType: e.target.value })}
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
@@ -240,17 +300,12 @@ export default function MyMedications() {
           </div>
           <button
             type="submit"
-            className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 flex items-center justify-center gap-2"
+            className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 flex items-center justify-center gap-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-5 h-5" aria-hidden="true" />
             Save Medication
           </button>
         </form>
-        {medMessage.text && (
-          <p className={`mt-4 text-center ${medMessage.type === 'error' ? 'text-red-600' : 'text-green-600'}`}>
-            {medMessage.text}
-          </p>
-        )}
       </div>
 
       {/* Medications List */}
@@ -275,10 +330,10 @@ export default function MyMedications() {
                   </div>
                   <button
                     onClick={() => handleDeleteMedication(med.id)}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition"
-                    aria-label="Delete medication"
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                    aria-label={`Delete ${med.medication_name}`}
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <Trash2 className="w-5 h-5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -286,6 +341,7 @@ export default function MyMedications() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
