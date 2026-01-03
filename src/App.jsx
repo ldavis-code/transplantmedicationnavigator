@@ -1667,10 +1667,7 @@ const Wizard = () => {
                         <div className="text-sm text-amber-800">
                             <p className="font-bold mb-2">Important Medical Information</p>
                             <p>
-                                Post-transplant medication regimens are complex and require careful management by a specialized transplant team.
-                                Lifelong adherence to these medications is crucial for the long-term success of the transplant and the health of the patient.
-                                Patients should always consult their transplant team before making any changes to their medication regimen or taking any new medications,
-                                including over-the-counter drugs and supplements.
+                                Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
                             </p>
                         </div>
                     </div>
