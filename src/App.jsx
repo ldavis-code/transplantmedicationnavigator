@@ -786,65 +786,6 @@ const Home = () => {
     );
 };
 
-// Contextual Help Component for Wizard
-const WizardHelp = ({ step, answers }) => {
-    const helpContent = {
-        1: {
-            title: "Choosing Your Role",
-            content: "Select the option that best describes you. This helps us tailor the guidance:\n\n• **Patient**: You're receiving or awaiting a transplant\n• **Carepartner**: You're helping a loved one\n• **Social Worker**: You're assisting patients professionally\n\nAll roles receive the same resources, but the language may be adjusted."
-        },
-        2: {
-            title: "Transplant Status",
-            content: "Your transplant stage determines which medications are relevant:\n\n• **Pre-transplant**: Shows medications for candidates (dialysis support, heart failure meds, etc.)\n• **Post-transplant (1st year)**: Focus on immunosuppressants and anti-infection medications\n• **Post-transplant (1+ years)**: Long-term maintenance medications\n\nDifferent assistance programs may be available at each stage."
-        },
-        3: {
-            title: "Selecting Your Organ",
-            content: "Choose all organs that apply to your situation:\n\n• **Single organ**: We'll show medications specific to that organ\n• **Multi-organ**: Select all relevant organs\n• **Other/Not listed**: Shows general transplant medications\n\nThis filters the medication list to show only relevant options."
-        },
-        4: null,
-        5: {
-            title: "Selecting Medications",
-            content: "Choose all medications you currently take or expect to take:\n\n• Don't worry if you're not sure - you can always come back\n• Selecting medications gives you direct links to manufacturer programs\n• You can search for specific meds using the Search Meds tool\n\n💡 If you're pre-transplant, the list shows supportive medications. Post-transplant shows immunosuppressants and prophylaxis."
-        },
-        6: {
-            title: "Specialty Pharmacy Check",
-            content: "**Important:** Your insurance may require you to use a specific specialty pharmacy for transplant medications.\n\n**If you use the wrong pharmacy:**\n• Your insurance won't pay\n• You pay full price (over $1,000)\n\n**What to do:** Call your insurance and ask: 'Which pharmacy must I use for my transplant medicine?'\n\n**Common specialty pharmacies:** Accredo, CVS Specialty, Walgreens Specialty, Optum"
-        },
-        7: {
-            title: "Financial Status",
-            content: "**Be honest - this helps us prioritize the best help for you:**\n\n• **Manageable**: We'll show copay savings tips\n• **Challenging**: Focus on PAPs and foundations\n• **Unaffordable**: Urgent PAP applications recommended\n• **Crisis**: Immediate assistance pathways\n\nYour answer is NEVER stored or shared. Many people qualify for help even if costs seem manageable now."
-        }
-    };
-
-    const help = helpContent[step];
-    if (!help) return null;
-
-    // Parse markdown-style bold text
-    const parseContent = (text) => {
-        const parts = text.split(/(\*\*[^*]+\*\*)/g);
-        return parts.map((part, i) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return <strong key={i}>{part.slice(2, -2)}</strong>;
-            }
-            return part;
-        });
-    };
-
-    return (
-        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-md p-4">
-            <div className="flex items-start gap-3">
-                <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-                    <Lightbulb size={20} className="text-blue-600" />
-                </div>
-                <div>
-                    <h3 className="font-bold text-blue-900 mb-2">{help.title}</h3>
-                    <p className="text-sm text-blue-800 whitespace-pre-wrap leading-relaxed">{parseContent(help.content)}</p>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 // Organ-specific medication data
 const ORGAN_MEDICATIONS = {
     Heart: {
@@ -1392,9 +1333,13 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <h1 className="text-2xl font-bold mb-2">About You</h1>
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-emerald-100 p-2 rounded-lg">
+                        <Users size={24} className="text-emerald-600" />
+                    </div>
+                    <h1 className="text-2xl font-bold">About You</h1>
+                </div>
                 <p className="text-slate-600 mb-6">Let's start with some basics to personalize your experience.</p>
-                <WizardHelp step={step} answers={answers} />
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">
@@ -1465,9 +1410,13 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">Your Transplant</h1>
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-rose-100 p-2 rounded-lg">
+                        <Heart size={24} className="text-rose-600" />
+                    </div>
+                    <h1 className="text-2xl font-bold">Your Transplant</h1>
+                </div>
                 <p className="text-slate-600 mb-6">Select your organ type(s) - choose all that apply.</p>
-                <WizardHelp step={step} answers={answers} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label="Select organ types">
                     {Object.values(OrganType).map((o) => (
                         <button
@@ -1541,12 +1490,16 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">Your Coverage</h1>
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-blue-100 p-2 rounded-lg">
+                        <Shield size={24} className="text-blue-600" />
+                    </div>
+                    <h1 className="text-2xl font-bold">Your Coverage</h1>
+                </div>
                 <div className="flex items-center gap-2 mb-6 text-slate-700">
                     <Lightbulb className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
                     <p className="text-sm"><strong>Having insurance doesn't mean you can't get additional help!</strong></p>
                 </div>
-                <WizardHelp step={step} answers={answers} />
 
                 {/* Question 3a: Insurance Type */}
                 <div className="mb-8">
@@ -1642,7 +1595,12 @@ const Wizard = () => {
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold mb-2">Your Medications</h1>
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="bg-purple-100 p-2 rounded-lg">
+                            <Pill size={24} className="text-purple-600" />
+                        </div>
+                        <h1 className="text-2xl font-bold">Your Medications</h1>
+                    </div>
                     <p className="text-slate-600 mb-3">
                         Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
                     </p>
@@ -1650,7 +1608,6 @@ const Wizard = () => {
                         First select your core immunosuppressants, then add any other transplant-related medications you take.
                     </p>
                 </div>
-                <WizardHelp step={step} answers={answers} />
 
                 {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
                 {isPreTransplant ? (
@@ -1790,9 +1747,13 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">Your Costs</h1>
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-amber-100 p-2 rounded-lg">
+                        <DollarSign size={24} className="text-amber-600" />
+                    </div>
+                    <h1 className="text-2xl font-bold">Your Costs</h1>
+                </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
-                <WizardHelp step={step} answers={answers} />
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
                 </div>
