@@ -1331,122 +1331,142 @@ const Wizard = () => {
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
-    // Navigation Logic
-    const handleNextFromInsurance = () => setStep(5);
-    const handleNextFromMeds = () => {
-        if (answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) {
-            setStep(6);
-        } else {
-            setStep(7);
-        }
-    };
-    const handleNextFromSpecialty = () => setStep(7);
-    const handleNextFromFinancial = () => setStep(8);
+    // Navigation Logic - Updated for grouped sections
+    const handleNextFromAboutYou = () => setStep(2);
+    const handleNextFromTransplant = () => setStep(3);
+    const handleNextFromCoverage = () => setStep(4);
+    const handleNextFromMeds = () => setStep(5);
+    const handleNextFromCosts = () => setStep(6);
 
-    const stepLabels = ['Role', 'Status', 'Organ', 'Insurance', 'Medications'];
-    const totalVisibleSteps = 5; // Main 5 steps the user sees
+    // Check if commercial insurance for specialty pharmacy question
+    const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
-    const renderProgress = () => (
-        <div className="mb-8 no-print">
-            {/* Step indicators */}
-            <div className="flex justify-between items-center mb-3">
-                {stepLabels.map((label, index) => {
-                    const stepNum = index + 1;
-                    const isCompleted = step > stepNum;
-                    const isCurrent = step === stepNum;
-                    const isFuture = step < stepNum;
+    // New grouped step labels
+    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
+    const totalVisibleSteps = 5; // 5 sections before results
 
-                    return (
-                        <div key={label} className="flex flex-col items-center flex-1">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                                isCompleted ? 'bg-emerald-500 text-white' :
-                                isCurrent ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' :
-                                'bg-slate-200 text-slate-500'
-                            }`}>
-                                {isCompleted ? <CheckCircle size={16} /> : stepNum}
+    const renderProgress = () => {
+        // For step 6 (results), show all steps as complete
+        const displayStep = Math.min(step, totalVisibleSteps);
+
+        return (
+            <div className="mb-8 no-print">
+                {/* Step indicators */}
+                <div className="flex justify-between items-center mb-3">
+                    {stepLabels.map((label, index) => {
+                        const stepNum = index + 1;
+                        const isCompleted = displayStep > stepNum;
+                        const isCurrent = displayStep === stepNum;
+
+                        return (
+                            <div key={label} className="flex flex-col items-center flex-1">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                                    isCompleted ? 'bg-emerald-500 text-white' :
+                                    isCurrent ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' :
+                                    'bg-slate-200 text-slate-500'
+                                }`}>
+                                    {isCompleted ? <CheckCircle size={16} /> : stepNum}
+                                </div>
+                                <span className={`text-xs mt-1 hidden sm:block ${
+                                    isCurrent ? 'text-emerald-700 font-bold' :
+                                    isCompleted ? 'text-emerald-600' :
+                                    'text-slate-400'
+                                }`}>{label}</span>
                             </div>
-                            <span className={`text-xs mt-1 hidden sm:block ${
-                                isCurrent ? 'text-emerald-700 font-bold' :
-                                isCompleted ? 'text-emerald-600' :
-                                'text-slate-400'
-                            }`}>{label}</span>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
+                {/* Progress bar */}
+                <div className="w-full bg-slate-200 h-2 rounded-full" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
+                    <div
+                        className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
+                    ></div>
+                </div>
             </div>
-            {/* Progress bar */}
-            <div className="w-full bg-slate-200 h-2 rounded-full" role="progressbar" aria-valuenow={(Math.min(step, totalVisibleSteps) / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Step ${Math.min(step, totalVisibleSteps)} of ${totalVisibleSteps}`}>
-                <div
-                    className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(Math.min(step, totalVisibleSteps) / totalVisibleSteps) * 100}%` }}
-                ></div>
-            </div>
-        </div>
-    );
+        );
+    };
 
-    // Step 1: Role
+    // Step 1: About You (combines Role + Status)
     if (step === 1) {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <h1 className="text-2xl font-bold mb-6">Who am I helping today?</h1>
+                <h1 className="text-2xl font-bold mb-2">About You</h1>
+                <p className="text-slate-600 mb-6">Let's start with some basics to personalize your experience.</p>
                 <WizardHelp step={step} answers={answers} />
-                <div className="space-y-3" role="radiogroup" aria-label="Select your role">
-                    {Object.values(Role).map((r) => (
-                        <button
-                            key={r}
-                            onClick={() => { handleSingleSelect('role', r); nextStep(); }}
-                            className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                answers.role === r ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
-                            }`}
-                            role="radio"
-                            aria-checked={answers.role === r}
-                        >
-                            <span className="font-medium text-lg">{r}</span>
-                            {answers.role === r && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
-                        </button>
-                    ))}
+
+                {/* Question 1a: Role */}
+                <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1a</span>
+                        <h2 className="text-lg font-bold text-slate-800">Who am I helping today?</h2>
+                    </div>
+                    <div className="space-y-3" role="radiogroup" aria-label="Select your role">
+                        {Object.values(Role).map((r) => (
+                            <button
+                                key={r}
+                                onClick={() => handleSingleSelect('role', r)}
+                                className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
+                                    answers.role === r ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                }`}
+                                role="radio"
+                                aria-checked={answers.role === r}
+                            >
+                                <span className="font-medium text-lg">{r}</span>
+                                {answers.role === r && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                            </button>
+                        ))}
+                    </div>
                 </div>
+
+                {/* Question 1b: Status - shows after role is selected */}
+                {answers.role && (
+                    <div className="mb-8 animate-fade-in">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1b</span>
+                            <h2 className="text-lg font-bold text-slate-800">Where are you in the transplant process?</h2>
+                        </div>
+                        <div className="space-y-3" role="radiogroup" aria-label="Select your transplant status">
+                            {Object.values(TransplantStatus).map((s) => (
+                                <button
+                                    key={s}
+                                    onClick={() => handleSingleSelect('status', s)}
+                                    className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
+                                        answers.status === s ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                    }`}
+                                    role="radio"
+                                    aria-checked={answers.status === s}
+                                >
+                                    <span className="font-medium text-lg">{s}</span>
+                                    {answers.status === s && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Next button - enabled when both role and status are selected */}
+                <button
+                    disabled={!answers.role || !answers.status}
+                    onClick={handleNextFromAboutYou}
+                    className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
+                    aria-label="Continue to next section"
+                >
+                    Next Section
+                </button>
             </div>
         );
     }
 
-    // Step 2: Status
+    // Step 2: Your Transplant (Organ selection)
     if (step === 2) {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-6">Where are you in the transplant process?</h1>
-                <WizardHelp step={step} answers={answers} />
-                <div className="space-y-3" role="radiogroup" aria-label="Select your transplant status">
-                    {Object.values(TransplantStatus).map((s) => (
-                        <button
-                            key={s}
-                            onClick={() => { handleSingleSelect('status', s); nextStep(); }}
-                            className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                answers.status === s ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
-                            }`}
-                            role="radio"
-                            aria-checked={answers.status === s}
-                        >
-                            <span className="font-medium text-lg">{s}</span>
-                            {answers.status === s && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-
-    // Step 3: Organ
-    if (step === 3) {
-        return (
-            <div className="max-w-2xl mx-auto">
-                {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">What type of transplant?</h1>
-                <p className="text-slate-600 mb-6">Select organ(s) - choose all that apply.</p>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <h1 className="text-2xl font-bold mb-2">Your Transplant</h1>
+                <p className="text-slate-600 mb-6">Select your organ type(s) - choose all that apply.</p>
                 <WizardHelp step={step} answers={answers} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label="Select organ types">
                     {Object.values(OrganType).map((o) => (
@@ -1466,18 +1486,18 @@ const Wizard = () => {
                 </div>
                 <button
                     disabled={answers.organs.length === 0}
-                    onClick={nextStep}
-                    className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed"
-                    aria-label="Continue to next step"
+                    onClick={handleNextFromTransplant}
+                    className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
+                    aria-label="Continue to next section"
                 >
-                    Next Step
+                    Next Section
                 </button>
             </div>
         );
     }
 
-    // Step 4: Insurance
-    if (step === 4) {
+    // Step 3: Your Coverage (combines Insurance + Specialty Pharmacy for commercial)
+    if (step === 3) {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
@@ -1520,54 +1540,109 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">What's your insurance type?</h1>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <h1 className="text-2xl font-bold mb-2">Your Coverage</h1>
                 <div className="flex items-center gap-2 mb-6 text-slate-700">
                     <Lightbulb className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
                     <p className="text-sm"><strong>Having insurance doesn't mean you can't get additional help!</strong></p>
                 </div>
                 <WizardHelp step={step} answers={answers} />
-                <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
-                    {insuranceOptions.map((option) => (
-                        <button
-                            key={option.value}
-                            onClick={() => { handleSingleSelect('insurance', option.value); handleNextFromInsurance(); }}
-                            className={`w-full p-4 text-left rounded-xl border-2 transition ${
-                                answers.insurance === option.value ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
-                            }`}
-                            role="radio"
-                            aria-checked={answers.insurance === option.value}
-                        >
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <div className="font-bold text-lg text-blue-700">{option.label}</div>
-                                    <div className="text-slate-500 text-sm mt-1">{option.description}</div>
-                                    {option.helpText && (
-                                        <div className="text-emerald-700 text-sm mt-2 flex items-center gap-1">
-                                            <Lightbulb className="text-amber-500" size={14} aria-hidden="true" />
-                                            {option.helpText}
-                                        </div>
-                                    )}
+
+                {/* Question 3a: Insurance Type */}
+                <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">3a</span>
+                        <h2 className="text-lg font-bold text-slate-800">What's your insurance type?</h2>
+                    </div>
+                    <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
+                        {insuranceOptions.map((option) => (
+                            <button
+                                key={option.value}
+                                onClick={() => handleSingleSelect('insurance', option.value)}
+                                className={`w-full p-4 text-left rounded-xl border-2 transition ${
+                                    answers.insurance === option.value ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                }`}
+                                role="radio"
+                                aria-checked={answers.insurance === option.value}
+                            >
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <div className="font-bold text-lg text-blue-700">{option.label}</div>
+                                        <div className="text-slate-500 text-sm mt-1">{option.description}</div>
+                                        {option.helpText && (
+                                            <div className="text-emerald-700 text-sm mt-2 flex items-center gap-1">
+                                                <Lightbulb className="text-amber-500" size={14} aria-hidden="true" />
+                                                {option.helpText}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {answers.insurance === option.value && <CheckCircle className="text-emerald-600 flex-shrink-0" aria-hidden="true" />}
                                 </div>
-                                {answers.insurance === option.value && <CheckCircle className="text-emerald-600 flex-shrink-0" aria-hidden="true" />}
-                            </div>
-                        </button>
-                    ))}
+                            </button>
+                        ))}
+                    </div>
                 </div>
+
+                {/* Question 3b: Specialty Pharmacy - only shows for commercial insurance */}
+                {isCommercialInsurance && answers.insurance && (
+                    <div className="mb-8 animate-fade-in">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
+                            <h2 className="text-lg font-bold text-slate-800">Does your plan require a specific specialty pharmacy?</h2>
+                        </div>
+                        <p className="text-slate-600 text-sm mb-4">Some commercial plans require you to use a specific pharmacy for transplant medications.</p>
+                        <div className="space-y-3" role="radiogroup" aria-label="Specialty pharmacy requirement">
+                            {['Yes', 'No', 'Not Sure'].map(opt => (
+                                <button
+                                    key={opt}
+                                    onClick={() => handleSingleSelect('specialtyPharmacyAware', opt === 'Yes' ? true : opt === 'No' ? false : null)}
+                                    className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
+                                        (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                        (opt === 'No' && answers.specialtyPharmacyAware === false) ||
+                                        (opt === 'Not Sure' && answers.specialtyPharmacyAware === null && answers.insurance)
+                                            ? 'border-emerald-500 bg-emerald-50'
+                                            : 'border-slate-200 hover:border-emerald-200'
+                                    }`}
+                                    role="radio"
+                                    aria-checked={
+                                        (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                        (opt === 'No' && answers.specialtyPharmacyAware === false)
+                                    }
+                                >
+                                    <span className="font-medium">{opt}</span>
+                                    {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                      (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
+                                        <CheckCircle className="text-emerald-600" aria-hidden="true" />
+                                    }
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Next button */}
+                <button
+                    disabled={!answers.insurance}
+                    onClick={handleNextFromCoverage}
+                    className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
+                    aria-label="Continue to next section"
+                >
+                    Next Section
+                </button>
             </div>
         );
     }
 
-    // Step 5: Meds
-    if (step === 5) {
+    // Step 4: Your Medications
+    if (step === 4) {
         const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
 
         return (
             <div className="max-w-3xl mx-auto">
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold mb-2">Which medications do you take?</h1>
+                    <h1 className="text-2xl font-bold mb-2">Your Medications</h1>
                     <p className="text-slate-600 mb-3">
                         Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
                     </p>
@@ -1701,51 +1776,21 @@ const Wizard = () => {
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow-md"
-                    aria-label="Continue to next step"
+                    aria-label="Continue to next section"
                 >
-                    Next Step
+                    Next Section
                 </button>
             </div>
         );
     }
 
-    // Step 6: Specialty Pharmacy
-    if (step === 6) {
+    // Step 5: Your Costs (Financial Status)
+    if (step === 5) {
         return (
             <div className="max-w-2xl mx-auto">
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-4">Specialty Pharmacy Check</h1>
-                <WizardHelp step={step} answers={answers} />
-                <h2 className="font-bold text-lg mb-4">Does your plan require you to use a specific specialty pharmacy?</h2>
-                
-                <div className="space-y-3 mb-8" role="radiogroup" aria-label="Specialty pharmacy requirement">
-                    {['Yes', 'No', 'Not Sure'].map(opt => (
-                         <button
-                         key={opt}
-                         onClick={() => { 
-                             handleSingleSelect('specialtyPharmacyAware', opt === 'Yes'); 
-                             handleNextFromSpecialty();
-                         }}
-                         className="w-full p-4 text-left rounded-xl border-2 border-slate-200 hover:border-emerald-200 hover:bg-slate-50 transition font-medium"
-                         role="radio"
-                         aria-checked={false}
-                       >
-                         {opt}
-                       </button>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-
-    // Step 7: Financial Status
-    if (step === 7) {
-        return (
-            <div className="max-w-2xl mx-auto">
-                {renderProgress()}
-                <button onClick={() => setStep((answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE) ? 6 : 5)} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]" aria-label="Go back to previous step"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
-                <h1 className="text-2xl font-bold mb-2">Find Your Best Options</h1>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <h1 className="text-2xl font-bold mb-2">Your Costs</h1>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
                 <WizardHelp step={step} answers={answers} />
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
@@ -1761,7 +1806,7 @@ const Wizard = () => {
                     ].map(opt => (
                         <button
                             key={opt.val}
-                            onClick={() => { handleSingleSelect('financialStatus', opt.val); handleNextFromFinancial(); }}
+                            onClick={() => { handleSingleSelect('financialStatus', opt.val); handleNextFromCosts(); }}
                             className={`w-full p-4 text-left rounded-xl border-2 transition ${
                                 answers.financialStatus === opt.val ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
                             }`}
@@ -1780,8 +1825,8 @@ const Wizard = () => {
         );
     }
 
-    // Step 8: Results
-    if (step === 8) {
+    // Step 6: Results
+    if (step === 6) {
         const isKidney = answers.organs.includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
@@ -1792,7 +1837,7 @@ const Wizard = () => {
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
                 {/* Back Button */}
                 <button
-                    onClick={() => setStep(7)}
+                    onClick={() => setStep(5)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
                     aria-label="Go back to previous step"
                 >
