@@ -1205,11 +1205,70 @@ const PreTransplantMedicationGuide = ({ answers }) => {
     );
 };
 
-// Smart Suggestions Component for Medication Selection
+// Smart Suggestions Component for Medication Selection (AI-Powered)
 const MedicationSuggestions = ({ answers, onSelectMedication }) => {
     const MEDICATIONS = useMedicationsList();
-    const suggestions = getMedicationSuggestions(answers);
+    const [suggestions, setSuggestions] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [showSuggestions, setShowSuggestions] = useState(true);
+    const [source, setSource] = useState('local');
+
+    // Fetch AI-powered suggestions on mount or when organs/status change
+    useEffect(() => {
+        const fetchAISuggestions = async () => {
+            if (!answers.organs || answers.organs.length === 0) {
+                setSuggestions([]);
+                setIsLoading(false);
+                return;
+            }
+
+            setIsLoading(true);
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'getMedicationSuggestions',
+                        organs: answers.organs,
+                        transplant_stage: answers.status === TransplantStatus.PRE_EVAL ? 'pre' : 'post',
+                        insurance_type: answers.insurance
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.suggestions && data.suggestions.length > 0) {
+                        setSuggestions(data.suggestions);
+                        setSource(data.source || 'ai');
+                        setIsLoading(false);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('AI suggestions unavailable, using fallback:', error);
+            }
+
+            // Fallback to local static suggestions
+            const localSuggestions = getMedicationSuggestions(answers);
+            setSuggestions(localSuggestions);
+            setSource('local');
+            setIsLoading(false);
+        };
+
+        fetchAISuggestions();
+    }, [answers.organs, answers.status, answers.insurance]);
+
+    if (isLoading) {
+        return (
+            <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
+                <div className="flex items-center gap-2">
+                    <Loader2 size={20} className="text-indigo-600 animate-spin" />
+                    <span className="text-indigo-900 text-sm">Loading smart suggestions...</span>
+                </div>
+            </div>
+        );
+    }
 
     if (suggestions.length === 0) return null;
 
@@ -1218,7 +1277,10 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
             <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                     <Zap size={20} className="text-indigo-600" />
-                    <h3 className="font-bold text-indigo-900">Smart Suggestions Based on Your Profile</h3>
+                    <h3 className="font-bold text-indigo-900">
+                        Smart Suggestions Based on Your Profile
+                        {source === 'ai' && <span className="ml-2 text-xs font-normal text-indigo-500">(AI-powered)</span>}
+                    </h3>
                 </div>
                 <button
                     onClick={() => setShowSuggestions(!showSuggestions)}

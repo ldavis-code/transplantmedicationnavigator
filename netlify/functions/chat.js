@@ -712,6 +712,125 @@ Please help them with their question about medication assistance. If they're ask
       }
     }
 
+    case 'getMedicationSuggestions': {
+      const { organs, transplant_stage, insurance_type } = body;
+
+      if (!organs || organs.length === 0) {
+        return { suggestions: [] };
+      }
+
+      try {
+        const db = getDb();
+
+        // Query medications that are common for the specified organ types
+        const medications = await db`
+          SELECT id, brand_name, generic_name, category, stage, common_organs
+          FROM medications
+          WHERE
+            common_organs && ${organs}::text[]
+            AND (
+              stage = 'Both (Pre & Post)'
+              OR stage = ${transplant_stage === 'pre' ? 'Pre-transplant' : 'Post-transplant'}
+            )
+          ORDER BY
+            CASE
+              WHEN category = 'Immunosuppressant' THEN 1
+              WHEN category = 'Anti-infective' THEN 2
+              WHEN category = 'Antibiotic' THEN 3
+              ELSE 4
+            END,
+            brand_name
+          LIMIT 20
+        `;
+
+        if (medications.length === 0) {
+          return { suggestions: [] };
+        }
+
+        // Use Claude to create personalized suggestions
+        const client = getAnthropic();
+        const medicationList = medications.map(m =>
+          `- ${m.brand_name} (${m.generic_name}) - ${m.category}`
+        ).join('\n');
+
+        const prompt = `You are a transplant medication expert. Based on a ${transplant_stage === 'pre' ? 'pre-transplant' : 'post-transplant'} patient with ${organs.join(', ')} transplant, organize these medications into helpful suggestion categories.
+
+Available medications from our database:
+${medicationList}
+
+Create 3-5 suggestion categories with the most relevant medications for this patient. For each category:
+- Give a short category name (e.g., "Core Immunosuppressants", "Anti-viral Prophylaxis")
+- List 1-3 medication IDs (use the lowercase generic name from the list)
+- Give a brief reason why these are important
+
+Respond ONLY with valid JSON in this exact format (no markdown, no explanation):
+{
+  "suggestions": [
+    {
+      "category": "Category Name",
+      "medications": ["medication_id1", "medication_id2"],
+      "reason": "Brief explanation"
+    }
+  ]
+}`;
+
+        const response = await client.messages.create({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 500,
+          messages: [{ role: 'user', content: prompt }],
+        });
+
+        // Parse Claude's response
+        const responseText = response.content[0].text.trim();
+        const parsed = JSON.parse(responseText);
+
+        // Validate medication IDs exist in our database
+        const validMedIds = new Set(medications.map(m => m.id));
+        const validatedSuggestions = parsed.suggestions.map(suggestion => ({
+          ...suggestion,
+          medications: suggestion.medications.filter(id => validMedIds.has(id))
+        })).filter(s => s.medications.length > 0);
+
+        return {
+          suggestions: validatedSuggestions,
+          source: 'ai'
+        };
+
+      } catch (error) {
+        console.error('Error generating AI suggestions:', error);
+        // Fallback to basic category-based suggestions
+        const db = getDb();
+        const medications = await db`
+          SELECT id, brand_name, generic_name, category, stage
+          FROM medications
+          WHERE
+            common_organs && ${organs}::text[]
+          ORDER BY category, brand_name
+          LIMIT 15
+        `;
+
+        // Group by category as fallback
+        const categories = {};
+        for (const med of medications) {
+          if (!categories[med.category]) {
+            categories[med.category] = {
+              category: med.category,
+              medications: [],
+              reason: `Common ${med.category.toLowerCase()} medications for ${organs.join('/')} transplant`
+            };
+          }
+          if (categories[med.category].medications.length < 3) {
+            categories[med.category].medications.push(med.id);
+          }
+        }
+
+        return {
+          suggestions: Object.values(categories).slice(0, 5),
+          source: 'fallback'
+        };
+      }
+    }
+
     default:
       return { error: 'Unknown action' };
   }
