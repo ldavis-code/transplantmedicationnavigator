@@ -19,11 +19,14 @@ export function MedicationsProvider({ children }) {
                 const dbMedications = await fetchAllMedications();
 
                 if (!cancelled && dbMedications && dbMedications.length > 0) {
-                    // Merge database data with JSON fallback to ensure all fields are present
-                    // This fixes issues where database may be missing copay/PAP program data
-                    const mergedMedications = dbMedications.map(dbMed => {
-                        const fallbackMed = MEDICATIONS_FALLBACK.find(m => m.id === dbMed.id);
-                        if (fallbackMed) {
+                    // Merge database data with JSON fallback to ensure all medications are present
+                    // Start with ALL fallback medications, then merge in database values
+                    // This ensures medications like prednisone are always included even if missing from DB
+                    const dbMedicationsMap = new Map(dbMedications.map(m => [m.id, m]));
+
+                    const mergedMedications = MEDICATIONS_FALLBACK.map(fallbackMed => {
+                        const dbMed = dbMedicationsMap.get(fallbackMed.id);
+                        if (dbMed) {
                             // Database values take priority, but use fallback for missing/null fields
                             return {
                                 ...fallbackMed,
@@ -38,9 +41,15 @@ export function MedicationsProvider({ children }) {
                                 medicare2026Note: dbMed.medicare2026Note || fallbackMed.medicare2026Note,
                             };
                         }
-                        return dbMed;
+                        // Medication exists in fallback but not in database - use fallback
+                        return fallbackMed;
                     });
-                    setMedications(mergedMedications);
+
+                    // Also add any medications that exist in database but not in fallback
+                    const fallbackIds = new Set(MEDICATIONS_FALLBACK.map(m => m.id));
+                    const dbOnlyMedications = dbMedications.filter(m => !fallbackIds.has(m.id));
+
+                    setMedications([...mergedMedications, ...dbOnlyMedications]);
                     setSource('database');
                     setError(null);
                 }
