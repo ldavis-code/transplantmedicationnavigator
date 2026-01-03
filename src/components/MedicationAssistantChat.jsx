@@ -9,7 +9,7 @@ import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
   User, Building2, Heart, AlertCircle, Printer, Lock,
-  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb
+  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb, PlusCircle
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 
@@ -640,38 +640,50 @@ const MedicationAssistantChat = () => {
       );
     }
 
+    const searchInputId = 'medication-search-input';
+    const listboxId = 'medication-search-results';
+
     return (
-      <div className="p-3 bg-slate-50 rounded-xl space-y-3">
+      <div className="p-4 bg-slate-50 rounded-xl space-y-4">
         {/* Search Usage Indicator */}
         {remainingSearches <= maxFreeSearches && remainingSearches > 0 && (
-          <div className={`text-xs px-3 py-1.5 rounded-lg flex items-center justify-between ${
-            remainingSearches <= 1 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-600'
-          }`}>
+          <div
+            className={`text-sm px-4 py-2 rounded-lg flex items-center justify-between ${
+              remainingSearches <= 1 ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-slate-200 text-slate-600'
+            }`}
+            role="status"
+            aria-live="polite"
+          >
             <span>
               {remainingSearches === 1 ? 'Last free search remaining' : `${remainingSearches} searches remaining`}
             </span>
-            <a href="/pricing" className="underline hover:no-underline font-medium">
+            <a href="/pricing" className="underline hover:no-underline font-medium min-h-[44px] flex items-center">
               Upgrade
             </a>
           </div>
         )}
 
+        {/* Selected Medications */}
         {selectedMedications.length > 0 && (
-          <div className="space-y-2">
-            <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
-            <div className="flex flex-wrap gap-2">
+          <div className="space-y-3">
+            <div className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-emerald-600" aria-hidden="true" />
+              Selected Medications ({selectedMedications.length}):
+            </div>
+            <div className="flex flex-wrap gap-2" role="list" aria-label="Selected medications">
               {selectedMedications.map((med) => (
                 <span
                   key={med.id}
-                  className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
+                  role="listitem"
+                  className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-base font-medium"
                 >
                   {med.brand_name}
                   <button
                     onClick={() => handleMedicationRemove(med.id)}
-                    className="hover:bg-emerald-200 rounded-full p-0.5"
-                    aria-label={`Remove ${med.brand_name}`}
+                    className="hover:bg-emerald-200 rounded-full p-1 min-w-[32px] min-h-[32px] flex items-center justify-center transition-colors"
+                    aria-label={`Remove ${med.brand_name} from selection`}
                   >
-                    <X size={14} />
+                    <X size={16} aria-hidden="true" />
                   </button>
                 </span>
               ))}
@@ -679,65 +691,111 @@ const MedicationAssistantChat = () => {
           </div>
         )}
 
+        {/* Search Input with proper ARIA */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <label htmlFor={searchInputId} className="sr-only">
+            Search for a medication
+          </label>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
           <input
+            id={searchInputId}
             type="text"
             value={medicationSearch}
             onChange={(e) => setMedicationSearch(e.target.value)}
             placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
-            className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+            className="w-full pl-12 pr-12 py-4 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
             autoFocus
+            role="combobox"
+            aria-expanded={medicationResults.length > 0}
+            aria-controls={listboxId}
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
           />
           {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 animate-spin" size={18} />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2" aria-hidden="true">
+              <Loader2 className="text-emerald-500 animate-spin" size={20} />
+            </div>
+          )}
+          {isSearching && (
+            <div className="sr-only" aria-live="polite">Searching for medications...</div>
           )}
         </div>
 
+        {/* Search Results with listbox role */}
         {medicationResults.length > 0 && (
-          <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg bg-white">
-            {medicationResults.map((med) => {
-              const isSelected = selectedMedications.find(m => m.id === med.id);
+          <div
+            id={listboxId}
+            className="max-h-64 overflow-y-auto border-2 border-slate-200 rounded-xl bg-white shadow-lg"
+            role="listbox"
+            aria-label="Medication search results"
+          >
+            <div className="sr-only" aria-live="polite">
+              {medicationResults.length} medication{medicationResults.length !== 1 ? 's' : ''} found
+            </div>
+            {medicationResults.map((med, index) => {
+              const isAlreadySelected = selectedMedications.find(m => m.id === med.id);
               return (
                 <button
                   key={med.id}
                   onClick={() => handleMedicationSelect(med)}
-                  disabled={isSelected}
-                  className={`w-full text-left p-3 border-b border-slate-100 last:border-b-0 transition ${
-                    isSelected ? 'bg-emerald-50 opacity-50' : 'hover:bg-emerald-50'
+                  disabled={isAlreadySelected}
+                  role="option"
+                  aria-selected={isAlreadySelected}
+                  aria-disabled={isAlreadySelected}
+                  className={`w-full text-left p-4 border-b border-slate-100 last:border-b-0 transition min-h-[60px] ${
+                    isAlreadySelected ? 'bg-emerald-50 cursor-not-allowed' : 'hover:bg-emerald-50 cursor-pointer'
                   }`}
                 >
-                  <div className="font-medium text-slate-900 flex items-center gap-2">
-                    {med.brand_name}
-                    {isSelected && <Check size={16} className="text-emerald-600" />}
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <div className="font-semibold text-lg text-slate-900 flex items-center gap-2">
+                        {med.brand_name}
+                        {isAlreadySelected && (
+                          <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">Added</span>
+                        )}
+                      </div>
+                      <div className="text-base text-slate-600">{med.generic_name} {med.category && `· ${med.category}`}</div>
+                    </div>
+                    {isAlreadySelected ? (
+                      <CheckCircle2 size={24} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                    ) : (
+                      <PlusCircle size={24} className="text-slate-400 flex-shrink-0" aria-hidden="true" />
+                    )}
                   </div>
-                  <div className="text-sm text-slate-500">{med.generic_name} {med.category && `· ${med.category}`}</div>
                 </button>
               );
             })}
           </div>
         )}
 
+        {/* Custom medication entry */}
         {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
           <button
             onClick={() => handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: 'Custom entry' })}
-            className="w-full text-left p-3 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-50 transition"
+            className="w-full text-left p-4 bg-white border-2 border-emerald-300 rounded-xl hover:bg-emerald-50 transition min-h-[60px]"
           >
-            <div className="font-medium text-emerald-700">Add "{medicationSearch}"</div>
-            <div className="text-sm text-slate-500">Add this medication to your list</div>
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="font-semibold text-lg text-emerald-700">Add "{medicationSearch}"</div>
+                <div className="text-base text-slate-600">Add this medication to your list</div>
+              </div>
+              <PlusCircle size={24} className="text-emerald-500 flex-shrink-0" aria-hidden="true" />
+            </div>
           </button>
         )}
 
+        {/* Continue Button - Large and prominent */}
         {selectedMedications.length > 0 && (
           <button
             onClick={handleMedicationsContinue}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg min-h-[56px] shadow-lg"
           >
             Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
-            <ChevronRight size={18} />
+            <ChevronRight size={24} aria-hidden="true" />
           </button>
         )}
 
+        {/* Skip Option - Clear and accessible */}
         {selectedMedications.length === 0 && (
           <button
             onClick={() => {
@@ -748,10 +806,15 @@ const MedicationAssistantChat = () => {
                 nextQuizQuestion();
               }
             }}
-            className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
+            className="w-full text-left p-4 bg-white border-2 border-slate-200 rounded-xl hover:bg-slate-100 hover:border-slate-300 transition min-h-[60px]"
           >
-            <div className="font-medium text-slate-700">Skip this step</div>
-            <div className="text-sm text-slate-500">Show general assistance programs</div>
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="font-semibold text-lg text-slate-700">Skip this step</div>
+                <div className="text-base text-slate-600">Show general assistance programs instead</div>
+              </div>
+              <ChevronRight size={24} className="text-slate-400 flex-shrink-0" aria-hidden="true" />
+            </div>
           </button>
         )}
       </div>
@@ -760,17 +823,55 @@ const MedicationAssistantChat = () => {
 
   // Render quiz progress indicator
   const renderQuizProgress = () => {
+    const progressPercent = Math.round((quizProgress.currentQuestionIndex / QUIZ_QUESTIONS.length) * 100);
     return (
-      <div className="px-4 py-2 bg-slate-50 border-b border-slate-200">
-        <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-          <span>Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}</span>
-          <span>{quizCompletionPercent}% complete</span>
+      <div className="px-4 py-3 bg-slate-50 border-b border-slate-200">
+        {/* Screen reader announcement */}
+        <div className="sr-only" aria-live="polite" aria-atomic="true">
+          Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}. {progressPercent}% complete.
         </div>
-        <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+
+        {/* Visual progress */}
+        <div className="flex items-center justify-between text-sm text-slate-600 mb-2 font-medium">
+          <span className="flex items-center gap-2">
+            <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-bold">
+              {quizProgress.currentQuestionIndex + 1}/{QUIZ_QUESTIONS.length}
+            </span>
+            <span>Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}</span>
+          </span>
+          <span className="text-emerald-600 font-semibold">{progressPercent}% complete</span>
+        </div>
+
+        {/* Progress bar with better visibility */}
+        <div
+          className="h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner"
+          role="progressbar"
+          aria-valuenow={progressPercent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Quiz progress: ${progressPercent}% complete`}
+        >
           <div
-            className="h-full bg-emerald-500 transition-all duration-300"
-            style={{ width: `${((quizProgress.currentQuestionIndex) / QUIZ_QUESTIONS.length) * 100}%` }}
+            className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500 ease-out rounded-full"
+            style={{ width: `${progressPercent}%` }}
           />
+        </div>
+
+        {/* Step indicators */}
+        <div className="flex justify-between mt-2 px-1">
+          {QUIZ_QUESTIONS.map((_, index) => (
+            <div
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index < quizProgress.currentQuestionIndex
+                  ? 'bg-emerald-500'
+                  : index === quizProgress.currentQuestionIndex
+                  ? 'bg-emerald-500 ring-2 ring-emerald-200 ring-offset-1'
+                  : 'bg-slate-300'
+              }`}
+              aria-hidden="true"
+            />
+          ))}
         </div>
       </div>
     );
@@ -784,84 +885,144 @@ const MedicationAssistantChat = () => {
 
     const question = currentQuizQuestion;
     if (!question) return null;
+    const questionId = `quiz-question-${question.id}`;
+    const helpTextId = `quiz-help-${question.id}`;
 
     return (
       <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
-        {/* Question Card */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm mb-4">
-          <h3 className="text-lg font-bold text-slate-800 mb-1">{question.question}</h3>
-          {question.helpText && (
-            <p className="text-sm text-slate-500">{question.helpText}</p>
-          )}
+        {/* Live region for screen reader announcements */}
+        <div className="sr-only" aria-live="assertive" aria-atomic="true" id="quiz-announcement">
+          {question.question}
+        </div>
+
+        {/* Question Card - Enhanced visual design */}
+        <div className="bg-white rounded-xl border-2 border-slate-200 p-6 shadow-md mb-5">
+          <div className="flex items-start gap-4">
+            {/* Question number badge */}
+            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-lg" aria-hidden="true">
+              {quizProgress.currentQuestionIndex + 1}
+            </div>
+            <div className="flex-1">
+              <h3
+                id={questionId}
+                className="text-xl font-bold text-slate-800 mb-2 leading-tight"
+              >
+                {question.question}
+              </h3>
+              {question.helpText && (
+                <p id={helpTextId} className="text-base text-slate-600 leading-relaxed">
+                  {question.helpText}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Options or Medication Search */}
         {question.type === 'medication_search' ? (
           renderMedicationSearch()
         ) : (
-          <div className="space-y-2">
-            {question.options?.map((option) => {
-              const isSelected = answers[question.id] === option.value;
-              return (
-                <button
-                  key={option.value}
-                  onClick={() => handleQuizOptionSelect(option)}
-                  className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                    isSelected
-                      ? 'border-emerald-500 bg-emerald-50'
-                      : option.urgent
-                      ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
-                      : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-medium text-slate-900 flex items-center gap-2">
-                        {option.label}
-                        {option.hint && (
-                          <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
-                            {option.hint}
-                          </span>
-                        )}
+          <fieldset aria-labelledby={questionId} aria-describedby={question.helpText ? helpTextId : undefined}>
+            <legend className="sr-only">{question.question}</legend>
+            <div className="space-y-3" role="radiogroup">
+              {question.options?.map((option, index) => {
+                const isSelected = answers[question.id] === option.value;
+                const optionId = `option-${question.id}-${option.value}`;
+                return (
+                  <button
+                    key={option.value}
+                    id={optionId}
+                    onClick={() => handleQuizOptionSelect(option)}
+                    role="radio"
+                    aria-checked={isSelected}
+                    aria-describedby={option.description ? `${optionId}-desc` : undefined}
+                    className={`w-full text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
+                      isSelected
+                        ? 'border-emerald-500 bg-emerald-50 shadow-md ring-2 ring-emerald-200'
+                        : option.urgent
+                        ? 'border-red-200 hover:border-red-400 hover:bg-red-50 hover:shadow-md'
+                        : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4 flex-1">
+                        {/* Large checkbox/radio indicator */}
+                        <div className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
+                          isSelected
+                            ? 'border-emerald-500 bg-emerald-500'
+                            : option.urgent
+                            ? 'border-red-300'
+                            : 'border-slate-300'
+                        }`} aria-hidden="true">
+                          {isSelected && <Check size={16} className="text-white" strokeWidth={3} />}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-lg text-slate-900 flex items-center gap-2 flex-wrap">
+                            {option.label}
+                            {option.hint && (
+                              <span className="text-xs bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full font-medium">
+                                {option.hint}
+                              </span>
+                            )}
+                            {option.urgent && (
+                              <span className="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded-full font-medium">
+                                Urgent
+                              </span>
+                            )}
+                          </div>
+                          {option.description && (
+                            <div id={`${optionId}-desc`} className="text-base text-slate-600 mt-1">{option.description}</div>
+                          )}
+                        </div>
                       </div>
-                      {option.description && (
-                        <div className="text-sm text-slate-500 mt-0.5">{option.description}</div>
+                      {/* Selection indicator */}
+                      {isSelected && (
+                        <CheckCircle2 size={28} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
                       )}
                     </div>
-                    {isSelected ? (
-                      <CheckCircle2 size={20} className="text-emerald-600" />
-                    ) : (
-                      <Circle size={20} className="text-slate-300" />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
         )}
 
         {/* Blue Lightbulb Tip Section - Below Options */}
         {question.tip && (
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 mt-0.5">
-                <Lightbulb size={18} className="text-blue-600" />
+          <div className="mt-5 bg-blue-50 border-2 border-blue-200 rounded-xl p-5" role="note" aria-label="Helpful tip">
+            <div className="flex gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center" aria-hidden="true">
+                  <Lightbulb size={20} className="text-blue-600" />
+                </div>
               </div>
-              <p className="text-sm text-blue-800 leading-relaxed">{question.tip}</p>
+              <div>
+                <p className="font-semibold text-blue-800 mb-1">Helpful Tip</p>
+                <p className="text-base text-blue-700 leading-relaxed">{question.tip}</p>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Navigation */}
+        {/* Navigation - Larger touch target */}
         {quizProgress.currentQuestionIndex > 0 && (
           <button
             onClick={prevQuizQuestion}
-            className="mt-4 flex items-center gap-1 text-slate-600 hover:text-emerald-700 text-sm"
+            className="mt-5 flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-base font-medium py-3 px-4 rounded-lg hover:bg-slate-100 transition-colors min-h-[48px]"
+            aria-label={`Go back to question ${quizProgress.currentQuestionIndex}`}
           >
-            <ChevronLeft size={16} />
+            <ChevronLeft size={20} aria-hidden="true" />
             Previous question
           </button>
         )}
+
+        {/* Keyboard navigation hint */}
+        <div className="mt-4 text-center text-sm text-slate-500" aria-hidden="true">
+          <kbd className="px-2 py-1 bg-slate-100 rounded border border-slate-300 text-xs font-mono">Tab</kbd>
+          <span className="mx-2">to navigate</span>
+          <kbd className="px-2 py-1 bg-slate-100 rounded border border-slate-300 text-xs font-mono">Enter</kbd>
+          <span className="mx-2">to select</span>
+        </div>
       </div>
     );
   };
