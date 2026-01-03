@@ -1655,9 +1655,9 @@
       "Kidney"
     ],
     "papUrl": "https://www.bmspaf.org/",
-    "copayUrl": "https://www.bmscopay.com/",
+    "copayUrl": "https://www.eliquis.bmscustomerconnect.com/",
     "copayProgramId": "eliquis-copay",
-    "supportUrl": "https://www.eliquis.bmscustomerconnect.com/",
+    "supportUrl": "https://www.bmscopay.com/",
     "medicarePartDUrl": "https://www.eliquis.bmscustomerconnect.com/medicare-part-d-changes",
     "cost_tier": "high",
     "generic_available": false,
