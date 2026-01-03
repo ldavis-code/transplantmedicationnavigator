@@ -1227,6 +1227,22 @@ const MedicationSuggestions = ({ answers, onSelectMedication }) => {
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
     const MEDICATIONS = useMedicationsList();
+    const { setAnswer: setContextAnswer } = useChatQuiz();
+
+    // Map InsuranceType display values to ChatQuizContext format
+    const mapInsuranceToContextFormat = (insuranceValue) => {
+        const mapping = {
+            [InsuranceType.COMMERCIAL]: 'commercial',
+            [InsuranceType.MARKETPLACE]: 'commercial', // Marketplace is also commercial
+            [InsuranceType.MEDICARE]: 'medicare',
+            [InsuranceType.MEDICAID]: 'medicaid',
+            [InsuranceType.TRICARE_VA]: 'tricare_va',
+            [InsuranceType.IHS]: 'ihs',
+            [InsuranceType.UNINSURED]: 'uninsured',
+            [InsuranceType.OTHER]: 'other',
+        };
+        return mapping[insuranceValue] || 'other';
+    };
 
     const [step, setStep] = useState(1);
     const [answers, setAnswers] = useState({
@@ -1292,6 +1308,11 @@ const Wizard = () => {
 
     const handleSingleSelect = (key, value) => {
         setAnswers({ ...answers, [key]: value });
+
+        // Sync insurance selection to ChatQuizContext so MedicationSearch can filter copay cards correctly
+        if (key === 'insurance') {
+            setContextAnswer('insurance_type', mapInsuranceToContextFormat(value));
+        }
     };
 
     const handleMultiSelect = (key, value) => {
