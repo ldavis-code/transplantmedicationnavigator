@@ -509,8 +509,7 @@ const Layout = ({ children }) => {
             <footer className="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
                 <div className="container mx-auto px-4 text-center">
                     <p className="mb-4">
-                        <strong>Disclaimer:</strong> This tool is for learning only. It is not medical advice.
-                        Prices are estimates. Always check with your doctor and pharmacist.
+                        <strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                     </p>
                     <p className="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">
                         We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.
@@ -1312,7 +1311,10 @@ const Wizard = () => {
                     </div>
                     <h1 className="text-2xl font-bold">About You</h1>
                 </div>
-                <p className="text-slate-600 mb-6">Let's start with some basics to personalize your experience.</p>
+                <p className="text-slate-600 mb-4">Let's start with some basics to personalize your experience.</p>
+                <p className="text-sm text-slate-500 mb-6 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                    <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                </p>
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">

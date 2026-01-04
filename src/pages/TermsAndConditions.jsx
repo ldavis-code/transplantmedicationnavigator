@@ -32,7 +32,10 @@ const TermsAndConditions = () => {
                         1. No Medical Advice
                     </h2>
                     <p className="text-slate-700 leading-relaxed">
-                        The content on this Website is for informational and educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have read on this Website.
+                        This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                    </p>
+                    <p className="text-slate-700 leading-relaxed mt-4">
+                        Never disregard professional medical advice or delay in seeking it because of something you have read on this Website.
                     </p>
                     <p className="text-slate-700 leading-relaxed mt-4 font-semibold bg-red-50 border border-red-200 rounded-lg p-4">
                         If you think you may have a medical emergency, call your doctor or 911 immediately.

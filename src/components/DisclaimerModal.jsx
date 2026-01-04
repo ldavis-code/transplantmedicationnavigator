@@ -127,10 +127,7 @@ const DisclaimerModal = () => {
           id="disclaimer-description"
           className="text-slate-700 text-center mb-6 leading-relaxed"
         >
-          This website is for <strong className="text-slate-900">patients</strong>.{' '}
-          It is for <strong className="text-slate-900">learning only</strong>{' '}
-          and is not medical advice.{' '}
-          <strong className="text-slate-900">Always talk to your transplant team or doctor before making health decisions.</strong>
+          This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
         </p>
 
         {/* Emergency Notice */}
