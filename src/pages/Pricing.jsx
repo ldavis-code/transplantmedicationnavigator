@@ -17,10 +17,10 @@ const Pricing = () => {
             icon: Users,
             features: [
                 '4 My Path Quizzes',
-                'All assistance program links',
-                'Educational resources',
+                '4 Savings Calculator estimates',
+                'Access to all educational resources and assistance program links',
                 'No login required',
-                'Medication lists are not saved'
+                'Your work is not saved'
             ],
             cta: 'Start Searching',
             ctaLink: '/wizard',
@@ -34,12 +34,13 @@ const Pricing = () => {
             color: 'blue',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quiz',
-                'Save medications on your device',
-                'Export or print your medication list',
-                'Unlimited medications in Search Meds',
-                'Personal copay card reminders stored on your device',
-                'Track your estimated medication savings locally'
+                'Unlimited My Path Quizzes',
+                'Unlimited medication searches',
+                'Unlimited Savings Calculator estimates',
+                'Save your medication lists and quiz results on your device',
+                'Export or print your medication lists',
+                'Track your actual medication savings locally',
+                'Personal copay card reminders stored on your device'
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
             cta: 'Subscribe Monthly',
@@ -54,12 +55,13 @@ const Pricing = () => {
             color: 'purple',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quiz',
-                'Save medications on your device',
-                'Export or print your medication list',
-                'Unlimited medications in Search Meds',
-                'Personal copay card reminders stored on your device',
-                'Track your estimated medication savings locally'
+                'Unlimited My Path Quizzes',
+                'Unlimited medication searches',
+                'Unlimited Savings Calculator estimates',
+                'Save your medication lists and quiz results on your device',
+                'Export or print your medication lists',
+                'Track your actual medication savings locally',
+                'Personal copay card reminders stored on your device'
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
             cta: 'Subscribe Yearly',
@@ -173,6 +175,14 @@ const Pricing = () => {
                             This tool is designed to help you organize and understand your medications. It does not replace medical advice. Always review medication changes with your transplant team.
                         </p>
 
+                        {/* Educational Mission Section */}
+                        <section className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
+                            <h2 className="text-2xl font-bold text-emerald-900 mb-4">Our Educational Mission & Your Premium Tools</h2>
+                            <p className="text-emerald-800 leading-relaxed">
+                                We are committed to providing free, accessible, and health-literate educational content to every transplant patient. Our core resources, guides, and assistance program information will always be available at no cost. The optional Pro subscription funds our mission and unlocks a powerful set of convenience tools designed to help you organize, track, and manage your medication journey more effectively. Your data is always stored locally on your own device for complete privacy.
+                            </p>
+                        </section>
+
                         {/* FAQ Section */}
                         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
@@ -180,13 +190,13 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan includes 4 My Path Quizzes, all assistance program links, educational resources, and no login required. Medication lists are not saved in the free plan.
+                                        The Free plan includes 4 My Path Quizzes, 4 Savings Calculator estimates, access to all educational resources and assistance program links, and no login required. Your work is not saved in the free plan.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, the ability to save medications on your device, export or print your medication list, unlimited medications in Search Meds, personal copay card reminders, and savings tracking—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
+                                        Pro gives you unlimited My Path Quizzes, unlimited medication searches, unlimited Savings Calculator estimates, the ability to save your medication lists and quiz results on your device, export or print your medication lists, track your actual medication savings locally, and personal copay card reminders—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>
