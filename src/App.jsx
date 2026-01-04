@@ -5323,12 +5323,15 @@ const MainSiteRoutes = () => (
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/wizard" element={<Wizard />} />
+                <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
+                <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
                 <Route path="/faq" element={<LazyFAQ />} />
                 <Route path="/my-medications" element={<LazyMyMedications />} />
                 <Route path="/savings-tracker" element={<LazySavingsTracker />} />
+                <Route path="/savings-calculator" element={<Navigate to="/savings-tracker" replace />} />
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
@@ -5340,6 +5343,7 @@ const MainSiteRoutes = () => (
                 <Route path="/subscribe/success" element={<LazySubscribeSuccess />} />
                 <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
+                <Route path="/terms" element={<Navigate to="/terms-and-conditions" replace />} />
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />
                 <Route path="/accessibility" element={<LazyAccessibility />} />
                 <Route path="/account" element={<LazyAccount />} />

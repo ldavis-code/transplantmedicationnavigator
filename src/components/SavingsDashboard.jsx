@@ -240,7 +240,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                                 </span>
                                 <span className="font-medium text-slate-900">
                                     ${parseFloat(program.total_saved).toFixed(2)}
-                                    <span className="text-slate-400 text-sm ml-1">({program.count} fills)</span>
+                                    <span className="text-slate-600 text-sm ml-1">({program.count} fills)</span>
                                 </span>
                             </div>
                         ))}
@@ -277,8 +277,9 @@ export default function SavingsDashboard({ refreshTrigger }) {
                                     <button
                                         onClick={() => handleDelete(entry.id)}
                                         disabled={deleteLoading === entry.id}
-                                        className="p-1 text-slate-400 hover:text-red-500 transition-colors"
-                                        title="Delete"
+                                        className="p-1 text-slate-500 hover:text-red-500 transition-colors"
+                                        title="Delete entry"
+                                        aria-label={`Delete savings entry for ${entry.medication_name}`}
                                     >
                                         <Trash2 size={16} className={deleteLoading === entry.id ? 'animate-spin' : ''} />
                                     </button>
@@ -292,7 +293,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {/* Empty State */}
             {totalEntries === 0 && !isLoading && (
                 <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 text-center">
-                    <DollarSign className="mx-auto text-slate-400 mb-4" size={48} />
+                    <DollarSign className="mx-auto text-slate-500 mb-4" size={48} aria-hidden="true" />
                     <h4 className="font-bold text-slate-900 mb-2">No savings logged yet</h4>
                     <p className="text-slate-600 text-sm">
                         Use the form above to log your first medication savings and start tracking your progress!
