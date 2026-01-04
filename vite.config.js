@@ -104,14 +104,15 @@ export default defineConfig({
             }
           },
           {
-            // Cache images with cache-first strategy
+            // Cache images with stale-while-revalidate for better freshness
+            // This serves cached version immediately but fetches updates in background
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
-            handler: 'CacheFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'image-cache-v2',
+              cacheName: 'image-cache-v3',
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days
               }
             }
           },
