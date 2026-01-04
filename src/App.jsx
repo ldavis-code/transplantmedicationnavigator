@@ -4919,18 +4919,18 @@ ${patientName || "[Your Name]"}`;
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <Link to="/wizard" className="block bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-xl p-4 mb-6 hover:border-emerald-400 transition group">
+            <Link to="/wizard" className="block bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 mb-6 hover:border-blue-400 transition group">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="bg-emerald-600 text-white p-2 rounded-lg">
+                        <div className="bg-blue-600 text-white p-2 rounded-lg">
                             <Sparkles size={20} aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="font-bold text-emerald-900">Not sure which programs to apply to?</p>
-                            <p className="text-sm text-emerald-700">Take the My Path Quiz first to get personalized recommendations</p>
+                            <p className="font-bold text-blue-900">Not sure which programs to apply to?</p>
+                            <p className="text-sm text-blue-700">Take the My Path Quiz first to get personalized recommendations</p>
                         </div>
                     </div>
-                    <ArrowRight className="text-emerald-600 group-hover:translate-x-1 transition-transform" size={20} aria-hidden="true" />
+                    <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={20} aria-hidden="true" />
                 </div>
             </Link>
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="LETTERS" label="Letters" icon={FileText} /></div></nav>
