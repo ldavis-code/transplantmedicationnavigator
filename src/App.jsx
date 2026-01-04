@@ -1307,10 +1307,10 @@ const Wizard = () => {
                         );
                     })}
                 </div>
-                {/* Progress bar - uses current step's color */}
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
+                {/* Progress bar - consistent emerald color for accessibility */}
+                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
                     <div
-                        className={`${currentColor.bg} h-2 rounded-full transition-all duration-300`}
+                        className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
@@ -1345,14 +1345,16 @@ const Wizard = () => {
                             <button
                                 key={r}
                                 onClick={() => handleSingleSelect('role', r)}
-                                className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                    answers.role === r ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-300'
+                                className={`w-full p-5 text-left rounded-xl border-3 transition-all duration-200 flex justify-between items-center shadow-sm ${
+                                    answers.role === r
+                                        ? 'border-emerald-600 bg-emerald-100 ring-2 ring-emerald-300 shadow-md'
+                                        : 'border-slate-300 bg-slate-50 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md'
                                 }`}
                                 role="radio"
                                 aria-checked={answers.role === r}
                             >
-                                <span className="font-medium text-lg">{r}</span>
-                                {answers.role === r && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                                <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{r}</span>
+                                {answers.role === r && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                             </button>
                         ))}
                     </div>
@@ -1370,14 +1372,16 @@ const Wizard = () => {
                                 <button
                                     key={s}
                                     onClick={() => handleSingleSelect('status', s)}
-                                    className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                        answers.status === s ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-300'
+                                    className={`w-full p-5 text-left rounded-xl border-3 transition-all duration-200 flex justify-between items-center shadow-sm ${
+                                        answers.status === s
+                                            ? 'border-emerald-600 bg-emerald-100 ring-2 ring-emerald-300 shadow-md'
+                                            : 'border-slate-300 bg-slate-50 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md'
                                     }`}
                                     role="radio"
                                     aria-checked={answers.status === s}
                                 >
-                                    <span className="font-medium text-lg">{s}</span>
-                                    {answers.status === s && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                                    <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{s}</span>
+                                    {answers.status === s && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                                 </button>
                             ))}
                         </div>
@@ -1415,14 +1419,16 @@ const Wizard = () => {
                         <button
                             key={o}
                             onClick={() => handleMultiSelect('organs', o)}
-                            className={`p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                answers.organs.includes(o) ? 'border-rose-500 bg-rose-50' : 'border-slate-200 hover:border-rose-300'
+                            className={`p-5 text-left rounded-xl border-3 transition-all duration-200 flex justify-between items-center shadow-sm ${
+                                answers.organs.includes(o)
+                                    ? 'border-rose-600 bg-rose-100 ring-2 ring-rose-300 shadow-md'
+                                    : 'border-slate-300 bg-slate-50 hover:border-rose-400 hover:bg-rose-50 hover:shadow-md'
                             }`}
                             role="checkbox"
                             aria-checked={answers.organs.includes(o)}
                         >
-                            <span className="font-medium">{o}</span>
-                            {answers.organs.includes(o) && <CheckCircle size={20} className="text-rose-600" aria-hidden="true" />}
+                            <span className={`font-bold text-lg ${answers.organs.includes(o) ? 'text-rose-800' : 'text-slate-800'}`}>{o}</span>
+                            {answers.organs.includes(o) && <CheckCircle size={24} className="text-rose-600" aria-hidden="true" />}
                         </button>
                     ))}
                 </div>
@@ -1505,24 +1511,26 @@ const Wizard = () => {
                             <button
                                 key={option.value}
                                 onClick={() => handleSingleSelect('insurance', option.value)}
-                                className={`w-full p-4 text-left rounded-xl border-2 transition ${
-                                    answers.insurance === option.value ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300'
+                                className={`w-full p-5 text-left rounded-xl border-3 transition-all duration-200 shadow-sm ${
+                                    answers.insurance === option.value
+                                        ? 'border-blue-600 bg-blue-100 ring-2 ring-blue-300 shadow-md'
+                                        : 'border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md'
                                 }`}
                                 role="radio"
                                 aria-checked={answers.insurance === option.value}
                             >
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <div className="font-bold text-lg text-blue-700">{option.label}</div>
-                                        <div className="text-slate-500 text-sm mt-1">{option.description}</div>
+                                        <div className={`font-bold text-lg ${answers.insurance === option.value ? 'text-blue-800' : 'text-blue-700'}`}>{option.label}</div>
+                                        <div className={`text-sm mt-1 ${answers.insurance === option.value ? 'text-blue-700' : 'text-slate-600'}`}>{option.description}</div>
                                         {option.helpText && (
-                                            <div className="text-blue-700 text-sm mt-2 flex items-center gap-1">
+                                            <div className={`text-sm mt-2 flex items-center gap-1 ${answers.insurance === option.value ? 'text-blue-800 font-medium' : 'text-blue-700'}`}>
                                                 <Lightbulb className="text-amber-500" size={14} aria-hidden="true" />
                                                 {option.helpText}
                                             </div>
                                         )}
                                     </div>
-                                    {answers.insurance === option.value && <CheckCircle className="text-blue-600 flex-shrink-0" aria-hidden="true" />}
+                                    {answers.insurance === option.value && <CheckCircle className="text-blue-600 flex-shrink-0" size={24} aria-hidden="true" />}
                                 </div>
                             </button>
                         ))}
@@ -1538,30 +1546,33 @@ const Wizard = () => {
                         </div>
                         <p className="text-slate-600 text-sm mb-4">Some commercial plans require you to use a specific pharmacy for transplant medications.</p>
                         <div className="space-y-3" role="radiogroup" aria-label="Specialty pharmacy requirement">
-                            {['Yes', 'No', 'Not Sure'].map(opt => (
-                                <button
-                                    key={opt}
-                                    onClick={() => handleSingleSelect('specialtyPharmacyAware', opt === 'Yes' ? true : opt === 'No' ? false : null)}
-                                    className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                        (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
-                                        (opt === 'No' && answers.specialtyPharmacyAware === false) ||
-                                        (opt === 'Not Sure' && answers.specialtyPharmacyAware === null && answers.insurance)
-                                            ? 'border-blue-500 bg-blue-50'
-                                            : 'border-slate-200 hover:border-blue-300'
-                                    }`}
-                                    role="radio"
-                                    aria-checked={
-                                        (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
-                                        (opt === 'No' && answers.specialtyPharmacyAware === false)
-                                    }
-                                >
-                                    <span className="font-medium">{opt}</span>
-                                    {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
-                                      (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
-                                        <CheckCircle className="text-blue-600" aria-hidden="true" />
-                                    }
-                                </button>
-                            ))}
+                            {['Yes', 'No', 'Not Sure'].map(opt => {
+                                const isSelected = (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                    (opt === 'No' && answers.specialtyPharmacyAware === false) ||
+                                    (opt === 'Not Sure' && answers.specialtyPharmacyAware === null && answers.insurance);
+                                return (
+                                    <button
+                                        key={opt}
+                                        onClick={() => handleSingleSelect('specialtyPharmacyAware', opt === 'Yes' ? true : opt === 'No' ? false : null)}
+                                        className={`w-full p-5 text-left rounded-xl border-3 transition-all duration-200 flex justify-between items-center shadow-sm ${
+                                            isSelected
+                                                ? 'border-blue-600 bg-blue-100 ring-2 ring-blue-300 shadow-md'
+                                                : 'border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md'
+                                        }`}
+                                        role="radio"
+                                        aria-checked={
+                                            (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                            (opt === 'No' && answers.specialtyPharmacyAware === false)
+                                        }
+                                    >
+                                        <span className={`font-bold text-lg ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{opt}</span>
+                                        {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
+                                          (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
+                                            <CheckCircle className="text-blue-600" size={24} aria-hidden="true" />
+                                        }
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
@@ -1743,29 +1754,63 @@ const Wizard = () => {
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
                 </div>
 
-                <div className="space-y-3" role="radiogroup" aria-label="Select your financial status">
+                <div className="space-y-4" role="radiogroup" aria-label="Select your financial status">
                     {[
-                        { val: FinancialStatus.MANAGEABLE, label: 'Manageable', desc: 'I can afford my medications but would like to save money' },
-                        { val: FinancialStatus.CHALLENGING, label: 'Challenging', desc: 'Medication costs are a significant burden' },
-                        { val: FinancialStatus.UNAFFORDABLE, label: 'Unaffordable', desc: 'I struggle to pay for my medications' },
-                        { val: FinancialStatus.CRISIS, label: 'Crisis', desc: 'I cannot afford my medications without help' },
-                    ].map(opt => (
-                        <button
-                            key={opt.val}
-                            onClick={() => { handleSingleSelect('financialStatus', opt.val); handleNextFromCosts(); }}
-                            className={`w-full p-4 text-left rounded-xl border-2 transition ${
-                                answers.financialStatus === opt.val ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:border-amber-300'
-                            }`}
-                            role="radio"
-                            aria-checked={answers.financialStatus === opt.val}
-                        >
-                            <div className="flex items-center justify-between mb-1">
-                                <span className="font-bold text-lg text-slate-900">{opt.label}</span>
-                                {answers.financialStatus === opt.val && <CheckCircle className="text-amber-600" aria-hidden="true" />}
-                            </div>
-                            <div className="text-slate-600 text-sm">{opt.desc}</div>
-                        </button>
-                    ))}
+                        { val: FinancialStatus.MANAGEABLE, label: 'Manageable', desc: 'I can afford my medications but would like to save money', color: 'emerald' },
+                        { val: FinancialStatus.CHALLENGING, label: 'Challenging', desc: 'Medication costs are a significant burden', color: 'amber' },
+                        { val: FinancialStatus.UNAFFORDABLE, label: 'Unaffordable', desc: 'I struggle to pay for my medications', color: 'orange' },
+                        { val: FinancialStatus.CRISIS, label: 'Crisis', desc: 'I cannot afford my medications without help', color: 'rose' },
+                    ].map(opt => {
+                        const isSelected = answers.financialStatus === opt.val;
+                        const colorStyles = {
+                            emerald: {
+                                selected: 'border-emerald-600 bg-emerald-100 ring-2 ring-emerald-300',
+                                unselected: 'border-emerald-300 bg-emerald-50 hover:border-emerald-500 hover:bg-emerald-100',
+                                label: isSelected ? 'text-emerald-800' : 'text-emerald-700',
+                                desc: isSelected ? 'text-emerald-700' : 'text-emerald-600',
+                                icon: 'text-emerald-600'
+                            },
+                            amber: {
+                                selected: 'border-amber-600 bg-amber-100 ring-2 ring-amber-300',
+                                unselected: 'border-amber-300 bg-amber-50 hover:border-amber-500 hover:bg-amber-100',
+                                label: isSelected ? 'text-amber-800' : 'text-amber-700',
+                                desc: isSelected ? 'text-amber-700' : 'text-amber-600',
+                                icon: 'text-amber-600'
+                            },
+                            orange: {
+                                selected: 'border-orange-600 bg-orange-100 ring-2 ring-orange-300',
+                                unselected: 'border-orange-300 bg-orange-50 hover:border-orange-500 hover:bg-orange-100',
+                                label: isSelected ? 'text-orange-800' : 'text-orange-700',
+                                desc: isSelected ? 'text-orange-700' : 'text-orange-600',
+                                icon: 'text-orange-600'
+                            },
+                            rose: {
+                                selected: 'border-rose-600 bg-rose-100 ring-2 ring-rose-300',
+                                unselected: 'border-rose-300 bg-rose-50 hover:border-rose-500 hover:bg-rose-100',
+                                label: isSelected ? 'text-rose-800' : 'text-rose-700',
+                                desc: isSelected ? 'text-rose-700' : 'text-rose-600',
+                                icon: 'text-rose-600'
+                            }
+                        };
+                        const styles = colorStyles[opt.color];
+                        return (
+                            <button
+                                key={opt.val}
+                                onClick={() => { handleSingleSelect('financialStatus', opt.val); handleNextFromCosts(); }}
+                                className={`w-full p-5 text-left rounded-xl border-3 transition-all duration-200 shadow-sm hover:shadow-md ${
+                                    isSelected ? styles.selected + ' shadow-md' : styles.unselected
+                                }`}
+                                role="radio"
+                                aria-checked={isSelected}
+                            >
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className={`font-bold text-xl ${styles.label}`}>{opt.label}</span>
+                                    {isSelected && <CheckCircle className={styles.icon} size={24} aria-hidden="true" />}
+                                </div>
+                                <div className={`text-base ${styles.desc}`}>{opt.desc}</div>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         );
