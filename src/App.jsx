@@ -583,12 +583,6 @@ const Home = () => {
                         Find Grants & Foundations
                     </Link>
                 </div>
-
-                <div className="mt-8 bg-emerald-50 border-2 border-emerald-200 rounded-xl px-6 py-4 max-w-2xl mx-auto">
-                    <p className="text-base md:text-lg text-emerald-800 font-medium text-center">
-                        We offer 4 free quizzes to get you started. Subscriptions are optional and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
-                    </p>
-                </div>
             </section>
 
             {/* Features Grid */}
@@ -740,6 +734,9 @@ const Home = () => {
                     <Map size={20} aria-hidden="true" />
                     Start My Medication Path Quiz
                 </Link>
+                <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
+                    We offer 4 free quizzes to get you started. Subscriptions are optional and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
+                </p>
             </section>
 
             {/* Created by Someone Who's Been There */}
