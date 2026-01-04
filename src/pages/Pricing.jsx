@@ -38,7 +38,6 @@ const Pricing = () => {
                 'Unlimited medication searches',
                 'Unlimited Savings Calculator estimates',
                 'Save your medication lists and quiz results on your device',
-                'Export or print your medication lists',
                 'Track your actual medication savings locally',
                 'Personal copay card reminders stored on your device'
             ],
@@ -59,7 +58,6 @@ const Pricing = () => {
                 'Unlimited medication searches',
                 'Unlimited Savings Calculator estimates',
                 'Save your medication lists and quiz results on your device',
-                'Export or print your medication lists',
                 'Track your actual medication savings locally',
                 'Personal copay card reminders stored on your device'
             ],
@@ -196,7 +194,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, unlimited medication searches, unlimited Savings Calculator estimates, the ability to save your medication lists and quiz results on your device, export or print your medication lists, track your actual medication savings locally, and personal copay card reminders—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
+                                        Pro gives you unlimited My Path Quizzes, unlimited medication searches, unlimited Savings Calculator estimates, the ability to save your medication lists and quiz results on your device, track your actual medication savings locally, and personal copay card reminders—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>
