@@ -583,6 +583,10 @@ const Home = () => {
                         Find Grants & Foundations
                     </Link>
                 </div>
+
+                <p className="text-sm text-slate-600 mt-6 max-w-xl mx-auto">
+                    We offer 4 free quizzes to get you started. Subscriptions are optional and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
+                </p>
             </section>
 
             {/* Features Grid */}
