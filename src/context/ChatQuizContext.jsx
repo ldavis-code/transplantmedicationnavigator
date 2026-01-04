@@ -16,6 +16,12 @@ const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 // Maximum number of medication searches allowed in free tier
 const MAX_FREE_SEARCHES = 4;
 
+// Maximum number of quiz completions allowed in free tier
+const MAX_FREE_QUIZZES = 4;
+
+// Maximum number of savings calculator uses allowed in free tier
+const MAX_FREE_CALCULATOR_USES = 4;
+
 // Debounce delay for server sync (ms)
 const SYNC_DEBOUNCE_MS = 2000;
 
@@ -104,10 +110,11 @@ const initialState = {
 
   // Usage tracking for free tier limits
   usageTracking: {
-    searchCount: 0,           // Number of medication searches performed
-    quizCompletionsCount: 0,  // Number of completed quizzes
-    searchLimitReached: false, // Whether the user has hit the search limit
-    lastResetDate: null,      // For potential monthly reset functionality
+    searchCount: 0,             // Number of medication searches performed
+    quizCompletionsCount: 0,    // Number of completed quizzes
+    calculatorUsesCount: 0,     // Number of savings calculator uses
+    searchLimitReached: false,  // Whether the user has hit the search limit
+    lastResetDate: null,        // For potential monthly reset functionality
   },
 
   // Quiz-specific state
@@ -489,6 +496,17 @@ export function ChatQuizProvider({ children }) {
     }));
   }, []);
 
+  // Increment calculator uses count
+  const incrementCalculatorUses = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      usageTracking: {
+        ...prev.usageTracking,
+        calculatorUsesCount: prev.usageTracking.calculatorUsesCount + 1,
+      },
+    }));
+  }, []);
+
   // Force sync to server (for immediate sync needs)
   const forceSync = useCallback(() => {
     if (syncTimeoutRef.current) {
@@ -506,6 +524,26 @@ export function ChatQuizProvider({ children }) {
   const remainingSearches = useMemo(() => {
     return Math.max(0, MAX_FREE_SEARCHES - state.usageTracking.searchCount);
   }, [state.usageTracking.searchCount]);
+
+  // Check if quiz limit is reached
+  const isQuizLimitReached = useMemo(() => {
+    return state.usageTracking.quizCompletionsCount >= MAX_FREE_QUIZZES;
+  }, [state.usageTracking.quizCompletionsCount]);
+
+  // Get remaining quizzes
+  const remainingQuizzes = useMemo(() => {
+    return Math.max(0, MAX_FREE_QUIZZES - state.usageTracking.quizCompletionsCount);
+  }, [state.usageTracking.quizCompletionsCount]);
+
+  // Check if calculator limit is reached
+  const isCalculatorLimitReached = useMemo(() => {
+    return state.usageTracking.calculatorUsesCount >= MAX_FREE_CALCULATOR_USES;
+  }, [state.usageTracking.calculatorUsesCount]);
+
+  // Get remaining calculator uses
+  const remainingCalculatorUses = useMemo(() => {
+    return Math.max(0, MAX_FREE_CALCULATOR_USES - state.usageTracking.calculatorUsesCount);
+  }, [state.usageTracking.calculatorUsesCount]);
 
   // Check if user has any saved progress
   const hasProgress = useMemo(() => {
@@ -560,6 +598,12 @@ export function ChatQuizProvider({ children }) {
     isSearchLimitReached,
     remainingSearches,
     maxFreeSearches: MAX_FREE_SEARCHES,
+    isQuizLimitReached,
+    remainingQuizzes,
+    maxFreeQuizzes: MAX_FREE_QUIZZES,
+    isCalculatorLimitReached,
+    remainingCalculatorUses,
+    maxFreeCalculatorUses: MAX_FREE_CALCULATOR_USES,
     isServerSynced: isAuthenticated(),
 
     // Actions
@@ -579,6 +623,7 @@ export function ChatQuizProvider({ children }) {
     resetProgress,
     incrementSearchCount,
     incrementQuizCompletions,
+    incrementCalculatorUses,
     forceSync,
   }), [
     state,
@@ -588,6 +633,10 @@ export function ChatQuizProvider({ children }) {
     profileSummary,
     isSearchLimitReached,
     remainingSearches,
+    isQuizLimitReached,
+    remainingQuizzes,
+    isCalculatorLimitReached,
+    remainingCalculatorUses,
     setMode,
     setIsOpen,
     setAnswer,
@@ -604,6 +653,7 @@ export function ChatQuizProvider({ children }) {
     resetProgress,
     incrementSearchCount,
     incrementQuizCompletions,
+    incrementCalculatorUses,
     forceSync,
   ]);
 

@@ -65,7 +65,7 @@ const COMMON_MEDICATIONS = [
     { id: 'creon', name: 'Creon (Pancrelipase)', category: 'Digestive Enzyme' },
 ];
 
-export default function SavingsCalculator({ medications = [], isPro = false, onUpgrade }) {
+export default function SavingsCalculator({ medications = [], isPro = false, onUpgrade, onCalculate }) {
     const [selectedMeds, setSelectedMeds] = useState([
         { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', quantity: 1 }
     ]);
@@ -122,6 +122,11 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     };
 
     const calculateSavings = () => {
+        // Check if user can calculate (handles paywall logic)
+        if (onCalculate && !onCalculate()) {
+            return;
+        }
+
         const results = selectedMeds
             .filter(med => med.id || med.name)
             .map(med => {

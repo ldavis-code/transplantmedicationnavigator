@@ -40,6 +40,8 @@ const LazyReportingPartnerReport = lazy(() => import('./pages/reporting/Reportin
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 // First-visit disclaimer modal
 import DisclaimerModal from './components/DisclaimerModal.jsx';
+// Paywall modal for free tier limits
+import PaywallModal from './components/PaywallModal.jsx';
 // AI Medication Assistant Chat Widget
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 // Term Tooltip for inline definitions
@@ -1148,11 +1150,39 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
     );
 };
 
+// Check localStorage for subscription status (used by Wizard)
+function useLocalSubscriptionStatus() {
+    const [isPro, setIsPro] = useState(false);
+
+    useEffect(() => {
+        try {
+            const cached = localStorage.getItem('tmn_subscription');
+            if (cached) {
+                const { data } = JSON.parse(cached);
+                setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+            }
+        } catch (e) {
+            // Ignore errors, default to free
+        }
+    }, []);
+
+    return { isPro };
+}
+
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
     const MEDICATIONS = useMedicationsList();
-    const { setAnswer: setContextAnswer } = useChatQuiz();
+    const {
+        setAnswer: setContextAnswer,
+        incrementQuizCompletions,
+        isQuizLimitReached,
+        remainingQuizzes
+    } = useChatQuiz();
+    const { isPro } = useLocalSubscriptionStatus();
+
+    // Paywall modal state
+    const [showPaywall, setShowPaywall] = useState(false);
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1275,7 +1305,21 @@ const Wizard = () => {
     const handleNextFromTransplant = () => setStep(3);
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
-    const handleNextFromCosts = () => setStep(6);
+    const handleNextFromCosts = () => {
+        // Pro users always have access
+        if (isPro) {
+            setStep(6);
+            return;
+        }
+        // Check if free tier limit is reached
+        if (isQuizLimitReached) {
+            setShowPaywall(true);
+            return;
+        }
+        // Increment quiz completion count and proceed
+        incrementQuizCompletions();
+        setStep(6);
+    };
 
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
@@ -1860,6 +1904,12 @@ const Wizard = () => {
     // Step 5: Your Costs (Financial Status)
     if (step === 5) {
         return (
+            <>
+            <PaywallModal
+                isOpen={showPaywall}
+                onClose={() => setShowPaywall(false)}
+                featureType="quiz"
+            />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
                 {renderProgress()}
@@ -1871,6 +1921,15 @@ const Wizard = () => {
                     <h1 className="text-2xl font-bold">Your Costs</h1>
                 </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
+
+                {/* Show remaining quizzes notice for free users */}
+                {!isPro && remainingQuizzes > 0 && remainingQuizzes <= 2 && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
+                        <strong>Note:</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.{' '}
+                        <Link to="/pricing" className="text-blue-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
+                    </div>
+                )}
+
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
                 </div>
@@ -1934,6 +1993,7 @@ const Wizard = () => {
                     })}
                 </div>
             </div>
+            </>
         );
     }
 
