@@ -1380,6 +1380,18 @@ const Wizard = () => {
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
+                {/* Free tier usage indicator */}
+                {!isPro && (
+                    <div className="flex justify-end mt-2">
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                            remainingQuizzes <= 1 ? 'bg-amber-100 text-amber-700' :
+                            remainingQuizzes <= 2 ? 'bg-blue-100 text-blue-700' :
+                            'bg-slate-100 text-slate-600'
+                        }`}>
+                            {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left
+                        </span>
+                    </div>
+                )}
             </div>
         );
     };
@@ -1410,9 +1422,30 @@ const Wizard = () => {
                     <h1 className="text-2xl font-bold">About You</h1>
                 </div>
                 <p className="text-slate-600 mb-4">Let's start with some basics to personalize your experience.</p>
-                <p className="text-sm text-slate-500 mb-6 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                <p className="text-sm text-slate-500 mb-4 bg-slate-50 border border-slate-200 rounded-lg p-3">
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
+
+                {/* Free tier usage info */}
+                {!isPro && (
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <Info size={20} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm">
+                            <p className="text-emerald-800">
+                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.
+                                {remainingQuizzes <= 2 && remainingQuizzes > 0 && (
+                                    <span> Running low? <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.</span>
+                                )}
+                            </p>
+                            {remainingQuizzes > 2 && (
+                                <p className="text-emerald-700 mt-1">
+                                    Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
+                                    <Link to="/pricing" className="underline">Learn more</Link>
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                )}
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">
@@ -1927,9 +1960,12 @@ const Wizard = () => {
 
                 {/* Show remaining quizzes notice for free users */}
                 {!isPro && remainingQuizzes > 0 && remainingQuizzes <= 2 && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
-                        <strong>Note:</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.{' '}
-                        <Link to="/pricing" className="text-blue-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-amber-800">
+                            <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining after this one.{' '}
+                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes and full features.
+                        </div>
                     </div>
                 )}
 
