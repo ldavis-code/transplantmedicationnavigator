@@ -71,7 +71,7 @@ const Account = () => {
       <article className="max-w-2xl mx-auto space-y-8 pb-12">
         <header className="text-center py-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
-            <User size={32} className="text-slate-400" />
+            <User size={32} className="text-slate-500" aria-hidden="true" />
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900 mb-4">Account</h1>
           <p className="text-slate-600">Please log in to view your account</p>
@@ -116,15 +116,16 @@ const Account = () => {
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <Crown size={24} className={isPro ? 'text-amber-500' : 'text-slate-300'} />
+              <Crown size={24} className={isPro ? 'text-amber-500' : 'text-slate-500'} aria-hidden="true" />
               Subscription
             </h2>
             <button
               onClick={refresh}
-              className="p-2 text-slate-400 hover:text-emerald-600 transition"
+              className="p-2 text-slate-500 hover:text-emerald-600 transition"
               title="Refresh subscription status"
+              aria-label="Refresh subscription status"
             >
-              <RefreshCw size={18} />
+              <RefreshCw size={18} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -166,7 +167,7 @@ const Account = () => {
                 <div className="bg-slate-50 rounded-lg p-4 space-y-3">
                   {subscription.subscription_plan && (
                     <div className="flex items-center gap-3 text-slate-700">
-                      <CreditCard size={18} className="text-slate-400" />
+                      <CreditCard size={18} className="text-slate-500" aria-hidden="true" />
                       <span>
                         {subscription.subscription_plan === 'yearly'
                           ? 'Yearly Plan ($79.99/year)'
@@ -176,7 +177,7 @@ const Account = () => {
                   )}
                   {subscription.subscription_expires_at && (
                     <div className="flex items-center gap-3 text-slate-700">
-                      <Calendar size={18} className="text-slate-400" />
+                      <Calendar size={18} className="text-slate-500" aria-hidden="true" />
                       <span>
                         {subscription.subscription_status === 'cancelled'
                           ? 'Access until: '

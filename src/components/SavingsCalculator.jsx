@@ -205,10 +205,11 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                             {selectedMeds.length > 1 && (
                                 <button
                                     onClick={() => removeMedication(index)}
-                                    className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                                    className="p-2 text-slate-500 hover:text-red-500 transition-colors"
                                     title="Remove medication"
+                                    aria-label={`Remove ${selectedMeds[index].medication || 'medication'}`}
                                 >
-                                    <Trash2 size={18} />
+                                    <Trash2 size={18} aria-hidden="true" />
                                 </button>
                             )}
                         </div>

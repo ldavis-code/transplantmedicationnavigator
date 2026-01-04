@@ -171,11 +171,12 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Program Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
+                        <label htmlFor="programName" className="block text-sm font-medium text-slate-700 mb-1">
                             Program Used
                         </label>
                         <input
                             type="text"
+                            id="programName"
                             name="programName"
                             value={formData.programName}
                             onChange={handleChange}
@@ -184,10 +185,11 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
+                        <label htmlFor="programType" className="block text-sm font-medium text-slate-700 mb-1">
                             Program Type
                         </label>
                         <select
+                            id="programType"
                             name="programType"
                             value={formData.programType}
                             onChange={handleChange}
@@ -263,11 +265,12 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
 
                 {/* Fill Date */}
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label htmlFor="fillDate" className="block text-sm font-medium text-slate-700 mb-1">
                         Fill Date
                     </label>
                     <input
                         type="date"
+                        id="fillDate"
                         name="fillDate"
                         value={formData.fillDate}
                         onChange={handleChange}
@@ -277,10 +280,11 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
 
                 {/* Notes */}
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Notes <span className="text-slate-500 font-normal">(optional)</span>
+                    <label htmlFor="notes" className="block text-sm font-medium text-slate-700 mb-1">
+                        Notes <span className="text-slate-600 font-normal">(optional)</span>
                     </label>
                     <textarea
+                        id="notes"
                         name="notes"
                         value={formData.notes}
                         onChange={handleChange}

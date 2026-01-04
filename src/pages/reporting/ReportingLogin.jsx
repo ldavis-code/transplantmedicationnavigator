@@ -57,7 +57,7 @@ export default function ReportingLogin() {
                         <BarChart3 className="h-8 w-8 text-white" />
                     </div>
                     <h1 className="text-2xl font-bold text-white">Analytics Dashboard</h1>
-                    <p className="text-slate-400 mt-1">
+                    <p className="text-slate-600 mt-1">
                         Transplant Medication Navigator
                     </p>
                 </div>
@@ -67,13 +67,14 @@ export default function ReportingLogin() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Password */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="adminPassword" className="block text-sm font-medium text-gray-700 mb-1">
                                 Admin Password
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" aria-hidden="true" />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
+                                    id="adminPassword"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
@@ -84,7 +85,8 @@ export default function ReportingLogin() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                                 >
                                     {showPassword ? (
                                         <EyeOff className="h-5 w-5" />
