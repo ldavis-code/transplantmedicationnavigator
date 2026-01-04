@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import SavingsCalculator from '../components/SavingsCalculator';
 import LogSavingsForm from '../components/LogSavingsForm';
 import SavingsDashboard from '../components/SavingsDashboard';
+import PaywallModal from '../components/PaywallModal';
 import { syncPendingEntries } from '../lib/savingsApi';
 import { useMedications } from '../context/MedicationsContext';
+import { useChatQuiz } from '../context/ChatQuizContext';
 
 // Check localStorage for subscription status (set by Account page)
 function useLocalSubscription() {
@@ -30,8 +32,14 @@ export default function SavingsTracker() {
     const [activeTab, setActiveTab] = useState('calculator');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [syncMessage, setSyncMessage] = useState(null);
+    const [showPaywall, setShowPaywall] = useState(false);
     const { medications } = useMedications();
     const { isPro } = useLocalSubscription();
+    const {
+        incrementCalculatorUses,
+        isCalculatorLimitReached,
+        remainingCalculatorUses
+    } = useChatQuiz();
 
     // Try to sync any pending local entries on mount
     useEffect(() => {
@@ -58,7 +66,29 @@ export default function SavingsTracker() {
         window.location.href = '/pricing';
     };
 
+    // Handler for when user attempts to calculate savings
+    const handleCalculate = () => {
+        // Pro users always have access
+        if (isPro) {
+            return true;
+        }
+        // Check if free tier limit is reached
+        if (isCalculatorLimitReached) {
+            setShowPaywall(true);
+            return false;
+        }
+        // Increment calculator uses count
+        incrementCalculatorUses();
+        return true;
+    };
+
     return (
+        <>
+        <PaywallModal
+            isOpen={showPaywall}
+            onClose={() => setShowPaywall(false)}
+            featureType="calculator"
+        />
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 mb-6 text-white">
@@ -132,11 +162,22 @@ export default function SavingsTracker() {
                 hidden={activeTab !== 'calculator'}
             >
             {activeTab === 'calculator' && (
-                <SavingsCalculator
-                    medications={medications || []}
-                    isPro={isPro}
-                    onUpgrade={handleUpgrade}
-                />
+                <>
+                    {/* Show remaining calculations notice for free users */}
+                    {!isPro && remainingCalculatorUses > 0 && remainingCalculatorUses <= 2 && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
+                            <strong>Note:</strong> You have {remainingCalculatorUses} free calculation{remainingCalculatorUses !== 1 ? 's' : ''} remaining.{' '}
+                            <Link to="/pricing" className="text-blue-700 underline font-medium">Upgrade to Pro</Link> for unlimited calculations.
+                        </div>
+                    )}
+                    <SavingsCalculator
+                        medications={medications || []}
+                        isPro={isPro}
+                        onUpgrade={handleUpgrade}
+                        onCalculate={handleCalculate}
+                        remainingCalculations={remainingCalculatorUses}
+                    />
+                </>
             )}
             </div>
 
@@ -193,5 +234,6 @@ export default function SavingsTracker() {
             )}
             </div>
         </div>
+        </>
     );
 }
