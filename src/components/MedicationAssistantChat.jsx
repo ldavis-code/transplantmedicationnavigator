@@ -9,7 +9,8 @@ import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
   User, Building2, Heart, AlertCircle, Printer, Lock,
-  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb, PlusCircle
+  ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb, PlusCircle,
+  Gift, Shield
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 
@@ -53,6 +54,9 @@ const MedicationAssistantChat = () => {
     maxFreeSearches,
     incrementSearchCount,
     incrementQuizCompletions,
+    remainingQuizzes,
+    maxFreeQuizzes,
+    isQuizLimitReached,
   } = useChatQuiz();
 
   // Local chat state (kept separate for API communication)
@@ -73,6 +77,9 @@ const MedicationAssistantChat = () => {
 
   // Popup blocked warning state (replaces browser alert)
   const [popupBlockedWarning, setPopupBlockedWarning] = useState(false);
+
+  // Track if user has started the quiz (dismissed intro)
+  const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
 
   // Refs
   const messagesEndRef = useRef(null);
@@ -440,6 +447,7 @@ const MedicationAssistantChat = () => {
     setError(null);
     setMedicationSearch('');
     setMedicationResults([]);
+    setHasStartedQuiz(false);
     resetProgress();
     setTimeout(() => {
       if (mode === 'chat') {
@@ -826,6 +834,91 @@ const MedicationAssistantChat = () => {
     );
   };
 
+  // Render quiz intro with transparency messaging
+  const renderQuizIntro = () => {
+    return (
+      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-sm mx-auto space-y-4">
+          {/* Welcome Header */}
+          <div className="text-center pt-2">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full mb-3">
+              <HeartHandshake size={32} className="text-emerald-600" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-800 mb-2">
+              Find Your Medication Pathway
+            </h3>
+            <p className="text-slate-600 text-sm">
+              Answer a few quick questions and we'll show you assistance programs you may qualify for.
+            </p>
+          </div>
+
+          {/* Transparency Banner - Free Trial Info */}
+          <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Gift size={20} className="text-emerald-600" />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-emerald-800 text-sm mb-1">
+                  {remainingQuizzes} free pathway quizzes — no account required
+                </p>
+                <p className="text-emerald-700 text-xs leading-relaxed">
+                  After that, subscriptions start at $8.99/month for unlimited quizzes, searches, and savings tracking.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* What You'll Learn */}
+          <div className="bg-white border border-slate-200 rounded-xl p-4">
+            <h4 className="font-semibold text-slate-700 text-sm mb-3 flex items-center gap-2">
+              <Sparkles size={16} className="text-purple-500" />
+              What you'll discover:
+            </h4>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
+                Copay assistance and savings cards
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
+                Patient assistance programs (free meds)
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
+                Foundation grants for out-of-pocket costs
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
+                Low-cost pharmacy alternatives
+              </li>
+            </ul>
+          </div>
+
+          {/* Privacy Note */}
+          <div className="flex items-center gap-2 text-xs text-slate-500 justify-center">
+            <Shield size={14} />
+            <span>Your answers stay on your device. No account needed.</span>
+          </div>
+
+          {/* Start Button */}
+          <button
+            onClick={() => setHasStartedQuiz(true)}
+            className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg shadow-lg hover:shadow-xl"
+          >
+            Start My Path Quiz
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Time estimate */}
+          <p className="text-center text-xs text-slate-400">
+            Takes about 2 minutes • 6 simple questions
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   // Render quiz progress indicator
   const renderQuizProgress = () => {
     const progressPercent = Math.round((quizProgress.currentQuestionIndex / QUIZ_QUESTIONS.length) * 100);
@@ -886,6 +979,12 @@ const MedicationAssistantChat = () => {
   const renderQuizMode = () => {
     if (quizProgress.isComplete || hasSeenResults) {
       return renderUnifiedResults();
+    }
+
+    // Show intro screen if user hasn't started and has no progress
+    const hasNoProgress = Object.keys(answers).length === 0 && quizProgress.currentQuestionIndex === 0;
+    if (!hasStartedQuiz && hasNoProgress) {
+      return renderQuizIntro();
     }
 
     const question = currentQuizQuestion;
