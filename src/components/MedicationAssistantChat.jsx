@@ -603,15 +603,15 @@ const MedicationAssistantChat = () => {
                   {selectedMedications.map((med) => (
                     <span
                       key={med.id}
-                      className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm"
+                      className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-base font-medium"
                     >
                       {med.brand_name}
                       <button
                         onClick={() => handleMedicationRemove(med.id)}
-                        className="hover:bg-emerald-200 rounded-full p-0.5"
+                        className="hover:bg-emerald-200 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                         aria-label={`Remove ${med.brand_name}`}
                       >
-                        <X size={14} />
+                        <X size={16} aria-hidden="true" />
                       </button>
                     </span>
                   ))}
@@ -685,7 +685,7 @@ const MedicationAssistantChat = () => {
                   {med.brand_name}
                   <button
                     onClick={() => handleMedicationRemove(med.id)}
-                    className="hover:bg-emerald-200 rounded-full p-1 min-w-[32px] min-h-[32px] flex items-center justify-center transition-colors"
+                    className="hover:bg-emerald-200 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                     aria-label={`Remove ${med.brand_name} from selection`}
                   >
                     <X size={16} aria-hidden="true" />
@@ -1331,7 +1331,7 @@ const MedicationAssistantChat = () => {
                 {(hasProgress || messages.length > 1 || isChatComplete) && (
                   <button
                     onClick={handleReset}
-                    className="hover:bg-white/20 p-2 rounded-lg transition"
+                    className="hover:bg-white/20 p-2 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Start over"
                     title="Start over"
                   >
@@ -1340,7 +1340,7 @@ const MedicationAssistantChat = () => {
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-white/20 p-2 rounded-lg transition"
+                  className="hover:bg-white/20 p-2 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Close"
                 >
                   <X size={20} />
@@ -1440,7 +1440,7 @@ const MedicationAssistantChat = () => {
                     </div>
                     <button
                       onClick={() => setPopupBlockedWarning(false)}
-                      className="ml-auto p-1 hover:bg-amber-100 rounded min-w-[32px] min-h-[32px] flex items-center justify-center"
+                      className="ml-auto p-2 hover:bg-amber-100 rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
                       aria-label="Dismiss warning"
                     >
                       <X size={16} aria-hidden="true" />
@@ -1484,10 +1484,10 @@ const MedicationAssistantChat = () => {
                 <button
                   onClick={handleTextSubmit}
                   disabled={!inputValue.trim() || isLoading}
-                  className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-3 rounded-xl transition disabled:cursor-not-allowed"
+                  className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-3 rounded-xl transition disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Send message"
                 >
-                  <Send size={20} />
+                  <Send size={20} aria-hidden="true" />
                 </button>
               </div>
             ) : (
