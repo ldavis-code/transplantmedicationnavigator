@@ -107,7 +107,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
     return (
         <div className="bg-white rounded-xl border border-slate-200 p-6">
             <div className="flex items-center gap-2 mb-4">
-                <DollarSign className="text-emerald-600" size={24} />
+                <DollarSign className="text-emerald-600" size={24} aria-hidden="true" />
                 <h3 className="text-lg font-bold text-slate-900">Log Your Savings</h3>
             </div>
 
@@ -298,16 +298,16 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-emerald-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-emerald-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px]"
                 >
                     {isLoading ? (
                         <>
-                            <Loader2 className="animate-spin" size={20} />
+                            <Loader2 className="animate-spin" size={20} aria-hidden="true" />
                             Saving...
                         </>
                     ) : (
                         <>
-                            <Check size={20} />
+                            <Check size={20} aria-hidden="true" />
                             Log Savings
                         </>
                     )}

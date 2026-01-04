@@ -108,7 +108,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                        <TrendingUp className="text-emerald-600" size={24} />
+                        <TrendingUp className="text-emerald-600" size={24} aria-hidden="true" />
                         <h3 className="text-lg font-bold text-emerald-900">Your Total Savings</h3>
                     </div>
                     <div className="flex gap-2">
@@ -177,22 +177,22 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {totalEntries > 0 && (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                        <DollarSign className="mx-auto text-blue-500 mb-2" size={24} />
+                        <DollarSign className="mx-auto text-blue-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">${avgPerFill.toFixed(0)}</div>
                         <div className="text-sm text-slate-500">Avg per fill</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                        <Pill className="mx-auto text-purple-500 mb-2" size={24} />
+                        <Pill className="mx-auto text-purple-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{uniqueMeds}</div>
                         <div className="text-sm text-slate-500">Medications</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                        <Calendar className="mx-auto text-amber-500 mb-2" size={24} />
+                        <Calendar className="mx-auto text-amber-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{totalEntries}</div>
                         <div className="text-sm text-slate-500">Total fills</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                        <Award className="mx-auto text-emerald-500 mb-2" size={24} />
+                        <Award className="mx-auto text-emerald-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{achievedMilestones.length}</div>
                         <div className="text-sm text-slate-500">Milestones</div>
                     </div>
@@ -255,9 +255,10 @@ export default function SavingsDashboard({ refreshTrigger }) {
                         <h4 className="font-bold text-slate-900">Recent Savings</h4>
                         <button
                             onClick={() => setShowEntries(!showEntries)}
-                            className="text-sm text-emerald-600 hover:text-emerald-700"
+                            className="text-sm text-emerald-600 hover:text-emerald-700 min-h-[44px] px-3 flex items-center"
+                            aria-expanded={showEntries}
                         >
-                            {showEntries ? 'Hide' : `Show all (${entries.length})`}
+                            {showEntries ? 'Hide entries' : `Show all (${entries.length})`}
                         </button>
                     </div>
                     <div className="space-y-3">
@@ -277,11 +278,10 @@ export default function SavingsDashboard({ refreshTrigger }) {
                                     <button
                                         onClick={() => handleDelete(entry.id)}
                                         disabled={deleteLoading === entry.id}
-                                        className="p-1 text-slate-500 hover:text-red-500 transition-colors"
-                                        title="Delete entry"
+                                        className="p-2 text-slate-500 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                                         aria-label={`Delete savings entry for ${entry.medication_name}`}
                                     >
-                                        <Trash2 size={16} className={deleteLoading === entry.id ? 'animate-spin' : ''} />
+                                        <Trash2 size={16} className={deleteLoading === entry.id ? 'animate-spin' : ''} aria-hidden="true" />
                                     </button>
                                 </div>
                             </div>

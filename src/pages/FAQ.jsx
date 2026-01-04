@@ -56,7 +56,7 @@ const FAQ = () => {
             <div className="border border-slate-200 rounded-lg overflow-hidden">
                 <button
                     onClick={() => toggleQuestion(index)}
-                    className="w-full px-6 py-4 text-left bg-white hover:bg-slate-50 transition flex items-center justify-between gap-4"
+                    className="w-full px-6 py-4 text-left bg-white hover:bg-slate-50 transition flex items-center justify-between gap-4 min-h-[44px]"
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${index}`}
                 >

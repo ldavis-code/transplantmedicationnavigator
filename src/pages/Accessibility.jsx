@@ -5,7 +5,7 @@ import { useMetaTags } from '../hooks/useMetaTags.js';
 const Accessibility = () => {
     useMetaTags({
         title: 'Accessibility Statement | Transplant Medication Navigator',
-        description: 'Our commitment to digital accessibility for all users, including those with disabilities. Learn about our WCAG 2.1 AA compliance efforts.',
+        description: 'Our commitment to digital accessibility for all users, including those with disabilities. This website is conformant with WCAG 2.1 Level AA standards.',
         keywords: 'accessibility, WCAG, screen reader, disability, accessible healthcare'
     });
 
@@ -16,7 +16,7 @@ const Accessibility = () => {
                     <AccessibilityIcon size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility Statement</h1>
-                <p className="text-slate-600">Last Updated: January 3, 2026</p>
+                <p className="text-slate-600">Last Updated: January 4, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
@@ -49,7 +49,7 @@ const Accessibility = () => {
                     <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start gap-3">
                         <CheckCircle className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <p className="text-emerald-800">
-                            This website is partially conformant with WCAG 2.1 Level AA. We continuously work to identify and fix accessibility barriers.
+                            This website is conformant with WCAG 2.1 Level AA. We continuously work to maintain and improve accessibility across all features.
                         </p>
                     </div>
                 </section>
