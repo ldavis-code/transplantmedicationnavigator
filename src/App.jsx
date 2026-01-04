@@ -740,7 +740,7 @@ const Home = () => {
                 </div>
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                     <img
-                        src="/lorrinda-gray-davis.jpg"
+                        src="/photos/lorrinda-gray-davis.jpg"
                         alt="Lorrinda Gray-Davis, founder of Transplant Medication Navigator"
                         className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-emerald-200 shadow-lg flex-shrink-0"
                         onError={(e) => { e.target.style.display = 'none'; }}
