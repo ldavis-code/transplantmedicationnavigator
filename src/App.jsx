@@ -4922,19 +4922,19 @@ ${patientName || "[Your Name]"}`;
 
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
-            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl text-slate-600 max-w-3xl mx-auto">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
-            <Link to="/wizard" className="block bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 mb-6 hover:border-blue-400 transition group">
+            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
+            <Link to="/wizard" className="block bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-5 mb-6 hover:border-blue-400 transition group">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-blue-600 text-white p-2 rounded-lg">
-                            <Sparkles size={20} aria-hidden="true" />
+                    <div className="flex items-center gap-4">
+                        <div className="bg-blue-600 text-white p-3 rounded-lg">
+                            <Sparkles size={24} aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="font-bold text-blue-900">Not sure which programs to apply to?</p>
-                            <p className="text-sm text-blue-700">Take the My Path Quiz first to get personalized recommendations</p>
+                            <p className="font-bold text-lg text-blue-900">Not sure which programs to apply to?</p>
+                            <p className="text-base text-blue-700">Take the My Path Quiz first to get personalized recommendations</p>
                         </div>
                     </div>
-                    <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={20} aria-hidden="true" />
+                    <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={24} aria-hidden="true" />
                 </div>
             </Link>
             <nav className="bg-white rounded-xl shadow-md border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections">
@@ -4949,45 +4949,45 @@ ${patientName || "[Your Name]"}`;
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
-                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-lg mb-2 flex items-center gap-2"><CheckCircle size={20} aria-hidden="true" /> Good News</h2><ul className="list-disc pl-5 text-emerald-900 space-y-1"><li><strong>PAPs and Foundations ask for the same information.</strong></li><li>Gather documents once → apply to multiple programs.</li></ul></aside>
+                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-xl mb-3 flex items-center gap-2"><CheckCircle size={24} aria-hidden="true" /> Good News</h2><ul className="list-disc pl-5 text-emerald-900 space-y-2 text-lg leading-relaxed"><li><strong>PAPs and Foundations ask for the same information.</strong></li><li>Gather documents once → apply to multiple programs.</li></ul></aside>
 
                         <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8" aria-labelledby="pap-definition">
-                            <h3 id="pap-definition" className="text-xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
-                            <p className="text-slate-700 leading-relaxed mb-4">
+                            <h3 id="pap-definition" className="text-2xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
+                            <p className="text-lg text-slate-800 leading-relaxed mb-4">
                                 Patient Assistance Programs (PAPs) are programs created by drug companies and medical supply makers to help patients access affordable medications. These programs provide prescription medications at no cost or low cost for individuals who need help affording their medications.
                             </p>
-                            <p className="text-slate-700 leading-relaxed font-medium">
+                            <p className="text-lg text-slate-800 leading-relaxed font-medium">
                                 <strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs.
                             </p>
                         </section>
 
                         <div className="grid md:grid-cols-3 gap-6">
                             <section className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
-                                <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <Pill size={24} aria-hidden="true" />
+                                <div className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                                    <Pill size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-blue-900 text-lg mb-3">Patient Assistance Programs</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
+                                <h3 className="font-bold text-blue-900 text-xl mb-3">Patient Assistance Programs</h3>
+                                <p className="text-slate-800 text-base leading-relaxed">
                                     Programs for everyone who needs affordable medications. Get prescription medications at no cost or minimal fee, regardless of insurance status.
                                 </p>
                             </section>
 
                             <section className="bg-purple-50 p-6 rounded-xl border-2 border-purple-200">
-                                <div className="bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <DollarSign size={24} aria-hidden="true" />
+                                <div className="bg-purple-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                                    <DollarSign size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-purple-900 text-lg mb-3">Help Paying What You Owe</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
+                                <h3 className="font-bold text-purple-900 text-xl mb-3">Help Paying What You Owe</h3>
+                                <p className="text-slate-800 text-base leading-relaxed">
                                     Ask the drug company or foundation to help pay what you owe after your insurance company has paid for qualifying medications.
                                 </p>
                             </section>
 
                             <section className="bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200">
-                                <div className="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                    <Shield size={24} aria-hidden="true" />
+                                <div className="bg-indigo-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                                    <Shield size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-indigo-900 text-lg mb-3">Help Paying for Insurance</h3>
-                                <p className="text-slate-700 text-sm leading-relaxed">
+                                <h3 className="font-bold text-indigo-900 text-xl mb-3">Help Paying for Insurance</h3>
+                                <p className="text-slate-800 text-base leading-relaxed">
                                     Ask the foundation to help pay what you owe to your insurance company to keep your medical or prescription coverage.
                                 </p>
                             </section>
@@ -4995,61 +4995,61 @@ ${patientName || "[Your Name]"}`;
 
                         <div className="grid md:grid-cols-2 gap-8">
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-emerald-300 transition-colors" aria-labelledby="pap-heading">
-                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg" aria-hidden="true"><FileText size={24} /></div><div><h2 id="pap-heading" className="font-bold text-lg text-slate-900">Patient Assistance Program (PAP)</h2><p className="text-xs text-slate-600">Direct from Manufacturer</p></div></div>
-                                <p className="text-slate-600 mb-4 text-sm min-h-[40px]">Free or low-cost medications provided directly by the drug company.</p>
-                                <div className="space-y-3 text-sm"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-600"><li>Commercial insurance</li><li>Uninsured</li><li>Underinsured</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-600">Approval Time</span><span className="font-medium text-emerald-700">2–4 weeks</span></div></div>
+                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-indigo-100 text-indigo-700 rounded-lg" aria-hidden="true"><FileText size={28} /></div><div><h2 id="pap-heading" className="font-bold text-xl text-slate-900">Patient Assistance Program (PAP)</h2><p className="text-base text-slate-700">Direct from Manufacturer</p></div></div>
+                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">Free or low-cost medications provided directly by the drug company.</p>
+                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-700"><li>Commercial insurance</li><li>Uninsured</li><li>Underinsured</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">Approval Time</span><span className="font-medium text-emerald-700">2–4 weeks</span></div></div>
                             </section>
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-sky-300 transition-colors" aria-labelledby="foundation-heading">
-                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-2 bg-sky-100 text-sky-700 rounded-lg" aria-hidden="true"><HeartHandshake size={24} /></div><div><h2 id="foundation-heading" className="font-bold text-lg text-slate-900">Foundation Grant</h2><p className="text-xs text-slate-600">Non-profit Assistance</p></div></div>
-                                <p className="text-slate-600 mb-4 text-sm min-h-[40px]">Helps with copays, premiums, deductibles, and out-of-pocket costs.</p>
-                                <div className="space-y-3 text-sm"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-600"><li>Medicare patients</li><li>High copay patients</li><li>Premium burden</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-600">Approval Time</span><span className="font-medium text-emerald-700">1–3 weeks</span></div></div>
+                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-sky-100 text-sky-700 rounded-lg" aria-hidden="true"><HeartHandshake size={28} /></div><div><h2 id="foundation-heading" className="font-bold text-xl text-slate-900">Foundation Grant</h2><p className="text-base text-slate-700">Non-profit Assistance</p></div></div>
+                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">Helps with copays, premiums, deductibles, and out-of-pocket costs.</p>
+                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-700"><li>Medicare patients</li><li>High copay patients</li><li>Premium burden</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">Approval Time</span><span className="font-medium text-emerald-700">1–3 weeks</span></div></div>
                             </section>
                         </div>
 
                         <aside className="bg-rose-50 border-l-4 border-rose-500 p-6 rounded-r-lg" role="note">
-                            <h3 className="font-bold text-rose-900 mb-3 flex items-center gap-2">
-                                <AlertCircle size={20} aria-hidden="true" />
+                            <h3 className="font-bold text-xl text-rose-900 mb-3 flex items-center gap-2">
+                                <AlertCircle size={24} aria-hidden="true" />
                                 Important Safety Notice
                             </h3>
-                            <p className="text-rose-900 font-bold leading-relaxed">
+                            <p className="text-lg text-rose-900 font-bold leading-relaxed">
                                 Remember: Real organizations NEVER ask for payment. If someone asks for payment or credit card details, that's a scam.
                             </p>
                         </aside>
 
                         <aside className="bg-amber-50 p-6 rounded-xl border border-amber-100" role="note">
-                            <h2 className="font-bold text-amber-900 mb-4 flex items-center gap-2"><AlertOctagon size={20} aria-hidden="true" /> Important Reminders</h2>
-                            <div className="grid md:grid-cols-2 gap-6 text-amber-800 text-sm"><div><strong className="block text-amber-900">Apply Once Only</strong>Multiple submissions to the same foundation slow down approval.</div><div><strong className="block text-amber-900">Apply Anytime</strong>There is no "season." Apply when cost becomes a barrier.</div><div><strong className="block text-amber-900">People Want to Help</strong>Most PAP and foundation teams are kind and patient.</div><div><strong className="block text-amber-900">Fax is Still Used</strong>Faxed forms go directly to a secure, dedicated team.</div></div>
+                            <h2 className="font-bold text-xl text-amber-900 mb-4 flex items-center gap-2"><AlertOctagon size={24} aria-hidden="true" /> Important Reminders</h2>
+                            <div className="grid md:grid-cols-2 gap-6 text-amber-800 text-base leading-relaxed"><div><strong className="block text-amber-900 text-lg">Apply Once Only</strong>Multiple submissions to the same foundation slow down approval.</div><div><strong className="block text-amber-900 text-lg">Apply Anytime</strong>There is no "season." Apply when cost becomes a barrier.</div><div><strong className="block text-amber-900 text-lg">People Want to Help</strong>Most PAP and foundation teams are kind and patient.</div><div><strong className="block text-amber-900 text-lg">Fax is Still Used</strong>Faxed forms go directly to a secure, dedicated team.</div></div>
                         </aside>
                     </div>
                 )}
                 {activeTab === 'INCOME' && (
                     <div className="space-y-10 max-w-4xl mx-auto">
-                        <div><h2 className="text-2xl font-bold text-slate-900 mb-4">Who Can Get Help</h2><p className="text-lg text-slate-600 mb-2">Most drug companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r" role="note"><p className="text-red-800 font-bold">Don't Count Yourself Out: Many programs have much higher income limits than you might expect.</p></div></div>
-                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-lg mb-3">How Income Limits Work</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-lg mb-3">Where to Find Guidelines</h3><ul className="space-y-2 text-slate-600 list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
-                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={20} aria-hidden="true" /> Quick Income Checker</h3><p className="text-slate-600 mb-4">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={16} aria-hidden="true" /></a><a href="https://medicineassistancetool.org/" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit MAT.org to search by medication (opens in new tab)">MAT.org (Search by Med) <ExternalLink size={16} aria-hidden="true" /></a></div></section>
+                        <div><h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Who Can Get Help</h2><p className="text-lg md:text-xl text-slate-700 mb-4 leading-relaxed">Most drug companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-5 rounded-r" role="note"><p className="text-lg text-red-800 font-bold leading-relaxed">Don't Count Yourself Out: Many programs have much higher income limits than you might expect.</p></div></div>
+                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-xl mb-4">How Income Limits Work</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-xl mb-4">Where to Find Guidelines</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-xl text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={24} aria-hidden="true" /> Quick Income Checker</h3><p className="text-base text-slate-700 mb-4 leading-relaxed">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={18} aria-hidden="true" /></a><a href="https://medicineassistancetool.org/" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit MAT.org to search by medication (opens in new tab)">MAT.org (Search by Med) <ExternalLink size={18} aria-hidden="true" /></a></div></section>
                     </div>
                 )}
                 {activeTab === 'STEPS' && (
                     <div className="max-w-3xl mx-auto">
-                        <h2 className="text-2xl font-bold text-slate-900 mb-6">Apply These Principles to Both PAPs and Foundations</h2>
-                        <section className="bg-white p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm" aria-labelledby="requirements-heading">
-                            <h3 id="requirements-heading" className="font-bold text-lg text-slate-900 mb-4">Both require:</h3>
-                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-3"><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Your name and contact info</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Doctor / coordinator contact</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Income and household size</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Diagnosis + medication list</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Insurance information</li><li className="flex items-center gap-2 text-slate-700"><div className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></div>Patient history</li></ul>
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">Apply These Principles to Both PAPs and Foundations</h2>
+                        <section className="bg-white p-6 md:p-8 rounded-xl border-l-4 border-emerald-500 shadow-sm" aria-labelledby="requirements-heading">
+                            <h3 id="requirements-heading" className="font-bold text-xl text-slate-900 mb-5">Both require:</h3>
+                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-4"><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Your name and contact info</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Doctor / coordinator contact</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Income and household size</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Diagnosis + medication list</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Insurance information</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Patient history</li></ul>
                         </section>
                     </div>
                 )}
                 {activeTab === 'CHECKLIST' && (
                     <div className="max-w-4xl mx-auto">
-                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl font-bold text-slate-900">"Before You Apply" Checklist</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-bold" aria-label="Print checklist"><Printer size={18} aria-hidden="true" /> Print</button></div>
+                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl md:text-3xl font-bold text-slate-900">"Before You Apply" Checklist</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-base text-emerald-600 hover:text-emerald-700 font-bold" aria-label="Print checklist"><Printer size={20} aria-hidden="true" /> Print</button></div>
                         <div className="grid lg:grid-cols-5 gap-8">
                             <div className="lg:col-span-3 space-y-6">
-                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-sm font-bold text-slate-700">Your Responsibility</span><span className="text-sm font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-3" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-3 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-600 text-xs mt-2 italic">Gather these items before you apply. Click to check them off.</p></section>
-                                <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={20} /> : <Square size={20} />}</div><span className={`font-medium text-sm md:text-base ${isChecked ? 'text-slate-900' : 'text-slate-600'}`}>{item}</span></button> ); })}</div>
-                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center fade-in" role="alert" aria-live="polite"><span className="font-bold">🎉 You have everything you need! Time to apply.</span></div> )}
+                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-base font-bold text-slate-700">Your Responsibility</span><span className="text-base font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-4" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-4 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-700 text-base mt-3 italic">Gather these items before you apply. Click to check them off.</p></section>
+                                <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={24} /> : <Square size={24} />}</div><span className={`font-medium text-base leading-relaxed ${isChecked ? 'text-slate-900' : 'text-slate-700'}`}>{item}</span></button> ); })}</div>
+                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center fade-in" role="alert" aria-live="polite"><span className="font-bold text-lg">🎉 You have everything you need! Time to apply.</span></div> )}
                             </div>
                             <aside className="lg:col-span-2 space-y-6">
-                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={20} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-xs text-slate-600 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-indigo-400 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
-                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={20} aria-hidden="true" /> Crucial Step</h3><p className="text-sm text-amber-900 leading-relaxed">It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program.</p></aside>
+                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={24} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-base text-slate-700 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-base text-slate-700"><CheckCircle size={18} className="text-indigo-500 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
+                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-lg text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={24} aria-hidden="true" /> Crucial Step</h3><p className="text-base text-amber-900 leading-relaxed">It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program.</p></aside>
                             </aside>
                         </div>
                     </div>
@@ -5057,17 +5057,17 @@ ${patientName || "[Your Name]"}`;
                 {activeTab === 'LETTERS' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         {/* Letter Builder */}
-                        <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100" aria-labelledby="letter-builder">
-                            <div className="flex items-center gap-2 mb-4">
-                                <FileText className="text-indigo-600" size={24} aria-hidden="true" />
-                                <h2 id="letter-builder" className="text-xl font-bold text-indigo-900">Letter Builder</h2>
+                        <section className="bg-indigo-50 p-6 md:p-8 rounded-xl border border-indigo-100" aria-labelledby="letter-builder">
+                            <div className="flex items-center gap-3 mb-4">
+                                <FileText className="text-indigo-600" size={28} aria-hidden="true" />
+                                <h2 id="letter-builder" className="text-2xl font-bold text-indigo-900">Letter Builder</h2>
                             </div>
-                            <p className="text-sm text-indigo-800 mb-6">Select a letter type, fill in your details, and generate a professional letter you can copy and use.</p>
+                            <p className="text-base text-indigo-800 mb-6 leading-relaxed">Select a letter type, fill in your details, and generate a professional letter you can copy and use.</p>
 
-                            <div className="space-y-4">
+                            <div className="space-y-5">
                                 <div>
-                                    <label htmlFor="letter-type" className="block text-sm font-bold text-slate-700 mb-2">Letter Type</label>
-                                    <select id="letter-type" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={letterType} onChange={(e) => { setLetterType(e.target.value); setGeneratedLetter(""); }}>
+                                    <label htmlFor="letter-type" className="block text-base font-bold text-slate-800 mb-2">Letter Type</label>
+                                    <select id="letter-type" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={letterType} onChange={(e) => { setLetterType(e.target.value); setGeneratedLetter(""); }}>
                                         <option value="appeal">Insurance Appeal Letter</option>
                                         <option value="pap">PAP Reconsideration Letter</option>
                                         <option value="doctor">Request Doctor's Support</option>
@@ -5075,21 +5075,21 @@ ${patientName || "[Your Name]"}`;
                                     </select>
                                 </div>
 
-                                <div className="grid md:grid-cols-2 gap-4">
+                                <div className="grid md:grid-cols-2 gap-5">
                                     <div>
-                                        <label htmlFor="patient-name" className="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
-                                        <input id="patient-name" type="text" placeholder="Your full name" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
+                                        <label htmlFor="patient-name" className="block text-base font-bold text-slate-800 mb-2">Your Name</label>
+                                        <input id="patient-name" type="text" placeholder="Your full name" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
                                     </div>
                                     <div>
-                                        <label htmlFor="medication-name" className="block text-sm font-bold text-slate-700 mb-2">Medication Name</label>
-                                        <input id="medication-name" type="text" placeholder="e.g., Tacrolimus" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
+                                        <label htmlFor="medication-name" className="block text-base font-bold text-slate-800 mb-2">Medication Name</label>
+                                        <input id="medication-name" type="text" placeholder="e.g., Tacrolimus" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
                                     </div>
                                 </div>
 
                                 {letterType === "appeal" && (
                                     <div>
-                                        <label htmlFor="appeal-reason" className="block text-sm font-bold text-slate-700 mb-2">Reason for Appeal</label>
-                                        <select id="appeal-reason" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={appealReason} onChange={(e) => setAppealReason(e.target.value)}>
+                                        <label htmlFor="appeal-reason" className="block text-base font-bold text-slate-800 mb-2">Reason for Appeal</label>
+                                        <select id="appeal-reason" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={appealReason} onChange={(e) => setAppealReason(e.target.value)}>
                                             <option value="Financial Hardship">Financial Hardship</option>
                                             <option value="Access Issues">Access Issues (Timing/Delivery)</option>
                                             <option value="Clinical Stability">Clinical Stability (Already stable)</option>
@@ -5098,54 +5098,54 @@ ${patientName || "[Your Name]"}`;
                                 )}
 
                                 {(letterType === "pap" || letterType === "hardship") && (
-                                    <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="grid md:grid-cols-2 gap-5">
                                         <div>
-                                            <label htmlFor="transplant-type" className="block text-sm font-bold text-slate-700 mb-2">Transplant Type</label>
-                                            <input id="transplant-type" type="text" placeholder="e.g., Kidney, Liver, Heart" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantType} onChange={(e) => setTransplantType(e.target.value)} />
+                                            <label htmlFor="transplant-type" className="block text-base font-bold text-slate-800 mb-2">Transplant Type</label>
+                                            <input id="transplant-type" type="text" placeholder="e.g., Kidney, Liver, Heart" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantType} onChange={(e) => setTransplantType(e.target.value)} />
                                         </div>
                                         <div>
-                                            <label htmlFor="transplant-date" className="block text-sm font-bold text-slate-700 mb-2">Transplant Date (optional)</label>
-                                            <input id="transplant-date" type="text" placeholder="e.g., January 2023" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantDate} onChange={(e) => setTransplantDate(e.target.value)} />
+                                            <label htmlFor="transplant-date" className="block text-base font-bold text-slate-800 mb-2">Transplant Date (optional)</label>
+                                            <input id="transplant-date" type="text" placeholder="e.g., January 2023" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantDate} onChange={(e) => setTransplantDate(e.target.value)} />
                                         </div>
                                     </div>
                                 )}
 
                                 {letterType === "doctor" && (
                                     <div>
-                                        <label htmlFor="doctor-name" className="block text-sm font-bold text-slate-700 mb-2">Doctor's Name</label>
-                                        <input id="doctor-name" type="text" placeholder="e.g., Smith" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
+                                        <label htmlFor="doctor-name" className="block text-base font-bold text-slate-800 mb-2">Doctor's Name</label>
+                                        <input id="doctor-name" type="text" placeholder="e.g., Smith" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
                                     </div>
                                 )}
 
                                 {(letterType === "pap" || letterType === "doctor") && (
                                     <div>
-                                        <label htmlFor="program-name" className="block text-sm font-bold text-slate-700 mb-2">Program Name(s)</label>
-                                        <input id="program-name" type="text" placeholder="e.g., Astellas Patient Assistance" className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={programName} onChange={(e) => setProgramName(e.target.value)} />
+                                        <label htmlFor="program-name" className="block text-base font-bold text-slate-800 mb-2">Program Name(s)</label>
+                                        <input id="program-name" type="text" placeholder="e.g., Astellas Patient Assistance" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={programName} onChange={(e) => setProgramName(e.target.value)} />
                                     </div>
                                 )}
 
                                 {(letterType === "pap" || letterType === "hardship") && (
                                     <div>
-                                        <label htmlFor="hardship-details" className="block text-sm font-bold text-slate-700 mb-2">Describe Your Situation</label>
-                                        <textarea id="hardship-details" rows={3} placeholder="Briefly describe your financial circumstances..." className="w-full p-3 rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={hardshipDetails} onChange={(e) => setHardshipDetails(e.target.value)} />
+                                        <label htmlFor="hardship-details" className="block text-base font-bold text-slate-800 mb-2">Describe Your Situation</label>
+                                        <textarea id="hardship-details" rows={3} placeholder="Briefly describe your financial circumstances..." className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={hardshipDetails} onChange={(e) => setHardshipDetails(e.target.value)} />
                                     </div>
                                 )}
 
-                                <button onClick={generateLetter} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition flex items-center gap-2">
-                                    <FileText size={18} aria-hidden="true" />
+                                <button onClick={generateLetter} className="bg-indigo-600 hover:bg-indigo-700 text-white text-base font-bold py-3 px-6 rounded-lg transition flex items-center gap-2">
+                                    <FileText size={20} aria-hidden="true" />
                                     Generate Letter
                                 </button>
 
                                 {generatedLetter && (
                                     <div className="mt-6 bg-white p-6 rounded-xl border border-indigo-200 relative">
                                         <div className="flex justify-between items-center mb-4">
-                                            <h3 className="text-sm font-bold text-slate-600 uppercase">Generated Letter:</h3>
-                                            <button onClick={copyToClipboard} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold transition">
-                                                {copied ? <Check size={16} className="text-green-600" aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+                                            <h3 className="text-base font-bold text-slate-700 uppercase">Generated Letter:</h3>
+                                            <button onClick={copyToClipboard} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-base font-bold transition">
+                                                {copied ? <Check size={18} className="text-green-600" aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
                                                 {copied ? 'Copied!' : 'Copy Text'}
                                             </button>
                                         </div>
-                                        <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-indigo-200 pl-4">{generatedLetter}</pre>
+                                        <pre className="whitespace-pre-wrap font-serif text-base text-slate-800 leading-relaxed border-l-4 border-indigo-200 pl-4">{generatedLetter}</pre>
                                     </div>
                                 )}
                             </div>
@@ -5153,25 +5153,25 @@ ${patientName || "[Your Name]"}`;
 
                         {/* Phone Scripts */}
                         <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Phone Scripts</h2>
-                            <p className="text-slate-600 mb-6">Use these scripts when calling manufacturers and foundations.</p>
+                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Phone Scripts</h2>
+                            <p className="text-lg text-slate-700 mb-6 leading-relaxed">Use these scripts when calling manufacturers and foundations.</p>
                             <div className="space-y-4">
                                 <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script">
-                                    <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700">
-                                        <Phone size={18} aria-hidden="true" />
+                                    <div className="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3 font-bold text-lg text-slate-800">
+                                        <Phone size={22} aria-hidden="true" />
                                         <span id="manufacturer-script">Calling Manufacturers</span>
                                     </div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-lg text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p>
+                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p>
                                     </div>
                                 </section>
                                 <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script">
-                                    <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700">
-                                        <HeartHandshake size={18} aria-hidden="true" />
+                                    <div className="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3 font-bold text-lg text-slate-800">
+                                        <HeartHandshake size={22} aria-hidden="true" />
                                         <span id="foundation-script">Calling Foundations</span>
                                     </div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-lg text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p>
+                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p>
                                     </div>
                                 </section>
                             </div>
