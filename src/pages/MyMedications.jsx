@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 const STORAGE_KEY = 'tmn_my_medications';
 
@@ -11,6 +13,8 @@ function generateId() {
 }
 
 export default function MyMedications() {
+  useMetaTags(seoMetadata.myMedications);
+
   const [medications, setMedications] = useState([]);
   const [medMessage, setMedMessage] = useState({ text: '', type: '' });
   const [newMed, setNewMed] = useState({

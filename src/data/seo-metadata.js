@@ -171,6 +171,94 @@ export const seoMetadata = {
     twitterDescription: 'Manage your Transplant Medication Navigator account and subscription.',
     breadcrumbName: 'My Account',
   },
+
+  survey: {
+    title: 'Share Your Journey | Transplant Medication Navigator™',
+    description: 'Share your medication experience to help improve access for all patients. Anonymous surveys for transplant recipients and anyone managing chronic conditions.',
+    canonical: `${BASE_URL}/survey`,
+    ogTitle: 'Share Your Medication Journey',
+    ogDescription: 'Your experience can change the system. Take our anonymous survey to help improve medication access for patients everywhere.',
+    twitterTitle: 'Share Your Journey',
+    twitterDescription: 'Share your medication experience to help improve access for all patients. Anonymous surveys available.',
+    breadcrumbName: 'Survey',
+  },
+
+  surveyTransplant: {
+    title: 'Transplant Medication Survey | Transplant Medication Navigator™',
+    description: 'Share your transplant medication journey. Help us understand challenges with anti-rejection drugs, pharmacies, insurance, and assistance programs.',
+    canonical: `${BASE_URL}/survey/transplant`,
+    ogTitle: 'Transplant Medication Journey Survey',
+    ogDescription: 'Share your experience with transplant medications. Your anonymous feedback helps improve access for all transplant patients.',
+    twitterTitle: 'Transplant Medication Survey',
+    twitterDescription: 'Share your transplant medication journey to help improve access for all patients.',
+    breadcrumbName: 'Transplant Survey',
+  },
+
+  surveyGeneral: {
+    title: 'General Medication Survey | Transplant Medication Navigator™',
+    description: 'Share your experience managing medications for chronic conditions. Help us advocate for better medication access and affordability.',
+    canonical: `${BASE_URL}/survey/general`,
+    ogTitle: 'General Medication Survey',
+    ogDescription: 'Share your medication experience. Your anonymous feedback helps advocate for better access and affordability.',
+    twitterTitle: 'General Medication Survey',
+    twitterDescription: 'Share your experience managing medications for chronic conditions.',
+    breadcrumbName: 'General Survey',
+  },
+
+  myMedications: {
+    title: 'My Medications | Transplant Medication Navigator™',
+    description: 'Track your transplant medications, renewal dates, and costs. Manage your medication list privately on your device with export and import options.',
+    canonical: `${BASE_URL}/my-medications`,
+    ogTitle: 'My Medications - Track Your Prescriptions',
+    ogDescription: 'Track your transplant medications, renewal dates, and costs. Manage your medication list privately on your device.',
+    twitterTitle: 'My Medications',
+    twitterDescription: 'Track your transplant medications, renewal dates, and costs privately.',
+    breadcrumbName: 'My Medications',
+  },
+
+  savingsTracker: {
+    title: 'Savings Calculator | Transplant Medication Navigator™',
+    description: 'Calculate how much you could save on transplant medications with assistance programs. Track actual savings and see your total benefits over time.',
+    canonical: `${BASE_URL}/savings-tracker`,
+    ogTitle: 'Medication Savings Calculator',
+    ogDescription: 'See how much you could save on transplant medications with assistance programs. Calculate and track your actual savings.',
+    twitterTitle: 'Savings Calculator',
+    twitterDescription: 'Calculate how much you could save on transplant medications with assistance programs.',
+    breadcrumbName: 'Savings Calculator',
+  },
+
+  subscribe: {
+    title: 'Subscribe to Pro | Transplant Medication Navigator™',
+    description: 'Unlock unlimited features with a Pro subscription. Save medications, track savings, and get personalized assistance recommendations.',
+    canonical: `${BASE_URL}/subscribe`,
+    ogTitle: 'Subscribe to Pro - Unlock All Features',
+    ogDescription: 'Get unlimited access to My Path Quiz, medication tracking, savings calculator, and more with a Pro subscription.',
+    twitterTitle: 'Subscribe to Pro',
+    twitterDescription: 'Unlock unlimited features with a Transplant Medication Navigator Pro subscription.',
+    breadcrumbName: 'Subscribe',
+  },
+
+  subscribeSuccess: {
+    title: 'Welcome to Pro! | Transplant Medication Navigator™',
+    description: 'Your Pro subscription is now active. Enjoy unlimited access to all Transplant Medication Navigator features.',
+    canonical: `${BASE_URL}/subscribe/success`,
+    ogTitle: 'Welcome to Pro!',
+    ogDescription: 'Your subscription is active. Enjoy unlimited access to all Transplant Medication Navigator features.',
+    twitterTitle: 'Welcome to Pro!',
+    twitterDescription: 'Your Pro subscription is now active. Enjoy all features.',
+    breadcrumbName: 'Subscription Success',
+  },
+
+  subscribeCancel: {
+    title: 'Subscription Cancelled | Transplant Medication Navigator™',
+    description: 'Your subscription checkout was cancelled. You can still use all free features of Transplant Medication Navigator.',
+    canonical: `${BASE_URL}/subscribe/cancel`,
+    ogTitle: 'Subscription Cancelled',
+    ogDescription: 'Checkout cancelled. You can still use all free features including medication search and educational resources.',
+    twitterTitle: 'Subscription Cancelled',
+    twitterDescription: 'Checkout cancelled. Continue using free features anytime.',
+    breadcrumbName: 'Subscription Cancelled',
+  },
 };
 
 /**

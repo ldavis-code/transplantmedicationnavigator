@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn } from 'lucide-react';
 import { useSubscriberAuth } from '../context/SubscriberAuthContext';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 const Subscribe = () => {
+    useMetaTags(seoMetadata.subscribe);
+
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { isAuthenticated, user } = useSubscriberAuth();

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { XCircle, ArrowLeft, HelpCircle } from 'lucide-react';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 const SubscribeCancel = () => {
+    useMetaTags(seoMetadata.subscribeCancel);
     return (
         <article className="max-w-2xl mx-auto text-center py-12 space-y-8">
             {/* Cancel Icon */}

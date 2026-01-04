@@ -9,12 +9,16 @@ import {
   Heart,
   ChevronLeft
 } from 'lucide-react';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 // Transplant Medication Journey Survey
 // Captures transplant-specific failure points in medication access
 // HIPAA-free: All user self-reported, no PHI collected
 
 export default function TransplantMedicationSurvey() {
+  useMetaTags(seoMetadata.surveyTransplant);
+
   const [activeTab, setActiveTab] = useState(null);
   const [responses, setResponses] = useState({});
   const [completedSections, setCompletedSections] = useState(new Set());

@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Heart, Pill, Shield, Quote } from 'lucide-react';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 // Survey Landing Page
 // Offers transplant-specific and general medication surveys
 
 export default function SurveyLanding() {
+  useMetaTags(seoMetadata.survey);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
       {/* Header */}

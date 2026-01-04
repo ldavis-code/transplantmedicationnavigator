@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 const SITE_URL = 'https://transplantmedicationnavigator.com';
 
 // Define all routes with their SEO metadata
-// Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), and confirmation pages
+// Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), auth pages, and confirmation pages
 const routes = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
     { path: '/wizard', changefreq: 'monthly', priority: 0.9 },
@@ -24,6 +24,9 @@ const routes = [
     { path: '/pilot', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/transplant', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/general', changefreq: 'monthly', priority: 0.6 },
+    { path: '/terms-and-conditions', changefreq: 'yearly', priority: 0.4 },
+    { path: '/privacy', changefreq: 'yearly', priority: 0.4 },
+    { path: '/accessibility', changefreq: 'yearly', priority: 0.4 },
 ];
 
 function generateSitemap() {
