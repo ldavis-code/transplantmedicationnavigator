@@ -334,6 +334,40 @@ body {
     [aria-disabled="true"] {
         color: GrayText !important;
     }
+
+    /* Tab icons in forced colors mode */
+    [role="tab"] span[aria-hidden="true"] {
+        background-color: ButtonFace !important;
+        border: 1px solid ButtonText !important;
+    }
+
+    [role="tab"][aria-selected="true"] span[aria-hidden="true"] {
+        background-color: Highlight !important;
+    }
+}
+
+/* ========================================
+   TAB ICON ACCESSIBILITY ENHANCEMENTS
+   Ensures colored tab icons work with accessibility preferences
+   ======================================== */
+
+/* High contrast mode - ensure tab icons have sufficient contrast */
+@media (prefers-contrast: more) {
+    [role="tab"] span[aria-hidden="true"] {
+        border: 2px solid currentColor !important;
+    }
+
+    [role="tab"][aria-selected="true"] span[aria-hidden="true"] {
+        outline: 3px solid #000 !important;
+        outline-offset: 2px !important;
+    }
+}
+
+/* Reduced motion - disable scale transform on tab icons */
+@media (prefers-reduced-motion: reduce) {
+    [role="tab"] span[aria-hidden="true"] {
+        transform: none !important;
+    }
 }
 
 /* ========================================

@@ -4910,9 +4910,13 @@ ${patientName || "[Your Name]"}`;
         med.brandName.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const TabButton = ({ id, label, icon: Icon }) => (
-        <button onClick={() => setActiveTab(id)} role="tab" id={`${id}-tab`} aria-selected={activeTab === id} aria-controls={`${id}-panel`} tabIndex={activeTab === id ? 0 : -1} className={`flex items-center gap-2 px-4 py-3 font-bold text-sm md:text-base transition-all border-b-4 min-h-[44px] ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
-            <Icon size={18} aria-hidden="true" /><span className="hidden md:inline">{label}</span><span className="md:hidden">{label.split(' ')[0]}</span>
+    const TabButton = ({ id, label, icon: Icon, iconBg, iconColor }) => (
+        <button onClick={() => setActiveTab(id)} role="tab" id={`${id}-tab`} aria-selected={activeTab === id} aria-controls={`${id}-panel`} tabIndex={activeTab === id ? 0 : -1} className={`flex items-center gap-3 px-5 py-4 font-bold text-base md:text-lg transition-all border-b-4 min-h-[52px] ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
+            <span className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg ${iconBg} transition-transform ${activeTab === id ? 'scale-110' : ''}`} aria-hidden="true">
+                <Icon size={20} className={iconColor} strokeWidth={2.5} />
+            </span>
+            <span className="hidden md:inline">{label}</span>
+            <span className="md:hidden">{label.split(' ')[0]}</span>
         </button>
     );
 
@@ -4933,7 +4937,15 @@ ${patientName || "[Your Name]"}`;
                     <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={20} aria-hidden="true" />
                 </div>
             </Link>
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections"><div className="flex min-w-max"><TabButton id="START" label="Getting Started" icon={HeartHandshake} /><TabButton id="INCOME" label="Income" icon={DollarSign} /><TabButton id="STEPS" label="Steps" icon={ArrowRight} /><TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} /><TabButton id="LETTERS" label="Letters" icon={FileText} /></div></nav>
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections">
+                <div className="flex min-w-max">
+                    <TabButton id="START" label="Getting Started" icon={HeartHandshake} iconBg="bg-rose-100" iconColor="text-rose-600" />
+                    <TabButton id="INCOME" label="Income" icon={DollarSign} iconBg="bg-emerald-100" iconColor="text-emerald-600" />
+                    <TabButton id="STEPS" label="Steps" icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
+                    <TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} iconBg="bg-amber-100" iconColor="text-amber-600" />
+                    <TabButton id="LETTERS" label="Letters" icon={FileText} iconBg="bg-purple-100" iconColor="text-purple-600" />
+                </div>
+            </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
