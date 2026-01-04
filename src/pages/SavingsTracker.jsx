@@ -6,16 +6,32 @@ import LogSavingsForm from '../components/LogSavingsForm';
 import SavingsDashboard from '../components/SavingsDashboard';
 import { syncPendingEntries } from '../lib/savingsApi';
 import { useMedications } from '../context/MedicationsContext';
-import { useAuth } from '../context/AuthContext';
-import { useSubscription } from '../hooks/useSubscription';
+
+// Check localStorage for subscription status (set by Account page)
+function useLocalSubscription() {
+    const [isPro, setIsPro] = useState(false);
+
+    useEffect(() => {
+        try {
+            const cached = localStorage.getItem('tmn_subscription');
+            if (cached) {
+                const { data } = JSON.parse(cached);
+                setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+            }
+        } catch (e) {
+            // Ignore errors, default to free
+        }
+    }, []);
+
+    return { isPro };
+}
 
 export default function SavingsTracker() {
     const [activeTab, setActiveTab] = useState('calculator');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [syncMessage, setSyncMessage] = useState(null);
     const { medications } = useMedications();
-    const { user } = useAuth();
-    const { isPro } = useSubscription(user?.email);
+    const { isPro } = useLocalSubscription();
 
     // Try to sync any pending local entries on mount
     useEffect(() => {
