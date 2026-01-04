@@ -485,7 +485,7 @@
       "name": "Adempas Co-Pay Program",
       "manufacturer": "Bayer",
       "medications": ["riociguat"],
-      "url": "https://www.adempas-us.com/cteph/financial-support",
+      "url": "https://www.adempas-us.com/",
       "phone": "1-855-423-3672",
       "eligibility": {
         "commercial": true,
@@ -645,7 +645,7 @@
       "name": "Dulera Savings Card",
       "manufacturer": "Organon",
       "medications": ["mometasone-formoterol"],
-      "url": "https://www.dulera.com/savings/",
+      "url": "https://www.organonhelps.com/",
       "phone": "1-800-672-6372",
       "eligibility": {
         "commercial": true,
@@ -1239,7 +1239,7 @@
       "name": "Alexion OneSource",
       "manufacturer": "Alexion",
       "medications": ["soliris", "ultomiris"],
-      "url": "https://alexion.com/our-patients",
+      "url": "https://alexiononesource.com/",
       "phone": "1-888-765-4747",
       "eligibility": {
         "commercial": false,
@@ -1375,7 +1375,7 @@
       "name": "Teva Cares Foundation",
       "manufacturer": "Teva",
       "medications": ["qvar", "proair"],
-      "url": "https://www.tevausa.com/patient-resources/",
+      "url": "https://www.tevacares.org/",
       "phone": "1-877-832-7276",
       "eligibility": {
         "commercial": false,
@@ -1392,7 +1392,7 @@
       "name": "Grifols Patient Care Programs",
       "manufacturer": "Grifols",
       "medications": ["hbig", "gamunex"],
-      "url": "https://www.grifolspatientcare.com/",
+      "url": "https://www.grifols.com/en/supporting-patients",
       "phone": "1-800-520-2807",
       "eligibility": {
         "commercial": false,
@@ -1409,7 +1409,7 @@
       "name": "CSL Vifor Patient Support",
       "manufacturer": "CSL Vifor",
       "medications": ["mircera", "ferinject"],
-      "url": "https://www.cslvifor.com/",
+      "url": "https://www.csl.com/patients-public-health/patient-support-and-organizations/csl-vifor-managed-access-programs",
       "phone": "1-888-847-7477",
       "eligibility": {
         "commercial": false,
@@ -1443,7 +1443,7 @@
       "name": "Bayer Patient Assistance Foundation",
       "manufacturer": "Bayer",
       "medications": ["adempas"],
-      "url": "https://www.adempas-us.com/",
+      "url": "https://www.bayer.com/en/pharma/patients",
       "phone": "1-855-423-3672",
       "eligibility": {
         "commercial": false,
@@ -1523,7 +1523,7 @@
     "patient-advocate-foundation": {
       "programId": "patient-advocate-foundation",
       "name": "Patient Advocate Foundation Co-Pay Relief",
-      "url": "https://www.copays.org/",
+      "url": "https://www.patientadvocate.org/connect-with-services/copay-relief/",
       "phone": "1-866-512-3861",
       "fax": "1-757-952-0119",
       "address": {
