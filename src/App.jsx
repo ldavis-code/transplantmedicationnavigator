@@ -450,10 +450,10 @@ const Layout = ({ children }) => {
                         ))}
                         <Link
                             to="/savings-tracker"
-                            aria-label="Track your medication savings"
+                            aria-label="Calculate your medication savings"
                             className="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
                         >
-                            Track Your Savings
+                            Savings Calculator
                         </Link>
                     </nav>
 
@@ -490,10 +490,10 @@ const Layout = ({ children }) => {
                             <Link
                                 to="/savings-tracker"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                aria-label="Track your medication savings"
+                                aria-label="Calculate your medication savings"
                                 className="px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
                             >
-                                Track Your Savings
+                                Savings Calculator
                             </Link>
                         </div>
                     </nav>

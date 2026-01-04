@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, AlertTriangle, Download, Upload, TrendingUp } from 'lucide-react';
+import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
 
 const STORAGE_KEY = 'tmn_my_medications';
@@ -144,16 +144,16 @@ export default function MyMedications() {
         </div>
       </div>
 
-      {/* Savings Tracker CTA */}
+      {/* Savings Calculator CTA */}
       <Link
         to="/savings-tracker"
         className="block bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-4 mb-6 text-white hover:from-emerald-700 hover:to-teal-700 transition-all"
       >
         <div className="flex items-center gap-3">
-          <TrendingUp size={24} />
+          <Calculator size={24} />
           <div>
-            <div className="font-semibold">Track Your Savings</div>
-            <div className="text-emerald-100 text-sm">Log prescription fills anonymously and see how much you're saving</div>
+            <div className="font-semibold">Savings Calculator</div>
+            <div className="text-emerald-100 text-sm">See how much you could save with assistance programs</div>
           </div>
         </div>
       </Link>
@@ -161,7 +161,7 @@ export default function MyMedications() {
       {/* Header with Export/Import */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold text-slate-900">Track Your Savings</h1>
+          <h1 className="text-2xl font-bold text-slate-900">My Medications</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={handleExport}

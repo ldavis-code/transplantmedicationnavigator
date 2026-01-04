@@ -63,10 +63,10 @@ const SubscribeSuccess = () => {
                     <ArrowRight size={18} />
                 </Link>
                 <Link
-                    to="/my-medications"
+                    to="/savings-tracker"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-emerald-700 border-2 border-emerald-200 font-bold rounded-xl transition"
                 >
-                    Track Your Savings
+                    Savings Calculator
                 </Link>
             </div>
 
