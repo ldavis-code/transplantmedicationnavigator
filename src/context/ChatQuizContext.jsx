@@ -2,17 +2,22 @@
  * Chat Quiz Context
  * Shared state management for integrated chat and quiz functionality
  * Enables seamless switching between chat and quiz modes with progress persistence
+ * Syncs to server for authenticated users, falls back to localStorage for guests
  */
 
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
 const ChatQuizContext = createContext(null);
 
 // Storage key for localStorage persistence
 const STORAGE_KEY = 'medication_navigator_progress';
+const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 
 // Maximum number of medication searches allowed in free tier
 const MAX_FREE_SEARCHES = 4;
+
+// Debounce delay for server sync (ms)
+const SYNC_DEBOUNCE_MS = 2000;
 
 // Question definitions for the quiz mode
 const QUIZ_QUESTIONS = [
@@ -181,13 +186,132 @@ function saveToStorage(state) {
   }
 }
 
+/**
+ * Check if user is authenticated (has valid token)
+ */
+function isAuthenticated() {
+  return !!localStorage.getItem(SUBSCRIBER_TOKEN_KEY);
+}
+
+/**
+ * Get auth token
+ */
+function getAuthToken() {
+  return localStorage.getItem(SUBSCRIBER_TOKEN_KEY);
+}
+
 export function ChatQuizProvider({ children }) {
   const [state, setState] = useState(() => loadFromStorage());
+  const [serverLoaded, setServerLoaded] = useState(false);
+  const syncTimeoutRef = useRef(null);
+  const lastSyncedRef = useRef(null);
 
-  // Save to localStorage whenever relevant state changes
+  // Load data from server on mount if authenticated
   useEffect(() => {
+    async function loadFromServer() {
+      if (!isAuthenticated()) {
+        setServerLoaded(true);
+        return;
+      }
+
+      try {
+        const response = await fetch('/.netlify/functions/subscriber-data/quiz', {
+          headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Object.keys(data).length > 0) {
+            // Merge server data with local state
+            setState(prev => {
+              const merged = {
+                ...prev,
+                answers: data.answers || prev.answers,
+                selectedMedications: data.selected_medications || prev.selectedMedications,
+                results: data.results || prev.results,
+                usageTracking: data.usage_tracking || prev.usageTracking,
+                quizProgress: data.quiz_progress || prev.quizProgress,
+                isOpen: false,
+              };
+              // Update lastSynced to prevent immediate re-sync
+              lastSyncedRef.current = JSON.stringify({
+                answers: merged.answers,
+                selectedMedications: merged.selectedMedications,
+                results: merged.results,
+                usageTracking: merged.usageTracking,
+                quizProgress: merged.quizProgress,
+              });
+              return merged;
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load data from server:', err);
+      } finally {
+        setServerLoaded(true);
+      }
+    }
+
+    loadFromServer();
+  }, []);
+
+  // Sync to server (debounced)
+  const syncToServer = useCallback(async (stateToSync) => {
+    if (!isAuthenticated()) return;
+
+    const dataToSync = {
+      answers: stateToSync.answers,
+      selectedMedications: stateToSync.selectedMedications,
+      results: stateToSync.results,
+      usageTracking: stateToSync.usageTracking,
+      quizProgress: stateToSync.quizProgress,
+    };
+
+    // Check if data has changed since last sync
+    const currentData = JSON.stringify(dataToSync);
+    if (currentData === lastSyncedRef.current) return;
+
+    try {
+      const response = await fetch('/.netlify/functions/subscriber-data/quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+        body: JSON.stringify(dataToSync),
+      });
+
+      if (response.ok) {
+        lastSyncedRef.current = currentData;
+      }
+    } catch (err) {
+      console.warn('Failed to sync to server:', err);
+    }
+  }, []);
+
+  // Save to localStorage and debounce server sync when state changes
+  useEffect(() => {
+    // Always save to localStorage
     saveToStorage(state);
-  }, [state.answers, state.quizProgress, state.selectedMedications, state.results, state.hasSeenResults, state.mode, state.usageTracking]);
+
+    // Debounce server sync
+    if (serverLoaded && isAuthenticated()) {
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current);
+      }
+      syncTimeoutRef.current = setTimeout(() => {
+        syncToServer(state);
+      }, SYNC_DEBOUNCE_MS);
+    }
+
+    return () => {
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current);
+      }
+    };
+  }, [state.answers, state.quizProgress, state.selectedMedications, state.results, state.hasSeenResults, state.mode, state.usageTracking, serverLoaded, syncToServer]);
 
   // Set mode (chat or quiz)
   const setMode = useCallback((mode) => {
@@ -365,6 +489,14 @@ export function ChatQuizProvider({ children }) {
     }));
   }, []);
 
+  // Force sync to server (for immediate sync needs)
+  const forceSync = useCallback(() => {
+    if (syncTimeoutRef.current) {
+      clearTimeout(syncTimeoutRef.current);
+    }
+    syncToServer(state);
+  }, [state, syncToServer]);
+
   // Check if search limit is reached
   const isSearchLimitReached = useMemo(() => {
     return state.usageTracking.searchCount >= MAX_FREE_SEARCHES;
@@ -428,6 +560,7 @@ export function ChatQuizProvider({ children }) {
     isSearchLimitReached,
     remainingSearches,
     maxFreeSearches: MAX_FREE_SEARCHES,
+    isServerSynced: isAuthenticated(),
 
     // Actions
     setMode,
@@ -446,6 +579,7 @@ export function ChatQuizProvider({ children }) {
     resetProgress,
     incrementSearchCount,
     incrementQuizCompletions,
+    forceSync,
   }), [
     state,
     hasProgress,
@@ -470,6 +604,7 @@ export function ChatQuizProvider({ children }) {
     resetProgress,
     incrementSearchCount,
     incrementQuizCompletions,
+    forceSync,
   ]);
 
   return (

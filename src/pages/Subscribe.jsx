@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
+import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn } from 'lucide-react';
+import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 
 const Subscribe = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const { isAuthenticated, user } = useSubscriberAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -43,17 +45,9 @@ const Subscribe = () => {
         setError(null);
 
         try {
-            // Get user info from Supabase if logged in
-            let email = null;
-            let userId = null;
-
-            if (window.supabaseClient) {
-                const { data: { user } } = await window.supabaseClient.auth.getUser();
-                if (user) {
-                    email = user.email;
-                    userId = user.id;
-                }
-            }
+            // Use subscriber auth context for user info
+            const email = user?.email || null;
+            const userId = user?.id || null;
 
             const response = await fetch('/.netlify/functions/create-checkout', {
                 method: 'POST',
@@ -128,6 +122,49 @@ const Subscribe = () => {
                     Unlock all features with a {selectedPlan.name.toLowerCase()} subscription
                 </p>
             </header>
+
+            {/* Account Status */}
+            {!isAuthenticated && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                        <User size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                            <p className="text-amber-800 font-medium">Create an account to sync across devices</p>
+                            <p className="text-amber-700 text-sm mt-1">
+                                Sign up for free to access your subscription and saved data on any device.
+                            </p>
+                            <div className="flex gap-3 mt-3">
+                                <Link
+                                    to={`/login/register?redirect=/subscribe?plan=${plan}`}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition"
+                                >
+                                    <User size={14} />
+                                    Create Account
+                                </Link>
+                                <Link
+                                    to={`/login?redirect=/subscribe?plan=${plan}`}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-amber-700 hover:bg-amber-100 text-sm font-medium rounded-lg transition"
+                                >
+                                    <LogIn size={14} />
+                                    Sign In
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {isAuthenticated && (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                    <div className="flex items-center gap-3">
+                        <CheckCircle size={20} className="text-emerald-600" />
+                        <div>
+                            <p className="text-emerald-800 font-medium">Signed in as {user.email}</p>
+                            <p className="text-emerald-700 text-sm">Your subscription will be linked to your account.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Plan Selection */}
             <div className="flex gap-4 justify-center">

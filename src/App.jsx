@@ -23,6 +23,10 @@ const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 
+// Subscriber auth pages (lazy loaded)
+const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
+const LazySubscriberRegister = lazy(() => import('./pages/subscriber/Register.jsx'));
+
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
 const LazyReportingDashboard = lazy(() => import('./pages/reporting/ReportingDashboard.jsx'));
@@ -42,6 +46,8 @@ import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 import TermTooltip, { DefineInline, GlossaryLink } from './components/TermTooltip.jsx';
 // Chat Quiz Context Provider
 import { ChatQuizProvider, useChatQuiz } from './context/ChatQuizContext.jsx';
+// Subscriber Auth Provider
+import { SubscriberAuthProvider } from './context/SubscriberAuthContext.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -5351,6 +5357,8 @@ const MainSiteRoutes = () => (
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />
                 <Route path="/accessibility" element={<LazyAccessibility />} />
                 <Route path="/account" element={<LazyAccount />} />
+                <Route path="/login" element={<LazySubscriberLogin />} />
+                <Route path="/login/register" element={<LazySubscriberRegister />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="*" element={<LazyNotFound />} />
@@ -5404,13 +5412,15 @@ const AppRoutes = () => {
 const App = () => {
     return (
         <MedicationsProvider>
-            <ChatQuizProvider>
-                <BrowserRouter>
-                    <GoogleAnalytics />
-                    <ScrollToTop />
-                    <AppRoutes />
-                </BrowserRouter>
-            </ChatQuizProvider>
+            <SubscriberAuthProvider>
+                <ChatQuizProvider>
+                    <BrowserRouter>
+                        <GoogleAnalytics />
+                        <ScrollToTop />
+                        <AppRoutes />
+                    </BrowserRouter>
+                </ChatQuizProvider>
+            </SubscriberAuthProvider>
         </MedicationsProvider>
     );
 };

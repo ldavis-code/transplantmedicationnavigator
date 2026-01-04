@@ -1,6 +1,6 @@
 /**
  * Account Page
- * User account management with subscription status and billing portal access
+ * User account management with subscription status, data sync, and billing portal access
  */
 
 import { useState, useEffect } from 'react';
@@ -17,40 +17,30 @@ import {
   ExternalLink,
   Calendar,
   RefreshCw,
+  Cloud,
+  CloudOff,
+  Upload,
 } from 'lucide-react';
+import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 import { useSubscription } from '../hooks/useSubscription';
+import { useDataSync } from '../hooks/useDataSync';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
-
-// Storage keys (matching AuthContext)
-const AUTH_USER_KEY = 'tmn_auth_user';
-const AUTH_TOKEN_KEY = 'tmn_auth_token';
 
 const Account = () => {
   useMetaTags(seoMetadata.account);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, isAuthenticated, loading: authLoading, logout, refreshUser } = useSubscriberAuth();
+  const { subscription, loading: subLoading, isPro, isPastDue, hasSubscription, refresh: refreshSubscription, openPortal } =
+    useSubscription(user?.email);
+  const { migrationNeeded, migrateLocalData, syncing } = useDataSync();
+
   const [portalLoading, setPortalLoading] = useState(false);
   const [portalError, setPortalError] = useState(null);
-
-  // Load user from localStorage
-  useEffect(() => {
-    const storedUser = localStorage.getItem(AUTH_USER_KEY);
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error('Error parsing stored user:', e);
-      }
-    }
-  }, []);
-
-  const { subscription, loading, isPro, isPastDue, hasSubscription, refresh, openPortal } =
-    useSubscription(user?.email);
+  const [migrationStatus, setMigrationStatus] = useState(null);
 
   const handleLogout = () => {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(AUTH_USER_KEY);
+    logout();
     navigate('/');
   };
 
@@ -65,8 +55,29 @@ const Account = () => {
     }
   };
 
+  const handleMigrate = async () => {
+    setMigrationStatus('migrating');
+    const result = await migrateLocalData();
+    if (result.success) {
+      setMigrationStatus('success');
+      // Refresh user data after migration
+      refreshUser();
+    } else {
+      setMigrationStatus('error');
+    }
+  };
+
+  // Loading state
+  if (authLoading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <Loader2 size={32} className="animate-spin text-emerald-600" />
+      </div>
+    );
+  }
+
   // If no user is logged in, show login prompt
-  if (!user) {
+  if (!isAuthenticated) {
     return (
       <article className="max-w-2xl mx-auto space-y-8 pb-12">
         <header className="text-center py-8">
@@ -74,27 +85,49 @@ const Account = () => {
             <User size={32} className="text-slate-500" aria-hidden="true" />
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900 mb-4">Account</h1>
-          <p className="text-slate-600">Please log in to view your account</p>
+          <p className="text-slate-600">Sign in to access your account and sync your data across devices</p>
         </header>
 
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-          <p className="text-slate-600 mb-6">
-            You need to be logged in to view your account and manage your subscription.
-          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-center gap-3 text-slate-600">
+              <Cloud size={20} className="text-emerald-600" />
+              <span>Sync your medications and quiz results</span>
+            </div>
+            <div className="flex items-center justify-center gap-3 text-slate-600">
+              <CheckCircle size={20} className="text-emerald-600" />
+              <span>Access your data on any device</span>
+            </div>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/admin/login"
+              to="/login"
               className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition"
             >
-              Log In
+              Sign In
             </Link>
             <Link
-              to="/subscribe"
+              to="/login/register"
               className="px-6 py-3 bg-white hover:bg-slate-50 text-emerald-700 font-bold rounded-lg border border-emerald-200 transition"
             >
-              Subscribe to Pro
+              Create Account
             </Link>
           </div>
+        </div>
+
+        {/* Subscribe CTA */}
+        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200 p-6 text-center">
+          <Crown size={24} className="text-amber-500 mx-auto mb-2" />
+          <h3 className="font-bold text-slate-900 mb-2">Get Pro for Unlimited Access</h3>
+          <p className="text-slate-600 text-sm mb-4">
+            Unlock unlimited quizzes, medication tracking, and more.
+          </p>
+          <Link
+            to="/subscribe"
+            className="inline-block px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition"
+          >
+            View Plans
+          </Link>
         </div>
       </article>
     );
@@ -108,8 +141,57 @@ const Account = () => {
           <User size={32} className="text-emerald-700" />
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">My Account</h1>
-        <p className="text-slate-600">{user.email}</p>
+        <p className="text-slate-600">{user.name || user.email}</p>
+        {user.name && <p className="text-slate-500 text-sm">{user.email}</p>}
       </header>
+
+      {/* Data Migration Notice */}
+      {migrationNeeded && migrationStatus !== 'success' && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0">
+              <Upload size={24} className="text-blue-600" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-blue-900 mb-1">Sync Your Local Data</h3>
+              <p className="text-blue-800 text-sm mb-4">
+                We found saved data on this device. Would you like to sync it to your account so you can access it anywhere?
+              </p>
+              {migrationStatus === 'error' && (
+                <div className="flex items-center gap-2 text-red-600 text-sm mb-3">
+                  <AlertCircle size={16} />
+                  <span>Sync failed. Please try again.</span>
+                </div>
+              )}
+              <button
+                onClick={handleMigrate}
+                disabled={syncing || migrationStatus === 'migrating'}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition disabled:opacity-50 flex items-center gap-2"
+              >
+                {migrationStatus === 'migrating' ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Syncing...
+                  </>
+                ) : (
+                  <>
+                    <Cloud size={16} />
+                    Sync Now
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sync Success Message */}
+      {migrationStatus === 'success' && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-3">
+          <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" />
+          <p className="text-emerald-800">Your data has been synced successfully!</p>
+        </div>
+      )}
 
       {/* Subscription Status Card */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -120,7 +202,7 @@ const Account = () => {
               Subscription
             </h2>
             <button
-              onClick={refresh}
+              onClick={refreshSubscription}
               className="p-2 text-slate-500 hover:text-emerald-600 transition"
               title="Refresh subscription status"
               aria-label="Refresh subscription status"
@@ -131,7 +213,7 @@ const Account = () => {
         </div>
 
         <div className="p-6">
-          {loading ? (
+          {subLoading ? (
             <div className="flex items-center justify-center py-8">
               <Loader2 size={24} className="animate-spin text-emerald-600" />
             </div>
@@ -188,6 +270,12 @@ const Account = () => {
                   )}
                 </div>
               )}
+
+              {/* Sync Status */}
+              <div className="flex items-center gap-3 text-slate-600 bg-slate-50 rounded-lg p-3">
+                <Cloud size={18} className="text-emerald-600" />
+                <span className="text-sm">Your data is synced across all your devices</span>
+              </div>
 
               {/* Portal Error */}
               {portalError && (
@@ -266,7 +354,7 @@ const Account = () => {
             className="w-full flex items-center gap-3 px-4 py-3 text-left text-red-600 hover:bg-red-50 rounded-lg transition"
           >
             <LogOut size={20} />
-            <span className="font-medium">Log Out</span>
+            <span className="font-medium">Sign Out</span>
           </button>
         </div>
       </div>
