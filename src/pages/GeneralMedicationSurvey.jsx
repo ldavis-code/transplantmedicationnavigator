@@ -7,12 +7,16 @@ import {
   HeartHandshake,
   ChevronLeft
 } from 'lucide-react';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 // General Medication Survey
 // For anyone managing chronic conditions
 // HIPAA-free: All user self-reported, no PHI collected
 
 export default function GeneralMedicationSurvey() {
+  useMetaTags(seoMetadata.surveyGeneral);
+
   const [activeTab, setActiveTab] = useState(null);
   const [responses, setResponses] = useState({});
   const [completedSections, setCompletedSections] = useState(new Set());

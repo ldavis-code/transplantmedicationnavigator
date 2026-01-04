@@ -8,6 +8,8 @@ import PaywallModal from '../components/PaywallModal';
 import { syncPendingEntries } from '../lib/savingsApi';
 import { useMedications } from '../context/MedicationsContext';
 import { useChatQuiz } from '../context/ChatQuizContext';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 // Check localStorage for subscription status (set by Account page)
 function useLocalSubscription() {
@@ -29,6 +31,8 @@ function useLocalSubscription() {
 }
 
 export default function SavingsTracker() {
+    useMetaTags(seoMetadata.savingsTracker);
+
     const [activeTab, setActiveTab] = useState('calculator');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [syncMessage, setSyncMessage] = useState(null);

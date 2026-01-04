@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { useMetaTags } from '../hooks/useMetaTags';
+import { seoMetadata } from '../data/seo-metadata';
 
 const SubscribeSuccess = () => {
+    useMetaTags(seoMetadata.subscribeSuccess);
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
 
