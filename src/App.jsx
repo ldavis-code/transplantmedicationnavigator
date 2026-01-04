@@ -1261,13 +1261,23 @@ const Wizard = () => {
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
-    // New grouped step labels
+    // New grouped step labels with color themes
     const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
     const totalVisibleSteps = 5; // 5 sections before results
+
+    // Color themes for each step (matching the icon colors)
+    const stepColors = {
+        1: { bg: 'bg-emerald-500', bgLight: 'bg-emerald-100', ring: 'ring-emerald-100', text: 'text-emerald-600', textBold: 'text-emerald-700', border: 'border-emerald-500', bgSelect: 'bg-emerald-50', hoverBorder: 'hover:border-emerald-200', badge: 'bg-emerald-600' },
+        2: { bg: 'bg-rose-500', bgLight: 'bg-rose-100', ring: 'ring-rose-100', text: 'text-rose-600', textBold: 'text-rose-700', border: 'border-rose-500', bgSelect: 'bg-rose-50', hoverBorder: 'hover:border-rose-200', badge: 'bg-rose-600' },
+        3: { bg: 'bg-blue-500', bgLight: 'bg-blue-100', ring: 'ring-blue-100', text: 'text-blue-600', textBold: 'text-blue-700', border: 'border-blue-500', bgSelect: 'bg-blue-50', hoverBorder: 'hover:border-blue-200', badge: 'bg-blue-600' },
+        4: { bg: 'bg-purple-500', bgLight: 'bg-purple-100', ring: 'ring-purple-100', text: 'text-purple-600', textBold: 'text-purple-700', border: 'border-purple-500', bgSelect: 'bg-purple-50', hoverBorder: 'hover:border-purple-200', badge: 'bg-purple-600' },
+        5: { bg: 'bg-amber-500', bgLight: 'bg-amber-100', ring: 'ring-amber-100', text: 'text-amber-600', textBold: 'text-amber-700', border: 'border-amber-500', bgSelect: 'bg-amber-50', hoverBorder: 'hover:border-amber-200', badge: 'bg-amber-600' },
+    };
 
     const renderProgress = () => {
         // For step 6 (results), show all steps as complete
         const displayStep = Math.min(step, totalVisibleSteps);
+        const currentColor = stepColors[displayStep] || stepColors[1];
 
         return (
             <div className="mb-8 no-print">
@@ -1277,29 +1287,30 @@ const Wizard = () => {
                         const stepNum = index + 1;
                         const isCompleted = displayStep > stepNum;
                         const isCurrent = displayStep === stepNum;
+                        const color = stepColors[stepNum];
 
                         return (
                             <div key={label} className="flex flex-col items-center flex-1">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                                    isCompleted ? 'bg-emerald-500 text-white' :
-                                    isCurrent ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' :
+                                    isCompleted ? `${color.bg} text-white` :
+                                    isCurrent ? `${color.bg} text-white ring-4 ${color.ring}` :
                                     'bg-slate-200 text-slate-500'
                                 }`}>
                                     {isCompleted ? <CheckCircle size={16} /> : stepNum}
                                 </div>
                                 <span className={`text-xs mt-1 hidden sm:block ${
-                                    isCurrent ? 'text-emerald-700 font-bold' :
-                                    isCompleted ? 'text-emerald-600' :
+                                    isCurrent ? `${color.textBold} font-bold` :
+                                    isCompleted ? color.text :
                                     'text-slate-400'
                                 }`}>{label}</span>
                             </div>
                         );
                     })}
                 </div>
-                {/* Progress bar */}
-                <div className="w-full bg-slate-200 h-2 rounded-full" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
+                {/* Progress bar - uses current step's color */}
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
                     <div
-                        className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                        className={`${currentColor.bg} h-2 rounded-full transition-all duration-300`}
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
@@ -1335,7 +1346,7 @@ const Wizard = () => {
                                 key={r}
                                 onClick={() => handleSingleSelect('role', r)}
                                 className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                    answers.role === r ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                    answers.role === r ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-300'
                                 }`}
                                 role="radio"
                                 aria-checked={answers.role === r}
@@ -1360,7 +1371,7 @@ const Wizard = () => {
                                     key={s}
                                     onClick={() => handleSingleSelect('status', s)}
                                     className={`w-full p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                        answers.status === s ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                        answers.status === s ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-300'
                                     }`}
                                     role="radio"
                                     aria-checked={answers.status === s}
@@ -1405,13 +1416,13 @@ const Wizard = () => {
                             key={o}
                             onClick={() => handleMultiSelect('organs', o)}
                             className={`p-4 text-left rounded-xl border-2 transition flex justify-between items-center ${
-                                answers.organs.includes(o) ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                answers.organs.includes(o) ? 'border-rose-500 bg-rose-50' : 'border-slate-200 hover:border-rose-300'
                             }`}
                             role="checkbox"
                             aria-checked={answers.organs.includes(o)}
                         >
                             <span className="font-medium">{o}</span>
-                            {answers.organs.includes(o) && <CheckCircle size={20} className="text-emerald-600" aria-hidden="true" />}
+                            {answers.organs.includes(o) && <CheckCircle size={20} className="text-rose-600" aria-hidden="true" />}
                         </button>
                     ))}
                 </div>
@@ -1486,7 +1497,7 @@ const Wizard = () => {
                 {/* Question 3a: Insurance Type */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">3a</span>
+                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3a</span>
                         <h2 className="text-lg font-bold text-slate-800">What's your insurance type?</h2>
                     </div>
                     <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
@@ -1495,7 +1506,7 @@ const Wizard = () => {
                                 key={option.value}
                                 onClick={() => handleSingleSelect('insurance', option.value)}
                                 className={`w-full p-4 text-left rounded-xl border-2 transition ${
-                                    answers.insurance === option.value ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                    answers.insurance === option.value ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300'
                                 }`}
                                 role="radio"
                                 aria-checked={answers.insurance === option.value}
@@ -1505,13 +1516,13 @@ const Wizard = () => {
                                         <div className="font-bold text-lg text-blue-700">{option.label}</div>
                                         <div className="text-slate-500 text-sm mt-1">{option.description}</div>
                                         {option.helpText && (
-                                            <div className="text-emerald-700 text-sm mt-2 flex items-center gap-1">
+                                            <div className="text-blue-700 text-sm mt-2 flex items-center gap-1">
                                                 <Lightbulb className="text-amber-500" size={14} aria-hidden="true" />
                                                 {option.helpText}
                                             </div>
                                         )}
                                     </div>
-                                    {answers.insurance === option.value && <CheckCircle className="text-emerald-600 flex-shrink-0" aria-hidden="true" />}
+                                    {answers.insurance === option.value && <CheckCircle className="text-blue-600 flex-shrink-0" aria-hidden="true" />}
                                 </div>
                             </button>
                         ))}
@@ -1522,7 +1533,7 @@ const Wizard = () => {
                 {isCommercialInsurance && answers.insurance && (
                     <div className="mb-8 animate-fade-in">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
+                            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
                             <h2 className="text-lg font-bold text-slate-800">Does your plan require a specific specialty pharmacy?</h2>
                         </div>
                         <p className="text-slate-600 text-sm mb-4">Some commercial plans require you to use a specific pharmacy for transplant medications.</p>
@@ -1535,8 +1546,8 @@ const Wizard = () => {
                                         (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                         (opt === 'No' && answers.specialtyPharmacyAware === false) ||
                                         (opt === 'Not Sure' && answers.specialtyPharmacyAware === null && answers.insurance)
-                                            ? 'border-emerald-500 bg-emerald-50'
-                                            : 'border-slate-200 hover:border-emerald-200'
+                                            ? 'border-blue-500 bg-blue-50'
+                                            : 'border-slate-200 hover:border-blue-300'
                                     }`}
                                     role="radio"
                                     aria-checked={
@@ -1547,7 +1558,7 @@ const Wizard = () => {
                                     <span className="font-medium">{opt}</span>
                                     {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                       (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
-                                        <CheckCircle className="text-emerald-600" aria-hidden="true" />
+                                        <CheckCircle className="text-blue-600" aria-hidden="true" />
                                     }
                                 </button>
                             ))}
@@ -1743,14 +1754,14 @@ const Wizard = () => {
                             key={opt.val}
                             onClick={() => { handleSingleSelect('financialStatus', opt.val); handleNextFromCosts(); }}
                             className={`w-full p-4 text-left rounded-xl border-2 transition ${
-                                answers.financialStatus === opt.val ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'
+                                answers.financialStatus === opt.val ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:border-amber-300'
                             }`}
                             role="radio"
                             aria-checked={answers.financialStatus === opt.val}
                         >
                             <div className="flex items-center justify-between mb-1">
                                 <span className="font-bold text-lg text-slate-900">{opt.label}</span>
-                                {answers.financialStatus === opt.val && <CheckCircle className="text-emerald-600" aria-hidden="true" />}
+                                {answers.financialStatus === opt.val && <CheckCircle className="text-amber-600" aria-hidden="true" />}
                             </div>
                             <div className="text-slate-600 text-sm">{opt.desc}</div>
                         </button>
