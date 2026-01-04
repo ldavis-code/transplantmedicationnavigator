@@ -519,7 +519,7 @@ const Layout = ({ children }) => {
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
                         Information last updated: {LAST_UPDATED}
                     </p>
-                    <p>© 2025 Transplant Medication Navigator™. All Rights Reserved.</p>
+                    <p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
                     <p className="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
@@ -995,7 +995,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
                                                     <button
-                                                        onClick={() => onMedicationClick && onMedicationClick(med.brand)}
+                                                        onClick={() => onMedicationClick && onMedicationClick(med.id)}
                                                         className="text-left hover:text-emerald-700 transition-colors group"
                                                     >
                                                         <span className="font-bold text-slate-900 group-hover:text-emerald-700 underline decoration-dotted underline-offset-2">{med.brand}</span>
@@ -1579,7 +1579,7 @@ const Wizard = () => {
                 {isPreTransplant ? (
                     <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
                 ) : (
-                    <OrganMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
+                    <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
 
                 {/* Medication Search Box */}
