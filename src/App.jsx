@@ -1180,10 +1180,23 @@ const Wizard = () => {
         financialStatus: null,
     });
 
+    // Medication verification state - patient confirms their medications
+    const [medicationsVerified, setMedicationsVerified] = useState(false);
+
     // Search state for Step 5
     const [medSearchTerm, setMedSearchTerm] = useState('');
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
+
+    // Scroll to top when step changes for accessibility
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Also announce page change for screen readers
+        const announcement = document.getElementById('step-announcement');
+        if (announcement) {
+            announcement.textContent = `Step ${step} of 6`;
+        }
+    }, [step]);
 
     // Fuse.js instance for fuzzy medication search
     const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -1226,6 +1239,8 @@ const Wizard = () => {
     const addMedFromSearch = (medId) => {
         if (!answers.medications.includes(medId)) {
             setAnswers({ ...answers, medications: [...answers.medications, medId] });
+            // Reset verification when medications change
+            setMedicationsVerified(false);
         }
         setMedSearchTerm('');
         setMedSearchResult(null);
@@ -1246,6 +1261,10 @@ const Wizard = () => {
             ? current.filter((item) => item !== value)
             : [...current, value];
         setAnswers({ ...answers, [key]: updated });
+        // Reset medication verification when medications list changes
+        if (key === 'medications') {
+            setMedicationsVerified(false);
+        }
     };
 
     const nextStep = () => setStep(step + 1);
@@ -1318,10 +1337,24 @@ const Wizard = () => {
         );
     };
 
+    // Screen reader announcement for step changes (accessible navigation)
+    const StepAnnouncement = () => (
+        <div
+            id="step-announcement"
+            className="sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+            role="status"
+        >
+            Step {step} of 6
+        </div>
+    );
+
     // Step 1: About You (combines Role + Status)
     if (step === 1) {
         return (
             <div className="max-w-2xl mx-auto">
+                <StepAnnouncement />
                 {renderProgress()}
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-emerald-100 p-2 rounded-lg">
@@ -1405,6 +1438,7 @@ const Wizard = () => {
     if (step === 2) {
         return (
             <div className="max-w-2xl mx-auto">
+                <StepAnnouncement />
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -1487,6 +1521,7 @@ const Wizard = () => {
 
         return (
             <div className="max-w-2xl mx-auto">
+                <StepAnnouncement />
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -1596,6 +1631,7 @@ const Wizard = () => {
 
         return (
             <div className="max-w-3xl mx-auto">
+                <StepAnnouncement />
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
@@ -1713,6 +1749,84 @@ const Wizard = () => {
                     </div>
                 )}
 
+                {/* Medication Verification Alert - Accessible alert for patients to confirm medications */}
+                <div
+                    className={`mb-6 border-2 rounded-xl p-5 transition-all ${
+                        medicationsVerified
+                            ? 'bg-emerald-50 border-emerald-400'
+                            : 'bg-blue-50 border-blue-400 ring-2 ring-blue-200'
+                    }`}
+                    role="alert"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    <div className="flex items-start gap-4">
+                        <div className={`p-2 rounded-full flex-shrink-0 ${
+                            medicationsVerified ? 'bg-emerald-100' : 'bg-blue-100'
+                        }`}>
+                            <AlertCircle
+                                className={medicationsVerified ? 'text-emerald-600' : 'text-blue-600'}
+                                size={28}
+                                aria-hidden="true"
+                            />
+                        </div>
+                        <div className="flex-grow">
+                            <h2 className={`font-bold text-lg mb-2 ${
+                                medicationsVerified ? 'text-emerald-800' : 'text-blue-800'
+                            }`}>
+                                {medicationsVerified
+                                    ? 'Medications Verified!'
+                                    : 'Are these all of your medications?'
+                                }
+                            </h2>
+                            <p className={`mb-4 ${medicationsVerified ? 'text-emerald-700' : 'text-blue-700'}`}>
+                                {medicationsVerified
+                                    ? 'Thank you for verifying your medications. You can continue to the next section.'
+                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then confirm below to continue.'
+                                }
+                            </p>
+
+                            {/* Accessible checkbox with large touch target */}
+                            <label
+                                className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-all min-h-[56px] ${
+                                    medicationsVerified
+                                        ? 'bg-emerald-100 border-emerald-300'
+                                        : 'bg-white border-blue-200 hover:border-blue-400 hover:bg-blue-50'
+                                }`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={medicationsVerified}
+                                    onChange={(e) => setMedicationsVerified(e.target.checked)}
+                                    className="sr-only"
+                                    aria-describedby="verify-medications-description"
+                                />
+                                <span
+                                    className={`flex-shrink-0 w-7 h-7 rounded-md border-2 flex items-center justify-center transition-all ${
+                                        medicationsVerified
+                                            ? 'bg-emerald-600 border-emerald-600'
+                                            : 'bg-white border-slate-400'
+                                    }`}
+                                    aria-hidden="true"
+                                >
+                                    {medicationsVerified && <Check size={18} className="text-white" />}
+                                </span>
+                                <span
+                                    id="verify-medications-description"
+                                    className={`font-semibold text-base ${
+                                        medicationsVerified ? 'text-emerald-800' : 'text-slate-700'
+                                    }`}
+                                >
+                                    {answers.medications.length > 0
+                                        ? `Yes, I have verified my ${answers.medications.length} medication${answers.medications.length > 1 ? 's' : ''} listed above`
+                                        : 'I confirm I have no transplant medications to add'
+                                    }
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Important Medical Information */}
                 <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
                     <div className="flex items-start gap-3">
@@ -1728,10 +1842,16 @@ const Wizard = () => {
 
                 <button
                     onClick={handleNextFromMeds}
-                    className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow-md"
-                    aria-label="Continue to next section"
+                    disabled={!medicationsVerified}
+                    className={`w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] ${
+                        medicationsVerified
+                            ? 'bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer'
+                            : 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                    }`}
+                    aria-label={medicationsVerified ? "Continue to next section" : "Please verify your medications first"}
+                    aria-disabled={!medicationsVerified}
                 >
-                    Next Section
+                    {medicationsVerified ? 'Next Section' : 'Please Verify Medications Above'}
                 </button>
             </div>
         );
@@ -1741,6 +1861,7 @@ const Wizard = () => {
     if (step === 5) {
         return (
             <div className="max-w-2xl mx-auto">
+                <StepAnnouncement />
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -1826,6 +1947,7 @@ const Wizard = () => {
 
         return (
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
+                <StepAnnouncement />
                 {/* Back Button */}
                 <button
                     onClick={() => setStep(5)}
@@ -2444,13 +2566,27 @@ const MedicationSearch = () => {
                         </div>
                     </div>
 
-                    {/* Are these all your medications prompt */}
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="status">
-                        <div className="flex items-start gap-3">
-                            <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                    {/* Medication Verification Alert - Accessible alert for patients */}
+                    <div
+                        className="mb-6 bg-blue-50 border-2 border-blue-400 rounded-xl p-5 ring-2 ring-blue-200"
+                        role="alert"
+                        aria-live="polite"
+                        aria-atomic="true"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className="p-2 bg-blue-100 rounded-full flex-shrink-0">
+                                <AlertCircle className="text-blue-600" size={28} aria-hidden="true" />
+                            </div>
                             <div>
-                                <p className="font-bold text-amber-800 mb-1">Are these all of your medications?</p>
-                                <p className="text-amber-700 text-sm">If you take other medications, you can add them using the search box below.</p>
+                                <h2 className="font-bold text-lg text-blue-800 mb-2">
+                                    Please Verify Your Medications
+                                </h2>
+                                <p className="text-blue-700 mb-3">
+                                    Review the medication list below carefully. If you take other transplant medications not shown, add them using the search box.
+                                </p>
+                                <p className="text-blue-600 text-sm font-medium">
+                                    Accurate medication information helps us find the best savings options for you.
+                                </p>
                             </div>
                         </div>
                     </div>
