@@ -1917,7 +1917,7 @@ const Wizard = () => {
                             
                             <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label="View application education guide">
                                 <div className="flex items-center gap-3">
-                                    <div className="bg-indigo-100 text-indigo-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
+                                    <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
                                     <div>
                                         <span className="font-bold text-slate-800 block text-sm">Application Education</span>
                                         <span className="text-xs text-slate-600">Scripts, checklists, and templates</span>
