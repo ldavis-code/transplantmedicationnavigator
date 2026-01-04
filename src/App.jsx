@@ -4255,7 +4255,7 @@ const Education = () => {
         <article className="max-w-6xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Resources & Education</h1>
-                <p className="text-xl text-slate-700 max-w-3xl mx-auto">Understand the difference between Patient Assistance Programs and Foundations, and learn how to navigate medication costs effectively.</p>
+                <p className="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
             </header>
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
                 <div className="flex min-w-max">
@@ -4271,8 +4271,8 @@ const Education = () => {
                 {activeTab === 'OOP' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
-                            <h2 className="text-2xl font-bold text-slate-900">Combining Programs</h2>
-                            <p className="text-lg text-slate-700">Most transplant patients have to mix and match different types of coverage to afford their medication. It is like a puzzle.</p>
+                            <h2 className="text-2xl font-bold text-slate-900">Mixing Programs</h2>
+                            <p className="text-lg text-slate-700">Most transplant patients use a mix of help programs to pay for their medicines. It's like a puzzle.</p>
                         </div>
                         <div className="grid md:grid-cols-2 gap-6">
                              <section className="bg-purple-50 p-6 rounded-xl border border-purple-100">
@@ -4280,39 +4280,39 @@ const Education = () => {
                                     <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Effective January 2026</span>
                                     <h3 className="font-bold text-purple-900">Medicare Drug Price Negotiation</h3>
                                  </div>
-                                 <p className="text-sm text-purple-900 mb-4 font-medium">For the first time in history, Medicare has directly negotiated drug prices with manufacturers.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first negotiated prices take effect January 1, 2026, delivering substantial savings. Key examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% reduction), and <strong>Januvia</strong> drops from $527 to $113/month (79% reduction). This is projected to save Medicare beneficiaries $1.5 billion in out-of-pocket costs in 2026 alone.</p>
-                                 <p className="text-slate-700 text-sm mb-4">The first 10 drugs selected include medications for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clot prevention (Eliquis, Xarelto), autoimmune conditions (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
-                                 <p className="text-slate-700 text-sm italic">Approximately 8.8 million Medicare Part D enrollees used these medications in 2023. The program will expand to 15 additional drugs for 2027.</p>
+                                 <p className="text-sm text-purple-900 mb-4 font-medium">For the first time ever, Medicare talked drug makers into lower prices.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first new prices start January 1, 2026, with big savings. Examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% less), and <strong>Januvia</strong> drops from $527 to $113/month (79% less). This will save Medicare patients $1.5 billion in 2026 alone.</p>
+                                 <p className="text-slate-700 text-sm mb-4">The first 10 drugs include medicines for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clots (Eliquis, Xarelto), immune diseases (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
+                                 <p className="text-slate-700 text-sm italic">About 8.8 million Medicare Part D patients used these medicines in 2023. The program will add 15 more drugs for 2027.</p>
                              </section>
                              <section className="bg-teal-50 p-6 rounded-xl border border-teal-100">
                                  <div className="flex items-center gap-2 mb-3">
                                     <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded">New in Mid-2026</span>
                                     <h3 className="font-bold text-teal-900">Medicare GLP-1 Coverage for Weight Loss</h3>
                                  </div>
-                                 <p className="text-sm text-teal-900 mb-4 font-medium">A historic policy shift: Medicare will cover anti-obesity medications.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will begin covering certain GLP-1 receptor agonists for weight loss—reversing a long-standing policy that excluded anti-obesity medications from Part D coverage.</p>
-                                 <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy (semaglutide) and Zepbound (tirzepatide) will be covered for patients with obesity-related health conditions. Expected copay is approximately <strong>$50/month</strong> after deductible is met.</p>
-                                 <p className="text-slate-700 text-sm italic">This follows agreements with manufacturers Eli Lilly and Novo Nordisk to provide these drugs at reduced prices for Medicare beneficiaries.</p>
+                                 <p className="text-sm text-teal-900 mb-4 font-medium">A big change: Medicare will now cover weight loss drugs.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss—ending a rule that kept these drugs out of Part D.</p>
+                                 <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy and Zepbound will be covered for patients with weight-related health issues. Your copay should be about <strong>$50/month</strong> after you meet your deductible.</p>
+                                 <p className="text-slate-700 text-sm italic">Eli Lilly and Novo Nordisk agreed to give these drugs at lower prices for Medicare patients.</p>
                              </section>
                              <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
                                  <div className="flex items-center gap-2 mb-3">
                                     <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
                                  </div>
-                                 <p className="text-sm text-indigo-900 mb-4 font-medium">A major change from the Inflation Reduction Act</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting in 2025, Medicare Part D enrollees can choose this option to spread out their prescription drug costs over the course of the year instead of paying large amounts up front (like when hitting the donut hole/coverage gap).</p>
-                                 <p className="text-slate-700 text-sm mb-4">This "smoothing" program helps make your out-of-pocket costs more predictable and manageable.</p>
-                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about enrolling in the Medicare Prescription Payment Plan during open enrollment.</p>
+                                 <p className="text-sm text-indigo-900 mb-4 font-medium">A big change from new laws</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once (like when you hit the donut hole).</p>
+                                 <p className="text-slate-700 text-sm mb-4">This program makes your costs more steady and easier to manage.</p>
+                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about this payment plan during open enrollment.</p>
                              </section>
                         </div>
 
                         <div className="border-t border-slate-200 pt-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Part D vs Medicare Advantage: Choosing Your Plan</h2>
-                            <p className="text-slate-600 mb-6">Understanding the differences can save you significant money on transplant medications.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Part D vs Medicare Advantage: Picking Your Plan</h2>
+                            <p className="text-slate-600 mb-6">Knowing the differences can save you a lot of money on transplant medicines.</p>
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
                                 <section className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
                                     <h3 className="font-bold text-blue-900 text-xl mb-3">Medicare Part D (Traditional)</h3>
-                                    <p className="text-sm text-slate-600 mb-4">Stand-alone prescription drug coverage that works with Original Medicare.</p>
+                                    <p className="text-sm text-slate-600 mb-4">A drug plan that works with Original Medicare. It's a separate plan just for medicines.</p>
                                     <ul className="space-y-2 text-slate-700 text-sm">
                                         <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Works with any Medicare-accepting provider</span></li>
                                         <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Separate deductible and premium</span></li>
@@ -4321,7 +4321,7 @@ const Education = () => {
                                 </section>
                                 <section className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
                                     <h3 className="font-bold text-green-900 text-xl mb-3">Medicare Advantage (MA-PD)</h3>
-                                    <p className="text-sm text-slate-600 mb-4">All-in-one plan that includes medical coverage AND prescription drugs.</p>
+                                    <p className="text-sm text-slate-600 mb-4">An all-in-one plan that covers both doctor visits AND medicines.</p>
                                     <ul className="space-y-2 text-slate-700 text-sm">
                                         <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Often lower or $0 premiums</span></li>
                                         <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Provider networks may be limited</span></li>
@@ -4331,13 +4331,13 @@ const Education = () => {
                             </div>
 
                             <div className="bg-white p-6 rounded-xl border border-slate-200 mb-8">
-                                <h3 className="text-xl font-bold text-slate-900 mb-4">How to Compare Plans for Your Medications</h3>
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">How to Compare Plans for Your Medicines</h3>
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Check Formularies</h4>
-                                            <p className="text-slate-600 text-sm mb-2">Use the Medicare Plan Finder tool at medicare.gov to compare which plans cover your drugs and their tier levels.</p>
+                                            <h4 className="font-bold text-slate-800 mb-1">Check Drug Lists</h4>
+                                            <p className="text-slate-600 text-sm mb-2">Use the Medicare Plan Finder tool at medicare.gov to see which plans cover your drugs and how much they cost.</p>
                                             <a href="https://www.medicare.gov/plan-compare/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Visit Medicare Plan Finder (opens in new tab)">Medicare Plan Finder <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
@@ -4345,14 +4345,14 @@ const Education = () => {
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Compare Total Costs</h4>
-                                            <p className="text-slate-600 text-sm">Look at premiums, deductibles, copays/coinsurance, and pharmacy networks. Include the $2,100 out-of-pocket cap (2026) in your calculations.</p>
+                                            <p className="text-slate-600 text-sm">Look at monthly fees, deductibles, copays, and which pharmacies you can use. Remember the $2,100 yearly limit (2026) when you add up costs.</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Consider Extra Help</h4>
-                                            <p className="text-slate-600 text-sm mb-2">If you have limited income, the Extra Help program can lower costs for both Part D and MA-PD plans, eliminating premiums and deductibles (which is $615 in 2026) and capping copays for generics and brand-name drugs.</p>
+                                            <h4 className="font-bold text-slate-800 mb-1">Look Into Extra Help</h4>
+                                            <p className="text-slate-600 text-sm mb-2">If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.</p>
                                             <a href="https://www.ssa.gov/medicare/prescriptionhelp" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
@@ -4360,7 +4360,7 @@ const Education = () => {
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Get Free Help</h4>
-                                            <p className="text-slate-600 text-sm mb-2">Contact your State Health Insurance Assistance Program (SHIP) for free, personalized help comparing plans.</p>
+                                            <p className="text-slate-600 text-sm mb-2">Call your State Health Insurance Assistance Program (SHIP) for free help picking a plan.</p>
                                             <a href="https://www.shiphelp.org/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Find Your Local SHIP (opens in new tab)">Find Your Local SHIP <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
@@ -4369,25 +4369,25 @@ const Education = () => {
 
                             <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
                                 <h3 className="text-xl font-bold text-slate-900 mb-4">Medicare Parts for Transplant Drugs</h3>
-                                <p className="text-slate-600 mb-4">Understanding which part of Medicare covers your transplant medications is crucial.</p>
+                                <p className="text-slate-600 mb-4">Knowing which part of Medicare pays for your transplant medicines is key.</p>
                                 <div className="grid md:grid-cols-3 gap-4">
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
                                         <h4 className="font-bold text-blue-700 text-lg mb-2">Part A (Hospital)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Covers drugs given during an inpatient hospital stay.</p>
+                                        <p className="text-xs text-slate-600 mb-3">Pays for drugs given while you're in the hospital.</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
                                             <li>Induction agents (Thymoglobulin, Simulect)</li>
                                         </ul>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
                                         <h4 className="font-bold text-blue-700 text-lg mb-2">Part B (Medical)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Covers some outpatient drugs, including immunosuppressants if you don't have Part D.</p>
+                                        <p className="text-xs text-slate-600 mb-3">Pays for some drugs you get at clinics. Also covers anti-rejection drugs if you don't have Part D.</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
                                             <li>IV infusions (Belatacept/Nulojix)</li>
                                         </ul>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
                                         <h4 className="font-bold text-blue-700 text-lg mb-2">Part D (Prescription)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Covers most of your daily oral take-home medications.</p>
+                                        <p className="text-xs text-slate-600 mb-3">Pays for most of the pills you take at home each day.</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
                                             <li>Tacrolimus, Mycophenolate, etc.</li>
                                         </ul>
@@ -4417,16 +4417,16 @@ const Education = () => {
                         </div>
                         <aside className="bg-emerald-50 p-6 rounded-xl border border-emerald-100" role="note">
                             <h3 className="font-bold text-emerald-900 mb-2">Key Insight</h3>
-                            <p className="text-emerald-800">Many patients combine programs—for example: Medicare patient → foundation grants for copays. Also compare cash pricing for generics.</p>
+                            <p className="text-emerald-800">Many patients mix programs—for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.</p>
                         </aside>
 
                         <div className="border-t border-slate-200 pt-8">
                             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
                                 <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                                     <BookOpen size={24} className="text-blue-600" aria-hidden="true" />
-                                    Insurance Jargon Made Simple
+                                    Insurance Words Made Simple
                                 </h2>
-                                <p className="text-slate-600 mb-6">Understanding insurance terms helps you navigate costs and find the help you need.</p>
+                                <p className="text-slate-600 mb-6">Knowing what these words mean helps you handle costs and find help.</p>
 
                                 <div className="space-y-6">
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
@@ -4603,7 +4603,7 @@ const Education = () => {
                 {activeTab === 'INSURANCE' && (
                     <div className="max-w-4xl mx-auto space-y-12">
                         <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center mb-8" role="note">
-                            <p className="text-blue-900 font-medium">Each insurance type has different benefits, costs, and best strategies.</p>
+                            <p className="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
                         </div>
 
                         {/* Insurance Change Simulation */}
@@ -4620,11 +4620,11 @@ const Education = () => {
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part B (Medical)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Immunosuppressants (if Part B-ID eligible)</li></ul>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Anti-rejection drugs (if Part B-ID eligible)</li></ul>
                                     </div>
                                     <div className="border border-purple-200 p-4 rounded-lg bg-purple-50">
                                         <strong className="text-purple-700 text-lg block mb-1">Part C (Medicare Advantage)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Bundles A, B, and usually D</li><li>May include extra benefits</li><li>Network restrictions apply</li></ul>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Combines A, B, and usually D</li><li>May have extra benefits</li><li>You must use certain doctors</li></ul>
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part D (Prescription)</strong>
@@ -4651,34 +4651,34 @@ const Education = () => {
                         <section aria-labelledby="commercial-insurance">
                             <h2 id="commercial-insurance" className="text-xl font-bold text-blue-900 bg-blue-50 p-4 rounded-t-xl border-b border-blue-100">Commercial Insurance</h2>
                             <div className="bg-white border border-slate-200 rounded-b-xl p-6 space-y-4">
-                                <p className="text-slate-700">Primary payer for first 30 months post-transplant.</p>
+                                <p className="text-slate-700">Your main payer for the first 30 months after transplant.</p>
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div>
                                         <h3 className="font-bold text-slate-900 mb-2">Key Points</h3>
-                                        <ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Eligible for most manufacturer PAPs</li><li>Copay cards often available</li><li>Foundations help with high copays</li><li>May require specialty pharmacy</li></ul>
+                                        <ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Can use most drug maker PAPs</li><li>Copay cards often work</li><li>Foundations help with high copays</li><li>May need to use a certain pharmacy</li></ul>
                                     </div>
-                                    <div><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><p className="text-sm text-slate-700">Start with manufacturer PAPs, then foundations for leftover copays and deductibles.</p></div>
+                                    <div><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><p className="text-sm text-slate-700">Start with drug maker PAPs, then use foundations for any copays or deductibles left over.</p></div>
                                 </div>
                             </div>
                         </section>
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="va-health">
                                 <h2 id="va-health" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">VA Health Care</h2>
-                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">For eligible veterans.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Priority Groups 1–6: $0 medications. VA pharmacy = primary source. Work with VA transplant coordinator.</div><a href="https://www.va.gov/health-care/eligibility/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit VA Prescription Information (opens in new tab)">VA Prescription Information <ExternalLink size={12} aria-hidden="true" /></a></div>
+                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">For veterans who qualify.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Priority Groups 1–6: $0 for medicines. Use the VA pharmacy first. Work with your VA transplant team.</div><a href="https://www.va.gov/health-care/eligibility/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit VA Prescription Information (opens in new tab)">VA Prescription Information <ExternalLink size={12} aria-hidden="true" /></a></div>
                             </section>
                             <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="tricare">
                                 <h2 id="tricare" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">TRICARE</h2>
-                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">Military insurance.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Use military pharmacy ($0 copay). TRICARE mail order for maintenance meds. Use formulary search tool.</div><a href="https://www.tricare.mil/CoveredServices/Pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit TRICARE Formulary Search (opens in new tab)">TRICARE Formulary Search <ExternalLink size={12} aria-hidden="true" /></a></div>
+                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">For military members and families.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Use the military pharmacy ($0 copay). Use TRICARE mail order for ongoing medicines. Check the drug list search tool.</div><a href="https://www.tricare.mil/CoveredServices/Pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit TRICARE Formulary Search (opens in new tab)">TRICARE Drug List Search <ExternalLink size={12} aria-hidden="true" /></a></div>
                             </section>
                         </div>
                         <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="no-insurance">
                             <h2 id="no-insurance" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">No Insurance</h2>
-                            <div className="p-6 bg-white"><p className="text-slate-700 mb-4">For uninsured patients.</p><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Start with manufacturer PAPs</li><li>Compare Cost Plus pricing</li><li>Use discount tools (GoodRx, SingleCare, etc.)</li><li>Explore Medicaid or Marketplace enrollment</li></ul><a href="https://www.healthcare.gov/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-4" aria-label="Explore Insurance Options on Healthcare.gov (opens in new tab)">Explore Insurance Options <ExternalLink size={12} aria-hidden="true" /></a></div>
+                            <div className="p-6 bg-white"><p className="text-slate-700 mb-4">For patients without insurance.</p><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Start with drug maker PAPs</li><li>Check Cost Plus Drugs prices</li><li>Use discount tools (GoodRx, SingleCare, etc.)</li><li>Look into Medicaid or Marketplace plans</li></ul><a href="https://www.healthcare.gov/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-4" aria-label="Explore Insurance Options on Healthcare.gov (opens in new tab)">Find Insurance Options <ExternalLink size={12} aria-hidden="true" /></a></div>
                         </section>
 
                         <section aria-labelledby="medicaid-section">
                             <h2 id="medicaid-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicaid (State-Based)</h2>
-                            <p className="text-slate-600 mb-6">Low-income program; coverage varies by state.</p>
+                            <p className="text-slate-600 mb-6">A program for people with low income. What it covers depends on your state.</p>
                             <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
                                 <label htmlFor="state-select" className="block font-bold text-slate-700 mb-2">Select your State:</label>
                                 <div className="relative">
@@ -4699,7 +4699,7 @@ const Education = () => {
 
                         <section aria-labelledby="ihs-section">
                             <h2 id="ihs-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Indian Health Service / Tribal Programs</h2>
-                            <p className="text-slate-600 mb-6">For eligible American Indian and Alaska Native patients.</p>
+                            <p className="text-slate-600 mb-6">For American Indian and Alaska Native patients who qualify.</p>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noreferrer" className="bg-white p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-200 transition text-center group" aria-label="Find an IHS facility (opens in new tab)">
                                     <div className="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-700" aria-hidden="true"><LandPlot size={32} /></div>
@@ -4714,10 +4714,10 @@ const Education = () => {
                 )}
                 {activeTab === 'SPECIALTY' && (
                     <div className="max-w-4xl mx-auto">
-                        <div className="mb-8 text-center"><h2 className="text-2xl font-bold text-slate-900 mb-4">Specialty Pharmacy Guide</h2><p className="text-lg text-slate-600">Understanding your rights and options when your insurer requires a specific pharmacy.</p></div>
+                        <div className="mb-8 text-center"><h2 className="text-2xl font-bold text-slate-900 mb-4">Specialty Pharmacy Guide</h2><p className="text-lg text-slate-600">Know your rights and choices when your insurance makes you use a certain pharmacy.</p></div>
                         <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100 mb-12" aria-labelledby="appeal-builder">
                             <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="appeal-builder" className="text-xl font-bold text-indigo-900">Appeal Letter Builder</h3></div>
-                            <p className="text-sm text-indigo-800 mb-6">Enter your details below to generate a professional letter template that you can copy and send to your insurance company.</p>
+                            <p className="text-sm text-indigo-800 mb-6">Fill in your details below to make a letter you can copy and send to your insurance company.</p>
                             <div className="grid md:grid-cols-3 gap-4 mb-4">
                                 <label htmlFor="appeal-name" className="sr-only">Your Name</label>
                                 <input id="appeal-name" type="text" placeholder="Your Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={appealName} onChange={(e) => setAppealName(e.target.value)} />
@@ -4742,9 +4742,9 @@ const Education = () => {
                         <div className="space-y-8">
                             <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-2">How to Appeal: A Step-by-Step Guide</h2>
                             <div className="grid md:grid-cols-3 gap-6">
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicare-appeals"><h3 id="medicare-appeals" className="font-bold text-slate-800 mb-3">Medicare Appeals</h3><p className="text-xs text-slate-600 mb-3">Crucial: Act within deadlines.</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><strong>Coverage Determination:</strong> Ask plan to cover at your preferred pharmacy.</li><li><strong>Level 1 (Reconsideration):</strong> File within 65 days of denial.</li><li><strong>Level 2 (IRE):</strong> Independent review if denied again.</li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label="Visit Official Medicare Guide (opens in new tab)">Official Medicare Guide</a></section>
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicaid-appeals"><h3 id="medicaid-appeals" className="font-bold text-slate-800 mb-3">Medicaid Appeals</h3><p className="text-sm text-slate-700 mb-3">Processes are state-run. Contact your state's Medicaid agency.</p></section>
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="private-insurance"><h3 id="private-insurance" className="font-bold text-slate-800 mb-3">Private Insurance</h3><p className="text-sm text-slate-700 mb-3">You have the right to an internal appeal, and if that is denied, an external review.</p></section>
+                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicare-appeals"><h3 id="medicare-appeals" className="font-bold text-slate-800 mb-3">Medicare Appeals</h3><p className="text-xs text-slate-600 mb-3">Important: Act on time.</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.</li><li><strong>Level 1 (Second Look):</strong> File within 65 days if they say no.</li><li><strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.</li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label="Visit Official Medicare Guide (opens in new tab)">Official Medicare Guide</a></section>
+                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicaid-appeals"><h3 id="medicaid-appeals" className="font-bold text-slate-800 mb-3">Medicaid Appeals</h3><p className="text-sm text-slate-700 mb-3">Each state runs its own appeals. Call your state's Medicaid office.</p></section>
+                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="private-insurance"><h3 id="private-insurance" className="font-bold text-slate-800 mb-3">Private Insurance</h3><p className="text-sm text-slate-700 mb-3">You can ask your company to look again. If they still say no, you can ask for an outside review.</p></section>
                             </div>
                         </div>
                     </div>
@@ -4762,8 +4762,8 @@ const Education = () => {
                                     <AlertTriangle size={32} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-red-900 mb-2">⚠️ Critical Warning for Transplant Patients</h2>
-                                    <p className="text-lg font-bold text-red-800">Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars per year.</p>
+                                    <h2 className="text-2xl font-bold text-red-900 mb-2">⚠️ Important Warning for Transplant Patients</h2>
+                                    <p className="text-lg font-bold text-red-800">Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars each year.</p>
                                 </div>
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
@@ -4828,29 +4828,29 @@ const Education = () => {
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 1: Drug NOT Covered by Insurance
                                     </h3>
-                                    <p className="text-slate-700 text-sm">For a medication NOT on your insurance's covered medicines list with no generic alternative available.</p>
+                                    <p className="text-slate-700 text-sm">For a medicine NOT on your insurance's list and no cheaper generic option is available.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 2: One-Time, Low-Cost Medications
                                     </h3>
-                                    <p className="text-slate-700 text-sm">For non-transplant-related, temporary medications (like a short antibiotic course) where the discount price is cheaper than your copay.</p>
+                                    <p className="text-slate-700 text-sm">For short-term medicines not related to your transplant (like a round of antibiotics) where the discount price is less than your copay.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 3: Extremely High Deductible
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If you have an extremely high deductible AND the cash price is significantly lower—but even then, carefully weigh the cost of not reaching your yearly limit.</p>
+                                    <p className="text-slate-700 text-sm">If you have a very high deductible AND the cash price is much lower—but even then, think hard about the cost of not reaching your yearly limit.</p>
                                 </div>
                             </div>
                             <div className="mt-6 bg-red-100 border-2 border-red-300 rounded-lg p-6">
                                 <h3 className="font-bold text-red-900 text-lg mb-3 flex items-center gap-2">
                                     🛑 NEVER Use Discount Cards For:
                                 </h3>
-                                <p className="text-red-900 font-bold text-lg">Your chronic, lifelong transplant immunosuppressants like Tacrolimus, Mycophenolate, or Cyclosporine.</p>
-                                <p className="text-red-800 mt-2">These are the medications that will help you reach your yearly limit quickly.</p>
+                                <p className="text-red-900 font-bold text-lg">Your daily anti-rejection medicines like Tacrolimus, Mycophenolate, or Cyclosporine.</p>
+                                <p className="text-red-800 mt-2">These are the medicines that will help you reach your yearly limit fast.</p>
                             </div>
                         </section>
 
@@ -4862,17 +4862,17 @@ const Education = () => {
                             <div className="grid md:grid-cols-3 gap-6">
                                 <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-200">
                                     <h3 className="font-bold text-emerald-900 text-lg mb-3">Patient Assistance Programs (PAPs)</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Free or low-cost medications directly from drug manufacturers.</p>
+                                    <p className="text-slate-700 text-sm mb-4">Free or low-cost medicines straight from drug makers.</p>
                                     <p className="text-emerald-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
                                     <h3 className="font-bold text-blue-900 text-lg mb-3">Co-pay Foundations</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Non-profit organizations that help cover copays and deductibles.</p>
+                                    <p className="text-slate-700 text-sm mb-4">Groups that help pay for your copays and deductibles.</p>
                                     <p className="text-blue-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                                 <div className="bg-purple-50 p-6 rounded-xl border border-purple-200">
-                                    <h3 className="font-bold text-purple-900 text-lg mb-3">Manufacturer Copay Cards</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Drug company assistance for brand-name medications (not available for Medicare).</p>
+                                    <h3 className="font-bold text-purple-900 text-lg mb-3">Drug Maker Copay Cards</h3>
+                                    <p className="text-slate-700 text-sm mb-4">Help from drug makers for brand-name medicines (not for Medicare patients).</p>
                                     <p className="text-purple-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
                                 </div>
                             </div>
@@ -4887,15 +4887,15 @@ const Education = () => {
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Discount cards prevent your payments from counting toward this goal.</span> They may save you a few dollars per prescription, but cost you thousands over the year.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Discount cards stop your payments from counting toward this goal.</span> They may save you a few dollars per medicine, but cost you thousands over the year.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Always prioritize PAPs and co-pay foundations.</span> These programs help you pay for medications AND help you reach your yearly limit faster.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Always use PAPs and co-pay foundations first.</span> These programs help you pay for medicines AND help you reach your yearly limit faster.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Talk to your transplant team.</span> They can connect you with financial counselors who understand these programs and can help you find your way through the system.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Talk to your transplant team.</span> They can connect you with people who know these programs and can help you through the system.</p>
                                 </li>
                             </ul>
                         </section>
@@ -4906,7 +4906,7 @@ const Education = () => {
                                 Questions?
                             </h3>
                             <p className="text-emerald-900 leading-relaxed">
-                                If you're unsure whether a discount card is right for your situation, ask your transplant center's financial counselor or social worker. They can review your specific insurance plan and help you make the best choice.
+                                Not sure if a discount card is right for you? Ask your transplant center's money helper or social worker. They can look at your insurance plan and help you choose.
                             </p>
                         </aside>
                     </div>
@@ -4915,7 +4915,7 @@ const Education = () => {
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="text-center mb-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-4">Mental Health Resources</h2>
-                            <p className="text-lg text-slate-600">Your mental health matters. Access free, confidential support when you need it.</p>
+                            <p className="text-lg text-slate-600">Your mental health matters. Get free, private support when you need it.</p>
                         </div>
 
                         <section className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-8 shadow-lg text-center" aria-labelledby="crisis-hotline">
@@ -4930,7 +4930,7 @@ const Education = () => {
                                     988
                                 </a>
                                 <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
-                                <p className="text-sm text-slate-600 mt-2">24/7 • Free • Confidential</p>
+                                <p className="text-sm text-slate-600 mt-2">24/7 • Free • Private</p>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
                                 <div className="bg-white/80 p-4 rounded-lg">
@@ -4956,21 +4956,21 @@ const Education = () => {
                                     <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-700 text-sm leading-relaxed mb-4">
-                                    <strong>Substance Abuse and Mental Health Services Administration</strong> - Find treatment facilities, support groups, and mental health services in your area.
+                                    <strong>Substance Abuse and Mental Health Services</strong> - Find treatment centers, support groups, and mental health help near you.
                                 </p>
                                 <div className="space-y-2 text-sm">
                                     <p className="text-slate-600">
                                         <strong className="text-slate-900">Helpline:</strong>{' '}
                                         <a href="tel:1-800-662-4357" className="text-indigo-600 font-bold hover:underline">1-800-662-HELP (4357)</a>
                                     </p>
-                                    <p className="text-slate-600 text-xs">Treatment referral and information service (24/7)</p>
+                                    <p className="text-slate-600 text-xs">Help finding treatment any time (24/7)</p>
                                 </div>
                             </a>
 
                             <section className="bg-white p-6 rounded-xl border border-slate-200 h-full" aria-labelledby="transplant-mental-health">
                                 <h3 id="transplant-mental-health" className="font-bold text-lg text-slate-900 mb-4">Transplant & Mental Health</h3>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                                    It's normal to experience anxiety, depression, or emotional challenges during your transplant journey. You're not alone.
+                                    It's normal to feel worried, sad, or stressed during your transplant journey. You're not alone.
                                 </p>
                                 <ul className="space-y-2 text-sm text-slate-700">
                                     <li className="flex items-start gap-2">
@@ -4979,7 +4979,7 @@ const Education = () => {
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                        <span>Many transplant centers have social workers and psychologists</span>
+                                        <span>Many transplant centers have social workers and mental health experts</span>
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
@@ -4994,7 +4994,7 @@ const Education = () => {
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                                    National Alliance on Mental Illness offers free peer support groups for people living with mental health conditions and their families.
+                                    NAMI offers free support groups for people with mental health issues and their families.
                                 </p>
                                 <p className="text-slate-600 text-sm">
                                     <strong className="text-slate-900">Helpline:</strong>{' '}
@@ -5008,7 +5008,7 @@ const Education = () => {
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed">
-                                    Government resource to help you understand mental health conditions, find treatment options, and locate services in your community.
+                                    A government site to help you learn about mental health, find treatment, and find services near you.
                                 </p>
                             </a>
                         </div>

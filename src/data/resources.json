@@ -8,7 +8,7 @@
   {
     "name": "American Transplant Foundation",
     "url": "https://www.americantransplantfoundation.org/",
-    "description": "Gives grants to help patients pay for medications. Also connects transplant patients with mentors who have been through the same experience.",
+    "description": "Gives grants to help patients pay for medicines. Also links transplant patients with mentors who've been through the same thing.",
     "category": "Foundation"
   },
   {
@@ -26,13 +26,13 @@
   {
     "name": "Drugs.com",
     "url": "https://www.drugs.com/",
-    "description": "Look up medications, find who makes them, and connect to their Patient Assistance Programs.",
+    "description": "Look up medicines, find who makes them, and connect to their help programs.",
     "category": "Medication Database"
   },
   {
     "name": "GoodRx",
     "url": "https://www.goodrx.com/",
-    "description": "Free prescription discount coupons. Compare prices at different pharmacies and get instant coupons.",
+    "description": "Free drug discount coupons. Compare prices at different pharmacies and get coupons right away.",
     "category": "Discount Program"
   },
   {
@@ -44,7 +44,7 @@
   {
     "name": "Heartfelt Help Foundation",
     "url": "https://www.heartfelthelpfoundation.com/",
-    "description": "Helps financially challenged heart transplant recipients in Northern California pay for lodging near the hospital and other transplant-related expenses not covered by insurance.",
+    "description": "Helps heart transplant patients in Northern California who need money help. Pays for housing near the hospital and other costs insurance doesn't cover.",
     "category": "Foundation"
   },
   {
@@ -56,7 +56,7 @@
   {
     "name": "National Alliance for Caregiving",
     "url": "https://www.caregiving.org/",
-    "description": "A national nonprofit that supports family caregivers. Offers resources, research, and support for people caring for loved ones.",
+    "description": "A group that helps family caregivers. Offers tips, info, and support for people caring for loved ones.",
     "category": "Caregiver Support"
   },
   {
@@ -98,7 +98,7 @@
   {
     "name": "Rx Outreach",
     "url": "https://rxoutreach.org/",
-    "description": "A nonprofit pharmacy that sells medications at low prices. Has saved patients hundreds of millions of dollars.",
+    "description": "A nonprofit pharmacy that sells medicines at low prices. Has saved patients lots of money.",
     "category": "Low-Cost Pharmacy"
   },
   {
