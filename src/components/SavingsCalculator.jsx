@@ -3,16 +3,6 @@ import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, Lock, A
 import { Link } from 'react-router-dom';
 import priceEstimates from '../data/price-estimates.json';
 
-// Assistance type savings estimates (percentage off retail)
-const ASSISTANCE_SAVINGS = {
-    pap: { min: 0.95, max: 1.0, label: 'Patient Assistance Program', description: 'Usually free ($0)' },
-    copay_card: { min: 0.70, max: 0.95, label: 'Copay Card', description: '$0-$35/month typical' },
-    foundation: { min: 0.80, max: 1.0, label: 'Foundation Grant', description: 'Covers copays' },
-    generic: { min: 0.70, max: 0.90, label: 'Generic Switch', description: '70-90% savings' },
-    discount_card: { min: 0.50, max: 0.80, label: 'Discount Card (GoodRx)', description: '50-80% off retail' },
-    medicare_negotiated: { min: 0.50, max: 0.79, label: 'Medicare Negotiated', description: '50-79% off (2026)' },
-};
-
 // Get retail price estimate for a medication
 function getRetailPrice(medicationId, medicationName) {
     const id = medicationId?.toLowerCase() || medicationName?.toLowerCase().split(' ')[0];
