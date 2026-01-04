@@ -5327,6 +5327,7 @@ const MainSiteRoutes = () => (
                 <Route path="/" element={<Home />} />
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
+                <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
                 <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
