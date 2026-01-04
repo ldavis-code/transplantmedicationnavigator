@@ -743,6 +743,7 @@ const Home = () => {
                         src="/lorrinda-gray-davis.jpg"
                         alt="Lorrinda Gray-Davis, founder of Transplant Medication Navigator"
                         className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-emerald-200 shadow-lg flex-shrink-0"
+                        onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <p className="text-slate-700 leading-relaxed">
                         <strong className="text-slate-900">Lorrinda Gray-Davis</strong> built this tool. She is a liver cancer survivor and liver transplant patient. She knows what you are going through because she has been there. Lorrinda works with patient groups to help transplant patients across the country. She has won awards for her work helping patients.
