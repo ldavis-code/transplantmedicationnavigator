@@ -157,7 +157,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
             {/* Header */}
             <div className="text-center mb-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
-                    <Calculator className="w-8 h-8 text-emerald-600" />
+                    <Calculator className="w-8 h-8 text-emerald-600" aria-hidden="true" />
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 mb-2">
                     Estimate Your Medication Savings
@@ -180,10 +180,14 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                     {selectedMeds.map((med, index) => (
                         <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                             <div className="flex-1">
+                                <label htmlFor={`medication-select-${index}`} className="sr-only">
+                                    Select medication {index + 1}
+                                </label>
                                 <select
+                                    id={`medication-select-${index}`}
                                     value={med.id}
                                     onChange={(e) => updateMedication(index, 'medication', e.target.value)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white min-h-[44px]"
                                 >
                                     <option value="">Select a medication...</option>
                                     {allMedications.map(m => (
@@ -192,22 +196,25 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                                 </select>
                             </div>
                             <div className="w-20">
+                                <label htmlFor={`medication-quantity-${index}`} className="sr-only">
+                                    Monthly quantity for medication {index + 1}
+                                </label>
                                 <input
+                                    id={`medication-quantity-${index}`}
                                     type="number"
                                     min="1"
                                     max="12"
                                     value={med.quantity}
                                     onChange={(e) => updateMedication(index, 'quantity', parseInt(e.target.value) || 1)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center"
-                                    title="Monthly quantity"
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center min-h-[44px]"
+                                    aria-label="Monthly quantity"
                                 />
                             </div>
                             {selectedMeds.length > 1 && (
                                 <button
                                     onClick={() => removeMedication(index)}
-                                    className="p-2 text-slate-500 hover:text-red-500 transition-colors"
-                                    title="Remove medication"
-                                    aria-label={`Remove ${selectedMeds[index].medication || 'medication'}`}
+                                    className="p-2 text-slate-500 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                                    aria-label={`Remove ${med.name || 'medication'} from list`}
                                 >
                                     <Trash2 size={18} aria-hidden="true" />
                                 </button>
@@ -220,7 +227,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 <button
                     onClick={addMedication}
                     disabled={!canAddMore && !onUpgrade}
-                    className={`mt-4 w-full py-3 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 transition-colors ${
+                    className={`mt-4 w-full py-3 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px] ${
                         canAddMore
                             ? 'border-slate-300 text-slate-600 hover:border-emerald-400 hover:text-emerald-600'
                             : 'border-amber-300 text-amber-600 bg-amber-50'
@@ -228,12 +235,12 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 >
                     {canAddMore ? (
                         <>
-                            <Plus size={18} />
+                            <Plus size={18} aria-hidden="true" />
                             Add Another Medication
                         </>
                     ) : (
                         <>
-                            <Lock size={18} />
+                            <Lock size={18} aria-hidden="true" />
                             Upgrade to Pro for Unlimited Medications
                         </>
                     )}
@@ -249,9 +256,9 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 <button
                     onClick={calculateSavings}
                     disabled={!selectedMeds.some(m => m.id || m.name)}
-                    className="mt-6 w-full bg-emerald-600 text-white py-4 px-6 rounded-xl font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
+                    className="mt-6 w-full bg-emerald-600 text-white py-4 px-6 rounded-xl font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg min-h-[44px]"
                 >
-                    <Calculator size={22} />
+                    <Calculator size={22} aria-hidden="true" />
                     Calculate My Savings
                 </button>
             </div>
@@ -319,10 +326,10 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                         </p>
                         <Link
                             to="/medications"
-                            className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                            className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors min-h-[44px]"
                         >
                             Search Assistance Programs
-                            <ArrowRight size={18} />
+                            <ArrowRight size={18} aria-hidden="true" />
                         </Link>
                     </div>
                 </div>
@@ -332,7 +339,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
             <div className="grid md:grid-cols-3 gap-4 mt-8">
                 <div className="bg-slate-50 rounded-xl p-4 text-center">
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-emerald-100 rounded-full mb-3">
-                        <Shield className="w-5 h-5 text-emerald-600" />
+                        <Shield className="w-5 h-5 text-emerald-600" aria-hidden="true" />
                     </div>
                     <h4 className="font-semibold text-slate-900 mb-1">Verified Programs</h4>
                     <p className="text-sm text-slate-600">
@@ -341,7 +348,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4 text-center">
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mb-3">
-                        <Database className="w-5 h-5 text-blue-600" />
+                        <Database className="w-5 h-5 text-blue-600" aria-hidden="true" />
                     </div>
                     <h4 className="font-semibold text-slate-900 mb-1">Real Price Data</h4>
                     <p className="text-sm text-slate-600">
@@ -350,7 +357,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4 text-center">
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-rose-100 rounded-full mb-3">
-                        <Heart className="w-5 h-5 text-rose-600" />
+                        <Heart className="w-5 h-5 text-rose-600" aria-hidden="true" />
                     </div>
                     <h4 className="font-semibold text-slate-900 mb-1">Patient First</h4>
                     <p className="text-sm text-slate-600">

@@ -65,14 +65,15 @@ export default function SavingsTracker() {
                 <div className="flex items-center gap-2 mb-2">
                     <Link
                         to="/my-medications"
-                        className="text-white/80 hover:text-white flex items-center gap-1 text-sm"
+                        className="text-white/80 hover:text-white flex items-center gap-1 text-sm min-h-[44px] min-w-[44px]"
+                        aria-label="Go back to My Medications page"
                     >
-                        <ArrowLeft size={16} />
+                        <ArrowLeft size={16} aria-hidden="true" />
                         My Medications
                     </Link>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Calculator size={32} />
+                    <Calculator size={32} aria-hidden="true" />
                     <div>
                         <h1 className="text-2xl font-bold">Savings Calculator</h1>
                         <p className="text-emerald-100">
@@ -83,39 +84,53 @@ export default function SavingsTracker() {
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl">
+            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl" role="tablist" aria-label="Savings options">
                 <button
                     onClick={() => setActiveTab('calculator')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+                    role="tab"
+                    id="tab-calculator"
+                    aria-selected={activeTab === 'calculator'}
+                    aria-controls="tabpanel-calculator"
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
                         activeTab === 'calculator'
                             ? 'bg-white text-emerald-700 shadow-sm'
                             : 'text-slate-600 hover:text-slate-900'
                     }`}
                 >
-                    <Calculator size={18} />
+                    <Calculator size={18} aria-hidden="true" />
                     Estimate Savings
                 </button>
                 <button
                     onClick={() => setActiveTab('tracker')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors ${
+                    role="tab"
+                    id="tab-tracker"
+                    aria-selected={activeTab === 'tracker'}
+                    aria-controls="tabpanel-tracker"
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
                         activeTab === 'tracker'
                             ? 'bg-white text-emerald-700 shadow-sm'
                             : 'text-slate-600 hover:text-slate-900'
                     }`}
                 >
-                    <TrendingUp size={18} />
+                    <TrendingUp size={18} aria-hidden="true" />
                     Track Actual Savings
                 </button>
             </div>
 
             {/* Sync Message */}
             {syncMessage && (
-                <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 rounded-lg mb-6 text-sm">
+                <div role="status" aria-live="polite" className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 rounded-lg mb-6 text-sm">
                     {syncMessage}
                 </div>
             )}
 
             {/* Calculator Tab */}
+            <div
+                role="tabpanel"
+                id="tabpanel-calculator"
+                aria-labelledby="tab-calculator"
+                hidden={activeTab !== 'calculator'}
+            >
             {activeTab === 'calculator' && (
                 <SavingsCalculator
                     medications={medications || []}
@@ -123,8 +138,15 @@ export default function SavingsTracker() {
                     onUpgrade={handleUpgrade}
                 />
             )}
+            </div>
 
             {/* Tracker Tab */}
+            <div
+                role="tabpanel"
+                id="tabpanel-tracker"
+                aria-labelledby="tab-tracker"
+                hidden={activeTab !== 'tracker'}
+            >
             {activeTab === 'tracker' && (
                 <>
                     <div className="grid md:grid-cols-2 gap-6">
@@ -169,6 +191,7 @@ export default function SavingsTracker() {
                     </div>
                 </>
             )}
+            </div>
         </div>
     );
 }
