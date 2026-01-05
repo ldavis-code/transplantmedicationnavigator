@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn } from 'lucide-react';
+import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn, Gift } from 'lucide-react';
 import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
@@ -10,9 +10,15 @@ const Subscribe = () => {
 
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { isAuthenticated, user } = useSubscriberAuth();
+    const { isAuthenticated, user, refreshUser } = useSubscriberAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Patient code state
+    const [patientCode, setPatientCode] = useState('');
+    const [codeLoading, setCodeLoading] = useState(false);
+    const [codeError, setCodeError] = useState(null);
+    const [codeSuccess, setCodeSuccess] = useState(false);
 
     const plan = searchParams.get('plan') || 'monthly';
 
@@ -43,6 +49,49 @@ const Subscribe = () => {
         'Reminders on copay cards',
         'My Medication Savings'
     ];
+
+    const handleRedeemCode = async (e) => {
+        e.preventDefault();
+        if (!patientCode.trim()) return;
+
+        setCodeLoading(true);
+        setCodeError(null);
+        setCodeSuccess(false);
+
+        try {
+            const response = await fetch('/.netlify/functions/redeem-patient-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    code: patientCode.trim(),
+                    email: user?.email
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to redeem code');
+            }
+
+            setCodeSuccess(true);
+            setPatientCode('');
+            // Refresh user data to reflect new Pro status
+            if (refreshUser) {
+                await refreshUser();
+            }
+            // Redirect to account page after successful redemption
+            setTimeout(() => {
+                navigate('/account');
+            }, 2000);
+        } catch (err) {
+            setCodeError(err.message);
+        } finally {
+            setCodeLoading(false);
+        }
+    };
 
     const handleSubscribe = async () => {
         setLoading(true);
@@ -249,6 +298,68 @@ const Subscribe = () => {
             <div className="flex items-center justify-center gap-2 text-slate-500 text-sm">
                 <Shield size={16} />
                 <span>Secure payment powered by Stripe</span>
+            </div>
+
+            {/* Patient Code Section */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                    <Gift size={24} className="text-emerald-600" />
+                    <div>
+                        <h3 className="font-bold text-slate-900">Have a Patient Code?</h3>
+                        <p className="text-slate-600 text-sm">
+                            If your healthcare provider gave you a patient assistance code, enter it below.
+                        </p>
+                    </div>
+                </div>
+
+                {!isAuthenticated ? (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <p className="text-amber-800 text-sm">
+                            Please <Link to={`/login/register?redirect=/subscribe?plan=${plan}`} className="font-medium underline">create an account</Link> or <Link to={`/login?redirect=/subscribe?plan=${plan}`} className="font-medium underline">sign in</Link> first to redeem a patient code.
+                        </p>
+                    </div>
+                ) : codeSuccess ? (
+                    <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                        <CheckCircle size={20} className="text-emerald-600" />
+                        <div>
+                            <p className="text-emerald-800 font-medium">Code redeemed successfully!</p>
+                            <p className="text-emerald-700 text-sm">Redirecting to your account...</p>
+                        </div>
+                    </div>
+                ) : (
+                    <form onSubmit={handleRedeemCode} className="space-y-3">
+                        <div className="flex gap-3">
+                            <input
+                                type="text"
+                                value={patientCode}
+                                onChange={(e) => setPatientCode(e.target.value)}
+                                placeholder="Enter patient code"
+                                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                disabled={codeLoading}
+                            />
+                            <button
+                                type="submit"
+                                disabled={codeLoading || !patientCode.trim()}
+                                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                            >
+                                {codeLoading ? (
+                                    <>
+                                        <Loader2 size={16} className="animate-spin" />
+                                        Redeeming...
+                                    </>
+                                ) : (
+                                    'Redeem'
+                                )}
+                            </button>
+                        </div>
+                        {codeError && (
+                            <div className="flex items-center gap-2 text-red-600 text-sm">
+                                <AlertCircle size={16} />
+                                <span>{codeError}</span>
+                            </div>
+                        )}
+                    </form>
+                )}
             </div>
 
             {/* Terms */}
