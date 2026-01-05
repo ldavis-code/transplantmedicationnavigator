@@ -1309,18 +1309,7 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Pro users always have access
-        if (isPro) {
-            setStep(6);
-            return;
-        }
-        // Check if free tier limit is reached
-        if (isQuizLimitReached) {
-            setShowPaywall(true);
-            return;
-        }
-        // Increment quiz completion count and proceed
-        incrementQuizCompletions();
+        // Proceed to results - free tier paywall check happens on "My Medication Savings" button in MedicationSearch
         setStep(6);
     };
 
@@ -1432,17 +1421,15 @@ const Wizard = () => {
                         <Info size={20} className="text-emerald-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
                             <p className="text-emerald-800">
-                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.
-                                {remainingQuizzes <= 2 && remainingQuizzes > 0 && (
-                                    <span> Running low? <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.</span>
+                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.
+                                {remainingQuizzes === 1 && (
+                                    <span> This is your last free quiz. </span>
                                 )}
+                                {remainingQuizzes === 0 && (
+                                    <span> You need Pro to see your savings. </span>
+                                )}
+                                <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                             </p>
-                            {remainingQuizzes > 2 && (
-                                <p className="text-emerald-700 mt-1">
-                                    Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
-                                    <Link to="/pricing" className="underline">Learn more</Link>
-                                </p>
-                            )}
                         </div>
                     </div>
                 )}
@@ -1959,12 +1946,20 @@ const Wizard = () => {
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
                 {/* Show remaining quizzes notice for free users */}
-                {!isPro && remainingQuizzes > 0 && remainingQuizzes <= 2 && (
+                {!isPro && remainingQuizzes >= 0 && remainingQuizzes <= 2 && (
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
                         <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-amber-800">
-                            <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining after this one.{' '}
-                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes and full features.
+                            {remainingQuizzes > 0 ? (
+                                <>
+                                    <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.{' '}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>No free quizzes left.</strong> You will need Pro to see your savings.{' '}
+                                </>
+                            )}
+                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                         </div>
                     </div>
                 )}
@@ -2429,7 +2424,13 @@ if (typeof window !== 'undefined') {
 const MedicationSearch = () => {
     useMetaTags(seoMetadata.medications);
     const MEDICATIONS = useMedicationsList();
-    const { answers: quizAnswers } = useChatQuiz();
+    const {
+        answers: quizAnswers,
+        incrementQuizCompletions,
+        isQuizLimitReached,
+        remainingQuizzes
+    } = useChatQuiz();
+    const { isPro } = useLocalSubscriptionStatus();
 
     // Determine if copay cards should be shown based on insurance type from quiz
     // Copay cards are only for commercial/employer insurance
@@ -2447,6 +2448,7 @@ const MedicationSearch = () => {
     const [priceReportRefresh, setPriceReportRefresh] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
     const [showSavings, setShowSavings] = useState(false);
+    const [showPaywall, setShowPaywall] = useState(false);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
     const fuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -2533,6 +2535,12 @@ const MedicationSearch = () => {
     const hasItems = displayListInternal.length > 0 || myCustomMeds.length > 0;
 
     return (
+        <>
+        <PaywallModal
+            isOpen={showPaywall}
+            onClose={() => setShowPaywall(false)}
+            featureType="quiz"
+        />
         <article className="max-w-5xl mx-auto space-y-8">
             {/* Show full search section only when no items OR when showSavings is false and user wants to add more */}
             {!hasItems && (
@@ -2843,6 +2851,16 @@ const MedicationSearch = () => {
                 <div className="flex justify-center no-print">
                     <button
                         onClick={() => {
+                            // Pro users always have access
+                            if (!isPro) {
+                                // Check if free tier limit is reached (3rd quiz attempt)
+                                if (isQuizLimitReached) {
+                                    setShowPaywall(true);
+                                    return;
+                                }
+                                // Increment quiz completion count for free users
+                                incrementQuizCompletions();
+                            }
                             setShowSavings(true);
                             setTimeout(() => {
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2880,6 +2898,7 @@ const MedicationSearch = () => {
                 </section>
             )}
         </article>
+        </>
     );
 };
 
