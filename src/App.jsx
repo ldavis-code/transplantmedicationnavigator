@@ -735,7 +735,7 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    We offer 4 free quizzes to get you started. Subscriptions are optional and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
+                    Subscriptions give you access to our quizzes and savings calculator, and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
                 </p>
             </section>
 
