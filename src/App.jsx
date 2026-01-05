@@ -406,6 +406,7 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
+        { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
@@ -456,13 +457,6 @@ const Layout = ({ children }) => {
                                 {link.label}
                             </Link>
                         ))}
-                        <Link
-                            to="/savings-tracker"
-                            aria-label="Calculate your medication savings"
-                            className="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
-                        >
-                            Savings Calculator
-                        </Link>
                     </nav>
 
                     {/* Mobile Menu Toggle */}
@@ -495,14 +489,6 @@ const Layout = ({ children }) => {
                                     {link.label}
                                 </Link>
                             ))}
-                            <Link
-                                to="/savings-tracker"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                aria-label="Calculate your medication savings"
-                                className="px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
-                            >
-                                Savings Calculator
-                            </Link>
                         </div>
                     </nav>
                 )}
