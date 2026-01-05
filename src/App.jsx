@@ -1140,22 +1140,47 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
 };
 
 // Check localStorage for subscription status (used by Wizard)
-function useLocalSubscriptionStatus() {
+// Also checks for promo code access for specific features
+function useLocalSubscriptionStatus(feature = null) {
     const [isPro, setIsPro] = useState(false);
+    const [hasPromoAccess, setHasPromoAccess] = useState(false);
 
-    useEffect(() => {
+    const checkAccess = useCallback(() => {
+        let proStatus = false;
+        let promoStatus = false;
+
         try {
             const cached = localStorage.getItem('tmn_subscription');
             if (cached) {
                 const { data } = JSON.parse(cached);
-                setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+                proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
             }
         } catch (e) {
             // Ignore errors, default to free
         }
-    }, []);
 
-    return { isPro };
+        // Check promo code access for specific feature
+        if (feature) {
+            try {
+                const promoCodes = localStorage.getItem('tmn_promo_codes');
+                if (promoCodes) {
+                    const redeemed = JSON.parse(promoCodes);
+                    promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
+                }
+            } catch (e) {
+                // Ignore errors
+            }
+        }
+
+        setIsPro(proStatus);
+        setHasPromoAccess(promoStatus);
+    }, [feature]);
+
+    useEffect(() => {
+        checkAccess();
+    }, [checkAccess]);
+
+    return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
 }
 
 // Wizard Page
@@ -1168,10 +1193,16 @@ const Wizard = () => {
         isQuizLimitReached,
         remainingQuizzes
     } = useChatQuiz();
-    const { isPro } = useLocalSubscriptionStatus();
+    const { isPro, hasAccess, refreshAccess } = useLocalSubscriptionStatus('quiz');
 
     // Paywall modal state
     const [showPaywall, setShowPaywall] = useState(false);
+
+    // Handler for successful promo code redemption
+    const handlePromoSuccess = () => {
+        refreshAccess();
+        setShowPaywall(false);
+    };
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1216,6 +1247,13 @@ const Wizard = () => {
             announcement.textContent = `Step ${step} of 6`;
         }
     }, [step]);
+
+    // Show paywall immediately for non-Pro users without promo access (quiz is Pro-only feature)
+    useEffect(() => {
+        if (!hasAccess && isQuizLimitReached) {
+            setShowPaywall(true);
+        }
+    }, [hasAccess, isQuizLimitReached]);
 
     // Fuse.js instance for fuzzy medication search
     const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -1295,7 +1333,18 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Proceed to results - free tier paywall check happens on "My Medication Savings" button in MedicationSearch
+        // Pro users and promo code users always have access
+        if (hasAccess) {
+            setStep(6);
+            return;
+        }
+        // Check if free tier limit is reached
+        if (isQuizLimitReached) {
+            setShowPaywall(true);
+            return;
+        }
+        // Increment quiz completion count and proceed
+        incrementQuizCompletions();
         setStep(6);
     };
 
@@ -1355,15 +1404,11 @@ const Wizard = () => {
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
-                {/* Free tier usage indicator */}
-                {!isPro && (
+                {/* Pro feature indicator */}
+                {!hasAccess && (
                     <div className="flex justify-end mt-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                            remainingQuizzes <= 1 ? 'bg-amber-100 text-amber-700' :
-                            remainingQuizzes <= 2 ? 'bg-blue-100 text-blue-700' :
-                            'bg-slate-100 text-slate-600'
-                        }`}>
-                            {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">
+                            Pro Feature
                         </span>
                     </div>
                 )}
@@ -1401,20 +1446,18 @@ const Wizard = () => {
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
 
-                {/* Free tier usage info */}
-                {!isPro && (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <Info size={20} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                {/* Pro feature info */}
+                {!hasAccess && (
+                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
-                            <p className="text-emerald-800">
-                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.
-                                {remainingQuizzes === 1 && (
-                                    <span> This is your last free quiz. </span>
-                                )}
-                                {remainingQuizzes === 0 && (
-                                    <span> You need Pro to see your savings. </span>
-                                )}
-                                <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
+                            <p className="text-purple-800">
+                                <strong>Pro Feature:</strong> My Path Quiz is available for Pro subscribers.{' '}
+                                <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock personalized medication assistance recommendations.
+                            </p>
+                            <p className="text-purple-700 mt-1">
+                                Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
+                                <Link to="/pricing" className="underline">Learn more</Link>
                             </p>
                         </div>
                     </div>
@@ -1918,6 +1961,7 @@ const Wizard = () => {
                 isOpen={showPaywall}
                 onClose={() => setShowPaywall(false)}
                 featureType="quiz"
+                onPromoSuccess={handlePromoSuccess}
             />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
@@ -1931,21 +1975,13 @@ const Wizard = () => {
                 </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
-                {/* Show remaining quizzes notice for free users */}
-                {!isPro && remainingQuizzes >= 0 && remainingQuizzes <= 2 && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-amber-800">
-                            {remainingQuizzes > 0 ? (
-                                <>
-                                    <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.{' '}
-                                </>
-                            ) : (
-                                <>
-                                    <strong>No free quizzes left.</strong> You will need Pro to see your savings.{' '}
-                                </>
-                            )}
-                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
+                {/* Show Pro feature notice for free users */}
+                {!hasAccess && (
+                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-purple-800">
+                            <strong>Pro Feature:</strong> Complete results require a Pro subscription.{' '}
+                            <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to see your personalized recommendations.
                         </div>
                     </div>
                 )}

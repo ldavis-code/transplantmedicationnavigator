@@ -1,12 +1,13 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Lock, Sparkles, CheckCircle, X } from 'lucide-react';
+import { Lock, Sparkles, CheckCircle, X, Tag, Loader2 } from 'lucide-react';
+import { redeemPromoCode } from '../lib/promoCodes';
 
 /**
  * PaywallModal Component
  *
- * Shows when users reach their free tier limits (2 quizzes or 2 calculator uses).
- * Prompts them to sign up for a Pro subscription to continue.
+ * Shows when users try to access Pro-only features.
+ * Prompts them to sign up for a Pro subscription or enter a promo code.
  *
  * Accessibility features:
  * - Focus trap to keep keyboard focus within modal
@@ -14,21 +15,28 @@ import { Lock, Sparkles, CheckCircle, X } from 'lucide-react';
  * - ARIA attributes for screen readers
  * - Escape key to close
  */
-const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
+const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess }) => {
   const modalRef = useRef(null);
   const primaryButtonRef = useRef(null);
   const previousActiveElement = useRef(null);
 
+  // Promo code state
+  const [showPromoInput, setShowPromoInput] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoError, setPromoError] = useState('');
+  const [promoSuccess, setPromoSuccess] = useState('');
+  const [isRedeeming, setIsRedeeming] = useState(false);
+
   // Feature-specific content
   const content = {
     quiz: {
-      title: "You've used your 2 free quizzes",
-      description: "Upgrade to Pro to keep using My Path Quizzes and unlock all features.",
+      title: "My Path Quiz is a Pro Feature",
+      description: "Get personalized medication assistance recommendations with unlimited quizzes when you upgrade to Pro.",
       icon: '🎯',
     },
     calculator: {
-      title: "You've used your 2 free calculations",
-      description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
+      title: "Savings Calculator is a Pro Feature",
+      description: "Estimate your potential savings with unlimited calculations when you upgrade to Pro.",
       icon: '💰',
     },
   };
@@ -43,6 +51,16 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
     'Track actual savings locally',
     'Copay card reminders',
   ];
+
+  // Reset promo state when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setShowPromoInput(false);
+      setPromoCode('');
+      setPromoError('');
+      setPromoSuccess('');
+    }
+  }, [isOpen]);
 
   // Store previous focus and prevent body scroll
   useEffect(() => {
@@ -112,6 +130,36 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
     }
   };
 
+  const handleRedeemPromo = async () => {
+    setPromoError('');
+    setPromoSuccess('');
+    setIsRedeeming(true);
+
+    // Small delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const result = redeemPromoCode(promoCode);
+    setIsRedeeming(false);
+
+    if (result.success) {
+      // Check if this code grants access to the current feature
+      if (result.features && result.features.includes(featureType)) {
+        setPromoSuccess(result.message || 'Code redeemed! You now have access.');
+        // Notify parent and close after short delay
+        setTimeout(() => {
+          if (onPromoSuccess) {
+            onPromoSuccess(result.features);
+          }
+          handleClose();
+        }, 1500);
+      } else {
+        setPromoError(`This code doesn't include ${featureType === 'quiz' ? 'Quiz' : 'Calculator'} access.`);
+      }
+    } else {
+      setPromoError(result.error || 'Invalid promo code');
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -127,7 +175,7 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
     >
       <div
         ref={modalRef}
-        className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 animate-in zoom-in-95 duration-200 relative"
+        className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 animate-in zoom-in-95 duration-200 relative max-h-[90vh] overflow-y-auto"
       >
         {/* Close Button */}
         <button
@@ -209,6 +257,58 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
           >
             Compare Plans
           </Link>
+
+          {/* Promo Code Section */}
+          <div className="pt-2 border-t border-slate-200">
+            {!showPromoInput ? (
+              <button
+                onClick={() => setShowPromoInput(true)}
+                className="w-full py-2 text-purple-600 hover:text-purple-700 text-sm font-medium transition flex items-center justify-center gap-2"
+              >
+                <Tag size={16} />
+                Have a promo code?
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={promoCode}
+                    onChange={(e) => {
+                      setPromoCode(e.target.value.toUpperCase());
+                      setPromoError('');
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && promoCode.trim()) {
+                        handleRedeemPromo();
+                      }
+                    }}
+                    placeholder="Enter code"
+                    className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm uppercase"
+                    disabled={isRedeeming}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleRedeemPromo}
+                    disabled={!promoCode.trim() || isRedeeming}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-slate-300 text-white font-medium rounded-lg transition disabled:cursor-not-allowed min-w-[80px] flex items-center justify-center"
+                  >
+                    {isRedeeming ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      'Apply'
+                    )}
+                  </button>
+                </div>
+                {promoError && (
+                  <p className="text-sm text-red-600 text-center">{promoError}</p>
+                )}
+                {promoSuccess && (
+                  <p className="text-sm text-emerald-600 text-center font-medium">{promoSuccess}</p>
+                )}
+              </div>
+            )}
+          </div>
 
           <button
             onClick={handleClose}
