@@ -7,10 +7,16 @@
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 
-// Initialize Supabase
+// Initialize Supabase with service role key for admin access
 const supabase = createClient(
   process.env.SUPABASE_URL || 'https://lhvemrazkwlmdaljrcln.supabase.co',
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_KEY,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
 );
 
 const SUBSCRIBER_JWT_SECRET = process.env.SUBSCRIBER_JWT_SECRET || process.env.JWT_SECRET || 'subscriber-secret-change-in-production';

@@ -27,7 +27,13 @@ export async function handler(event) {
   // Initialize Supabase with service role key for admin access
   const supabase = createClient(
     process.env.SUPABASE_URL || 'https://lhvemrazkwlmdaljrcln.supabase.co',
-    process.env.SUPABASE_SERVICE_KEY
+    process.env.SUPABASE_SERVICE_KEY,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    }
   );
 
   const sig = event.headers['stripe-signature'];
