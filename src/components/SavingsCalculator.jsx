@@ -3,6 +3,16 @@ import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, Lock, A
 import { Link } from 'react-router-dom';
 import priceEstimates from '../data/price-estimates.json';
 
+// Assistance type savings estimates (percentage off retail)
+const ASSISTANCE_SAVINGS = {
+    pap: { min: 0.95, max: 1.0, label: 'Patient Assistance Program', description: 'Usually free ($0)' },
+    copay_card: { min: 0.70, max: 0.95, label: 'Copay Card', description: '$0-$35/month typical' },
+    foundation: { min: 0.80, max: 1.0, label: 'Foundation Grant', description: 'Covers copays' },
+    generic: { min: 0.70, max: 0.90, label: 'Generic Switch', description: '70-90% savings' },
+    discount_card: { min: 0.50, max: 0.80, label: 'Discount Card (GoodRx)', description: '50-80% off retail' },
+    medicare_negotiated: { min: 0.50, max: 0.79, label: 'Medicare Negotiated', description: '50-79% off (2026)' },
+};
+
 // Get retail price estimate for a medication
 function getRetailPrice(medicationId, medicationName) {
     const id = medicationId?.toLowerCase() || medicationName?.toLowerCase().split(' ')[0];
@@ -37,22 +47,22 @@ function getAssistedPrice(medicationId, medicationName) {
     return priceEstimates.categoryDefaults?.Immunosuppressant?.costplus?.min || 15;
 }
 
-// Common transplant medications for dropdown
-const COMMON_MEDICATIONS = [
-    { id: 'tacrolimus', name: 'Tacrolimus (Generic Prograf)', category: 'Immunosuppressant' },
-    { id: 'prograf', name: 'Prograf (Brand Tacrolimus)', category: 'Immunosuppressant' },
-    { id: 'mycophenolate', name: 'Mycophenolate (Generic CellCept)', category: 'Immunosuppressant' },
-    { id: 'sirolimus', name: 'Sirolimus (Generic Rapamune)', category: 'Immunosuppressant' },
-    { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', category: 'Antiviral' },
-    { id: 'prevymis', name: 'Prevymis (Letermovir)', category: 'Antiviral' },
-    { id: 'noxafil', name: 'Noxafil (Posaconazole)', category: 'Antifungal' },
-    { id: 'vfend', name: 'Voriconazole (Generic Vfend)', category: 'Antifungal' },
-    { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
-    { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
-    { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
-    { id: 'jardiance', name: 'Jardiance (Empagliflozin)', category: 'Diabetes/Heart/Kidney' },
-    { id: 'farxiga', name: 'Farxiga (Dapagliflozin)', category: 'Diabetes/Heart/Kidney' },
+// Fallback medications if none provided from context
+const FALLBACK_MEDICATIONS = [
     { id: 'creon', name: 'Creon (Pancrelipase)', category: 'Digestive Enzyme' },
+    { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
+    { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
+    { id: 'farxiga', name: 'Farxiga (Dapagliflozin)', category: 'Diabetes/Heart/Kidney' },
+    { id: 'jardiance', name: 'Jardiance (Empagliflozin)', category: 'Diabetes/Heart/Kidney' },
+    { id: 'mycophenolate', name: 'Mycophenolate (Generic CellCept)', category: 'Immunosuppressant' },
+    { id: 'noxafil', name: 'Noxafil (Posaconazole)', category: 'Antifungal' },
+    { id: 'prevymis', name: 'Prevymis (Letermovir)', category: 'Antiviral' },
+    { id: 'prograf', name: 'Prograf (Brand Tacrolimus)', category: 'Immunosuppressant' },
+    { id: 'sirolimus', name: 'Sirolimus (Generic Rapamune)', category: 'Immunosuppressant' },
+    { id: 'tacrolimus', name: 'Tacrolimus (Generic Prograf)', category: 'Immunosuppressant' },
+    { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', category: 'Antiviral' },
+    { id: 'vfend', name: 'Voriconazole (Generic Vfend)', category: 'Antifungal' },
+    { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
 ];
 
 export default function SavingsCalculator({ medications = [], isPro = false, onUpgrade, onCalculate }) {
@@ -65,19 +75,18 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const MAX_FREE_MEDS = 3;
     const canAddMore = isPro || selectedMeds.length < MAX_FREE_MEDS;
 
-    // Combine common meds with any from context
-    const allMedications = [...COMMON_MEDICATIONS];
-    if (medications?.length > 0) {
-        medications.forEach(med => {
-            if (!allMedications.find(m => m.id === med.id)) {
-                allMedications.push({
-                    id: med.id,
-                    name: med.brandName || med.genericName,
-                    category: med.category
-                });
-            }
-        });
-    }
+    // Use medications from context if available, otherwise use fallback
+    // This gives access to all 180+ medications from the database
+    const allMedications = medications?.length > 0
+        ? medications.map(med => ({
+            id: med.id,
+            name: med.brandName || med.genericName || med.name,
+            category: med.category
+        }))
+        : [...FALLBACK_MEDICATIONS];
+
+    // Sort alphabetically by name
+    allMedications.sort((a, b) => a.name.localeCompare(b.name));
 
     const addMedication = () => {
         if (!canAddMore) {

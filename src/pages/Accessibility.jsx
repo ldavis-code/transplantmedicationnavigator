@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
+import { seoMetadata } from '../data/seo-metadata.js';
 
 const Accessibility = () => {
-    useMetaTags({
-        title: 'Accessibility Statement | Transplant Medication Navigator',
-        description: 'Our commitment to digital accessibility for all users, including those with disabilities. This website is conformant with WCAG 2.1 Level AA standards.',
-        keywords: 'accessibility, WCAG, screen reader, disability, accessible healthcare'
-    });
+    useMetaTags(seoMetadata.accessibility);
 
     return (
         <article className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -16,7 +13,7 @@ const Accessibility = () => {
                     <AccessibilityIcon size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility Statement</h1>
-                <p className="text-slate-600">Last Updated: January 4, 2026</p>
+                <p className="text-slate-600">Last Updated: January 5, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
@@ -37,19 +34,19 @@ const Accessibility = () => {
                     <p className="text-slate-700 leading-relaxed mb-4">
                         We strive to conform to the{' '}
                         <a
-                            href="https://www.w3.org/WAI/WCAG21/quickref/"
+                            href="https://www.w3.org/WAI/WCAG22/quickref/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-emerald-600 hover:text-emerald-700 underline"
                         >
-                            Web Content Accessibility Guidelines (WCAG) 2.1 Level AA
+                            Web Content Accessibility Guidelines (WCAG) 2.2 Level AA
                         </a>
                         . These guidelines explain how to make web content more accessible for people with disabilities, and user-friendly for everyone.
                     </p>
                     <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start gap-3">
                         <CheckCircle className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <p className="text-emerald-800">
-                            This website is conformant with WCAG 2.1 Level AA. We continuously work to maintain and improve accessibility across all features.
+                            This website is conformant with WCAG 2.2 Level AA. We continuously work to maintain and improve accessibility across all features.
                         </p>
                     </div>
                 </section>
@@ -204,7 +201,7 @@ const Accessibility = () => {
                         We assess the accessibility of this website through the following methods:
                     </p>
                     <ul className="list-disc list-inside space-y-2 text-slate-700 mt-4">
-                        <li>Self-evaluation using WCAG 2.1 Level AA criteria</li>
+                        <li>Self-evaluation using WCAG 2.2 Level AA criteria</li>
                         <li>Automated testing tools (Lighthouse, axe-core)</li>
                         <li>Manual testing with keyboard and screen readers</li>
                         <li>User feedback and accessibility reports</li>

@@ -5,7 +5,7 @@ import { Lock, Sparkles, CheckCircle, X } from 'lucide-react';
 /**
  * PaywallModal Component
  *
- * Shows when users reach their free tier limits (4 quizzes or 4 calculator uses).
+ * Shows when users reach their free tier limits (2 quizzes or 2 calculator uses).
  * Prompts them to sign up for a Pro subscription to continue.
  *
  * Accessibility features:
@@ -22,12 +22,12 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
   // Feature-specific content
   const content = {
     quiz: {
-      title: "You've completed 4 free quizzes",
-      description: "Upgrade to Pro for unlimited My Path Quizzes and unlock all premium features.",
+      title: "You've used your 2 free quizzes",
+      description: "Upgrade to Pro to keep using My Path Quizzes and unlock all features.",
       icon: '🎯',
     },
     calculator: {
-      title: "You've used 4 free calculations",
+      title: "You've used your 2 free calculations",
       description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
       icon: '💰',
     },

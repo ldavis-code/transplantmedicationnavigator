@@ -406,6 +406,7 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
+        { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
@@ -456,13 +457,6 @@ const Layout = ({ children }) => {
                                 {link.label}
                             </Link>
                         ))}
-                        <Link
-                            to="/savings-tracker"
-                            aria-label="Calculate your medication savings"
-                            className="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
-                        >
-                            Savings Calculator
-                        </Link>
                     </nav>
 
                     {/* Mobile Menu Toggle */}
@@ -495,14 +489,6 @@ const Layout = ({ children }) => {
                                     {link.label}
                                 </Link>
                             ))}
-                            <Link
-                                to="/savings-tracker"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                aria-label="Calculate your medication savings"
-                                className="px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center bg-emerald-600 text-white hover:bg-emerald-700"
-                            >
-                                Savings Calculator
-                            </Link>
                         </div>
                     </nav>
                 )}
@@ -735,7 +721,7 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Subscriptions give you access to our quizzes and savings calculator, and help us maintain this patient-built tool — no investors, no ads, just patients helping patients.
+                    Try 2 free quizzes to see how we can help. After that, a subscription is required to continue — no investors, no ads, just patients helping patients.
                 </p>
             </section>
 
@@ -1309,18 +1295,7 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Pro users always have access
-        if (isPro) {
-            setStep(6);
-            return;
-        }
-        // Check if free tier limit is reached
-        if (isQuizLimitReached) {
-            setShowPaywall(true);
-            return;
-        }
-        // Increment quiz completion count and proceed
-        incrementQuizCompletions();
+        // Proceed to results - free tier paywall check happens on "My Medication Savings" button in MedicationSearch
         setStep(6);
     };
 
@@ -1432,17 +1407,15 @@ const Wizard = () => {
                         <Info size={20} className="text-emerald-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
                             <p className="text-emerald-800">
-                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.
-                                {remainingQuizzes <= 2 && remainingQuizzes > 0 && (
-                                    <span> Running low? <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.</span>
+                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.
+                                {remainingQuizzes === 1 && (
+                                    <span> This is your last free quiz. </span>
                                 )}
+                                {remainingQuizzes === 0 && (
+                                    <span> You need Pro to see your savings. </span>
+                                )}
+                                <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                             </p>
-                            {remainingQuizzes > 2 && (
-                                <p className="text-emerald-700 mt-1">
-                                    Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
-                                    <Link to="/pricing" className="underline">Learn more</Link>
-                                </p>
-                            )}
                         </div>
                     </div>
                 )}
@@ -1959,12 +1932,20 @@ const Wizard = () => {
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
                 {/* Show remaining quizzes notice for free users */}
-                {!isPro && remainingQuizzes > 0 && remainingQuizzes <= 2 && (
+                {!isPro && remainingQuizzes >= 0 && remainingQuizzes <= 2 && (
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
                         <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-amber-800">
-                            <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining after this one.{' '}
-                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes and full features.
+                            {remainingQuizzes > 0 ? (
+                                <>
+                                    <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.{' '}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>No free quizzes left.</strong> You will need Pro to see your savings.{' '}
+                                </>
+                            )}
+                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                         </div>
                     </div>
                 )}
@@ -2429,7 +2410,13 @@ if (typeof window !== 'undefined') {
 const MedicationSearch = () => {
     useMetaTags(seoMetadata.medications);
     const MEDICATIONS = useMedicationsList();
-    const { answers: quizAnswers } = useChatQuiz();
+    const {
+        answers: quizAnswers,
+        incrementQuizCompletions,
+        isQuizLimitReached,
+        remainingQuizzes
+    } = useChatQuiz();
+    const { isPro } = useLocalSubscriptionStatus();
 
     // Determine if copay cards should be shown based on insurance type from quiz
     // Copay cards are only for commercial/employer insurance
@@ -2447,6 +2434,7 @@ const MedicationSearch = () => {
     const [priceReportRefresh, setPriceReportRefresh] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
     const [showSavings, setShowSavings] = useState(false);
+    const [showPaywall, setShowPaywall] = useState(false);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
     const fuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -2533,6 +2521,12 @@ const MedicationSearch = () => {
     const hasItems = displayListInternal.length > 0 || myCustomMeds.length > 0;
 
     return (
+        <>
+        <PaywallModal
+            isOpen={showPaywall}
+            onClose={() => setShowPaywall(false)}
+            featureType="quiz"
+        />
         <article className="max-w-5xl mx-auto space-y-8">
             {/* Show full search section only when no items OR when showSavings is false and user wants to add more */}
             {!hasItems && (
@@ -2843,6 +2837,16 @@ const MedicationSearch = () => {
                 <div className="flex justify-center no-print">
                     <button
                         onClick={() => {
+                            // Pro users always have access
+                            if (!isPro) {
+                                // Check if free tier limit is reached (3rd quiz attempt)
+                                if (isQuizLimitReached) {
+                                    setShowPaywall(true);
+                                    return;
+                                }
+                                // Increment quiz completion count for free users
+                                incrementQuizCompletions();
+                            }
                             setShowSavings(true);
                             setTimeout(() => {
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2880,6 +2884,7 @@ const MedicationSearch = () => {
                 </section>
             )}
         </article>
+        </>
     );
 };
 
@@ -4353,7 +4358,7 @@ const Education = () => {
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Look Into Extra Help</h4>
                                             <p className="text-slate-600 text-sm mb-2">If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.</p>
-                                            <a href="https://www.ssa.gov/medicare/prescriptionhelp" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
+                                            <a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
@@ -5002,9 +5007,9 @@ const Education = () => {
                                 </p>
                             </a>
 
-                            <a href="https://www.mentalhealth.gov/get-help" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label="Visit MentalHealth.gov (opens in new tab)">
+                            <a href="https://findtreatment.gov/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label="Visit FindTreatment.gov (opens in new tab)">
                                 <div className="flex justify-between items-start mb-3">
-                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700">MentalHealth.gov</h3>
+                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700">FindTreatment.gov</h3>
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed">
