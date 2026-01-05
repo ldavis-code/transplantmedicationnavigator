@@ -568,7 +568,7 @@ const Home = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
                         to="/wizard"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-2"
                         aria-label="Start My Path Quiz"
                     >
                         <Search size={20} aria-hidden="true" />
@@ -583,6 +583,9 @@ const Home = () => {
                         Find Grants & Foundations
                     </Link>
                 </div>
+                <p className="mt-6 text-slate-600 text-base max-w-xl mx-auto">
+                    Try 2 free quizzes to see how we can help. After that, a subscription is required to continue — no investors, no ads, just patients helping patients.
+                </p>
             </section>
 
             {/* Features Grid */}
