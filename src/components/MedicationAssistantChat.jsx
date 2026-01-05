@@ -15,23 +15,47 @@ import {
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 import PaywallModal from './PaywallModal.jsx';
 
-// Check localStorage for subscription status
-function useLocalSubscription() {
+// Check localStorage for subscription status and promo code access
+function useLocalSubscription(feature = null) {
   const [isPro, setIsPro] = useState(false);
+  const [hasPromoAccess, setHasPromoAccess] = useState(false);
 
-  useEffect(() => {
+  const checkAccess = useCallback(() => {
+    let proStatus = false;
+    let promoStatus = false;
+
     try {
       const cached = localStorage.getItem('tmn_subscription');
       if (cached) {
         const { data } = JSON.parse(cached);
-        setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+        proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
       }
     } catch (e) {
       // Ignore errors, default to free
     }
-  }, []);
 
-  return { isPro };
+    // Check promo code access for specific feature
+    if (feature) {
+      try {
+        const promoCodes = localStorage.getItem('tmn_promo_codes');
+        if (promoCodes) {
+          const redeemed = JSON.parse(promoCodes);
+          promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+
+    setIsPro(proStatus);
+    setHasPromoAccess(promoStatus);
+  }, [feature]);
+
+  useEffect(() => {
+    checkAccess();
+  }, [checkAccess]);
+
+  return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
 }
 
 // Mode toggle tabs
@@ -41,8 +65,13 @@ const MODE_TABS = [
 ];
 
 const MedicationAssistantChat = () => {
-  // Check subscription status
-  const { isPro } = useLocalSubscription();
+  // Check subscription status and promo access
+  const { isPro, hasAccess, refreshAccess } = useLocalSubscription('quiz');
+
+  // Handler for successful promo code redemption
+  const handlePromoSuccess = () => {
+    refreshAccess();
+  };
 
   // Context for shared state
   const {
@@ -879,7 +908,7 @@ const MedicationAssistantChat = () => {
           </div>
 
           {/* Pro Feature Banner */}
-          {isPro ? (
+          {hasAccess ? (
             <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
@@ -887,7 +916,7 @@ const MedicationAssistantChat = () => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-emerald-800 text-sm mb-1">
-                    Pro subscriber — unlimited access
+                    {isPro ? 'Pro subscriber' : 'Promo access'} — unlimited access
                   </p>
                   <p className="text-emerald-700 text-xs leading-relaxed">
                     You have unlimited pathway quizzes, medication searches, and savings tracking.
@@ -948,7 +977,7 @@ const MedicationAssistantChat = () => {
           {/* Start Button */}
           <button
             onClick={() => {
-              if (!isPro && isQuizLimitReached) {
+              if (!hasAccess && isQuizLimitReached) {
                 setShowPaywall(true);
               } else {
                 setHasStartedQuiz(true);
@@ -1446,6 +1475,7 @@ const MedicationAssistantChat = () => {
       isOpen={showPaywall}
       onClose={() => setShowPaywall(false)}
       featureType="quiz"
+      onPromoSuccess={handlePromoSuccess}
     />
     <div className="fixed bottom-6 right-6 z-50 no-print">
       {/* Chat Toggle Button */}

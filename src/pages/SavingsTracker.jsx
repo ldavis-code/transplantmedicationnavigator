@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Calculator, TrendingUp, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SavingsCalculator from '../components/SavingsCalculator';
@@ -11,23 +11,47 @@ import { useChatQuiz } from '../context/ChatQuizContext';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 
-// Check localStorage for subscription status (set by Account page)
-function useLocalSubscription() {
+// Check localStorage for subscription status and promo code access
+function useLocalSubscription(feature = null) {
     const [isPro, setIsPro] = useState(false);
+    const [hasPromoAccess, setHasPromoAccess] = useState(false);
 
-    useEffect(() => {
+    const checkAccess = useCallback(() => {
+        let proStatus = false;
+        let promoStatus = false;
+
         try {
             const cached = localStorage.getItem('tmn_subscription');
             if (cached) {
                 const { data } = JSON.parse(cached);
-                setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+                proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
             }
         } catch (e) {
             // Ignore errors, default to free
         }
-    }, []);
 
-    return { isPro };
+        // Check promo code access for specific feature
+        if (feature) {
+            try {
+                const promoCodes = localStorage.getItem('tmn_promo_codes');
+                if (promoCodes) {
+                    const redeemed = JSON.parse(promoCodes);
+                    promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
+                }
+            } catch (e) {
+                // Ignore errors
+            }
+        }
+
+        setIsPro(proStatus);
+        setHasPromoAccess(promoStatus);
+    }, [feature]);
+
+    useEffect(() => {
+        checkAccess();
+    }, [checkAccess]);
+
+    return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
 }
 
 export default function SavingsTracker() {
@@ -38,12 +62,18 @@ export default function SavingsTracker() {
     const [syncMessage, setSyncMessage] = useState(null);
     const [showPaywall, setShowPaywall] = useState(false);
     const { medications } = useMedications();
-    const { isPro } = useLocalSubscription();
+    const { isPro, hasAccess, refreshAccess } = useLocalSubscription('calculator');
     const {
         incrementCalculatorUses,
         isCalculatorLimitReached,
         remainingCalculatorUses
     } = useChatQuiz();
+
+    // Handler for successful promo code redemption
+    const handlePromoSuccess = () => {
+        refreshAccess();
+        setShowPaywall(false);
+    };
 
     // Try to sync any pending local entries on mount
     useEffect(() => {
@@ -62,12 +92,12 @@ export default function SavingsTracker() {
         trySync();
     }, []);
 
-    // Show paywall immediately for non-Pro users (calculator is Pro-only feature)
+    // Show paywall immediately for non-Pro users without promo access (calculator is Pro-only feature)
     useEffect(() => {
-        if (!isPro && isCalculatorLimitReached && activeTab === 'calculator') {
+        if (!hasAccess && isCalculatorLimitReached && activeTab === 'calculator') {
             setShowPaywall(true);
         }
-    }, [isPro, isCalculatorLimitReached, activeTab]);
+    }, [hasAccess, isCalculatorLimitReached, activeTab]);
 
     const handleSavingsLogged = () => {
         setRefreshTrigger(prev => prev + 1);
@@ -79,8 +109,8 @@ export default function SavingsTracker() {
 
     // Handler for when user attempts to calculate savings
     const handleCalculate = () => {
-        // Pro users always have access
-        if (isPro) {
+        // Pro users and promo code users always have access
+        if (hasAccess) {
             return true;
         }
         // Check if free tier limit is reached
@@ -99,6 +129,7 @@ export default function SavingsTracker() {
             isOpen={showPaywall}
             onClose={() => setShowPaywall(false)}
             featureType="calculator"
+            onPromoSuccess={handlePromoSuccess}
         />
         <div className="max-w-4xl mx-auto">
             {/* Header */}
@@ -175,7 +206,7 @@ export default function SavingsTracker() {
             {activeTab === 'calculator' && (
                 <>
                     {/* Show Pro feature notice for free users */}
-                    {!isPro && (
+                    {!hasAccess && (
                         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 text-sm text-purple-800">
                             <strong>Pro Feature:</strong> The Savings Calculator is available for Pro subscribers.{' '}
                             <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock unlimited calculations.
@@ -183,7 +214,7 @@ export default function SavingsTracker() {
                     )}
                     <SavingsCalculator
                         medications={medications || []}
-                        isPro={isPro}
+                        isPro={hasAccess}
                         onUpgrade={handleUpgrade}
                         onCalculate={handleCalculate}
                         remainingCalculations={remainingCalculatorUses}

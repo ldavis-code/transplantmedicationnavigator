@@ -1154,22 +1154,47 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
 };
 
 // Check localStorage for subscription status (used by Wizard)
-function useLocalSubscriptionStatus() {
+// Also checks for promo code access for specific features
+function useLocalSubscriptionStatus(feature = null) {
     const [isPro, setIsPro] = useState(false);
+    const [hasPromoAccess, setHasPromoAccess] = useState(false);
 
-    useEffect(() => {
+    const checkAccess = useCallback(() => {
+        let proStatus = false;
+        let promoStatus = false;
+
         try {
             const cached = localStorage.getItem('tmn_subscription');
             if (cached) {
                 const { data } = JSON.parse(cached);
-                setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+                proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
             }
         } catch (e) {
             // Ignore errors, default to free
         }
-    }, []);
 
-    return { isPro };
+        // Check promo code access for specific feature
+        if (feature) {
+            try {
+                const promoCodes = localStorage.getItem('tmn_promo_codes');
+                if (promoCodes) {
+                    const redeemed = JSON.parse(promoCodes);
+                    promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
+                }
+            } catch (e) {
+                // Ignore errors
+            }
+        }
+
+        setIsPro(proStatus);
+        setHasPromoAccess(promoStatus);
+    }, [feature]);
+
+    useEffect(() => {
+        checkAccess();
+    }, [checkAccess]);
+
+    return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
 }
 
 // Wizard Page
@@ -1182,10 +1207,16 @@ const Wizard = () => {
         isQuizLimitReached,
         remainingQuizzes
     } = useChatQuiz();
-    const { isPro } = useLocalSubscriptionStatus();
+    const { isPro, hasAccess, refreshAccess } = useLocalSubscriptionStatus('quiz');
 
     // Paywall modal state
     const [showPaywall, setShowPaywall] = useState(false);
+
+    // Handler for successful promo code redemption
+    const handlePromoSuccess = () => {
+        refreshAccess();
+        setShowPaywall(false);
+    };
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1231,12 +1262,12 @@ const Wizard = () => {
         }
     }, [step]);
 
-    // Show paywall immediately for non-Pro users (quiz is Pro-only feature)
+    // Show paywall immediately for non-Pro users without promo access (quiz is Pro-only feature)
     useEffect(() => {
-        if (!isPro && isQuizLimitReached) {
+        if (!hasAccess && isQuizLimitReached) {
             setShowPaywall(true);
         }
-    }, [isPro, isQuizLimitReached]);
+    }, [hasAccess, isQuizLimitReached]);
 
     // Fuse.js instance for fuzzy medication search
     const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -1316,8 +1347,8 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Pro users always have access
-        if (isPro) {
+        // Pro users and promo code users always have access
+        if (hasAccess) {
             setStep(6);
             return;
         }
@@ -1388,7 +1419,7 @@ const Wizard = () => {
                     ></div>
                 </div>
                 {/* Pro feature indicator */}
-                {!isPro && (
+                {!hasAccess && (
                     <div className="flex justify-end mt-2">
                         <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">
                             Pro Feature
@@ -1430,7 +1461,7 @@ const Wizard = () => {
                 </p>
 
                 {/* Pro feature info */}
-                {!isPro && (
+                {!hasAccess && (
                     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
                         <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
@@ -1944,6 +1975,7 @@ const Wizard = () => {
                 isOpen={showPaywall}
                 onClose={() => setShowPaywall(false)}
                 featureType="quiz"
+                onPromoSuccess={handlePromoSuccess}
             />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
@@ -1958,7 +1990,7 @@ const Wizard = () => {
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
                 {/* Show Pro feature notice for free users */}
-                {!isPro && (
+                {!hasAccess && (
                     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
                         <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-purple-800">
