@@ -8,7 +8,7 @@
       },
       {
         "q": "Is this site free to use?",
-        "a": "Yes! You can use our main tools for free, including 4 My Path Quizzes and 4 Savings Calculator estimates. We have a Pro plan with unlimited access and extra features if you want them, which costs $8.99 a month or $79.99 a year. The drug programs we link to are always free. Never pay to apply for help. If a site asks for money, that's a scam."
+        "a": "Yes! You can browse drug information and find assistance programs for free. Our My Path Quiz and Savings Calculator are available with a subscription for $8.99 a month or $79.99 a year. The drug programs we link to are always free. Never pay to apply for help. If a site asks for money, that's a scam."
       },
       {
         "q": "Who should use this site?",
@@ -187,7 +187,7 @@
     "questions": [
       {
         "q": "What if I make too much money for assistance programs?",
-        "a": "Don't give up! Here's why:\n\n1. Different programs have different rules. Some let you make a lot of money and still get help.\n\n2. Some programs look at your bills, not just your income. If you have high medical costs, you might still qualify.\n\n3. Take the My Path Quiz. It will show you programs that match your situation.\n\nMany people are surprised they qualify!"
+        "a": "Don't give up! Here's why:\n\n1. Different programs have different rules. Some let you make a lot of money and still get help.\n\n2. Some programs look at your bills, not just your income. If you have high medical costs, you might still qualify.\n\n3. Subscribe and take the My Path Quiz. It will show you programs that match your situation.\n\nMany people are surprised they qualify!"
       },
       {
         "q": "Are generic anti-rejection drugs safe?",
@@ -261,7 +261,7 @@
     "questions": [
       {
         "q": "How does the \"My Path\" quiz work?",
-        "a": "The quiz asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that help you pay for your medicine."
+        "a": "The quiz is available to subscribers. It asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that help you pay for your medicine."
       },
       {
         "q": "Can I search for a specific medicine?",
@@ -298,7 +298,7 @@
     "questions": [
       {
         "q": "I am overwhelmed. Where do I start?",
-        "a": "Start with the \"My Path\" quiz. It will guide you step by step. If you need more help, contact your transplant center's social worker."
+        "a": "Start by browsing our free drug information and assistance programs. For personalized guidance, subscribe and take the \"My Path\" quiz - it will guide you step by step. If you need more help, contact your transplant center's social worker."
       },
       {
         "q": "Can you help me fill out applications?",
