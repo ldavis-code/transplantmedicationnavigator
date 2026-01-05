@@ -1451,13 +1451,15 @@ const Wizard = () => {
                     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
                         <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
-                            <p className="text-purple-800">
-                                <strong>Pro Feature:</strong> My Path Quiz is available for Pro subscribers.{' '}
-                                <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock personalized medication assistance recommendations.
-                            </p>
-                            <p className="text-purple-700 mt-1">
-                                Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
-                                <Link to="/pricing" className="underline">Learn more</Link>
+                            <p className="text-emerald-800">
+                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.
+                                {remainingQuizzes === 1 && (
+                                    <span> This is your last free quiz. </span>
+                                )}
+                                {remainingQuizzes === 0 && (
+                                    <span> You need Pro to see your savings. </span>
+                                )}
+                                <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                             </p>
                         </div>
                     </div>
@@ -1975,13 +1977,21 @@ const Wizard = () => {
                 </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
-                {/* Show Pro feature notice for free users */}
-                {!hasAccess && (
-                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-purple-800">
-                            <strong>Pro Feature:</strong> Complete results require a Pro subscription.{' '}
-                            <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to see your personalized recommendations.
+                {/* Show remaining quizzes notice for free users */}
+                {!isPro && remainingQuizzes >= 0 && remainingQuizzes <= 2 && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-amber-800">
+                            {remainingQuizzes > 0 ? (
+                                <>
+                                    <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.{' '}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>No free quizzes left.</strong> You will need Pro to see your savings.{' '}
+                                </>
+                            )}
+                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
                         </div>
                     </div>
                 )}

@@ -6,8 +6,8 @@ import { redeemPromoCode } from '../lib/promoCodes';
 /**
  * PaywallModal Component
  *
- * Shows when users try to access Pro-only features.
- * Prompts them to sign up for a Pro subscription or enter a promo code.
+ * Shows when users reach their free tier limits (2 quizzes or 2 calculator uses).
+ * Prompts them to sign up for a Pro subscription to continue.
  *
  * Accessibility features:
  * - Focus trap to keep keyboard focus within modal
@@ -30,13 +30,13 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess })
   // Feature-specific content
   const content = {
     quiz: {
-      title: "My Path Quiz is a Pro Feature",
-      description: "Get personalized medication assistance recommendations with unlimited quizzes when you upgrade to Pro.",
+      title: "You've used your 2 free quizzes",
+      description: "Upgrade to Pro to keep using My Path Quizzes and unlock all features.",
       icon: '🎯',
     },
     calculator: {
-      title: "Savings Calculator is a Pro Feature",
-      description: "Estimate your potential savings with unlimited calculations when you upgrade to Pro.",
+      title: "You've used your 2 free calculations",
+      description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
       icon: '💰',
     },
   };
