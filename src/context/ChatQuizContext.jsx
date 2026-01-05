@@ -16,11 +16,11 @@ const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 // Maximum number of medication searches allowed in free tier
 const MAX_FREE_SEARCHES = 4;
 
-// Maximum number of quiz completions allowed in free tier (0 = Pro only)
-const MAX_FREE_QUIZZES = 0;
+// Maximum number of quiz completions allowed in free tier
+const MAX_FREE_QUIZZES = 2;
 
-// Maximum number of savings calculator uses allowed in free tier (0 = Pro only)
-const MAX_FREE_CALCULATOR_USES = 0;
+// Maximum number of savings calculator uses allowed in free tier
+const MAX_FREE_CALCULATOR_USES = 2;
 
 // Debounce delay for server sync (ms)
 const SYNC_DEBOUNCE_MS = 2000;
