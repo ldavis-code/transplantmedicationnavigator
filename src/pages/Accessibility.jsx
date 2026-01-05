@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
+import { seoMetadata } from '../data/seo-metadata.js';
 
 const Accessibility = () => {
-    useMetaTags({
-        title: 'Accessibility Statement | Transplant Medication Navigator',
-        description: 'Our commitment to digital accessibility for all users, including those with disabilities. This website is conformant with WCAG 2.1 Level AA standards.',
-        keywords: 'accessibility, WCAG, screen reader, disability, accessible healthcare'
-    });
+    useMetaTags(seoMetadata.accessibility);
 
     return (
         <article className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -16,7 +13,7 @@ const Accessibility = () => {
                     <AccessibilityIcon size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility Statement</h1>
-                <p className="text-slate-600">Last Updated: January 4, 2026</p>
+                <p className="text-slate-600">Last Updated: January 5, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
