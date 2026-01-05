@@ -5,7 +5,7 @@ import { Lock, Sparkles, CheckCircle, X } from 'lucide-react';
 /**
  * PaywallModal Component
  *
- * Shows when users reach their free tier limits (2 quizzes or 4 calculator uses).
+ * Shows when users reach their free tier limits (2 quizzes or 2 calculator uses).
  * Prompts them to sign up for a Pro subscription to continue.
  *
  * Accessibility features:
