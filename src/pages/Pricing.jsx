@@ -9,13 +9,14 @@ const Pricing = () => {
 
     const tiers = [
         {
-            name: '2 Free Quizzes',
+            name: 'Free',
             description: 'For individual patients',
             price: '$0',
             priceSubtext: '— always free',
             color: 'emerald',
             icon: Users,
             features: [
+                '2 Free Quizzes',
                 'Access to all educational resources and assistance program links',
                 'No login required',
                 'Your work is not saved'
