@@ -259,6 +259,17 @@ export const seoMetadata = {
     twitterDescription: 'Checkout cancelled. Continue using free features anytime.',
     breadcrumbName: 'Subscription Cancelled',
   },
+
+  accessibility: {
+    title: 'Accessibility Statement | Transplant Medication Navigator™',
+    description: 'Our commitment to making Transplant Medication Navigator accessible to all users, including those with disabilities. Read about our accessibility features and standards.',
+    canonical: `${BASE_URL}/accessibility`,
+    ogTitle: 'Accessibility Statement - Transplant Medication Navigator™',
+    ogDescription: 'Learn about our commitment to accessibility and the features we provide to ensure everyone can use Transplant Medication Navigator.',
+    twitterTitle: 'Accessibility Statement',
+    twitterDescription: 'Our commitment to making Transplant Medication Navigator accessible to all users.',
+    breadcrumbName: 'Accessibility',
+  },
 };
 
 /**

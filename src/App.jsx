@@ -4358,7 +4358,7 @@ const Education = () => {
                                         <div className="flex-1">
                                             <h4 className="font-bold text-slate-800 mb-1">Look Into Extra Help</h4>
                                             <p className="text-slate-600 text-sm mb-2">If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.</p>
-                                            <a href="https://www.ssa.gov/medicare/prescriptionhelp" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
+                                            <a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
@@ -5007,9 +5007,9 @@ const Education = () => {
                                 </p>
                             </a>
 
-                            <a href="https://www.mentalhealth.gov/get-help" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label="Visit MentalHealth.gov (opens in new tab)">
+                            <a href="https://findtreatment.gov/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label="Visit FindTreatment.gov (opens in new tab)">
                                 <div className="flex justify-between items-start mb-3">
-                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700">MentalHealth.gov</h3>
+                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700">FindTreatment.gov</h3>
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed">
