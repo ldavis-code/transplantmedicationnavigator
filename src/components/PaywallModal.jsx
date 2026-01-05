@@ -22,13 +22,13 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
   // Feature-specific content
   const content = {
     quiz: {
-      title: "You've completed 4 free quizzes",
-      description: "Upgrade to Pro for unlimited My Path Quizzes and unlock all premium features.",
+      title: "My Path Quiz is a Pro Feature",
+      description: "Get personalized medication assistance recommendations with unlimited quizzes when you upgrade to Pro.",
       icon: '🎯',
     },
     calculator: {
-      title: "You've used 4 free calculations",
-      description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
+      title: "Savings Calculator is a Pro Feature",
+      description: "Estimate your potential savings with unlimited calculations when you upgrade to Pro.",
       icon: '💰',
     },
   };

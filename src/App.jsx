@@ -1231,6 +1231,13 @@ const Wizard = () => {
         }
     }, [step]);
 
+    // Show paywall immediately for non-Pro users (quiz is Pro-only feature)
+    useEffect(() => {
+        if (!isPro && isQuizLimitReached) {
+            setShowPaywall(true);
+        }
+    }, [isPro, isQuizLimitReached]);
+
     // Fuse.js instance for fuzzy medication search
     const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
         keys: ['brandName', 'genericName'],
@@ -1380,15 +1387,11 @@ const Wizard = () => {
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
-                {/* Free tier usage indicator */}
+                {/* Pro feature indicator */}
                 {!isPro && (
                     <div className="flex justify-end mt-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                            remainingQuizzes <= 1 ? 'bg-amber-100 text-amber-700' :
-                            remainingQuizzes <= 2 ? 'bg-blue-100 text-blue-700' :
-                            'bg-slate-100 text-slate-600'
-                        }`}>
-                            {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">
+                            Pro Feature
                         </span>
                     </div>
                 )}
@@ -1426,23 +1429,19 @@ const Wizard = () => {
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
 
-                {/* Free tier usage info */}
+                {/* Pro feature info */}
                 {!isPro && (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <Info size={20} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm">
-                            <p className="text-emerald-800">
-                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining.
-                                {remainingQuizzes <= 2 && remainingQuizzes > 0 && (
-                                    <span> Running low? <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.</span>
-                                )}
+                            <p className="text-purple-800">
+                                <strong>Pro Feature:</strong> My Path Quiz is available for Pro subscribers.{' '}
+                                <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock personalized medication assistance recommendations.
                             </p>
-                            {remainingQuizzes > 2 && (
-                                <p className="text-emerald-700 mt-1">
-                                    Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
-                                    <Link to="/pricing" className="underline">Learn more</Link>
-                                </p>
-                            )}
+                            <p className="text-purple-700 mt-1">
+                                Pro subscriptions ($8.99/mo) help us maintain this patient-built tool.{' '}
+                                <Link to="/pricing" className="underline">Learn more</Link>
+                            </p>
                         </div>
                     </div>
                 )}
@@ -1958,13 +1957,13 @@ const Wizard = () => {
                 </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
-                {/* Show remaining quizzes notice for free users */}
-                {!isPro && remainingQuizzes > 0 && remainingQuizzes <= 2 && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-amber-800">
-                            <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} remaining after this one.{' '}
-                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes and full features.
+                {/* Show Pro feature notice for free users */}
+                {!isPro && (
+                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-purple-800">
+                            <strong>Pro Feature:</strong> Complete results require a Pro subscription.{' '}
+                            <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to see your personalized recommendations.
                         </div>
                     </div>
                 )}

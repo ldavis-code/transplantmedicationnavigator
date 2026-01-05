@@ -62,6 +62,13 @@ export default function SavingsTracker() {
         trySync();
     }, []);
 
+    // Show paywall immediately for non-Pro users (calculator is Pro-only feature)
+    useEffect(() => {
+        if (!isPro && isCalculatorLimitReached && activeTab === 'calculator') {
+            setShowPaywall(true);
+        }
+    }, [isPro, isCalculatorLimitReached, activeTab]);
+
     const handleSavingsLogged = () => {
         setRefreshTrigger(prev => prev + 1);
     };
@@ -167,11 +174,11 @@ export default function SavingsTracker() {
             >
             {activeTab === 'calculator' && (
                 <>
-                    {/* Show remaining calculations notice for free users */}
-                    {!isPro && remainingCalculatorUses > 0 && remainingCalculatorUses <= 2 && (
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
-                            <strong>Note:</strong> You have {remainingCalculatorUses} free calculation{remainingCalculatorUses !== 1 ? 's' : ''} remaining.{' '}
-                            <Link to="/pricing" className="text-blue-700 underline font-medium">Upgrade to Pro</Link> for unlimited calculations.
+                    {/* Show Pro feature notice for free users */}
+                    {!isPro && (
+                        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 text-sm text-purple-800">
+                            <strong>Pro Feature:</strong> The Savings Calculator is available for Pro subscribers.{' '}
+                            <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock unlimited calculations.
                         </div>
                     )}
                     <SavingsCalculator

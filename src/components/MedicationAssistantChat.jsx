@@ -13,6 +13,26 @@ import {
   Gift, Shield
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
+import PaywallModal from './PaywallModal.jsx';
+
+// Check localStorage for subscription status
+function useLocalSubscription() {
+  const [isPro, setIsPro] = useState(false);
+
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem('tmn_subscription');
+      if (cached) {
+        const { data } = JSON.parse(cached);
+        setIsPro(data?.plan === 'pro' && data?.subscription_status === 'active');
+      }
+    } catch (e) {
+      // Ignore errors, default to free
+    }
+  }, []);
+
+  return { isPro };
+}
 
 // Mode toggle tabs
 const MODE_TABS = [
@@ -21,6 +41,9 @@ const MODE_TABS = [
 ];
 
 const MedicationAssistantChat = () => {
+  // Check subscription status
+  const { isPro } = useLocalSubscription();
+
   // Context for shared state
   const {
     mode,
@@ -80,6 +103,9 @@ const MedicationAssistantChat = () => {
 
   // Track if user has started the quiz (dismissed intro)
   const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
+
+  // Paywall modal state
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // Refs
   const messagesEndRef = useRef(null);
@@ -852,22 +878,40 @@ const MedicationAssistantChat = () => {
             </p>
           </div>
 
-          {/* Transparency Banner - Free Trial Info */}
-          <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                <Gift size={20} className="text-emerald-600" />
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold text-emerald-800 text-sm mb-1">
-                  {remainingQuizzes} free pathway quizzes — no account required
-                </p>
-                <p className="text-emerald-700 text-xs leading-relaxed">
-                  After that, subscriptions start at $8.99/month for unlimited quizzes, searches, and savings tracking.
-                </p>
+          {/* Pro Feature Banner */}
+          {isPro ? (
+            <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <CheckCircle2 size={20} className="text-emerald-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-emerald-800 text-sm mb-1">
+                    Pro subscriber — unlimited access
+                  </p>
+                  <p className="text-emerald-700 text-xs leading-relaxed">
+                    You have unlimited pathway quizzes, medication searches, and savings tracking.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                  <Lock size={20} className="text-purple-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-purple-800 text-sm mb-1">
+                    Pro Feature — requires subscription
+                  </p>
+                  <p className="text-purple-700 text-xs leading-relaxed">
+                    Subscribe for $8.99/month to access unlimited quizzes, searches, and savings tracking.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* What You'll Learn */}
           <div className="bg-white border border-slate-200 rounded-xl p-4">
@@ -903,7 +947,13 @@ const MedicationAssistantChat = () => {
 
           {/* Start Button */}
           <button
-            onClick={() => setHasStartedQuiz(true)}
+            onClick={() => {
+              if (!isPro && isQuizLimitReached) {
+                setShowPaywall(true);
+              } else {
+                setHasStartedQuiz(true);
+              }
+            }}
             className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg shadow-lg hover:shadow-xl"
           >
             Start My Path Quiz
@@ -1391,6 +1441,12 @@ const MedicationAssistantChat = () => {
   };
 
   return (
+    <>
+    <PaywallModal
+      isOpen={showPaywall}
+      onClose={() => setShowPaywall(false)}
+      featureType="quiz"
+    />
     <div className="fixed bottom-6 right-6 z-50 no-print">
       {/* Chat Toggle Button */}
       {!isOpen && (
@@ -1599,6 +1655,7 @@ const MedicationAssistantChat = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
