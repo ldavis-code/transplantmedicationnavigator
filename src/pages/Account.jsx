@@ -20,6 +20,7 @@ import {
   Cloud,
   CloudOff,
   Upload,
+  Gift,
 } from 'lucide-react';
 import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 import { useSubscription } from '../hooks/useSubscription';
@@ -38,6 +39,12 @@ const Account = () => {
   const [portalLoading, setPortalLoading] = useState(false);
   const [portalError, setPortalError] = useState(null);
   const [migrationStatus, setMigrationStatus] = useState(null);
+
+  // Patient code state
+  const [patientCode, setPatientCode] = useState('');
+  const [codeLoading, setCodeLoading] = useState(false);
+  const [codeError, setCodeError] = useState(null);
+  const [codeSuccess, setCodeSuccess] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -64,6 +71,44 @@ const Account = () => {
       refreshUser();
     } else {
       setMigrationStatus('error');
+    }
+  };
+
+  const handleRedeemCode = async (e) => {
+    e.preventDefault();
+    if (!patientCode.trim()) return;
+
+    setCodeLoading(true);
+    setCodeError(null);
+    setCodeSuccess(false);
+
+    try {
+      const response = await fetch('/.netlify/functions/redeem-patient-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: patientCode.trim(),
+          email: user?.email
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to redeem code');
+      }
+
+      setCodeSuccess(true);
+      setPatientCode('');
+      // Refresh subscription and user data
+      refreshUser();
+      refreshSubscription();
+    } catch (err) {
+      setCodeError(err.message);
+    } finally {
+      setCodeLoading(false);
     }
   };
 
@@ -318,7 +363,7 @@ const Account = () => {
               </div>
 
               {/* Subscription Info */}
-              {!hasSubscription && (
+              {!hasSubscription && !isPro && (
                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
                   <h3 className="font-bold text-emerald-900 mb-2">Upgrade to Pro</h3>
                   <p className="text-emerald-800 text-sm mb-3">
@@ -338,6 +383,61 @@ const Account = () => {
                       Medication savings tracker
                     </li>
                   </ul>
+                </div>
+              )}
+
+              {/* Patient Code Redemption */}
+              {!isPro && (
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Gift size={20} className="text-emerald-600" />
+                    <div>
+                      <h3 className="font-bold text-slate-900">Have a Patient Code?</h3>
+                      <p className="text-slate-600 text-sm">
+                        Enter a code from your healthcare provider for free access.
+                      </p>
+                    </div>
+                  </div>
+
+                  {codeSuccess ? (
+                    <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                      <CheckCircle size={18} className="text-emerald-600" />
+                      <p className="text-emerald-800 font-medium">Code redeemed! You now have Pro access.</p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleRedeemCode} className="space-y-2">
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={patientCode}
+                          onChange={(e) => setPatientCode(e.target.value)}
+                          placeholder="Enter patient code"
+                          className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+                          disabled={codeLoading}
+                        />
+                        <button
+                          type="submit"
+                          disabled={codeLoading || !patientCode.trim()}
+                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm"
+                        >
+                          {codeLoading ? (
+                            <>
+                              <Loader2 size={14} className="animate-spin" />
+                              Redeeming...
+                            </>
+                          ) : (
+                            'Redeem'
+                          )}
+                        </button>
+                      </div>
+                      {codeError && (
+                        <div className="flex items-center gap-2 text-red-600 text-sm">
+                          <AlertCircle size={14} />
+                          <span>{codeError}</span>
+                        </div>
+                      )}
+                    </form>
+                  )}
                 </div>
               )}
             </div>
