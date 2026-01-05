@@ -47,22 +47,22 @@ function getAssistedPrice(medicationId, medicationName) {
     return priceEstimates.categoryDefaults?.Immunosuppressant?.costplus?.min || 15;
 }
 
-// Common transplant medications for dropdown
+// Common transplant medications for dropdown (alphabetically sorted)
 const COMMON_MEDICATIONS = [
-    { id: 'tacrolimus', name: 'Tacrolimus (Generic Prograf)', category: 'Immunosuppressant' },
-    { id: 'prograf', name: 'Prograf (Brand Tacrolimus)', category: 'Immunosuppressant' },
-    { id: 'mycophenolate', name: 'Mycophenolate (Generic CellCept)', category: 'Immunosuppressant' },
-    { id: 'sirolimus', name: 'Sirolimus (Generic Rapamune)', category: 'Immunosuppressant' },
-    { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', category: 'Antiviral' },
-    { id: 'prevymis', name: 'Prevymis (Letermovir)', category: 'Antiviral' },
-    { id: 'noxafil', name: 'Noxafil (Posaconazole)', category: 'Antifungal' },
-    { id: 'vfend', name: 'Voriconazole (Generic Vfend)', category: 'Antifungal' },
-    { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
-    { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
-    { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
-    { id: 'jardiance', name: 'Jardiance (Empagliflozin)', category: 'Diabetes/Heart/Kidney' },
-    { id: 'farxiga', name: 'Farxiga (Dapagliflozin)', category: 'Diabetes/Heart/Kidney' },
     { id: 'creon', name: 'Creon (Pancrelipase)', category: 'Digestive Enzyme' },
+    { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
+    { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
+    { id: 'farxiga', name: 'Farxiga (Dapagliflozin)', category: 'Diabetes/Heart/Kidney' },
+    { id: 'jardiance', name: 'Jardiance (Empagliflozin)', category: 'Diabetes/Heart/Kidney' },
+    { id: 'mycophenolate', name: 'Mycophenolate (Generic CellCept)', category: 'Immunosuppressant' },
+    { id: 'noxafil', name: 'Noxafil (Posaconazole)', category: 'Antifungal' },
+    { id: 'prevymis', name: 'Prevymis (Letermovir)', category: 'Antiviral' },
+    { id: 'prograf', name: 'Prograf (Brand Tacrolimus)', category: 'Immunosuppressant' },
+    { id: 'sirolimus', name: 'Sirolimus (Generic Rapamune)', category: 'Immunosuppressant' },
+    { id: 'tacrolimus', name: 'Tacrolimus (Generic Prograf)', category: 'Immunosuppressant' },
+    { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', category: 'Antiviral' },
+    { id: 'vfend', name: 'Voriconazole (Generic Vfend)', category: 'Antifungal' },
+    { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
 ];
 
 export default function SavingsCalculator({ medications = [], isPro = false, onUpgrade, onCalculate }) {
@@ -75,7 +75,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const MAX_FREE_MEDS = 3;
     const canAddMore = isPro || selectedMeds.length < MAX_FREE_MEDS;
 
-    // Combine common meds with any from context
+    // Combine common meds with any from context and sort alphabetically
     const allMedications = [...COMMON_MEDICATIONS];
     if (medications?.length > 0) {
         medications.forEach(med => {
@@ -88,6 +88,8 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
             }
         });
     }
+    // Sort alphabetically by name
+    allMedications.sort((a, b) => a.name.localeCompare(b.name));
 
     const addMedication = () => {
         if (!canAddMore) {
