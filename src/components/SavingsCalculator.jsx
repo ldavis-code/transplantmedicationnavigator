@@ -47,8 +47,8 @@ function getAssistedPrice(medicationId, medicationName) {
     return priceEstimates.categoryDefaults?.Immunosuppressant?.costplus?.min || 15;
 }
 
-// Common transplant medications for dropdown (alphabetically sorted)
-const COMMON_MEDICATIONS = [
+// Fallback medications if none provided from context
+const FALLBACK_MEDICATIONS = [
     { id: 'creon', name: 'Creon (Pancrelipase)', category: 'Digestive Enzyme' },
     { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
     { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
@@ -75,19 +75,16 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const MAX_FREE_MEDS = 3;
     const canAddMore = isPro || selectedMeds.length < MAX_FREE_MEDS;
 
-    // Combine common meds with any from context and sort alphabetically
-    const allMedications = [...COMMON_MEDICATIONS];
-    if (medications?.length > 0) {
-        medications.forEach(med => {
-            if (!allMedications.find(m => m.id === med.id)) {
-                allMedications.push({
-                    id: med.id,
-                    name: med.brandName || med.genericName,
-                    category: med.category
-                });
-            }
-        });
-    }
+    // Use medications from context if available, otherwise use fallback
+    // This gives access to all 180+ medications from the database
+    const allMedications = medications?.length > 0
+        ? medications.map(med => ({
+            id: med.id,
+            name: med.brandName || med.genericName || med.name,
+            category: med.category
+        }))
+        : [...FALLBACK_MEDICATIONS];
+
     // Sort alphabetically by name
     allMedications.sort((a, b) => a.name.localeCompare(b.name));
 
