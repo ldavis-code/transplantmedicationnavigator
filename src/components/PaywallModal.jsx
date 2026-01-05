@@ -27,7 +27,7 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz' }) => {
       icon: '🎯',
     },
     calculator: {
-      title: "You've used 4 free calculations",
+      title: "You've used your 2 free calculations",
       description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
       icon: '💰',
     },

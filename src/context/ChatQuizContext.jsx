@@ -20,7 +20,7 @@ const MAX_FREE_SEARCHES = 4;
 const MAX_FREE_QUIZZES = 2;
 
 // Maximum number of savings calculator uses allowed in free tier
-const MAX_FREE_CALCULATOR_USES = 4;
+const MAX_FREE_CALCULATOR_USES = 2;
 
 // Debounce delay for server sync (ms)
 const SYNC_DEBOUNCE_MS = 2000;
