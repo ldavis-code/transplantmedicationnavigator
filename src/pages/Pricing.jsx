@@ -16,8 +16,6 @@ const Pricing = () => {
             color: 'emerald',
             icon: Users,
             features: [
-                '4 My Path Quizzes',
-                '4 Savings Calculator estimates',
                 'Access to all educational resources and assistance program links',
                 'No login required',
                 'Your work is not saved'
@@ -188,7 +186,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        The Free plan includes 4 My Path Quizzes, 4 Savings Calculator estimates, access to all educational resources and assistance program links, and no login required. Your work is not saved in the free plan.
+                                        The Free plan includes access to all educational resources and assistance program links. No login is required. Your work is not saved in the free plan.
                                     </p>
                                 </div>
                                 <div>
