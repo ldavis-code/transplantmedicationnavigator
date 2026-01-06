@@ -85,6 +85,11 @@ function verifyToken(token) {
   }
 }
 
+// Generate password reset token (simple random token)
+function generateResetToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
 // Main handler
 export async function handler(event) {
   // Handle CORS preflight
@@ -331,6 +336,197 @@ export async function handler(event) {
             has_subscription: !!user.stripe_customer_id,
           },
         }),
+      };
+    }
+
+    // POST /subscriber-auth/forgot-password
+    if (event.httpMethod === 'POST' && path === '/forgot-password') {
+      const { email } = JSON.parse(event.body);
+
+      if (!email) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Email is required' }),
+        };
+      }
+
+      // Find user by email
+      const { data: user } = await supabase
+        .from('user_profiles')
+        .select('id, email, name')
+        .eq('email', email.toLowerCase())
+        .single();
+
+      // Always return success to prevent email enumeration
+      if (!user) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ message: 'If an account exists, a reset link will be sent' }),
+        };
+      }
+
+      // Generate reset token
+      const resetToken = generateResetToken();
+      const resetExpires = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
+
+      // Store reset token in database
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({
+          reset_token: resetToken,
+          reset_token_expires: resetExpires,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+
+      if (updateError) {
+        console.error('Error storing reset token:', updateError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ error: 'Failed to process request' }),
+        };
+      }
+
+      // Build reset URL
+      const siteUrl = process.env.URL || 'https://transplantmedicationnavigator.com';
+      const resetUrl = `${siteUrl}/login/reset-password?token=${resetToken}`;
+
+      // Log for development/debugging (in production, send email)
+      console.log(`Password reset requested for ${email}. Reset URL: ${resetUrl}`);
+
+      // TODO: Send email with reset link
+      // For now, if we have a configured email service, send the email
+      // Otherwise, just log it for testing
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          message: 'If an account exists, a reset link will be sent',
+          // Include reset URL in development for testing (remove in production)
+          ...(process.env.NODE_ENV !== 'production' && { resetUrl }),
+        }),
+      };
+    }
+
+    // GET /subscriber-auth/validate-reset-token
+    if (event.httpMethod === 'GET' && path === '/validate-reset-token') {
+      const token = event.queryStringParameters?.token;
+
+      if (!token) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ valid: false }),
+        };
+      }
+
+      // Find user with this reset token
+      const { data: user } = await supabase
+        .from('user_profiles')
+        .select('id, reset_token_expires')
+        .eq('reset_token', token)
+        .single();
+
+      if (!user) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ valid: false }),
+        };
+      }
+
+      // Check if token is expired
+      if (new Date(user.reset_token_expires) < new Date()) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ valid: false }),
+        };
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ valid: true }),
+      };
+    }
+
+    // POST /subscriber-auth/reset-password
+    if (event.httpMethod === 'POST' && path === '/reset-password') {
+      const { token, password } = JSON.parse(event.body);
+
+      if (!token || !password) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Token and password are required' }),
+        };
+      }
+
+      if (password.length < 8) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Password must be at least 8 characters' }),
+        };
+      }
+
+      // Find user with this reset token
+      const { data: user } = await supabase
+        .from('user_profiles')
+        .select('id, reset_token_expires')
+        .eq('reset_token', token)
+        .single();
+
+      if (!user) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Invalid or expired reset token' }),
+        };
+      }
+
+      // Check if token is expired
+      if (new Date(user.reset_token_expires) < new Date()) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Reset token has expired. Please request a new one.' }),
+        };
+      }
+
+      // Hash new password
+      const { hash, salt } = hashPassword(password);
+      const passwordHash = `${hash}:${salt}`;
+
+      // Update password and clear reset token
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({
+          password_hash: passwordHash,
+          reset_token: null,
+          reset_token_expires: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+
+      if (updateError) {
+        console.error('Error resetting password:', updateError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ error: 'Failed to reset password' }),
+        };
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ message: 'Password reset successful' }),
       };
     }
 

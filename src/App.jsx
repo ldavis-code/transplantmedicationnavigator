@@ -26,6 +26,8 @@ const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
 const LazySubscriberRegister = lazy(() => import('./pages/subscriber/Register.jsx'));
+const LazyForgotPassword = lazy(() => import('./pages/subscriber/ForgotPassword.jsx'));
+const LazyResetPassword = lazy(() => import('./pages/subscriber/ResetPassword.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -5713,6 +5715,8 @@ const MainSiteRoutes = () => (
                 <Route path="/account" element={<LazyAccount />} />
                 <Route path="/login" element={<LazySubscriberLogin />} />
                 <Route path="/login/register" element={<LazySubscriberRegister />} />
+                <Route path="/login/forgot-password" element={<LazyForgotPassword />} />
+                <Route path="/login/reset-password" element={<LazyResetPassword />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="*" element={<LazyNotFound />} />
