@@ -5,7 +5,7 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const SITE_URL = 'https://www.transplantmedicationnavigator.com';
+const SITE_URL = 'https://transplantmedicationnavigator.com';
 
 // Define all routes with their SEO metadata
 // Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), auth pages, and confirmation pages
