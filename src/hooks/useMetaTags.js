@@ -125,7 +125,7 @@ export function useMetaTags(config) {
 
     // Cleanup function - restore default values and remove breadcrumb
     return () => {
-      document.title = 'Transplant Medication Navigator - Medication Assistance Guide for Transplant Patients';
+      document.title = 'Transplant Medication Navigator™ | From Prescription to Possession';
       const breadcrumbScript = document.querySelector('script[data-breadcrumb="true"]');
       if (breadcrumbScript) {
         breadcrumbScript.remove();
