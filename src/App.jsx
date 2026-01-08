@@ -547,7 +547,7 @@ const Home = () => {
                     Compare medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
                 </h1>
                 <p className="text-xl md:text-2xl font-semibold text-emerald-600 mb-4">
-                    Patient-led. Unbiased.
+                    From Prescription to Possession
                 </p>
                 <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
                     A safe guide for transplant patients and care partners to find affordable medications and assistance programs.
