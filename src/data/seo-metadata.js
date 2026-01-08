@@ -11,7 +11,7 @@ export const seoMetadata = {
     title: 'Transplant Medication Navigator™ | Free Assistance Guide',
     description: 'Find free medication assistance for transplant patients. Search Patient Assistance Programs, copay foundations, and help paying for immunosuppressants.',
     canonical: `${BASE_URL}/`,
-    ogTitle: 'Transplant Medication Navigator™ - Medication Assistance Guide',
+    ogTitle: 'Transplant Medication Navigator™ | From Prescription to Possession',
     ogDescription: 'Helping transplant patients find medication assistance programs, Patient Assistance Programs (PAPs), and copay support for immunosuppressants. Free educational resources.',
     twitterTitle: 'Transplant Medication Navigator™',
     twitterDescription: 'Find free medication assistance programs for transplant patients. Search PAPs, copay foundations, and get help paying for immunosuppressants.',

@@ -1,7 +1,7 @@
 {
   "name": "transplant-medication-navigator",
   "version": "1.0.0",
-  "description": "Medication Assistance Guide for Transplant Patients",
+  "description": "From Prescription to Possession - Free guide for transplant patients",
   "type": "module",
   "scripts": {
     "dev": "vite",

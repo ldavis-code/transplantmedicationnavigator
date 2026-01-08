@@ -29,7 +29,7 @@ Save these in the `/public` folder. Use a design tool like:
 
 **Image should include:**
 - Your website name: "Transplant Medication Navigator"
-- Tagline: "Medication Assistance Guide"
+- Tagline: "From Prescription to Possession"
 - Simple medical/health imagery
 - Clean, readable text
 
