@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn, Gift } from 'lucide-react';
+import { CreditCard, CheckCircle, Shield, ArrowLeft, Loader2, AlertCircle, User, LogIn, Gift, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
@@ -10,9 +10,17 @@ const Subscribe = () => {
 
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { isAuthenticated, user, refreshUser } = useSubscriberAuth();
+    const { isAuthenticated, user, refreshUser, register } = useSubscriberAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Registration form state (for non-authenticated users)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setName] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [hasExistingAccount, setHasExistingAccount] = useState(false);
 
     // Patient code state
     const [patientCode, setPatientCode] = useState('');
@@ -21,6 +29,10 @@ const Subscribe = () => {
     const [codeSuccess, setCodeSuccess] = useState(false);
 
     const plan = searchParams.get('plan') || 'monthly';
+
+    // Password validation
+    const isPasswordValid = password.length >= 8;
+    const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
 
     const plans = {
         monthly: {
@@ -59,6 +71,35 @@ const Subscribe = () => {
         setCodeSuccess(false);
 
         try {
+            let userEmail = user?.email;
+
+            // If not authenticated, register the user first
+            if (!isAuthenticated) {
+                // Validate registration fields
+                if (!email.trim()) {
+                    throw new Error('Please enter your email address above');
+                }
+                if (!isPasswordValid) {
+                    throw new Error('Password must be at least 8 characters');
+                }
+                if (!passwordsMatch) {
+                    throw new Error('Passwords do not match');
+                }
+
+                // Register the user
+                const registerResult = await register(email.trim(), password, name.trim());
+
+                if (!registerResult.success) {
+                    if (registerResult.error?.includes('already exists')) {
+                        setHasExistingAccount(true);
+                        throw new Error('An account with this email already exists. Please sign in first.');
+                    }
+                    throw new Error(registerResult.error || 'Failed to create account');
+                }
+
+                userEmail = registerResult.user.email;
+            }
+
             const response = await fetch('/.netlify/functions/redeem-patient-code', {
                 method: 'POST',
                 headers: {
@@ -66,7 +107,7 @@ const Subscribe = () => {
                 },
                 body: JSON.stringify({
                     code: patientCode.trim(),
-                    email: user?.email
+                    email: userEmail
                 }),
             });
 
@@ -98,10 +139,42 @@ const Subscribe = () => {
         setError(null);
 
         try {
-            // Use subscriber auth context for user info
-            const email = user?.email || null;
-            const userId = user?.id || null;
+            let currentUser = user;
+            let userEmail = user?.email || null;
+            let userId = user?.id || null;
 
+            // If not authenticated, register the user first
+            if (!isAuthenticated) {
+                // Validate registration fields
+                if (!email.trim()) {
+                    throw new Error('Please enter your email address');
+                }
+                if (!isPasswordValid) {
+                    throw new Error('Password must be at least 8 characters');
+                }
+                if (!passwordsMatch) {
+                    throw new Error('Passwords do not match');
+                }
+
+                // Register the user
+                const registerResult = await register(email.trim(), password, name.trim());
+
+                if (!registerResult.success) {
+                    // Check if user already exists and suggest login
+                    if (registerResult.error?.includes('already exists')) {
+                        setHasExistingAccount(true);
+                        throw new Error('An account with this email already exists. Please sign in below.');
+                    }
+                    throw new Error(registerResult.error || 'Failed to create account');
+                }
+
+                // Use the newly registered user's info
+                currentUser = registerResult.user;
+                userEmail = registerResult.user.email;
+                userId = registerResult.user.id;
+            }
+
+            // Create Stripe checkout session
             const response = await fetch('/.netlify/functions/create-checkout', {
                 method: 'POST',
                 headers: {
@@ -109,7 +182,7 @@ const Subscribe = () => {
                 },
                 body: JSON.stringify({
                     plan: plan,
-                    email: email,
+                    email: userEmail,
                     userId: userId
                 }),
             });
@@ -176,33 +249,126 @@ const Subscribe = () => {
                 </p>
             </header>
 
-            {/* Account Status */}
+            {/* Account Status / Registration Form */}
             {!isAuthenticated && (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <div className="flex items-start gap-3">
-                        <User size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                        <div className="flex-1">
-                            <p className="text-amber-800 font-medium">Create an account to sync across devices</p>
-                            <p className="text-amber-700 text-sm mt-1">
-                                Sign up for free to access your subscription and saved data on any device.
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <User size={24} className="text-emerald-600" />
+                        <div>
+                            <h3 className="font-bold text-slate-900">Create Your Account</h3>
+                            <p className="text-slate-600 text-sm">
+                                Enter your details to create an account and subscribe in one step.
                             </p>
-                            <div className="flex gap-3 mt-3">
-                                <Link
-                                    to={`/login/register?redirect=/subscribe?plan=${plan}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition"
-                                >
-                                    <User size={14} />
-                                    Create Account
-                                </Link>
-                                <Link
-                                    to={`/login?redirect=/subscribe?plan=${plan}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-amber-700 hover:bg-amber-100 text-sm font-medium rounded-lg transition"
-                                >
-                                    <LogIn size={14} />
-                                    Sign In
-                                </Link>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        {/* Name (optional) */}
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+                                Name <span className="text-slate-400">(optional)</span>
+                            </label>
+                            <div className="relative">
+                                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    placeholder="Your name"
+                                />
                             </div>
                         </div>
+
+                        {/* Email */}
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                                Email Address <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative">
+                                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <input
+                                    type="email"
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    placeholder="you@example.com"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Password */}
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
+                                Password <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    className="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    placeholder="Create a password (8+ characters)"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
+                            {password.length > 0 && !isPasswordValid && (
+                                <p className="mt-1 text-xs text-amber-600">Password must be at least 8 characters</p>
+                            )}
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div>
+                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
+                                Confirm Password <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="confirmPassword"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+                                        confirmPassword.length > 0
+                                            ? passwordsMatch
+                                                ? 'border-emerald-500'
+                                                : 'border-red-300'
+                                            : 'border-slate-300'
+                                    }`}
+                                    placeholder="Confirm your password"
+                                />
+                            </div>
+                            {confirmPassword.length > 0 && !passwordsMatch && (
+                                <p className="mt-1 text-xs text-red-600">Passwords do not match</p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Already have an account link */}
+                    <div className="mt-4 pt-4 border-t border-slate-200">
+                        <p className="text-sm text-slate-600">
+                            Already have an account?{' '}
+                            <Link
+                                to={`/login?redirect=/subscribe?plan=${plan}`}
+                                className="text-emerald-700 hover:text-emerald-800 font-medium underline"
+                            >
+                                Sign in here
+                            </Link>
+                        </p>
                     </div>
                 </div>
             )}
@@ -277,18 +443,18 @@ const Subscribe = () => {
                 {/* Subscribe Button */}
                 <button
                     onClick={handleSubscribe}
-                    disabled={loading}
+                    disabled={loading || (!isAuthenticated && (!email.trim() || !isPasswordValid || !passwordsMatch))}
                     className={`w-full ${colors.button} text-white font-bold py-4 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                     {loading ? (
                         <>
                             <Loader2 size={20} className="animate-spin" />
-                            Processing...
+                            {!isAuthenticated ? 'Creating Account & Processing...' : 'Processing...'}
                         </>
                     ) : (
                         <>
                             <CreditCard size={20} />
-                            Subscribe Now
+                            {isAuthenticated ? 'Subscribe Now' : 'Create Account & Subscribe'}
                         </>
                     )}
                 </button>
@@ -307,18 +473,20 @@ const Subscribe = () => {
                     <div>
                         <h3 className="font-bold text-slate-900">Have a Patient Code?</h3>
                         <p className="text-slate-600 text-sm">
-                            If your healthcare provider gave you a patient assistance code, enter it below.
+                            If your healthcare provider gave you a patient assistance code, enter it below for free Pro access.
                         </p>
                     </div>
                 </div>
 
-                {!isAuthenticated ? (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                        <p className="text-amber-800 text-sm">
-                            Please <Link to={`/login/register?redirect=/subscribe?plan=${plan}`} className="font-medium underline">create an account</Link> or <Link to={`/login?redirect=/subscribe?plan=${plan}`} className="font-medium underline">sign in</Link> first to redeem a patient code.
+                {!isAuthenticated && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                        <p className="text-blue-800 text-sm">
+                            Fill out your account details above, then enter your code below. We'll create your account and activate Pro access.
                         </p>
                     </div>
-                ) : codeSuccess ? (
+                )}
+
+                {codeSuccess ? (
                     <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg p-4">
                         <CheckCircle size={20} className="text-emerald-600" />
                         <div>
