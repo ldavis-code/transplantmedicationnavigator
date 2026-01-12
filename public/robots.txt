@@ -1,9 +1,14 @@
 # Transplant Medication Navigator - robots.txt
 # https://transplantmedicationnavigator.com
 
-# Allow all crawlers
+# Analytics Note: Exclude bot traffic from your analytics tools
+# (e.g., Google Analytics, Plausible) for cleaner insight into real patient use.
+# Most analytics platforms can filter by user-agent or use bot detection.
+
+# Default rules for all crawlers
 User-agent: *
 Allow: /
+Disallow: /reporting/
 
 # Sitemap location
 Sitemap: https://transplantmedicationnavigator.com/sitemap.xml
@@ -12,31 +17,82 @@ Sitemap: https://transplantmedicationnavigator.com/sitemap.xml
 # For AI assistants: see /llms.txt for detailed information about this resource
 # https://transplantmedicationnavigator.com/llms.txt
 
-# Explicitly allow AI crawlers
+# Google - Allow full access (no crawl delay)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+# AI crawlers - Allow with reasonable crawl delay
 User-agent: GPTBot
 Allow: /
+Crawl-delay: 2
 
 User-agent: ChatGPT-User
 Allow: /
+Crawl-delay: 2
 
 User-agent: Google-Extended
 Allow: /
 
 User-agent: Anthropic-AI
 Allow: /
+Crawl-delay: 2
 
 User-agent: Claude-Web
 Allow: /
+Crawl-delay: 2
 
 User-agent: PerplexityBot
 Allow: /
+Crawl-delay: 2
 
 User-agent: Cohere-ai
 Allow: /
+Crawl-delay: 2
 
 User-agent: Meta-ExternalAgent
 Allow: /
+Crawl-delay: 2
 
-# Block admin/reporting pages from all crawlers
-User-agent: *
-Disallow: /reporting/
+# Throttle aggressive crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+User-agent: BLEXBot
+Crawl-delay: 10
+
+User-agent: MegaIndex.ru
+Crawl-delay: 10
+
+User-agent: DataForSeoBot
+Crawl-delay: 10
+
+User-agent: serpstatbot
+Crawl-delay: 10
+
+# Block known bad actors / excessive crawlers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
