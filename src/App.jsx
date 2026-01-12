@@ -564,14 +564,6 @@ const Home = () => {
                         Start My Path Quiz
                     </Link>
                     <Link
-                        to="/application-help"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
-                        aria-label="Find grants and foundations"
-                    >
-                        <HeartHandshake size={20} aria-hidden="true" />
-                        Find Grants & Foundations
-                    </Link>
-                    <Link
                         to="/education/appeals"
                         className="w-full sm:w-auto px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition flex items-center gap-3"
                         aria-label="Get help with insurance denials"
@@ -581,6 +573,14 @@ const Home = () => {
                             <span className="block">Got Denied?</span>
                             <span className="block text-sm font-normal opacity-90">Step therapy, prior auth, and appeal help</span>
                         </div>
+                    </Link>
+                    <Link
+                        to="/application-help"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
+                        aria-label="Find grants and foundations"
+                    >
+                        <HeartHandshake size={20} aria-hidden="true" />
+                        Find Grants & Foundations
                     </Link>
                 </div>
             </section>
