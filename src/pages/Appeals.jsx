@@ -21,13 +21,13 @@ export default function Appeals() {
       {/* Page Header */}
       <header className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-rose-100 text-rose-600 p-3 rounded-lg" aria-hidden="true">
+          <div className="bg-emerald-100 text-emerald-600 p-3 rounded-lg" aria-hidden="true">
             <ShieldAlert size={28} />
           </div>
           <h1 className="text-3xl font-bold text-slate-800">Got Denied? Don't Give Up.</h1>
         </div>
         <p className="text-lg text-slate-600">
-          Insurance denials happen to almost everyone. The good news? Many denials are overturned on appeal. This guide walks you through the process.
+          Insurance says "no" to almost everyone at some point. The good news? You can fight back. Many people win when they appeal. This guide shows you how.
         </p>
       </header>
 
@@ -35,96 +35,96 @@ export default function Appeals() {
       <nav className="bg-slate-50 rounded-lg p-4 mb-8" aria-label="Page sections">
         <p className="font-semibold text-slate-700 mb-2">On This Page:</p>
         <ul className="space-y-1 text-slate-600">
-          <li><a href="#why-denied" className="hover:text-emerald-600">Why Medications Get Denied</a></li>
-          <li><a href="#step-therapy" className="hover:text-emerald-600">Step Therapy (Fail First) Explained</a></li>
-          <li><a href="#generics" className="hover:text-emerald-600">Generics vs. Brand Name</a></li>
+          <li><a href="#why-denied" className="hover:text-emerald-600">Why Insurance Says No</a></li>
+          <li><a href="#step-therapy" className="hover:text-emerald-600">Step Therapy: "Try This First"</a></li>
+          <li><a href="#generics" className="hover:text-emerald-600">Generic vs. Brand Name Drugs</a></li>
           <li><a href="#how-to-appeal" className="hover:text-emerald-600">How to Appeal: Step by Step</a></li>
-          <li><a href="#letter-template" className="hover:text-emerald-600">Medical Necessity Letter Template</a></li>
+          <li><a href="#letter-template" className="hover:text-emerald-600">Letter Template for Your Doctor</a></li>
         </ul>
       </nav>
 
       {/* Why Medications Get Denied */}
       <section id="why-denied" className="mb-10">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Why Medications Get Denied</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mb-4">Why Insurance Says No</h2>
         <p className="text-slate-600 mb-4">
-          Understanding why you were denied is the first step to fighting back. Check your denial letter for the specific reason. Common ones include:
+          Your denial letter tells you why they said no. Here are the most common reasons:
         </p>
         <ul className="space-y-3">
           <li className="flex gap-3">
-            <span className="font-semibold text-slate-800 min-w-fit">Prior Authorization Required:</span>
-            <span className="text-slate-600">Your insurer needs approval from your doctor before covering the medication</span>
+            <span className="font-semibold text-slate-800 min-w-fit">Prior Auth Needed:</span>
+            <span className="text-slate-600">Your doctor needs to ask permission first</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-semibold text-slate-800 min-w-fit">Not on Formulary:</span>
-            <span className="text-slate-600">The medication isn't on your plan's approved drug list</span>
+            <span className="font-semibold text-slate-800 min-w-fit">Not on the List:</span>
+            <span className="text-slate-600">Your drug isn't on their approved list</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-semibold text-slate-800 min-w-fit">Step Therapy Required:</span>
-            <span className="text-slate-600">Your insurer wants you to try a cheaper drug first</span>
+            <span className="font-semibold text-slate-800 min-w-fit">Try Something Else First:</span>
+            <span className="text-slate-600">They want you to try a cheaper drug first</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-semibold text-slate-800 min-w-fit">Quantity Limits:</span>
-            <span className="text-slate-600">Your insurer limits how much of the medication you can get</span>
+            <span className="font-semibold text-slate-800 min-w-fit">Too Much:</span>
+            <span className="text-slate-600">They say you're getting too much of this drug</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-semibold text-slate-800 min-w-fit">Generic Required:</span>
-            <span className="text-slate-600">Your insurer wants you to take a generic instead of brand-name</span>
+            <span className="font-semibold text-slate-800 min-w-fit">Use the Generic:</span>
+            <span className="text-slate-600">They want you to use a cheaper version</span>
           </li>
         </ul>
       </section>
 
       {/* Step Therapy Section */}
       <section id="step-therapy" className="mb-10">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Step Therapy: What It Is and Why It's Dangerous</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mb-4">Step Therapy: "Try This First"</h2>
         <p className="text-slate-600 mb-4">
-          <strong>Step therapy</strong> (also called "fail first") is when your insurance requires you to try a cheaper medication before they'll cover the one your transplant team prescribed.
+          <strong>Step therapy</strong> means your insurance wants you to try a cheaper drug before they'll pay for the one your doctor picked. Some people call this "fail first."
         </p>
 
-        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">Why This Is Risky for Transplant Patients</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">Why This Can Be Bad for Transplant Patients</h3>
         <ul className="list-disc list-inside space-y-2 text-slate-600">
-          <li>Immunosuppressants have a narrow therapeutic index—small changes in blood levels matter</li>
-          <li>"Failing" on the wrong medication could mean rejection</li>
-          <li>Your transplant team chose your medication for specific clinical reasons</li>
-          <li>Switching medications requires extra blood monitoring and clinic visits</li>
+          <li>Anti-rejection drugs need to stay at the right level in your blood. Small changes matter a lot.</li>
+          <li>Trying the wrong drug could hurt your transplant.</li>
+          <li>Your transplant team picked your drug for good reasons.</li>
+          <li>Switching drugs means more blood tests and doctor visits.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">Your Rights</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">What You Can Do</h3>
         <ul className="list-disc list-inside space-y-2 text-slate-600">
-          <li>You can request a step therapy exception</li>
-          <li>Transplant medications often qualify for medical necessity override</li>
-          <li>Your transplant physician's letter carries significant weight</li>
-          <li>Many states have step therapy reform laws protecting patients</li>
+          <li>You can ask them to skip step therapy.</li>
+          <li>Transplant drugs often get approved when your doctor says you need them.</li>
+          <li>A letter from your transplant doctor helps a lot.</li>
+          <li>Many states have laws that protect patients from step therapy.</li>
         </ul>
       </section>
 
       {/* Generics vs Brand Section */}
       <section id="generics" className="mb-10">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Generics vs. Brand Name: The Transplant Exception</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mb-4">Generic vs. Brand Name Drugs</h2>
 
         <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">The Basics</h3>
         <ul className="list-disc list-inside space-y-2 text-slate-600">
-          <li>Generic medications must have the same active ingredient as the brand</li>
-          <li>FDA considers them "therapeutically equivalent"</li>
-          <li>For most medications, generics work just fine</li>
+          <li>Generic drugs have the same main ingredient as brand-name drugs.</li>
+          <li>The FDA says they work the same way.</li>
+          <li>For most drugs, generics are fine.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">The Transplant Exception</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">Why Transplant Drugs Are Different</h3>
         <p className="text-slate-600 mb-3">
-          Immunosuppressants are different. Many are classified as <strong>narrow therapeutic index (NTI)</strong> drugs, meaning:
+          Anti-rejection drugs are special. Even tiny changes in how much gets into your blood can cause problems:
         </p>
         <ul className="list-disc list-inside space-y-2 text-slate-600">
-          <li>Small differences in blood levels can cause rejection or toxicity</li>
-          <li>Switching between formulations can affect absorption</li>
-          <li>Many transplant centers don't allow generic tacrolimus switches</li>
-          <li>Clinical guidelines (KDIGO, ISHLT) support maintaining brand consistency</li>
+          <li>Too little drug = your body might reject the transplant</li>
+          <li>Too much drug = side effects and toxicity</li>
+          <li>Switching brands can change how your body absorbs the drug</li>
+          <li>Many transplant centers don't allow switches for tacrolimus</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">When Brand May Be Medically Necessary</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mt-6 mb-3">When You Might Need Brand Name</h3>
         <ul className="list-disc list-inside space-y-2 text-slate-600">
-          <li>Your levels have been stable on a specific formulation</li>
-          <li>You've had problems with generic switches before</li>
-          <li>Your center's protocol requires brand-name</li>
-          <li>You have documented absorption issues</li>
+          <li>Your drug levels have been steady on this brand</li>
+          <li>You had problems when you switched before</li>
+          <li>Your transplant center requires brand-name</li>
+          <li>Your body has trouble absorbing the drug</li>
         </ul>
       </section>
 
@@ -134,49 +134,49 @@ export default function Appeals() {
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 1: Get the Denial in Writing</h3>
-            <p className="text-slate-600">Request a written explanation that includes the specific reason for denial and the clinical criteria used. You need this to know what to address in your appeal.</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 1: Get It in Writing</h3>
+            <p className="text-slate-600">Ask for a letter that says exactly why they said no. You need this to know what to say in your appeal.</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 2: Note Your Deadline</h3>
-            <p className="text-slate-600">Appeal deadlines are strict—often 30-60 days from the denial date. Mark your calendar and don't miss it.</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 2: Watch the Clock</h3>
+            <p className="text-slate-600">You usually have 30 to 60 days to appeal. Mark the date on your calendar. Don't miss it.</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 3: Gather Documentation</h3>
-            <p className="text-slate-600 mb-2">Work with your transplant team to collect:</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 3: Get Your Papers Together</h3>
+            <p className="text-slate-600 mb-2">Ask your transplant team for:</p>
             <ul className="list-disc list-inside space-y-1 text-slate-600 ml-4">
-              <li>Letter of medical necessity from your transplant physician</li>
-              <li>Your transplant history and current medication regimen</li>
-              <li>Lab results showing blood levels, kidney/liver function</li>
-              <li>Any rejection history or adverse events</li>
-              <li>Documentation of why alternatives won't work</li>
+              <li>A letter from your doctor saying why you need this drug</li>
+              <li>Your transplant records</li>
+              <li>Recent lab results</li>
+              <li>Any records of past rejection or problems</li>
+              <li>Notes about why other drugs won't work for you</li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 4: File the Appeal</h3>
-            <p className="text-slate-600">Submit your appeal with all documentation. Keep copies of everything you send.</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 4: Send Your Appeal</h3>
+            <p className="text-slate-600">Send everything together. Keep copies of everything you send.</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 5: Request Expedited Review If Urgent</h3>
-            <p className="text-slate-600">If you'll run out of medication before a standard appeal is processed, request expedited/urgent review. For transplant immunosuppressants, this is almost always medically justified.</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 5: Ask for a Fast Review If You Need It</h3>
+            <p className="text-slate-600">If you're going to run out of your medicine soon, ask for a fast review. For transplant drugs, this almost always counts as urgent.</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 6: Know Your Next Steps</h3>
-            <p className="text-slate-600">If your internal appeal is denied, you can usually request an external review by an independent third party. Your state insurance commissioner's office can also help.</p>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Step 6: Know What Comes Next</h3>
+            <p className="text-slate-600">If they say no again, you can ask someone outside the company to review it. Your state insurance office can also help.</p>
           </div>
         </div>
       </section>
 
       {/* Letter Template Section */}
       <section id="letter-template" className="mb-10">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Medical Necessity Letter Template</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mb-4">Letter Template for Your Doctor</h2>
         <p className="text-slate-600 mb-4">
-          Use this template with your transplant physician. They can customize it for your specific situation and submit it with your appeal.
+          Give this template to your transplant doctor. They can fill it out and send it with your appeal.
         </p>
 
         <a
