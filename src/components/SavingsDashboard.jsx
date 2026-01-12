@@ -7,6 +7,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
     const [summary, setSummary] = useState(null);
     const [entries, setEntries] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [showEntries, setShowEntries] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null);
     const { showConfirm, showAlert, DialogComponent } = useConfirmDialog();
@@ -17,6 +18,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
 
     async function loadData() {
         setIsLoading(true);
+        setError(null);
         try {
             const [summaryData, entriesData] = await Promise.all([
                 fetchSavingsSummary(),
@@ -24,8 +26,9 @@ export default function SavingsDashboard({ refreshTrigger }) {
             ]);
             setSummary(summaryData);
             setEntries(entriesData.entries || []);
-        } catch (error) {
-            console.error('Error loading savings data:', error);
+        } catch (err) {
+            console.error('Error loading savings data:', err);
+            setError('Having trouble loading right now. Try again in a moment.');
         } finally {
             setIsLoading(false);
         }
@@ -83,6 +86,24 @@ export default function SavingsDashboard({ refreshTrigger }) {
         );
     }
 
+    if (error && !summary) {
+        return (
+            <div className="bg-red-50 rounded-xl border border-red-200 p-6" role="alert">
+                <div className="flex flex-col items-center text-center">
+                    <RefreshCw className="text-red-400 mb-3" size={32} aria-hidden="true" />
+                    <p className="text-red-700 mb-4">{error}</p>
+                    <button
+                        onClick={loadData}
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors min-h-[44px] flex items-center gap-2"
+                    >
+                        <RefreshCw size={16} aria-hidden="true" />
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     const totalSaved = parseFloat(summary?.summary?.total_saved) || 0;
     const totalEntries = parseInt(summary?.summary?.total_entries) || 0;
     const avgPerFill = parseFloat(summary?.summary?.avg_savings_per_fill) || 0;
@@ -104,6 +125,18 @@ export default function SavingsDashboard({ refreshTrigger }) {
         <>
             {DialogComponent}
             <div className="space-y-6">
+            {/* Error Banner (shown when refresh fails but data exists) */}
+            {error && summary && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center justify-between" role="alert">
+                    <p className="text-red-700 text-sm">{error}</p>
+                    <button
+                        onClick={loadData}
+                        className="text-red-600 hover:text-red-800 text-sm font-medium underline ml-4"
+                    >
+                        Retry
+                    </button>
+                </div>
+            )}
             {/* Main Stats Card */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200 p-6">
                 <div className="flex items-center justify-between mb-4">
