@@ -565,7 +565,7 @@ const Home = () => {
                     </Link>
                     <Link
                         to="/education/appeals"
-                        className="w-full sm:w-auto px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition flex items-center gap-3"
+                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center gap-3"
                         aria-label="Get help with insurance denials"
                     >
                         <ShieldAlert size={20} aria-hidden="true" />
@@ -4329,15 +4329,15 @@ const Education = () => {
                 className="block p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition bg-white shadow-sm"
             >
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-rose-100 text-rose-600 p-2 rounded" aria-hidden="true">
+                    <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true">
                         <ShieldAlert size={20} />
                     </div>
                     <span className="font-bold text-slate-800">Got Denied?</span>
                 </div>
                 <p className="text-sm text-slate-600">
-                    Learn about step therapy, generic vs brand requirements, and how to appeal insurance denials. Includes letter templates for your transplant team.
+                    Learn why insurance says no, and how to fight back. We have letter templates to help.
                 </p>
-                <span className="text-rose-600 font-semibold text-sm mt-2 inline-block">View Appeal Guide &rarr;</span>
+                <span className="text-emerald-600 font-semibold text-sm mt-2 inline-block">View Appeal Guide &rarr;</span>
             </Link>
 
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
