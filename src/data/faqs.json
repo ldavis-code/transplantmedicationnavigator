@@ -319,6 +319,51 @@
     ]
   },
   {
+    "category": "Got Denied? Fighting Insurance Denials",
+    "questions": [
+      {
+        "q": "Why did my insurance deny my transplant medication?",
+        "a": "Your denial letter tells you why they said no. Here are the most common reasons:\n\n• **Prior Auth Needed:** Your doctor needs to ask permission first\n• **Not on the List:** Your drug isn't on their approved list (formulary)\n• **Step Therapy:** They want you to try a cheaper drug first\n• **Quantity Limits:** They say you're getting too much of this drug\n• **Use the Generic:** They want you to use a cheaper version\n\nThe letter should say what to do next. If it doesn't, call your insurance and ask."
+      },
+      {
+        "q": "What is step therapy and why is it bad for transplant patients?",
+        "a": "**Step therapy** means your insurance wants you to try a cheaper drug before they'll pay for the one your doctor picked. Some people call this \"fail first.\"\n\n**Why This Can Be Bad for Transplant Patients:**\n• Anti-rejection drugs need to stay at the right level in your blood. Small changes matter a lot.\n• Trying the wrong drug could hurt your transplant.\n• Your transplant team picked your drug for good reasons.\n• Switching drugs means more blood tests and doctor visits.\n\n**Good News:** You can ask them to skip step therapy. Transplant drugs often get approved when your doctor says you need them."
+      },
+      {
+        "q": "Can I ask my insurance to skip step therapy?",
+        "a": "Yes! You can request a step therapy exception.\n\n**What helps:**\n• A letter from your transplant doctor explaining why you need this specific drug\n• Your transplant records and lab results\n• Notes about why other drugs won't work for you\n\n**Also know:**\n• Many states have laws that protect patients from step therapy\n• Transplant drugs often get exceptions because of medical necessity\n• Your transplant center can help you fight this"
+      },
+      {
+        "q": "Why does my insurance want me to use a generic instead of brand-name?",
+        "a": "Generic drugs cost less, so insurance prefers them. For most drugs, generics are fine - the FDA says they work the same way.\n\n**But transplant drugs are different:**\n• Anti-rejection drugs are \"narrow therapeutic index\" drugs\n• Even tiny changes in how much gets into your blood can cause problems\n• Too little drug = your body might reject the transplant\n• Too much drug = side effects and toxicity\n• Switching brands can change how your body absorbs the drug\n\nMany transplant centers don't allow switches for tacrolimus and other critical drugs."
+      },
+      {
+        "q": "When should I fight for brand-name instead of generic?",
+        "a": "Consider fighting for brand-name when:\n\n• Your drug levels have been steady on this brand\n• You had problems when you switched before\n• Your transplant center requires brand-name\n• Your body has trouble absorbing the drug\n• You're taking tacrolimus or another narrow therapeutic index drug\n\n**What to do:**\n• Ask your transplant doctor to write a letter explaining why you need brand-name\n• Include your lab history showing stable levels\n• Note any past problems with generic versions"
+      },
+      {
+        "q": "How do I appeal an insurance denial?",
+        "a": "**Step 1: Get It in Writing**\nAsk for a letter that says exactly why they said no. You need this to know what to say in your appeal.\n\n**Step 2: Watch the Clock**\nYou usually have 30 to 60 days to appeal. Mark the date on your calendar.\n\n**Step 3: Get Your Papers Together**\n• A letter from your doctor saying why you need this drug\n• Your transplant records\n• Recent lab results\n• Any records of past rejection or problems\n\n**Step 4: Send Your Appeal**\nSend everything together. Keep copies of everything.\n\n**Step 5: Ask for Fast Review**\nIf you're going to run out of medicine soon, ask for an expedited (fast) review."
+      },
+      {
+        "q": "What should be in my doctor's appeal letter?",
+        "a": "A strong medical necessity letter should include:\n\n• **Your diagnosis:** The specific transplant and date\n• **Current medication:** What you're taking and why\n• **Why this specific drug:** Medical reasons for this choice\n• **Why alternatives won't work:** Side effects, absorption issues, past failures\n• **Risk of changing:** Rejection risk, hospitalization risk\n• **Clinical guidelines:** References to KDIGO, ISHLT, or other transplant guidelines\n\nWe have a letter template on our Appeals page that your doctor can use. Visit our Education section and click \"Got Denied?\" to find it."
+      },
+      {
+        "q": "What if my first appeal is denied?",
+        "a": "Don't give up! You have more options:\n\n**Level 2 Appeal:** You can appeal to a higher level within your insurance company.\n\n**External Review:** You can ask someone outside the company to review your case. This is often a panel of doctors who don't work for your insurance.\n\n**State Help:** Your state insurance commissioner can help. They have staff who handle complaints.\n\n**Keep Records:** Save copies of all letters, faxes, and notes from phone calls.\n\nMany people win on their second or third try. The key is not giving up."
+      },
+      {
+        "q": "Can I get my medicine while I wait for my appeal?",
+        "a": "Sometimes! Here's what to ask for:\n\n**Expedited Review:** If you're running low on medicine, tell them it's urgent. Transplant drugs usually count as urgent because stopping them is dangerous.\n\n**Continuation of Coverage:** If you were already on the drug and they're now denying it, you may be able to keep getting it while you appeal.\n\n**Bridge Supply:** Some pharmacies or drug companies can give you a short supply while you wait.\n\n**Emergency Supply:** If it's an emergency, call your transplant center. They may have samples or other options."
+      },
+      {
+        "q": "Who can help me with my appeal?",
+        "a": "You don't have to do this alone:\n\n• **Transplant Social Worker:** They know these systems and can help with paperwork\n• **Your Transplant Coordinator:** Can provide medical records quickly\n• **Your Doctor's Office:** They file appeals often and know what works\n• **Patient Advocates:** Your hospital may have staff who help with insurance\n• **State Insurance Office:** They can explain your rights and file complaints\n\nAsk for help early. Don't wait until your medicine runs out."
+      }
+    ]
+  },
+  {
     "category": "Special Situations",
     "questions": [
       {
