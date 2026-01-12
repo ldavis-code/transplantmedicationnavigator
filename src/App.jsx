@@ -4326,18 +4326,22 @@ const Education = () => {
             {/* Got Denied? Appeal Help Card */}
             <Link
                 to="/education/appeals"
-                className="block p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition bg-white shadow-sm"
+                className="block p-6 rounded-xl bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 hover:border-rose-300 hover:shadow-md transition-all"
             >
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true">
-                        <ShieldAlert size={20} />
+                <div className="flex items-start gap-4">
+                    <div className="bg-rose-100 text-rose-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+                        <ShieldAlert size={28} />
                     </div>
-                    <span className="font-bold text-slate-800">Got Denied?</span>
+                    <div className="flex-1">
+                        <h2 className="text-xl font-bold text-rose-800 mb-2">Got Denied?</h2>
+                        <p className="text-slate-700 mb-3">
+                            Insurance said no? Don't worry—you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.
+                        </p>
+                        <span className="inline-flex items-center gap-1 text-rose-600 font-semibold">
+                            View Appeal Guide <ArrowRight size={16} aria-hidden="true" />
+                        </span>
+                    </div>
                 </div>
-                <p className="text-sm text-slate-600">
-                    Learn why insurance says no, and how to fight back. We have letter templates to help.
-                </p>
-                <span className="text-emerald-600 font-semibold text-sm mt-2 inline-block">View Appeal Guide &rarr;</span>
             </Link>
 
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
