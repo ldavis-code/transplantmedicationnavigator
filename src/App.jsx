@@ -22,6 +22,7 @@ const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx
 const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
+const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -569,6 +570,17 @@ const Home = () => {
                     >
                         <HeartHandshake size={20} aria-hidden="true" />
                         Find Grants & Foundations
+                    </Link>
+                    <Link
+                        to="/education/appeals"
+                        className="w-full sm:w-auto px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition flex items-center gap-3"
+                        aria-label="Get help with insurance denials"
+                    >
+                        <ShieldAlert size={20} aria-hidden="true" />
+                        <div className="text-left">
+                            <span className="block">Got Denied?</span>
+                            <span className="block text-sm font-normal opacity-90">Step therapy, prior auth, and appeal help</span>
+                        </div>
                     </Link>
                 </div>
             </section>
@@ -4310,6 +4322,24 @@ const Education = () => {
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Resources & Education</h1>
                 <p className="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
             </header>
+
+            {/* Got Denied? Appeal Help Card */}
+            <Link
+                to="/education/appeals"
+                className="block p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition bg-white shadow-sm"
+            >
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-rose-100 text-rose-600 p-2 rounded" aria-hidden="true">
+                        <ShieldAlert size={20} />
+                    </div>
+                    <span className="font-bold text-slate-800">Got Denied?</span>
+                </div>
+                <p className="text-sm text-slate-600">
+                    Learn about step therapy, generic vs brand requirements, and how to appeal insurance denials. Includes letter templates for your transplant team.
+                </p>
+                <span className="text-rose-600 font-semibold text-sm mt-2 inline-block">View Appeal Guide &rarr;</span>
+            </Link>
+
             <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
                 <div className="flex min-w-max">
                     <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
@@ -5692,6 +5722,7 @@ const MainSiteRoutes = () => (
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
                 <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
+                <Route path="/education/appeals" element={<LazyAppeals />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
                 <Route path="/faq" element={<LazyFAQ />} />
