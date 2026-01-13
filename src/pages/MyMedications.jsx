@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator } from 'lucide-react';
+import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator, Bell } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
@@ -148,19 +148,36 @@ export default function MyMedications() {
         </div>
       </div>
 
-      {/* Savings Calculator CTA */}
-      <Link
-        to="/savings-tracker"
-        className="block bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-4 mb-6 text-white hover:from-emerald-700 hover:to-teal-700 transition-all"
-      >
-        <div className="flex items-center gap-3">
-          <Calculator size={24} />
-          <div>
-            <div className="font-semibold">Savings Calculator</div>
-            <div className="text-emerald-100 text-sm">See how much you could save with assistance programs</div>
+      {/* Quick Links */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {/* Savings Calculator CTA */}
+        <Link
+          to="/savings-tracker"
+          className="block bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-4 text-white hover:from-emerald-700 hover:to-teal-700 transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <Calculator size={24} />
+            <div>
+              <div className="font-semibold">Savings Calculator</div>
+              <div className="text-emerald-100 text-sm">See how much you could save</div>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+
+        {/* Copay Card Reminders CTA */}
+        <Link
+          to="/copay-reminders"
+          className="block bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-4 text-white hover:from-amber-600 hover:to-orange-600 transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <Bell size={24} />
+            <div>
+              <div className="font-semibold">Copay Card Reminders</div>
+              <div className="text-amber-100 text-sm">Never miss a renewal</div>
+            </div>
+          </div>
+        </Link>
+      </div>
 
       {/* Header with Export/Import */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
