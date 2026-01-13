@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CreditCard, Users, CheckCircle, ArrowRight, Mail } from 'lucide-react';
+import { CreditCard, Users, CheckCircle, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -34,14 +34,17 @@ const Pricing = () => {
             color: 'blue',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quizzes',
+                'Unlimited My Path Quizzes — update anytime when your situation changes',
                 'Unlimited medication searches',
                 'Unlimited Savings Calculator estimates',
-                'Save your medication lists and quiz results on your device',
-                'Track your actual medication savings locally',
-                'Personal copay card reminders stored on your device'
+                'Savings Dashboard — visual proof of how much you\'ve saved',
+                'Track Your Actual Savings — document monthly savings to prove ROI',
+                'Copay Card Renewal Reminders — never miss an annual expiration',
+                'Medication Calendar — track when PAP applications need renewal',
+                'Save your medication lists and quiz results on your device'
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
+            moneyBackGuarantee: true,
             cta: 'Subscribe Monthly',
             ctaLink: '/subscribe?plan=monthly',
             highlighted: true
@@ -54,14 +57,17 @@ const Pricing = () => {
             color: 'purple',
             icon: CreditCard,
             features: [
-                'Unlimited My Path Quizzes',
+                'Unlimited My Path Quizzes — update anytime when your situation changes',
                 'Unlimited medication searches',
                 'Unlimited Savings Calculator estimates',
-                'Save your medication lists and quiz results on your device',
-                'Track your actual medication savings locally',
-                'Personal copay card reminders stored on your device'
+                'Savings Dashboard — visual proof of how much you\'ve saved',
+                'Track Your Actual Savings — document monthly savings to prove ROI',
+                'Copay Card Renewal Reminders — never miss an annual expiration',
+                'Medication Calendar — track when PAP applications need renewal',
+                'Save your medication lists and quiz results on your device'
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
+            moneyBackGuarantee: true,
             cta: 'Subscribe Yearly',
             ctaLink: '/subscribe?plan=yearly',
             highlighted: false
@@ -142,9 +148,15 @@ const Pricing = () => {
                                             ))}
                                         </ul>
                                         {tier.importantNote && (
-                                            <p className="text-xs text-slate-500 mb-6 italic">
+                                            <p className="text-xs text-slate-500 mb-4 italic">
                                                 {tier.importantNote}
                                             </p>
+                                        )}
+                                        {tier.moneyBackGuarantee && (
+                                            <div className="flex items-center gap-2 mb-6 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                                <ShieldCheck size={20} className="text-green-600 flex-shrink-0" aria-hidden="true" />
+                                                <span className="text-sm font-semibold text-green-800">30-Day Money Back Guarantee</span>
+                                            </div>
                                         )}
                                         {tier.ctaLink.startsWith('mailto:') ? (
                                             <a
@@ -194,7 +206,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        Pro gives you unlimited My Path Quizzes, unlimited medication searches, unlimited Savings Calculator estimates, the ability to save your medication lists and quiz results on your device, track your actual medication savings locally, and personal copay card reminders—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
+                                        Pro gives you unlimited My Path Quizzes (update anytime when your situation changes), unlimited medication searches, unlimited Savings Calculator estimates, a Savings Dashboard to visualize your savings, the ability to track and document your actual monthly savings to prove ROI, copay card renewal reminders so you never miss an annual expiration, a medication calendar to track PAP application renewals, and the ability to save your medication lists and quiz results—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>
@@ -207,6 +219,12 @@ const Pricing = () => {
                                     <h3 className="font-bold text-slate-900 mb-2">Can I cancel my subscription?</h3>
                                     <p className="text-slate-600">
                                         Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period, and you'll still have full access to the Free plan.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-slate-900 mb-2">What is the money back guarantee?</h3>
+                                    <p className="text-slate-600">
+                                        We offer a 30-day money back guarantee on all Pro subscriptions. If you're not satisfied with your Pro subscription for any reason within the first 30 days, contact us for a full refund—no questions asked.
                                     </p>
                                 </div>
                             </div>
