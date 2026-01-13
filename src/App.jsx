@@ -757,7 +757,7 @@ const Home = () => {
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <p className="text-slate-700 leading-relaxed">
-                        <strong className="text-slate-900">Lorrinda Gray-Davis</strong> built this tool. She is a liver cancer survivor and liver transplant patient. She knows what you are going through because she has been there. Lorrinda works with patient groups to help transplant patients across the country. She has won awards for her work helping patients.
+                        <strong className="text-slate-900">Lorrinda Gray-Davis</strong> built this tool. She is a liver cancer survivor and liver transplant patient. She knows what you are going through because she has been there. Lorrinda works with patient groups to help transplant patients across the country. She has won awards for her work helping patients. <a href="https://www.lorrindagraydavis.com" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium underline">Learn more about Lorrinda</a>.
                     </p>
                 </div>
             </section>
