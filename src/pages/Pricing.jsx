@@ -193,6 +193,26 @@ const Pricing = () => {
                             </p>
                         </section>
 
+                        {/* Guarantee Section */}
+                        <section className="bg-green-50 border border-green-200 rounded-2xl p-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <ShieldCheck size={28} className="text-green-600" aria-hidden="true" />
+                                <h2 className="text-2xl font-bold text-green-900">Our Guarantee: You Save Money, Or You Don't Pay</h2>
+                            </div>
+                            <p className="text-green-800 leading-relaxed mb-4">
+                                We're so confident this tool will save you money that we offer a full 30-day money-back guarantee on a monthly subscription.
+                            </p>
+                            <p className="text-green-800 leading-relaxed mb-4">
+                                <strong>Here's how it works:</strong> If you subscribe to our annual plan and don't save at least $79.99 on your medications within the first 90 days, we'll provide a full refund. No questions asked.
+                            </p>
+                            <p className="text-green-800 leading-relaxed mb-4">
+                                Simply email us at <a href="mailto:info@transplantmedicationnavigator.com" className="text-green-700 underline hover:text-green-900">info@transplantmedicationnavigator.com</a> with a brief explanation, and we'll process your refund immediately.
+                            </p>
+                            <p className="text-green-800 leading-relaxed italic">
+                                <strong>Why we offer this:</strong> We're transplant patients helping transplant patients. We built this tool because we know how expensive medications are, and we're confident it will help you find savings. If it doesn't, you shouldn't have to pay.
+                            </p>
+                        </section>
+
                         {/* FAQ Section */}
                         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
