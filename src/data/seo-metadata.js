@@ -227,6 +227,17 @@ export const seoMetadata = {
     breadcrumbName: 'Savings Calculator',
   },
 
+  copayReminders: {
+    title: 'Copay Card Reminders | Transplant Medication Navigator™',
+    description: 'Never miss a copay card renewal. Track expiration dates for manufacturer copay cards and patient assistance programs. Get reminders before your cards expire.',
+    canonical: `${BASE_URL}/copay-reminders`,
+    ogTitle: 'Copay Card Reminders - Never Miss a Renewal',
+    ogDescription: 'Track copay card expiration dates and get reminders before they expire. Keep your medication assistance programs active.',
+    twitterTitle: 'Copay Card Reminders',
+    twitterDescription: 'Never miss a copay card renewal. Track expiration dates and get reminders.',
+    breadcrumbName: 'Copay Reminders',
+  },
+
   subscribe: {
     title: 'Subscribe to Pro | Transplant Medication Navigator™',
     description: 'Unlock unlimited features with a Pro subscription. Save medications, track savings, and get personalized assistance recommendations.',
