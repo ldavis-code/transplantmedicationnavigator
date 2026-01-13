@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Lock, Sparkles, CheckCircle, X, Tag, Loader2 } from 'lucide-react';
+import { Lock, Sparkles, CheckCircle, X, Tag, Loader2, ShieldCheck } from 'lucide-react';
 import { redeemPromoCode } from '../lib/promoCodes';
 
 /**
@@ -232,12 +232,18 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess })
         </div>
 
         {/* Pricing */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <span className="text-2xl font-bold text-slate-900">$8.99</span>
           <span className="text-slate-500">/month</span>
           <span className="text-slate-400 mx-2">or</span>
           <span className="text-lg font-semibold text-purple-600">$79.99/year</span>
           <span className="text-xs text-purple-600 ml-1">(save 26%)</span>
+        </div>
+
+        {/* Money Back Guarantee */}
+        <div className="flex items-center justify-center gap-2 mb-6 p-3 bg-green-50 border border-green-200 rounded-lg">
+          <ShieldCheck size={20} className="text-green-600 flex-shrink-0" aria-hidden="true" />
+          <span className="text-sm font-semibold text-green-800">30-Day Money Back Guarantee</span>
         </div>
 
         {/* CTA Buttons */}
