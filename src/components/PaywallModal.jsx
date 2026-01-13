@@ -6,7 +6,7 @@ import { redeemPromoCode } from '../lib/promoCodes';
 /**
  * PaywallModal Component
  *
- * Shows when users reach their free tier limits (2 quizzes or 2 calculator uses).
+ * Shows when users reach their free tier limits (1 quiz or 1 calculator use).
  * Prompts them to sign up for a Pro subscription to continue.
  *
  * Accessibility features:
@@ -30,12 +30,12 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess })
   // Feature-specific content
   const content = {
     quiz: {
-      title: "You've used your 2 free quizzes",
+      title: "You've used your free quiz",
       description: "Upgrade to Pro to keep using My Path Quizzes and unlock all features.",
       icon: '🎯',
     },
     calculator: {
-      title: "You've used your 2 free calculations",
+      title: "You've used your free calculation",
       description: "Upgrade to Pro for unlimited Savings Calculator estimates and unlock all premium features.",
       icon: '💰',
     },
