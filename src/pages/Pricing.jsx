@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CreditCard, Users, CheckCircle, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
+import { CreditCard, Users, CheckCircle, ArrowRight, Mail, ShieldCheck, Building2 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -71,6 +71,27 @@ const Pricing = () => {
             cta: 'Subscribe Yearly',
             ctaLink: '/subscribe?plan=yearly',
             highlighted: false
+        },
+        {
+            name: 'Enterprise',
+            description: 'For hospitals & healthcare organizations',
+            price: 'Custom',
+            priceSubtext: 'pricing',
+            color: 'indigo',
+            icon: Building2,
+            features: [
+                'Volume licensing for your organization',
+                'Dedicated account manager',
+                'Custom onboarding and training',
+                'Priority support',
+                'Analytics and reporting dashboard',
+                'HIPAA-compliant deployment options',
+                'Integration with existing systems',
+                'Custom branding options'
+            ],
+            cta: 'Contact Sales',
+            ctaLink: 'mailto:enterprise@transplantmedicationnavigator.com?subject=Enterprise%20Pricing%20Inquiry',
+            highlighted: false
         }
     ];
 
@@ -95,6 +116,13 @@ const Pricing = () => {
             icon: 'bg-purple-100 text-purple-600',
             button: 'bg-purple-700 hover:bg-purple-800',
             check: 'text-purple-600'
+        },
+        indigo: {
+            bg: 'bg-indigo-50',
+            border: 'border-indigo-200',
+            icon: 'bg-indigo-100 text-indigo-600',
+            button: 'bg-indigo-700 hover:bg-indigo-800',
+            check: 'text-indigo-600'
         }
     };
 
@@ -117,7 +145,7 @@ const Pricing = () => {
             <div className="space-y-12">
                 <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-3 gap-6">
+                        <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
