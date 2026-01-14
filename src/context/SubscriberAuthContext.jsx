@@ -12,6 +12,17 @@ const SubscriberAuthContext = createContext(null);
 const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 const SUBSCRIBER_USER_KEY = 'tmn_subscriber_user';
 
+// Demo mode keys (shared with DemoModeContext)
+const DEMO_MODE_KEY = 'tmn_demo_mode';
+const DEMO_EXPIRY_KEY = 'tmn_demo_expiry';
+
+// Check if demo mode is active (from localStorage)
+const isDemoModeActive = () => {
+  const storedDemo = localStorage.getItem(DEMO_MODE_KEY);
+  const storedExpiry = localStorage.getItem(DEMO_EXPIRY_KEY);
+  return storedDemo && storedExpiry && Date.now() < parseInt(storedExpiry, 10);
+};
+
 // API base URL
 const API_BASE = '/.netlify/functions';
 
@@ -152,13 +163,17 @@ export function SubscriberAuthProvider({ children }) {
     }
   }, []);
 
+  // Check demo mode on every render (it can change via URL)
+  const isInDemoMode = isDemoModeActive();
+
   const value = useMemo(
     () => ({
       user,
       loading,
       error,
       isAuthenticated: !!user,
-      isPro: user?.plan === 'pro' && user?.subscription_status === 'active',
+      isPro: isInDemoMode || (user?.plan === 'pro' && user?.subscription_status === 'active'),
+      isDemo: isInDemoMode,
       login,
       register,
       logout,
@@ -166,7 +181,7 @@ export function SubscriberAuthProvider({ children }) {
       updateUser,
       refreshUser,
     }),
-    [user, loading, error, login, register, logout, getToken, updateUser, refreshUser]
+    [user, loading, error, isInDemoMode, login, register, logout, getToken, updateUser, refreshUser]
   );
 
   return (
