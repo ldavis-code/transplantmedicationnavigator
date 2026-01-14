@@ -13,6 +13,7 @@ const LazyForEmployers = lazy(() => import('./pages/ForEmployers.jsx'));
 const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
+const LazyDemo = lazy(() => import('./pages/Demo.jsx'));
 const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
 const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazyCopayCardReminders = lazy(() => import('./pages/CopayCardReminders.jsx'));
@@ -54,6 +55,10 @@ import TermTooltip, { DefineInline, GlossaryLink } from './components/TermToolti
 import { ChatQuizProvider, useChatQuiz } from './context/ChatQuizContext.jsx';
 // Subscriber Auth Provider
 import { SubscriberAuthProvider } from './context/SubscriberAuthContext.jsx';
+// Demo Mode Provider
+import { DemoModeProvider } from './context/DemoModeContext.jsx';
+// Demo Banner Component
+import DemoBanner from './components/DemoBanner.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -5756,6 +5761,8 @@ const MainSiteRoutes = () => (
                 <Route path="/login/reset-password" element={<LazyResetPassword />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
+                <Route path="/demo" element={<LazyDemo />} />
+                <Route path="/demo/:demoType" element={<LazyDemo />} />
                 <Route path="*" element={<LazyNotFound />} />
             </Routes>
         </Suspense>
@@ -5810,9 +5817,12 @@ const App = () => {
             <SubscriberAuthProvider>
                 <ChatQuizProvider>
                     <BrowserRouter>
-                        <GoogleAnalytics />
-                        <ScrollToTop />
-                        <AppRoutes />
+                        <DemoModeProvider>
+                            <DemoBanner />
+                            <GoogleAnalytics />
+                            <ScrollToTop />
+                            <AppRoutes />
+                        </DemoModeProvider>
                     </BrowserRouter>
                 </ChatQuizProvider>
             </SubscriberAuthProvider>
