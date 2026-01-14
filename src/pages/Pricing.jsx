@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CreditCard, Users, CheckCircle, ArrowRight, Mail, ShieldCheck, Building2 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
@@ -6,6 +7,7 @@ import { seoMetadata } from '../data/seo-metadata.js';
 const Pricing = () => {
 
     useMetaTags(seoMetadata.pricing);
+    const [billingPeriod, setBillingPeriod] = useState('yearly');
 
     const tiers = [
         {
@@ -27,10 +29,10 @@ const Pricing = () => {
             highlighted: false
         },
         {
-            name: 'Monthly',
-            description: 'Pro subscription',
-            price: '$8.99',
-            priceSubtext: 'per month',
+            name: 'Pro',
+            description: billingPeriod === 'yearly' ? 'Pro subscription - Save 26%' : 'Pro subscription',
+            price: billingPeriod === 'yearly' ? '$79.99' : '$8.99',
+            priceSubtext: billingPeriod === 'yearly' ? 'per year' : 'per month',
             color: 'blue',
             icon: CreditCard,
             features: [
@@ -45,32 +47,10 @@ const Pricing = () => {
             ],
             importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
             moneyBackGuarantee: true,
-            cta: 'Subscribe Monthly',
-            ctaLink: '/subscribe?plan=monthly',
-            highlighted: true
-        },
-        {
-            name: 'Yearly',
-            description: 'Pro subscription - Save 26%',
-            price: '$79.99',
-            priceSubtext: 'per year',
-            color: 'purple',
-            icon: CreditCard,
-            features: [
-                'Unlimited My Path Quizzes — update anytime when your situation changes',
-                'Unlimited medication searches',
-                'Unlimited Savings Calculator estimates',
-                'Savings Dashboard — visual proof of how much you\'ve saved',
-                'Track Your Actual Savings — document monthly savings to prove ROI',
-                'Copay Card Renewal Reminders — never miss an annual expiration',
-                'Medication Calendar — track when PAP applications need renewal',
-                'Save your medication lists and quiz results on your device'
-            ],
-            importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
-            moneyBackGuarantee: true,
-            cta: 'Subscribe Yearly',
-            ctaLink: '/subscribe?plan=yearly',
-            highlighted: false
+            cta: billingPeriod === 'yearly' ? 'Subscribe Yearly' : 'Subscribe Monthly',
+            ctaLink: billingPeriod === 'yearly' ? '/subscribe?plan=yearly' : '/subscribe?plan=monthly',
+            highlighted: true,
+            hasBillingToggle: true
         },
         {
             name: 'Enterprise',
@@ -110,13 +90,6 @@ const Pricing = () => {
             button: 'bg-blue-700 hover:bg-blue-800',
             check: 'text-blue-600'
         },
-        purple: {
-            bg: 'bg-purple-50',
-            border: 'border-purple-200',
-            icon: 'bg-purple-100 text-purple-600',
-            button: 'bg-purple-700 hover:bg-purple-800',
-            check: 'text-purple-600'
-        },
         indigo: {
             bg: 'bg-indigo-50',
             border: 'border-indigo-200',
@@ -145,7 +118,7 @@ const Pricing = () => {
             <div className="space-y-12">
                 <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <section className="grid md:grid-cols-3 gap-6">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
@@ -163,6 +136,30 @@ const Pricing = () => {
                                         </div>
                                         <h2 className="text-2xl font-bold text-slate-900 mb-1">{tier.name}</h2>
                                         <p className="text-slate-600 text-sm mb-4">{tier.description}</p>
+                                        {tier.hasBillingToggle && (
+                                            <div className="flex items-center justify-center gap-2 mb-4 p-1 bg-slate-100 rounded-lg">
+                                                <button
+                                                    onClick={() => setBillingPeriod('monthly')}
+                                                    className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                                                        billingPeriod === 'monthly'
+                                                            ? 'bg-white text-slate-900 shadow-sm'
+                                                            : 'text-slate-600 hover:text-slate-900'
+                                                    }`}
+                                                >
+                                                    Monthly
+                                                </button>
+                                                <button
+                                                    onClick={() => setBillingPeriod('yearly')}
+                                                    className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                                                        billingPeriod === 'yearly'
+                                                            ? 'bg-white text-slate-900 shadow-sm'
+                                                            : 'text-slate-600 hover:text-slate-900'
+                                                    }`}
+                                                >
+                                                    Yearly
+                                                </button>
+                                            </div>
+                                        )}
                                         <div className="mb-6">
                                             <span className="text-3xl font-bold text-slate-900">{tier.price}</span>
                                             <span className="text-slate-500 text-sm ml-2">{tier.priceSubtext}</span>
