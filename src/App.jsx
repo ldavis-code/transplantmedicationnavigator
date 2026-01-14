@@ -143,6 +143,65 @@ const getPriceEstimate = (medicationId, category, source) => {
     return 'Check live price';
 };
 
+// Helper function to get medication-specific savings estimates
+const getMedicationSavingsEstimate = (med) => {
+    const medId = med.id?.toLowerCase();
+    const category = med.category;
+    const costTier = med.cost_tier;
+    const copayTier = med.typical_copay_tier;
+
+    // Get retail price from price-estimates data
+    let retailPrice;
+    if (PRICE_ESTIMATES_DATA.medicationOverrides[medId]) {
+        // Use walmart max as retail estimate (highest typical retail)
+        const override = PRICE_ESTIMATES_DATA.medicationOverrides[medId];
+        retailPrice = override.walmart?.max || override.goodrx?.max || override.costplus?.max;
+    }
+
+    // Fall back to category defaults if no override
+    if (!retailPrice) {
+        const categoryKey = category === 'Immunosuppressant' ? 'Immunosuppressant' : 'default';
+        const categoryDefaults = PRICE_ESTIMATES_DATA.categoryDefaults[categoryKey];
+        if (categoryDefaults?.walmart) {
+            retailPrice = categoryDefaults.walmart.max;
+        }
+    }
+
+    // Final fallback based on cost_tier
+    if (!retailPrice) {
+        retailPrice = costTier === 'high' ? 550 : costTier === 'medium' ? 250 : 75;
+    }
+
+    // Calculate copay card price based on typical_copay_tier
+    // Tier 1: $0-5, Tier 2: $5-15, Tier 3: $15-35, Tier 4/Specialty: $25-75
+    let copayPrice;
+    if (copayTier === 'Specialty' || copayTier === 4) {
+        // Specialty medications: higher copay even with assistance
+        copayPrice = Math.round(5 + (retailPrice % 70)); // $5-75 range, varies by med
+    } else if (copayTier === 3) {
+        copayPrice = Math.round(10 + (retailPrice % 25)); // $10-35 range
+    } else if (copayTier === 2) {
+        copayPrice = Math.round(5 + (retailPrice % 15)); // $5-20 range
+    } else {
+        // Tier 1 or low-cost generics
+        copayPrice = Math.round(retailPrice % 10); // $0-10 range
+    }
+
+    // Ensure copay is always less than retail
+    copayPrice = Math.min(copayPrice, Math.round(retailPrice * 0.1));
+
+    // Calculate monthly and annual savings
+    const monthlySavings = retailPrice - copayPrice;
+    const annualSavings = monthlySavings * 12;
+
+    return {
+        retailPrice,
+        copayPrice,
+        monthlySavings,
+        annualSavings
+    };
+};
+
 // --- COMPONENTS ---
 
 // ScrollToTop Component
@@ -3272,7 +3331,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
             </header>
 
             {/* Savings Summary Card - Shows potential savings at a glance */}
-            {showCopayCards && hasCopayProgram && (
+            {showCopayCards && hasCopayProgram && (() => {
+                const savingsEstimate = getMedicationSavingsEstimate(med);
+                return (
                 <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-4 border-b border-emerald-100">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                         <div className="flex items-center gap-3">
@@ -3283,20 +3344,21 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 <p className="text-sm font-medium text-emerald-800">Your Potential Savings</p>
                                 <div className="flex items-center gap-2 mt-0.5">
                                     <span className="text-slate-500 line-through text-sm">Without Help</span>
-                                    <span className="text-red-600 font-bold line-through">${med.cost_tier === 'high' ? '550' : med.cost_tier === 'medium' ? '250' : '75'}/mo</span>
+                                    <span className="text-red-600 font-bold line-through">${savingsEstimate.retailPrice.toLocaleString()}/mo</span>
                                     <ArrowRight size={16} className="text-slate-400" aria-hidden="true" />
                                     <span className="text-emerald-700 text-sm">With Copay Card</span>
-                                    <span className="text-emerald-700 font-bold text-lg">$10/mo</span>
+                                    <span className="text-emerald-700 font-bold text-lg">${savingsEstimate.copayPrice}/mo</span>
                                 </div>
                             </div>
                         </div>
                         <div className="text-right">
                             <p className="text-xs text-emerald-700">Annual Savings</p>
-                            <p className="text-2xl font-bold text-emerald-700">~${(med.cost_tier === 'high' ? 540 : med.cost_tier === 'medium' ? 240 : 65) * 12}</p>
+                            <p className="text-2xl font-bold text-emerald-700">~${savingsEstimate.annualSavings.toLocaleString()}</p>
                         </div>
                     </div>
                 </div>
-            )}
+                );
+            })()}
 
             {/* Quick Filters */}
             <div className="bg-white px-6 py-3 border-b border-slate-200 no-print">
