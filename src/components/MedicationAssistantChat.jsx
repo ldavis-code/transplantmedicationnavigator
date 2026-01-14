@@ -15,14 +15,34 @@ import {
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 import PaywallModal from './PaywallModal.jsx';
 
-// Check localStorage for subscription status and promo code access
+// Demo mode storage keys (must match DemoModeContext)
+const DEMO_MODE_KEY = 'tmn_demo_mode';
+const DEMO_EXPIRY_KEY = 'tmn_demo_expiry';
+
+// Check if demo mode is active from localStorage
+const isDemoModeActive = () => {
+  try {
+    const storedDemo = localStorage.getItem(DEMO_MODE_KEY);
+    const storedExpiry = localStorage.getItem(DEMO_EXPIRY_KEY);
+    return storedDemo && storedExpiry && Date.now() < parseInt(storedExpiry, 10);
+  } catch (e) {
+    return false;
+  }
+};
+
+// Check localStorage for subscription status, promo code access, and demo mode
 function useLocalSubscription(feature = null) {
   const [isPro, setIsPro] = useState(false);
   const [hasPromoAccess, setHasPromoAccess] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
 
   const checkAccess = useCallback(() => {
     let proStatus = false;
     let promoStatus = false;
+    let demoStatus = false;
+
+    // Check demo mode first (grants full Pro access)
+    demoStatus = isDemoModeActive();
 
     try {
       const cached = localStorage.getItem('tmn_subscription');
@@ -49,13 +69,15 @@ function useLocalSubscription(feature = null) {
 
     setIsPro(proStatus);
     setHasPromoAccess(promoStatus);
+    setIsDemo(demoStatus);
   }, [feature]);
 
   useEffect(() => {
     checkAccess();
   }, [checkAccess]);
 
-  return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
+  // Demo mode grants full access
+  return { isPro, hasPromoAccess, isDemo, hasAccess: isPro || hasPromoAccess || isDemo, refreshAccess: checkAccess };
 }
 
 // Mode toggle tabs
@@ -66,7 +88,7 @@ const MODE_TABS = [
 
 const MedicationAssistantChat = () => {
   // Check subscription status and promo access
-  const { isPro, hasAccess, refreshAccess } = useLocalSubscription('quiz');
+  const { isPro, hasAccess, isDemo, refreshAccess } = useLocalSubscription('quiz');
 
   // Handler for successful promo code redemption
   const handlePromoSuccess = () => {
@@ -916,7 +938,7 @@ const MedicationAssistantChat = () => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-emerald-800 text-sm mb-1">
-                    {isPro ? 'Pro subscriber' : 'Promo access'} — unlimited access
+                    {isDemo ? 'Demo mode' : isPro ? 'Pro subscriber' : 'Promo access'} — unlimited access
                   </p>
                   <p className="text-emerald-700 text-xs leading-relaxed">
                     You have unlimited pathway quizzes, medication searches, and savings tracking.
