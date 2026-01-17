@@ -75,6 +75,35 @@
     ]
   },
   {
+    "category": "Copay Cards",
+    "questions": [
+      {
+        "q": "What is a copay card?",
+        "a": "Copay cards (also called copay assistance cards or manufacturer coupons) are programs offered by pharmaceutical companies that reduce or eliminate your out-of-pocket costs for brand-name medications.\n\n**Who can use them:**\n• Patients with commercial (private) insurance only\n• NOT available for Medicare, Medicaid, Tricare, or VA benefits\n\nCopay cards are different from copay foundations. Copay cards come from drug companies and only work with private insurance. Copay foundations are nonprofits that CAN help Medicare patients."
+      },
+      {
+        "q": "How do copay cards work?",
+        "a": "When you fill a prescription, here's what happens:\n\n**Step 1:** Your commercial insurance processes the claim and determines your copay or coinsurance amount.\n\n**Step 2:** The copay card then covers some or all of that remaining cost.\n\n**The result:** Your out-of-pocket cost is often reduced to $0-$25 per fill, regardless of whether the medication costs $500 or $15,000.\n\n**Example:**\nYour insurance says you owe $200 for your tacrolimus. You present your copay card, and it covers $195. You pay only $5."
+      },
+      {
+        "q": "Who pays for copay cards?",
+        "a": "The money comes directly from the drug manufacturer, not your insurance.\n\n**Why do drug companies do this?**\nCopay cards are essentially a marketing tool. Manufacturers use them to keep patients on their brand-name drugs rather than switching to generics or competitors.\n\n**What this means for you:**\n• The help is real money that reduces your costs\n• It does not affect your insurance benefits\n• You are not borrowing or taking out a loan\n• There is no credit check or repayment"
+      },
+      {
+        "q": "Can I use copay cards with Medicare, Medicaid, or other government insurance?",
+        "a": "**No.** Copay cards cannot be used with government insurance programs:\n• Medicare (including Part D)\n• Medicaid\n• Tricare\n• VA benefits\n• Other federal or state programs\n\n**Why not?**\nFederal anti-kickback laws prohibit drug manufacturers from providing this type of assistance to government insurance beneficiaries.\n\n**What government insurance patients CAN use:**\n• Copay foundations (nonprofit groups like HealthWell, PAN Foundation)\n• Medicare Extra Help (if income qualifies)\n• State pharmaceutical assistance programs"
+      },
+      {
+        "q": "Do copay cards have annual limits?",
+        "a": "**Yes.** Most copay cards have caps and requirements:\n\n**Annual caps:**\n• Commonly $10,000-$20,000 per year\n• Some programs have higher limits for expensive drugs\n• Once you hit the cap, you pay full price for the rest of the year\n\n**Other requirements:**\n• Most require re-enrollment annually\n• Some expire after a set time period\n• You may need to re-verify your insurance status\n\n**Tips:**\n• Mark your calendar for renewal dates\n• Check your remaining balance throughout the year\n• Know what your costs will be if you hit the cap"
+      },
+      {
+        "q": "What is a copay accumulator or maximizer program?",
+        "a": "This is increasingly important for transplant patients on expensive immunosuppressants.\n\n**What it is:**\nSome insurance plans use \"copay accumulator\" or \"copay maximizer\" programs that do NOT count manufacturer copay assistance toward your deductible or out-of-pocket maximum.\n\n**Why this matters:**\nNormally, your copays count toward your deductible. Once you hit your out-of-pocket max, insurance pays 100%. But with accumulator programs:\n• The copay card pays your costs\n• But those payments don't count toward your deductible\n• When the copay card runs out, you still have your full deductible to meet\n• You could face thousands in unexpected costs\n\n**What to do:**\n• Ask your insurance if they have an accumulator or maximizer program\n• Read your plan documents carefully\n• Budget for costs after your copay card benefit is exhausted\n• Talk to your transplant social worker about backup options"
+      }
+    ]
+  },
+  {
     "category": "Insurance & Coverage",
     "questions": [
       {
