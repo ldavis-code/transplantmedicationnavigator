@@ -26,6 +26,11 @@ const VALID_PROMO_CODES = {
     expires: null,
     description: 'Transplant community access',
   },
+  'LOUE!!A2749': {
+    features: ['quiz', 'calculator'],
+    expires: null,
+    description: 'Free plan access',
+  },
 };
 
 const STORAGE_KEY = 'tmn_promo_codes';
