@@ -98,6 +98,24 @@ const QUIZ_QUESTIONS = [
     ],
     tip: "If you're in crisis, reach out to your transplant center social worker immediately. Never skip doses—there are emergency options available.",
   },
+  {
+    id: 'transplant_pharmacy',
+    question: "Are you filling prescriptions at your transplant center's pharmacy?",
+    type: 'single',
+    options: [
+      { value: 'yes', label: 'Yes', description: "I use my transplant center's pharmacy" },
+      { value: 'no', label: 'No', description: "I use a different pharmacy" },
+      { value: 'not_sure', label: "I'm not sure", description: "I don't know if my center has one" },
+      { value: 'will_check', label: "I'll check!", description: "Good idea—I'll call and ask" },
+    ],
+    tip: "Some transplant centers offer their own pharmacy with lower pricing that patients don't know about. It's worth one phone call to check—you might save significantly on your medications.",
+    // This question only shows when patient is uninsured OR struggling with costs
+    showIf: (answers) => {
+      const isUninsured = answers.insurance_type === 'uninsured';
+      const isStrugglingWithCosts = ['challenging', 'unaffordable', 'crisis'].includes(answers.cost_burden);
+      return isUninsured || isStrugglingWithCosts;
+    },
+  },
 ];
 
 // Initial state
@@ -363,10 +381,26 @@ export function ChatQuizProvider({ children }) {
     }));
   }, []);
 
-  // Advance to next quiz question
+  // Helper to check if a question should be shown based on current answers
+  const shouldShowQuestion = useCallback((question, answers) => {
+    if (!question.showIf) return true;
+    return question.showIf(answers);
+  }, []);
+
+  // Advance to next quiz question (skipping conditional questions that don't apply)
   const nextQuizQuestion = useCallback(() => {
     setState(prev => {
-      const nextIndex = prev.quizProgress.currentQuestionIndex + 1;
+      let nextIndex = prev.quizProgress.currentQuestionIndex + 1;
+
+      // Skip questions that shouldn't be shown based on current answers
+      while (nextIndex < QUIZ_QUESTIONS.length) {
+        const nextQuestion = QUIZ_QUESTIONS[nextIndex];
+        if (shouldShowQuestion(nextQuestion, prev.answers)) {
+          break;
+        }
+        nextIndex++;
+      }
+
       const isComplete = nextIndex >= QUIZ_QUESTIONS.length;
       return {
         ...prev,
@@ -378,19 +412,32 @@ export function ChatQuizProvider({ children }) {
         },
       };
     });
-  }, []);
+  }, [shouldShowQuestion]);
 
-  // Go to previous quiz question
+  // Go to previous quiz question (skipping conditional questions that don't apply)
   const prevQuizQuestion = useCallback(() => {
-    setState(prev => ({
-      ...prev,
-      quizProgress: {
-        ...prev.quizProgress,
-        currentQuestionIndex: Math.max(0, prev.quizProgress.currentQuestionIndex - 1),
-        isComplete: false,
-      },
-    }));
-  }, []);
+    setState(prev => {
+      let prevIndex = prev.quizProgress.currentQuestionIndex - 1;
+
+      // Skip questions that shouldn't be shown based on current answers
+      while (prevIndex >= 0) {
+        const prevQuestion = QUIZ_QUESTIONS[prevIndex];
+        if (shouldShowQuestion(prevQuestion, prev.answers)) {
+          break;
+        }
+        prevIndex--;
+      }
+
+      return {
+        ...prev,
+        quizProgress: {
+          ...prev.quizProgress,
+          currentQuestionIndex: Math.max(0, prevIndex),
+          isComplete: false,
+        },
+      };
+    });
+  }, [shouldShowQuestion]);
 
   // Update chat state
   const setChatState = useCallback((updates) => {
@@ -557,15 +604,39 @@ export function ChatQuizProvider({ children }) {
     return QUIZ_QUESTIONS[state.quizProgress.currentQuestionIndex] || null;
   }, [state.quizProgress.currentQuestionIndex]);
 
-  // Calculate quiz completion percentage
-  const quizCompletionPercent = useMemo(() => {
-    const answered = Object.keys(state.answers).length;
-    return Math.round((answered / QUIZ_QUESTIONS.length) * 100);
+  // Get visible questions based on current answers (filters out conditional questions that don't apply)
+  const visibleQuestions = useMemo(() => {
+    return QUIZ_QUESTIONS.filter(q => {
+      if (!q.showIf) return true;
+      return q.showIf(state.answers);
+    });
   }, [state.answers]);
+
+  // Get the total count of visible questions for progress display
+  const visibleQuestionCount = useMemo(() => {
+    return visibleQuestions.length;
+  }, [visibleQuestions]);
+
+  // Get the current position within visible questions (for progress bar)
+  const currentVisibleQuestionIndex = useMemo(() => {
+    const currentQuestion = QUIZ_QUESTIONS[state.quizProgress.currentQuestionIndex];
+    if (!currentQuestion) return visibleQuestions.length;
+    return visibleQuestions.findIndex(q => q.id === currentQuestion.id);
+  }, [state.quizProgress.currentQuestionIndex, visibleQuestions]);
+
+  // Calculate quiz completion percentage based on visible questions
+  const quizCompletionPercent = useMemo(() => {
+    // Use current visible position for progress
+    const progress = Math.max(0, currentVisibleQuestionIndex);
+    return Math.round((progress / visibleQuestionCount) * 100);
+  }, [currentVisibleQuestionIndex, visibleQuestionCount]);
 
   // Get profile summary from answers
   const profileSummary = useMemo(() => {
     const { answers, selectedMedications } = state;
+    // Count answered visible questions (excluding optional medication question)
+    const requiredVisibleQuestions = visibleQuestions.filter(q => !q.allowSkip);
+    const answeredCount = requiredVisibleQuestions.filter(q => answers[q.id] !== undefined).length;
     return {
       role: answers.role,
       transplantStage: answers.transplant_stage,
@@ -573,9 +644,9 @@ export function ChatQuizProvider({ children }) {
       insuranceType: answers.insurance_type,
       costBurden: answers.cost_burden,
       medications: selectedMedications,
-      isComplete: Object.keys(answers).length >= QUIZ_QUESTIONS.length - 1, // -1 for optional medication
+      isComplete: answeredCount >= requiredVisibleQuestions.length - 1, // -1 for some flexibility
     };
-  }, [state.answers, state.selectedMedications]);
+  }, [state.answers, state.selectedMedications, visibleQuestions]);
 
   const value = useMemo(() => ({
     // State
@@ -595,6 +666,9 @@ export function ChatQuizProvider({ children }) {
     quizCompletionPercent,
     profileSummary,
     questions: QUIZ_QUESTIONS,
+    visibleQuestions,
+    visibleQuestionCount,
+    currentVisibleQuestionIndex,
     isSearchLimitReached,
     remainingSearches,
     maxFreeSearches: MAX_FREE_SEARCHES,
@@ -631,6 +705,9 @@ export function ChatQuizProvider({ children }) {
     currentQuizQuestion,
     quizCompletionPercent,
     profileSummary,
+    visibleQuestions,
+    visibleQuestionCount,
+    currentVisibleQuestionIndex,
     isSearchLimitReached,
     remainingSearches,
     isQuizLimitReached,
