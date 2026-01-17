@@ -131,6 +131,10 @@ const MedicationAssistantChat = () => {
     remainingQuizzes,
     maxFreeQuizzes,
     isQuizLimitReached,
+    // Visible questions for conditional question support
+    visibleQuestions,
+    visibleQuestionCount,
+    currentVisibleQuestionIndex,
   } = useChatQuiz();
 
   // Local chat state (kept separate for API communication)
@@ -1013,7 +1017,7 @@ const MedicationAssistantChat = () => {
 
           {/* Time estimate */}
           <p className="text-center text-xs text-slate-400">
-            Takes about 2 minutes • 6 simple questions
+            Takes about 2 minutes • {visibleQuestionCount} simple questions
           </p>
         </div>
       </div>
@@ -1022,21 +1026,23 @@ const MedicationAssistantChat = () => {
 
   // Render quiz progress indicator
   const renderQuizProgress = () => {
-    const progressPercent = Math.round((quizProgress.currentQuestionIndex / QUIZ_QUESTIONS.length) * 100);
+    // Use visible question index for accurate progress display
+    const currentPosition = Math.max(0, currentVisibleQuestionIndex);
+    const progressPercent = Math.round((currentPosition / visibleQuestionCount) * 100);
     return (
       <div className="px-4 py-3 bg-slate-50 border-b border-slate-200">
         {/* Screen reader announcement */}
         <div className="sr-only" aria-live="polite" aria-atomic="true">
-          Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}. {progressPercent}% complete.
+          Question {currentPosition + 1} of {visibleQuestionCount}. {progressPercent}% complete.
         </div>
 
         {/* Visual progress */}
         <div className="flex items-center justify-between text-sm text-slate-600 mb-2 font-medium">
           <span className="flex items-center gap-2">
             <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-bold">
-              {quizProgress.currentQuestionIndex + 1}/{QUIZ_QUESTIONS.length}
+              {currentPosition + 1}/{visibleQuestionCount}
             </span>
-            <span>Question {quizProgress.currentQuestionIndex + 1} of {QUIZ_QUESTIONS.length}</span>
+            <span>Question {currentPosition + 1} of {visibleQuestionCount}</span>
           </span>
           <span className="text-emerald-600 font-semibold">{progressPercent}% complete</span>
         </div>
@@ -1056,15 +1062,15 @@ const MedicationAssistantChat = () => {
           />
         </div>
 
-        {/* Step indicators */}
+        {/* Step indicators - show only visible questions */}
         <div className="flex justify-between mt-2 px-1">
-          {QUIZ_QUESTIONS.map((_, index) => (
+          {visibleQuestions.map((_, index) => (
             <div
               key={index}
               className={`w-2 h-2 rounded-full transition-all ${
-                index < quizProgress.currentQuestionIndex
+                index < currentPosition
                   ? 'bg-emerald-500'
-                  : index === quizProgress.currentQuestionIndex
+                  : index === currentPosition
                   ? 'bg-emerald-500 ring-2 ring-emerald-200 ring-offset-1'
                   : 'bg-slate-300'
               }`}
@@ -1105,7 +1111,7 @@ const MedicationAssistantChat = () => {
           <div className="flex items-start gap-4">
             {/* Question number badge */}
             <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-lg" aria-hidden="true">
-              {quizProgress.currentQuestionIndex + 1}
+              {Math.max(0, currentVisibleQuestionIndex) + 1}
             </div>
             <div className="flex-1">
               <h3
