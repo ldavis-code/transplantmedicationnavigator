@@ -17,7 +17,7 @@ const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 const MAX_FREE_SEARCHES = 4;
 
 // Maximum number of quiz completions allowed in free tier
-const MAX_FREE_QUIZZES = 2;
+const MAX_FREE_QUIZZES = 1;
 
 // Maximum number of savings calculator uses allowed in free tier
 const MAX_FREE_CALCULATOR_USES = 2;
