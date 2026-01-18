@@ -93,6 +93,19 @@ const MedicationAssistantChat = () => {
   // Handler for successful promo code redemption
   const handlePromoSuccess = () => {
     refreshAccess();
+    // If we were waiting to continue the quiz after paywall, advance to next question
+    if (pendingQuizContinue) {
+      setPendingQuizContinue(false);
+      setShowPaywall(false);
+      // Continue to the next question
+      if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
+        nextQuizQuestion();
+      } else {
+        // Quiz complete - generate results
+        setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
+        generateResults(answers);
+      }
+    }
   };
 
   // Context for shared state
@@ -161,6 +174,9 @@ const MedicationAssistantChat = () => {
 
   // Paywall modal state
   const [showPaywall, setShowPaywall] = useState(false);
+
+  // Track if we're waiting to continue quiz after paywall (for mid-quiz paywall)
+  const [pendingQuizContinue, setPendingQuizContinue] = useState(false);
 
   // Refs
   const messagesEndRef = useRef(null);
@@ -310,6 +326,13 @@ const MedicationAssistantChat = () => {
 
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
+      // Check if this is the cost_burden question - show paywall after it for non-Pro users
+      if (question.id === 'cost_burden' && !hasAccess) {
+        setPendingQuizContinue(true);
+        setShowPaywall(true);
+        return;
+      }
+
       if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
         nextQuizQuestion();
       } else {
@@ -934,7 +957,7 @@ const MedicationAssistantChat = () => {
           </div>
 
           {/* Pro Feature Banner */}
-          {hasAccess ? (
+          {hasAccess && (
             <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
@@ -946,22 +969,6 @@ const MedicationAssistantChat = () => {
                   </p>
                   <p className="text-emerald-700 text-xs leading-relaxed">
                     You have unlimited pathway quizzes, medication searches, and savings tracking.
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                  <Lock size={20} className="text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-purple-800 text-sm mb-1">
-                    Pro Feature — requires subscription
-                  </p>
-                  <p className="text-purple-700 text-xs leading-relaxed">
-                    Subscribe for $8.99/month to access unlimited quizzes, searches, and savings tracking.
                   </p>
                 </div>
               </div>
@@ -1003,11 +1010,7 @@ const MedicationAssistantChat = () => {
           {/* Start Button */}
           <button
             onClick={() => {
-              if (!hasAccess && isQuizLimitReached) {
-                setShowPaywall(true);
-              } else {
-                setHasStartedQuiz(true);
-              }
+              setHasStartedQuiz(true);
             }}
             className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg shadow-lg hover:shadow-xl"
           >
@@ -1501,7 +1504,10 @@ const MedicationAssistantChat = () => {
     <>
     <PaywallModal
       isOpen={showPaywall}
-      onClose={() => setShowPaywall(false)}
+      onClose={() => {
+        setShowPaywall(false);
+        setPendingQuizContinue(false);
+      }}
       featureType="quiz"
       onPromoSuccess={handlePromoSuccess}
     />
