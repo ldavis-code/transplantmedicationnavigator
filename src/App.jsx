@@ -2957,9 +2957,9 @@ const MedicationSearch = () => {
                 <div className="flex justify-center no-print">
                     <button
                         onClick={() => {
-                            // Pro users always have access
-                            if (!isPro) {
-                                // Check if free tier limit is reached (3rd quiz attempt)
+                            // Pro users and promo code users always have access
+                            if (!hasAccess) {
+                                // Check if free tier limit is reached
                                 if (isQuizLimitReached) {
                                     setShowPaywall(true);
                                     return;
