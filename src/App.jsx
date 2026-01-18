@@ -1269,19 +1269,9 @@ const Wizard = () => {
     const {
         setAnswer: setContextAnswer,
         incrementQuizCompletions,
-        isQuizLimitReached,
         remainingQuizzes
     } = useChatQuiz();
-    const { isPro, hasAccess, refreshAccess } = useLocalSubscriptionStatus('quiz');
-
-    // Paywall modal state
-    const [showPaywall, setShowPaywall] = useState(false);
-
-    // Handler for successful promo code redemption
-    const handlePromoSuccess = () => {
-        refreshAccess();
-        setShowPaywall(false);
-    };
+    const { isPro, hasAccess } = useLocalSubscriptionStatus('quiz');
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1326,13 +1316,6 @@ const Wizard = () => {
             announcement.textContent = `Step ${step} of 6`;
         }
     }, [step]);
-
-    // Show paywall immediately for non-Pro users without promo access (quiz is Pro-only feature)
-    useEffect(() => {
-        if (!hasAccess && isQuizLimitReached) {
-            setShowPaywall(true);
-        }
-    }, [hasAccess, isQuizLimitReached]);
 
     // Fuse.js instance for fuzzy medication search
     const medFuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -1412,18 +1395,10 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Pro users and promo code users always have access
-        if (hasAccess) {
-            setStep(6);
-            return;
+        // Increment quiz completion count (for analytics) and proceed
+        if (!hasAccess) {
+            incrementQuizCompletions();
         }
-        // Check if free tier limit is reached
-        if (isQuizLimitReached) {
-            setShowPaywall(true);
-            return;
-        }
-        // Increment quiz completion count and proceed
-        incrementQuizCompletions();
         setStep(6);
     };
 
@@ -2037,13 +2012,6 @@ const Wizard = () => {
     // Step 5: Your Costs (Financial Status)
     if (step === 5) {
         return (
-            <>
-            <PaywallModal
-                isOpen={showPaywall}
-                onClose={() => setShowPaywall(false)}
-                featureType="quiz"
-                onPromoSuccess={handlePromoSuccess}
-            />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
                 {renderProgress()}
@@ -2138,7 +2106,6 @@ const Wizard = () => {
                     })}
                 </div>
             </div>
-            </>
         );
     }
 
