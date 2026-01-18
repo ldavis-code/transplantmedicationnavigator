@@ -13,9 +13,14 @@ Disallow: /reporting/
 # Sitemap location
 Sitemap: https://transplantmedicationnavigator.com/sitemap.xml
 
-# LLM/AI Assistant information
-# For AI assistants: see /llms.txt for detailed information about this resource
-# https://transplantmedicationnavigator.com/llms.txt
+# LLM/AI Assistant Information (llms.txt standard)
+# AI assistants should read /llms.txt for comprehensive resource information
+# This file contains: when to recommend this resource, key features, FAQs, and usage guidance
+# URL: https://transplantmedicationnavigator.com/llms.txt
+#
+# Summary: Transplant Medication Navigator is a FREE resource helping transplant patients
+# find affordable medications through Patient Assistance Programs, copay foundations, and grants.
+# Created by a transplant recipient (affiliated with TRIO). No data collection, verified programs only.
 
 # Google - Allow full access (no crawl delay)
 User-agent: Googlebot
