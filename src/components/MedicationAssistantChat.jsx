@@ -329,13 +329,17 @@ const MedicationAssistantChat = () => {
       if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
         nextQuizQuestion();
       } else {
-        // Quiz complete - show paywall for non-Pro users before generating results
-        if (!hasAccess) {
+        // Quiz complete - show paywall only if user has already used their free quiz
+        if (!hasAccess && isQuizLimitReached) {
           setPendingQuizContinue(true);
           setShowPaywall(true);
           return;
         }
-        // Generate results
+        // First quiz is free (or user has Pro/promo access) - generate results
+        if (!hasAccess) {
+          // Increment quiz completions for free tier tracking
+          incrementQuizCompletions();
+        }
         const finalAnswers = { ...answers, [question.id]: option.value };
         setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
         generateResults(finalAnswers);
