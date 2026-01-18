@@ -1279,15 +1279,10 @@ const Wizard = () => {
 
     // Handler for successful promo code redemption
     const handlePromoSuccess = () => {
-        // Refresh access to pick up the newly saved promo code
-        refreshAccess();
-        // Close the paywall
+        // Navigate directly to results - promo code is already saved in localStorage
+        incrementQuizCompletions();
         setShowPaywall(false);
-        // Small delay to ensure state updates complete, then navigate
-        setTimeout(() => {
-            incrementQuizCompletions();
-            setStep(6);
-        }, 100);
+        setStep(6);
     };
 
     // Map InsuranceType display values to ChatQuizContext format
