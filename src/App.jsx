@@ -2536,7 +2536,7 @@ const MedicationSearch = () => {
         isQuizLimitReached,
         remainingQuizzes
     } = useChatQuiz();
-    const { isPro, hasAccess } = useLocalSubscriptionStatus();
+    const { isPro, hasAccess } = useLocalSubscriptionStatus('quiz');
 
     // Determine if copay cards should be shown based on insurance type from quiz
     // Copay cards are only for commercial/employer insurance
