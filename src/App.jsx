@@ -1269,9 +1269,22 @@ const Wizard = () => {
     const {
         setAnswer: setContextAnswer,
         incrementQuizCompletions,
+        isQuizLimitReached,
         remainingQuizzes
     } = useChatQuiz();
-    const { isPro, hasAccess } = useLocalSubscriptionStatus('quiz');
+    const { isPro, hasAccess, refreshAccess } = useLocalSubscriptionStatus('quiz');
+
+    // Paywall modal state
+    const [showPaywall, setShowPaywall] = useState(false);
+
+    // Handler for successful promo code redemption
+    const handlePromoSuccess = () => {
+        refreshAccess();
+        setShowPaywall(false);
+        // Proceed to results after successful promo redemption
+        incrementQuizCompletions();
+        setStep(6);
+    };
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1395,10 +1408,18 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Increment quiz completion count (for analytics) and proceed
-        if (!hasAccess) {
-            incrementQuizCompletions();
+        // Pro users and promo code users always have access
+        if (hasAccess) {
+            setStep(6);
+            return;
         }
+        // Check if free tier limit is reached - show paywall for promo code entry
+        if (isQuizLimitReached) {
+            setShowPaywall(true);
+            return;
+        }
+        // Increment quiz completion count and proceed
+        incrementQuizCompletions();
         setStep(6);
     };
 
@@ -2012,6 +2033,13 @@ const Wizard = () => {
     // Step 5: Your Costs (Financial Status)
     if (step === 5) {
         return (
+            <>
+            <PaywallModal
+                isOpen={showPaywall}
+                onClose={() => setShowPaywall(false)}
+                featureType="quiz"
+                onPromoSuccess={handlePromoSuccess}
+            />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
                 {renderProgress()}
@@ -2106,6 +2134,7 @@ const Wizard = () => {
                     })}
                 </div>
             </div>
+            </>
         );
     }
 
