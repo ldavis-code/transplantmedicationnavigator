@@ -326,8 +326,9 @@ const MedicationAssistantChat = () => {
 
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
-      // Check if this is the cost_burden question - show paywall after it for non-Pro users
-      if (question.id === 'cost_burden' && !hasAccess) {
+      // Check if this is the insurance_type question - show paywall after it for non-Pro users
+      // This appears before the medication search question
+      if (question.id === 'insurance_type' && !hasAccess) {
         setPendingQuizContinue(true);
         setShowPaywall(true);
         return;
