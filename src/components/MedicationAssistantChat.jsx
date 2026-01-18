@@ -326,18 +326,16 @@ const MedicationAssistantChat = () => {
 
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
-      // Check if this is the insurance_type question - show paywall after it for non-Pro users
-      // This appears before the medication search question
-      if (question.id === 'insurance_type' && !hasAccess) {
-        setPendingQuizContinue(true);
-        setShowPaywall(true);
-        return;
-      }
-
       if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
         nextQuizQuestion();
       } else {
-        // Quiz complete - generate results
+        // Quiz complete - show paywall for non-Pro users before generating results
+        if (!hasAccess) {
+          setPendingQuizContinue(true);
+          setShowPaywall(true);
+          return;
+        }
+        // Generate results
         const finalAnswers = { ...answers, [question.id]: option.value };
         setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
         generateResults(finalAnswers);
