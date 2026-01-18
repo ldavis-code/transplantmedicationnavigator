@@ -336,10 +336,7 @@ const MedicationAssistantChat = () => {
           return;
         }
         // First quiz is free (or user has Pro/promo access) - generate results
-        if (!hasAccess) {
-          // Increment quiz completions for free tier tracking
-          incrementQuizCompletions();
-        }
+        // Quiz completion is counted after results are generated (in generateResults)
         const finalAnswers = { ...answers, [question.id]: option.value };
         setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
         generateResults(finalAnswers);

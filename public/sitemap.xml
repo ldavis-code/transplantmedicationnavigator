@@ -4,7 +4,7 @@
         <loc>https://transplantmedicationnavigator.com/</loc>
         <lastmod>2026-01-18</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
+        <priority>1</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/wizard</loc>
@@ -22,83 +22,83 @@
         <loc>https://transplantmedicationnavigator.com/education</loc>
         <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/application-help</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/pricing</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/my-medications</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/savings-tracker</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/subscribe</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/faq</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/pilot</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey/transplant</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey/general</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/terms-and-conditions</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/privacy</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/accessibility</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-18</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
