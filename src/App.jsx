@@ -1266,24 +1266,7 @@ function useLocalSubscriptionStatus(feature = null) {
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
     const MEDICATIONS = useMedicationsList();
-    const {
-        setAnswer: setContextAnswer,
-        incrementQuizCompletions,
-        isQuizLimitReached,
-        remainingQuizzes
-    } = useChatQuiz();
-    const { isPro, hasAccess, refreshAccess } = useLocalSubscriptionStatus('quiz');
-
-    // Paywall modal state
-    const [showPaywall, setShowPaywall] = useState(false);
-
-    // Handler for successful promo code redemption
-    const handlePromoSuccess = () => {
-        // Navigate directly to results - promo code is already saved in localStorage
-        incrementQuizCompletions();
-        setShowPaywall(false);
-        setStep(6);
-    };
+    const { setAnswer: setContextAnswer } = useChatQuiz();
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1407,18 +1390,8 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Pro users and promo code users always have access
-        if (hasAccess) {
-            setStep(6);
-            return;
-        }
-        // Check if free tier limit is reached - show paywall for promo code entry
-        if (isQuizLimitReached) {
-            setShowPaywall(true);
-            return;
-        }
-        // Increment quiz completion count and proceed
-        incrementQuizCompletions();
+        // Quiz results (strategy/guidance) are always free
+        // The paywall only appears when viewing detailed medication cards on the Medications page
         setStep(6);
     };
 
@@ -1478,14 +1451,6 @@ const Wizard = () => {
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
                     ></div>
                 </div>
-                {/* Pro feature indicator */}
-                {!hasAccess && (
-                    <div className="flex justify-end mt-2">
-                        <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">
-                            Pro Feature
-                        </span>
-                    </div>
-                )}
             </div>
         );
     };
@@ -1519,25 +1484,6 @@ const Wizard = () => {
                 <p className="text-sm text-slate-500 mb-4 bg-slate-50 border border-slate-200 rounded-lg p-3">
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
-
-                {/* Pro feature info */}
-                {!hasAccess && (
-                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <Lock size={20} className="text-purple-600 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm">
-                            <p className="text-emerald-800">
-                                <strong>Free to try:</strong> You have <span className="font-bold">{remainingQuizzes}</span> free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.
-                                {remainingQuizzes === 1 && (
-                                    <span> This is your last free quiz. </span>
-                                )}
-                                {remainingQuizzes === 0 && (
-                                    <span> You need Pro to see your savings. </span>
-                                )}
-                                <Link to="/pricing" className="text-emerald-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
-                            </p>
-                        </div>
-                    </div>
-                )}
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">
@@ -2032,13 +1978,6 @@ const Wizard = () => {
     // Step 5: Your Costs (Financial Status)
     if (step === 5) {
         return (
-            <>
-            <PaywallModal
-                isOpen={showPaywall}
-                onClose={() => setShowPaywall(false)}
-                featureType="quiz"
-                onPromoSuccess={handlePromoSuccess}
-            />
             <div className="max-w-2xl mx-auto">
                 <StepAnnouncement />
                 {renderProgress()}
@@ -2050,25 +1989,6 @@ const Wizard = () => {
                     <h1 className="text-2xl font-bold">Your Costs</h1>
                 </div>
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
-
-                {/* Show remaining quizzes notice for free users */}
-                {!isPro && remainingQuizzes >= 0 && remainingQuizzes <= 2 && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-amber-800">
-                            {remainingQuizzes > 0 ? (
-                                <>
-                                    <strong>Almost there!</strong> You have {remainingQuizzes} free quiz{remainingQuizzes !== 1 ? 'zes' : ''} left.{' '}
-                                </>
-                            ) : (
-                                <>
-                                    <strong>No free quizzes left.</strong> You will need Pro to see your savings.{' '}
-                                </>
-                            )}
-                            <Link to="/pricing" className="text-amber-700 underline font-medium">Upgrade to Pro</Link> for unlimited quizzes.
-                        </div>
-                    </div>
-                )}
 
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
                     This helps us prioritize the best assistance programs for you. We do not store this answer.
@@ -2133,7 +2053,6 @@ const Wizard = () => {
                     })}
                 </div>
             </div>
-            </>
         );
     }
 
