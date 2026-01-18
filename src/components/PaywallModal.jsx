@@ -146,12 +146,11 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess })
       // Check if this code grants access to the current feature
       if (result.features && result.features.includes(featureType)) {
         setPromoSuccess(result.message || 'Code redeemed! You now have access.');
-        // Notify parent and close after short delay
+        // Notify parent after short delay - parent handles closing and navigation
         setTimeout(() => {
           if (onPromoSuccess) {
             onPromoSuccess(result.features);
           }
-          handleClose();
         }, 1500);
       } else {
         setPromoError(`This code doesn't include ${featureType === 'quiz' ? 'Quiz' : 'Calculator'} access.`);

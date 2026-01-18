@@ -1279,10 +1279,9 @@ const Wizard = () => {
 
     // Handler for successful promo code redemption
     const handlePromoSuccess = () => {
-        refreshAccess();
-        setShowPaywall(false);
-        // Proceed to results after successful promo redemption
+        // Navigate directly to results - promo code is already saved in localStorage
         incrementQuizCompletions();
+        setShowPaywall(false);
         setStep(6);
     };
 
