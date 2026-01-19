@@ -8,15 +8,15 @@
       },
       {
         "q": "Is this site free to use?",
-        "a": "Yes! You can try our main tools for free, including 1 My Path Quiz and 2 Savings Calculator uses. We have a Pro plan with unlimited access and extra features if you want them. Pro costs $8.99 a month or $79.99 a year. Our guides and links to assistance programs are always free. Never pay to apply for help. If a site asks for money, that's a scam."
+        "a": "Yes! All our tools are completely free for individual patients, including unlimited My Path Quizzes, unlimited medication searches, and unlimited Savings Calculator uses. Our guides and links to assistance programs are always free. Never pay to apply for help. If a site asks for money, that's a scam."
       },
       {
         "q": "Who should use this site?",
         "a": "This site is for:\n• Transplant patients\n• Family members and caregivers\n• Social workers\n• Anyone who needs help paying for transplant drugs"
       },
       {
-        "q": "Why does this site have a paid plan if programs are free?",
-        "a": "The drug programs are free. We are a tool that helps you find them. Think of us like a map app. The places you go are free, but the app that helps you find them can have extra features."
+        "q": "How is this site funded?",
+        "a": "This tool is free for individual patients. We offer enterprise solutions for hospitals and employers who want to provide this tool to their patients or employees. Those partnerships help fund our mission to keep patient access free."
       },
       {
         "q": "Is my information kept private?",
@@ -216,7 +216,7 @@
     "questions": [
       {
         "q": "What if I make too much money for assistance programs?",
-        "a": "Don't give up! Here's why:\n\n1. Different programs have different rules. Some let you make a lot of money and still get help.\n\n2. Some programs look at your bills, not just your income. If you have high medical costs, you might still qualify.\n\n3. Subscribe and take the My Path Quiz. It will show you programs that match your situation.\n\nMany people are surprised they qualify!"
+        "a": "Don't give up! Here's why:\n\n1. Different programs have different rules. Some let you make a lot of money and still get help.\n\n2. Some programs look at your bills, not just your income. If you have high medical costs, you might still qualify.\n\n3. Take our free My Path Quiz. It will show you programs that match your situation.\n\nMany people are surprised they qualify!"
       },
       {
         "q": "Are generic anti-rejection drugs safe?",
@@ -290,7 +290,7 @@
     "questions": [
       {
         "q": "How does the \"My Path\" quiz work?",
-        "a": "The quiz is available to subscribers. It asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that help you pay for your medicine."
+        "a": "The quiz is free for all patients. It asks about you:\n• Your role (patient, caregiver, etc.)\n• Your transplant status\n• Your organ type\n• Your insurance\n• Your medicines\n\nBased on your answers, we show you programs that help you pay for your medicine."
       },
       {
         "q": "Can I search for a specific medicine?",
@@ -327,7 +327,7 @@
     "questions": [
       {
         "q": "I am overwhelmed. Where do I start?",
-        "a": "Start by browsing our free drug information and assistance programs. For personalized guidance, subscribe and take the \"My Path\" quiz - it will guide you step by step. If you need more help, contact your transplant center's social worker."
+        "a": "Start by taking our free \"My Path\" quiz - it will guide you step by step based on your specific situation. You can also browse our drug information and assistance programs. If you need more help, contact your transplant center's social worker."
       },
       {
         "q": "Can you help me fill out applications?",

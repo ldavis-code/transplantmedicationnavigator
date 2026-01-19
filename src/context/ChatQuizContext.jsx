@@ -13,14 +13,14 @@ const ChatQuizContext = createContext(null);
 const STORAGE_KEY = 'medication_navigator_progress';
 const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 
-// Maximum number of medication searches allowed in free tier
-const MAX_FREE_SEARCHES = 4;
+// Maximum number of medication searches allowed in free tier (unlimited for patients)
+const MAX_FREE_SEARCHES = Infinity;
 
-// Maximum number of quiz completions allowed in free tier
-const MAX_FREE_QUIZZES = 1;
+// Maximum number of quiz completions allowed in free tier (unlimited for patients)
+const MAX_FREE_QUIZZES = Infinity;
 
-// Maximum number of savings calculator uses allowed in free tier
-const MAX_FREE_CALCULATOR_USES = 2;
+// Maximum number of savings calculator uses allowed in free tier (unlimited for patients)
+const MAX_FREE_CALCULATOR_USES = Infinity;
 
 // Debounce delay for server sync (ms)
 const SYNC_DEBOUNCE_MS = 2000;
