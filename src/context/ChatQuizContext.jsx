@@ -87,8 +87,7 @@ const QUIZ_QUESTIONS = [
       { value: 'no', label: 'No', description: 'I only have one insurance plan' },
     ],
     tip: "Having multiple insurance plans (like Medicare plus an employer plan) affects which assistance programs you can use. This is called Coordination of Benefits.",
-    // Only show for Medicare patients (most common COB scenario)
-    showIf: (answers) => answers.insurance_type === 'medicare',
+    // Show for all insurance types since COB can apply to various scenarios
   },
   {
     id: 'insurance_combination',
@@ -117,7 +116,7 @@ const QUIZ_QUESTIONS = [
       },
     ],
     tip: "Your insurance combination determines which programs you qualify for. Medicare + active employer coverage is special—the employer plan is primary, so copay cards may be available!",
-    // Only show if user has multiple insurance and selected Medicare
+    // Only show if user has multiple insurance and selected Medicare (main COB impact)
     showIf: (answers) => answers.insurance_type === 'medicare' && answers.has_multiple_insurance === 'yes',
   },
   {
