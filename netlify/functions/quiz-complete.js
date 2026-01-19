@@ -1,10 +1,12 @@
 // netlify/functions/quiz-complete.js
 // Triggered when user completes quiz and provides email
 
-import { Resend } from 'resend';
+// TODO: Uncomment when ready to send emails
+// import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// TODO: Uncomment when ready to send emails
+// const resend = new Resend(process.env.RESEND_API_KEY);
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
