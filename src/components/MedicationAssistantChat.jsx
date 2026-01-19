@@ -1008,6 +1008,14 @@ const MedicationAssistantChat = () => {
             <span>Your answers stay on your device. No account needed.</span>
           </div>
 
+          {/* Progress Saving Message */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center" role="status">
+            <div className="flex items-center justify-center gap-2 text-sm text-emerald-700">
+              <RefreshCw size={14} className="text-emerald-600" aria-hidden="true" />
+              <span>Your progress is automatically saved. You can return anytime.</span>
+            </div>
+          </div>
+
           {/* Start Button */}
           <button
             onClick={() => {
@@ -1139,7 +1147,7 @@ const MedicationAssistantChat = () => {
         ) : (
           <fieldset aria-labelledby={questionId} aria-describedby={question.helpText ? helpTextId : undefined}>
             <legend className="sr-only">{question.question}</legend>
-            <div className="space-y-3" role="radiogroup">
+            <div className="space-y-3" role="radiogroup" aria-label={question.question}>
               {question.options?.map((option, index) => {
                 const isSelected = answers[question.id] === option.value;
                 const optionId = `option-${question.id}-${option.value}`;
@@ -1151,6 +1159,7 @@ const MedicationAssistantChat = () => {
                     role="radio"
                     aria-checked={isSelected}
                     aria-describedby={option.description ? `${optionId}-desc` : undefined}
+                    aria-label={`${option.label}${option.description ? ': ' + option.description : ''}${isSelected ? ', selected' : ''}`}
                     className={`w-full text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
                       isSelected
                         ? 'border-emerald-500 bg-emerald-50 shadow-md ring-2 ring-emerald-200'
