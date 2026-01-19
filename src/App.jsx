@@ -1883,12 +1883,67 @@ const Wizard = () => {
                     <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
 
-                {/* Medication Search Box */}
-                <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Search size={18} className="text-emerald-600" />
-                        <h3 className="font-bold text-slate-800">Type in medication and hit the <span className="text-emerald-600">+</span> button to add to your list</h3>
+                {/* Quick-Add Common Medications */}
+                {!isPreTransplant && answers.organs && answers.organs.length > 0 && (
+                    <div className="mb-6 bg-white border-2 border-purple-200 rounded-xl p-4 shadow-sm">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Pill size={18} className="text-purple-600" />
+                            <h3 className="font-bold text-purple-800">Quick Add Common Medications</h3>
+                        </div>
+                        <p className="text-sm text-slate-600 mb-3">
+                            Click to quickly add common anti-rejection drugs for your transplant type:
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {/* Get unique medications from all selected organs */}
+                            {(() => {
+                                const uniqueMeds = new Map();
+                                answers.organs.forEach(organ => {
+                                    const organData = ORGAN_MEDICATIONS[organ];
+                                    if (organData) {
+                                        organData.medications.forEach(med => {
+                                            if (!uniqueMeds.has(med.id)) {
+                                                uniqueMeds.set(med.id, med);
+                                            }
+                                        });
+                                    }
+                                });
+                                return Array.from(uniqueMeds.values()).map(med => {
+                                    const isAlreadySelected = answers.medications.includes(med.id);
+                                    return (
+                                        <button
+                                            key={med.id}
+                                            onClick={() => !isAlreadySelected && addMedFromSearch(med.id)}
+                                            disabled={isAlreadySelected}
+                                            aria-label={`${isAlreadySelected ? 'Already added: ' : 'Add '}${med.brand} (${med.name})`}
+                                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                                                isAlreadySelected
+                                                    ? 'bg-emerald-100 text-emerald-700 cursor-not-allowed'
+                                                    : 'bg-purple-100 text-purple-800 hover:bg-purple-200 hover:shadow-md cursor-pointer border-2 border-transparent hover:border-purple-300'
+                                            }`}
+                                        >
+                                            {isAlreadySelected ? (
+                                                <CheckCircle size={16} className="text-emerald-600" />
+                                            ) : (
+                                                <PlusCircle size={16} className="text-purple-600" />
+                                            )}
+                                            {med.brand}
+                                        </button>
+                                    );
+                                });
+                            })()}
+                        </div>
                     </div>
+                )}
+
+                {/* Medication Search Box */}
+                <div className="mb-6 bg-white border-2 border-teal-200 rounded-xl p-4 shadow-sm">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Search size={18} className="text-teal-600" />
+                        <h3 className="font-bold text-teal-800">Search for Any Medication</h3>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-3">
+                        Can't find your medication above? Search our database:
+                    </p>
                     <div className="relative">
                         <label htmlFor="wizard-med-search" className="sr-only">Search for medications</label>
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
