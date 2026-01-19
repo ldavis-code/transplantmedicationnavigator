@@ -56,7 +56,9 @@ export async function handler(event) {
     // Generate unique results link
     const resultsLink = `${SITE_URL}/results/${submission.results_token}`;
 
-    // Send Email 1 immediately
+    // TODO: Re-enable email sending once Resend is configured
+    // Email sending temporarily disabled - data is saved to Supabase
+    /*
     const { error: emailError } = await resend.emails.send({
       from: 'Lorrinda @ Transplant Medication Navigator <hello@transplantmedicationnavigator.com>',
       to: email,
@@ -72,14 +74,13 @@ export async function handler(event) {
 
     if (emailError) {
       console.error('Email error:', emailError);
-      // Don't fail the whole request - email can be retried by scheduler
     } else {
-      // Mark email 1 as sent
       await supabase
         .from('quiz_submissions')
         .update({ email_1_sent_at: new Date().toISOString() })
         .eq('id', submission.id);
     }
+    */
 
     return {
       statusCode: 200,
