@@ -651,46 +651,33 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Value Proposition Section */}
-            <section className="max-w-3xl mx-auto" aria-label="Why TransplantMedicationNavigator">
-                <div className="bg-gradient-to-br from-emerald-50 to-sky-50 rounded-2xl border border-emerald-200 shadow-sm p-6 md:p-8">
-                    <p className="text-lg md:text-xl font-semibold text-slate-800 mb-6 text-center">
-                        That's why I built TransplantMedicationNavigator.com.
-                    </p>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <Pill size={18} />
+            {/* Stats Section */}
+            <section className="max-w-4xl mx-auto" aria-label="Database statistics">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
+                    <div className="grid grid-cols-3 gap-4 md:gap-8">
+                        <div className="text-center">
+                            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
+                                <Pill size={24} />
                             </div>
-                            <div>
-                                <span className="font-bold text-slate-900">184 transplant medications</span>
-                            </div>
+                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{MEDICATIONS_DATA.length}</div>
+                            <div className="text-sm md:text-base text-slate-600 font-medium">Medications</div>
                         </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <HeartHandshake size={18} />
+                        <div className="text-center">
+                            <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
+                                <CreditCard size={24} />
                             </div>
-                            <div>
-                                <span className="font-bold text-slate-900">125+ assistance programs</span>
-                            </div>
+                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{Object.keys(PROGRAMS_DATA.copayPrograms).length}</div>
+                            <div className="text-sm md:text-base text-slate-600 font-medium">Copay Cards</div>
                         </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <CreditCard size={18} />
+                        <div className="text-center">
+                            <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
+                                <HeartHandshake size={24} />
                             </div>
-                            <div>
-                                <span className="font-bold text-slate-900">Copay cards and Patient Assistance Programs clearly separated</span>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <UserCheck size={18} />
-                            </div>
-                            <div>
-                                <span className="font-bold text-slate-900">Personalized guidance based on YOUR insurance type</span>
-                            </div>
+                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{Object.keys(PROGRAMS_DATA.papPrograms).length}</div>
+                            <div className="text-sm md:text-base text-slate-600 font-medium">Patient Assistance Programs</div>
                         </div>
                     </div>
+                    <p className="text-center text-slate-500 text-sm mt-4">Verified assistance programs for transplant medications</p>
                 </div>
             </section>
 
