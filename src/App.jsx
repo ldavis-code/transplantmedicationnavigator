@@ -85,7 +85,6 @@ import {
     TransplantStage
 } from './data/constants.js';
 import MEDICATIONS_DATA from './data/medications.json';
-import PROGRAMS_DATA from './data/programs.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
 import STATES_DATA from './data/states.json';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
@@ -648,36 +647,6 @@ const Home = () => {
                         <HeartHandshake size={20} aria-hidden="true" />
                         Find Grants & Foundations
                     </Link>
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section className="max-w-4xl mx-auto" aria-label="Database statistics">
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
-                    <div className="grid grid-cols-3 gap-4 md:gap-8">
-                        <div className="text-center">
-                            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
-                                <Pill size={24} />
-                            </div>
-                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{MEDICATIONS_DATA.length}</div>
-                            <div className="text-sm md:text-base text-slate-600 font-medium">Medications</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
-                                <CreditCard size={24} />
-                            </div>
-                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{Object.keys(PROGRAMS_DATA.copayPrograms).length}</div>
-                            <div className="text-sm md:text-base text-slate-600 font-medium">Copay Cards</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
-                                <HeartHandshake size={24} />
-                            </div>
-                            <div className="text-3xl md:text-4xl font-extrabold text-slate-900">{Object.keys(PROGRAMS_DATA.papPrograms).length}</div>
-                            <div className="text-sm md:text-base text-slate-600 font-medium">Patient Assistance Programs</div>
-                        </div>
-                    </div>
-                    <p className="text-center text-slate-500 text-sm mt-4">Verified assistance programs for transplant medications</p>
                 </div>
             </section>
 
