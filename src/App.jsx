@@ -844,7 +844,7 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help — no investors, no ads, just patients helping patients.
+                    Try 1 free quiz to see how we can help. After that, a subscription is required to continue — no investors, no ads, just patients helping patients.
                 </p>
             </section>
 

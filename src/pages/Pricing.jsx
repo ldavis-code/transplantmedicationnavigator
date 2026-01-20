@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, CheckCircle, ArrowRight, Mail, ShieldCheck, Building2, CreditCard } from 'lucide-react';
+import { CreditCard, Users, CheckCircle, ArrowRight, Mail, ShieldCheck, Building2 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -14,23 +14,47 @@ const Pricing = () => {
             name: 'Free',
             description: 'For individual patients',
             price: '$0',
-            priceSubtext: '— always free for patients',
+            priceSubtext: '— always free',
             color: 'emerald',
             icon: Users,
+            features: [
+                '1 Free Quiz',
+                '1 Free Savings Calculator use',
+                'Access to all educational resources and assistance program links',
+                'No login required',
+                'Your work is not saved'
+            ],
+            cta: 'Start Searching',
+            ctaLink: '/wizard',
+            highlighted: false
+        },
+        {
+            name: 'Pro',
+            description: billingPeriod === 'yearly' ? 'Pro subscription - Save 26%' : 'Pro subscription',
+            price: billingPeriod === 'yearly' ? '$79.99' : '$8.99',
+            priceSubtext: billingPeriod === 'yearly' ? 'per year' : 'per month',
+            color: 'blue',
+            icon: CreditCard,
             features: [
                 'Unlimited My Path Quizzes — update anytime when your situation changes',
                 'Unlimited medication searches',
                 'Unlimited Savings Calculator estimates',
-                'Access to all educational resources and assistance program links',
-                'No login required'
+                'Savings Dashboard — visual proof of how much you\'ve saved',
+                'Track Your Actual Savings — document monthly savings to prove ROI',
+                'Copay Card Renewal Reminders — never miss an annual expiration',
+                'Medication Calendar — track when PAP applications need renewal',
+                'Save your medication lists and quiz results on your device'
             ],
-            cta: 'Start Free Quiz',
-            ctaLink: '/wizard',
-            highlighted: true
+            importantNote: 'Your medication information stays on your device. Transplant Medication Navigator does not store or access your medication list.',
+            moneyBackGuarantee: true,
+            cta: billingPeriod === 'yearly' ? 'Subscribe Yearly' : 'Subscribe Monthly',
+            ctaLink: billingPeriod === 'yearly' ? '/subscribe?plan=yearly' : '/subscribe?plan=monthly',
+            highlighted: true,
+            hasBillingToggle: true
         },
         {
             name: 'Enterprise',
-            description: 'For hospitals, employers & healthcare organizations',
+            description: 'For hospitals & healthcare organizations',
             price: 'Custom',
             priceSubtext: 'pricing',
             color: 'indigo',
@@ -86,7 +110,7 @@ const Pricing = () => {
                     Pricing
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                    Free for patients. Enterprise solutions for organizations.
+                    Free access to education. Pro features for power users.
                 </p>
             </header>
 
@@ -94,7 +118,7 @@ const Pricing = () => {
             <div className="space-y-12">
                 <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <section className="grid md:grid-cols-3 gap-6">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
@@ -188,23 +212,29 @@ const Pricing = () => {
 
                         {/* Educational Mission Section */}
                         <section className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
-                            <h2 className="text-2xl font-bold text-emerald-900 mb-4">Our Mission: Free Access for Every Patient</h2>
+                            <h2 className="text-2xl font-bold text-emerald-900 mb-4">Our Educational Mission & Your Premium Tools</h2>
                             <p className="text-emerald-800 leading-relaxed">
-                                We believe every transplant patient deserves access to medication savings tools, regardless of their financial situation. That's why we've made our full suite of tools completely free for individual patients. Our enterprise partnerships with hospitals and employers help fund this mission. Your data is always stored locally on your own device for complete privacy.
+                                We are committed to providing free, accessible, and health-literate educational content to every transplant patient. Our core resources, guides, and assistance program information will always be available at no cost. The optional Pro subscription funds our mission and unlocks a powerful set of convenience tools designed to help you organize, track, and manage your medication journey more effectively. Your data is always stored locally on your own device for complete privacy.
                             </p>
                         </section>
 
-                        {/* Built by Patients Section */}
+                        {/* Guarantee Section */}
                         <section className="bg-green-50 border border-green-200 rounded-2xl p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <ShieldCheck size={28} className="text-green-600" aria-hidden="true" />
-                                <h2 className="text-2xl font-bold text-green-900">Built by Patients, for Patients</h2>
+                                <h2 className="text-2xl font-bold text-green-900">Our Guarantee: You Save Money, Or You Don't Pay</h2>
                             </div>
                             <p className="text-green-800 leading-relaxed mb-4">
-                                This tool was created by transplant patients who understand the financial challenges you face. We've been where you are, and we built this to help.
+                                We're so confident this tool will save you money that we offer a full 30-day money-back guarantee on a monthly subscription.
                             </p>
-                            <p className="text-green-800 leading-relaxed">
-                                Have questions or feedback? Email us at <a href="mailto:info@transplantmedicationnavigator.com" className="text-green-700 underline hover:text-green-900">info@transplantmedicationnavigator.com</a>. We'd love to hear from you.
+                            <p className="text-green-800 leading-relaxed mb-4">
+                                <strong>Here's how it works:</strong> If you subscribe to our annual plan and don't save at least $79.99 on your medications within the first 90 days, we'll provide a full refund. No questions asked.
+                            </p>
+                            <p className="text-green-800 leading-relaxed mb-4">
+                                Simply email us at <a href="mailto:info@transplantmedicationnavigator.com" className="text-green-700 underline hover:text-green-900">info@transplantmedicationnavigator.com</a> with a brief explanation, and we'll process your refund immediately.
+                            </p>
+                            <p className="text-green-800 leading-relaxed italic">
+                                <strong>Why we offer this:</strong> We're transplant patients helping transplant patients. We built this tool because we know how expensive medications are, and we're confident it will help you find savings. If it doesn't, you shouldn't have to pay.
                             </p>
                         </section>
 
@@ -213,27 +243,33 @@ const Pricing = () => {
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Is this really free for patients?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">What's included in the Free plan?</h3>
                                     <p className="text-slate-600">
-                                        Yes! All features are completely free for individual transplant patients. You get unlimited quizzes, unlimited medication searches, unlimited Savings Calculator uses, and access to all educational resources. No login required.
+                                        The Free plan includes 1 free quiz, 1 free Savings Calculator use, access to all educational resources, and assistance program links. No login is required. Your work is not saved in the free plan.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Why is it free?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Why upgrade to Pro?</h3>
                                     <p className="text-slate-600">
-                                        We believe every transplant patient deserves access to medication savings tools, regardless of their financial situation. Our Enterprise solutions for hospitals and employers help fund our mission to keep patient access free.
+                                        Pro gives you unlimited My Path Quizzes (update anytime when your situation changes), unlimited medication searches, unlimited Savings Calculator estimates, a Savings Dashboard to visualize your savings, the ability to track and document your actual monthly savings to prove ROI, copay card renewal reminders so you never miss an annual expiration, a medication calendar to track PAP application renewals, and the ability to save your medication lists and quiz results—all stored locally on your device. Choose Monthly at $8.99/month or save 26% with Yearly at $79.99/year.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">Is my medication data private?</h3>
                                     <p className="text-slate-600">
-                                        Yes. Your medications are stored only on your device (in your browser), not on our servers. Transplant Medication Navigator does not store or access your medication list.
+                                        Yes. With Pro, your medications are stored only on your device (in your browser), not on our servers. Transplant Medication Navigator does not store or access your medication list.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">What is Enterprise pricing?</h3>
+                                    <h3 className="font-bold text-slate-900 mb-2">Can I cancel my subscription?</h3>
                                     <p className="text-slate-600">
-                                        Enterprise pricing is for hospitals, employers, and healthcare organizations who want to offer this tool to their patients or employees. Contact us for custom pricing based on your organization's needs.
+                                        Yes, you can cancel your subscription at any time. Your Pro features will remain active until the end of your billing period, and you'll still have full access to the Free plan.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-slate-900 mb-2">What is the money back guarantee?</h3>
+                                    <p className="text-slate-600">
+                                        We offer a 30-day money back guarantee on all Pro subscriptions. If you're not satisfied with your Pro subscription for any reason within the first 30 days, contact us for a full refund—no questions asked.
                                     </p>
                                 </div>
                             </div>
