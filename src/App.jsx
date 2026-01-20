@@ -1302,6 +1302,12 @@ const Wizard = () => {
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
 
+    // Email collection state for Step 6 (Your Plan)
+    const [userEmail, setUserEmail] = useState('');
+    const [marketingOptIn, setMarketingOptIn] = useState(false);
+    const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
+    const [emailError, setEmailError] = useState('');
+
     // Scroll to top when step changes for accessibility
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1391,17 +1397,61 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Quiz results (strategy/guidance) are always free
-        // The paywall only appears when viewing detailed medication cards on the Medications page
+        // Go to email collection step before showing results
         setStep(6);
+    };
+
+    // Email submission handler
+    const handleEmailSubmit = async () => {
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!userEmail.trim()) {
+            setEmailError('Please enter your email address');
+            return;
+        }
+        if (!emailRegex.test(userEmail.trim())) {
+            setEmailError('Please enter a valid email address');
+            return;
+        }
+
+        setEmailError('');
+        setIsSubmittingEmail(true);
+
+        try {
+            const response = await fetch('/.netlify/functions/quiz-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: userEmail.trim(),
+                    marketingOptIn: marketingOptIn,
+                    quizAnswers: answers,
+                    selectedMedications: answers.medications || [],
+                    source: 'quiz'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save email');
+            }
+
+            // Success - proceed to results
+            setStep(7);
+        } catch (error) {
+            console.error('Error submitting email:', error);
+            // Still proceed to results even if email save fails
+            // We don't want to block the user from seeing their results
+            setStep(7);
+        } finally {
+            setIsSubmittingEmail(false);
+        }
     };
 
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
-    const totalVisibleSteps = 5; // 5 sections before results
+    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Your Plan'];
+    const totalVisibleSteps = 5; // 5 sections shown in progress (Costs is part of step 5, email collection before results)
 
     // Color themes for each step (matching the icon colors)
     const stepColors = {
@@ -1409,7 +1459,7 @@ const Wizard = () => {
         2: { bg: 'bg-rose-500', bgLight: 'bg-rose-100', ring: 'ring-rose-100', text: 'text-rose-600', textBold: 'text-rose-700', border: 'border-rose-500', bgSelect: 'bg-rose-50', hoverBorder: 'hover:border-rose-200', badge: 'bg-rose-600' },
         3: { bg: 'bg-blue-500', bgLight: 'bg-blue-100', ring: 'ring-blue-100', text: 'text-blue-600', textBold: 'text-blue-700', border: 'border-blue-500', bgSelect: 'bg-blue-50', hoverBorder: 'hover:border-blue-200', badge: 'bg-blue-600' },
         4: { bg: 'bg-purple-500', bgLight: 'bg-purple-100', ring: 'ring-purple-100', text: 'text-purple-600', textBold: 'text-purple-700', border: 'border-purple-500', bgSelect: 'bg-purple-50', hoverBorder: 'hover:border-purple-200', badge: 'bg-purple-600' },
-        5: { bg: 'bg-amber-500', bgLight: 'bg-amber-100', ring: 'ring-amber-100', text: 'text-amber-600', textBold: 'text-amber-700', border: 'border-amber-500', bgSelect: 'bg-amber-50', hoverBorder: 'hover:border-amber-200', badge: 'bg-amber-600' },
+        5: { bg: 'bg-teal-500', bgLight: 'bg-teal-100', ring: 'ring-teal-100', text: 'text-teal-600', textBold: 'text-teal-700', border: 'border-teal-500', bgSelect: 'bg-teal-50', hoverBorder: 'hover:border-teal-200', badge: 'bg-teal-600' },
     };
 
     const renderProgress = () => {
@@ -1465,7 +1515,7 @@ const Wizard = () => {
             aria-atomic="true"
             role="status"
         >
-            Step {step} of 6
+            Step {step} of 7
         </div>
     );
 
@@ -2061,8 +2111,115 @@ const Wizard = () => {
         );
     }
 
-    // Step 6: Results
+    // Step 6: Email Collection (Your Plan)
     if (step === 6) {
+        return (
+            <div className="max-w-2xl mx-auto">
+                <StepAnnouncement />
+                {renderProgress()}
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+
+                {/* Email Collection Card */}
+                <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8">
+                    {/* Header with Shield Icon */}
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-teal-100 p-3 rounded-xl">
+                            <Shield size={32} className="text-teal-600" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl font-bold text-slate-800">Get Your Personalized Medication Strategy</h1>
+                            <p className="text-slate-600 mt-1">You're almost there! To receive your personalized medication assistance plan, please enter your email address below.</p>
+                        </div>
+                    </div>
+
+                    {/* Why we ask for email */}
+                    <div className="mb-6">
+                        <h2 className="font-bold text-slate-800 mb-3">Why we ask for your email:</h2>
+                        <ul className="space-y-2">
+                            <li className="flex items-center gap-2 text-slate-700">
+                                <CheckCircle size={18} className="text-teal-600 flex-shrink-0" />
+                                <span>Receive your complete medication strategy report</span>
+                            </li>
+                            <li className="flex items-center gap-2 text-slate-700">
+                                <CheckCircle size={18} className="text-teal-600 flex-shrink-0" />
+                                <span>Get reminders about copay card renewals</span>
+                            </li>
+                            <li className="flex items-center gap-2 text-slate-700">
+                                <CheckCircle size={18} className="text-teal-600 flex-shrink-0" />
+                                <span>Stay updated on new assistance programs</span>
+                            </li>
+                            <li className="flex items-center gap-2 text-slate-700">
+                                <CheckCircle size={18} className="text-teal-600 flex-shrink-0" />
+                                <span>Access your results anytime</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Privacy Promise */}
+                    <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mb-6">
+                        <h3 className="font-bold text-teal-800 mb-1">Privacy Promise:</h3>
+                        <p className="text-teal-700 text-sm">We will never sell your email address. We will never share your medication information. You can unsubscribe anytime.</p>
+                    </div>
+
+                    {/* Email Input */}
+                    <div className="mb-4">
+                        <label htmlFor="user-email" className="block font-bold text-slate-800 mb-2">Email Address</label>
+                        <input
+                            id="user-email"
+                            type="email"
+                            value={userEmail}
+                            onChange={(e) => {
+                                setUserEmail(e.target.value);
+                                setEmailError('');
+                            }}
+                            placeholder="your.email@example.com"
+                            className={`w-full px-4 py-3 rounded-lg border ${emailError ? 'border-red-400 focus:ring-red-100' : 'border-slate-300 focus:ring-teal-100'} focus:border-teal-500 focus:ring-2 outline-none transition text-lg`}
+                            aria-describedby={emailError ? 'email-error' : undefined}
+                        />
+                        {emailError && (
+                            <p id="email-error" className="text-red-600 text-sm mt-1">{emailError}</p>
+                        )}
+                    </div>
+
+                    {/* Marketing Opt-in Checkbox */}
+                    <label className="flex items-start gap-3 mb-6 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={marketingOptIn}
+                            onChange={(e) => setMarketingOptIn(e.target.checked)}
+                            className="mt-1 w-5 h-5 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
+                        />
+                        <span className="text-slate-600 text-sm">Send me helpful medication assistance updates (optional)</span>
+                    </label>
+
+                    {/* Submit Button */}
+                    <button
+                        onClick={handleEmailSubmit}
+                        disabled={isSubmittingEmail}
+                        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                        {isSubmittingEmail ? (
+                            <>
+                                <Loader2 size={20} className="animate-spin" />
+                                <span>Saving...</span>
+                            </>
+                        ) : (
+                            <span>Get My Medication Plan</span>
+                        )}
+                    </button>
+
+                    {/* Terms Footer */}
+                    <p className="text-center text-xs text-slate-500 mt-4">
+                        By continuing, you agree to our <Link to="/terms" className="underline hover:text-teal-600">Terms of Service</Link> and <Link to="/privacy" className="underline hover:text-teal-600">Privacy Policy</Link>.
+                        <br />We use your email only to send you your results and occasional updates.
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    // Step 7: Results
+    if (step === 7) {
         const isKidney = answers.organs.includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
@@ -2074,7 +2231,7 @@ const Wizard = () => {
                 <StepAnnouncement />
                 {/* Back Button */}
                 <button
-                    onClick={() => setStep(5)}
+                    onClick={() => setStep(6)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
                     aria-label="Go back to previous step"
                 >
