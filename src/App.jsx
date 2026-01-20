@@ -71,7 +71,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter, Mail, RefreshCw
+    CreditCard, Sparkles, Star, Filter, Mail
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -924,71 +924,56 @@ const Home = () => {
     );
 };
 
-// Helper component to render medication class with tooltip
-const MedClassWithTooltip = ({ className: medClass }) => {
-    // Map medication classes to glossary terms
-    const classToTerm = {
-        'Calcineurin Inhibitor': 'calcineurin-inhibitor',
-        'Antimetabolite': 'antimetabolite',
-        'Corticosteroid': 'corticosteroid',
-    };
-    const term = classToTerm[medClass];
-    if (term) {
-        return <TermTooltip term={term}>{medClass}</TermTooltip>;
-    }
-    return <span>{medClass}</span>;
-};
-
 // Organ-specific medication data
 const ORGAN_MEDICATIONS = {
     Heart: {
         title: 'Heart Transplant',
-        description: 'Heart transplant recipients typically take a combination of anti-rejection drugs including tacrolimus (or cyclosporine), mycophenolate, and prednisone.',
+        description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Main anti-rejection drug for long-term use.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus or cyclosporine.' },
-            { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative anti-rejection drug.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often reduced to a low dose or stopped over time.' }
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
+            { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
     },
     Kidney: {
         title: 'Kidney Transplant',
-        description: 'Kidney transplant anti-rejection drugs are similar to heart transplants, with a focus on balancing effectiveness and reducing side effects.',
+        description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for long-term use.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used together with tacrolimus or cyclosporine.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers try to stop steroids to reduce long-term side effects.' },
-            { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative for certain patients.' }
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers aim for steroid-free regimens to reduce long-term side effects.' },
+            { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative to CNIs for certain patients.' }
         ]
     },
     Liver: {
         title: 'Liver Transplant',
-        description: 'Liver transplant patients often need fewer anti-rejection drugs compared to other organ recipients due to the liver\'s unique properties.',
+        description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used drug in liver transplantation.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Usually reduced and stopped within the first few months.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used CNI in liver transplantation.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
     },
     Lung: {
         title: 'Lung Transplant',
-        description: 'Lung transplant recipients have a higher risk of rejection, so anti-rejection drug regimens are often more intensive.',
+        description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred drug for lung transplant patients.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Kept at a low dose long-term.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant patients.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
     },
     Pancreas: {
         title: 'Pancreas Transplant',
-        description: 'Pancreas transplant anti-rejection drugs are similar to kidney transplantation, as the two are often done together.',
+        description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for long-term use.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often reduced to a low dose or stopped over time.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
     }
 };
@@ -1144,7 +1129,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                                                         <span className="text-slate-500 ml-1">({med.name})</span>
                                                     </button>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600"><MedClassWithTooltip className={med.class} /></td>
+                                                <td className="py-3 px-3 text-slate-600">{med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
                                             </tr>
                                         );
@@ -1508,37 +1493,27 @@ const Wizard = () => {
         return (
             <div className="mb-8 no-print">
                 {/* Step indicators */}
-                <div className="flex justify-between items-center mb-3" role="list" aria-label="Wizard steps">
+                <div className="flex justify-between items-center mb-3">
                     {stepLabels.map((label, index) => {
                         const stepNum = index + 1;
                         const isCompleted = displayStep > stepNum;
                         const isCurrent = displayStep === stepNum;
                         const color = stepColors[stepNum];
-                        const stepStatus = isCompleted ? 'completed' : isCurrent ? 'current' : 'upcoming';
 
                         return (
-                            <div
-                                key={label}
-                                className="flex flex-col items-center flex-1"
-                                role="listitem"
-                                aria-label={`Step ${stepNum}: ${label}, ${stepStatus}`}
-                                aria-current={isCurrent ? 'step' : undefined}
-                            >
-                                <div
-                                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                                        isCompleted ? `${color.bg} text-white` :
-                                        isCurrent ? `${color.bg} text-white ring-4 ${color.ring}` :
-                                        'bg-slate-200 text-slate-500'
-                                    }`}
-                                    aria-hidden="true"
-                                >
+                            <div key={label} className="flex flex-col items-center flex-1">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                                    isCompleted ? `${color.bg} text-white` :
+                                    isCurrent ? `${color.bg} text-white ring-4 ${color.ring}` :
+                                    'bg-slate-200 text-slate-500'
+                                }`}>
                                     {isCompleted ? <CheckCircle size={16} /> : stepNum}
                                 </div>
                                 <span className={`text-xs mt-1 hidden sm:block ${
                                     isCurrent ? `${color.textBold} font-bold` :
                                     isCompleted ? color.text :
                                     'text-slate-400'
-                                }`} aria-hidden="true">{label}</span>
+                                }`}>{label}</span>
                             </div>
                         );
                     })}
@@ -1584,14 +1559,6 @@ const Wizard = () => {
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
 
-                {/* Progress Saving Message */}
-                <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center" role="status">
-                    <div className="flex items-center justify-center gap-2 text-sm text-emerald-700">
-                        <RefreshCw size={14} className="text-emerald-600" aria-hidden="true" />
-                        <span>Your progress is automatically saved. You can return anytime.</span>
-                    </div>
-                </div>
-
                 {/* Question 1a: Role */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
@@ -1610,7 +1577,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={answers.role === r}
-                                aria-label={`${r}${answers.role === r ? ', selected' : ''}`}
                             >
                                 <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{r}</span>
                                 {answers.role === r && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
@@ -1638,7 +1604,6 @@ const Wizard = () => {
                                     }`}
                                     role="radio"
                                     aria-checked={answers.status === s}
-                                    aria-label={`${s}${answers.status === s ? ', selected' : ''}`}
                                 >
                                     <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{s}</span>
                                     {answers.status === s && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
@@ -1780,7 +1745,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={answers.insurance === option.value}
-                                aria-label={`${option.label}: ${option.description}${answers.insurance === option.value ? ', selected' : ''}`}
                             >
                                 <div className="flex justify-between items-start">
                                     <div>
@@ -1877,7 +1841,7 @@ const Wizard = () => {
                         )}
                     </p>
                     <p className="text-sm text-slate-500">
-                        First select your core anti-rejection drugs, then add any other transplant-related medications you take.
+                        First select your core immunosuppressants, then add any other transplant-related medications you take.
                     </p>
                 </div>
 
@@ -2066,7 +2030,7 @@ const Wizard = () => {
                         <div className="text-sm text-amber-800">
                             <p className="font-bold mb-2">Important Medical Information</p>
                             <p>
-                                Taking your medicine as prescribed every day is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
+                                Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
                             </p>
                         </div>
                     </div>
@@ -2156,7 +2120,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={isSelected}
-                                aria-label={`${opt.label}: ${opt.desc}${isSelected ? ', selected' : ''}`}
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <span className={`font-bold text-xl ${styles.label}`}>{opt.label}</span>
@@ -4429,7 +4392,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
                 { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients).' },
                 { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of anti-rejection drugs (Part B-ID) with 20% coinsurance.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
                 { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
             ],
             action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
@@ -4474,7 +4437,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with $2,100 out-of-pocket cap (2026).' },
                 { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
                 { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers anti-rejection drugs even without Part A/B.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B.' },
             ],
             action: 'Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited.',
         },

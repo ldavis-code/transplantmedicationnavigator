@@ -18,11 +18,7 @@
     },
     "formulary": {
       "term": "formulary",
-      "definition": "Your insurance's covered medication list - the medicines they will help pay for"
-    },
-    "covered-medication-list": {
-      "term": "covered medication list",
-      "definition": "The list of medicines your insurance will help pay for (also called a formulary)"
+      "definition": "Your insurance's list of covered medicines"
     },
     "generic": {
       "term": "generic",
@@ -43,38 +39,6 @@
     "foundation-grant": {
       "term": "foundation grant",
       "definition": "Money from a charity to help pay for medicine"
-    },
-    "calcineurin-inhibitor": {
-      "term": "calcineurin inhibitor",
-      "definition": "A type of anti-rejection drug that prevents your immune system from attacking your new organ. Examples: tacrolimus (Prograf) and cyclosporine (Neoral)"
-    },
-    "immunosuppressant": {
-      "term": "immunosuppressant",
-      "definition": "Anti-rejection drugs - medicines that lower your immune system to protect your transplanted organ"
-    },
-    "anti-rejection-drugs": {
-      "term": "anti-rejection drugs",
-      "definition": "Medicines that prevent your body from rejecting your transplanted organ by lowering your immune response"
-    },
-    "antimetabolite": {
-      "term": "antimetabolite",
-      "definition": "A type of anti-rejection drug that slows the growth of cells that could attack your new organ. Examples: mycophenolate (CellCept) and azathioprine (Imuran)"
-    },
-    "corticosteroid": {
-      "term": "corticosteroid",
-      "definition": "A medicine that reduces swelling and calms your immune system. Examples: prednisone and methylprednisolone"
-    },
-    "induction-therapy": {
-      "term": "induction therapy",
-      "definition": "Strong anti-rejection medicines given right after transplant surgery to prevent early rejection"
-    },
-    "maintenance-therapy": {
-      "term": "maintenance therapy",
-      "definition": "Anti-rejection medicines you take every day for the rest of your life after transplant"
-    },
-    "trough-level": {
-      "term": "trough level",
-      "definition": "A blood test taken right before your next dose to check if you have the right amount of medicine in your body"
     }
   }
 }
