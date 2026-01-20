@@ -79,6 +79,47 @@ const QUIZ_QUESTIONS = [
     tip: "Copay cards work best with commercial insurance. Medicare and Medicaid patients often have access to Patient Assistance Programs (PAPs) for free medications.",
   },
   {
+    id: 'has_multiple_insurance',
+    question: "Do you have more than one type of health insurance?",
+    type: 'single',
+    options: [
+      { value: 'yes', label: 'Yes', description: 'I have multiple insurance plans' },
+      { value: 'no', label: 'No', description: 'I only have one insurance plan' },
+    ],
+    tip: "Having multiple insurance plans (like Medicare plus an employer plan) affects which assistance programs you can use. This is called Coordination of Benefits.",
+    // Show for all insurance types since COB can apply to various scenarios
+  },
+  {
+    id: 'insurance_combination',
+    question: "Which of the following applies to you?",
+    type: 'single',
+    options: [
+      {
+        value: 'medicare_employer_active',
+        label: 'Medicare + Employer Coverage (Working)',
+        description: 'I or my spouse currently work and have employer insurance'
+      },
+      {
+        value: 'medicare_retiree',
+        label: 'Medicare + Retiree Benefits',
+        description: 'I have retiree health benefits from a former employer'
+      },
+      {
+        value: 'medicare_medicaid',
+        label: 'Medicare + Medicaid (Dual Eligible)',
+        description: 'I qualify for both Medicare and Medicaid'
+      },
+      {
+        value: 'other_combination',
+        label: 'Other Combination',
+        description: 'My situation is different from the options above'
+      },
+    ],
+    tip: "Your insurance combination determines which programs you qualify for. Medicare + active employer coverage is special—the employer plan is primary, so copay cards may be available!",
+    // Only show if user has multiple insurance and selected Medicare (main COB impact)
+    showIf: (answers) => answers.insurance_type === 'medicare' && answers.has_multiple_insurance === 'yes',
+  },
+  {
     id: 'medication',
     question: "Which medication do you need help with?",
     type: 'medication_search',
