@@ -1335,6 +1335,7 @@ const Wizard = () => {
     const [marketingOptIn, setMarketingOptIn] = useState(false);
     const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
     const [emailError, setEmailError] = useState('');
+    const [emailSentSuccess, setEmailSentSuccess] = useState(null); // null = not attempted, true = sent, false = failed
 
     // Scroll to top when step changes for accessibility
     useEffect(() => {
@@ -1462,12 +1463,17 @@ const Wizard = () => {
                 throw new Error('Failed to save email');
             }
 
+            // Parse response to check if email was actually sent
+            const result = await response.json();
+            setEmailSentSuccess(result.emailSent === true);
+
             // Success - proceed to results
             setStep(7);
         } catch (error) {
             console.error('Error submitting email:', error);
             // Still proceed to results even if email save fails
             // We don't want to block the user from seeing their results
+            setEmailSentSuccess(false);
             setStep(7);
         } finally {
             setIsSubmittingEmail(false);
@@ -2265,6 +2271,33 @@ const Wizard = () => {
                 >
                     <ChevronLeft size={16} aria-hidden="true" /> Back
                 </button>
+
+                {/* Email Status Notification */}
+                {emailSentSuccess === false && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3 no-print" role="alert">
+                        <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <div>
+                            <p className="text-amber-800 font-medium">We couldn't send your results email</p>
+                            <p className="text-amber-700 text-sm mt-1">
+                                Your results are saved, but we had trouble sending the email to <strong>{userEmail}</strong>.
+                                Please bookmark this page or use the print button to save your results.
+                            </p>
+                        </div>
+                    </div>
+                )}
+                {emailSentSuccess === true && (
+                    <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3 no-print" role="status">
+                        <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <div>
+                            <p className="text-green-800 font-medium">Results sent to your email</p>
+                            <p className="text-green-700 text-sm mt-1">
+                                We've sent your personalized medication strategy to <strong>{userEmail}</strong>.
+                                Check your inbox (and spam folder) for the email.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 {/* Header */}
                 <div className={`p-8 rounded-2xl shadow-xl text-white flex justify-between items-start ${
                     financial === FinancialStatus.CRISIS || financial === FinancialStatus.UNAFFORDABLE
