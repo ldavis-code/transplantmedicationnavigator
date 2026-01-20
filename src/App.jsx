@@ -2410,7 +2410,7 @@ const Wizard = () => {
                                         const med = MEDICATIONS.find(m => m.id === id);
                                         return (
                                             <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
-                                                {med?.brandName?.split('/')[0] || id}
+                                                {med?.brandName.split('/')[0]}
                                                 <button
                                                     onClick={() => handleMultiSelect('medications', id)}
                                                     className="text-slate-400 hover:text-red-500 ml-1"
@@ -3528,7 +3528,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const hasPapProgram = !!(papProgram || med.papProgramId || med.papUrl);
 
     // Use direct URL from JSON data (bypasses database lookup for reliability)
-    const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName?.split('/')[0] || med.id}`;
+    const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
     const papLinkText = papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
 
     // Get community price stats for each source
@@ -3748,7 +3748,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                             <strong>Tip:</strong> Always verify with your doctor if you can switch between Brand and Generic versions.
                         </div>
                         <div className="flex gap-4 mt-4 no-print">
-                            <a href={`https://www.drugs.com/search.php?searchterm=${med.brandName?.split('/')[0] || med.id}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName || med.id} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
+                            <a href={`https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
 
                         {/* Pharmacies Section */}
