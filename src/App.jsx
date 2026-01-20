@@ -2064,47 +2064,23 @@ const Wizard = () => {
                             <p className={`mb-4 ${medicationsVerified ? 'text-emerald-700' : 'text-blue-700'}`}>
                                 {medicationsVerified
                                     ? 'Thank you for verifying your medications. You can continue to the next section.'
-                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then confirm below to continue.'
+                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then click the button below to continue.'
                                 }
                             </p>
 
-                            {/* Accessible checkbox with large touch target */}
-                            <label
-                                className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-all min-h-[56px] ${
-                                    medicationsVerified
-                                        ? 'bg-emerald-100 border-emerald-300'
-                                        : 'bg-white border-blue-200 hover:border-blue-400 hover:bg-blue-50'
-                                }`}
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={medicationsVerified}
-                                    onChange={(e) => setMedicationsVerified(e.target.checked)}
-                                    className="sr-only"
-                                    aria-describedby="verify-medications-description"
-                                />
-                                <span
-                                    className={`flex-shrink-0 w-7 h-7 rounded-md border-2 flex items-center justify-center transition-all ${
-                                        medicationsVerified
-                                            ? 'bg-emerald-600 border-emerald-600'
-                                            : 'bg-white border-slate-400'
-                                    }`}
-                                    aria-hidden="true"
+                            {/* Verification Button */}
+                            {!medicationsVerified && (
+                                <button
+                                    onClick={() => setMedicationsVerified(true)}
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all min-h-[56px] flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                                 >
-                                    {medicationsVerified && <Check size={18} className="text-white" />}
-                                </span>
-                                <span
-                                    id="verify-medications-description"
-                                    className={`font-semibold text-base ${
-                                        medicationsVerified ? 'text-emerald-800' : 'text-slate-700'
-                                    }`}
-                                >
+                                    <CheckCircle size={20} aria-hidden="true" />
                                     {answers.medications.length > 0
-                                        ? `Yes, I have verified my ${answers.medications.length} medication${answers.medications.length > 1 ? 's' : ''} listed above`
-                                        : 'I confirm I have no transplant medications to add'
+                                        ? `Yes, I've Added My ${answers.medications.length} Medication${answers.medications.length > 1 ? 's' : ''}`
+                                        : 'I Have No Medications to Add'
                                     }
-                                </span>
-                            </label>
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
