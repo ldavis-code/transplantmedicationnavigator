@@ -76,7 +76,7 @@ const QUIZ_QUESTIONS = [
       { value: 'ihs', label: 'Indian Health Service', description: 'Tribal health programs' },
       { value: 'uninsured', label: 'I don\'t have insurance', description: 'No current insurance coverage' },
     ],
-    tip: "Copay cards work best with commercial insurance. Medicare and Medicaid patients often have access to Patient Assistance Programs (PAPs) for free medications.",
+    tip: "Copay cards work best with commercial insurance. Medicare and Medicaid patients often have access to Patient Assistance Programs (PAPs) for free medications. Have dual coverage? Take our COB Quiz at /insurance/cob-quiz to learn which is primary.",
   },
   {
     id: 'has_multiple_insurance',

@@ -25,6 +25,7 @@ const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
+const LazyCOBQuiz = lazy(() => import('./pages/COBQuiz.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -4865,6 +4866,27 @@ const Education = () => {
                             <p className="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
                         </div>
 
+                        {/* Coordination of Benefits Quiz CTA */}
+                        <Link
+                            to="/insurance/cob-quiz"
+                            className="block p-6 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition-all"
+                        >
+                            <div className="flex items-start gap-4">
+                                <div className="bg-emerald-100 text-emerald-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+                                    <Shield size={28} />
+                                </div>
+                                <div className="flex-1">
+                                    <h2 className="text-xl font-bold text-emerald-800 mb-2">Have Dual Coverage? Take the COB Quiz</h2>
+                                    <p className="text-slate-700 mb-3">
+                                        Many transplant patients have Medicare AND employer insurance. Learn which is primary and whether you can use copay cards.
+                                    </p>
+                                    <span className="inline-flex items-center gap-1 text-emerald-700 font-semibold">
+                                        Start the Quiz <ArrowRight size={16} aria-hidden="true" />
+                                    </span>
+                                </div>
+                            </div>
+                        </Link>
+
                         {/* Insurance Change Simulation */}
                         <InsuranceChangeSimulator />
 
@@ -5899,6 +5921,8 @@ const MainSiteRoutes = () => (
                 <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
+                <Route path="/insurance/cob-quiz" element={<LazyCOBQuiz />} />
+                <Route path="/cob-quiz" element={<Navigate to="/insurance/cob-quiz" replace />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
                 <Route path="/faq" element={<LazyFAQ />} />
