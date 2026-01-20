@@ -1446,6 +1446,7 @@ const Wizard = () => {
         setIsSubmittingEmail(true);
 
         try {
+            // Save to quiz_email_leads table
             const response = await fetch('/.netlify/functions/quiz-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1461,6 +1462,18 @@ const Wizard = () => {
             if (!response.ok) {
                 throw new Error('Failed to save email');
             }
+
+            // Send confirmation email with medication list via subscribe-alerts
+            // This runs in parallel and doesn't block the user
+            fetch('/.netlify/functions/subscribe-alerts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: userEmail.trim(),
+                    medications: answers.medications || [],
+                    wantsUpdates: marketingOptIn
+                })
+            }).catch(err => console.error('Error sending confirmation email:', err));
 
             // Success - proceed to results
             setStep(7);
