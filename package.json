@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.js && vite build",
+    "build": "npm run check:readability && node scripts/generate-sitemap.js && vite build",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
-    "generate-icons": "node scripts/generate-icons.js"
+    "generate-icons": "node scripts/generate-icons.js",
+    "check:readability": "node scripts/check-readability.js",
+    "check:readability:strict": "node scripts/check-readability.js --strict"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
