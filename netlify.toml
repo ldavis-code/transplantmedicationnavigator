@@ -2,9 +2,17 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+  included_files = ["netlify/functions/**"]
+
+[functions."*"]
+  external_node_modules = ["@anthropic-ai/sdk", "@neondatabase/serverless"]
 
 # WWW to non-WWW redirect (301 permanent) - must come first
 # This ensures all traffic goes to the canonical non-www domain
