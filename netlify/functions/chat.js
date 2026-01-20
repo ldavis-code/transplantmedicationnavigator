@@ -126,76 +126,6 @@ const getEligibilityColumn = (insuranceType) => {
   return mapping[insuranceType] || 'commercial_eligible';
 };
 
-/**
- * Determine effective insurance type and copay card eligibility based on Coordination of Benefits
- *
- * COB Rules:
- * - Medicare + employer coverage (working): Commercial is PRIMARY → Copay cards YES
- * - Medicare + retiree coverage: Medicare is PRIMARY → Copay cards NO
- * - Medicare + Medicaid (dual eligible): Medicare/Medicaid → Copay cards NO
- * - Other combinations: Default to the primary insurance type selected
- *
- * @param {Object} answers - Quiz answers including insurance_type, has_multiple_insurance, insurance_combination
- * @returns {Object} - { effectiveInsuranceType, copayCardsEligible, papsEligible, cobScenario }
- */
-const getEffectiveInsuranceInfo = (answers) => {
-  const { insurance_type, has_multiple_insurance, insurance_combination } = answers;
-
-  // Default values based on primary insurance type
-  let effectiveInsuranceType = insurance_type;
-  let copayCardsEligible = insurance_type === 'commercial';
-  let papsEligible = true; // PAPs are generally available to all
-  let cobScenario = null;
-
-  // Handle Coordination of Benefits scenarios for Medicare patients
-  if (insurance_type === 'medicare' && has_multiple_insurance === 'yes') {
-    switch (insurance_combination) {
-      case 'medicare_employer_active':
-        // Active employer coverage is PRIMARY when you or spouse are currently working
-        // This means the commercial insurance processes claims first
-        effectiveInsuranceType = 'commercial';
-        copayCardsEligible = true;
-        papsEligible = true;
-        cobScenario = 'medicare_employer_active';
-        break;
-
-      case 'medicare_retiree':
-        // Retiree coverage: Medicare is typically PRIMARY
-        // Retiree plan is secondary - copay cards NOT allowed (Anti-Kickback Statute applies)
-        effectiveInsuranceType = 'medicare';
-        copayCardsEligible = false;
-        papsEligible = true;
-        cobScenario = 'medicare_retiree';
-        break;
-
-      case 'medicare_medicaid':
-        // Dual eligible: Medicare pays first, Medicaid covers remaining costs
-        // Copay cards NOT allowed
-        effectiveInsuranceType = 'medicare_medicaid';
-        copayCardsEligible = false;
-        papsEligible = true;
-        cobScenario = 'medicare_medicaid';
-        break;
-
-      case 'other_combination':
-      default:
-        // Default to Medicare rules for unknown combinations
-        effectiveInsuranceType = 'medicare';
-        copayCardsEligible = false;
-        papsEligible = true;
-        cobScenario = 'other';
-        break;
-    }
-  }
-
-  return {
-    effectiveInsuranceType,
-    copayCardsEligible,
-    papsEligible,
-    cobScenario,
-  };
-};
-
 // Search medications in database
 const searchMedications = async (query) => {
   try {
@@ -221,13 +151,8 @@ const searchMedications = async (query) => {
 };
 
 // Get savings programs for a medication and insurance type
-// Now accepts optional cobInfo for Coordination of Benefits scenarios
-const getSavingsPrograms = async (medicationId, insuranceType, cobInfo = null) => {
+const getSavingsPrograms = async (medicationId, insuranceType) => {
   const eligibilityColumn = getEligibilityColumn(insuranceType);
-
-  // Use COB info if provided, otherwise default based on insurance type
-  const copayCardsEligible = cobInfo ? cobInfo.copayCardsEligible : (insuranceType === 'commercial');
-  const effectiveType = cobInfo ? cobInfo.effectiveInsuranceType : insuranceType;
 
   try {
     const db = getDb();
@@ -299,33 +224,32 @@ const getSavingsPrograms = async (medicationId, insuranceType, cobInfo = null) =
       `;
     }
 
-    // Filter by insurance eligibility with COB support
-    // copayCardsEligible determines if copay cards should be included
+    // Filter by insurance eligibility
+    // Commercial insurance: Only copay cards + PAPs (NO foundations, NO discount cards/pharmacies)
+    // All other insurance types: PAPs + Foundations + Discount cards/pharmacies (price estimates)
     const filteredPrograms = programs.filter(p => {
-      // Handle copay cards based on COB eligibility
+      // For commercial insurance: ONLY copay cards and PAPs
+      if (insuranceType === 'commercial') {
+        return p.program_type === 'copay_card' || p.program_type === 'pap';
+      }
+
+      // For non-commercial: Include PAPs, foundations, discount cards/pharmacies
+      // But NOT copay cards (they can't use them anyway)
       if (p.program_type === 'copay_card') {
-        return copayCardsEligible;
+        return false; // Non-commercial can't use copay cards
       }
-
-      // For effective commercial insurance (including Medicare + active employer): copay cards + PAPs
-      if (effectiveType === 'commercial') {
-        return p.program_type === 'pap';
-      }
-
-      // For Medicare/Medicaid/other: Include PAPs, foundations, discount cards/pharmacies
       if (p.program_type === 'pap' || p.program_type === 'foundation' ||
           p.program_type === 'discount_pharmacy' || p.program_type === 'discount_card') {
         return true;
       }
-
       // For other program types, check insurance eligibility
       return p[eligibilityColumn] === true;
     });
 
-    // Re-sort based on effective insurance type and copay card eligibility
-    // If copay cards are eligible: copay cards first, then PAP, then foundations, then discount cards
-    // If copay cards NOT eligible: PAP first, then foundations, then discount cards
-    const sortOrder = copayCardsEligible
+    // Re-sort based on insurance type
+    // For non-commercial: PAP (manufacturer) first, then foundations, then discount cards
+    // For commercial: copay cards first, then PAP (backup), then foundations, then discount cards
+    const sortOrder = insuranceType === 'commercial'
       ? { copay_card: 1, pap: 2, foundation: 3, discount_card: 4, discount_pharmacy: 5 }
       : { pap: 1, foundation: 2, copay_card: 3, discount_card: 4, discount_pharmacy: 5 };
 
@@ -358,7 +282,6 @@ const getMedicationDetails = async (medicationId) => {
 
 // Format programs for display - ordered by insurance type
 // Cost Plus Drugs is now handled separately in the UI, so we don't include it here
-// Now supports COB scenarios where effective insurance type may differ from primary
 const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = false) => {
   if (!programs || programs.length === 0) {
     return 'NO PROGRAMS FOUND in the database for this medication/insurance combination. Provide general guidance only.';
@@ -373,11 +296,11 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
   const foundations = programs.filter(p => p.program_type === 'foundation');
   const paps = programs.filter(p => p.program_type === 'pap');
 
-  // Order depends on insurance type (which may be the effective type from COB)
+  // Order depends on insurance type
   if (insuranceType === 'commercial') {
-    // Commercial (or Medicare + active employer): Copay cards FIRST, then PAPs
+    // Commercial: Copay cards FIRST, then PAPs only (NO discount cards, NO foundations)
     if (copayCards.length > 0) {
-      context += '\n**🥇 BEST OPTION - COPAY CARDS:**\n';
+      context += '\n**🥇 BEST OPTION - COPAY CARDS (for Commercial Insurance):**\n';
       copayCards.forEach(p => {
         context += `- ${p.program_name}\n`;
         context += `  Savings: ${p.max_benefit || 'Up to $0 copay'}\n`;
@@ -400,7 +323,7 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
         context += `  URL: ${p.application_url || 'N/A'}\n`;
       });
     }
-  } else if (insuranceType === 'medicare' || insuranceType === 'medicare_medicaid') {
+  } else if (insuranceType === 'medicare') {
     // Medicare: NO copay cards allowed! Foundations first, then PAPs, then discount cards
     context += '\n**⚠️ IMPORTANT: Medicare patients CANNOT use manufacturer copay cards (Anti-Kickback Statute)**\n';
 
@@ -475,46 +398,20 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
 };
 
 // Generate response using Claude
-// Now accepts costPlusAvailable parameter and COB context
+// Now accepts costPlusAvailable parameter
 const generateClaudeResponse = async (userContext, programs, costPlusAvailable = false, previousMessages = []) => {
   try {
-    // Use effective insurance type for program formatting
-    const effectiveType = userContext.effective_insurance_type || userContext.insurance_type;
-    const programContext = formatProgramsForContext(programs, effectiveType, costPlusAvailable);
+    const programContext = formatProgramsForContext(programs, userContext.insurance_type, costPlusAvailable);
     const programCount = programs ? programs.length : 0;
-
-    // Build COB explanation if applicable
-    let cobExplanation = '';
-    if (userContext.cob_scenario) {
-      switch (userContext.cob_scenario) {
-        case 'medicare_employer_active':
-          cobExplanation = `
-**Coordination of Benefits:** You have Medicare PLUS active employer coverage. Because you or your spouse are currently working, your employer insurance is PRIMARY. This is great news - you ARE eligible for manufacturer copay cards!`;
-          break;
-        case 'medicare_retiree':
-          cobExplanation = `
-**Coordination of Benefits:** You have Medicare PLUS retiree benefits. With retiree coverage, Medicare is your PRIMARY insurance. Unfortunately, this means copay cards are NOT available to you due to federal law (Anti-Kickback Statute). However, you have excellent options through Patient Assistance Programs and foundations.`;
-          break;
-        case 'medicare_medicaid':
-          cobExplanation = `
-**Coordination of Benefits:** You are dual eligible (Medicare + Medicaid). Medicare pays first, and Medicaid covers remaining costs. While copay cards are not available, you often have minimal out-of-pocket costs. Patient Assistance Programs can help if needed.`;
-          break;
-        default:
-          cobExplanation = '';
-      }
-    }
 
     const userMessage = `
 **Patient Profile:**
 - Role: ${userContext.role || 'Patient'}
 - Transplant Stage: ${userContext.transplant_stage || 'Not specified'}
 - Organ Type: ${userContext.organ_type || 'Not specified'}
-- Insurance: ${userContext.insurance_type || 'Not specified'}${userContext.cob_scenario ? ` (COB Scenario: ${userContext.cob_scenario})` : ''}
-- Effective Insurance for Programs: ${effectiveType}
-- Copay Cards Eligible: ${userContext.copay_cards_eligible ? 'YES' : 'NO'}
+- Insurance: ${userContext.insurance_type || 'Not specified'}
 - Medication: ${userContext.medication_name || 'Not specified'}
 - Cost Burden: ${userContext.cost_burden || 'Not specified'}
-${cobExplanation}
 
 **SPECIFIC PROGRAMS FROM DATABASE (${programCount} programs found):**
 ${programContext}
@@ -526,7 +423,6 @@ ${programContext}
 4. Include the specific URLs and application steps from the database
 5. If the patient indicated "crisis" or "unaffordable" cost burden, emphasize urgency and immediate steps
 6. If NO programs were found, then and only then provide general guidance about where to look
-7. If there is a Coordination of Benefits scenario, briefly explain why certain programs are or aren't available
 
 Be specific and actionable. Reference the exact program names and URLs from the database.`;
 
@@ -647,10 +543,6 @@ const handleAction = async (action, body) => {
       const { answers } = body;
       const { insurance_type, medication, cost_burden, role, transplant_stage, organ_type } = answers;
 
-      // Get effective insurance info based on Coordination of Benefits
-      const cobInfo = getEffectiveInsuranceInfo(answers);
-      const { effectiveInsuranceType, copayCardsEligible, cobScenario } = cobInfo;
-
       // Handle medication - could be a single ID, array of IDs, typed name, or "general"
       let medicationDetailsList = [];
       let medicationNames = [];
@@ -683,8 +575,8 @@ const handleAction = async (action, body) => {
               });
             }
 
-            // Get programs for this specific medication (with COB support)
-            const medPrograms = await getSavingsPrograms(medId, insurance_type, cobInfo);
+            // Get programs for this specific medication
+            const medPrograms = await getSavingsPrograms(medId, insurance_type);
 
             // Build medication entry with its programs
             const medEntry = {
@@ -731,7 +623,7 @@ const handleAction = async (action, body) => {
 
       // If no valid medications found, get general programs
       if (medicationDetailsList.length === 0) {
-        const generalPrograms = await getSavingsPrograms(null, insurance_type, cobInfo);
+        const generalPrograms = await getSavingsPrograms(null, insurance_type);
         // Filter out unwanted universal programs
         const filteredGeneralPrograms = generalPrograms.filter(p =>
           !p.program_name?.toLowerCase().includes('cost plus') &&
@@ -755,16 +647,13 @@ const handleAction = async (action, body) => {
         ? medicationNames.join(', ')
         : 'General transplant medications';
 
-      // Build context for Claude (with COB info)
+      // Build context for Claude
       const anyCostPlusAvailable = costPlusMedications.length > 0;
       const userContext = {
         role,
         transplant_stage,
         organ_type,
         insurance_type,
-        effective_insurance_type: effectiveInsuranceType,
-        copay_cards_eligible: copayCardsEligible,
-        cob_scenario: cobScenario,
         medication_ids: medicationIds,
         medication_name: medicationName,
         cost_burden,
@@ -790,12 +679,6 @@ const handleAction = async (action, body) => {
         programs: allPrograms.slice(0, 8), // Flat list for backward compatibility
         costPlusAvailable: anyCostPlusAvailable,
         costPlusMedications, // List of medications available on Cost Plus
-        // COB info for frontend display
-        cobInfo: {
-          effectiveInsuranceType,
-          copayCardsEligible,
-          cobScenario,
-        },
       };
     }
 

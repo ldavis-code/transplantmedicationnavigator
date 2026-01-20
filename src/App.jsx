@@ -71,7 +71,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter, Mail, RefreshCw
+    CreditCard, Sparkles, Star, Filter
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -85,7 +85,6 @@ import {
     TransplantStage
 } from './data/constants.js';
 import MEDICATIONS_DATA from './data/medications.json';
-import PROGRAMS_DATA from './data/programs.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
 import STATES_DATA from './data/states.json';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
@@ -651,49 +650,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Value Proposition Section */}
-            <section className="max-w-3xl mx-auto" aria-label="Why TransplantMedicationNavigator">
-                <div className="bg-gradient-to-br from-emerald-50 to-sky-50 rounded-2xl border border-emerald-200 shadow-sm p-6 md:p-8">
-                    <p className="text-lg md:text-xl font-semibold text-slate-800 mb-6 text-center">
-                        That's why I built TransplantMedicationNavigator.com.
-                    </p>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <Pill size={18} />
-                            </div>
-                            <div>
-                                <span className="font-bold text-slate-900">184 transplant medications</span>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <HeartHandshake size={18} />
-                            </div>
-                            <div>
-                                <span className="font-bold text-slate-900">125+ assistance programs</span>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <CreditCard size={18} />
-                            </div>
-                            <div>
-                                <span className="font-bold text-slate-900">Copay cards and Patient Assistance Programs clearly separated</span>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <UserCheck size={18} />
-                            </div>
-                            <div>
-                                <span className="font-bold text-slate-900">Personalized guidance based on YOUR insurance type</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             {/* Features Grid */}
             <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-100 transition">
@@ -844,7 +800,7 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help — no investors, no ads, just patients helping patients.
+                    Try 1 free quiz to see how we can help. After that, a subscription is required to continue — no investors, no ads, just patients helping patients.
                 </p>
             </section>
 
@@ -924,71 +880,56 @@ const Home = () => {
     );
 };
 
-// Helper component to render medication class with tooltip
-const MedClassWithTooltip = ({ className: medClass }) => {
-    // Map medication classes to glossary terms
-    const classToTerm = {
-        'Calcineurin Inhibitor': 'calcineurin-inhibitor',
-        'Antimetabolite': 'antimetabolite',
-        'Corticosteroid': 'corticosteroid',
-    };
-    const term = classToTerm[medClass];
-    if (term) {
-        return <TermTooltip term={term}>{medClass}</TermTooltip>;
-    }
-    return <span>{medClass}</span>;
-};
-
 // Organ-specific medication data
 const ORGAN_MEDICATIONS = {
     Heart: {
         title: 'Heart Transplant',
-        description: 'Heart transplant recipients typically take a combination of anti-rejection drugs including tacrolimus (or cyclosporine), mycophenolate, and prednisone.',
+        description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Main anti-rejection drug for long-term use.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus or cyclosporine.' },
-            { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative anti-rejection drug.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often reduced to a low dose or stopped over time.' }
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
+            { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
     },
     Kidney: {
         title: 'Kidney Transplant',
-        description: 'Kidney transplant anti-rejection drugs are similar to heart transplants, with a focus on balancing effectiveness and reducing side effects.',
+        description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for long-term use.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used together with tacrolimus or cyclosporine.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers try to stop steroids to reduce long-term side effects.' },
-            { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative for certain patients.' }
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers aim for steroid-free regimens to reduce long-term side effects.' },
+            { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative to CNIs for certain patients.' }
         ]
     },
     Liver: {
         title: 'Liver Transplant',
-        description: 'Liver transplant patients often need fewer anti-rejection drugs compared to other organ recipients due to the liver\'s unique properties.',
+        description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used drug in liver transplantation.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Usually reduced and stopped within the first few months.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used CNI in liver transplantation.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
     },
     Lung: {
         title: 'Lung Transplant',
-        description: 'Lung transplant recipients have a higher risk of rejection, so anti-rejection drug regimens are often more intensive.',
+        description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred drug for lung transplant patients.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Kept at a low dose long-term.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant patients.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
     },
     Pancreas: {
         title: 'Pancreas Transplant',
-        description: 'Pancreas transplant anti-rejection drugs are similar to kidney transplantation, as the two are often done together.',
+        description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for long-term use.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used together with tacrolimus.' },
-            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often reduced to a low dose or stopped over time.' }
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
     }
 };
@@ -1144,7 +1085,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                                                         <span className="text-slate-500 ml-1">({med.name})</span>
                                                     </button>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600"><MedClassWithTooltip className={med.class} /></td>
+                                                <td className="py-3 px-3 text-slate-600">{med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
                                             </tr>
                                         );
@@ -1356,19 +1297,10 @@ const Wizard = () => {
     // Medication verification state - patient confirms their medications
     const [medicationsVerified, setMedicationsVerified] = useState(false);
 
-    // Email gate state for Step 6
-    const [email, setEmail] = useState('');
-    const [emailOptIn, setEmailOptIn] = useState(false);
-    const [emailError, setEmailError] = useState('');
-
     // Search state for Step 5
     const [medSearchTerm, setMedSearchTerm] = useState('');
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
-
-    // Step 7: Combined medication savings view state
-    const [showSavings, setShowSavings] = useState(false);
-    const [priceReportRefresh, setPriceReportRefresh] = useState(0);
 
     // Scroll to top when step changes for accessibility
     useEffect(() => {
@@ -1376,7 +1308,7 @@ const Wizard = () => {
         // Also announce page change for screen readers
         const announcement = document.getElementById('step-announcement');
         if (announcement) {
-            announcement.textContent = `Step ${step} of 7`;
+            announcement.textContent = `Step ${step} of 6`;
         }
     }, [step]);
 
@@ -1459,37 +1391,17 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Go to email gate step before showing results
-        setStep(6);
-    };
-
-    // Email validation helper
-    const isValidEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
-
-    const handleNextFromEmailGate = () => {
-        // Validate email
-        if (!email.trim()) {
-            setEmailError('Please enter your email address');
-            return;
-        }
-        if (!isValidEmail(email.trim())) {
-            setEmailError('Please enter a valid email address');
-            return;
-        }
-        setEmailError('');
         // Quiz results (strategy/guidance) are always free
         // The paywall only appears when viewing detailed medication cards on the Medications page
-        setStep(7);
+        setStep(6);
     };
 
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Your Plan'];
-    const totalVisibleSteps = 5; // 5 sections before results (Costs merged into final step)
+    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
+    const totalVisibleSteps = 5; // 5 sections before results
 
     // Color themes for each step (matching the icon colors)
     const stepColors = {
@@ -1497,7 +1409,7 @@ const Wizard = () => {
         2: { bg: 'bg-rose-500', bgLight: 'bg-rose-100', ring: 'ring-rose-100', text: 'text-rose-600', textBold: 'text-rose-700', border: 'border-rose-500', bgSelect: 'bg-rose-50', hoverBorder: 'hover:border-rose-200', badge: 'bg-rose-600' },
         3: { bg: 'bg-blue-500', bgLight: 'bg-blue-100', ring: 'ring-blue-100', text: 'text-blue-600', textBold: 'text-blue-700', border: 'border-blue-500', bgSelect: 'bg-blue-50', hoverBorder: 'hover:border-blue-200', badge: 'bg-blue-600' },
         4: { bg: 'bg-purple-500', bgLight: 'bg-purple-100', ring: 'ring-purple-100', text: 'text-purple-600', textBold: 'text-purple-700', border: 'border-purple-500', bgSelect: 'bg-purple-50', hoverBorder: 'hover:border-purple-200', badge: 'bg-purple-600' },
-        5: { bg: 'bg-teal-500', bgLight: 'bg-teal-100', ring: 'ring-teal-100', text: 'text-teal-600', textBold: 'text-teal-700', border: 'border-teal-500', bgSelect: 'bg-teal-50', hoverBorder: 'hover:border-teal-200', badge: 'bg-teal-600' },
+        5: { bg: 'bg-amber-500', bgLight: 'bg-amber-100', ring: 'ring-amber-100', text: 'text-amber-600', textBold: 'text-amber-700', border: 'border-amber-500', bgSelect: 'bg-amber-50', hoverBorder: 'hover:border-amber-200', badge: 'bg-amber-600' },
     };
 
     const renderProgress = () => {
@@ -1508,37 +1420,27 @@ const Wizard = () => {
         return (
             <div className="mb-8 no-print">
                 {/* Step indicators */}
-                <div className="flex justify-between items-center mb-3" role="list" aria-label="Wizard steps">
+                <div className="flex justify-between items-center mb-3">
                     {stepLabels.map((label, index) => {
                         const stepNum = index + 1;
                         const isCompleted = displayStep > stepNum;
                         const isCurrent = displayStep === stepNum;
                         const color = stepColors[stepNum];
-                        const stepStatus = isCompleted ? 'completed' : isCurrent ? 'current' : 'upcoming';
 
                         return (
-                            <div
-                                key={label}
-                                className="flex flex-col items-center flex-1"
-                                role="listitem"
-                                aria-label={`Step ${stepNum}: ${label}, ${stepStatus}`}
-                                aria-current={isCurrent ? 'step' : undefined}
-                            >
-                                <div
-                                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                                        isCompleted ? `${color.bg} text-white` :
-                                        isCurrent ? `${color.bg} text-white ring-4 ${color.ring}` :
-                                        'bg-slate-200 text-slate-500'
-                                    }`}
-                                    aria-hidden="true"
-                                >
+                            <div key={label} className="flex flex-col items-center flex-1">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                                    isCompleted ? `${color.bg} text-white` :
+                                    isCurrent ? `${color.bg} text-white ring-4 ${color.ring}` :
+                                    'bg-slate-200 text-slate-500'
+                                }`}>
                                     {isCompleted ? <CheckCircle size={16} /> : stepNum}
                                 </div>
                                 <span className={`text-xs mt-1 hidden sm:block ${
                                     isCurrent ? `${color.textBold} font-bold` :
                                     isCompleted ? color.text :
                                     'text-slate-400'
-                                }`} aria-hidden="true">{label}</span>
+                                }`}>{label}</span>
                             </div>
                         );
                     })}
@@ -1584,14 +1486,6 @@ const Wizard = () => {
                     <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
                 </p>
 
-                {/* Progress Saving Message */}
-                <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center" role="status">
-                    <div className="flex items-center justify-center gap-2 text-sm text-emerald-700">
-                        <RefreshCw size={14} className="text-emerald-600" aria-hidden="true" />
-                        <span>Your progress is automatically saved. You can return anytime.</span>
-                    </div>
-                </div>
-
                 {/* Question 1a: Role */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
@@ -1610,7 +1504,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={answers.role === r}
-                                aria-label={`${r}${answers.role === r ? ', selected' : ''}`}
                             >
                                 <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{r}</span>
                                 {answers.role === r && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
@@ -1638,7 +1531,6 @@ const Wizard = () => {
                                     }`}
                                     role="radio"
                                     aria-checked={answers.status === s}
-                                    aria-label={`${s}${answers.status === s ? ', selected' : ''}`}
                                 >
                                     <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{s}</span>
                                     {answers.status === s && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
@@ -1780,7 +1672,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={answers.insurance === option.value}
-                                aria-label={`${option.label}: ${option.description}${answers.insurance === option.value ? ', selected' : ''}`}
                             >
                                 <div className="flex justify-between items-start">
                                     <div>
@@ -1877,7 +1768,7 @@ const Wizard = () => {
                         )}
                     </p>
                     <p className="text-sm text-slate-500">
-                        First select your core anti-rejection drugs, then add any other transplant-related medications you take.
+                        First select your core immunosuppressants, then add any other transplant-related medications you take.
                     </p>
                 </div>
 
@@ -1888,67 +1779,12 @@ const Wizard = () => {
                     <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
 
-                {/* Quick-Add Common Medications */}
-                {!isPreTransplant && answers.organs && answers.organs.length > 0 && (
-                    <div className="mb-6 bg-white border-2 border-purple-200 rounded-xl p-4 shadow-sm">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Pill size={18} className="text-purple-600" />
-                            <h3 className="font-bold text-purple-800">Quick Add Common Medications</h3>
-                        </div>
-                        <p className="text-sm text-slate-600 mb-3">
-                            Click to quickly add common anti-rejection drugs for your transplant type:
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            {/* Get unique medications from all selected organs */}
-                            {(() => {
-                                const uniqueMeds = new Map();
-                                answers.organs.forEach(organ => {
-                                    const organData = ORGAN_MEDICATIONS[organ];
-                                    if (organData) {
-                                        organData.medications.forEach(med => {
-                                            if (!uniqueMeds.has(med.id)) {
-                                                uniqueMeds.set(med.id, med);
-                                            }
-                                        });
-                                    }
-                                });
-                                return Array.from(uniqueMeds.values()).map(med => {
-                                    const isAlreadySelected = (answers.medications || []).includes(med.id);
-                                    return (
-                                        <button
-                                            key={med.id}
-                                            onClick={() => !isAlreadySelected && addMedFromSearch(med.id)}
-                                            disabled={isAlreadySelected}
-                                            aria-label={`${isAlreadySelected ? 'Already added: ' : 'Add '}${med.brand} (${med.name})`}
-                                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                                                isAlreadySelected
-                                                    ? 'bg-emerald-100 text-emerald-700 cursor-not-allowed'
-                                                    : 'bg-purple-100 text-purple-800 hover:bg-purple-200 hover:shadow-md cursor-pointer border-2 border-transparent hover:border-purple-300'
-                                            }`}
-                                        >
-                                            {isAlreadySelected ? (
-                                                <CheckCircle size={16} className="text-emerald-600" />
-                                            ) : (
-                                                <PlusCircle size={16} className="text-purple-600" />
-                                            )}
-                                            {med.brand}
-                                        </button>
-                                    );
-                                });
-                            })()}
-                        </div>
-                    </div>
-                )}
-
                 {/* Medication Search Box */}
-                <div className="mb-6 bg-white border-2 border-teal-200 rounded-xl p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Search size={18} className="text-teal-600" />
-                        <h3 className="font-bold text-teal-800">Search for Any Medication</h3>
+                <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                    <div className="flex items-center gap-2 mb-3">
+                        <Search size={18} className="text-emerald-600" />
+                        <h3 className="font-bold text-slate-800">Type in medication and hit the <span className="text-emerald-600">+</span> button to add to your list</h3>
                     </div>
-                    <p className="text-sm text-slate-600 mb-3">
-                        Can't find your medication above? Search our database:
-                    </p>
                     <div className="relative">
                         <label htmlFor="wizard-med-search" className="sr-only">Search for medications</label>
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
@@ -2121,7 +1957,7 @@ const Wizard = () => {
                         <div className="text-sm text-amber-800">
                             <p className="font-bold mb-2">Important Medical Information</p>
                             <p>
-                                Taking your medicine as prescribed every day is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
+                                Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
                             </p>
                         </div>
                     </div>
@@ -2211,7 +2047,6 @@ const Wizard = () => {
                                 }`}
                                 role="radio"
                                 aria-checked={isSelected}
-                                aria-label={`${opt.label}: ${opt.desc}${isSelected ? ', selected' : ''}`}
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <span className={`font-bold text-xl ${styles.label}`}>{opt.label}</span>
@@ -2226,127 +2061,9 @@ const Wizard = () => {
         );
     }
 
-    // Step 6: Email Gate
+    // Step 6: Results
     if (step === 6) {
-        return (
-            <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
-                {renderProgress()}
-
-                {/* Back button */}
-                <button
-                    onClick={() => setStep(5)}
-                    className="text-slate-700 flex items-center gap-1 text-sm hover:text-teal-600 mb-6 min-h-[44px] min-w-[44px]"
-                    aria-label="Go back to previous step"
-                >
-                    <ChevronLeft size={16} aria-hidden="true" /> Back
-                </button>
-
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-                    {/* Header with shield icon */}
-                    <div className="flex items-start gap-4 mb-6 pb-6 border-b border-slate-200">
-                        <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <ShieldCheck className="w-10 h-10 text-teal-600" aria-hidden="true" />
-                        </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Get Your Personalized Medication Strategy</h2>
-                            <p className="text-slate-600">
-                                You're almost there! To receive your personalized medication assistance plan, please enter your email address below.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Benefits list */}
-                    <div className="mb-6">
-                        <h3 className="font-semibold text-slate-800 mb-4">Why we ask for your email:</h3>
-                        <ul className="space-y-3">
-                            {[
-                                'Receive your complete medication strategy report',
-                                'Get reminders about copay card renewals',
-                                'Stay updated on new assistance programs',
-                                'Access your results anytime'
-                            ].map((benefit, index) => (
-                                <li key={index} className="flex items-center gap-3 text-slate-700">
-                                    <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0" aria-hidden="true" />
-                                    <span>{benefit}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Privacy promise */}
-                    <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mb-6">
-                        <h4 className="font-semibold text-teal-800 mb-1">Privacy Promise:</h4>
-                        <p className="text-teal-700 text-sm">
-                            We will never sell your email address. We will never share your medication information. You can unsubscribe anytime.
-                        </p>
-                    </div>
-
-                    {/* Email input */}
-                    <div className="mb-4">
-                        <label htmlFor="email-gate-input" className="block font-semibold text-slate-800 mb-2">
-                            Email Address
-                        </label>
-                        <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
-                            <input
-                                id="email-gate-input"
-                                type="email"
-                                value={email}
-                                onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
-                                placeholder="your.email@example.com"
-                                className={`w-full pl-11 pr-4 py-3 rounded-lg border ${emailError ? 'border-red-500 focus:ring-red-200' : 'border-slate-300 focus:border-teal-500 focus:ring-teal-100'} focus:ring-2 outline-none transition text-slate-900`}
-                                aria-describedby={emailError ? 'email-error' : undefined}
-                            />
-                        </div>
-                        {emailError && (
-                            <p id="email-error" className="mt-2 text-sm text-red-600 flex items-center gap-1">
-                                <AlertCircle size={14} aria-hidden="true" />
-                                {emailError}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* Optional marketing checkbox */}
-                    <div className="mb-6">
-                        <label className="flex items-start gap-3 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={emailOptIn}
-                                onChange={(e) => setEmailOptIn(e.target.checked)}
-                                className="mt-1 w-4 h-4 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
-                            />
-                            <span className="text-slate-600 text-sm">
-                                Send me helpful medication assistance updates (optional)
-                            </span>
-                        </label>
-                    </div>
-
-                    {/* Submit button */}
-                    <button
-                        onClick={handleNextFromEmailGate}
-                        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"
-                    >
-                        Get My Medication Plan
-                    </button>
-                </div>
-
-                {/* Footer text */}
-                <p className="text-center text-slate-500 text-sm mt-6">
-                    By continuing, you agree to our{' '}
-                    <Link to="/terms" className="text-teal-600 hover:underline">Terms of Service</Link>
-                    {' '}and{' '}
-                    <Link to="/privacy" className="text-teal-600 hover:underline">Privacy Policy</Link>.
-                    <br />
-                    We use your email only to send you your results and occasional updates.
-                </p>
-            </div>
-        );
-    }
-
-    // Step 7: Results
-    if (step === 7) {
-        const isKidney = (answers.organs || []).includes(OrganType.KIDNEY);
+        const isKidney = answers.organs.includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
         const isUninsured = answers.insurance === InsuranceType.UNINSURED;
@@ -2357,7 +2074,7 @@ const Wizard = () => {
                 <StepAnnouncement />
                 {/* Back Button */}
                 <button
-                    onClick={() => setStep(6)}
+                    onClick={() => setStep(5)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
                     aria-label="Go back to previous step"
                 >
@@ -2399,9 +2116,7 @@ const Wizard = () => {
                         </a>
                     </aside>
                 )}
-
-                {/* Strategy View - shown when not viewing savings */}
-                {!showSavings && (
+                
                 <div className="grid md:grid-cols-2 gap-6">
 
                     {/* Column 1 (Left): Med List & Tools */}
@@ -2486,18 +2201,14 @@ const Wizard = () => {
                             </div>
 
                             <div className="space-y-2 no-print">
-                                {(answers.medications || []).length > 0 && (
-                                    <button
-                                        onClick={() => {
-                                            setShowSavings(true);
-                                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                                        }}
-                                        className="w-full block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-base shadow-md transition flex items-center justify-center gap-2"
-                                        aria-label="View medication savings options"
+                                {answers.medications.length > 0 && (
+                                    <Link
+                                        to={`/medications?ids=${answers.medications.join(',')}`}
+                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
+                                        aria-label="View price estimates for your selected medications"
                                     >
-                                        <DollarSign size={18} aria-hidden="true" />
-                                        My Medication Savings
-                                    </button>
+                                        View Price Estimates for These Meds
+                                    </Link>
                                 )}
                             </div>
                         </section>
@@ -2635,124 +2346,6 @@ const Wizard = () => {
                         )}
                     </div>
                 </div>
-                )}
-
-                {/* Medication Savings View - shown when viewing savings */}
-                {showSavings && (
-                <div className="space-y-6">
-                    {/* Back Button */}
-                    <button
-                        onClick={() => setShowSavings(false)}
-                        className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] no-print"
-                        aria-label="Go back to strategy view"
-                    >
-                        <ChevronLeft size={16} aria-hidden="true" /> Back to Strategy
-                    </button>
-
-                    {/* Header */}
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-bold text-emerald-700 flex items-center gap-2">
-                            <DollarSign size={24} aria-hidden="true" />
-                            My Medication Savings
-                        </h2>
-                    </div>
-
-                    {/* Your Options - Color coded guide */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm no-print">
-                        <h3 className="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2">
-                            <Info className="text-slate-600" size={20} aria-hidden="true" />
-                            Your Options
-                        </h3>
-                        <p className="text-slate-600 text-sm mb-4">Each card below shows one of your medications. Click the tabs to explore:</p>
-
-                        <div className="grid md:grid-cols-3 gap-3">
-                            {/* Assistance - Green */}
-                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-emerald-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-emerald-800 text-sm">Assistance</span>
-                                </div>
-                                <p className="text-emerald-700 text-xs">Free medicine programs, copay cards & patient assistance</p>
-                            </div>
-
-                            {/* Price - Blue */}
-                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-blue-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-blue-800 text-sm">Price</span>
-                                </div>
-                                <p className="text-blue-700 text-xs">Estimated costs (vary by dosage & quantity)</p>
-                            </div>
-
-                            {/* Overview - Purple */}
-                            <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-purple-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-purple-800 text-sm">Overview</span>
-                                </div>
-                                <p className="text-purple-700 text-xs">Basic medication info & manufacturer details</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Medication Cards */}
-                    <div className="space-y-6">
-                        {(answers.medications || []).map(medId => {
-                            const med = MEDICATIONS.find(m => m.id === medId);
-                            if (!med) return null;
-                            return (
-                                <MedicationCard
-                                    key={med.id}
-                                    med={med}
-                                    onRemove={() => handleMultiSelect('medications', med.id)}
-                                    onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)}
-                                    showCopayCards={isCommercial}
-                                    quizAnswers={{
-                                        insurance_type: answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE ? 'commercial' :
-                                                       answers.insurance === InsuranceType.MEDICARE ? 'medicare' :
-                                                       answers.insurance === InsuranceType.MEDICAID ? 'medicaid' : 'other'
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-
-                    {(answers.medications || []).length === 0 && (
-                        <div className="text-center py-8 bg-slate-50 rounded-xl border border-slate-200">
-                            <p className="text-slate-600">No medications selected. Go back to add medications to see savings options.</p>
-                            <button
-                                onClick={() => setShowSavings(false)}
-                                className="mt-4 text-emerald-600 hover:text-emerald-700 font-medium"
-                            >
-                                Go back to add medications
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Application Help */}
-                    <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading-wizard">
-                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                            <div className="flex items-start gap-4">
-                                <div className="bg-emerald-600 text-white p-3 rounded-full" aria-hidden="true">
-                                    <BookOpen size={24} />
-                                </div>
-                                <div>
-                                    <h3 id="app-guide-heading-wizard" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h3>
-                                    <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
-                                </div>
-                            </div>
-                            <Link
-                                to="/application-help"
-                                className="flex items-center gap-2 px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
-                                aria-label="View application guide for step-by-step help"
-                            >
-                                <FileText size={18} aria-hidden="true" />
-                                Grants & Foundations
-                            </Link>
-                        </div>
-                    </section>
-                </div>
-                )}
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
                     <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
@@ -4484,7 +4077,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
                 { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients).' },
                 { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of anti-rejection drugs (Part B-ID) with 20% coinsurance.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
                 { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
             ],
             action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
@@ -4529,7 +4122,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with $2,100 out-of-pocket cap (2026).' },
                 { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
                 { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers anti-rejection drugs even without Part A/B.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B.' },
             ],
             action: 'Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited.',
         },
@@ -4656,270 +4249,6 @@ const InsuranceChangeSimulator = () => {
 
             {currentInsurance && futureInsurance && currentInsurance === futureInsurance && (
                 <p className="mt-4 text-sm text-indigo-600">Please select different insurance types to see the transition changes.</p>
-            )}
-        </section>
-    );
-};
-
-// Coordination of Benefits (COB) Eligibility Tool
-// Helps patients with multiple insurance plans understand which programs they can use
-const COBEligibilityTool = () => {
-    const [hasMultipleInsurance, setHasMultipleInsurance] = useState(null);
-    const [insuranceCombination, setInsuranceCombination] = useState('');
-    const [showResults, setShowResults] = useState(false);
-
-    const combinationOptions = [
-        { id: 'medicare_employer_active', label: 'Medicare + Employer Insurance (you or spouse still working)' },
-        { id: 'medicare_retiree', label: 'Medicare + Retiree Health Benefits' },
-        { id: 'medicare_medicaid', label: 'Medicare + Medicaid (dual eligible)' },
-        { id: 'medicare_tricare', label: 'Medicare + TRICARE' },
-        { id: 'commercial_medicaid', label: 'Commercial Insurance + Medicaid' },
-        { id: 'other', label: 'Other combination' },
-    ];
-
-    const cobResults = {
-        'medicare_employer_active': {
-            title: 'Medicare + Active Employer Coverage',
-            primaryInsurance: 'Your Employer Insurance',
-            explanation: 'When you or your spouse are still working, your employer insurance is the "primary" payer. This is great news!',
-            eligibility: [
-                { type: 'yes', title: 'Copay Cards', desc: 'YES! Because your employer insurance pays first, you CAN use manufacturer copay cards. These can reduce your costs to $0-$50/month.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! You may qualify for free medications through PAPs if your income qualifies.' },
-                { type: 'yes', title: 'Foundation Grants', desc: 'YES! Foundations like PAN and HealthWell can help with remaining costs.' },
-            ],
-            tip: 'This is one of the best situations for medication assistance. Take advantage of copay cards while you have active employer coverage!',
-        },
-        'medicare_retiree': {
-            title: 'Medicare + Retiree Benefits',
-            primaryInsurance: 'Medicare',
-            explanation: 'With retiree health benefits, Medicare is usually the "primary" payer. Your retiree plan helps with what Medicare doesn\'t cover.',
-            eligibility: [
-                { type: 'no', title: 'Copay Cards', desc: 'NO. Because Medicare is primary, federal law (the Anti-Kickback Statute) prohibits using manufacturer copay cards.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! You may qualify for free medications through manufacturer PAPs.' },
-                { type: 'yes', title: 'Foundation Grants', desc: 'YES! Foundations like PAN, HealthWell, and Patient Advocate Foundation can help pay your Medicare copays.' },
-            ],
-            tip: 'Even without copay cards, foundations can significantly reduce your costs. Apply early as funds can run out.',
-        },
-        'medicare_medicaid': {
-            title: 'Medicare + Medicaid (Dual Eligible)',
-            primaryInsurance: 'Medicare (Medicaid secondary)',
-            explanation: 'You have "dual eligible" status. Medicare pays first, then Medicaid covers most remaining costs. This often means very low out-of-pocket costs.',
-            eligibility: [
-                { type: 'no', title: 'Copay Cards', desc: 'NO. Copay cards cannot be used when Medicare or Medicaid is involved.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! PAPs can provide free medications if needed.' },
-                { type: 'maybe', title: 'Extra Help (LIS)', desc: 'You likely already have Extra Help/Low Income Subsidy which greatly reduces Part D costs.' },
-            ],
-            tip: 'Your out-of-pocket costs are usually minimal. If you\'re still having trouble affording medications, a PAP can provide them free.',
-        },
-        'medicare_tricare': {
-            title: 'Medicare + TRICARE',
-            primaryInsurance: 'Medicare (TRICARE for Life secondary)',
-            explanation: 'TRICARE for Life acts as secondary insurance to Medicare, covering most of what Medicare doesn\'t.',
-            eligibility: [
-                { type: 'no', title: 'Copay Cards', desc: 'NO. Copay cards cannot be used with Medicare or TRICARE.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! You may still qualify for free medications through PAPs.' },
-                { type: 'maybe', title: 'TRICARE Pharmacy', desc: 'TRICARE\'s pharmacy benefit may offer better pricing than Part D for some medications.' },
-            ],
-            tip: 'Compare TRICARE pharmacy prices with Part D before filling. TRICARE for Life typically has very low copays.',
-        },
-        'commercial_medicaid': {
-            title: 'Commercial Insurance + Medicaid',
-            primaryInsurance: 'Commercial Insurance',
-            explanation: 'Your commercial insurance pays first. Medicaid covers remaining costs and can pay your premiums.',
-            eligibility: [
-                { type: 'maybe', title: 'Copay Cards', desc: 'MAYBE. Check your state\'s Medicaid rules - some states don\'t allow copay cards when Medicaid is involved, even as secondary.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! You may qualify for free medications through PAPs.' },
-                { type: 'yes', title: 'Low Copays', desc: 'Medicaid often covers any copays left after your commercial insurance pays.' },
-            ],
-            tip: 'Contact your state Medicaid office to understand exactly what they cover as secondary insurance.',
-        },
-        'other': {
-            title: 'Other Insurance Combination',
-            primaryInsurance: 'Depends on your situation',
-            explanation: 'Insurance coordination rules can be complex. The "primary" insurance is usually determined by: 1) Medicare rules if Medicare is involved, 2) Birthday rule for parents covering children, 3) Active vs. inactive employment.',
-            eligibility: [
-                { type: 'maybe', title: 'Copay Cards', desc: 'DEPENDS. Generally allowed only if commercial insurance (not Medicare/Medicaid) is your primary payer.' },
-                { type: 'yes', title: 'Patient Assistance Programs (PAPs)', desc: 'YES! PAPs are available regardless of insurance combination.' },
-                { type: 'yes', title: 'Foundation Grants', desc: 'YES! Foundations can help with most insurance situations.' },
-            ],
-            tip: 'Call your insurance companies to confirm which is primary. Ask your transplant social worker for help navigating your options.',
-        },
-    };
-
-    const result = cobResults[insuranceCombination];
-
-    const handleCheckEligibility = () => {
-        if (insuranceCombination) {
-            setShowResults(true);
-        }
-    };
-
-    const handleReset = () => {
-        setHasMultipleInsurance(null);
-        setInsuranceCombination('');
-        setShowResults(false);
-    };
-
-    return (
-        <section className="bg-gradient-to-br from-teal-50 to-cyan-50 border-2 border-teal-200 rounded-2xl p-6 md:p-8 mt-8" aria-labelledby="cob-tool">
-            <div className="flex items-center gap-3 mb-4">
-                <div className="bg-teal-600 text-white p-2 rounded-lg">
-                    <Shield size={24} />
-                </div>
-                <div>
-                    <h2 id="cob-tool" className="text-xl md:text-2xl font-bold text-teal-900">Multiple Insurance? Check Your Options</h2>
-                    <p className="text-sm text-teal-700">Find out which assistance programs you can use with your insurance combination</p>
-                </div>
-            </div>
-
-            {/* Step 1: Do you have multiple insurance? */}
-            {hasMultipleInsurance === null && (
-                <div className="bg-white rounded-xl p-6 border border-teal-100">
-                    <h3 className="font-bold text-slate-800 mb-4">Do you have more than one type of health insurance?</h3>
-                    <p className="text-sm text-slate-600 mb-4">
-                        This includes having Medicare plus another plan, employer insurance plus Medicaid, or any other combination.
-                    </p>
-                    <div className="flex gap-4">
-                        <button
-                            onClick={() => setHasMultipleInsurance(true)}
-                            className="flex-1 py-3 px-6 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg transition"
-                        >
-                            Yes, I have multiple plans
-                        </button>
-                        <button
-                            onClick={() => setHasMultipleInsurance(false)}
-                            className="flex-1 py-3 px-6 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg transition"
-                        >
-                            No, just one plan
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Step 1b: Only one insurance */}
-            {hasMultipleInsurance === false && (
-                <div className="bg-white rounded-xl p-6 border border-teal-100">
-                    <h3 className="font-bold text-slate-800 mb-2">Single Insurance Plan</h3>
-                    <p className="text-slate-600 mb-4">
-                        With one insurance plan, your eligibility for assistance programs is straightforward:
-                    </p>
-                    <div className="space-y-3">
-                        <div className="flex gap-3 p-3 bg-green-50 border border-green-100 rounded-lg">
-                            <span className="text-xl">✅</span>
-                            <div>
-                                <strong className="text-slate-900">Commercial Insurance:</strong>
-                                <span className="text-slate-700 ml-1">Copay cards, PAPs, and foundations all available</span>
-                            </div>
-                        </div>
-                        <div className="flex gap-3 p-3 bg-amber-50 border border-amber-100 rounded-lg">
-                            <span className="text-xl">⚠️</span>
-                            <div>
-                                <strong className="text-slate-900">Medicare:</strong>
-                                <span className="text-slate-700 ml-1">No copay cards, but PAPs and foundations can help</span>
-                            </div>
-                        </div>
-                        <div className="flex gap-3 p-3 bg-green-50 border border-green-100 rounded-lg">
-                            <span className="text-xl">✅</span>
-                            <div>
-                                <strong className="text-slate-900">Medicaid:</strong>
-                                <span className="text-slate-700 ml-1">Usually very low copays; PAPs available if needed</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button
-                        onClick={handleReset}
-                        className="mt-4 text-teal-600 hover:text-teal-700 font-medium"
-                    >
-                        ← Start over
-                    </button>
-                </div>
-            )}
-
-            {/* Step 2: Select combination */}
-            {hasMultipleInsurance === true && !showResults && (
-                <div className="bg-white rounded-xl p-6 border border-teal-100">
-                    <h3 className="font-bold text-slate-800 mb-4">Which insurance combination do you have?</h3>
-                    <div className="space-y-2 mb-6">
-                        {combinationOptions.map(option => (
-                            <button
-                                key={option.id}
-                                onClick={() => setInsuranceCombination(option.id)}
-                                className={`w-full text-left p-4 rounded-lg border-2 transition ${
-                                    insuranceCombination === option.id
-                                        ? 'border-teal-500 bg-teal-50'
-                                        : 'border-slate-200 hover:border-teal-300 hover:bg-slate-50'
-                                }`}
-                            >
-                                <span className={`font-medium ${insuranceCombination === option.id ? 'text-teal-800' : 'text-slate-700'}`}>
-                                    {option.label}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                    <div className="flex gap-4">
-                        <button
-                            onClick={handleReset}
-                            className="py-3 px-6 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition"
-                        >
-                            ← Back
-                        </button>
-                        <button
-                            onClick={handleCheckEligibility}
-                            disabled={!insuranceCombination}
-                            className="flex-1 py-3 px-6 bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-lg transition"
-                        >
-                            Check My Options
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Results */}
-            {showResults && result && (
-                <div className="space-y-4 fade-in">
-                    <div className="bg-white rounded-xl p-6 border border-teal-100">
-                        <div className="flex items-start justify-between mb-4">
-                            <div>
-                                <h3 className="text-xl font-bold text-slate-900">{result.title}</h3>
-                                <p className="text-sm text-teal-700 font-medium">Primary Insurance: {result.primaryInsurance}</p>
-                            </div>
-                            <button
-                                onClick={handleReset}
-                                className="text-sm text-teal-600 hover:text-teal-700 font-medium"
-                            >
-                                Check different combination
-                            </button>
-                        </div>
-
-                        <div className="bg-teal-50 border border-teal-100 rounded-lg p-4 mb-6">
-                            <p className="text-teal-900">{result.explanation}</p>
-                        </div>
-
-                        <h4 className="font-bold text-slate-800 mb-3">Your Assistance Program Eligibility:</h4>
-                        <div className="space-y-3">
-                            {result.eligibility.map((item, i) => (
-                                <div key={i} className={`flex gap-4 p-4 rounded-lg ${
-                                    item.type === 'yes' ? 'bg-green-50 border border-green-100' :
-                                    item.type === 'no' ? 'bg-red-50 border border-red-100' :
-                                    'bg-amber-50 border border-amber-100'
-                                }`}>
-                                    <span className="text-2xl flex-shrink-0" aria-hidden="true">
-                                        {item.type === 'yes' ? '✅' : item.type === 'no' ? '❌' : '⚠️'}
-                                    </span>
-                                    <div>
-                                        <h5 className="font-bold text-slate-900">{item.title}</h5>
-                                        <p className="text-sm text-slate-700">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="mt-6 p-4 bg-cyan-50 border border-cyan-200 rounded-lg">
-                            <h4 className="font-bold text-cyan-800 mb-1">💡 Helpful Tip</h4>
-                            <p className="text-sm text-cyan-900">{result.tip}</p>
-                        </div>
-                    </div>
-                </div>
             )}
         </section>
     );
@@ -5353,9 +4682,6 @@ const Education = () => {
 
                         {/* Insurance Change Simulation */}
                         <InsuranceChangeSimulator />
-
-                        {/* Coordination of Benefits Tool */}
-                        <COBEligibilityTool />
 
                         <section aria-labelledby="medicare-guide">
                             <h2 id="medicare-guide" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicare Guide</h2>

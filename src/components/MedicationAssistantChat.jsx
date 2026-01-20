@@ -15,48 +15,6 @@ import {
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 import PaywallModal from './PaywallModal.jsx';
 
-// Common anti-rejection medications by organ type for quick-add feature
-const COMMON_MEDICATIONS_BY_ORGAN = {
-  heart: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-    { id: 'cyclosporine', brand_name: 'Neoral', generic_name: 'Cyclosporine', category: 'Anti-rejection' },
-  ],
-  kidney: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-    { id: 'belatacept', brand_name: 'Nulojix', generic_name: 'Belatacept', category: 'Anti-rejection' },
-  ],
-  liver: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-  ],
-  lung: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-  ],
-  pancreas: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-  ],
-  multi: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-    { id: 'cyclosporine', brand_name: 'Neoral', generic_name: 'Cyclosporine', category: 'Anti-rejection' },
-  ],
-  other: [
-    { id: 'tacrolimus', brand_name: 'Prograf', generic_name: 'Tacrolimus', category: 'Anti-rejection' },
-    { id: 'mycophenolate', brand_name: 'CellCept', generic_name: 'Mycophenolate Mofetil', category: 'Anti-rejection' },
-    { id: 'prednisone', brand_name: 'Prednisone', generic_name: 'Prednisone', category: 'Anti-rejection' },
-  ],
-};
-
 // Demo mode storage keys (must match DemoModeContext)
 const DEMO_MODE_KEY = 'tmn_demo_mode';
 const DEMO_EXPIRY_KEY = 'tmn_demo_expiry';
@@ -500,13 +458,12 @@ const MedicationAssistantChat = () => {
       // Track quiz completion
       incrementQuizCompletions();
 
-      // Store results in context (including COB info)
+      // Store results in context
       setResults({
         programs: data.programs || [],
         medicationPrograms: data.medicationPrograms || [],
         costPlusMedications: data.costPlusMedications || [],
         message: data.message,
-        cobInfo: data.cobInfo || null,
       });
 
       // Add to chat messages if in chat mode
@@ -851,85 +808,34 @@ const MedicationAssistantChat = () => {
           </div>
         )}
 
-        {/* Quick-Add Common Medications by Organ Type */}
-        {answers.organ_type && COMMON_MEDICATIONS_BY_ORGAN[answers.organ_type] && (
-          <div className="space-y-3 bg-white border-2 border-purple-200 rounded-xl p-4">
-            <div className="flex items-center gap-2">
-              <Pill size={18} className="text-purple-600" aria-hidden="true" />
-              <h4 className="font-bold text-purple-800 text-base">
-                Common {answers.organ_type.charAt(0).toUpperCase() + answers.organ_type.slice(1)} Transplant Medications
-              </h4>
+        {/* Search Input with proper ARIA */}
+        <div className="relative">
+          <label htmlFor={searchInputId} className="sr-only">
+            Search for a medication
+          </label>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
+          <input
+            id={searchInputId}
+            type="text"
+            value={medicationSearch}
+            onChange={(e) => setMedicationSearch(e.target.value)}
+            placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
+            className="w-full pl-12 pr-12 py-4 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
+            autoFocus
+            role="combobox"
+            aria-expanded={medicationResults.length > 0}
+            aria-controls={listboxId}
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+          />
+          {isSearching && (
+            <div className="absolute right-4 top-1/2 -translate-y-1/2" aria-hidden="true">
+              <Loader2 className="text-emerald-500 animate-spin" size={20} />
             </div>
-            <p className="text-sm text-slate-600">
-              Click to quickly add common anti-rejection drugs:
-            </p>
-            <div className="flex flex-wrap gap-2" role="list" aria-label="Common medications for your transplant type">
-              {COMMON_MEDICATIONS_BY_ORGAN[answers.organ_type].map((med) => {
-                const isAlreadySelected = selectedMedications.some(m => m.id === med.id);
-                return (
-                  <button
-                    key={med.id}
-                    onClick={() => !isAlreadySelected && handleMedicationSelect(med)}
-                    disabled={isAlreadySelected}
-                    role="listitem"
-                    aria-label={`${isAlreadySelected ? 'Already added: ' : 'Add '}${med.brand_name} (${med.generic_name})`}
-                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      isAlreadySelected
-                        ? 'bg-emerald-100 text-emerald-700 cursor-not-allowed'
-                        : 'bg-purple-100 text-purple-800 hover:bg-purple-200 hover:shadow-md cursor-pointer border-2 border-transparent hover:border-purple-300'
-                    }`}
-                  >
-                    {isAlreadySelected ? (
-                      <CheckCircle2 size={16} className="text-emerald-600" aria-hidden="true" />
-                    ) : (
-                      <PlusCircle size={16} className="text-purple-600" aria-hidden="true" />
-                    )}
-                    {med.brand_name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Search Input Section with prominent heading */}
-        <div className="space-y-3 bg-white border-2 border-teal-200 rounded-xl p-4">
-          <div className="flex items-center gap-2">
-            <Search size={18} className="text-teal-600" aria-hidden="true" />
-            <h4 className="font-bold text-teal-800 text-base">
-              Search for Any Medication
-            </h4>
-          </div>
-          <p className="text-sm text-slate-600">
-            Can't find your medication above? Search our database:
-          </p>
-          <div className="relative">
-            <label htmlFor={searchInputId} className="sr-only">
-              Search for a medication
-            </label>
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
-            <input
-              id={searchInputId}
-              type="text"
-              value={medicationSearch}
-              onChange={(e) => setMedicationSearch(e.target.value)}
-              placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
-              className="w-full pl-12 pr-12 py-4 border-2 border-teal-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base bg-white"
-              role="combobox"
-              aria-expanded={medicationResults.length > 0}
-              aria-controls={listboxId}
-              aria-autocomplete="list"
-              aria-haspopup="listbox"
-            />
-            {isSearching && (
-              <div className="absolute right-4 top-1/2 -translate-y-1/2" aria-hidden="true">
-                <Loader2 className="text-teal-500 animate-spin" size={20} />
-              </div>
-            )}
-            {isSearching && (
-              <div className="sr-only" aria-live="polite">Searching for medications...</div>
-            )}
-          </div>
+          )}
+          {isSearching && (
+            <div className="sr-only" aria-live="polite">Searching for medications...</div>
+          )}
         </div>
 
         {/* Search Results with listbox role */}
@@ -1101,14 +1007,6 @@ const MedicationAssistantChat = () => {
             <span>Your answers stay on your device. No account needed.</span>
           </div>
 
-          {/* Progress Saving Message */}
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center" role="status">
-            <div className="flex items-center justify-center gap-2 text-sm text-emerald-700">
-              <RefreshCw size={14} className="text-emerald-600" aria-hidden="true" />
-              <span>Your progress is automatically saved. You can return anytime.</span>
-            </div>
-          </div>
-
           {/* Start Button */}
           <button
             onClick={() => {
@@ -1240,7 +1138,7 @@ const MedicationAssistantChat = () => {
         ) : (
           <fieldset aria-labelledby={questionId} aria-describedby={question.helpText ? helpTextId : undefined}>
             <legend className="sr-only">{question.question}</legend>
-            <div className="space-y-3" role="radiogroup" aria-label={question.question}>
+            <div className="space-y-3" role="radiogroup">
               {question.options?.map((option, index) => {
                 const isSelected = answers[question.id] === option.value;
                 const optionId = `option-${question.id}-${option.value}`;
@@ -1252,7 +1150,6 @@ const MedicationAssistantChat = () => {
                     role="radio"
                     aria-checked={isSelected}
                     aria-describedby={option.description ? `${optionId}-desc` : undefined}
-                    aria-label={`${option.label}${option.description ? ': ' + option.description : ''}${isSelected ? ', selected' : ''}`}
                     className={`w-full text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
                       isSelected
                         ? 'border-emerald-500 bg-emerald-50 shadow-md ring-2 ring-emerald-200'
@@ -1350,10 +1247,6 @@ const MedicationAssistantChat = () => {
       ? results.medicationPrograms
       : [];
 
-    // Use COB info for filtering if available, otherwise fall back to insurance type
-    const copayCardsEligible = results.cobInfo?.copayCardsEligible ?? (answers.insurance_type === 'commercial');
-    const cobScenario = results.cobInfo?.cobScenario;
-
     return (
       <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
         {/* Success Header */}
@@ -1362,40 +1255,6 @@ const MedicationAssistantChat = () => {
           <h3 className="font-bold text-emerald-800 text-lg">Your Personalized Results</h3>
           <p className="text-sm text-emerald-600">Based on your profile, here are programs you may qualify for</p>
         </div>
-
-        {/* COB Info Banner */}
-        {cobScenario && (
-          <div className={`border rounded-xl p-4 mb-4 ${
-            cobScenario === 'medicare_employer_active'
-              ? 'bg-blue-50 border-blue-200'
-              : 'bg-amber-50 border-amber-200'
-          }`}>
-            <h4 className={`font-semibold mb-1 flex items-center gap-2 ${
-              cobScenario === 'medicare_employer_active' ? 'text-blue-800' : 'text-amber-800'
-            }`}>
-              <Shield size={16} />
-              Coordination of Benefits
-            </h4>
-            {cobScenario === 'medicare_employer_active' && (
-              <p className="text-sm text-blue-700">
-                Because you have active employer coverage, your commercial insurance is <strong>primary</strong>.
-                Good news—you <strong>are eligible</strong> for manufacturer copay cards!
-              </p>
-            )}
-            {cobScenario === 'medicare_retiree' && (
-              <p className="text-sm text-amber-700">
-                With retiree benefits, Medicare is <strong>primary</strong>. Copay cards are not available,
-                but you have great options through foundations and Patient Assistance Programs.
-              </p>
-            )}
-            {cobScenario === 'medicare_medicaid' && (
-              <p className="text-sm text-amber-700">
-                As a dual eligible patient, you often have minimal out-of-pocket costs.
-                Patient Assistance Programs can help if needed.
-              </p>
-            )}
-          </div>
-        )}
 
         {/* Profile Summary */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
@@ -1424,8 +1283,8 @@ const MedicationAssistantChat = () => {
                   <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
                 </div>
                 <div className="p-3 space-y-2">
-                  {/* Cost Plus Drugs - show only when copay cards are NOT the primary option and if generic is available */}
-                  {!copayCardsEligible && medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                  {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                  {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
@@ -1449,14 +1308,14 @@ const MedicationAssistantChat = () => {
                       </a>
                     </div>
                   )}
-                  {/* Filter programs based on COB copay card eligibility */}
+                  {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
                   {(() => {
                     const filteredPrograms = medGroup.programs?.filter(p => {
-                      // If copay cards are eligible (commercial or Medicare + active employer): show copay cards and PAPs
-                      if (copayCardsEligible) {
+                      // Commercial insurance: show copay cards and PAPs
+                      if (answers.insurance_type === 'commercial') {
                         return p.program_type === 'copay_card' || p.program_type === 'pap';
                       }
-                      // If copay cards NOT eligible: show PAPs and foundations, but NEVER copay cards
+                      // Non-commercial: show PAPs and foundations, but NEVER copay cards
                       return p.program_type !== 'copay_card';
                     }) || [];
 
@@ -1572,9 +1431,6 @@ const MedicationAssistantChat = () => {
       ? message.medicationPrograms
       : null;
 
-    // Use COB info for filtering if available, otherwise fall back to insurance type
-    const copayCardsEligible = results.cobInfo?.copayCardsEligible ?? (answers.insurance_type === 'commercial');
-
     if (programsData) {
       return (
         <div className="mt-4 space-y-4">
@@ -1588,8 +1444,8 @@ const MedicationAssistantChat = () => {
                 <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
               </div>
               <div className="p-2 space-y-2">
-                {/* Cost Plus Drugs - show only when copay cards are NOT the primary option and if generic is available */}
-                {!copayCardsEligible && medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
                     <p className="text-xs text-blue-600 mt-1">Low-cost transparent pricing</p>
@@ -1603,14 +1459,14 @@ const MedicationAssistantChat = () => {
                     </a>
                   </div>
                 )}
-                {/* Filter programs based on COB copay card eligibility */}
+                {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
                 {(() => {
                   const filteredPrograms = medGroup.programs?.filter(p => {
-                    // If copay cards are eligible (commercial or Medicare + active employer): show copay cards and PAPs
-                    if (copayCardsEligible) {
+                    // Commercial insurance: show copay cards and PAPs
+                    if (answers.insurance_type === 'commercial') {
                       return p.program_type === 'copay_card' || p.program_type === 'pap';
                     }
-                    // If copay cards NOT eligible: show PAPs and foundations, but NEVER copay cards
+                    // Non-commercial: show PAPs and foundations, but NEVER copay cards
                     return p.program_type !== 'copay_card';
                   }) || [];
 

@@ -13,14 +13,14 @@ const ChatQuizContext = createContext(null);
 const STORAGE_KEY = 'medication_navigator_progress';
 const SUBSCRIBER_TOKEN_KEY = 'tmn_subscriber_token';
 
-// Maximum number of medication searches allowed in free tier (unlimited for patients)
-const MAX_FREE_SEARCHES = Infinity;
+// Maximum number of medication searches allowed in free tier
+const MAX_FREE_SEARCHES = 4;
 
-// Maximum number of quiz completions allowed in free tier (unlimited for patients)
-const MAX_FREE_QUIZZES = Infinity;
+// Maximum number of quiz completions allowed in free tier
+const MAX_FREE_QUIZZES = 1;
 
-// Maximum number of savings calculator uses allowed in free tier (unlimited for patients)
-const MAX_FREE_CALCULATOR_USES = Infinity;
+// Maximum number of savings calculator uses allowed in free tier
+const MAX_FREE_CALCULATOR_USES = 2;
 
 // Debounce delay for server sync (ms)
 const SYNC_DEBOUNCE_MS = 2000;
@@ -79,6 +79,48 @@ const QUIZ_QUESTIONS = [
     tip: "Copay cards work best with commercial insurance. Medicare and Medicaid patients often have access to Patient Assistance Programs (PAPs) for free medications.",
   },
   {
+    id: 'has_multiple_insurance',
+    question: "Do you have more than one type of health insurance?",
+    type: 'single',
+    options: [
+      { value: 'yes', label: 'Yes', description: 'I have multiple insurance plans' },
+      { value: 'no', label: 'No', description: 'I only have one insurance plan' },
+    ],
+    tip: "Having multiple insurance plans (like Medicare plus an employer plan) affects which assistance programs you can use. This is called Coordination of Benefits.",
+    // Only show for Medicare patients (most common COB scenario)
+    showIf: (answers) => answers.insurance_type === 'medicare',
+  },
+  {
+    id: 'insurance_combination',
+    question: "Which of the following applies to you?",
+    type: 'single',
+    options: [
+      {
+        value: 'medicare_employer_active',
+        label: 'Medicare + Employer Coverage (Working)',
+        description: 'I or my spouse currently work and have employer insurance'
+      },
+      {
+        value: 'medicare_retiree',
+        label: 'Medicare + Retiree Benefits',
+        description: 'I have retiree health benefits from a former employer'
+      },
+      {
+        value: 'medicare_medicaid',
+        label: 'Medicare + Medicaid (Dual Eligible)',
+        description: 'I qualify for both Medicare and Medicaid'
+      },
+      {
+        value: 'other_combination',
+        label: 'Other Combination',
+        description: 'My situation is different from the options above'
+      },
+    ],
+    tip: "Your insurance combination determines which programs you qualify for. Medicare + active employer coverage is special—the employer plan is primary, so copay cards may be available!",
+    // Only show if user has multiple insurance and selected Medicare
+    showIf: (answers) => answers.insurance_type === 'medicare' && answers.has_multiple_insurance === 'yes',
+  },
+  {
     id: 'medication',
     question: "Which medication do you need help with?",
     type: 'medication_search',
@@ -111,8 +153,6 @@ const QUIZ_QUESTIONS = [
     tip: "Some transplant centers offer their own pharmacy with lower pricing that patients don't know about. It's worth one phone call to check—you might save significantly on your medications.",
     // This question only shows when patient is uninsured OR struggling with costs
     showIf: (answers) => {
-      // Safely handle null/undefined answers
-      if (!answers || typeof answers !== 'object') return false;
       const isUninsured = answers.insurance_type === 'uninsured';
       const isStrugglingWithCosts = ['challenging', 'unaffordable', 'crisis'].includes(answers.cost_burden);
       return isUninsured || isStrugglingWithCosts;
@@ -179,46 +219,9 @@ function loadFromStorage() {
       const parsed = JSON.parse(saved);
       // Validate and return saved state
       if (parsed && typeof parsed === 'object') {
-        // Ensure critical nested objects have valid values with proper defaults
-        const mergedAnswers = (parsed.answers && typeof parsed.answers === 'object')
-          ? parsed.answers
-          : initialState.answers;
-
-        const mergedQuizProgress = (parsed.quizProgress && typeof parsed.quizProgress === 'object')
-          ? {
-              ...initialState.quizProgress,
-              ...parsed.quizProgress,
-              // Ensure currentQuestionIndex is within valid bounds
-              currentQuestionIndex: Math.max(0, Math.min(
-                typeof parsed.quizProgress.currentQuestionIndex === 'number'
-                  ? parsed.quizProgress.currentQuestionIndex
-                  : 0,
-                QUIZ_QUESTIONS.length - 1
-              )),
-            }
-          : initialState.quizProgress;
-
-        const mergedUsageTracking = (parsed.usageTracking && typeof parsed.usageTracking === 'object')
-          ? { ...initialState.usageTracking, ...parsed.usageTracking }
-          : initialState.usageTracking;
-
-        const mergedResults = (parsed.results && typeof parsed.results === 'object')
-          ? { ...initialState.results, ...parsed.results }
-          : initialState.results;
-
-        const mergedSelectedMedications = Array.isArray(parsed.selectedMedications)
-          ? parsed.selectedMedications
-          : initialState.selectedMedications;
-
         return {
           ...initialState,
-          answers: mergedAnswers,
-          quizProgress: mergedQuizProgress,
-          usageTracking: mergedUsageTracking,
-          results: mergedResults,
-          selectedMedications: mergedSelectedMedications,
-          hasSeenResults: typeof parsed.hasSeenResults === 'boolean' ? parsed.hasSeenResults : initialState.hasSeenResults,
-          mode: parsed.mode === 'chat' || parsed.mode === 'quiz' ? parsed.mode : initialState.mode,
+          ...parsed,
           // Don't persist UI open state
           isOpen: false,
         };
