@@ -648,6 +648,22 @@ const Home = () => {
                         Find Grants & Foundations
                     </Link>
                 </div>
+
+                {/* Stats Banner */}
+                <div className="flex flex-wrap justify-center gap-6 md:gap-12 mt-10 pt-8 border-t border-slate-200">
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">184</div>
+                        <div className="text-sm md:text-base text-slate-600 font-medium">Medications</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">65+</div>
+                        <div className="text-sm md:text-base text-slate-600 font-medium">Copay Cards</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">60+</div>
+                        <div className="text-sm md:text-base text-slate-600 font-medium">Patient Assistance Programs</div>
+                    </div>
+                </div>
             </section>
 
             {/* Features Grid */}
