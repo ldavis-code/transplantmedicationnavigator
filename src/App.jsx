@@ -650,18 +650,30 @@ const Home = () => {
                 </div>
 
                 {/* Stats Banner */}
-                <div className="flex flex-wrap justify-center gap-6 md:gap-12 mt-10 pt-8 border-t border-slate-200">
-                    <div className="text-center">
-                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">184</div>
-                        <div className="text-sm md:text-base text-slate-600 font-medium">Medications</div>
+                <div className="grid grid-cols-3 gap-3 md:gap-6 mt-10 max-w-3xl mx-auto">
+                    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 md:p-6 text-center border border-emerald-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
+                            <Pill size={20} className="md:hidden" />
+                            <Pill size={24} className="hidden md:block" />
+                        </div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">184</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Medications</div>
                     </div>
-                    <div className="text-center">
-                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">65+</div>
-                        <div className="text-sm md:text-base text-slate-600 font-medium">Copay Cards</div>
+                    <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-4 md:p-6 text-center border border-sky-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
+                            <CreditCard size={20} className="md:hidden" />
+                            <CreditCard size={24} className="hidden md:block" />
+                        </div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-sky-700">65+</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
                     </div>
-                    <div className="text-center">
-                        <div className="text-3xl md:text-4xl font-extrabold text-emerald-600">60+</div>
-                        <div className="text-sm md:text-base text-slate-600 font-medium">Patient Assistance Programs</div>
+                    <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-4 md:p-6 text-center border border-violet-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
+                            <HeartHandshake size={20} className="md:hidden" />
+                            <HeartHandshake size={24} className="hidden md:block" />
+                        </div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-violet-700">60+</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Assistance Programs</div>
                     </div>
                 </div>
             </section>
