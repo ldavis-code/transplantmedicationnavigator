@@ -111,8 +111,6 @@ const QUIZ_QUESTIONS = [
     tip: "Some transplant centers offer their own pharmacy with lower pricing that patients don't know about. It's worth one phone call to check—you might save significantly on your medications.",
     // This question only shows when patient is uninsured OR struggling with costs
     showIf: (answers) => {
-      // Safely handle null/undefined answers
-      if (!answers || typeof answers !== 'object') return false;
       const isUninsured = answers.insurance_type === 'uninsured';
       const isStrugglingWithCosts = ['challenging', 'unaffordable', 'crisis'].includes(answers.cost_burden);
       return isUninsured || isStrugglingWithCosts;
@@ -179,46 +177,9 @@ function loadFromStorage() {
       const parsed = JSON.parse(saved);
       // Validate and return saved state
       if (parsed && typeof parsed === 'object') {
-        // Ensure critical nested objects have valid values with proper defaults
-        const mergedAnswers = (parsed.answers && typeof parsed.answers === 'object')
-          ? parsed.answers
-          : initialState.answers;
-
-        const mergedQuizProgress = (parsed.quizProgress && typeof parsed.quizProgress === 'object')
-          ? {
-              ...initialState.quizProgress,
-              ...parsed.quizProgress,
-              // Ensure currentQuestionIndex is within valid bounds
-              currentQuestionIndex: Math.max(0, Math.min(
-                typeof parsed.quizProgress.currentQuestionIndex === 'number'
-                  ? parsed.quizProgress.currentQuestionIndex
-                  : 0,
-                QUIZ_QUESTIONS.length - 1
-              )),
-            }
-          : initialState.quizProgress;
-
-        const mergedUsageTracking = (parsed.usageTracking && typeof parsed.usageTracking === 'object')
-          ? { ...initialState.usageTracking, ...parsed.usageTracking }
-          : initialState.usageTracking;
-
-        const mergedResults = (parsed.results && typeof parsed.results === 'object')
-          ? { ...initialState.results, ...parsed.results }
-          : initialState.results;
-
-        const mergedSelectedMedications = Array.isArray(parsed.selectedMedications)
-          ? parsed.selectedMedications
-          : initialState.selectedMedications;
-
         return {
           ...initialState,
-          answers: mergedAnswers,
-          quizProgress: mergedQuizProgress,
-          usageTracking: mergedUsageTracking,
-          results: mergedResults,
-          selectedMedications: mergedSelectedMedications,
-          hasSeenResults: typeof parsed.hasSeenResults === 'boolean' ? parsed.hasSeenResults : initialState.hasSeenResults,
-          mode: parsed.mode === 'chat' || parsed.mode === 'quiz' ? parsed.mode : initialState.mode,
+          ...parsed,
           // Don't persist UI open state
           isOpen: false,
         };
