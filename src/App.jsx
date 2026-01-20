@@ -1085,7 +1085,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                     {organTypes.map(organ => {
                         const IconComponent = organIcons[organ];
                         const isExpanded = expandedOrgan === organ;
-                        const isSelected = answers.organs.includes(organ);
+                        const isSelected = (answers.organs || []).includes(organ);
                         return (
                             <button
                                 key={organ}
@@ -1184,7 +1184,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                     {organTypes.map(organ => {
                         const IconComponent = organIcons[organ];
                         const isExpanded = expandedOrgan === organ;
-                        const isSelected = answers.organs.includes(organ);
+                        const isSelected = (answers.organs || []).includes(organ);
                         return (
                             <button
                                 key={organ}
