@@ -1870,7 +1870,11 @@ const Wizard = () => {
                         <h1 className="text-2xl font-bold">Your Medications</h1>
                     </div>
                     <p className="text-slate-600 mb-3">
-                        Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.
+                        {answers.organs && answers.organs.length > 0 ? (
+                            <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
+                        ) : (
+                            <>Select your medications from the options below.</>
+                        )}
                     </p>
                     <p className="text-sm text-slate-500">
                         First select your core anti-rejection drugs, then add any other transplant-related medications you take.
