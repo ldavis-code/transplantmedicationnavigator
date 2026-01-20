@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, Lock, ArrowRight } from 'lucide-react';
+import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import priceEstimates from '../data/price-estimates.json';
 
@@ -72,8 +72,8 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const [showResults, setShowResults] = useState(false);
     const [calculations, setCalculations] = useState(null);
 
-    const MAX_FREE_MEDS = 3;
-    const canAddMore = isPro || selectedMeds.length < MAX_FREE_MEDS;
+    // Free for all patients - no medication limit
+    const canAddMore = true;
 
     // Use medications from context if available, otherwise use fallback
     // This gives access to all 180+ medications from the database
@@ -230,31 +230,11 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 {/* Add Medication Button */}
                 <button
                     onClick={addMedication}
-                    disabled={!canAddMore && !onUpgrade}
-                    className={`mt-4 w-full py-3 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px] ${
-                        canAddMore
-                            ? 'border-slate-300 text-slate-600 hover:border-emerald-400 hover:text-emerald-600'
-                            : 'border-amber-300 text-amber-600 bg-amber-50'
-                    }`}
+                    className="mt-4 w-full py-3 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px] border-slate-300 text-slate-600 hover:border-emerald-400 hover:text-emerald-600"
                 >
-                    {canAddMore ? (
-                        <>
-                            <Plus size={18} aria-hidden="true" />
-                            Add Another Medication
-                        </>
-                    ) : (
-                        <>
-                            <Lock size={18} aria-hidden="true" />
-                            Upgrade to Pro for Unlimited Medications
-                        </>
-                    )}
+                    <Plus size={18} aria-hidden="true" />
+                    Add Another Medication
                 </button>
-
-                {!isPro && (
-                    <p className="text-xs text-slate-500 text-center mt-2">
-                        Free tier: {selectedMeds.length}/{MAX_FREE_MEDS} medications
-                    </p>
-                )}
 
                 {/* Calculate Button */}
                 <button

@@ -205,13 +205,6 @@ export default function SavingsTracker() {
             >
             {activeTab === 'calculator' && (
                 <>
-                    {/* Show Pro feature notice for free users */}
-                    {!hasAccess && (
-                        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6 text-sm text-purple-800">
-                            <strong>Pro Feature:</strong> The Savings Calculator is available for Pro subscribers.{' '}
-                            <Link to="/pricing" className="text-purple-700 underline font-medium">Upgrade to Pro</Link> to unlock unlimited calculations.
-                        </div>
-                    )}
                     <SavingsCalculator
                         medications={medications || []}
                         isPro={hasAccess}
