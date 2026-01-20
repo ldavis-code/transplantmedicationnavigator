@@ -1419,8 +1419,9 @@ const Wizard = () => {
 
     // Add medication from search
     const addMedFromSearch = (medId) => {
-        if (!answers.medications.includes(medId)) {
-            setAnswers({ ...answers, medications: [...answers.medications, medId] });
+        const currentMeds = answers.medications || [];
+        if (!currentMeds.includes(medId)) {
+            setAnswers({ ...answers, medications: [...currentMeds, medId] });
             // Reset verification when medications change
             setMedicationsVerified(false);
         }
@@ -1908,7 +1909,7 @@ const Wizard = () => {
                                     }
                                 });
                                 return Array.from(uniqueMeds.values()).map(med => {
-                                    const isAlreadySelected = answers.medications.includes(med.id);
+                                    const isAlreadySelected = (answers.medications || []).includes(med.id);
                                     return (
                                         <button
                                             key={med.id}
@@ -1973,7 +1974,7 @@ const Wizard = () => {
                             {medSearchResult.length > 0 ? (
                                 <div className="divide-y divide-slate-100">
                                     {medSearchResult.slice(0, 8).map(med => {
-                                        const isAlreadySelected = answers.medications.includes(med.id);
+                                        const isAlreadySelected = (answers.medications || []).includes(med.id);
                                         return (
                                             <button
                                                 key={med.id}
@@ -2004,14 +2005,14 @@ const Wizard = () => {
                 </div>
 
                 {/* Selected Medications Display */}
-                {answers.medications.length > 0 && (
+                {(answers.medications || []).length > 0 && (
                     <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                             <CheckCircle size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Selected Medications ({answers.medications.length})</h3>
+                            <h3 className="font-bold text-slate-800">Your Selected Medications ({(answers.medications || []).length})</h3>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                            {answers.medications.map(id => {
+                            {(answers.medications || []).map(id => {
                                 const med = MEDICATIONS.find(m => m.id === id);
                                 return (
                                     <span key={id} className="bg-white text-slate-700 px-3 py-1.5 rounded-full text-sm border border-emerald-200 shadow-sm flex items-center gap-2">
@@ -2074,10 +2075,9 @@ const Wizard = () => {
                                     onClick={() => setMedicationsVerified(true)}
                                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all min-h-[56px] flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                                 >
-                                    <CheckCircle size={20} aria-hidden="true" />
-                                    {answers.medications.length > 0
-                                        ? `Yes, I've Added My ${answers.medications.length} Medication${answers.medications.length > 1 ? 's' : ''}`
-                                        : 'I Have No Medications to Add'
+                                    {(answers.medications || []).length > 0
+                                        ? `Yes, I have verified my ${(answers.medications || []).length} medication${(answers.medications || []).length > 1 ? 's' : ''} listed above`
+                                        : 'I confirm I have no transplant medications to add'
                                     }
                                 </button>
                             )}
@@ -2317,7 +2317,7 @@ const Wizard = () => {
 
     // Step 7: Results
     if (step === 7) {
-        const isKidney = answers.organs.includes(OrganType.KIDNEY);
+        const isKidney = (answers.organs || []).includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
         const isUninsured = answers.insurance === InsuranceType.UNINSURED;
@@ -2379,9 +2379,9 @@ const Wizard = () => {
                     <div className="space-y-6">
                         <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
                             <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">Your Medication List</h2>
-                            {answers.medications.length > 0 && (
+                            {(answers.medications || []).length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                    {answers.medications.map(id => {
+                                    {(answers.medications || []).map(id => {
                                         const med = MEDICATIONS.find(m => m.id === id);
                                         return (
                                             <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
@@ -2426,7 +2426,7 @@ const Wizard = () => {
                                         {medSearchResult.length > 0 ? (
                                             <div className="divide-y divide-slate-100">
                                                 {medSearchResult.slice(0, 6).map(med => {
-                                                    const isAlreadySelected = answers.medications.includes(med.id);
+                                                    const isAlreadySelected = (answers.medications || []).includes(med.id);
                                                     return (
                                                         <button
                                                             key={med.id}
@@ -2457,7 +2457,7 @@ const Wizard = () => {
                             </div>
 
                             <div className="space-y-2 no-print">
-                                {answers.medications.length > 0 && (
+                                {(answers.medications || []).length > 0 && (
                                     <button
                                         onClick={() => {
                                             setShowSavings(true);
@@ -2588,7 +2588,7 @@ const Wizard = () => {
                                         <p className="text-sm text-slate-600 mt-1">
                                             Most manufacturers have a "Patient Assistance Program". This is your best route for free medication. 
                                             <br/>
-                                            <Link to={`/medications?ids=${answers.medications.join(',')}`} className="text-rose-700 font-bold underline">Search your med here</Link> to find the manufacturer link.
+                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">Search your med here</Link> to find the manufacturer link.
                                         </p>
                                     </li>
                                     <li>
@@ -2668,7 +2668,7 @@ const Wizard = () => {
 
                     {/* Medication Cards */}
                     <div className="space-y-6">
-                        {answers.medications.map(medId => {
+                        {(answers.medications || []).map(medId => {
                             const med = MEDICATIONS.find(m => m.id === medId);
                             if (!med) return null;
                             return (
@@ -2688,7 +2688,7 @@ const Wizard = () => {
                         })}
                     </div>
 
-                    {answers.medications.length === 0 && (
+                    {(answers.medications || []).length === 0 && (
                         <div className="text-center py-8 bg-slate-50 rounded-xl border border-slate-200">
                             <p className="text-slate-600">No medications selected. Go back to add medications to see savings options.</p>
                             <button
