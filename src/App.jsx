@@ -1460,12 +1460,16 @@ const Wizard = () => {
                 })
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to save email');
-            }
-
-            // Parse response to check if email was actually sent
+            // Parse response to check status and get details
             const result = await response.json();
+
+            if (!response.ok) {
+                // Server returned an error - capture the details
+                setEmailSentSuccess(false);
+                setEmailErrorDetails(result.errorDetails || result.error || 'Server error');
+                setStep(7);
+                return;
+            }
             setEmailSentSuccess(result.emailSent === true);
 
             // Capture error details for debugging if email failed

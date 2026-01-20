@@ -145,6 +145,19 @@ export async function handler(event) {
     }
 
     // Insert into quiz_email_leads table
+    // First check if Supabase is configured
+    if (!process.env.SUPABASE_SERVICE_KEY) {
+      console.error('DATABASE CONFIG ERROR: SUPABASE_SERVICE_KEY environment variable is not set');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          error: 'Failed to save email',
+          errorDetails: 'SUPABASE_SERVICE_KEY not set'
+        }),
+      };
+    }
+
     const { data, error } = await supabase
       .from('quiz_email_leads')
       .insert({
@@ -159,11 +172,17 @@ export async function handler(event) {
       .single();
 
     if (error) {
-      console.error('Error saving quiz email lead:', error);
+      console.error('Supabase insert error:', JSON.stringify(error, null, 2));
+      console.error('Error code:', error.code);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error.details);
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ error: 'Failed to save email' }),
+        body: JSON.stringify({
+          error: 'Failed to save email',
+          errorDetails: error.message || error.code || 'Database error'
+        }),
       };
     }
 
