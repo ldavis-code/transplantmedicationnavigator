@@ -458,13 +458,12 @@ const MedicationAssistantChat = () => {
       // Track quiz completion
       incrementQuizCompletions();
 
-      // Store results in context (including COB info)
+      // Store results in context
       setResults({
         programs: data.programs || [],
         medicationPrograms: data.medicationPrograms || [],
         costPlusMedications: data.costPlusMedications || [],
         message: data.message,
-        cobInfo: data.cobInfo || null,
       });
 
       // Add to chat messages if in chat mode
@@ -1257,10 +1256,6 @@ const MedicationAssistantChat = () => {
       ? results.medicationPrograms
       : [];
 
-    // Use COB info for filtering if available, otherwise fall back to insurance type
-    const copayCardsEligible = results.cobInfo?.copayCardsEligible ?? (answers.insurance_type === 'commercial');
-    const cobScenario = results.cobInfo?.cobScenario;
-
     return (
       <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-slate-50 to-white">
         {/* Success Header */}
@@ -1269,40 +1264,6 @@ const MedicationAssistantChat = () => {
           <h3 className="font-bold text-emerald-800 text-lg">Your Personalized Results</h3>
           <p className="text-sm text-emerald-600">Based on your profile, here are programs you may qualify for</p>
         </div>
-
-        {/* COB Info Banner */}
-        {cobScenario && (
-          <div className={`border rounded-xl p-4 mb-4 ${
-            cobScenario === 'medicare_employer_active'
-              ? 'bg-blue-50 border-blue-200'
-              : 'bg-amber-50 border-amber-200'
-          }`}>
-            <h4 className={`font-semibold mb-1 flex items-center gap-2 ${
-              cobScenario === 'medicare_employer_active' ? 'text-blue-800' : 'text-amber-800'
-            }`}>
-              <Shield size={16} />
-              Coordination of Benefits
-            </h4>
-            {cobScenario === 'medicare_employer_active' && (
-              <p className="text-sm text-blue-700">
-                Because you have active employer coverage, your commercial insurance is <strong>primary</strong>.
-                Good news—you <strong>are eligible</strong> for manufacturer copay cards!
-              </p>
-            )}
-            {cobScenario === 'medicare_retiree' && (
-              <p className="text-sm text-amber-700">
-                With retiree benefits, Medicare is <strong>primary</strong>. Copay cards are not available,
-                but you have great options through foundations and Patient Assistance Programs.
-              </p>
-            )}
-            {cobScenario === 'medicare_medicaid' && (
-              <p className="text-sm text-amber-700">
-                As a dual eligible patient, you often have minimal out-of-pocket costs.
-                Patient Assistance Programs can help if needed.
-              </p>
-            )}
-          </div>
-        )}
 
         {/* Profile Summary */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
@@ -1331,8 +1292,8 @@ const MedicationAssistantChat = () => {
                   <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
                 </div>
                 <div className="p-3 space-y-2">
-                  {/* Cost Plus Drugs - show only when copay cards are NOT the primary option and if generic is available */}
-                  {!copayCardsEligible && medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                  {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                  {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
@@ -1356,14 +1317,14 @@ const MedicationAssistantChat = () => {
                       </a>
                     </div>
                   )}
-                  {/* Filter programs based on COB copay card eligibility */}
+                  {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
                   {(() => {
                     const filteredPrograms = medGroup.programs?.filter(p => {
-                      // If copay cards are eligible (commercial or Medicare + active employer): show copay cards and PAPs
-                      if (copayCardsEligible) {
+                      // Commercial insurance: show copay cards and PAPs
+                      if (answers.insurance_type === 'commercial') {
                         return p.program_type === 'copay_card' || p.program_type === 'pap';
                       }
-                      // If copay cards NOT eligible: show PAPs and foundations, but NEVER copay cards
+                      // Non-commercial: show PAPs and foundations, but NEVER copay cards
                       return p.program_type !== 'copay_card';
                     }) || [];
 
@@ -1479,9 +1440,6 @@ const MedicationAssistantChat = () => {
       ? message.medicationPrograms
       : null;
 
-    // Use COB info for filtering if available, otherwise fall back to insurance type
-    const copayCardsEligible = results.cobInfo?.copayCardsEligible ?? (answers.insurance_type === 'commercial');
-
     if (programsData) {
       return (
         <div className="mt-4 space-y-4">
@@ -1495,8 +1453,8 @@ const MedicationAssistantChat = () => {
                 <div className="text-xs text-slate-500">{medGroup.generic_name}</div>
               </div>
               <div className="p-2 space-y-2">
-                {/* Cost Plus Drugs - show only when copay cards are NOT the primary option and if generic is available */}
-                {!copayCardsEligible && medGroup.cost_plus_available && medGroup.generic_available !== false && (
+                {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
+                {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
                     <p className="text-xs text-blue-600 mt-1">Low-cost transparent pricing</p>
@@ -1510,14 +1468,14 @@ const MedicationAssistantChat = () => {
                     </a>
                   </div>
                 )}
-                {/* Filter programs based on COB copay card eligibility */}
+                {/* Filter programs: commercial gets copay cards + PAPs, others get PAPs + foundations (no copay cards) */}
                 {(() => {
                   const filteredPrograms = medGroup.programs?.filter(p => {
-                    // If copay cards are eligible (commercial or Medicare + active employer): show copay cards and PAPs
-                    if (copayCardsEligible) {
+                    // Commercial insurance: show copay cards and PAPs
+                    if (answers.insurance_type === 'commercial') {
                       return p.program_type === 'copay_card' || p.program_type === 'pap';
                     }
-                    // If copay cards NOT eligible: show PAPs and foundations, but NEVER copay cards
+                    // Non-commercial: show PAPs and foundations, but NEVER copay cards
                     return p.program_type !== 'copay_card';
                   }) || [];
 
