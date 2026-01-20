@@ -1351,10 +1351,6 @@ const Wizard = () => {
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
 
-    // Step 7: Combined medication savings view state
-    const [showSavings, setShowSavings] = useState(false);
-    const [priceReportRefresh, setPriceReportRefresh] = useState(0);
-
     // Scroll to top when step changes for accessibility
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2307,9 +2303,7 @@ const Wizard = () => {
                         </a>
                     </aside>
                 )}
-
-                {/* Strategy View - shown when not viewing savings */}
-                {!showSavings && (
+                
                 <div className="grid md:grid-cols-2 gap-6">
 
                     {/* Column 1 (Left): Med List & Tools */}
@@ -2394,18 +2388,14 @@ const Wizard = () => {
                             </div>
 
                             <div className="space-y-2 no-print">
-                                {(answers.medications || []).length > 0 && (
-                                    <button
-                                        onClick={() => {
-                                            setShowSavings(true);
-                                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                                        }}
-                                        className="w-full block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-base shadow-md transition flex items-center justify-center gap-2"
-                                        aria-label="View medication savings options"
+                                {answers.medications.length > 0 && (
+                                    <Link
+                                        to={`/medications?ids=${answers.medications.join(',')}`}
+                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
+                                        aria-label="View price estimates for your selected medications"
                                     >
-                                        <DollarSign size={18} aria-hidden="true" />
-                                        My Medication Savings
-                                    </button>
+                                        View Price Estimates for These Meds
+                                    </Link>
                                 )}
                             </div>
                         </section>
@@ -2543,102 +2533,6 @@ const Wizard = () => {
                         )}
                     </div>
                 </div>
-                )}
-
-                {/* Medication Savings View - shown when viewing savings */}
-                {showSavings && (
-                <div className="space-y-6">
-                    {/* Back Button */}
-                    <button
-                        onClick={() => setShowSavings(false)}
-                        className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] no-print"
-                        aria-label="Go back to strategy view"
-                    >
-                        <ChevronLeft size={16} aria-hidden="true" /> Back to Strategy
-                    </button>
-
-                    {/* Header */}
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-bold text-emerald-700 flex items-center gap-2">
-                            <DollarSign size={24} aria-hidden="true" />
-                            My Medication Savings
-                        </h2>
-                    </div>
-
-                    {/* Info Box */}
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 no-print">
-                        <div className="flex items-start gap-3">
-                            <Info className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                            <div>
-                                <p className="font-bold text-emerald-800 mb-1">Your Options</p>
-                                <p className="text-emerald-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
-                                <ul className="text-emerald-700 text-sm mt-2 ml-4 list-disc space-y-1">
-                                    <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
-                                    <li><strong>Price</strong> - Prices are ESTIMATES and vary by the number of pills prescribed or dosage</li>
-                                    <li><strong>Overview</strong> - Basic info about the medication</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Medication Cards */}
-                    <div className="space-y-6">
-                        {(answers.medications || []).map(medId => {
-                            const med = MEDICATIONS.find(m => m.id === medId);
-                            if (!med) return null;
-                            return (
-                                <MedicationCard
-                                    key={med.id}
-                                    med={med}
-                                    onRemove={() => handleMultiSelect('medications', med.id)}
-                                    onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)}
-                                    showCopayCards={isCommercial}
-                                    quizAnswers={{
-                                        insurance_type: answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE ? 'commercial' :
-                                                       answers.insurance === InsuranceType.MEDICARE ? 'medicare' :
-                                                       answers.insurance === InsuranceType.MEDICAID ? 'medicaid' : 'other'
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-
-                    {(answers.medications || []).length === 0 && (
-                        <div className="text-center py-8 bg-slate-50 rounded-xl border border-slate-200">
-                            <p className="text-slate-600">No medications selected. Go back to add medications to see savings options.</p>
-                            <button
-                                onClick={() => setShowSavings(false)}
-                                className="mt-4 text-emerald-600 hover:text-emerald-700 font-medium"
-                            >
-                                Go back to add medications
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Application Help */}
-                    <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading-wizard">
-                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                            <div className="flex items-start gap-4">
-                                <div className="bg-emerald-600 text-white p-3 rounded-full" aria-hidden="true">
-                                    <BookOpen size={24} />
-                                </div>
-                                <div>
-                                    <h3 id="app-guide-heading-wizard" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h3>
-                                    <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
-                                </div>
-                            </div>
-                            <Link
-                                to="/application-help"
-                                className="flex items-center gap-2 px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
-                                aria-label="View application guide for step-by-step help"
-                            >
-                                <FileText size={18} aria-hidden="true" />
-                                Grants & Foundations
-                            </Link>
-                        </div>
-                    </section>
-                </div>
-                )}
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
                     <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
