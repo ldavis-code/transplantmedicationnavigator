@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Users, CheckCircle, ArrowRight, Mail, Building2 } from 'lucide-react';
+import { Users, CheckCircle, ArrowRight, Mail, Building2, CreditCard } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -44,8 +44,8 @@ const Pricing = () => {
                 'Integration with existing systems',
                 'Custom branding options'
             ],
-            cta: 'Contact Sales',
-            ctaLink: 'mailto:enterprise@transplantmedicationnavigator.com?subject=Enterprise%20Pricing%20Inquiry',
+            cta: 'Contact Us',
+            ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Enterprise%20Pricing%20Inquiry',
             highlighted: false
         }
     ];
