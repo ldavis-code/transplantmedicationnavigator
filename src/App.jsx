@@ -2065,22 +2065,47 @@ const Wizard = () => {
                             <p className={`mb-4 ${medicationsVerified ? 'text-emerald-700' : 'text-blue-700'}`}>
                                 {medicationsVerified
                                     ? 'Thank you for verifying your medications. You can continue to the next section.'
-                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then click the button below to continue.'
+                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then confirm below to continue.'
                                 }
                             </p>
 
-                            {/* Verification Button */}
-                            {!medicationsVerified && (
-                                <button
-                                    onClick={() => setMedicationsVerified(true)}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all min-h-[56px] flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                            {/* Accessible checkbox with large touch target */}
+                            <label
+                                className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-all min-h-[56px] ${
+                                    medicationsVerified
+                                        ? 'bg-emerald-100 border-emerald-300'
+                                        : 'bg-white border-blue-200 hover:border-blue-400 hover:bg-blue-50'
+                                }`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={medicationsVerified}
+                                    onChange={(e) => setMedicationsVerified(e.target.checked)}
+                                    className="sr-only"
+                                    aria-describedby="verify-medications-description"
+                                />
+                                <span
+                                    className={`flex-shrink-0 w-7 h-7 rounded-md border-2 flex items-center justify-center transition-all ${
+                                        medicationsVerified
+                                            ? 'bg-emerald-600 border-emerald-600'
+                                            : 'bg-white border-slate-400'
+                                    }`}
+                                    aria-hidden="true"
+                                >
+                                    {medicationsVerified && <Check size={18} className="text-white" />}
+                                </span>
+                                <span
+                                    id="verify-medications-description"
+                                    className={`font-semibold text-base ${
+                                        medicationsVerified ? 'text-emerald-800' : 'text-slate-700'
+                                    }`}
                                 >
                                     {(answers.medications || []).length > 0
                                         ? `Yes, I have verified my ${(answers.medications || []).length} medication${(answers.medications || []).length > 1 ? 's' : ''} listed above`
                                         : 'I confirm I have no transplant medications to add'
                                     }
-                                </button>
-                            )}
+                                </span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -2385,7 +2410,7 @@ const Wizard = () => {
                                         const med = MEDICATIONS.find(m => m.id === id);
                                         return (
                                             <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
-                                                {med?.brandName?.split('/')[0] || id}
+                                                {med?.brandName.split('/')[0]}
                                                 <button
                                                     onClick={() => handleMultiSelect('medications', id)}
                                                     className="text-slate-400 hover:text-red-500 ml-1"
@@ -3503,7 +3528,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const hasPapProgram = !!(papProgram || med.papProgramId || med.papUrl);
 
     // Use direct URL from JSON data (bypasses database lookup for reliability)
-    const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName?.split('/')[0] || med.id}`;
+    const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
     const papLinkText = papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
 
     // Get community price stats for each source
@@ -3723,7 +3748,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                             <strong>Tip:</strong> Always verify with your doctor if you can switch between Brand and Generic versions.
                         </div>
                         <div className="flex gap-4 mt-4 no-print">
-                            <a href={`https://www.drugs.com/search.php?searchterm=${med.brandName?.split('/')[0] || med.id}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName || med.id} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
+                            <a href={`https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
 
                         {/* Pharmacies Section */}
