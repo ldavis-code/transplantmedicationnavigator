@@ -2565,40 +2565,18 @@ const Wizard = () => {
                         </h2>
                     </div>
 
-                    {/* Your Options - Color coded guide */}
-                    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm no-print">
-                        <h3 className="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2">
-                            <Info className="text-slate-600" size={20} aria-hidden="true" />
-                            Your Options
-                        </h3>
-                        <p className="text-slate-600 text-sm mb-4">Each card below shows one of your medications. Click the tabs to explore:</p>
-
-                        <div className="grid md:grid-cols-3 gap-3">
-                            {/* Assistance - Green */}
-                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-emerald-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-emerald-800 text-sm">Assistance</span>
-                                </div>
-                                <p className="text-emerald-700 text-xs">Free medicine programs, copay cards & patient assistance</p>
-                            </div>
-
-                            {/* Price - Blue */}
-                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-blue-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-blue-800 text-sm">Price</span>
-                                </div>
-                                <p className="text-blue-700 text-xs">Estimated costs (vary by dosage & quantity)</p>
-                            </div>
-
-                            {/* Overview - Purple */}
-                            <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-3 h-3 bg-purple-500 rounded-full" aria-hidden="true"></div>
-                                    <span className="font-bold text-purple-800 text-sm">Overview</span>
-                                </div>
-                                <p className="text-purple-700 text-xs">Basic medication info & manufacturer details</p>
+                    {/* Info Box */}
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 no-print">
+                        <div className="flex items-start gap-3">
+                            <Info className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                            <div>
+                                <p className="font-bold text-emerald-800 mb-1">Your Options</p>
+                                <p className="text-emerald-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
+                                <ul className="text-emerald-700 text-sm mt-2 ml-4 list-disc space-y-1">
+                                    <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
+                                    <li><strong>Price</strong> - Prices are ESTIMATES and vary by the number of pills prescribed or dosage</li>
+                                    <li><strong>Overview</strong> - Basic info about the medication</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
