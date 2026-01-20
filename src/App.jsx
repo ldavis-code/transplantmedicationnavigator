@@ -1336,6 +1336,7 @@ const Wizard = () => {
     const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [emailSentSuccess, setEmailSentSuccess] = useState(null); // null = not attempted, true = sent, false = failed
+    const [emailErrorDetails, setEmailErrorDetails] = useState(null); // Detailed error info for debugging
 
     // Scroll to top when step changes for accessibility
     useEffect(() => {
@@ -1467,6 +1468,11 @@ const Wizard = () => {
             const result = await response.json();
             setEmailSentSuccess(result.emailSent === true);
 
+            // Capture error details for debugging if email failed
+            if (!result.emailSent && result.errorDetails) {
+                setEmailErrorDetails(result.errorDetails);
+            }
+
             // Success - proceed to results
             setStep(7);
         } catch (error) {
@@ -1474,6 +1480,7 @@ const Wizard = () => {
             // Still proceed to results even if email save fails
             // We don't want to block the user from seeing their results
             setEmailSentSuccess(false);
+            setEmailErrorDetails(error.message || 'Network error');
             setStep(7);
         } finally {
             setIsSubmittingEmail(false);
@@ -2282,6 +2289,11 @@ const Wizard = () => {
                                 Your results are saved, but we had trouble sending the email to <strong>{userEmail}</strong>.
                                 Please bookmark this page or use the print button to save your results.
                             </p>
+                            {emailErrorDetails && (
+                                <p className="text-amber-600 text-xs mt-2 font-mono bg-amber-100 px-2 py-1 rounded">
+                                    Debug info: {emailErrorDetails}
+                                </p>
+                            )}
                         </div>
                     </div>
                 )}

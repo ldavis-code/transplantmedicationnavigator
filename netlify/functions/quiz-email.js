@@ -170,31 +170,50 @@ export async function handler(event) {
     // Send personalized results email
     let emailSent = false;
     let emailWarning = null;
+    let emailErrorDetails = null;
 
-    try {
-      const emailHtml = buildQuizResultsEmail(
-        email.toLowerCase().trim(),
-        quizAnswers,
-        selectedMedications,
-        marketingOptIn
-      );
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('EMAIL CONFIG ERROR: RESEND_API_KEY environment variable is not set');
+      emailWarning = 'Email service not configured';
+      emailErrorDetails = 'RESEND_API_KEY not set';
+    } else {
+      try {
+        console.log('Attempting to send email to:', email.toLowerCase().trim());
+        console.log('RESEND_API_KEY is set:', process.env.RESEND_API_KEY ? 'Yes (length: ' + process.env.RESEND_API_KEY.length + ')' : 'No');
 
-      const { error: emailError } = await resend.emails.send({
-        from: 'Transplant Medication Navigator <info@transplantmedicationnavigator.com>',
-        to: email.toLowerCase().trim(),
-        subject: 'Your Personalized Medication Assistance Plan',
-        html: emailHtml,
-      });
+        const emailHtml = buildQuizResultsEmail(
+          email.toLowerCase().trim(),
+          quizAnswers,
+          selectedMedications,
+          marketingOptIn
+        );
 
-      if (emailError) {
-        console.error('Resend error:', emailError);
-        emailWarning = 'Results saved but email delivery pending';
-      } else {
-        emailSent = true;
+        const { data: emailData, error: emailError } = await resend.emails.send({
+          from: 'Transplant Medication Navigator <info@transplantmedicationnavigator.com>',
+          to: email.toLowerCase().trim(),
+          subject: 'Your Personalized Medication Assistance Plan',
+          html: emailHtml,
+        });
+
+        if (emailError) {
+          console.error('Resend API error:', JSON.stringify(emailError, null, 2));
+          console.error('Error name:', emailError.name);
+          console.error('Error message:', emailError.message);
+          emailWarning = 'Results saved but email delivery pending';
+          emailErrorDetails = emailError.message || 'Unknown Resend error';
+        } else {
+          console.log('Email sent successfully! Resend ID:', emailData?.id);
+          emailSent = true;
+        }
+      } catch (emailErr) {
+        console.error('Email send exception:', emailErr);
+        console.error('Exception type:', emailErr.constructor.name);
+        console.error('Exception message:', emailErr.message);
+        console.error('Exception stack:', emailErr.stack);
+        emailWarning = 'Results saved but email delivery failed';
+        emailErrorDetails = emailErr.message || 'Unknown error';
       }
-    } catch (emailErr) {
-      console.error('Email send error:', emailErr);
-      emailWarning = 'Results saved but email delivery failed';
     }
 
     return {
@@ -205,7 +224,8 @@ export async function handler(event) {
         message: emailSent ? 'Email saved and results sent' : 'Email saved successfully',
         id: data.id,
         emailSent,
-        ...(emailWarning && { warning: emailWarning })
+        ...(emailWarning && { warning: emailWarning }),
+        ...(emailErrorDetails && { errorDetails: emailErrorDetails })
       }),
     };
 
