@@ -71,7 +71,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter, Mail
+    CreditCard, Sparkles, Star, Filter
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -1297,11 +1297,6 @@ const Wizard = () => {
     // Medication verification state - patient confirms their medications
     const [medicationsVerified, setMedicationsVerified] = useState(false);
 
-    // Email gate state for Step 6
-    const [email, setEmail] = useState('');
-    const [emailOptIn, setEmailOptIn] = useState(false);
-    const [emailError, setEmailError] = useState('');
-
     // Search state for Step 5
     const [medSearchTerm, setMedSearchTerm] = useState('');
     const [medSearchResult, setMedSearchResult] = useState(null);
@@ -1313,7 +1308,7 @@ const Wizard = () => {
         // Also announce page change for screen readers
         const announcement = document.getElementById('step-announcement');
         if (announcement) {
-            announcement.textContent = `Step ${step} of 7`;
+            announcement.textContent = `Step ${step} of 6`;
         }
     }, [step]);
 
@@ -1396,37 +1391,17 @@ const Wizard = () => {
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
     const handleNextFromCosts = () => {
-        // Go to email gate step before showing results
-        setStep(6);
-    };
-
-    // Email validation helper
-    const isValidEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
-
-    const handleNextFromEmailGate = () => {
-        // Validate email
-        if (!email.trim()) {
-            setEmailError('Please enter your email address');
-            return;
-        }
-        if (!isValidEmail(email.trim())) {
-            setEmailError('Please enter a valid email address');
-            return;
-        }
-        setEmailError('');
         // Quiz results (strategy/guidance) are always free
         // The paywall only appears when viewing detailed medication cards on the Medications page
-        setStep(7);
+        setStep(6);
     };
 
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Your Plan'];
-    const totalVisibleSteps = 5; // 5 sections before results (Costs merged into final step)
+    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
+    const totalVisibleSteps = 5; // 5 sections before results
 
     // Color themes for each step (matching the icon colors)
     const stepColors = {
@@ -1434,7 +1409,7 @@ const Wizard = () => {
         2: { bg: 'bg-rose-500', bgLight: 'bg-rose-100', ring: 'ring-rose-100', text: 'text-rose-600', textBold: 'text-rose-700', border: 'border-rose-500', bgSelect: 'bg-rose-50', hoverBorder: 'hover:border-rose-200', badge: 'bg-rose-600' },
         3: { bg: 'bg-blue-500', bgLight: 'bg-blue-100', ring: 'ring-blue-100', text: 'text-blue-600', textBold: 'text-blue-700', border: 'border-blue-500', bgSelect: 'bg-blue-50', hoverBorder: 'hover:border-blue-200', badge: 'bg-blue-600' },
         4: { bg: 'bg-purple-500', bgLight: 'bg-purple-100', ring: 'ring-purple-100', text: 'text-purple-600', textBold: 'text-purple-700', border: 'border-purple-500', bgSelect: 'bg-purple-50', hoverBorder: 'hover:border-purple-200', badge: 'bg-purple-600' },
-        5: { bg: 'bg-teal-500', bgLight: 'bg-teal-100', ring: 'ring-teal-100', text: 'text-teal-600', textBold: 'text-teal-700', border: 'border-teal-500', bgSelect: 'bg-teal-50', hoverBorder: 'hover:border-teal-200', badge: 'bg-teal-600' },
+        5: { bg: 'bg-amber-500', bgLight: 'bg-amber-100', ring: 'ring-amber-100', text: 'text-amber-600', textBold: 'text-amber-700', border: 'border-amber-500', bgSelect: 'bg-amber-50', hoverBorder: 'hover:border-amber-200', badge: 'bg-amber-600' },
     };
 
     const renderProgress = () => {
@@ -2086,127 +2061,9 @@ const Wizard = () => {
         );
     }
 
-    // Step 6: Email Gate
+    // Step 6: Results
     if (step === 6) {
-        return (
-            <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
-                {renderProgress()}
-
-                {/* Back button */}
-                <button
-                    onClick={() => setStep(5)}
-                    className="text-slate-700 flex items-center gap-1 text-sm hover:text-teal-600 mb-6 min-h-[44px] min-w-[44px]"
-                    aria-label="Go back to previous step"
-                >
-                    <ChevronLeft size={16} aria-hidden="true" /> Back
-                </button>
-
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-                    {/* Header with shield icon */}
-                    <div className="flex items-start gap-4 mb-6 pb-6 border-b border-slate-200">
-                        <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <ShieldCheck className="w-10 h-10 text-teal-600" aria-hidden="true" />
-                        </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Get Your Personalized Medication Strategy</h2>
-                            <p className="text-slate-600">
-                                You're almost there! To receive your personalized medication assistance plan, please enter your email address below.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Benefits list */}
-                    <div className="mb-6">
-                        <h3 className="font-semibold text-slate-800 mb-4">Why we ask for your email:</h3>
-                        <ul className="space-y-3">
-                            {[
-                                'Receive your complete medication strategy report',
-                                'Get reminders about copay card renewals',
-                                'Stay updated on new assistance programs',
-                                'Access your results anytime'
-                            ].map((benefit, index) => (
-                                <li key={index} className="flex items-center gap-3 text-slate-700">
-                                    <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0" aria-hidden="true" />
-                                    <span>{benefit}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Privacy promise */}
-                    <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mb-6">
-                        <h4 className="font-semibold text-teal-800 mb-1">Privacy Promise:</h4>
-                        <p className="text-teal-700 text-sm">
-                            We will never sell your email address. We will never share your medication information. You can unsubscribe anytime.
-                        </p>
-                    </div>
-
-                    {/* Email input */}
-                    <div className="mb-4">
-                        <label htmlFor="email-gate-input" className="block font-semibold text-slate-800 mb-2">
-                            Email Address
-                        </label>
-                        <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" aria-hidden="true" />
-                            <input
-                                id="email-gate-input"
-                                type="email"
-                                value={email}
-                                onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
-                                placeholder="your.email@example.com"
-                                className={`w-full pl-11 pr-4 py-3 rounded-lg border ${emailError ? 'border-red-500 focus:ring-red-200' : 'border-slate-300 focus:border-teal-500 focus:ring-teal-100'} focus:ring-2 outline-none transition text-slate-900`}
-                                aria-describedby={emailError ? 'email-error' : undefined}
-                            />
-                        </div>
-                        {emailError && (
-                            <p id="email-error" className="mt-2 text-sm text-red-600 flex items-center gap-1">
-                                <AlertCircle size={14} aria-hidden="true" />
-                                {emailError}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* Optional marketing checkbox */}
-                    <div className="mb-6">
-                        <label className="flex items-start gap-3 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={emailOptIn}
-                                onChange={(e) => setEmailOptIn(e.target.checked)}
-                                className="mt-1 w-4 h-4 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
-                            />
-                            <span className="text-slate-600 text-sm">
-                                Send me helpful medication assistance updates (optional)
-                            </span>
-                        </label>
-                    </div>
-
-                    {/* Submit button */}
-                    <button
-                        onClick={handleNextFromEmailGate}
-                        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"
-                    >
-                        Get My Medication Plan
-                    </button>
-                </div>
-
-                {/* Footer text */}
-                <p className="text-center text-slate-500 text-sm mt-6">
-                    By continuing, you agree to our{' '}
-                    <Link to="/terms" className="text-teal-600 hover:underline">Terms of Service</Link>
-                    {' '}and{' '}
-                    <Link to="/privacy" className="text-teal-600 hover:underline">Privacy Policy</Link>.
-                    <br />
-                    We use your email only to send you your results and occasional updates.
-                </p>
-            </div>
-        );
-    }
-
-    // Step 7: Results
-    if (step === 7) {
-        const isKidney = (answers.organs || []).includes(OrganType.KIDNEY);
+        const isKidney = answers.organs.includes(OrganType.KIDNEY);
         const isMedicare = answers.insurance === InsuranceType.MEDICARE;
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
         const isUninsured = answers.insurance === InsuranceType.UNINSURED;
@@ -2217,7 +2074,7 @@ const Wizard = () => {
                 <StepAnnouncement />
                 {/* Back Button */}
                 <button
-                    onClick={() => setStep(6)}
+                    onClick={() => setStep(5)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
                     aria-label="Go back to previous step"
                 >
