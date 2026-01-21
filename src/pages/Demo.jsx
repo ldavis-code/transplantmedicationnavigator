@@ -50,9 +50,9 @@ const Demo = () => {
     },
     {
       icon: FileText,
-      title: 'Medication Search',
+      title: 'At the Pharmacy Counter',
       description: 'Search 100+ transplant medications with assistance program details',
-      path: '/medications',
+      path: '/pharmacy',
     },
     {
       icon: Calendar,
