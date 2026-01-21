@@ -479,7 +479,6 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
-        { path: '/pharmacy', label: 'At the Pharmacy Counter', ariaLabel: 'View medication prices and assistance programs' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
@@ -2552,17 +2551,6 @@ const Wizard = () => {
                                 )}
                             </div>
 
-                            <div className="space-y-2 no-print">
-                                {answers.medications.length > 0 && (
-                                    <Link
-                                        to={`/pharmacy?ids=${answers.medications.join(',')}#medication-cards`}
-                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                        aria-label="View price estimates for your selected medications"
-                                    >
-                                        View Price Estimates for These Meds
-                                    </Link>
-                                )}
-                            </div>
                         </section>
 
                         <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
@@ -2738,20 +2726,6 @@ const Wizard = () => {
                             </div>
                         </div>
 
-                        {/* Call to Action for Programs */}
-                        <div className="mt-8 bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">
-                            <h3 className="font-bold text-purple-900 mb-2">Want to save more?</h3>
-                            <p className="text-purple-700 mb-4">
-                                Use our medication search to find Patient Assistance Programs, foundation grants,
-                                and copay cards for your specific medications.
-                            </p>
-                            <Link
-                                to="/pharmacy"
-                                className="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors"
-                            >
-                                Search Medications
-                            </Link>
-                        </div>
                     </>
                 )}
                 </div>
@@ -6136,8 +6110,6 @@ const MainSiteRoutes = () => (
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
-                <Route path="/pharmacy" element={<MedicationSearch />} />
-                <Route path="/medications" element={<Navigate to="/pharmacy" replace />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
