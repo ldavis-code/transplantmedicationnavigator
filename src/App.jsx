@@ -2904,12 +2904,16 @@ const MedicationSearch = () => {
     // Scroll to medication cards if hash is present
     useEffect(() => {
         if (window.location.hash === '#medication-cards' && myListIds.length > 0) {
-            setTimeout(() => {
+            // Wait for the DOM to render the medication cards section
+            const scrollToCards = () => {
                 const element = document.getElementById('medication-cards');
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            }, 100);
+            };
+            // Try multiple times to ensure element is rendered
+            setTimeout(scrollToCards, 200);
+            setTimeout(scrollToCards, 500);
         }
     }, [myListIds]);
 
