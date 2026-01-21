@@ -2387,9 +2387,16 @@ const Wizard = () => {
                 }`}>
                     <div>
                         <h1 className="text-3xl font-bold mb-2">Your Medication Strategy</h1>
-                        <p className="opacity-90">
+                        <p className="opacity-90 mb-4">
                             Based on your inputs, here is how to navigate your costs.
                         </p>
+                        <Link
+                            to="/my-medications"
+                            className="inline-block bg-emerald-500 hover:bg-emerald-400 text-white px-6 py-2 rounded-lg font-bold text-sm transition no-print"
+                            aria-label="View your estimated medication costs"
+                        >
+                            Please view my estimated cost
+                        </Link>
                     </div>
                     <button
                         onClick={() => window.print()}
