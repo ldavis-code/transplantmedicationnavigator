@@ -479,8 +479,8 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
+        { path: '/pharmacy', label: 'At the Pharmacy Counter', ariaLabel: 'View medication prices and assistance programs' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
-        { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
@@ -2407,22 +2407,6 @@ const Wizard = () => {
                         <span className="sm:hidden">Strategy</span>
                     </button>
                     <button
-                        onClick={() => setActiveResultsTab('calculator')}
-                        role="tab"
-                        id="tab-calculator"
-                        aria-selected={activeResultsTab === 'calculator'}
-                        aria-controls="tabpanel-calculator"
-                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 sm:px-6 rounded-xl font-bold transition-all min-h-[56px] text-sm sm:text-base ${
-                            activeResultsTab === 'calculator'
-                                ? 'bg-emerald-600 text-white shadow-lg scale-[1.02]'
-                                : 'bg-white text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 shadow-sm'
-                        }`}
-                    >
-                        <Calculator size={20} aria-hidden="true" />
-                        <span className="hidden sm:inline">Estimate Savings</span>
-                        <span className="sm:hidden">Estimate</span>
-                    </button>
-                    <button
                         onClick={() => setActiveResultsTab('tracker')}
                         role="tab"
                         id="tab-tracker"
@@ -2558,7 +2542,7 @@ const Wizard = () => {
                             <div className="space-y-2 no-print">
                                 {answers.medications.length > 0 && (
                                     <Link
-                                        to={`/medications?ids=${answers.medications.join(',')}#medication-cards`}
+                                        to={`/pharmacy?ids=${answers.medications.join(',')}#medication-cards`}
                                         className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
                                         aria-label="View price estimates for your selected medications"
                                     >
@@ -2706,24 +2690,6 @@ const Wizard = () => {
                 )}
                 </div>
 
-                {/* Calculator Tab Content */}
-                <div
-                    role="tabpanel"
-                    id="tabpanel-calculator"
-                    aria-labelledby="tab-calculator"
-                    hidden={activeResultsTab !== 'calculator'}
-                >
-                {activeResultsTab === 'calculator' && (
-                    <SavingsCalculator
-                        medications={allMedications || []}
-                        isPro={hasCalculatorAccess}
-                        onUpgrade={handleCalculatorUpgrade}
-                        onCalculate={handleCalculate}
-                        remainingCalculations={remainingCalculatorUses}
-                    />
-                )}
-                </div>
-
                 {/* Tracker Tab Content */}
                 <div
                     role="tabpanel"
@@ -2767,7 +2733,7 @@ const Wizard = () => {
                                 and copay cards for your specific medications.
                             </p>
                             <Link
-                                to="/medications"
+                                to="/pharmacy"
                                 className="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors"
                             >
                                 Search Medications
@@ -6153,7 +6119,8 @@ const MainSiteRoutes = () => (
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
-                <Route path="/medications" element={<MedicationSearch />} />
+                <Route path="/pharmacy" element={<MedicationSearch />} />
+                <Route path="/medications" element={<Navigate to="/pharmacy" replace />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
