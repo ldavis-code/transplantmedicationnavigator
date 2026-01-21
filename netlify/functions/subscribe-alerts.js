@@ -107,6 +107,7 @@ export const handler = async (event) => {
 
     const { error: emailError } = await resend.emails.send({
       from: 'Transplant Medication Navigator <info@contact.transplantmedicationnavigator.com>',
+      replyTo: 'info@transplantmedicationnavigator.com',
       to: email,
       subject: 'Your Personalized Medication Assistance Plan',
       html: `
