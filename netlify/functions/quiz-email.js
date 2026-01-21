@@ -209,7 +209,7 @@ export async function handler(event) {
         );
 
         const { data: emailData, error: emailError } = await resend.emails.send({
-          from: 'Transplant Medication Navigator <info@transplantmedicationnavigator.com>',
+          from: 'Transplant Medication Navigator <info@contact.transplantmedicationnavigator.com>',
           to: email.toLowerCase().trim(),
           subject: 'Your Personalized Medication Assistance Plan',
           html: emailHtml,
