@@ -7,20 +7,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-// Load programs data
-let programsData = { copayPrograms: {}, papPrograms: {}, foundationPrograms: {} };
-try {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const programsPath = join(__dirname, '../../src/data/programs.json');
-  programsData = JSON.parse(readFileSync(programsPath, 'utf-8'));
-} catch (e) {
-  console.error('Could not load programs.json:', e.message);
-}
+import programsData from '../../src/data/programs.json' with { type: 'json' };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
