@@ -2889,7 +2889,11 @@ const MedicationSearch = () => {
         const ids = searchParams.get('ids');
         if (ids) {
             const idArray = ids.split(',').filter(id => id.trim() !== '');
-            if (idArray.length > 0) setMyListIds(idArray);
+            if (idArray.length > 0) {
+                setMyListIds(idArray);
+                // Skip verification and go directly to medication cards
+                setShowSavings(true);
+            }
         }
     }, [searchParams]);
 
@@ -2901,9 +2905,9 @@ const MedicationSearch = () => {
         }
     }, [myListIds, setSearchParams]);
 
-    // Scroll to medication cards if hash is present
+    // Scroll to medication cards if hash is present or coming from quiz
     useEffect(() => {
-        if (window.location.hash === '#medication-cards' && myListIds.length > 0) {
+        if (window.location.hash === '#medication-cards' && myListIds.length > 0 && showSavings) {
             // Wait for the DOM to render the medication cards section
             const scrollToCards = () => {
                 const element = document.getElementById('medication-cards');
@@ -2915,7 +2919,7 @@ const MedicationSearch = () => {
             setTimeout(scrollToCards, 200);
             setTimeout(scrollToCards, 500);
         }
-    }, [myListIds]);
+    }, [myListIds, showSavings]);
 
     const handleSearch = useCallback(() => {
         if (!searchTerm.trim()) {
@@ -3102,7 +3106,7 @@ const MedicationSearch = () => {
 
             {/* When user has medications - show confirmation prompt and guidance */}
             {hasItems && !showSavings && (
-                <section id="medication-cards" className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
+                <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
                             <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Your Medications</h1>
@@ -3268,7 +3272,7 @@ const MedicationSearch = () => {
                 </div>
             )}
 
-            <div className="space-y-6 pb-12">
+            <div id="medication-cards" className="space-y-6 pb-12">
                 {!hasItems && (
                     <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                         <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
