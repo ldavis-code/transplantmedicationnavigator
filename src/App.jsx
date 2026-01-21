@@ -2389,21 +2389,22 @@ const Wizard = () => {
                 </div>
 
                 {/* Tab Navigation */}
-                <div className="flex gap-2 bg-slate-100 p-1 rounded-xl no-print" role="tablist" aria-label="Results tabs">
+                <div className="flex gap-1 sm:gap-2 bg-slate-200 p-1.5 rounded-2xl no-print shadow-inner" role="tablist" aria-label="Results tabs">
                     <button
                         onClick={() => setActiveResultsTab('results')}
                         role="tab"
                         id="tab-results"
                         aria-selected={activeResultsTab === 'results'}
                         aria-controls="tabpanel-results"
-                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 sm:px-6 rounded-xl font-bold transition-all min-h-[56px] text-sm sm:text-base ${
                             activeResultsTab === 'results'
-                                ? 'bg-white text-emerald-700 shadow-sm'
-                                : 'text-slate-600 hover:text-slate-900'
+                                ? 'bg-emerald-600 text-white shadow-lg scale-[1.02]'
+                                : 'bg-white text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 shadow-sm'
                         }`}
                     >
-                        <Shield size={18} aria-hidden="true" />
-                        My Strategy
+                        <Shield size={20} aria-hidden="true" />
+                        <span className="hidden sm:inline">My Strategy</span>
+                        <span className="sm:hidden">Strategy</span>
                     </button>
                     <button
                         onClick={() => setActiveResultsTab('calculator')}
@@ -2411,14 +2412,15 @@ const Wizard = () => {
                         id="tab-calculator"
                         aria-selected={activeResultsTab === 'calculator'}
                         aria-controls="tabpanel-calculator"
-                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 sm:px-6 rounded-xl font-bold transition-all min-h-[56px] text-sm sm:text-base ${
                             activeResultsTab === 'calculator'
-                                ? 'bg-white text-emerald-700 shadow-sm'
-                                : 'text-slate-600 hover:text-slate-900'
+                                ? 'bg-emerald-600 text-white shadow-lg scale-[1.02]'
+                                : 'bg-white text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 shadow-sm'
                         }`}
                     >
-                        <Calculator size={18} aria-hidden="true" />
-                        Estimate Savings
+                        <Calculator size={20} aria-hidden="true" />
+                        <span className="hidden sm:inline">Estimate Savings</span>
+                        <span className="sm:hidden">Estimate</span>
                     </button>
                     <button
                         onClick={() => setActiveResultsTab('tracker')}
@@ -2426,14 +2428,15 @@ const Wizard = () => {
                         id="tab-tracker"
                         aria-selected={activeResultsTab === 'tracker'}
                         aria-controls="tabpanel-tracker"
-                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 sm:px-6 rounded-xl font-bold transition-all min-h-[56px] text-sm sm:text-base ${
                             activeResultsTab === 'tracker'
-                                ? 'bg-white text-emerald-700 shadow-sm'
-                                : 'text-slate-600 hover:text-slate-900'
+                                ? 'bg-emerald-600 text-white shadow-lg scale-[1.02]'
+                                : 'bg-white text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 shadow-sm'
                         }`}
                     >
-                        <TrendingUp size={18} aria-hidden="true" />
-                        Track Savings
+                        <TrendingUp size={20} aria-hidden="true" />
+                        <span className="hidden sm:inline">Track Savings</span>
+                        <span className="sm:hidden">Track</span>
                     </button>
                 </div>
 
@@ -2555,7 +2558,7 @@ const Wizard = () => {
                             <div className="space-y-2 no-print">
                                 {answers.medications.length > 0 && (
                                     <Link
-                                        to={`/medications?ids=${answers.medications.join(',')}`}
+                                        to={`/medications?ids=${answers.medications.join(',')}#medication-cards`}
                                         className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
                                         aria-label="View price estimates for your selected medications"
                                     >
@@ -2932,6 +2935,18 @@ const MedicationSearch = () => {
         }
     }, [myListIds, setSearchParams]);
 
+    // Scroll to medication cards if hash is present
+    useEffect(() => {
+        if (window.location.hash === '#medication-cards' && myListIds.length > 0) {
+            setTimeout(() => {
+                const element = document.getElementById('medication-cards');
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+    }, [myListIds]);
+
     const handleSearch = useCallback(() => {
         if (!searchTerm.trim()) {
             setSearchResult(null);
@@ -3117,7 +3132,7 @@ const MedicationSearch = () => {
 
             {/* When user has medications - show confirmation prompt and guidance */}
             {hasItems && !showSavings && (
-                <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
+                <section id="medication-cards" className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
                             <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Your Medications</h1>
