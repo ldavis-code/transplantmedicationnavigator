@@ -60,9 +60,14 @@ import { DemoModeProvider } from './context/DemoModeContext.jsx';
 // Demo Banner Component
 import DemoBanner from './components/DemoBanner.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
-import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
+import { MedicationsProvider, useMedicationsList, useMedications } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
 import { ReportingAuthProvider } from './context/ReportingAuthContext.jsx';
+// Savings components for Wizard results tabs
+import SavingsCalculator from './components/SavingsCalculator.jsx';
+import LogSavingsForm from './components/LogSavingsForm.jsx';
+import SavingsDashboard from './components/SavingsDashboard.jsx';
+import { syncPendingEntries } from './lib/savingsApi.js';
 import {
     Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck,
     Menu, X, ShieldAlert, HeartHandshake, CheckCircle, ChevronLeft, DollarSign,
@@ -71,7 +76,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter
+    CreditCard, Sparkles, Star, Filter, Calculator
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -1338,6 +1343,54 @@ const Wizard = () => {
     const [emailSentSuccess, setEmailSentSuccess] = useState(null); // null = not attempted, true = sent, false = failed
     const [emailErrorDetails, setEmailErrorDetails] = useState(null); // Detailed error info for debugging
 
+    // Results page tabs state (Step 7)
+    const [activeResultsTab, setActiveResultsTab] = useState('results');
+    const [savingsRefreshTrigger, setSavingsRefreshTrigger] = useState(0);
+    const [savingsSyncMessage, setSavingsSyncMessage] = useState(null);
+    const { medications: allMedications } = useMedications();
+    const {
+        incrementCalculatorUses,
+        isCalculatorLimitReached,
+        remainingCalculatorUses
+    } = useChatQuiz();
+
+    // Check subscription status for savings calculator
+    const { hasAccess: hasCalculatorAccess, refreshAccess: refreshCalculatorAccess } = useLocalSubscriptionStatus('calculator');
+
+    // Sync pending savings entries when tracker tab is active
+    useEffect(() => {
+        if (step === 7 && activeResultsTab === 'tracker') {
+            async function trySync() {
+                try {
+                    const result = await syncPendingEntries();
+                    if (result.synced > 0) {
+                        setSavingsSyncMessage(`Synced ${result.synced} pending entries`);
+                        setSavingsRefreshTrigger(prev => prev + 1);
+                        setTimeout(() => setSavingsSyncMessage(null), 3000);
+                    }
+                } catch (error) {
+                    console.error('Sync error:', error);
+                }
+            }
+            trySync();
+        }
+    }, [step, activeResultsTab]);
+
+    const handleSavingsLogged = () => {
+        setSavingsRefreshTrigger(prev => prev + 1);
+    };
+
+    const handleCalculatorUpgrade = () => {
+        window.location.href = '/pricing';
+    };
+
+    const handleCalculate = () => {
+        if (hasCalculatorAccess) return true;
+        if (isCalculatorLimitReached) return false;
+        incrementCalculatorUses();
+        return true;
+    };
+
     // Scroll to top when step changes for accessibility
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2326,7 +2379,7 @@ const Wizard = () => {
                             Based on your inputs, here is how to navigate your costs.
                         </p>
                     </div>
-                    <button 
+                    <button
                         onClick={() => window.print()}
                         className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 border border-white/20 transition no-print"
                         aria-label="Print your medication plan"
@@ -2335,6 +2388,71 @@ const Wizard = () => {
                     </button>
                 </div>
 
+                {/* Tab Navigation */}
+                <div className="flex gap-2 bg-slate-100 p-1 rounded-xl no-print" role="tablist" aria-label="Results tabs">
+                    <button
+                        onClick={() => setActiveResultsTab('results')}
+                        role="tab"
+                        id="tab-results"
+                        aria-selected={activeResultsTab === 'results'}
+                        aria-controls="tabpanel-results"
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                            activeResultsTab === 'results'
+                                ? 'bg-white text-emerald-700 shadow-sm'
+                                : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                    >
+                        <Shield size={18} aria-hidden="true" />
+                        My Strategy
+                    </button>
+                    <button
+                        onClick={() => setActiveResultsTab('calculator')}
+                        role="tab"
+                        id="tab-calculator"
+                        aria-selected={activeResultsTab === 'calculator'}
+                        aria-controls="tabpanel-calculator"
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                            activeResultsTab === 'calculator'
+                                ? 'bg-white text-emerald-700 shadow-sm'
+                                : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                    >
+                        <Calculator size={18} aria-hidden="true" />
+                        Estimate Savings
+                    </button>
+                    <button
+                        onClick={() => setActiveResultsTab('tracker')}
+                        role="tab"
+                        id="tab-tracker"
+                        aria-selected={activeResultsTab === 'tracker'}
+                        aria-controls="tabpanel-tracker"
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
+                            activeResultsTab === 'tracker'
+                                ? 'bg-white text-emerald-700 shadow-sm'
+                                : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                    >
+                        <TrendingUp size={18} aria-hidden="true" />
+                        Track Savings
+                    </button>
+                </div>
+
+                {/* Sync Message for Tracker */}
+                {savingsSyncMessage && activeResultsTab === 'tracker' && (
+                    <div role="status" aria-live="polite" className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 rounded-lg text-sm">
+                        {savingsSyncMessage}
+                    </div>
+                )}
+
+                {/* Results Tab Content */}
+                <div
+                    role="tabpanel"
+                    id="tabpanel-results"
+                    aria-labelledby="tab-results"
+                    hidden={activeResultsTab !== 'results'}
+                >
+                {activeResultsTab === 'results' && (
+                <>
                 {/* Critical Alerts */}
                 {isKidney && isMedicare && (
                     <aside className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-600" role="alert" aria-labelledby="medicare-alert">
@@ -2579,6 +2697,81 @@ const Wizard = () => {
                             </section>
                         )}
                     </div>
+                </div>
+
+                </>
+                )}
+                </div>
+
+                {/* Calculator Tab Content */}
+                <div
+                    role="tabpanel"
+                    id="tabpanel-calculator"
+                    aria-labelledby="tab-calculator"
+                    hidden={activeResultsTab !== 'calculator'}
+                >
+                {activeResultsTab === 'calculator' && (
+                    <SavingsCalculator
+                        medications={allMedications || []}
+                        isPro={hasCalculatorAccess}
+                        onUpgrade={handleCalculatorUpgrade}
+                        onCalculate={handleCalculate}
+                        remainingCalculations={remainingCalculatorUses}
+                    />
+                )}
+                </div>
+
+                {/* Tracker Tab Content */}
+                <div
+                    role="tabpanel"
+                    id="tabpanel-tracker"
+                    aria-labelledby="tab-tracker"
+                    hidden={activeResultsTab !== 'tracker'}
+                >
+                {activeResultsTab === 'tracker' && (
+                    <>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {/* Left Column: Log Form */}
+                            <div>
+                                <LogSavingsForm
+                                    onSuccess={handleSavingsLogged}
+                                    medications={allMedications || []}
+                                />
+
+                                {/* Tips */}
+                                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                    <h4 className="font-semibold text-blue-900 mb-2">Tips for Tracking</h4>
+                                    <ul className="text-sm text-blue-800 space-y-2">
+                                        <li>• Log each prescription fill as you pick it up</li>
+                                        <li>• Include what you would have paid without assistance</li>
+                                        <li>• Check your pharmacy receipt for the "You Saved" amount</li>
+                                        <li>• Track different program types to see which save you most</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Right Column: Dashboard */}
+                            <div>
+                                <SavingsDashboard refreshTrigger={savingsRefreshTrigger} />
+                            </div>
+                        </div>
+
+                        {/* Call to Action for Programs */}
+                        <div className="mt-8 bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">
+                            <h3 className="font-bold text-purple-900 mb-2">Want to save more?</h3>
+                            <p className="text-purple-700 mb-4">
+                                Use our medication search to find Patient Assistance Programs, foundation grants,
+                                and copay cards for your specific medications.
+                            </p>
+                            <Link
+                                to="/medications"
+                                className="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                            >
+                                Search Medications
+                            </Link>
+                        </div>
+                    </>
+                )}
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
