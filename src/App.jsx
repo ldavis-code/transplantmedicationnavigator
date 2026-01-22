@@ -2322,9 +2322,16 @@ const Wizard = () => {
                 }`}>
                     <div>
                         <h1 className="text-3xl font-bold mb-2">Your Medication Strategy</h1>
-                        <p className="opacity-90">
+                        <p className="opacity-90 mb-4">
                             Based on your inputs, here is how to navigate your costs.
                         </p>
+                        <Link
+                            to="/my-medications"
+                            className="inline-block bg-emerald-500 hover:bg-emerald-400 text-white px-6 py-2 rounded-lg font-bold text-sm transition no-print"
+                            aria-label="View your estimated medication costs"
+                        >
+                            Please view my estimated cost
+                        </Link>
                     </div>
                     <button 
                         onClick={() => window.print()}
@@ -2434,17 +2441,6 @@ const Wizard = () => {
                                 )}
                             </div>
 
-                            <div className="space-y-2 no-print">
-                                {answers.medications.length > 0 && (
-                                    <Link
-                                        to={`/medications?ids=${answers.medications.join(',')}`}
-                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
-                                        aria-label="View price estimates for your selected medications"
-                                    >
-                                        View Price Estimates for These Meds
-                                    </Link>
-                                )}
-                            </div>
                         </section>
 
                         <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
@@ -2579,6 +2575,49 @@ const Wizard = () => {
                             </section>
                         )}
                     </div>
+                </div>
+
+                </>
+                )}
+                </div>
+
+                {/* Tracker Tab Content */}
+                <div
+                    role="tabpanel"
+                    id="tabpanel-tracker"
+                    aria-labelledby="tab-tracker"
+                    hidden={activeResultsTab !== 'tracker'}
+                >
+                {activeResultsTab === 'tracker' && (
+                    <>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {/* Left Column: Log Form */}
+                            <div>
+                                <LogSavingsForm
+                                    onSuccess={handleSavingsLogged}
+                                    medications={allMedications || []}
+                                />
+
+                                {/* Tips */}
+                                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                    <h4 className="font-semibold text-blue-900 mb-2">Tips for Tracking</h4>
+                                    <ul className="text-sm text-blue-800 space-y-2">
+                                        <li>• Log each prescription fill as you pick it up</li>
+                                        <li>• Include what you would have paid without assistance</li>
+                                        <li>• Check your pharmacy receipt for the "You Saved" amount</li>
+                                        <li>• Track different program types to see which save you most</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Right Column: Dashboard */}
+                            <div>
+                                <SavingsDashboard refreshTrigger={savingsRefreshTrigger} />
+                            </div>
+                        </div>
+
+                    </>
+                )}
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
@@ -5945,7 +5984,6 @@ const MainSiteRoutes = () => (
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
-                <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { HeartHandshake, Search, Map, Building2, ShieldCheck } from 'lucide-react';
+import { HeartHandshake, Map, Building2, ShieldCheck } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -78,17 +78,7 @@ const Pilot = () => {
             {/* Main CTAs */}
             <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
                 <h2 className="text-xl font-bold text-slate-900 mb-6 text-center">Get Started</h2>
-                <div className="grid md:grid-cols-3 gap-4">
-                    <Link
-                        to="/medications"
-                        className="flex flex-col items-center text-center p-6 bg-emerald-50 hover:bg-emerald-100 rounded-xl border border-emerald-200 transition group"
-                    >
-                        <div className="w-14 h-14 bg-emerald-600 text-white rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-700 transition">
-                            <Search size={24} aria-hidden="true" />
-                        </div>
-                        <h3 className="font-bold text-slate-900 mb-2">Search Medications</h3>
-                        <p className="text-slate-600 text-sm">Find your medications and compare prices</p>
-                    </Link>
+                <div className="grid md:grid-cols-2 gap-4">
                     <Link
                         to="/wizard"
                         className="flex flex-col items-center text-center p-6 bg-blue-50 hover:bg-blue-100 rounded-xl border border-blue-200 transition group"

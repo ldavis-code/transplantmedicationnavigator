@@ -10,7 +10,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Play, Monitor, CheckCircle, ArrowRight, Building2, Users,
   TrendingUp, Shield, Sparkles, Clock, Target, Zap, Heart,
-  Calculator, Calendar, FileText, MessageCircle
+  Calculator, Calendar, MessageCircle
 } from 'lucide-react';
 import { useDemoMode } from '../context/DemoModeContext';
 
@@ -47,12 +47,6 @@ const Demo = () => {
       title: 'Savings Calculator',
       description: 'Estimate potential savings across different assistance programs',
       path: '/savings-tracker',
-    },
-    {
-      icon: FileText,
-      title: 'Medication Search',
-      description: 'Search 100+ transplant medications with assistance program details',
-      path: '/medications',
     },
     {
       icon: Calendar,
