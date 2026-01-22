@@ -25,6 +25,7 @@ const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
+const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -6245,6 +6246,7 @@ const MainSiteRoutes = () => (
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
+                <Route path="/feedback" element={<LazyFeedbackSurvey />} />
                 <Route path="/for-transplant-programs" element={<Navigate to="/pricing#transplant-programs" replace />} />
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
