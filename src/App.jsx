@@ -482,6 +482,7 @@ const Layout = ({ children }) => {
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
+        { path: '/feedback', label: 'Feedback', ariaLabel: 'Share your feedback' },
     ];
 
     return (
@@ -594,6 +595,8 @@ const Layout = ({ children }) => {
                         <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility</Link>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
                     </div>
                 </div>
             </footer>

@@ -152,11 +152,11 @@ export default function FeedbackSurvey() {
 
   const OptionButton = ({ onClick, color = 'blue', children, disabled, selected }) => {
     const colorClasses = {
-      emerald: 'bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500',
-      rose: 'bg-rose-500 hover:bg-rose-600 focus:ring-rose-400',
-      amber: 'bg-amber-500 hover:bg-amber-600 focus:ring-amber-400',
-      slate: 'bg-slate-500 hover:bg-slate-600 focus:ring-slate-400',
-      blue: 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
+      emerald: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-300 text-emerald-800 focus:ring-emerald-300',
+      rose: 'bg-rose-50 hover:bg-rose-100 border-rose-300 text-rose-800 focus:ring-rose-300',
+      amber: 'bg-amber-50 hover:bg-amber-100 border-amber-300 text-amber-800 focus:ring-amber-300',
+      slate: 'bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-700 focus:ring-slate-300',
+      blue: 'bg-blue-50 hover:bg-blue-100 border-blue-300 text-blue-800 focus:ring-blue-300',
     };
 
     return (
@@ -164,7 +164,7 @@ export default function FeedbackSurvey() {
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`w-full text-left px-5 py-4 mb-3 text-white font-medium rounded-xl transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-3 focus:ring-offset-2 ${colorClasses[color]} disabled:opacity-50 disabled:cursor-not-allowed ${selected ? 'ring-3 ring-offset-2' : ''}`}
+        className={`w-full text-left px-5 py-4 mb-3 font-medium rounded-xl border-2 transition-all hover:shadow-md focus:outline-none focus:ring-3 focus:ring-offset-2 ${colorClasses[color]} disabled:opacity-50 disabled:cursor-not-allowed ${selected ? 'ring-3 ring-offset-2' : ''}`}
       >
         {children}
       </button>
@@ -207,7 +207,7 @@ export default function FeedbackSurvey() {
             </p>
             <Link
               to="/"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 font-medium rounded-xl hover:bg-emerald-200 transition-colors"
             >
               <Home className="w-5 h-5" />
               Back to Home
@@ -372,7 +372,7 @@ export default function FeedbackSurvey() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 font-medium rounded-xl hover:bg-emerald-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
                   {!isSubmitting && <ArrowRight className="w-5 h-5" />}
@@ -381,7 +381,7 @@ export default function FeedbackSurvey() {
                   type="button"
                   onClick={handleSkipOptional}
                   disabled={isSubmitting}
-                  className="flex-1 px-6 py-4 bg-slate-100 text-slate-700 font-medium rounded-xl hover:bg-slate-200 transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-4 bg-slate-50 border-2 border-slate-300 text-slate-700 font-medium rounded-xl hover:bg-slate-100 transition-colors disabled:opacity-50"
                 >
                   Skip & Submit
                 </button>
