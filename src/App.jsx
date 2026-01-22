@@ -3059,18 +3059,44 @@ const MedicationSearch = () => {
             {hasItems && showSavings && (
                 <>
                 {/* Your Options - medication cards explanation */}
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4 no-print">
-                    <div className="flex items-start gap-3">
-                        <Info className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <div>
-                            <p className="font-bold text-emerald-800 mb-1">Your Options</p>
-                            <p className="text-emerald-700 text-sm">Each card shows one of your medications. Click the tabs to see:</p>
-                            <ul className="text-emerald-700 text-sm mt-2 ml-4 list-disc space-y-1">
-                                <li><strong>Assistance</strong> - Free medicine programs and copay cards</li>
-                                <li><strong>Price</strong> - Prices are ESTIMATES and vary by the number of pills prescribed or dosage</li>
-                                <li><strong>Overview</strong> - Basic info about the medication</li>
-                                <li><strong>Print</strong> - Print-friendly summary</li>
-                            </ul>
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-6 mb-6 no-print shadow-md">
+                    <div className="flex items-start gap-4">
+                        <div className="bg-emerald-600 text-white p-3 rounded-full flex-shrink-0">
+                            <Info size={28} aria-hidden="true" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-2xl font-bold text-emerald-800 mb-2">Your Options</h2>
+                            <p className="text-emerald-700 text-lg mb-4">Each card shows one of your medications. Click the tabs to see:</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div className="flex items-center gap-3 bg-pink-100 border border-pink-300 rounded-xl p-4">
+                                    <Heart className="text-pink-600 flex-shrink-0" size={24} aria-hidden="true" />
+                                    <div>
+                                        <p className="font-bold text-pink-800 text-lg">Assistance</p>
+                                        <p className="text-pink-700">Free medicine programs and copay cards</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 bg-green-100 border border-green-300 rounded-xl p-4">
+                                    <DollarSign className="text-green-600 flex-shrink-0" size={24} aria-hidden="true" />
+                                    <div>
+                                        <p className="font-bold text-green-800 text-lg">Price</p>
+                                        <p className="text-green-700">Estimates vary by pills prescribed or dosage</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 bg-blue-100 border border-blue-300 rounded-xl p-4">
+                                    <Info className="text-blue-600 flex-shrink-0" size={24} aria-hidden="true" />
+                                    <div>
+                                        <p className="font-bold text-blue-800 text-lg">Overview</p>
+                                        <p className="text-blue-700">Basic info about the medication</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 bg-slate-100 border border-slate-300 rounded-xl p-4">
+                                    <Printer className="text-slate-600 flex-shrink-0" size={24} aria-hidden="true" />
+                                    <div>
+                                        <p className="font-bold text-slate-800 text-lg">Print</p>
+                                        <p className="text-slate-700">Print-friendly summary</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
