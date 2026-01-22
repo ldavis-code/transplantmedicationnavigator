@@ -1150,22 +1150,22 @@ const MedicationAssistantChat = () => {
                     role="radio"
                     aria-checked={isSelected}
                     aria-describedby={option.description ? `${optionId}-desc` : undefined}
-                    className={`w-auto min-w-[280px] max-w-sm text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
+                    className={`w-auto min-w-[280px] max-w-sm text-left p-5 rounded-xl border transition-all min-h-[64px] bg-white ${
                       isSelected
-                        ? 'border-emerald-500 bg-emerald-50 shadow-md ring-2 ring-emerald-200'
+                        ? 'border-emerald-400 bg-emerald-50 shadow-sm'
                         : option.urgent
-                        ? 'border-red-200 hover:border-red-400 hover:bg-red-50 hover:shadow-md'
-                        : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md'
+                        ? 'border-slate-200 hover:border-red-300 hover:bg-red-50'
+                        : 'border-slate-200 hover:border-emerald-300 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
-                        {/* Large checkbox/radio indicator */}
-                        <div className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
+                        {/* Radio indicator */}
+                        <div className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                           isSelected
                             ? 'border-emerald-500 bg-emerald-500'
                             : option.urgent
-                            ? 'border-red-300'
+                            ? 'border-slate-300'
                             : 'border-slate-300'
                         }`} aria-hidden="true">
                           {isSelected && <Check size={16} className="text-white" strokeWidth={3} />}
@@ -1395,10 +1395,10 @@ const MedicationAssistantChat = () => {
           <button
             key={option.value}
             onClick={() => handleChatOptionSelect(option)}
-            className={`w-auto min-w-[260px] max-w-xs text-left p-3 rounded-xl border-2 transition-all ${
+            className={`w-auto min-w-[260px] max-w-xs text-left p-3 rounded-xl border transition-all bg-white ${
               option.urgent
-                ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
-                : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
+                ? 'border-slate-200 hover:border-red-300 hover:bg-red-50'
+                : 'border-slate-200 hover:border-emerald-300 hover:bg-slate-50'
             }`}
           >
             <div className="flex items-start gap-3">
