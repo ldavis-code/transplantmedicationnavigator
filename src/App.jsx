@@ -5680,9 +5680,12 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-purple-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                                     <DollarSign size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-purple-900 text-xl mb-3">Help Paying What You Owe</h3>
-                                <p className="text-slate-800 text-base leading-relaxed">
-                                    Ask the drug company or foundation to help pay what you owe after your insurance company has paid for qualifying medications.
+                                <h3 className="font-bold text-purple-900 text-xl mb-3">Copay Cards</h3>
+                                <p className="text-slate-800 text-base leading-relaxed mb-3">
+                                    Manufacturer copay cards help reduce your out-of-pocket costs at the pharmacy.
+                                </p>
+                                <p className="text-purple-800 text-sm font-medium bg-purple-100 p-2 rounded-lg">
+                                    <strong>Commercial insurance only:</strong> Copay cards cannot be used with Medicare, Medicaid, or other government insurance. If you have government insurance, see Patient Assistance Programs instead.
                                 </p>
                             </section>
 
