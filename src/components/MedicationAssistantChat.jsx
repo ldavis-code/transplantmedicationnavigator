@@ -1138,7 +1138,7 @@ const MedicationAssistantChat = () => {
         ) : (
           <fieldset aria-labelledby={questionId} aria-describedby={question.helpText ? helpTextId : undefined}>
             <legend className="sr-only">{question.question}</legend>
-            <div className="space-y-3" role="radiogroup">
+            <div className="space-y-3 flex flex-col items-center" role="radiogroup">
               {question.options?.map((option, index) => {
                 const isSelected = answers[question.id] === option.value;
                 const optionId = `option-${question.id}-${option.value}`;
@@ -1150,7 +1150,7 @@ const MedicationAssistantChat = () => {
                     role="radio"
                     aria-checked={isSelected}
                     aria-describedby={option.description ? `${optionId}-desc` : undefined}
-                    className={`w-full text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
+                    className={`w-auto min-w-[280px] max-w-sm text-left p-5 rounded-xl border-2 transition-all min-h-[64px] ${
                       isSelected
                         ? 'border-emerald-500 bg-emerald-50 shadow-md ring-2 ring-emerald-200'
                         : option.urgent
@@ -1390,12 +1390,12 @@ const MedicationAssistantChat = () => {
     }
 
     return (
-      <div className="p-3 bg-slate-50 rounded-xl space-y-2">
+      <div className="p-3 bg-slate-50 rounded-xl space-y-2 flex flex-col items-center">
         {question.options?.map((option) => (
           <button
             key={option.value}
             onClick={() => handleChatOptionSelect(option)}
-            className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+            className={`w-auto min-w-[260px] max-w-xs text-left p-3 rounded-xl border-2 transition-all ${
               option.urgent
                 ? 'border-red-200 hover:border-red-400 hover:bg-red-50'
                 : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50'
