@@ -59,6 +59,8 @@ import { SubscriberAuthProvider } from './context/SubscriberAuthContext.jsx';
 import { DemoModeProvider } from './context/DemoModeContext.jsx';
 // Demo Banner Component
 import DemoBanner from './components/DemoBanner.jsx';
+// Feedback Widget for medication results
+import FeedbackWidget from './components/FeedbackWidget.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -4269,6 +4271,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         </div>
                     </div>
                 )}
+            </div>
+
+            {/* Feedback Widget */}
+            <div className="px-6 pb-6 no-print">
+                <FeedbackWidget medicationName={med.brandName} />
             </div>
         </article>
         </>
