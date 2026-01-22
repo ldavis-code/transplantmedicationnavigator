@@ -5684,8 +5684,8 @@ ${patientName || "[Your Name]"}`;
                                 <p className="text-slate-800 text-base leading-relaxed mb-3">
                                     Manufacturer copay cards help reduce your out-of-pocket costs at the pharmacy.
                                 </p>
-                                <p className="text-purple-800 text-sm font-medium bg-purple-100 p-2 rounded-lg">
-                                    <strong>Commercial insurance only:</strong> Copay cards cannot be used with Medicare, Medicaid, or other government insurance. If you have government insurance, see Patient Assistance Programs instead.
+                                <p className="text-amber-900 text-base font-medium bg-amber-50 border border-amber-200 p-3 rounded-lg">
+                                    <strong>Who can use copay cards:</strong> Only for insurance you get through work or buy on your own. Not for Medicare, Medicaid, or VA benefits. If you have these, look at Patient Assistance Programs instead.
                                 </p>
                             </section>
 
