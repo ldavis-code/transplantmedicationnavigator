@@ -309,7 +309,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                             for your medications.
                         </p>
                         <Link
-                            to="/pharmacy"
+                            to="/medications"
                             className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors min-h-[44px]"
                         >
                             Search Assistance Programs
