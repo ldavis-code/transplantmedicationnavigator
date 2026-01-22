@@ -507,7 +507,7 @@ const Layout = ({ children }) => {
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home">
-                        <img src="/logo.svg" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
+                        <img src="/photos/logo.png" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
                         <span className="font-bold text-lg md:text-xl leading-tight">
                             Transplant Medication<br className="md:hidden"/> Navigator<sup className="text-xs">™</sup>
                         </span>
