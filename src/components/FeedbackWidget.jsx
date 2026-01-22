@@ -1,12 +1,13 @@
 /**
  * FeedbackWidget Component
  * Collects user feedback after viewing medication information
+ * Three-question flow to understand outcomes and impact
  * Saves to Supabase feedback table
  */
 
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { ThumbsUp, ThumbsDown, Send, CheckCircle } from 'lucide-react';
+import { Check, X, DollarSign, HelpCircle, CheckCircle } from 'lucide-react';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -15,124 +16,157 @@ const supabase = createClient(
 );
 
 const FeedbackWidget = ({ medicationName }) => {
-  const [step, setStep] = useState('initial'); // 'initial', 'details', 'submitted'
-  const [wasHelpful, setWasHelpful] = useState(null);
-  const [savingsRange, setSavingsRange] = useState('');
-  const [comment, setComment] = useState('');
+  const [step, setStep] = useState('q1'); // 'q1', 'q2', 'q3', 'submitted'
+  const [responses, setResponses] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleYes = () => {
-    setWasHelpful(true);
-    setStep('details');
+  const updateResponse = (key, value) => {
+    setResponses(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleNo = () => {
-    setWasHelpful(false);
-    setStep('details');
+  // Q1: Did you get your medication today?
+  const answerQ1 = (value) => {
+    updateResponse('got_medication', value);
+    if (value === 'yes') {
+      setStep('q2'); // Ask about savings
+    } else {
+      setStep('q3'); // Skip to what would you have done
+    }
   };
 
-  const handleSubmit = async () => {
+  // Q2: How much did this save you?
+  const answerQ2 = (value) => {
+    updateResponse('savings_range', value);
+    setStep('q3');
+  };
+
+  // Q3: What would you have done without this tool?
+  const answerQ3 = async (value) => {
     setIsSubmitting(true);
 
-    try {
-      await supabase.from('feedback').insert([{
-        helpful: wasHelpful,
-        savings_range: savingsRange || null,
-        comment: comment || null,
-        medication_searched: medicationName || null,
-        created_at: new Date().toISOString()
-      }]);
+    const feedbackData = {
+      ...responses,
+      without_tool: value,
+      medication_searched: medicationName || null,
+      created_at: new Date().toISOString()
+    };
 
-      setStep('submitted');
+    try {
+      await supabase.from('feedback').insert([feedbackData]);
     } catch (error) {
       console.error('Error submitting feedback:', error);
-      // Still show success to user - don't block their experience
-      setStep('submitted');
+      // Still show success - don't block user experience
     }
 
     setIsSubmitting(false);
+    setStep('submitted');
+  };
+
+  const OptionButton = ({ onClick, color, children, disabled }) => {
+    const colorClasses = {
+      green: 'bg-emerald-600 hover:bg-emerald-700',
+      red: 'bg-rose-500 hover:bg-rose-600',
+      amber: 'bg-amber-500 hover:bg-amber-600',
+      gray: 'bg-slate-500 hover:bg-slate-600',
+      blue: 'bg-blue-600 hover:bg-blue-700'
+    };
+
+    return (
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        className={`w-full text-left px-4 py-3 mb-2 text-white font-medium rounded-lg transition ${colorClasses[color]} disabled:opacity-50 disabled:cursor-not-allowed`}
+      >
+        {children}
+      </button>
+    );
   };
 
   if (step === 'submitted') {
     return (
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-center">
-        <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold">
-          <CheckCircle size={20} aria-hidden="true" />
-          Thank you! Your feedback helps us improve.
+      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center">
+        <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold text-lg">
+          <CheckCircle size={24} aria-hidden="true" />
+          Thank you!
         </div>
+        <p className="text-emerald-600 mt-2">Your feedback helps transplant centers understand patient needs.</p>
       </div>
     );
   }
 
-  if (step === 'details') {
+  if (step === 'q3') {
     return (
-      <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
-        <p className="font-semibold text-slate-800 text-center mb-4">
-          {wasHelpful
-            ? "Great! How much did you save?"
-            : "Sorry to hear that. What were you looking for?"}
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p className="font-semibold text-slate-800 text-lg mb-4">
+          What would you have done without this tool?
         </p>
-
-        {wasHelpful && (
-          <select
-            value={savingsRange}
-            onChange={(e) => setSavingsRange(e.target.value)}
-            className="w-full p-3 text-base rounded-lg border border-slate-300 mb-3 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            aria-label="Select estimated savings"
-          >
-            <option value="">Select estimated savings</option>
-            <option value="0-50">$0 - $50</option>
-            <option value="50-100">$50 - $100</option>
-            <option value="100-250">$100 - $250</option>
-            <option value="250-500">$250 - $500</option>
-            <option value="500+">$500+</option>
-            <option value="unsure">Not sure yet</option>
-          </select>
-        )}
-
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder={wasHelpful ? "Any other feedback? (optional)" : "Tell us what you needed..."}
-          className="w-full p-3 text-base rounded-lg border border-slate-300 mb-3 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-          rows={3}
-          aria-label={wasHelpful ? "Additional feedback" : "What were you looking for"}
-        />
-
-        <button
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-          className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition"
-        >
-          <Send size={18} aria-hidden="true" />
-          {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
-        </button>
+        <OptionButton onClick={() => answerQ3('paid_full')} color="blue" disabled={isSubmitting}>
+          Paid full price
+        </OptionButton>
+        <OptionButton onClick={() => answerQ3('skipped_rationed')} color="red" disabled={isSubmitting}>
+          Skipped or rationed doses
+        </OptionButton>
+        <OptionButton onClick={() => answerQ3('called_coordinator')} color="amber" disabled={isSubmitting}>
+          Called my transplant coordinator
+        </OptionButton>
+        <OptionButton onClick={() => answerQ3('not_filled')} color="red" disabled={isSubmitting}>
+          Not filled the prescription
+        </OptionButton>
+        <OptionButton onClick={() => answerQ3('other')} color="gray" disabled={isSubmitting}>
+          Other
+        </OptionButton>
       </div>
     );
   }
 
-  // Initial step
-  return (
-    <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 text-center">
-      <p className="font-semibold text-slate-800 mb-4">Did you find what you needed?</p>
-      <div className="flex justify-center gap-3">
-        <button
-          onClick={handleYes}
-          className="flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition"
-          aria-label="Yes, I found what I needed"
-        >
-          <ThumbsUp size={18} aria-hidden="true" />
-          Yes
-        </button>
-        <button
-          onClick={handleNo}
-          className="flex items-center gap-2 px-5 py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-lg transition"
-          aria-label="No, I did not find what I needed"
-        >
-          <ThumbsDown size={18} aria-hidden="true" />
-          No
-        </button>
+  if (step === 'q2') {
+    return (
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p className="font-semibold text-slate-800 text-lg mb-4">
+          How much did this save you?
+        </p>
+        <OptionButton onClick={() => answerQ2('0-50')} color="blue">
+          $0 – $50
+        </OptionButton>
+        <OptionButton onClick={() => answerQ2('50-100')} color="blue">
+          $50 – $100
+        </OptionButton>
+        <OptionButton onClick={() => answerQ2('100-250')} color="blue">
+          $100 – $250
+        </OptionButton>
+        <OptionButton onClick={() => answerQ2('250-500')} color="blue">
+          $250 – $500
+        </OptionButton>
+        <OptionButton onClick={() => answerQ2('500+')} color="blue">
+          $500+
+        </OptionButton>
+        <OptionButton onClick={() => answerQ2('unsure')} color="gray">
+          Not sure yet
+        </OptionButton>
       </div>
+    );
+  }
+
+  // Q1: Initial question
+  return (
+    <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
+      <p className="font-semibold text-slate-800 text-lg mb-4">
+        Did you get your medication today?
+      </p>
+      <OptionButton onClick={() => answerQ1('yes')} color="green">
+        <span className="flex items-center gap-2">
+          <Check size={18} aria-hidden="true" /> Yes
+        </span>
+      </OptionButton>
+      <OptionButton onClick={() => answerQ1('no_too_expensive')} color="red">
+        No – still too expensive
+      </OptionButton>
+      <OptionButton onClick={() => answerQ1('no_another_pharmacy')} color="amber">
+        No – will try another pharmacy
+      </OptionButton>
+      <OptionButton onClick={() => answerQ1('no_other')} color="gray">
+        No – other reason
+      </OptionButton>
     </div>
   );
 };
