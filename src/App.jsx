@@ -5411,6 +5411,14 @@ const ApplicationHelp = () => {
     useMetaTags(seoMetadata.applicationHelp);
     const MEDICATIONS = useMedicationsList();
 
+    // Get quiz context for pre-selected medications
+    const { answers: quizAnswers, selectedMedications: quizSelectedMeds } = useChatQuiz();
+
+    // Determine if copay cards should be shown based on insurance type
+    const insuranceType = quizAnswers?.insurance_type;
+    const isCommercialInsurance = insuranceType === 'commercial' || !insuranceType;
+    const showCopayCards = isCommercialInsurance;
+
     const [activeTab, setActiveTab] = useState('START');
     const checklistItems = APPLICATION_CHECKLIST_DATA;
     const [checkedItems, setCheckedItems] = useState({});
@@ -5418,9 +5426,79 @@ const ApplicationHelp = () => {
     const checkedCount = Object.values(checkedItems).filter(Boolean).length;
     const progress = Math.round((checkedCount / checklistItems.length) * 100);
 
-    // Medication search states
+    // Medication search states for MEDS tab
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedMedication, setSelectedMedication] = useState(null);
+    const [medsTabListIds, setMedsTabListIds] = useState([]);
+    const [searchResult, setSearchResult] = useState(null);
+    const [isSearching, setIsSearching] = useState(false);
+
+    // Fuse.js for fuzzy medication search
+    const fuse = useMemo(() => new Fuse(MEDICATIONS, {
+        keys: ['brandName', 'genericName'],
+        threshold: 0.4,
+        includeScore: true,
+        ignoreLocation: true,
+        minMatchCharLength: 2
+    }), [MEDICATIONS]);
+
+    // Initialize medsTabListIds from quiz selections on mount
+    useEffect(() => {
+        if (quizSelectedMeds && quizSelectedMeds.length > 0 && medsTabListIds.length === 0) {
+            // Extract medication IDs from quiz selections
+            const quizMedIds = quizSelectedMeds
+                .filter(m => m && m.id)
+                .map(m => m.id);
+            if (quizMedIds.length > 0) {
+                setMedsTabListIds(quizMedIds);
+            }
+        }
+    }, [quizSelectedMeds, medsTabListIds.length]);
+
+    // Handle medication search
+    const handleMedSearch = useCallback(() => {
+        if (!searchTerm.trim()) {
+            setSearchResult(null);
+            setIsSearching(false);
+            return;
+        }
+        const fuseResults = fuse.search(searchTerm.trim());
+        const internalMatches = fuseResults.map(result => result.item);
+        setSearchResult({ internal: internalMatches });
+        setIsSearching(false);
+    }, [searchTerm, fuse]);
+
+    // Debounced search effect
+    useEffect(() => {
+        if (searchTerm.trim()) {
+            setIsSearching(true);
+        } else {
+            setSearchResult(null);
+            setIsSearching(false);
+        }
+        const timer = setTimeout(() => {
+            if (searchTerm.trim()) handleMedSearch();
+            else setSearchResult(null);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchTerm, handleMedSearch]);
+
+    // Add medication to list
+    const addMedToList = (id) => {
+        if (!medsTabListIds.includes(id)) {
+            setMedsTabListIds([...medsTabListIds, id]);
+        }
+        setSearchTerm('');
+        setSearchResult(null);
+    };
+
+    // Remove medication from list
+    const removeMedFromList = (id) => {
+        setMedsTabListIds(medsTabListIds.filter(m => m !== id));
+    };
+
+    // Get medication objects for display
+    const displayMeds = MEDICATIONS.filter(m => medsTabListIds.includes(m.id));
 
     // Letter builder states
     const [letterType, setLetterType] = useState("appeal");
@@ -5569,6 +5647,7 @@ ${patientName || "[Your Name]"}`;
                     <TabButton id="STEPS" label="Steps" icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
                     <TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} iconBg="bg-amber-100" iconColor="text-amber-600" />
                     <TabButton id="LETTERS" label="Letters" icon={FileText} iconBg="bg-purple-100" iconColor="text-purple-600" />
+                    <TabButton id="MEDS" label="My Medications" icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
@@ -5801,6 +5880,178 @@ ${patientName || "[Your Name]"}`;
                                 </section>
                             </div>
                         </div>
+                    </div>
+                )}
+                {activeTab === 'MEDS' && (
+                    <div className="space-y-6 fade-in">
+                        {/* Header with context */}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                            <div>
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">My Medications & PAP Programs</h2>
+                                <p className="text-slate-600">View your medications alongside their Patient Assistance Programs. Search for medications to see application links.</p>
+                            </div>
+                        </div>
+
+                        {/* Quiz data indicator */}
+                        {quizSelectedMeds && quizSelectedMeds.length > 0 && (
+                            <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg" role="note">
+                                <div className="flex items-center gap-2">
+                                    <CheckCircle size={20} className="text-emerald-600" aria-hidden="true" />
+                                    <p className="text-emerald-800 font-medium">
+                                        We loaded {quizSelectedMeds.length} medication{quizSelectedMeds.length !== 1 ? 's' : ''} from your My Path Quiz. Add more below or view program details.
+                                    </p>
+                                </div>
+                            </aside>
+                        )}
+
+                        {/* Search bar to add medications */}
+                        <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h3 className="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2">
+                                <Search size={20} className="text-teal-600" aria-hidden="true" />
+                                Search for Medications
+                            </h3>
+                            <p className="text-slate-600 text-sm mb-4">Search for your transplant medications to see their Patient Assistance Program information.</p>
+                            <div className="relative">
+                                <div className="flex flex-col md:flex-row gap-3">
+                                    <div className="flex-grow relative">
+                                        <label htmlFor="meds-tab-search" className="sr-only">Search for medications</label>
+                                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
+                                        <input
+                                            id="meds-tab-search"
+                                            type="text"
+                                            placeholder="Enter drug name (e.g. Prograf, Tacrolimus)..."
+                                            className="w-full pl-12 pr-12 py-3 rounded-xl border border-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none text-base transition shadow-sm"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') handleMedSearch();
+                                                if (e.key === 'Escape') { setSearchResult(null); setSearchTerm(''); }
+                                            }}
+                                            aria-expanded={!!(searchResult && searchTerm && !isSearching)}
+                                        />
+                                        {isSearching && (
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                                                <Loader2 size={20} className="text-teal-600 animate-spin" aria-label="Searching" />
+                                            </div>
+                                        )}
+                                        {searchTerm && !isSearching && (
+                                            <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Clear search">
+                                                <X size={20} />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Search results dropdown */}
+                                {searchResult && searchTerm && !isSearching && (
+                                    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[40vh] overflow-y-auto z-50">
+                                        {searchResult.internal.length > 0 ? (
+                                            <div className="space-y-1">
+                                                {searchResult.internal.map(med => {
+                                                    const isAlreadyIn = medsTabListIds.includes(med.id);
+                                                    return (
+                                                        <button key={med.id} onClick={() => addMedToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed">
+                                                            <div>
+                                                                <span className="font-bold text-slate-900 block">{med.brandName}</span>
+                                                                <span className="text-sm text-slate-600">{med.genericName}</span>
+                                                            </div>
+                                                            {isAlreadyIn ? (
+                                                                <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> Added</span>
+                                                            ) : (
+                                                                <span className="text-teal-600 bg-teal-50 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-teal-100 flex items-center gap-1"><PlusCircle size={16} /> Add</span>
+                                                            )}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div className="p-4 text-center">
+                                                <p className="text-slate-700 font-medium mb-1">No matches found</p>
+                                                <p className="text-slate-500 text-sm">Try a different spelling or check our <Link to="/medications" className="text-teal-600 hover:underline">medication search page</Link>.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Medication cards with PAP info */}
+                        {displayMeds.length > 0 ? (
+                            <div className="space-y-6">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="font-bold text-xl text-slate-900 flex items-center gap-2">
+                                        <Pill size={22} className="text-teal-600" aria-hidden="true" />
+                                        Your Medications ({displayMeds.length})
+                                    </h3>
+                                    <Link to="/medications" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
+                                        View full savings details <ArrowRight size={16} />
+                                    </Link>
+                                </div>
+
+                                {/* Info box about what they're seeing */}
+                                <div className="bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-4">
+                                    <div className="flex items-start gap-3">
+                                        <Info size={20} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                        <div>
+                                            <p className="text-teal-800 font-medium">Each medication card shows:</p>
+                                            <ul className="text-teal-700 text-sm mt-1 list-disc pl-4">
+                                                <li><strong>Assistance tab:</strong> PAP programs and copay cards with direct application links</li>
+                                                <li><strong>Price tab:</strong> Estimated costs at different pharmacies</li>
+                                                <li><strong>Overview tab:</strong> Basic medication information</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {displayMeds.map(med => (
+                                    <MedicationCard
+                                        key={med.id}
+                                        med={med}
+                                        onRemove={() => removeMedFromList(med.id)}
+                                        onPriceReportSubmit={() => {}}
+                                        showCopayCards={showCopayCards}
+                                        quizAnswers={quizAnswers}
+                                    />
+                                ))}
+
+                                {/* CTA to application education */}
+                                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
+                                    <div className="flex items-start gap-4">
+                                        <div className="bg-blue-600 text-white p-3 rounded-lg">
+                                            <FileText size={24} aria-hidden="true" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-lg text-blue-900 mb-1">Ready to Apply?</h4>
+                                            <p className="text-blue-700 text-sm mb-3">Check out the other tabs on this page for step-by-step application guidance, checklists, and letter templates.</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                <button onClick={() => setActiveTab('STEPS')} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                                                    View Application Steps
+                                                </button>
+                                                <button onClick={() => setActiveTab('CHECKLIST')} className="bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm font-bold transition">
+                                                    View Checklist
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center py-12 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
+                                <div className="text-slate-400 mb-4" aria-hidden="true"><Pill size={64} className="mx-auto" /></div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">No medications added yet</h3>
+                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications and see their Patient Assistance Program information.</p>
+                                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                    <Link to="/wizard" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
+                                        <Sparkles size={20} aria-hidden="true" />
+                                        Take My Path Quiz
+                                    </Link>
+                                    <Link to="/medications" className="inline-flex items-center gap-2 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-6 py-3 rounded-lg font-bold transition">
+                                        <Search size={20} aria-hidden="true" />
+                                        Full Medication Search
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
