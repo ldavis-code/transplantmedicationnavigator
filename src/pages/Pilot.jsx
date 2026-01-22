@@ -80,13 +80,13 @@ const Pilot = () => {
                 <h2 className="text-xl font-bold text-slate-900 mb-6 text-center">Get Started</h2>
                 <div className="grid md:grid-cols-3 gap-4">
                     <Link
-                        to="/pharmacy"
+                        to="/medications"
                         className="flex flex-col items-center text-center p-6 bg-emerald-50 hover:bg-emerald-100 rounded-xl border border-emerald-200 transition group"
                     >
                         <div className="w-14 h-14 bg-emerald-600 text-white rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-700 transition">
                             <Search size={24} aria-hidden="true" />
                         </div>
-                        <h3 className="font-bold text-slate-900 mb-2">At the Pharmacy Counter</h3>
+                        <h3 className="font-bold text-slate-900 mb-2">Search Medications</h3>
                         <p className="text-slate-600 text-sm">Find your medications and compare prices</p>
                     </Link>
                     <Link
