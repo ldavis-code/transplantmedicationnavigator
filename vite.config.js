@@ -160,7 +160,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
+    sourcemap: 'hidden', // Generate source maps but don't link them (for debugging without exposing source)
     minify: 'terser',
     terserOptions: {
       compress: {
