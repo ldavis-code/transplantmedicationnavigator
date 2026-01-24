@@ -189,8 +189,9 @@ function generatePageHTML(page, mainScriptPath) {
 
     <div id="root">
         <!-- Static content for SEO - React will replace this when it loads -->
+        <!-- Note: No <h1> here to avoid duplicate h1 tags when React renders -->
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
-            <h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
+            <p style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-bottom: 16px;">${pageTitle}</p>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>
             <p style="color: #64748b; margin-bottom: 16px;">Loading interactive features...</p>
             <a href="/" style="color: #059669; text-decoration: underline;">Go to Homepage</a>
