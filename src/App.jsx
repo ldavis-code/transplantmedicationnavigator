@@ -4951,6 +4951,15 @@ const Education = () => {
                             <p className="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
                         </div>
 
+                        {/* Healthcare Insurance Infographic */}
+                        <div className="flex justify-center mb-8">
+                            <img
+                                src="/photos/healthcare_insurance_infographic_simplified.jpg"
+                                alt="Healthcare insurance infographic showing key insurance concepts simplified"
+                                className="max-w-full h-auto rounded-lg shadow-md"
+                            />
+                        </div>
+
                         {/* Insurance Change Simulation */}
                         <InsuranceChangeSimulator />
 
