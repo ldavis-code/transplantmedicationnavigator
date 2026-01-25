@@ -144,7 +144,7 @@ export default defineConfig({
         // Pre-cache important pages
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         // Exclude large infographic images from precaching
-        globIgnores: ['**/photos/healthcare_insurance_infographic_simplified.jpg'],
+        globIgnores: ['**/photos/tmn_infographic.jpg'],
         // Don't precache large files
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
         // Clean up old caches
