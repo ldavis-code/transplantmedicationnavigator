@@ -4954,7 +4954,7 @@ const Education = () => {
                         {/* Healthcare Insurance Infographic */}
                         <div className="flex justify-center mb-8">
                             <img
-                                src="/photos/healthcare_insurance_infographic_simplified.png"
+                                src="/photos/healthcare_infographic_simplified.jpg"
                                 alt="Healthcare insurance infographic showing key insurance concepts simplified"
                                 className="max-w-full h-auto rounded-lg shadow-md"
                             />
