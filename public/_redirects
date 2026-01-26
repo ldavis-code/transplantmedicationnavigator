@@ -20,6 +20,24 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /out/foundation/*  /.netlify/functions/out-redirect  200!
 /out/pap/*  /.netlify/functions/out-redirect  200!
 
+# Prerendered pages - serve static HTML with SEO meta tags
+# These rules ensure search engines see page-specific meta descriptions
+/faq  /faq/index.html  200
+/wizard  /wizard/index.html  200
+/medications  /medications/index.html  200
+/education  /education/index.html  200
+/application-help  /application-help/index.html  200
+/pricing  /pricing/index.html  200
+/my-medications  /my-medications/index.html  200
+/savings-tracker  /savings-tracker/index.html  200
+/subscribe  /subscribe/index.html  200
+/survey  /survey/index.html  200
+/survey/transplant  /survey/transplant/index.html  200
+/survey/general  /survey/general/index.html  200
+/pilot  /pilot/index.html  200
+/terms-and-conditions  /terms-and-conditions/index.html  200
+/privacy  /privacy/index.html  200
+/accessibility  /accessibility/index.html  200
+
 # SPA fallback - all other routes go to index.html
-# NOTE: Do NOT use ! (force) here, or it will override static files!
 /*  /index.html  200

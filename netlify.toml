@@ -68,8 +68,90 @@
   status = 200
   force = true
 
-# SPA fallback - must come AFTER API routes
-# NOTE: Do NOT use force=true here, or it will override static files!
+# Prerendered pages - serve static HTML with SEO meta tags
+# These rules ensure search engines see page-specific meta descriptions
+[[redirects]]
+  from = "/faq"
+  to = "/faq/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/wizard"
+  to = "/wizard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/medications"
+  to = "/medications/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/education"
+  to = "/education/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/application-help"
+  to = "/application-help/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/pricing"
+  to = "/pricing/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/my-medications"
+  to = "/my-medications/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/savings-tracker"
+  to = "/savings-tracker/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/subscribe"
+  to = "/subscribe/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/survey"
+  to = "/survey/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/survey/transplant"
+  to = "/survey/transplant/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/survey/general"
+  to = "/survey/general/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/pilot"
+  to = "/pilot/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/terms-and-conditions/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/accessibility"
+  to = "/accessibility/index.html"
+  status = 200
+
+# SPA fallback - must come AFTER prerendered pages and API routes
+# This catches all other routes and serves the React SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
