@@ -16,7 +16,6 @@ const routes = [
     { path: '/education', changefreq: 'monthly', priority: 0.8 },
     { path: '/application-help', changefreq: 'monthly', priority: 0.8 },
     { path: '/pricing', changefreq: 'monthly', priority: 0.8 },
-    { path: '/my-medications', changefreq: 'monthly', priority: 0.8 },
     { path: '/savings-tracker', changefreq: 'monthly', priority: 0.8 },
     { path: '/subscribe', changefreq: 'monthly', priority: 0.8 },
     { path: '/faq', changefreq: 'monthly', priority: 0.7 },

@@ -16,6 +16,7 @@ const BASE_URL = 'https://transplantmedicationnavigator.com';
  * @param {string} [config.twitterDescription] - Twitter card description (defaults to description)
  * @param {string} [config.twitterImage] - Twitter card image URL
  * @param {string} [config.breadcrumbName] - Name for breadcrumb (if different from title)
+ * @param {boolean} [config.noindex] - If true, add noindex meta tag to prevent search engine indexing
  */
 export function useMetaTags(config) {
   useEffect(() => {
@@ -31,6 +32,7 @@ export function useMetaTags(config) {
       twitterDescription,
       twitterImage = '/twitter-image.png',
       breadcrumbName,
+      noindex,
     } = config;
 
     // Update document title
@@ -73,6 +75,11 @@ export function useMetaTags(config) {
 
     // Update basic meta tags
     updateMetaTag('meta[name="description"]', 'content', description);
+
+    // Update robots meta tag for noindex pages
+    if (noindex) {
+      updateMetaTag('meta[name="robots"]', 'content', 'noindex, nofollow');
+    }
 
     // Update canonical URL
     updateLinkTag('canonical', canonical);
