@@ -8,7 +8,7 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 
 export const seoMetadata = {
   home: {
-    title: 'Transplant Medication Navigator™ | Free Help Finding Affordable Medications',
+    title: 'Transplant Medication Navigator™',
     description: 'Get FREE transplant medications through Patient Assistance Programs. Find help paying for tacrolimus, mycophenolate, immunosuppressants. Compare prices, copay foundations & grants for kidney, liver, heart transplant patients. Created by a transplant recipient.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Free Transplant Medication Help | Transplant Medication Navigator™',
