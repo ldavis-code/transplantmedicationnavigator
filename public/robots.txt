@@ -9,6 +9,7 @@
 User-agent: *
 Allow: /
 Disallow: /reporting/
+Disallow: /my-medications
 
 # Sitemap location
 Sitemap: https://transplantmedicationnavigator.com/sitemap.xml

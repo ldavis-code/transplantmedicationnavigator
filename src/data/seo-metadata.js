@@ -214,6 +214,7 @@ export const seoMetadata = {
     twitterTitle: 'My Medications',
     twitterDescription: 'Track your transplant medications, renewal dates, and costs privately.',
     breadcrumbName: 'My Medications',
+    noindex: true, // Private user feature - do not index in search engines
   },
 
   savingsTracker: {
