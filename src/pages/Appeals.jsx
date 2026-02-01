@@ -880,7 +880,7 @@ Contact: [Your Phone Number]
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
               >
                 <Download size={18} aria-hidden="true" />
-                Open Doctor's Template
+                Download Free Template
               </a>
             </div>
           </div>
