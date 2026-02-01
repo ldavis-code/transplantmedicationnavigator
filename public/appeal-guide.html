@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Free Appeal Guide - How to Fight Insurance Denials for Transplant Medications</title>
+    <style>
+        @media print {
+            body {
+                margin: 0.5in;
+                font-size: 11pt;
+            }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            h2 { page-break-after: avoid; }
+            .keep-together { page-break-inside: avoid; }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.75in;
+            color: #1e293b;
+            background: #fff;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            color: white;
+            padding: 1.5rem;
+            margin: -0.75in -0.75in 1.5rem -0.75in;
+            text-align: center;
+        }
+
+        .header-banner h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .header-banner p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .print-instructions {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .print-instructions h2 {
+            color: #92400e;
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .print-instructions p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #78350f;
+        }
+
+        .guide-title {
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .guide-title h1 {
+            font-size: 1.75rem;
+            color: #059669;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .guide-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Quick Stats Box */
+        .stats-box {
+            display: flex;
+            justify-content: space-around;
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #059669;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Section Styling */
+        h2 {
+            color: #059669;
+            font-size: 1.25rem;
+            border-bottom: 2px solid #059669;
+            padding-bottom: 0.5rem;
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: #0f766e;
+            font-size: 1.1rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .callout-green {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+        }
+
+        .callout-amber {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .callout-red {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .callout-blue {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .callout-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Step Cards */
+        .step-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .step-number {
+            background: #059669;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #475569;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0.75rem 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0 0.5rem 2rem;
+            position: relative;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #94a3b8;
+            border-radius: 3px;
+            background: white;
+        }
+
+        /* Denial Reason Cards */
+        .denial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .denial-card {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+
+        .denial-card strong {
+            color: #991b1b;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .denial-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #7f1d1d;
+        }
+
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 3px solid #059669;
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -1.65rem;
+            top: 0.35rem;
+            width: 12px;
+            height: 12px;
+            background: #059669;
+            border-radius: 50%;
+        }
+
+        .timeline-item strong {
+            color: #059669;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background: #f0fdf4;
+            color: #059669;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: #059669;
+            text-decoration: none;
+        }
+
+        /* Rights Box */
+        .rights-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+            border: 2px solid #059669;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .rights-box h3 {
+            color: #059669;
+            margin-top: 0;
+        }
+
+        /* Sample Scripts */
+        .script-box {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            font-style: italic;
+        }
+
+        .script-box::before {
+            content: '"';
+            font-size: 2rem;
+            color: #059669;
+            line-height: 0;
+            vertical-align: bottom;
+        }
+
+        /* Responsive for screen viewing */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .header-banner {
+                margin: -1rem -1rem 1rem -1rem;
+            }
+            .two-columns, .denial-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-box {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-banner no-print">
+        <h1>TransplantMedicationNavigator</h1>
+        <p>Free Appeal Guide for Transplant Patients</p>
+    </div>
+
+    <div class="print-instructions no-print">
+        <h2>How to Use This Guide</h2>
+        <p>
+            1. Print this guide (Ctrl+P / Cmd+P) or save as PDF for easy reference<br>
+            2. Use the checklists to track your progress<br>
+            3. Share with family members or caregivers who are helping you<br>
+            4. Keep a copy with your medical documents
+        </p>
+    </div>
+
+    <div class="guide-title">
+        <h1>Your Guide to Appealing Insurance Denials</h1>
+    </div>
+    <p class="guide-subtitle">Clear steps to help you fight for your transplant medications</p>
+
+    <!-- Quick Stats -->
+    <div class="stats-box">
+        <div class="stat-item">
+            <div class="stat-number">50%+</div>
+            <div class="stat-label">of appeals are won</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">30-60</div>
+            <div class="stat-label">days to appeal</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">FREE</div>
+            <div class="stat-label">to file an appeal</div>
+        </div>
+    </div>
+
+    <div class="callout callout-green">
+        <div class="callout-title">You Can Do This!</div>
+        <p>A denial is NOT the final answer. Many people feel scared or confused when their medication is denied. That's normal. This guide will walk you through exactly what to do, step by step.</p>
+    </div>
+
+    <!-- Section 1: Understanding Your Denial -->
+    <h2>Part 1: Understanding Your Denial</h2>
+
+    <p>Before you can fight a denial, you need to understand why it happened. Look at your denial letter carefully. Here are the most common reasons insurance companies say "no":</p>
+
+    <div class="denial-grid">
+        <div class="denial-card keep-together">
+            <strong>Prior Authorization Needed</strong>
+            <p>Your doctor must get permission first before insurance will pay.</p>
+        </div>
+        <div class="denial-card keep-together">
+            <strong>Not on the Formulary</strong>
+            <p>Your drug isn't on their approved list of medications.</p>
+        </div>
+        <div class="denial-card keep-together">
+            <strong>Step Therapy Required</strong>
+            <p>They want you to try a cheaper drug first.</p>
+        </div>
+        <div class="denial-card keep-together">
+            <strong>Quantity Limits</strong>
+            <p>They say you're prescribed too much medication.</p>
+        </div>
+        <div class="denial-card keep-together">
+            <strong>Generic Preferred</strong>
+            <p>They want you to use a generic instead of brand name.</p>
+        </div>
+        <div class="denial-card keep-together">
+            <strong>Medical Necessity</strong>
+            <p>They don't think you need this specific medication.</p>
+        </div>
+    </div>
+
+    <div class="callout callout-amber">
+        <div class="callout-title">Important for Transplant Patients</div>
+        <p>Transplant medications are often "narrow therapeutic index" drugs. This means even small changes in your blood levels can cause serious problems. Your doctor may have good reasons for prescribing a specific medication that generic alternatives cannot replace.</p>
+    </div>
+
+    <!-- Section 2: Your Rights -->
+    <h2>Part 2: Know Your Rights</h2>
+
+    <div class="rights-box">
+        <h3>You Have the Right To:</h3>
+        <ul>
+            <li><strong>Get a written explanation</strong> - The insurance company must tell you exactly why they denied your medication</li>
+            <li><strong>Appeal any denial</strong> - You can always ask them to look at your case again</li>
+            <li><strong>Request a fast review</strong> - If waiting could harm your health, you can ask for an urgent decision</li>
+            <li><strong>Get an outside review</strong> - If the insurance company says "no" again, someone from outside the company can review your case</li>
+            <li><strong>File a complaint</strong> - You can report problems to your state insurance department</li>
+        </ul>
+    </div>
+
+    <!-- Section 3: Step by Step Guide -->
+    <h2 class="page-break">Part 3: How to Appeal - Step by Step</h2>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>Get Your Denial in Writing</h4>
+                <p>Call the number on your insurance card and ask for a written denial letter. This letter tells you exactly why they said no and how long you have to appeal.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout callout-blue">
+        <div class="callout-title">What to Say:</div>
+        <div class="script-box">
+            I need a copy of the denial letter for my medication [medication name]. Please send it to me in writing and tell me the deadline to appeal.
+        </div>
+    </div>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>Mark Your Calendar</h4>
+                <p>You usually have 30 to 60 days to appeal. Write the deadline on your calendar right away. Set a reminder on your phone 2 weeks before the deadline.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>Contact Your Transplant Team</h4>
+                <p>Call your transplant coordinator or doctor's office. Tell them about the denial. Ask them to write a "letter of medical necessity" that explains why you need this specific medication.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout callout-blue">
+        <div class="callout-title">What to Say:</div>
+        <div class="script-box">
+            My insurance denied my [medication name]. I need to appeal by [date]. Can my doctor write a letter of medical necessity explaining why I need this specific medication for my transplant?
+        </div>
+    </div>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h4>Gather Your Documents</h4>
+                <p>Collect everything you need for your appeal (see the checklist below). Make copies of everything - never send originals.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h4>Write Your Appeal Letter</h4>
+                <p>Write a short letter asking them to reverse the denial. Keep it simple and include: your name, member ID, the medication name, and why you need it.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card keep-together">
+        <div class="step-header">
+            <div class="step-number">6</div>
+            <div class="step-content">
+                <h4>Submit Your Appeal</h4>
+                <p>Send everything together. Use certified mail or fax so you have proof it was received. Keep copies of everything you send.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checklist -->
+    <h2 class="page-break">Part 4: Your Appeal Checklist</h2>
+
+    <p>Use this checklist to make sure you have everything you need:</p>
+
+    <h3>Documents to Gather:</h3>
+    <ul class="checklist">
+        <li>Copy of the denial letter</li>
+        <li>Letter of medical necessity from your transplant doctor</li>
+        <li>Recent lab results (drug levels, kidney/liver function)</li>
+        <li>Copy of your transplant summary</li>
+        <li>Your appeal letter (written by you)</li>
+        <li>Any other medical records that support your case</li>
+    </ul>
+
+    <h3>Information to Include in Your Appeal Letter:</h3>
+    <ul class="checklist">
+        <li>Your full name and date of birth</li>
+        <li>Your insurance member ID number</li>
+        <li>The claim or reference number from the denial letter</li>
+        <li>Name of the medication that was denied</li>
+        <li>Date of the denial</li>
+        <li>Short explanation of why you need this medication</li>
+        <li>Your contact information (phone and address)</li>
+        <li>Your signature and the date</li>
+    </ul>
+
+    <h3>Before You Send:</h3>
+    <ul class="checklist">
+        <li>Made copies of everything</li>
+        <li>Double-checked the deadline</li>
+        <li>Found the correct address to send it to</li>
+        <li>Chosen a method with tracking (certified mail or fax)</li>
+    </ul>
+
+    <!-- Need a Fast Decision -->
+    <h2>Part 5: Need a Fast Decision?</h2>
+
+    <div class="callout callout-red">
+        <div class="callout-title">Request an Expedited (Fast) Appeal If:</div>
+        <ul>
+            <li>You are running out of your transplant medication</li>
+            <li>Waiting could cause serious harm to your health</li>
+            <li>Your doctor says your situation is urgent</li>
+        </ul>
+    </div>
+
+    <p>For an expedited appeal, the insurance company usually must give you an answer within 72 hours (3 days) instead of the normal 30 days.</p>
+
+    <div class="callout callout-blue">
+        <div class="callout-title">What to Say:</div>
+        <div class="script-box">
+            I need an expedited appeal for my transplant medication. Running out of this medication is life-threatening for transplant patients. My doctor [name] can confirm this is urgent.
+        </div>
+    </div>
+
+    <!-- If Your Appeal is Denied -->
+    <h2 class="page-break">Part 6: If Your Appeal Is Denied</h2>
+
+    <p>Don't give up! You have more options:</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <strong>Internal Appeal (Second Level)</strong><br>
+            Many insurance plans allow a second appeal reviewed by different people at the company. Ask if this is available.
+        </div>
+        <div class="timeline-item">
+            <strong>External Review</strong><br>
+            You can request a review by an independent organization outside the insurance company. This is your legal right.
+        </div>
+        <div class="timeline-item">
+            <strong>State Insurance Department</strong><br>
+            File a complaint with your state's insurance commissioner. They can investigate and sometimes help resolve issues.
+        </div>
+        <div class="timeline-item">
+            <strong>Patient Advocacy Organizations</strong><br>
+            Groups like the Patient Advocate Foundation (1-800-532-5274) offer free help with appeals.
+        </div>
+    </div>
+
+    <!-- Helpful Contacts -->
+    <h2>Part 7: Helpful Contacts</h2>
+
+    <table>
+        <tr>
+            <th>Organization</th>
+            <th>Phone / Website</th>
+            <th>How They Can Help</th>
+        </tr>
+        <tr>
+            <td><strong>Patient Advocate Foundation</strong></td>
+            <td>1-800-532-5274<br>patientadvocate.org</td>
+            <td>Free case managers to help with appeals</td>
+        </tr>
+        <tr>
+            <td><strong>Medicare (if applicable)</strong></td>
+            <td>1-800-633-4227</td>
+            <td>Help with Medicare drug coverage issues</td>
+        </tr>
+        <tr>
+            <td><strong>Your State Insurance Dept.</strong></td>
+            <td>Search: "[your state] insurance commissioner"</td>
+            <td>File complaints, get help with disputes</td>
+        </tr>
+        <tr>
+            <td><strong>Your Transplant Center</strong></td>
+            <td>Use the number on file</td>
+            <td>Medical necessity letters, clinical support</td>
+        </tr>
+    </table>
+
+    <!-- Sample Appeal Letter -->
+    <h2 class="page-break">Part 8: Sample Appeal Letter</h2>
+
+    <p>Here is a simple template you can use. Fill in the blanks with your own information:</p>
+
+    <div style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; font-family: Georgia, serif; line-height: 1.8;">
+        <p><strong>[Your Name]</strong><br>
+        [Your Address]<br>
+        [City, State ZIP]<br>
+        [Your Phone Number]<br>
+        [Your Email]</p>
+
+        <p>[Date]</p>
+
+        <p>[Insurance Company Name]<br>
+        [Appeals Department Address]<br>
+        [City, State ZIP]</p>
+
+        <p><strong>RE: Appeal for Coverage of [Medication Name]</strong><br>
+        Member Name: [Your Name]<br>
+        Member ID: [Your ID Number]<br>
+        Claim/Reference Number: [From denial letter]</p>
+
+        <p>Dear Appeals Committee:</p>
+
+        <p>I am writing to appeal the denial of coverage for [medication name and dose]. I received a denial letter dated [date] stating [brief reason for denial].</p>
+
+        <p>I am a [organ type] transplant recipient. I received my transplant on [date] at [hospital name]. I need this medication to prevent my body from rejecting my transplant.</p>
+
+        <p>My transplant doctor, [doctor's name], has written a letter of medical necessity explaining why I need this specific medication. I have included this letter along with my recent lab results and transplant records.</p>
+
+        <p>[If applicable: I have tried [other medication names] in the past, but they did not work well for me because [brief reason].]</p>
+
+        <p>Please reverse this denial and approve coverage for [medication name]. Without this medication, I am at risk of organ rejection.</p>
+
+        <p>Please contact me at [phone number] if you need any additional information.</p>
+
+        <p>Thank you for your time and consideration.</p>
+
+        <p>Sincerely,</p>
+        <p style="margin-top: 2rem;">[Your Signature]<br>
+        [Your Printed Name]<br>
+        [Date]</p>
+
+        <p><strong>Enclosures:</strong></p>
+        <ul>
+            <li>Copy of denial letter</li>
+            <li>Letter of medical necessity from Dr. [Name]</li>
+            <li>Recent lab results</li>
+            <li>Transplant summary</li>
+        </ul>
+    </div>
+
+    <!-- Tips for Success -->
+    <h2 class="page-break">Part 9: Tips for a Successful Appeal</h2>
+
+    <div class="two-columns">
+        <div class="callout callout-green keep-together">
+            <div class="callout-title">DO:</div>
+            <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>Stay calm and be polite</li>
+                <li>Keep records of all phone calls (date, time, name of person you spoke with)</li>
+                <li>Get everything in writing</li>
+                <li>Follow up if you don't hear back</li>
+                <li>Meet all deadlines</li>
+                <li>Ask your doctor's office for help</li>
+            </ul>
+        </div>
+        <div class="callout callout-red keep-together">
+            <div class="callout-title">DON'T:</div>
+            <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>Don't give up after the first "no"</li>
+                <li>Don't miss the deadline</li>
+                <li>Don't send original documents (only copies)</li>
+                <li>Don't stop taking your medication without talking to your doctor</li>
+                <li>Don't feel embarrassed to ask for help</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- While You Wait -->
+    <h2>Part 10: While You Wait for a Decision</h2>
+
+    <div class="callout callout-amber">
+        <div class="callout-title">Don't Run Out of Medication!</div>
+        <p>Ask your doctor or pharmacist about these options while your appeal is being reviewed:</p>
+        <ul>
+            <li><strong>Emergency supply:</strong> Some pharmacies can give you a few days' worth of medication</li>
+            <li><strong>Samples:</strong> Your doctor may have free samples</li>
+            <li><strong>Patient assistance programs:</strong> Drug companies often help patients who can't afford their medications</li>
+            <li><strong>Manufacturer coupons:</strong> Some brands offer discount cards</li>
+        </ul>
+    </div>
+
+    <!-- Final Encouragement -->
+    <div class="rights-box" style="text-align: center;">
+        <h3 style="margin-bottom: 0.75rem;">Remember: You Are Not Alone</h3>
+        <p style="font-size: 1.1rem; margin: 0;">Thousands of transplant patients successfully appeal their denials every year. You deserve access to the medications that keep you healthy. Don't give up!</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>This guide is provided free by TransplantMedicationNavigator.com</strong></p>
+        <p>This guide is for educational purposes only and is not legal or medical advice.<br>
+        Always consult with your healthcare team about your specific situation.</p>
+        <p style="margin-top: 1rem;">Last updated: 2025 | <a href="https://transplantmedicationnavigator.com">TransplantMedicationNavigator.com</a></p>
+    </div>
+</body>
+</html>
