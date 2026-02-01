@@ -297,6 +297,30 @@ Contact: [Your Phone Number]
             <div className="text-sm text-slate-600">To file an appeal</div>
           </div>
         </div>
+
+        {/* Download Appeal Guide CTA */}
+        <div className="mt-6 bg-white rounded-lg p-4 border-2 border-emerald-300 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-emerald-100 p-2 rounded-lg">
+                <FileText size={24} className="text-emerald-600" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="font-bold text-slate-800">Free Appeal Guide</p>
+                <p className="text-sm text-slate-600">Print-ready guide with checklists & sample letters</p>
+              </div>
+            </div>
+            <a
+              href="/appeal-guide.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg whitespace-nowrap"
+            >
+              <Download size={18} aria-hidden="true" />
+              Download Free Guide
+            </a>
+          </div>
+        </div>
       </header>
 
       {/* Interactive Navigation */}
@@ -776,26 +800,89 @@ Contact: [Your Phone Number]
         </div>
       </section>
 
-      {/* Doctor's Letter Template Link */}
-      <section className="mb-8 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border-2 border-emerald-200">
-        <div className="flex items-start gap-4">
-          <div className="bg-emerald-600 text-white p-3 rounded-lg flex-shrink-0">
-            <Download size={24} aria-hidden="true" />
+      {/* Downloadable Resources */}
+      <section className="mb-8 rounded-xl border-2 border-emerald-200 overflow-hidden">
+        <div className="bg-emerald-100 px-6 py-4 border-b-2 border-emerald-200">
+          <div className="flex items-center gap-3">
+            <div className="bg-emerald-600 text-white p-3 rounded-lg">
+              <Download size={24} aria-hidden="true" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-emerald-900">Free Downloadable Resources</h2>
+              <p className="text-emerald-700">Print these guides to help with your appeal</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-emerald-900 mb-2">Letter Template for Your Doctor</h2>
-            <p className="text-slate-700 mb-4">
-              Share this template with your transplant doctor. It's a ready-to-use medical necessity letter they can customize and send with your appeal.
-            </p>
-            <a
-              href="/medical-necessity-letter-template.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg"
-            >
-              <Download size={20} aria-hidden="true" />
-              Open Doctor's Letter Template
-            </a>
+        </div>
+
+        <div className="p-6 bg-gradient-to-br from-emerald-50 to-teal-50">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Appeal Guide */}
+            <div className="bg-white rounded-lg p-5 border-2 border-emerald-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-3">
+                <FileText size={24} className="text-emerald-600" aria-hidden="true" />
+                <h3 className="text-lg font-bold text-slate-800">Complete Appeal Guide</h3>
+              </div>
+              <p className="text-slate-600 mb-4 text-sm">
+                Step-by-step instructions, checklists, sample letters, and tips for winning your appeal. Written in plain language.
+              </p>
+              <ul className="text-sm text-slate-600 mb-4 space-y-1">
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
+                  Printable checklists
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
+                  Sample appeal letter template
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
+                  Phone scripts for calling insurance
+                </li>
+              </ul>
+              <a
+                href="/appeal-guide.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
+              >
+                <Download size={18} aria-hidden="true" />
+                Download Appeal Guide
+              </a>
+            </div>
+
+            {/* Doctor's Letter Template */}
+            <div className="bg-white rounded-lg p-5 border-2 border-purple-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-3">
+                <ClipboardList size={24} className="text-purple-600" aria-hidden="true" />
+                <h3 className="text-lg font-bold text-slate-800">Doctor's Letter Template</h3>
+              </div>
+              <p className="text-slate-600 mb-4 text-sm">
+                Share this with your transplant doctor. A ready-to-use medical necessity letter template they can customize for your appeal.
+              </p>
+              <ul className="text-sm text-slate-600 mb-4 space-y-1">
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-purple-500" aria-hidden="true" />
+                  Professional medical format
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-purple-500" aria-hidden="true" />
+                  Clinical guideline references
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check size={14} className="text-purple-500" aria-hidden="true" />
+                  Fill-in-the-blank sections
+                </li>
+              </ul>
+              <a
+                href="/medical-necessity-letter-template.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
+              >
+                <Download size={18} aria-hidden="true" />
+                Open Doctor's Template
+              </a>
+            </div>
           </div>
         </div>
       </section>
