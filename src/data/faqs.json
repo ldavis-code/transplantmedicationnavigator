@@ -104,6 +104,35 @@
     ]
   },
   {
+    "category": "Insurance Diversion Tactics",
+    "questions": [
+      {
+        "q": "What is a patient assistance diversion program?",
+        "a": "A patient assistance diversion program is when your insurance company, employer, or a third-party program withholds coverage for your medication and makes you apply for free medicine from drug manufacturers first.\n\n**The goal:** Shift the cost from your insurance to the drug maker.\n\n**The problem:** You may face delays getting your medicine, and you might not qualify for free programs. This leaves you without coverage.\n\n**Three main types:**\n• Copay accumulator programs\n• Copay maximizer programs\n• Alternative funding programs (AFPs)"
+      },
+      {
+        "q": "What is an alternative funding program (AFP)?",
+        "a": "An alternative funding program (AFP) is when your employer's health plan refuses to cover your specialty drug and instead requires you to work with a third-party company to get free medicine from drug manufacturers.\n\n**How it works:**\n• Your employer \"carves out\" expensive drugs from coverage\n• A third-party vendor contacts you to help apply for PAPs\n• You're only covered if the free drug application is denied\n\n**Why this is dangerous for transplant patients:**\n• Delays can be weeks or months\n• You might not qualify for the free drug program\n• If you don't qualify, you may have to pay full price\n• Missing doses of anti-rejection drugs is dangerous"
+      },
+      {
+        "q": "How can I tell if my insurance uses diversion programs?",
+        "a": "**Warning signs:**\n• Your plan documents mention \"copay accumulator\" or \"accumulator adjustment\"\n• Copay card payments aren't counting toward your deductible\n• You're told to contact a \"specialty benefits coordinator\" before getting medicine\n• Your specialty drug is \"carved out\" or excluded from regular coverage\n• You must apply for free medicine programs before insurance will help\n\n**Questions to ask your insurance:**\n• \"Does my plan have a copay accumulator or maximizer program?\"\n• \"Will copay card payments count toward my deductible?\"\n• \"Is my medication fully covered or carved out?\""
+      },
+      {
+        "q": "What states have laws protecting against copay accumulators?",
+        "a": "As of 2026, many states require copay assistance to count toward your deductible and out-of-pocket maximum. These protections apply to state-regulated plans (not self-funded employer plans).\n\n**States with protections include:**\nArizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Minnesota, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Puerto Rico, Tennessee, Texas, Virginia, Washington, West Virginia, and more.\n\n**Check your state:**\nContact your state insurance commissioner to see what protections apply to your plan. Laws are changing fast as more patients speak up."
+      },
+      {
+        "q": "What can I do if I'm being diverted from coverage?",
+        "a": "**Step 1:** Read your plan documents carefully. Look for terms like \"accumulator adjustment,\" \"maximizer,\" \"alternative funding,\" or \"specialty carve-out.\"\n\n**Step 2:** Track your spending. Compare what you pay to what shows on your insurer's deductible tracker.\n\n**Step 3:** File an appeal if your medication is denied. Ask your transplant team to write a letter of medical necessity.\n\n**Step 4:** Contact your state insurance commissioner. They can explain your rights and help file complaints.\n\n**Step 5:** Talk to your employer (if you have job insurance). Tell HR how these programs affect you and ask them to consider plans without diversion tactics.\n\n**Get help:** Contact the Patient Advocate Foundation for free case management."
+      },
+      {
+        "q": "Why are diversion programs especially harmful for transplant patients?",
+        "a": "Transplant patients face unique risks from diversion programs:\n\n**1. You can't miss doses**\nAnti-rejection medicines must be taken on time, every time. Delays from diversion programs can be dangerous.\n\n**2. PAPs aren't guaranteed**\nDrug maker programs have income limits and funding caps. If you don't qualify or funding runs out, you could be left with no coverage.\n\n**3. You're paying for coverage**\nYou pay insurance premiums for coverage. These programs let insurers collect your money while making drug companies pay instead.\n\n**4. The \"cliff\" effect**\nWith accumulator programs, when your copay card runs out and nothing counted toward your deductible, you may suddenly owe thousands of dollars."
+      }
+    ]
+  },
+  {
     "category": "Insurance & Coverage",
     "questions": [
       {
