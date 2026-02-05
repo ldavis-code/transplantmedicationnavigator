@@ -5269,8 +5269,8 @@ const Education = () => {
                 {activeTab === 'DIVERSION' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Patient Assistance Diversion Programs</h1>
-                            <p className="text-xl text-slate-600">How Insurance Companies May Be Shifting Drug Costs Away From Themselves—And Onto You</p>
+                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">When Insurance Sends You Elsewhere</h1>
+                            <p className="text-xl text-slate-600">Some plans try to avoid paying for your drugs. Learn how to spot this and what to do.</p>
                         </div>
 
                         <div className="bg-gradient-to-br from-red-50 to-orange-50 border-4 border-red-300 rounded-2xl p-8 shadow-lg">
@@ -5279,37 +5279,37 @@ const Education = () => {
                                     <AlertOctagon size={32} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-red-900 mb-2">Warning: Your Insurance May Be Redirecting You</h2>
-                                    <p className="text-lg font-bold text-red-800">Some insurance companies and employers use tactics to avoid paying for your expensive medications—by making you get them free from drug makers instead.</p>
+                                    <h2 className="text-2xl font-bold text-red-900 mb-2">Warning: Your Plan May Send You Away</h2>
+                                    <p className="text-lg font-bold text-red-800">Some plans don't want to pay for costly drugs. They may make you get free drugs from drug makers first.</p>
                                 </div>
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
-                                <h3 className="font-bold text-red-900 text-xl mb-3">What Are Diversion Programs?</h3>
-                                <p className="text-slate-800 leading-relaxed mb-3">A "patient assistance diversion program" is when your insurance company, employer, or a third-party program <span className="font-bold bg-yellow-200 px-2 py-1 rounded">withholds coverage for your medication until you first apply for free medication</span> through a drug maker's Patient Assistance Program (PAP).</p>
-                                <p className="text-slate-700 leading-relaxed">This shifts the cost from your insurance to the drug maker—but it can leave you without medicine while you wait for approval, and it may affect your future coverage options.</p>
+                                <h3 className="font-bold text-red-900 text-xl mb-3">What Does This Mean?</h3>
+                                <p className="text-slate-800 leading-relaxed mb-3">Your plan may say: <span className="font-bold bg-yellow-200 px-2 py-1 rounded">"We won't pay for your drug until you ask a drug maker for free medicine first."</span></p>
+                                <p className="text-slate-700 leading-relaxed">This saves money for your plan. But it can leave you without medicine while you wait. And you might not get the free drugs.</p>
                             </div>
                         </div>
 
                         <section className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="types-heading">
                             <h2 id="types-heading" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <List className="text-indigo-600" size={28} aria-hidden="true" />
-                                Three Types of Diversion Programs
+                                Three Ways Plans Do This
                             </h2>
-                            <p className="text-slate-600 mb-8">These programs have different names, but they all have one goal: making you pay less through insurance—which may sound good, but often hurts you in the long run.</p>
+                            <p className="text-slate-600 mb-8">These tricks have fancy names. But they all do the same thing: make someone else pay for your drugs.</p>
 
                             <div className="space-y-6">
                                 <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border-2 border-purple-200">
                                     <div className="flex items-start gap-4">
                                         <div className="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">1</div>
                                         <div>
-                                            <h3 className="font-bold text-purple-900 text-xl mb-2">Copay Accumulator Programs</h3>
-                                            <p className="text-slate-700 mb-4">Your insurance takes the copay help from drug makers, but <span className="font-bold text-red-700">doesn't count it toward your deductible or out-of-pocket maximum</span>.</p>
+                                            <h3 className="font-bold text-purple-900 text-xl mb-2">Copay Accumulator</h3>
+                                            <p className="text-slate-700 mb-4">Drug makers give you copay help. Your plan takes that help. But <span className="font-bold text-red-700">it does not count toward what you owe for the year</span>.</p>
                                             <div className="bg-white p-4 rounded-lg border border-purple-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">How It Hurts You:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You use up your copay card benefits faster</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Once the copay card runs out, you suddenly owe full price</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You never reach your out-of-pocket maximum—so you keep paying all year</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your copay card runs out faster</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>When it runs out, you owe the full price</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You keep paying all year long</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -5320,14 +5320,14 @@ const Education = () => {
                                     <div className="flex items-start gap-4">
                                         <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">2</div>
                                         <div>
-                                            <h3 className="font-bold text-orange-900 text-xl mb-2">Copay Maximizer Programs</h3>
-                                            <p className="text-slate-700 mb-4">Your insurance stretches out your copay card benefits over the whole year, but <span className="font-bold text-red-700">redirects the savings to the insurance company, not to you</span>.</p>
+                                            <h3 className="font-bold text-orange-900 text-xl mb-2">Copay Maximizer</h3>
+                                            <p className="text-slate-700 mb-4">Your plan spreads your copay card over the year. But <span className="font-bold text-red-700">the plan keeps the savings, not you</span>.</p>
                                             <div className="bg-white p-4 rounded-lg border border-orange-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">How It Hurts You:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>The drug maker's help goes to your insurer instead of reducing your costs</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your copay stays higher than it should be</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You may still hit a "cliff" when benefits run out mid-year</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>The drug maker's help goes to your plan, not you</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You still pay more than you should</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>When the help runs out, you owe a lot</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -5338,15 +5338,15 @@ const Education = () => {
                                     <div className="flex items-start gap-4">
                                         <div className="bg-rose-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">3</div>
                                         <div>
-                                            <h3 className="font-bold text-rose-900 text-xl mb-2">Alternative Funding Programs (AFPs)</h3>
-                                            <p className="text-slate-700 mb-4">Your employer's plan <span className="font-bold text-red-700">refuses to cover your specialty drug entirely</span> and makes you work with a third-party company to get it free from the drug maker.</p>
+                                            <h3 className="font-bold text-rose-900 text-xl mb-2">Alternative Funding (AFP)</h3>
+                                            <p className="text-slate-700 mb-4">Your work plan says: <span className="font-bold text-red-700">"We won't cover this drug. Go get it free from the drug maker."</span></p>
                                             <div className="bg-white p-4 rounded-lg border border-rose-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">How It Hurts You:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Delays in getting your medication while applications are processed</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You may not qualify for the free drug program</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>If you can't get free medicine, you may have to pay full price or go without</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your insurer saves money—at your risk</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You wait weeks or months for your drugs</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You might not get the free drugs</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>If you don't get free drugs, you pay full price</span></li>
+                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your plan saves money. You take the risk.</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -5358,52 +5358,52 @@ const Education = () => {
                         <section className="bg-slate-50 p-8 rounded-xl border border-slate-200" aria-labelledby="identify-heading">
                             <h2 id="identify-heading" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <Search className="text-emerald-600" size={28} aria-hidden="true" />
-                                How to Know If You're Affected
+                                How to Tell If This Is Happening to You
                             </h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-white p-6 rounded-xl border border-slate-200">
-                                    <h3 className="font-bold text-slate-900 mb-4">Signs Your Plan Uses These Programs:</h3>
+                                    <h3 className="font-bold text-slate-900 mb-4">Warning Signs:</h3>
                                     <ul className="space-y-3">
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Your plan documents mention "copay accumulator" or "accumulator adjustment"</span>
+                                            <span>Your plan papers say "copay accumulator"</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Copay card payments aren't showing up toward your deductible</span>
+                                            <span>Copay card money is not showing on your plan tracker</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>You're told to contact a "specialty benefits coordinator" or third-party company</span>
+                                            <span>They tell you to call another company first</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Your coverage for certain drugs is "carved out" or excluded</span>
+                                            <span>Your drug is "carved out" (not covered)</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>You're required to apply for free medicine programs before insurance will help</span>
+                                            <span>You must ask for free drugs before your plan will help</span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl border border-slate-200">
-                                    <h3 className="font-bold text-slate-900 mb-4">Questions to Ask Your Insurance:</h3>
+                                    <h3 className="font-bold text-slate-900 mb-4">Ask Your Plan These Questions:</h3>
                                     <ul className="space-y-3">
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Does my plan have a copay accumulator or maximizer program?"</span>
+                                            <span>"Do you use a copay accumulator?"</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Will copay card payments count toward my deductible and out-of-pocket max?"</span>
+                                            <span>"Will my copay card count toward what I owe?"</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Is my medication fully covered, or is it 'carved out' of my benefits?"</span>
+                                            <span>"Is my drug fully covered?"</span>
                                         </li>
                                         <li className="flex items-start gap-3 text-slate-700">
                                             <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Am I required to apply for patient assistance before you'll cover my drug?"</span>
+                                            <span>"Do I have to ask for free drugs first?"</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -5419,37 +5419,37 @@ const Education = () => {
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">1</div>
-                                        Read Your Plan Documents Carefully
+                                        Read Your Plan Papers
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Look for terms like "accumulator adjustment," "maximizer," "alternative funding," or "specialty carve-out" in your Summary of Benefits or Evidence of Coverage.</p>
+                                    <p className="text-slate-700 text-sm">Look for words like "accumulator," "maximizer," or "alternative funding." These are clues.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">2</div>
-                                        Track Your Out-of-Pocket Spending
+                                        Keep Track of What You Pay
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Keep records of every payment. Compare what you pay to what shows on your insurer's tracker. If copay card payments aren't counting, you may be in an accumulator program.</p>
+                                    <p className="text-slate-700 text-sm">Save your receipts. Check if your copay card money shows up on your plan's tracker. If not, you may have an accumulator plan.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">3</div>
-                                        File an Appeal If Denied
+                                        Appeal If They Say No
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If your insurance refuses to cover your medicine and diverts you to a PAP, you can appeal. Ask your transplant team to write a letter of medical necessity.</p>
+                                    <p className="text-slate-700 text-sm">If your plan won't cover your drug, you can fight back. Ask your transplant team to write a letter saying you need this drug.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">4</div>
-                                        Contact Your State Insurance Commissioner
+                                        Call Your State for Help
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Some states have laws protecting patients from accumulator programs. Your state insurance commissioner can help you understand your rights and file a complaint.</p>
+                                    <p className="text-slate-700 text-sm">Many states have laws to protect you. Call your state insurance office. They can tell you your rights and help you file a complaint.</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">5</div>
-                                        Ask Your Employer (If Employer-Sponsored Insurance)
+                                        Talk to Your Boss (If You Get Insurance From Work)
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Your employer chooses the plan design. Tell HR how these programs affect you and ask them to consider plans without diversion tactics.</p>
+                                    <p className="text-slate-700 text-sm">Your boss picks the plan. Tell HR how this hurts you. Ask them to pick a better plan.</p>
                                 </div>
                             </div>
                         </section>
@@ -5457,36 +5457,36 @@ const Education = () => {
                         <section className="bg-blue-50 p-8 rounded-xl border border-blue-200" aria-labelledby="state-laws-heading">
                             <h2 id="state-laws-heading" className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                                 <Scale className="text-blue-600" size={28} aria-hidden="true" />
-                                State Protections
+                                States That Protect You
                             </h2>
-                            <p className="text-slate-700 mb-6">Some states have passed laws requiring copay assistance to count toward your deductible and out-of-pocket maximum. These protections apply to state-regulated plans (not self-funded employer plans).</p>
+                            <p className="text-slate-700 mb-6">Some states made laws to stop these tricks. In these states, copay card money must count toward what you owe.</p>
                             <div className="bg-white p-6 rounded-xl border border-blue-200">
-                                <h3 className="font-bold text-blue-900 mb-3">States With Copay Accumulator Protections (as of 2026):</h3>
-                                <p className="text-slate-700 text-sm mb-4">Arizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Minnesota, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Puerto Rico, Tennessee, Texas, Virginia, Washington, West Virginia, and more states considering legislation.</p>
+                                <h3 className="font-bold text-blue-900 mb-3">States With Laws to Help (as of 2026):</h3>
+                                <p className="text-slate-700 text-sm mb-4">Arizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Minnesota, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Puerto Rico, Tennessee, Texas, Virginia, Washington, West Virginia, and more.</p>
                                 <div className="bg-blue-100 p-4 rounded-lg mt-4">
-                                    <p className="text-blue-900 text-sm font-medium">Check with your state insurance commissioner to see if new protections have been added. Laws are changing fast as more patients speak up.</p>
+                                    <p className="text-blue-900 text-sm font-medium">Call your state insurance office to learn about new laws. More states add protections every year.</p>
                                 </div>
                             </div>
                         </section>
 
                         <section className="bg-gradient-to-r from-amber-50 to-yellow-50 p-8 rounded-xl border-2 border-amber-300" aria-labelledby="why-matters">
-                            <h2 id="why-matters" className="text-2xl font-bold text-slate-900 mb-6">Why This Matters for Transplant Patients</h2>
+                            <h2 id="why-matters" className="text-2xl font-bold text-slate-900 mb-6">Why Transplant Patients Must Know This</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">You can't miss doses.</span> Anti-rejection medicines must be taken on time, every time. Delays from diversion programs can be dangerous.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">You can't skip your drugs.</span> Missing doses can hurt your transplant. Waiting weeks for free drugs is risky.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">PAPs aren't guaranteed.</span> Drug maker programs have income limits and funding caps. If you don't qualify or funding runs out, you could be left with no coverage.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Free drugs are not a sure thing.</span> Drug makers have rules. You might not qualify. The money might run out.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">You're paying for insurance.</span> You pay premiums for coverage. These programs let insurers collect your money while making drug companies pay for your medicine.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">You pay for your plan.</span> You pay every month. But some plans make drug makers pay for your drugs instead.</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Accumulator "cliffs" are real.</span> When your copay card runs out mid-year and nothing counted toward your deductible, you may suddenly owe thousands of dollars.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">Big bills can hit fast.</span> When your copay card runs out, you may owe a lot of money all at once.</p>
                                 </li>
                             </ul>
                         </section>
@@ -5497,10 +5497,10 @@ const Education = () => {
                                 Need Help?
                             </h3>
                             <p className="text-emerald-900 leading-relaxed mb-4">
-                                If you think you're being diverted or your copay assistance isn't counting toward your deductible, talk to your transplant center's financial counselor or social worker. They can help you understand your options and advocate on your behalf.
+                                Think this is happening to you? Talk to your transplant center's money helper or social worker. They know how to help.
                             </p>
                             <p className="text-emerald-800 text-sm">
-                                You can also contact the <a href="https://www.patientadvocate.org/" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">Patient Advocate Foundation</a> for free case management help.
+                                You can also call the <a href="https://www.patientadvocate.org/" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">Patient Advocate Foundation</a> for free help.
                             </p>
                         </aside>
                     </div>
