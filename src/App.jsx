@@ -6482,19 +6482,24 @@ const MainSiteRoutes = () => (
         <Suspense fallback={<PageLoadingFallback />}>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/about" element={<Navigate to="/" replace />} />
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
+                <Route path="/quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/medications" element={<MedicationSearch />} />
                 <Route path="/education" element={<Education />} />
+                <Route path="/resources" element={<Navigate to="/education" replace />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
+                <Route path="/grants" element={<Navigate to="/application-help" replace />} />
                 <Route path="/faq" element={<LazyFAQ />} />
                 <Route path="/my-medications" element={<LazyMyMedications />} />
                 <Route path="/copay-reminders" element={<LazyCopayCardReminders />} />
                 <Route path="/savings-tracker" element={<LazySavingsTracker />} />
                 <Route path="/savings-calculator" element={<Navigate to="/savings-tracker" replace />} />
+                <Route path="/calculator" element={<Navigate to="/savings-tracker" replace />} />
                 <Route path="/survey" element={<LazySurveyLanding />} />
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
