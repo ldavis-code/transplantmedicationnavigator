@@ -622,7 +622,7 @@ const Home = () => {
                     From Prescription to Possession
                 </p>
                 <p className="text-lg md:text-xl font-semibold text-slate-900 mb-4">
-                    One patient went from $624/month to $10. See how.
+                    One patient went from $624/month to $10 with a copay card. See how in the My Path Quiz.
                 </p>
                 <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
                     A safe guide for transplant patients and care partners to find affordable medications and assistance programs.
