@@ -247,7 +247,7 @@ export const generateGuidanceSummary = (answers, medications) => {
         summary.keyMessages.push({
           type: 'info',
           title: 'Special Kidney Coverage',
-          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers anti-rejection drugs.',
+          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers anti-rejection drugs. The 2026 premium is $121.60/month (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.',
         });
       }
       break;

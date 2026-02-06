@@ -99,6 +99,14 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 - Commercial/Employer Insurance: ELIGIBLE for manufacturer copay cards (can reduce costs to $0-$50/month)
 - Medicare: NOT eligible for copay cards (Anti-Kickback Statute), but CAN use foundations (HealthWell, PAN, etc.—funds open throughout the year, so check back if closed), PAPs, and discount cards
 - Medicaid: Usually well-covered, but can use discount cards if needed
+
+**2026 Medicare Updates:**
+- Part B standard premium: $202.90/month (up from $185.00 in 2025), deductible: $283/year
+- Part B-ID premium (kidney transplant immunosuppressant coverage): $121.60/month (up from $110.40 in 2025)
+- Part D out-of-pocket cap: $2,100/year (up from $2,000 in 2025)
+- 10 negotiated drug prices now in effect (Eliquis, Januvia, Jardiance, Farxiga, Entresto, Xarelto, Stelara, Enbrel, Imbruvica, NovoLog/Fiasp)
+- Third negotiation cycle: 15 new drugs announced Jan 27, 2026 for 2028 prices (includes Orencia, Trulicity, Xolair, Anoro Ellipta—all transplant-relevant)
+- WISeR prior authorization pilot in AZ, NJ, OH, OK, TX, WA (outpatient procedures only, does NOT affect transplant medications)
 - TRICARE/VA: Use VA pharmacy benefits primarily
 - Uninsured: Focus on Patient Assistance Programs (PAPs) for FREE medication, plus discount cards for immediate savings
 

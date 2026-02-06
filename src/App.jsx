@@ -2348,8 +2348,8 @@ const Wizard = () => {
                             <AlertCircle aria-hidden="true" /> Important: Medicare Part B-ID
                         </h2>
                         <p className="mt-2 text-slate-700">
-                            Since you are a kidney transplant recipient on Medicare, you may qualify for <strong>Medicare Part B-ID</strong>. 
-                            This extends coverage for immunosuppressive drugs for life.
+                            Since you are a kidney transplant recipient on Medicare, you may qualify for <strong>Medicare Part B-ID</strong>.
+                            This extends coverage for immunosuppressive drugs for life. The 2026 premium is <strong>$121.60/month</strong> (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.
                         </p>
                         <a href="https://www.medicare.gov" target="_blank" rel="noreferrer" className="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition no-print">
                             Check Eligibility on Medicare.gov
@@ -4348,7 +4348,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
                 { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients).' },
                 { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID) with 20% coinsurance.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID). Premium: $121.60/month in 2026 (up from $110.40 in 2025), plus 20% coinsurance after $283 deductible.' },
                 { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
             ],
             action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
@@ -4371,7 +4371,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'gain', icon: '✅', title: 'Dual Eligible Status', desc: 'You may qualify as "dual eligible" and keep some Medicaid benefits alongside Medicare.' },
                 { type: 'info', icon: '💡', title: 'Extra Help/LIS', desc: 'Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs.' },
                 { type: 'change', icon: '🔄', title: 'Primary Payer', desc: 'Medicare becomes primary, Medicaid secondary for covered services.' },
-                { type: 'gain', icon: '✅', title: 'MSP Programs', desc: 'Medicare Savings Programs can pay your Part B premium.' },
+                { type: 'gain', icon: '✅', title: 'MSP Programs', desc: 'Medicare Savings Programs can pay your Part B premium ($202.90/month in 2026).' },
             ],
             action: 'Contact your State Health Insurance Assistance Program (SHIP) for free counseling on dual eligible benefits.',
         },
@@ -4393,7 +4393,7 @@ const InsuranceChangeSimulator = () => {
                 { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with $2,100 out-of-pocket cap (2026).' },
                 { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
                 { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B.' },
+                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B. Premium: $121.60/month (2026).' },
             ],
             action: 'Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited.',
         },
@@ -4629,7 +4629,12 @@ const Education = () => {
                                  <p className="text-sm text-purple-900 mb-4 font-medium">For the first time ever, Medicare talked drug makers into lower prices.</p>
                                  <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first new prices start January 1, 2026, with big savings. Examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% less), and <strong>Januvia</strong> drops from $527 to $113/month (79% less). This will save Medicare patients $1.5 billion in 2026 alone.</p>
                                  <p className="text-slate-700 text-sm mb-4">The first 10 drugs include medicines for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clots (Eliquis, Xarelto), immune diseases (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
-                                 <p className="text-slate-700 text-sm italic">About 8.8 million Medicare Part D patients used these medicines in 2023. The program will add 15 more drugs for 2027.</p>
+                                 <p className="text-slate-700 text-sm italic">About 8.8 million Medicare Part D patients used these medicines in 2023. A second round of 15 drugs was selected for 2027 prices.</p>
+                                 <div className="mt-4 p-3 bg-purple-100 rounded-lg border border-purple-200">
+                                     <p className="text-purple-900 text-sm font-bold mb-1">Third Round Announced January 27, 2026</p>
+                                     <p className="text-slate-700 text-sm mb-2">CMS selected 15 new drugs for negotiation, including the <strong>first-ever Part B drugs</strong>. New prices take effect January 1, 2028.</p>
+                                     <p className="text-slate-700 text-xs"><strong>Transplant-relevant picks:</strong> Orencia (abatacept, related to Belatacept), Trulicity (dulaglutide, for post-transplant diabetes), Xolair (omalizumab, lung transplant), Anoro Ellipta (lung transplant). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.</p>
+                                 </div>
                              </section>
                              <section className="bg-teal-50 p-6 rounded-xl border border-teal-100">
                                  <div className="flex items-center gap-2 mb-3">
@@ -4818,6 +4823,10 @@ const Education = () => {
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                         <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="prior-authorization" showIcon={false}>Prior Authorization</TermTooltip></h3>
                                         <p className="text-slate-700 text-sm">When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.</p>
+                                        <div className="mt-3 p-2 bg-amber-50 rounded border border-amber-200">
+                                            <p className="text-amber-900 text-xs font-bold">New in 2026: CMS WISeR Pilot</p>
+                                            <p className="text-slate-700 text-xs">The WISeR (Wasteful and Inappropriate Service Reduction) model requires prior authorization for 17 outpatient Medicare Part B services in 6 states: Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington. While it does not directly affect transplant medications, it may add steps for some procedures. <a href="/appeals" className="text-blue-600 hover:underline">Learn more on our Appeals page</a>.</p>
+                                        </div>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
@@ -4975,7 +4984,7 @@ const Education = () => {
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
                                         <strong className="text-blue-700 text-lg block mb-1">Part B (Medical)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Anti-rejection drugs (if Part B-ID eligible)</li></ul>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Anti-rejection drugs (if Part B-ID eligible)</li><li>2026: $202.90/month premium, $283 deductible</li><li>Part B-ID premium: $121.60/month (kidney patients)</li></ul>
                                     </div>
                                     <div className="border border-purple-200 p-4 rounded-lg bg-purple-50">
                                         <strong className="text-purple-700 text-lg block mb-1">Part C (Medicare Advantage)</strong>

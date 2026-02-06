@@ -101,7 +101,7 @@ const generateKeyMessages = (insuranceType, organs = [], financialStatus) => {
                 messages.push({
                     type: 'info',
                     title: 'Part B-ID for Immunosuppressants',
-                    message: 'Kidney transplant patients may qualify for Medicare Part B-ID for immunosuppressant coverage.',
+                    message: 'Kidney transplant patients may qualify for Medicare Part B-ID for immunosuppressant coverage. The 2026 premium is $121.60/month (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.',
                 });
             }
             break;
