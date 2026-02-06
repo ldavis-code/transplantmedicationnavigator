@@ -621,6 +621,9 @@ const Home = () => {
                 <p className="text-xl md:text-2xl font-semibold text-emerald-600 mb-4">
                     From Prescription to Possession
                 </p>
+                <p className="text-lg md:text-xl font-semibold text-slate-900 mb-4">
+                    One patient went from $624/month to $10. See how.
+                </p>
                 <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
                     A safe guide for transplant patients and care partners to find affordable medications and assistance programs.
                 </p>
