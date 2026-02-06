@@ -887,6 +887,42 @@ Contact: [Your Phone Number]
         </div>
       </section>
 
+      {/* WISeR Prior Authorization Pilot */}
+      <section className="bg-amber-50 rounded-xl p-6 border-2 border-amber-200">
+        <div className="flex items-center gap-3 mb-4">
+          <AlertTriangle size={28} className="text-amber-600" aria-hidden="true" />
+          <h2 className="text-xl font-bold text-slate-900">New in 2026: CMS WISeR Prior Authorization Pilot</h2>
+        </div>
+        <p className="text-slate-700 mb-4">
+          Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-white p-4 rounded-lg border border-amber-200">
+            <h3 className="font-bold text-amber-900 mb-2">Affected States</h3>
+            <ul className="text-sm text-slate-700 space-y-1">
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Arizona</li>
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> New Jersey</li>
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Ohio</li>
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> <strong>Oklahoma</strong></li>
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Texas</li>
+              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Washington</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg border border-amber-200">
+            <h3 className="font-bold text-amber-900 mb-2">What Transplant Patients Should Know</h3>
+            <ul className="text-sm text-slate-700 space-y-1 list-disc pl-4">
+              <li>WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications</li>
+              <li>Your immunosuppressant drugs are NOT affected</li>
+              <li>If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization</li>
+              <li>Coverage decisions are made within 72 hours (48 hours for urgent cases)</li>
+            </ul>
+          </div>
+        </div>
+        <p className="text-slate-600 text-sm">
+          The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process.
+        </p>
+      </section>
+
       {/* Encouragement Footer */}
       <footer className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200 text-center">
         <Heart size={32} className="text-purple-600 mx-auto mb-3" aria-hidden="true" />

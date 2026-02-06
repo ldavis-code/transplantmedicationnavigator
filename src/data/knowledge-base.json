@@ -35,6 +35,18 @@
     "keywords": ["faq", "questions", "common"],
     "response": "**Common Questions:**\n\nCheck our FAQ page for answers about:\n\n• Who can apply\n• How long it takes\n• How to renew\n• Generic vs brand drugs\n• Insurance appeals\n\nWhat question do you have?"
   },
+  "medicare2026costs": {
+    "keywords": ["part b premium", "part b cost", "part b deductible", "medicare premium 2026", "part b-id premium", "b-id cost", "immunosuppressive drug premium", "121", "202", "283"],
+    "response": "**2026 Medicare Part B Costs:**\n\n• **Standard Part B premium:** $202.90/month (up from $185.00 in 2025)\n• **Part B deductible:** $283/year (up from $257 in 2025)\n• **Part B-ID premium** (kidney transplant): $121.60/month (up from $110.40 in 2025)\n• **Part D out-of-pocket cap:** $2,100/year\n\n**Part B-ID** is a special benefit for kidney transplant patients that covers immunosuppressive drugs for life, even after full Medicare ends. You pay the $121.60 premium plus 20% coinsurance after the $283 deductible.\n\nMedicare Savings Programs (QMB, SLMB, QI) can help pay premiums if your income is low."
+  },
+  "wiser": {
+    "keywords": ["wiser", "prior authorization pilot", "cms pilot", "prior auth 2026", "wasteful and inappropriate"],
+    "response": "**CMS WISeR Prior Authorization Pilot (2026):**\n\nStarting January 2026, the WISeR (Wasteful and Inappropriate Service Reduction) model adds prior authorization for 17 outpatient Medicare Part B services in 6 states: Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington.\n\n**For transplant patients:** WISeR does NOT directly affect your transplant medications or immunosuppressants. It covers outpatient procedures (nerve stimulators, spinal procedures, wound care). However, if you need any of these procedures, your provider must get prior authorization first.\n\nThis applies only to Original Medicare, not Medicare Advantage."
+  },
+  "negotiatedDrugs": {
+    "keywords": ["negotiated price", "drug negotiation", "inflation reduction", "IRA drugs", "medicare negotiation", "third cycle", "2028 prices"],
+    "response": "**Medicare Drug Price Negotiation:**\n\n**First 10 drugs (prices effective Jan 2026):** Eliquis, Entresto, Jardiance, Farxiga, Januvia, Xarelto, Stelara, Enbrel, Imbruvica, NovoLog/Fiasp. Savings up to 79%.\n\n**Third round (announced Jan 27, 2026, prices effective 2028):** 15 new drugs including first-ever Part B drugs. Transplant-relevant picks: Orencia (related to Belatacept), Trulicity (post-transplant diabetes), Xolair & Anoro Ellipta (lung transplant). Also Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, Xeljanz.\n\nLower prices = you hit your $2,100 out-of-pocket cap faster."
+  },
   "diversion": {
     "keywords": ["diversion", "accumulator", "maximizer", "afp", "alternative funding", "copay accumulator", "copay maximizer", "carved out", "carve out"],
     "response": "**When Plans Send You Away:**\n\nSome plans try to avoid paying for your drugs:\n\n• **Copay Accumulator**: Takes your copay card help but does not count it toward what you owe\n• **Copay Maximizer**: Keeps the savings for the plan, not you\n• **Alternative Funding (AFP)**: Won't cover your drug. Makes you get free drugs from drug makers.\n\n**Watch for these signs:**\n• Copay card money not showing on your tracker\n• They tell you to get free drugs first\n• Your drug is \"carved out\" (not covered)\n\n**What to do:**\n• Ask your plan if they use these tricks\n• Many states have laws to protect you\n• Appeal if your plan says no\n• Talk to your transplant team's money helper\n\nVisit our **Diversion Programs** tab in Education to learn more."

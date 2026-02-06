@@ -162,6 +162,18 @@
       {
         "q": "What are State Drug Programs?",
         "a": "Some states have programs that help residents pay for drugs.\n\n**Who can use them:**\n• Often people age 65+ or disabled\n• People with limited income\n• State residents\n\n**Examples:**\n• New York: EPIC\n• Pennsylvania: PACE\n• New Jersey: PAAD\n\n**How to find your state's program:**\n• Visit Medicare.gov\n• Call 1-800-MEDICARE\n• Ask your social worker"
+      },
+      {
+        "q": "What is Medicare Part B-ID and how much does it cost in 2026?",
+        "a": "**Part B-ID** is a special Medicare benefit just for kidney transplant patients. It covers immunosuppressive drugs (anti-rejection medicines) for life, even after your full Medicare ends.\n\n**2026 Costs:**\n• Monthly premium: **$121.60** (up from $110.40 in 2025)\n• Annual deductible: **$283**\n• Coinsurance: **20%** of the drug cost\n\n**Who qualifies:**\n• Kidney transplant recipients whose full Medicare (Part A/B) ended 36 months after transplant\n• People who don't have other insurance covering immunosuppressants\n\n**Important:** Part B-ID only covers immunosuppressive drugs. It does not cover other medical services. If you need full coverage, look into Medicare Savings Programs (MSP) to help pay premiums."
+      },
+      {
+        "q": "What are the 2026 Medicare Part B costs?",
+        "a": "Here are the standard Medicare Part B costs for 2026:\n\n**Monthly premium:** $202.90 (up from $185.00 in 2025)\n**Annual deductible:** $283 (up from $257 in 2025)\n**Coinsurance:** 20% of Medicare-approved costs after deductible\n\n**Part B-ID premium** (kidney transplant patients): $121.60/month\n\n**If you have low income:**\nMedicare Savings Programs (QMB, SLMB, QI) can help pay your Part B premium and may cover deductibles and coinsurance too.\n\n**Higher income:** If you earn more than $109,000/year (single) or $218,000 (married), you pay more for Part B."
+      },
+      {
+        "q": "What is the CMS WISeR prior authorization pilot?",
+        "a": "Starting January 2026, CMS launched the **WISeR** (Wasteful and Inappropriate Service Reduction) model. It adds prior authorization for 17 outpatient Medicare Part B services.\n\n**Affected states:** Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington.\n\n**What transplant patients should know:**\n• WISeR does NOT affect your transplant medications\n• It covers outpatient procedures like nerve stimulators, spinal procedures, and wound care\n• If you need one of these procedures, your provider must get approval first\n• Decisions are made within 72 hours (48 hours for urgent cases)\n\n**Important:** This only affects Original Medicare (fee-for-service), not Medicare Advantage plans. The model runs through December 2031."
       }
     ]
   },
@@ -187,6 +199,10 @@
       {
         "q": "How can I get better prices on generic drugs?",
         "a": "**Tips:**\n• Check the price online before you refill\n• If the price went up, try a different pharmacy\n• Ask for a 90-day supply to lock in the price longer"
+      },
+      {
+        "q": "What drugs are being negotiated by Medicare?",
+        "a": "Medicare is negotiating drug prices under the Inflation Reduction Act. Here is where things stand:\n\n**First 10 drugs (prices in effect January 2026):**\nEliquis, Jardiance, Xarelto, Januvia, Farxiga, Entresto, Enbrel, Imbruvica, Stelara, and NovoLog/Fiasp. These save patients up to 79% on some drugs.\n\n**Second round (15 drugs, prices effective 2027):**\nA second group of 15 drugs was selected for negotiation with prices taking effect in 2027.\n\n**Third round (announced January 27, 2026, prices effective 2028):**\n15 new drugs including the first-ever Part B drugs. Transplant-relevant picks include Orencia (related to Belatacept for kidney transplant), Trulicity (for post-transplant diabetes), Xolair and Anoro Ellipta (for lung transplant patients). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.\n\n**Why it matters:** Lower prices mean you hit your $2,100 out-of-pocket cap faster, or pay less overall."
       }
     ]
   },
