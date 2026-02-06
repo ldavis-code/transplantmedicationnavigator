@@ -618,20 +618,17 @@ const Home = () => {
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
                     Compare medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
                 </h1>
-                <p className="text-xl md:text-2xl font-semibold text-emerald-600 mb-4">
+                <p className="text-lg md:text-xl font-medium italic text-slate-500 mb-4 tracking-wide">
                     From Prescription to Possession
                 </p>
-                <p className="text-lg md:text-xl font-semibold text-slate-900 mb-4">
-                    One patient went from $624/month to $10 with a copay card. Start the My Path Quiz to find your savings.
-                </p>
-                <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-2xl mx-auto">
-                    A guide for transplant patients and care partners to find affordable medications and assistance programs.
+                <p className="text-lg md:text-xl font-semibold text-slate-900 mb-8 max-w-2xl mx-auto">
+                    One patient went from $624/month to $10 with a copay card. Find out what you could save.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
                         to="/wizard"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-2"
                         aria-label="Start My Path Quiz"
                     >
                         <Search size={20} aria-hidden="true" />
@@ -639,7 +636,7 @@ const Home = () => {
                     </Link>
                     <Link
                         to="/education/appeals"
-                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center gap-3"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-slate-300 transition flex items-center gap-3"
                         aria-label="Get help with insurance denials"
                     >
                         <ShieldAlert size={20} aria-hidden="true" />
