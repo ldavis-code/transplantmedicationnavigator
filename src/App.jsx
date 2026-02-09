@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense, useMemo } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense, useMemo, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate, useSearchParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
 
@@ -62,6 +62,8 @@ import { DemoModeProvider } from './context/DemoModeContext.jsx';
 import DemoBanner from './components/DemoBanner.jsx';
 // Feedback Widget for medication results
 import FeedbackWidget from './components/FeedbackWidget.jsx';
+// Read Aloud Button for accessibility
+import ReadAloudButton from './components/ReadAloudButton.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -3509,6 +3511,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
     const [activeFilter, setActiveFilter] = useState('all');
+    const contentRef = useRef(null);
 
     // Pharmacy availability - exclude medications not carried by each pharmacy
     // Excluded: Injectable biologics, IV formulations, hospital-only medications
@@ -3650,7 +3653,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         </div>
                     </div>
                 </div>
-                <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                    <ReadAloudButton contentRef={contentRef} label="Read Aloud" />
+                    <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
+                </div>
             </header>
 
             {/* Savings Summary Card - Shows potential savings at a glance */}
@@ -3736,7 +3742,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                 ))}
             </nav>
 
-            <div className="p-6" role="tabpanel" id={`${med.id}-${activeTab}-panel`}>
+            <div className="p-6" role="tabpanel" id={`${med.id}-${activeTab}-panel`} ref={contentRef}>
                 {activeTab === 'OVERVIEW' && (
                     <div className="space-y-6 fade-in">
                         <p className="text-slate-700 leading-relaxed">
