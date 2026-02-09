@@ -150,6 +150,41 @@
     </div>
   </div>
 
+  <!-- Noscript fallback - displays helpful content when JavaScript is disabled -->
+  <noscript>
+    <style>.hidden { display: block !important; } #saved-section, #logged-out-section, #user-bar, #med-message, h2, input, select, button, label, hr, p { display: none !important; }</style>
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
+      <h1 style="display: block !important; color: #0f172a;">Transplant Medication Navigator</h1>
+      <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <p style="display: block !important; color: #92400e; font-weight: bold; margin: 0 0 4px;">JavaScript is required for the My Medications tracker.</p>
+        <p style="display: block !important; color: #78350f; margin: 0; font-size: 0.875rem;">Please enable JavaScript to save and manage your medications. The resources below are still available.</p>
+      </div>
+
+      <h2 style="display: block !important; color: #059669; border-bottom: 2px solid #d1fae5; padding-bottom: 8px;">Key Transplant Medication Programs</h2>
+      <table style="width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem;">
+        <tr><th style="border: 1px solid #e2e8f0; padding: 8px; background: #f0fdf4; color: #059669; text-align: left;">Program</th><th style="border: 1px solid #e2e8f0; padding: 8px; background: #f0fdf4; color: #059669; text-align: left;">Phone</th><th style="border: 1px solid #e2e8f0; padding: 8px; background: #f0fdf4; color: #059669; text-align: left;">Medications</th></tr>
+        <tr><td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Astellas Patient Assistance</strong></td><td style="border: 1px solid #e2e8f0; padding: 8px;"><a href="tel:1-800-477-6472">1-800-477-6472</a></td><td style="border: 1px solid #e2e8f0; padding: 8px;">Tacrolimus (Prograf)</td></tr>
+        <tr style="background: #f8fafc;"><td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Novartis Patient Assistance</strong></td><td style="border: 1px solid #e2e8f0; padding: 8px;"><a href="tel:1-800-277-2254">1-800-277-2254</a></td><td style="border: 1px solid #e2e8f0; padding: 8px;">Cyclosporine, Myfortic, Zortress</td></tr>
+        <tr><td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Genentech Patient Foundation</strong></td><td style="border: 1px solid #e2e8f0; padding: 8px;"><a href="tel:1-866-422-2377">1-866-422-2377</a></td><td style="border: 1px solid #e2e8f0; padding: 8px;">CellCept, Valcyte</td></tr>
+        <tr style="background: #f8fafc;"><td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Pfizer RxPathways</strong></td><td style="border: 1px solid #e2e8f0; padding: 8px;"><a href="tel:1-844-989-7284">1-844-989-7284</a></td><td style="border: 1px solid #e2e8f0; padding: 8px;">Rapamune (Sirolimus)</td></tr>
+        <tr><td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>BMS Patient Assistance</strong></td><td style="border: 1px solid #e2e8f0; padding: 8px;"><a href="tel:1-800-736-0003">1-800-736-0003</a></td><td style="border: 1px solid #e2e8f0; padding: 8px;">Nulojix (Belatacept)</td></tr>
+      </table>
+
+      <h2 style="display: block !important; color: #059669; border-bottom: 2px solid #d1fae5; padding-bottom: 8px; margin-top: 24px;">Copay Foundations</h2>
+      <ul style="list-style: disc; padding-left: 20px; color: #334155; line-height: 2;">
+        <li><a href="https://www.healthwellfoundation.org/" style="color: #059669;">HealthWell Foundation</a> &mdash; Copays, travel costs, premiums</li>
+        <li><a href="https://www.panfoundation.org/" style="color: #059669;">PAN Foundation</a> &mdash; Medication costs for serious illnesses</li>
+        <li><a href="https://www.patientadvocate.org/" style="color: #059669;">Patient Advocate Foundation</a> &mdash; <a href="tel:1-800-532-5274">1-800-532-5274</a></li>
+        <li><a href="https://www.kidneyfund.org/" style="color: #059669;">American Kidney Fund</a> &mdash; Grants for transplant patients</li>
+      </ul>
+
+      <p style="display: block !important; color: #334155; margin-top: 24px;">
+        Visit the full site with JavaScript enabled: <a href="https://transplantmedicationnavigator.com/" style="color: #059669;">transplantmedicationnavigator.com</a><br>
+        TRIO: <a href="https://www.trioweb.org/" style="color: #059669;">trioweb.org</a>
+      </p>
+    </div>
+  </noscript>
+
   <script src="supabase-auth.js"></script>
   <script>
     // Store medication temporarily if user isn't logged in
