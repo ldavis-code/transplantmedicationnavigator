@@ -71,6 +71,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     ]);
     const [showResults, setShowResults] = useState(false);
     const [calculations, setCalculations] = useState(null);
+    const [errors, setErrors] = useState({});
 
     // Free for all patients - no medication limit
     const canAddMore = true;
@@ -112,6 +113,12 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
             }
             return updated;
         });
+        setErrors(prev => {
+            const updated = { ...prev };
+            delete updated[`medication-${index}`];
+            delete updated[`quantity-${index}`];
+            return updated;
+        });
         setShowResults(false);
     };
 
@@ -121,6 +128,21 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     };
 
     const calculateSavings = () => {
+        // Validate inputs
+        const newErrors = {};
+        selectedMeds.forEach((med, index) => {
+            if (!med.id && !med.name) {
+                newErrors[`medication-${index}`] = 'Please select a medication';
+            }
+            if (!med.quantity || med.quantity < 1 || med.quantity > 12) {
+                newErrors[`quantity-${index}`] = 'Quantity must be between 1 and 12';
+            }
+        });
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length > 0) {
+            return;
+        }
+
         // Check if user can calculate (handles paywall logic)
         if (onCalculate && !onCalculate()) {
             return;
@@ -182,26 +204,33 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                 {/* Medication Entries */}
                 <div className="space-y-3">
                     {selectedMeds.map((med, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                        <div key={index} className="flex items-end gap-3 p-3 bg-slate-50 rounded-lg">
                             <div className="flex-1">
-                                <label htmlFor={`medication-select-${index}`} className="sr-only">
-                                    Select medication {index + 1}
+                                <label htmlFor={`medication-select-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
+                                    Medication {index + 1}
                                 </label>
                                 <select
                                     id={`medication-select-${index}`}
                                     value={med.id}
                                     onChange={(e) => updateMedication(index, 'medication', e.target.value)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white min-h-[44px]"
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white min-h-[44px] ${errors[`medication-${index}`] ? 'border-red-500' : 'border-slate-300'}`}
+                                    aria-describedby={errors[`medication-${index}`] ? `medication-error-${index}` : undefined}
+                                    aria-invalid={errors[`medication-${index}`] ? 'true' : undefined}
                                 >
                                     <option value="">Select a medication...</option>
                                     {allMedications.map(m => (
                                         <option key={m.id} value={m.id}>{m.name}</option>
                                     ))}
                                 </select>
+                                {errors[`medication-${index}`] && (
+                                    <p id={`medication-error-${index}`} className="text-red-600 text-xs mt-1" role="alert">
+                                        {errors[`medication-${index}`]}
+                                    </p>
+                                )}
                             </div>
-                            <div className="w-20">
-                                <label htmlFor={`medication-quantity-${index}`} className="sr-only">
-                                    Monthly quantity for medication {index + 1}
+                            <div className="w-24">
+                                <label htmlFor={`medication-quantity-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
+                                    Qty/mo
                                 </label>
                                 <input
                                     id={`medication-quantity-${index}`}
@@ -210,9 +239,15 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                                     max="12"
                                     value={med.quantity}
                                     onChange={(e) => updateMedication(index, 'quantity', parseInt(e.target.value) || 1)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center min-h-[44px]"
-                                    aria-label="Monthly quantity"
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-center min-h-[44px] ${errors[`quantity-${index}`] ? 'border-red-500' : 'border-slate-300'}`}
+                                    aria-describedby={errors[`quantity-${index}`] ? `quantity-error-${index}` : undefined}
+                                    aria-invalid={errors[`quantity-${index}`] ? 'true' : undefined}
                                 />
+                                {errors[`quantity-${index}`] && (
+                                    <p id={`quantity-error-${index}`} className="text-red-600 text-xs mt-1" role="alert">
+                                        {errors[`quantity-${index}`]}
+                                    </p>
+                                )}
                             </div>
                             {selectedMeds.length > 1 && (
                                 <button
@@ -248,6 +283,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
             </div>
 
             {/* Results */}
+            <div aria-live="polite" aria-atomic="true">
             {showResults && calculations && (
                 <div className="space-y-6 animate-fadeIn">
                     {/* Main Savings Display */}
@@ -318,6 +354,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                     </div>
                 </div>
             )}
+            </div>
 
             {/* Trust Indicators */}
             <div className="grid md:grid-cols-3 gap-4 mt-8">
