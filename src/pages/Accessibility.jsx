@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -13,155 +13,235 @@ const Accessibility = () => {
                     <AccessibilityIcon size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility Statement</h1>
-                <p className="text-slate-600">Last Updated: January 5, 2026</p>
+                <p className="text-slate-600">Last Updated: February 9, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
+
+                {/* Commitment */}
                 <section>
+                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                        Our Commitment
+                    </h2>
                     <p className="text-slate-700 leading-relaxed">
-                        TransplantNav LLC is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.
+                        TransplantNav LLC is committed to making the Transplant Medication Navigator website accessible to everyone, including people with disabilities. We believe that all transplant patients deserve equal access to medication assistance information, regardless of ability.
                     </p>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        We believe that all transplant patients deserve equal access to medication assistance information, regardless of ability. Our goal is to make the Transplant Medication Navigator website accessible to as many people as possible.
+                        We work to follow the{' '}
+                        <a
+                            href="https://www.w3.org/TR/WCAG21/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
+                        >
+                            Web Content Accessibility Guidelines (WCAG) 2.1 Level AA
+                            <ExternalLink size={14} aria-hidden="true" />
+                        </a>
+                        . These guidelines help make web content more usable for people with disabilities and better for everyone.
                     </p>
                 </section>
 
+                {/* Conformance Status */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
                         Conformance Status
                     </h2>
-                    <p className="text-slate-700 leading-relaxed mb-4">
-                        We strive to conform to the{' '}
-                        <a
-                            href="https://www.w3.org/WAI/WCAG22/quickref/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-600 hover:text-emerald-700 underline"
-                        >
-                            Web Content Accessibility Guidelines (WCAG) 2.2 Level AA
-                        </a>
-                        . These guidelines explain how to make web content more accessible for people with disabilities, and user-friendly for everyone.
-                    </p>
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start gap-3">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start gap-3 mb-4">
                         <CheckCircle className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <p className="text-emerald-800">
-                            This website is conformant with WCAG 2.2 Level AA. We continuously work to maintain and improve accessibility across all features.
+                            <strong>Partially conformant</strong> with WCAG 2.1 Level AA. "Partially conformant" means that some parts of the content do not fully meet the standard. We continuously work to maintain and improve accessibility across all features.
                         </p>
                     </div>
+                    <p className="text-slate-700 leading-relaxed">
+                        We performed a self-assessment of this website on February 9, 2026 and found that it meets the majority of WCAG 2.1 Level AA success criteria. A summary of our findings is listed below.
+                    </p>
                 </section>
 
+                {/* What We Do Well */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
                         Accessibility Features
                     </h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                        We have implemented the following accessibility features:
+                        This website includes the following accessibility features:
                     </p>
                     <div className="space-y-4">
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Keyboard Navigation</h3>
                             <p className="text-slate-700">
-                                All interactive elements are accessible via keyboard. You can use Tab to navigate, Enter or Space to activate buttons, and Escape to close dialogs.
+                                All interactive elements can be reached and used with a keyboard. Use <kbd>Tab</kbd> to move between items, <kbd>Enter</kbd> or <kbd>Space</kbd> to activate buttons, and <kbd>Escape</kbd> to close dialogs and tooltips.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Screen Reader Support</h3>
                             <p className="text-slate-700">
-                                We use proper semantic HTML and ARIA attributes to ensure compatibility with screen readers like JAWS, NVDA, VoiceOver, and TalkBack.
+                                We use semantic HTML and ARIA attributes so screen readers can understand the page structure. We test with JAWS, NVDA, VoiceOver, and TalkBack.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Skip Navigation</h3>
                             <p className="text-slate-700">
-                                A "Skip to main content" link is available at the top of each page, allowing keyboard users to bypass repetitive navigation.
+                                A "Skip to main content" link appears at the top of each page when you press <kbd>Tab</kbd>. This lets keyboard users skip past the navigation menu.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
-                            <h3 className="font-semibold text-slate-900 mb-2">Color Contrast</h3>
+                            <h3 className="font-semibold text-slate-900 mb-2">Color and Contrast</h3>
                             <p className="text-slate-700">
-                                Text and interactive elements meet WCAG AA contrast ratio requirements (4.5:1 for normal text, 3:1 for large text and UI components).
+                                Text colors meet WCAG AA contrast requirements (at least 4.5:1 for normal text and 3:1 for large text). We use a custom high-contrast color palette designed for transplant patients who may have vision changes from medications. Color is never the only way to convey information.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Focus Indicators</h3>
                             <p className="text-slate-700">
-                                Visible focus indicators are provided for all interactive elements to help keyboard users track their location on the page.
+                                All interactive elements show a visible green outline when focused via keyboard. On dark backgrounds, the outline changes to white for better visibility.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Reduced Motion</h3>
                             <p className="text-slate-700">
-                                We respect the "prefers-reduced-motion" setting. If you have reduced motion enabled in your operating system, animations and transitions are minimized.
+                                We respect the "prefers-reduced-motion" system setting. If you have this enabled in your operating system, animations and transitions are turned off.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
-                            <h3 className="font-semibold text-slate-900 mb-2">Form Accessibility</h3>
+                            <h3 className="font-semibold text-slate-900 mb-2">High Contrast and Forced Colors</h3>
                             <p className="text-slate-700">
-                                All form inputs have associated labels, error messages are announced to screen readers, and required fields are clearly indicated.
+                                We support the "prefers-contrast" media query and Windows High Contrast Mode (forced colors). Focus indicators, buttons, and form inputs adapt to your system theme.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Forms</h3>
+                            <p className="text-slate-700">
+                                All form fields have visible labels. Required fields are clearly marked. Error messages are announced to screen readers.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Touch Targets</h3>
                             <p className="text-slate-700">
-                                Interactive elements have minimum touch target sizes of 44x44 pixels to accommodate users with motor impairments.
+                                Buttons and links have a minimum size of 44 by 44 pixels, meeting WCAG 2.1 requirements. Most are 48 pixels for easier tapping on mobile devices.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Plain Language</h3>
+                            <p className="text-slate-700">
+                                Content is written at a 5th to 7th grade reading level. Medical terms are explained in plain language using inline tooltips with definitions.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Simple View Mode</h3>
+                            <p className="text-slate-700">
+                                A "Simple View" toggle in the navigation increases font sizes, raises contrast, hides decorative elements, and simplifies the layout for users who prefer a cleaner interface.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Read Aloud</h3>
+                            <p className="text-slate-700">
+                                A "Read Aloud" button is available on key pages, using your browser's text-to-speech feature to read content out loud.
                             </p>
                         </div>
                     </div>
                 </section>
 
+                {/* Technical Details */}
+                <section>
+                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                        Technical Details
+                    </h2>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                        This website is built with React and uses semantic HTML5 elements. Accessibility features include:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-slate-700">
+                        <li>Landmark roles: <code className="bg-slate-100 px-1 rounded text-sm">banner</code>, <code className="bg-slate-100 px-1 rounded text-sm">navigation</code>, <code className="bg-slate-100 px-1 rounded text-sm">main</code>, <code className="bg-slate-100 px-1 rounded text-sm">contentinfo</code></li>
+                        <li>ARIA attributes for dynamic content (<code className="bg-slate-100 px-1 rounded text-sm">aria-live</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-expanded</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-pressed</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-modal</code>)</li>
+                        <li>Focus management and focus trapping in modal dialogs</li>
+                        <li>Page titles updated on each route change</li>
+                        <li>Minimum 16px base font size, scalable with browser zoom up to 200%</li>
+                        <li>Responsive single-column reflow at narrow viewports</li>
+                        <li>Print stylesheet optimized for medication and program information</li>
+                    </ul>
+                </section>
+
+                {/* Compatibility */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
                         Compatibility
                     </h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                        This website is designed to be compatible with the following assistive technologies:
+                        This website is designed to work with:
                     </p>
                     <ul className="list-disc list-inside space-y-2 text-slate-700">
-                        <li>Screen readers (JAWS, NVDA, VoiceOver, TalkBack)</li>
+                        <li>Screen readers: JAWS, NVDA, VoiceOver (macOS/iOS), TalkBack (Android)</li>
                         <li>Screen magnification software</li>
                         <li>Speech recognition software</li>
                         <li>Keyboard-only navigation</li>
                         <li>Browser zoom up to 200%</li>
+                        <li>Windows High Contrast Mode</li>
                     </ul>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        We recommend using the latest versions of Chrome, Firefox, Safari, or Edge for the best accessibility experience.
+                        We recommend using the latest version of Chrome, Firefox, Safari, or Edge for the best experience.
                     </p>
                 </section>
 
+                {/* Known Limitations */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
-                        Limitations
+                        Known Limitations
                     </h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                        Despite our best efforts, some parts of this website may not be fully accessible. Known limitations include:
+                        We know about the following accessibility issues and are working to fix them:
                     </p>
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
                         <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <div className="text-amber-800">
-                            <p className="font-medium mb-2">Known Issues:</p>
-                            <ul className="list-disc list-inside space-y-1 text-sm">
-                                <li>Some older PDF documents may not be fully accessible</li>
-                                <li>Third-party embedded content may have accessibility limitations</li>
-                                <li>Some complex data visualizations may be difficult to interpret with screen readers</li>
+                            <ul className="list-disc list-inside space-y-2 text-sm">
+                                <li><strong>Infographic images:</strong> Two informational graphics contain text that is not available as HTML. We plan to add long text descriptions.</li>
+                                <li><strong>Single-page app navigation:</strong> When pages change, screen readers may not always announce the new page title. We are evaluating solutions for route-change announcements.</li>
+                                <li><strong>Third-party content:</strong> Some embedded content from external services may not fully meet accessibility standards.</li>
+                                <li><strong>AI chat assistant:</strong> The chat feature uses streaming text responses that may not be announced in real time by all screen readers.</li>
                             </ul>
                         </div>
                     </div>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        We are actively working to address these limitations. If you encounter any barriers, please contact us.
+                        If any of these issues affect your use of the site, please contact us and we will provide the information in an alternative format.
                     </p>
                 </section>
 
+                {/* Assessment Approach */}
+                <section>
+                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                        How We Test
+                    </h2>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                        We assess accessibility through:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-slate-700">
+                        <li>Self-evaluation against WCAG 2.1 Level AA success criteria</li>
+                        <li>Automated testing with Lighthouse and axe-core</li>
+                        <li>Manual keyboard-only navigation testing</li>
+                        <li>Screen reader testing with NVDA and VoiceOver</li>
+                        <li>Color contrast analysis of all text and interactive elements</li>
+                        <li>Reading level checks using Flesch-Kincaid tools</li>
+                        <li>Feedback from users, including people with disabilities</li>
+                    </ul>
+                    <p className="text-slate-700 leading-relaxed mt-4">
+                        Our most recent assessment was completed on February 9, 2026.
+                    </p>
+                </section>
+
+                {/* Feedback */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
                         Feedback
                     </h2>
                     <p className="text-slate-700 leading-relaxed mb-4">
-                        We welcome your feedback on the accessibility of this website. If you encounter any accessibility barriers or have suggestions for improvement, please contact us:
+                        We welcome your feedback on the accessibility of this website. If you find a barrier or have a suggestion, please contact us:
                     </p>
                     <div className="bg-slate-50 rounded-lg p-4 space-y-3">
                         <p className="text-slate-700">
@@ -179,56 +259,47 @@ const Accessibility = () => {
                         </p>
                     </div>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        When reporting accessibility issues, please include:
+                        When reporting an issue, it helps if you include:
                     </p>
                     <ul className="list-disc list-inside space-y-2 text-slate-700 mt-2">
-                        <li>The web page URL where you encountered the issue</li>
-                        <li>A description of the problem</li>
-                        <li>The assistive technology you were using (if any)</li>
+                        <li>The web page address (URL) where the issue happened</li>
+                        <li>What you were trying to do</li>
+                        <li>What happened instead</li>
+                        <li>The assistive technology you use (if any)</li>
                         <li>Your browser and operating system</li>
                     </ul>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        We will respond to accessibility feedback within 5 business days and work to address valid concerns.
+                        We aim to respond to accessibility feedback within 5 business days and will work to fix valid issues promptly.
                     </p>
                 </section>
 
+                {/* Formal Complaint Process */}
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
-                        Assessment Approach
+                        Formal Complaints
                     </h2>
                     <p className="text-slate-700 leading-relaxed">
-                        We assess the accessibility of this website through the following methods:
+                        If you are not satisfied with our response to your accessibility feedback, you may file a complaint with the{' '}
+                        <a
+                            href="https://www.hhs.gov/civil-rights/filing-a-complaint/index.html"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
+                        >
+                            U.S. Department of Health and Human Services, Office for Civil Rights
+                            <ExternalLink size={14} aria-hidden="true" />
+                        </a>
+                        .
                     </p>
-                    <ul className="list-disc list-inside space-y-2 text-slate-700 mt-4">
-                        <li>Self-evaluation using WCAG 2.2 Level AA criteria</li>
-                        <li>Automated testing tools (Lighthouse, axe-core)</li>
-                        <li>Manual testing with keyboard and screen readers</li>
-                        <li>User feedback and accessibility reports</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
-                        Continuous Improvement
-                    </h2>
-                    <p className="text-slate-700 leading-relaxed">
-                        We are committed to ongoing accessibility improvements. Our accessibility efforts include:
-                    </p>
-                    <ul className="list-disc list-inside space-y-2 text-slate-700 mt-4">
-                        <li>Regular accessibility audits and testing</li>
-                        <li>Incorporating accessibility into our development process</li>
-                        <li>Training our team on accessibility best practices</li>
-                        <li>Promptly addressing reported accessibility issues</li>
-                    </ul>
                 </section>
             </div>
 
+            {/* Help CTA */}
             <aside className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 md:p-8 text-center">
                 <h2 className="text-xl font-bold text-emerald-900 mb-3">Need Assistance?</h2>
                 <p className="text-emerald-800 mb-6">
-                    If you need help accessing any content on this website or have accessibility concerns, we're here to help.
+                    If you need help accessing any content on this website or have accessibility concerns, we are here to help.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -240,7 +311,7 @@ const Accessibility = () => {
                     </a>
                     <Link
                         to="/"
-                        className="px-6 py-3 bg-white hover:bg-slate-50 text-emerald-700 font-bold rounded-lg shadow-md border border-emerald-200 transition min-h-[44px]"
+                        className="px-6 py-3 bg-white hover:bg-slate-50 text-emerald-700 font-bold rounded-lg shadow-md border border-emerald-200 transition min-h-[44px] inline-flex items-center justify-center"
                     >
                         Back to Home
                     </Link>
