@@ -58,6 +58,8 @@ import { ChatQuizProvider, useChatQuiz } from './context/ChatQuizContext.jsx';
 import { SubscriberAuthProvider } from './context/SubscriberAuthContext.jsx';
 // Demo Mode Provider
 import { DemoModeProvider } from './context/DemoModeContext.jsx';
+// Simple View Provider
+import { SimpleViewProvider, useSimpleView } from './context/SimpleViewContext.jsx';
 // Demo Banner Component
 import DemoBanner from './components/DemoBanner.jsx';
 // Feedback Widget for medication results
@@ -76,7 +78,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter
+    CreditCard, Sparkles, Star, Filter, Eye, EyeOff
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -475,6 +477,7 @@ const ChatWidget = () => {
 const Layout = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
+    const { isSimpleView, toggleSimpleView } = useSimpleView();
 
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
@@ -531,6 +534,18 @@ const Layout = ({ children }) => {
                                 {link.label}
                             </Link>
                         ))}
+                        <button
+                            onClick={toggleSimpleView}
+                            aria-pressed={isSimpleView}
+                            className={`ml-2 px-3 py-2 rounded-lg text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors ${
+                                isSimpleView
+                                    ? 'bg-emerald-700 text-white border-emerald-700'
+                                    : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700'
+                            }`}
+                        >
+                            {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                            Simple View
+                        </button>
                     </nav>
 
                     {/* Mobile Menu Toggle */}
@@ -563,6 +578,18 @@ const Layout = ({ children }) => {
                                     {link.label}
                                 </Link>
                             ))}
+                            <button
+                                onClick={toggleSimpleView}
+                                aria-pressed={isSimpleView}
+                                className={`px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center gap-2 border-2 transition-colors ${
+                                    isSimpleView
+                                        ? 'bg-emerald-700 text-white border-emerald-700'
+                                        : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100'
+                                }`}
+                            >
+                                {isSimpleView ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
+                                Simple View
+                            </button>
                         </div>
                     </nav>
                 )}
@@ -6727,20 +6754,22 @@ const AppRoutes = () => {
 // App Component
 const App = () => {
     return (
-        <MedicationsProvider>
-            <SubscriberAuthProvider>
-                <ChatQuizProvider>
-                    <BrowserRouter>
-                        <DemoModeProvider>
-                            <DemoBanner />
-                            <GoogleAnalytics />
-                            <ScrollToTop />
-                            <AppRoutes />
-                        </DemoModeProvider>
-                    </BrowserRouter>
-                </ChatQuizProvider>
-            </SubscriberAuthProvider>
-        </MedicationsProvider>
+        <SimpleViewProvider>
+            <MedicationsProvider>
+                <SubscriberAuthProvider>
+                    <ChatQuizProvider>
+                        <BrowserRouter>
+                            <DemoModeProvider>
+                                <DemoBanner />
+                                <GoogleAnalytics />
+                                <ScrollToTop />
+                                <AppRoutes />
+                            </DemoModeProvider>
+                        </BrowserRouter>
+                    </ChatQuizProvider>
+                </SubscriberAuthProvider>
+            </MedicationsProvider>
+        </SimpleViewProvider>
     );
 };
 

@@ -745,3 +745,179 @@ kbd {
 html {
     scroll-behavior: smooth;
 }
+
+/* ========================================
+   SIMPLE VIEW MODE
+   Large fonts, high contrast, hides non-essential elements
+   Toggled via the "Simple View" button in the site header
+   ======================================== */
+
+/* --- Typography: Larger base font and scaled headings --- */
+html.simple-view {
+    font-size: 20px;
+}
+
+html.simple-view body {
+    line-height: 1.8;
+}
+
+html.simple-view h1 {
+    font-size: 2.25rem;
+    line-height: 1.3;
+}
+
+html.simple-view h2 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+}
+
+html.simple-view h3 {
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+
+html.simple-view p,
+html.simple-view li,
+html.simple-view td,
+html.simple-view th,
+html.simple-view label,
+html.simple-view span,
+html.simple-view a {
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+/* Override Tailwind small text classes to be larger in simple view */
+html.simple-view .text-xs {
+    font-size: 1rem !important;
+}
+
+html.simple-view .text-sm {
+    font-size: 1.05rem !important;
+}
+
+html.simple-view .text-base {
+    font-size: 1.15rem !important;
+}
+
+/* --- High Contrast Colors --- */
+html.simple-view body {
+    background-color: #ffffff;
+    color: #111827;
+}
+
+html.simple-view main {
+    background-color: #ffffff;
+}
+
+/* Force high contrast text throughout */
+html.simple-view .text-slate-400,
+html.simple-view .text-slate-500,
+html.simple-view .text-gray-400,
+html.simple-view .text-gray-500,
+html.simple-view .text-slate-600 {
+    color: #1f2937 !important;
+}
+
+html.simple-view .text-slate-700,
+html.simple-view .text-slate-800,
+html.simple-view .text-slate-900 {
+    color: #111827 !important;
+}
+
+/* High contrast links */
+html.simple-view a:not([role="button"]):not([class*="bg-emerald"]) {
+    color: #047857 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+}
+
+/* High contrast buttons */
+html.simple-view button,
+html.simple-view [role="button"] {
+    border-width: 2px;
+}
+
+/* Stronger borders on cards and sections */
+html.simple-view .rounded-xl,
+html.simple-view .rounded-lg,
+html.simple-view .rounded-2xl {
+    border: 2px solid #374151 !important;
+}
+
+/* Brighter focus indicator */
+html.simple-view *:focus-visible {
+    outline: 4px solid #000 !important;
+    outline-offset: 4px !important;
+}
+
+/* --- Hide Non-Essential Elements --- */
+
+/* Decorative images and icons */
+html.simple-view img:not([role="img"]):not(.simple-view-keep) {
+    display: none !important;
+}
+
+/* Keep the logo visible */
+html.simple-view header img {
+    display: inline-block !important;
+}
+
+/* Hide decorative SVG icons (aria-hidden ones are decorative) */
+html.simple-view svg[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Keep icons inside buttons/links visible for context */
+html.simple-view button svg[aria-hidden="true"],
+html.simple-view a svg[aria-hidden="true"],
+html.simple-view [role="button"] svg[aria-hidden="true"] {
+    display: inline-block !important;
+}
+
+/* Hide non-essential navigation items in simple view */
+html.simple-view .simple-view-hidden {
+    display: none !important;
+}
+
+/* Hide the chat widget in simple view */
+html.simple-view .fixed.bottom-4,
+html.simple-view .fixed.bottom-6 {
+    display: none !important;
+}
+
+/* Simplify background colors for clarity */
+html.simple-view .bg-slate-50,
+html.simple-view .bg-slate-100,
+html.simple-view .bg-gray-50,
+html.simple-view .bg-gray-100 {
+    background-color: #ffffff !important;
+}
+
+html.simple-view .bg-emerald-50 {
+    background-color: #ecfdf5 !important;
+    border: 2px solid #047857 !important;
+}
+
+/* Ensure form inputs are highly visible */
+html.simple-view input,
+html.simple-view select,
+html.simple-view textarea {
+    border: 2px solid #374151 !important;
+    font-size: 1.15rem !important;
+    padding: 0.75rem !important;
+}
+
+/* Larger touch targets */
+html.simple-view button,
+html.simple-view [role="button"],
+html.simple-view a {
+    min-height: 48px;
+}
+
+/* --- Simple View Header Adjustments --- */
+/* Keep the header functional but compact */
+html.simple-view header nav a {
+    font-size: 1rem !important;
+    padding: 0.5rem 0.625rem !important;
+}
