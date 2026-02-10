@@ -4781,7 +4781,6 @@ const Education = () => {
                     <TabButton id="INSURANCE" label="Insurance(s)" icon={Shield} />
                     <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
                     <TabButton id="OOP" label="Out-of-Pocket Max" icon={DollarSign} />
-                    <TabButton id="SPECIALTY" label="Specialty Pharmacy" icon={Stethoscope} />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
@@ -5128,6 +5127,42 @@ const Education = () => {
                 )}
                 {activeTab === 'INSURANCE' && (
                     <div className="max-w-4xl mx-auto space-y-12">
+                        {/* WISeR Prior Authorization Pilot */}
+                        <section className="bg-amber-50 rounded-xl p-6 border-2 border-amber-200">
+                            <div className="flex items-center gap-3 mb-4">
+                                <AlertTriangle size={28} className="text-amber-600" aria-hidden="true" />
+                                <h2 className="text-xl font-bold text-slate-900">New in 2026: CMS WISeR Prior Authorization Pilot</h2>
+                            </div>
+                            <p className="text-slate-700 mb-4">
+                                Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.
+                            </p>
+                            <div className="grid md:grid-cols-2 gap-4 mb-4">
+                                <div className="bg-white p-4 rounded-lg border border-amber-200">
+                                    <h3 className="font-bold text-amber-900 mb-2">Affected States</h3>
+                                    <ul className="text-sm text-slate-700 space-y-1">
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Arizona</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> New Jersey</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Ohio</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> <strong>Oklahoma</strong></li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Texas</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Washington</li>
+                                    </ul>
+                                </div>
+                                <div className="bg-white p-4 rounded-lg border border-amber-200">
+                                    <h3 className="font-bold text-amber-900 mb-2">What Transplant Patients Should Know</h3>
+                                    <ul className="text-sm text-slate-700 space-y-1 list-disc pl-4">
+                                        <li>WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications</li>
+                                        <li>Your immunosuppressant drugs are NOT affected</li>
+                                        <li>If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization</li>
+                                        <li>Coverage decisions are made within 72 hours (48 hours for urgent cases)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p className="text-slate-600 text-sm">
+                                The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process.
+                            </p>
+                        </section>
+
                         <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center mb-8" role="note">
                             <p className="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
                         </div>
@@ -5245,43 +5280,6 @@ const Education = () => {
                                 <section className="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy"><h3 id="ihs-strategy" className="font-bold text-slate-900 mb-4">Best Strategy</h3><p className="text-slate-600 text-sm">Use your local IHS or Urban Indian Program — usually $0 cost.</p></section>
                             </div>
                         </section>
-                    </div>
-                )}
-                {activeTab === 'SPECIALTY' && (
-                    <div className="max-w-4xl mx-auto">
-                        <div className="mb-8 text-center"><h2 className="text-2xl font-bold text-slate-900 mb-4">Specialty Pharmacy Guide</h2><p className="text-lg text-slate-600">Know your rights and choices when your insurance makes you use a certain pharmacy.</p></div>
-                        <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100 mb-12" aria-labelledby="appeal-builder">
-                            <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="appeal-builder" className="text-xl font-bold text-indigo-900">Appeal Letter Builder</h3></div>
-                            <p className="text-sm text-indigo-800 mb-6">Fill in your details below to make a letter you can copy and send to your insurance company.</p>
-                            <div className="grid md:grid-cols-3 gap-4 mb-4">
-                                <label htmlFor="appeal-name" className="sr-only">Your Name</label>
-                                <input id="appeal-name" type="text" placeholder="Your Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={appealName} onChange={(e) => setAppealName(e.target.value)} />
-                                <label htmlFor="appeal-drug" className="sr-only">Medication Name</label>
-                                <input id="appeal-drug" type="text" placeholder="Medication Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={appealDrug} onChange={(e) => setAppealDrug(e.target.value)} />
-                                <label htmlFor="appeal-reason" className="sr-only">Reason for Appeal</label>
-                                <select id="appeal-reason" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={appealReason} onChange={(e) => setAppealReason(e.target.value)}>
-                                    <option value="Financial Hardship">Financial Hardship</option>
-                                    <option value="Access Issues">Access Issues (Timing/Delivery)</option>
-                                    <option value="Clinical Stability">Clinical Stability (Already stable)</option>
-                                </select>
-                            </div>
-                            <button onClick={generateAppealLetter} disabled={!appealName || !appealDrug} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Generate appeal letter">Generate Letter</button>
-                            {generatedLetter && (
-                                <div className="mt-6 bg-white p-4 rounded border border-indigo-200 relative fade-in">
-                                    <h4 className="text-xs font-bold text-slate-600 uppercase mb-2">Preview:</h4>
-                                    <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-slate-200 pl-4">{generatedLetter}</pre>
-                                    <button onClick={copyToClipboard} className="absolute top-4 right-4 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold transition" aria-label="Copy letter text to clipboard">{copied ? <Check size={14} className="text-green-600" aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{copied ? 'Copied!' : 'Copy Text'}</button>
-                                </div>
-                            )}
-                        </section>
-                        <div className="space-y-8">
-                            <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-2">How to Appeal: A Step-by-Step Guide</h2>
-                            <div className="grid md:grid-cols-3 gap-6">
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicare-appeals"><h3 id="medicare-appeals" className="font-bold text-slate-800 mb-3">Medicare Appeals</h3><p className="text-xs text-slate-600 mb-3">Important: Act on time.</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.</li><li><strong>Level 1 (Second Look):</strong> File within 65 days if they say no.</li><li><strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.</li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label="Visit Official Medicare Guide (opens in new tab)">Official Medicare Guide</a></section>
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="medicaid-appeals"><h3 id="medicaid-appeals" className="font-bold text-slate-800 mb-3">Medicaid Appeals</h3><p className="text-sm text-slate-700 mb-3">Each state runs its own appeals. Call your state's Medicaid office.</p></section>
-                                <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="private-insurance"><h3 id="private-insurance" className="font-bold text-slate-800 mb-3">Private Insurance</h3><p className="text-sm text-slate-700 mb-3">You can ask your company to look again. If they still say no, you can ask for an outside review.</p></section>
-                            </div>
-                        </div>
                     </div>
                 )}
                 {activeTab === 'DEDUCTIBLE_TRAP' && (
