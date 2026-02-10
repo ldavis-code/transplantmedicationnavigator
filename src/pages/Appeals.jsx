@@ -19,7 +19,9 @@ import {
   Clock,
   Send,
   CheckCircle,
-  XCircle
+  XCircle,
+  Stethoscope,
+  ExternalLink
 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 
@@ -51,6 +53,13 @@ export default function Appeals() {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [generatedLetter, setGeneratedLetter] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // Specialty pharmacy appeal letter states
+  const [spAppealName, setSpAppealName] = useState('');
+  const [spAppealDrug, setSpAppealDrug] = useState('');
+  const [spAppealReason, setSpAppealReason] = useState('Financial Hardship');
+  const [spGeneratedLetter, setSpGeneratedLetter] = useState('');
+  const [spCopied, setSpCopied] = useState(false);
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -115,6 +124,25 @@ Contact: [Your Phone Number]
     navigator.clipboard.writeText(generatedLetter);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const generateSpAppealLetter = () => {
+    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const text = `Date: ${date}\n\nTo Whom It May Concern:\n\nI am writing to appeal the coverage denial or specialty pharmacy requirement for my medication, ${spAppealDrug}. \n\nPatient Name: ${spAppealName}\nMedication: ${spAppealDrug}\n\nReason for Appeal: ${spAppealReason}\n\nThis medication is medically necessary for my transplant care. The current requirement creates a significant barrier to my adherence and health outcomes because ${
+      spAppealReason === 'Financial Hardship'
+        ? 'the cost at the required specialty pharmacy creates an undue financial burden.'
+        : spAppealReason === 'Access Issues'
+          ? 'the specialty pharmacy has caused repeated delays in delivery, putting my health at risk.'
+          : 'I am clinically stable on my current medication regimen and any changes could jeopardize my transplant.'
+    }\n\nPlease review this appeal and allow me to access my medication at my pharmacy of choice.\n\nSincerely,\n${spAppealName}`;
+    setSpGeneratedLetter(text);
+    setSpCopied(false);
+  };
+
+  const copySpToClipboard = () => {
+    navigator.clipboard.writeText(spGeneratedLetter);
+    setSpCopied(true);
+    setTimeout(() => setSpCopied(false), 2000);
   };
 
   // Section header component with color coding
@@ -887,40 +915,55 @@ Contact: [Your Phone Number]
         </div>
       </section>
 
-      {/* WISeR Prior Authorization Pilot */}
-      <section className="bg-amber-50 rounded-xl p-6 border-2 border-amber-200">
-        <div className="flex items-center gap-3 mb-4">
-          <AlertTriangle size={28} className="text-amber-600" aria-hidden="true" />
-          <h2 className="text-xl font-bold text-slate-900">New in 2026: CMS WISeR Prior Authorization Pilot</h2>
-        </div>
-        <p className="text-slate-700 mb-4">
-          Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.
-        </p>
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div className="bg-white p-4 rounded-lg border border-amber-200">
-            <h3 className="font-bold text-amber-900 mb-2">Affected States</h3>
-            <ul className="text-sm text-slate-700 space-y-1">
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Arizona</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> New Jersey</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Ohio</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> <strong>Oklahoma</strong></li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Texas</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Washington</li>
-            </ul>
-          </div>
-          <div className="bg-white p-4 rounded-lg border border-amber-200">
-            <h3 className="font-bold text-amber-900 mb-2">What Transplant Patients Should Know</h3>
-            <ul className="text-sm text-slate-700 space-y-1 list-disc pl-4">
-              <li>WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications</li>
-              <li>Your immunosuppressant drugs are NOT affected</li>
-              <li>If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization</li>
-              <li>Coverage decisions are made within 72 hours (48 hours for urgent cases)</li>
-            </ul>
+      {/* Specialty Pharmacy Guide */}
+      <section className="mb-8 rounded-xl border-2 border-indigo-200 overflow-hidden">
+        <div className="bg-indigo-100 px-6 py-4 border-b-2 border-indigo-200">
+          <div className="flex items-center gap-3">
+            <div className="bg-indigo-600 text-white p-3 rounded-lg">
+              <Stethoscope size={24} aria-hidden="true" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-indigo-900">Specialty Pharmacy Guide</h2>
+              <p className="text-indigo-700">Know your rights and choices when your insurance makes you use a certain pharmacy.</p>
+            </div>
           </div>
         </div>
-        <p className="text-slate-600 text-sm">
-          The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process.
-        </p>
+
+        <div className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50">
+          <section className="bg-white p-6 rounded-xl border border-indigo-100 mb-8" aria-labelledby="sp-appeal-builder">
+            <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="sp-appeal-builder" className="text-xl font-bold text-indigo-900">Specialty Pharmacy Appeal Letter Builder</h3></div>
+            <p className="text-sm text-indigo-800 mb-6">Fill in your details below to make a letter you can copy and send to your insurance company.</p>
+            <div className="grid md:grid-cols-3 gap-4 mb-4">
+              <label htmlFor="sp-appeal-name" className="sr-only">Your Name</label>
+              <input id="sp-appeal-name" type="text" placeholder="Your Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealName} onChange={(e) => setSpAppealName(e.target.value)} />
+              <label htmlFor="sp-appeal-drug" className="sr-only">Medication Name</label>
+              <input id="sp-appeal-drug" type="text" placeholder="Medication Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealDrug} onChange={(e) => setSpAppealDrug(e.target.value)} />
+              <label htmlFor="sp-appeal-reason" className="sr-only">Reason for Appeal</label>
+              <select id="sp-appeal-reason" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={spAppealReason} onChange={(e) => setSpAppealReason(e.target.value)}>
+                <option value="Financial Hardship">Financial Hardship</option>
+                <option value="Access Issues">Access Issues (Timing/Delivery)</option>
+                <option value="Clinical Stability">Clinical Stability (Already stable)</option>
+              </select>
+            </div>
+            <button onClick={generateSpAppealLetter} disabled={!spAppealName || !spAppealDrug} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Generate specialty pharmacy appeal letter">Generate Letter</button>
+            {spGeneratedLetter && (
+              <div className="mt-6 bg-white p-4 rounded border border-indigo-200 relative fade-in">
+                <h4 className="text-xs font-bold text-slate-600 uppercase mb-2">Preview:</h4>
+                <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-slate-200 pl-4">{spGeneratedLetter}</pre>
+                <button onClick={copySpToClipboard} className="absolute top-4 right-4 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold transition" aria-label="Copy letter text to clipboard">{spCopied ? <Check size={14} className="text-green-600" aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{spCopied ? 'Copied!' : 'Copy Text'}</button>
+              </div>
+            )}
+          </section>
+
+          <div className="space-y-8">
+            <h3 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-2">How to Appeal: A Step-by-Step Guide</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicare-appeals"><h4 id="sp-medicare-appeals" className="font-bold text-slate-800 mb-3">Medicare Appeals</h4><p className="text-xs text-slate-600 mb-3">Important: Act on time.</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.</li><li><strong>Level 1 (Second Look):</strong> File within 65 days if they say no.</li><li><strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.</li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label="Visit Official Medicare Guide (opens in new tab)">Official Medicare Guide</a></section>
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicaid-appeals"><h4 id="sp-medicaid-appeals" className="font-bold text-slate-800 mb-3">Medicaid Appeals</h4><p className="text-sm text-slate-700 mb-3">Each state runs its own appeals. Call your state's Medicaid office.</p></section>
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-private-insurance"><h4 id="sp-private-insurance" className="font-bold text-slate-800 mb-3">Private Insurance</h4><p className="text-sm text-slate-700 mb-3">You can ask your company to look again. If they still say no, you can ask for an outside review.</p></section>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Encouragement Footer */}
