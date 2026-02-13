@@ -66,6 +66,8 @@ import DemoBanner from './components/DemoBanner.jsx';
 import FeedbackWidget from './components/FeedbackWidget.jsx';
 // Read Aloud Button for accessibility
 import ReadAloudButton from './components/ReadAloudButton.jsx';
+// Route change announcer for screen readers (Section 504 / WCAG 2.1 AA)
+import RouteAnnouncer from './components/RouteAnnouncer.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -618,12 +620,21 @@ const Layout = ({ children }) => {
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
                     </p>
+                    {/* Non-Discrimination Notice - Section 504 Compliance */}
+                    <div className="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
+                        <p className="text-slate-300">
+                            <strong className="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability.{' '}
+                            <Link to="/accessibility#section-504" className="text-emerald-400 hover:text-emerald-300 underline transition">
+                                Section 504 Notice & Grievance Procedure
+                            </Link>
+                        </p>
+                    </div>
                     <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
                         <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">Terms of Service</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility</Link>
+                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility & Section 504</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
                     </div>
@@ -6761,6 +6772,7 @@ const App = () => {
                                 <DemoBanner />
                                 <GoogleAnalytics />
                                 <ScrollToTop />
+                                <RouteAnnouncer />
                                 <AppRoutes />
                             </DemoModeProvider>
                         </BrowserRouter>
