@@ -764,11 +764,13 @@ textarea {
     line-height: inherit;
 }
 
-/* Ensure cards and containers expand rather than clip */
-.rounded-xl,
-.rounded-lg,
-.rounded-2xl,
-.rounded-full {
+/* Ensure cards and containers expand rather than clip.
+   Exclude replaced elements (img, video, iframe, etc.) to avoid
+   the deprecated OverflowVisibleOnReplacedElement behavior. */
+.rounded-xl:not(img, video, iframe, canvas, object, embed),
+.rounded-lg:not(img, video, iframe, canvas, object, embed),
+.rounded-2xl:not(img, video, iframe, canvas, object, embed),
+.rounded-full:not(img, video, iframe, canvas, object, embed) {
     overflow: visible;
 }
 
