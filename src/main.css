@@ -731,6 +731,57 @@ kbd {
     }
 }
 
+/* ========================================
+   TEXT SPACING SUPPORT - WCAG 1.4.12
+   Ensures content remains readable when users apply custom
+   text spacing via browser extensions or user stylesheets.
+   Required for HHS Section 504 compliance (WCAG 2.1 Level AA).
+   ======================================== */
+
+/* Ensure containers can grow to accommodate increased text spacing */
+main,
+article,
+section,
+[role="dialog"],
+[role="alertdialog"] {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Prevent fixed-height containers from clipping text */
+p,
+li,
+td,
+th,
+label,
+span,
+a,
+button,
+[role="button"],
+input,
+select,
+textarea {
+    line-height: inherit;
+}
+
+/* Ensure cards and containers expand rather than clip */
+.rounded-xl,
+.rounded-lg,
+.rounded-2xl,
+.rounded-full {
+    overflow: visible;
+}
+
+/* ========================================
+   REFLOW SUPPORT - WCAG 1.4.10
+   Content reflows without horizontal scroll at 320px viewport width.
+   ======================================== */
+
+/* Ensure tables can scroll horizontally when constrained */
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
 /* Loading animation */
 .fade-in {
     animation: fadeIn 0.3s ease-in;

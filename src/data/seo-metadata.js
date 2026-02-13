@@ -273,14 +273,14 @@ export const seoMetadata = {
   },
 
   accessibility: {
-    title: 'Accessibility Statement | Transplant Medication Navigator™',
-    description: 'Our commitment to making Transplant Medication Navigator accessible to all users, including those with disabilities. Read about our accessibility features and standards.',
+    title: 'Accessibility & Section 504 Compliance | Transplant Medication Navigator™',
+    description: 'HHS Section 504 compliance, WCAG 2.1 Level AA conformance, non-discrimination notice, and grievance procedure for Transplant Medication Navigator. Our commitment to accessibility for all users.',
     canonical: `${BASE_URL}/accessibility`,
-    ogTitle: 'Accessibility Statement - Transplant Medication Navigator™',
-    ogDescription: 'Learn about our commitment to accessibility and the features we provide to ensure everyone can use Transplant Medication Navigator.',
-    twitterTitle: 'Accessibility Statement',
-    twitterDescription: 'Our commitment to making Transplant Medication Navigator accessible to all users.',
-    breadcrumbName: 'Accessibility',
+    ogTitle: 'Accessibility & Section 504 Compliance - Transplant Medication Navigator™',
+    ogDescription: 'Section 504 non-discrimination notice, accessibility features, WCAG 2.1 AA conformance, and grievance procedure for Transplant Medication Navigator.',
+    twitterTitle: 'Accessibility & Section 504 Compliance',
+    twitterDescription: 'Section 504 compliance, WCAG 2.1 AA conformance, and accessibility features for Transplant Medication Navigator.',
+    breadcrumbName: 'Accessibility & Section 504',
   },
 };
 

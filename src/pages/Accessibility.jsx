@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
+import { Accessibility as AccessibilityIcon, Mail, CheckCircle, AlertCircle, ExternalLink, Scale, Phone } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -12,11 +12,47 @@ const Accessibility = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
                     <AccessibilityIcon size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility Statement</h1>
-                <p className="text-slate-600">Last Updated: February 9, 2026</p>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Accessibility &amp; Section 504 Compliance</h1>
+                <p className="text-slate-600">Last Updated: February 12, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
+
+                {/* Section 504 Non-Discrimination Notice */}
+                <section id="section-504">
+                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                        Section 504 Non-Discrimination Notice
+                    </h2>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                        <p className="text-blue-900 leading-relaxed">
+                            In accordance with <strong>Section 504 of the Rehabilitation Act of 1973</strong> and the{' '}
+                            <a
+                                href="https://www.hhs.gov/civil-rights/for-individuals/disability/section-504-rehabilitation-act-of-1973/index.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-700 hover:text-blue-800 underline inline-flex items-center gap-1"
+                            >
+                                U.S. Department of Health and Human Services (HHS) Final Rule
+                                <ExternalLink size={14} aria-hidden="true" />
+                            </a>
+                            , TransplantNav LLC does not discriminate on the basis of disability in its programs, services, or activities. This website is designed to be accessible to all users, including people with disabilities.
+                        </p>
+                    </div>
+                    <p className="text-slate-700 leading-relaxed">
+                        We are committed to ensuring that our digital content meets the accessibility standards required by the HHS Section 504 final rule, which mandates conformance with the{' '}
+                        <a
+                            href="https://www.w3.org/TR/WCAG21/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
+                        >
+                            Web Content Accessibility Guidelines (WCAG) 2.1 Level AA
+                            <ExternalLink size={14} aria-hidden="true" />
+                        </a>
+                        {' '}for patient-facing web content by May 11, 2026.
+                    </p>
+                </section>
 
                 {/* Commitment */}
                 <section>
@@ -28,17 +64,7 @@ const Accessibility = () => {
                         TransplantNav LLC is committed to making the Transplant Medication Navigator website accessible to everyone, including people with disabilities. We believe that all transplant patients deserve equal access to medication assistance information, regardless of ability.
                     </p>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        We work to follow the{' '}
-                        <a
-                            href="https://www.w3.org/TR/WCAG21/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
-                        >
-                            Web Content Accessibility Guidelines (WCAG) 2.1 Level AA
-                            <ExternalLink size={14} aria-hidden="true" />
-                        </a>
-                        . These guidelines help make web content more usable for people with disabilities and better for everyone.
+                        We work to follow the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. These guidelines help make web content more usable for people with disabilities and better for everyone.
                     </p>
                 </section>
 
@@ -55,7 +81,7 @@ const Accessibility = () => {
                         </p>
                     </div>
                     <p className="text-slate-700 leading-relaxed">
-                        We performed a self-assessment of this website on February 9, 2026 and found that it meets the majority of WCAG 2.1 Level AA success criteria. A summary of our findings is listed below.
+                        We performed a self-assessment of this website on February 12, 2026 and found that it meets the majority of WCAG 2.1 Level AA success criteria. A summary of our findings is listed below.
                     </p>
                 </section>
 
@@ -79,6 +105,12 @@ const Accessibility = () => {
                             <h3 className="font-semibold text-slate-900 mb-2">Screen Reader Support</h3>
                             <p className="text-slate-700">
                                 We use semantic HTML and ARIA attributes so screen readers can understand the page structure. We test with JAWS, NVDA, VoiceOver, and TalkBack.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Route Change Announcements</h3>
+                            <p className="text-slate-700">
+                                When you navigate to a new page, the page title is announced to screen readers through a live region. This ensures that screen reader users know when the page has changed.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
@@ -109,6 +141,12 @@ const Accessibility = () => {
                             <h3 className="font-semibold text-slate-900 mb-2">High Contrast and Forced Colors</h3>
                             <p className="text-slate-700">
                                 We support the "prefers-contrast" media query and Windows High Contrast Mode (forced colors). Focus indicators, buttons, and form inputs adapt to your system theme.
+                            </p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-4">
+                            <h3 className="font-semibold text-slate-900 mb-2">Text Spacing</h3>
+                            <p className="text-slate-700">
+                                Content remains readable and functional when text spacing is adjusted by the user. Line height, letter spacing, word spacing, and paragraph spacing can be increased without loss of content or functionality (WCAG 1.4.12).
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
@@ -157,9 +195,10 @@ const Accessibility = () => {
                         <li>Landmark roles: <code className="bg-slate-100 px-1 rounded text-sm">banner</code>, <code className="bg-slate-100 px-1 rounded text-sm">navigation</code>, <code className="bg-slate-100 px-1 rounded text-sm">main</code>, <code className="bg-slate-100 px-1 rounded text-sm">contentinfo</code></li>
                         <li>ARIA attributes for dynamic content (<code className="bg-slate-100 px-1 rounded text-sm">aria-live</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-expanded</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-pressed</code>, <code className="bg-slate-100 px-1 rounded text-sm">aria-modal</code>)</li>
                         <li>Focus management and focus trapping in modal dialogs</li>
-                        <li>Page titles updated on each route change</li>
+                        <li>Page title announcements on route changes via <code className="bg-slate-100 px-1 rounded text-sm">aria-live</code> region</li>
                         <li>Minimum 16px base font size, scalable with browser zoom up to 200%</li>
-                        <li>Responsive single-column reflow at narrow viewports</li>
+                        <li>Text spacing support per WCAG 1.4.12 (content adapts to user-modified spacing)</li>
+                        <li>Responsive single-column reflow at narrow viewports (WCAG 1.4.10)</li>
                         <li>Print stylesheet optimized for medication and program information</li>
                     </ul>
                 </section>
@@ -200,7 +239,6 @@ const Accessibility = () => {
                         <div className="text-amber-800">
                             <ul className="list-disc list-inside space-y-2 text-sm">
                                 <li><strong>Infographic images:</strong> Two informational graphics contain text that is not available as HTML. We plan to add long text descriptions.</li>
-                                <li><strong>Single-page app navigation:</strong> When pages change, screen readers may not always announce the new page title. We are evaluating solutions for route-change announcements.</li>
                                 <li><strong>Third-party content:</strong> Some embedded content from external services may not fully meet accessibility standards.</li>
                                 <li><strong>AI chat assistant:</strong> The chat feature uses streaming text responses that may not be announced in real time by all screen readers.</li>
                             </ul>
@@ -230,8 +268,58 @@ const Accessibility = () => {
                         <li>Feedback from users, including people with disabilities</li>
                     </ul>
                     <p className="text-slate-700 leading-relaxed mt-4">
-                        Our most recent assessment was completed on February 9, 2026.
+                        Our most recent assessment was completed on February 12, 2026.
                     </p>
+                </section>
+
+                {/* Section 504 Grievance Procedure */}
+                <section id="grievance-procedure">
+                    <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
+                        Section 504 Grievance Procedure
+                    </h2>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                        TransplantNav LLC has adopted an internal grievance procedure for the prompt and equitable resolution of complaints alleging any action prohibited by Section 504 of the Rehabilitation Act of 1973.
+                    </p>
+                    <div className="bg-slate-50 rounded-lg p-4 space-y-4">
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-2">How to File a Grievance</h3>
+                            <p className="text-slate-700">
+                                Any person who believes they have been subjected to discrimination on the basis of disability may file a grievance. Grievances must be submitted in writing within 60 days of the date the person filing the grievance becomes aware of the alleged discriminatory action.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-2">Submit Your Grievance To</h3>
+                            <div className="text-slate-700 space-y-1">
+                                <p><strong>Section 504 Coordinator</strong></p>
+                                <p>TransplantNav LLC</p>
+                                <p>
+                                    Email:{' '}
+                                    <a
+                                        href="mailto:504coordinator@transplantmedicationnavigator.com?subject=Section%20504%20Grievance"
+                                        className="text-emerald-600 hover:text-emerald-700 underline"
+                                    >
+                                        504coordinator@transplantmedicationnavigator.com
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-2">Resolution Process</h3>
+                            <ol className="list-decimal list-inside space-y-2 text-slate-700">
+                                <li>A written acknowledgment of your grievance will be sent within 5 business days.</li>
+                                <li>An investigation will be conducted, which may include interviews and review of relevant documents.</li>
+                                <li>A written determination will be issued within 30 days of receiving the grievance.</li>
+                                <li>If you are not satisfied with the resolution, you may appeal within 15 days of receiving the determination.</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-2">Alternative Formats</h3>
+                            <p className="text-slate-700">
+                                This grievance procedure is available in alternative formats upon request. If you need this information in a different format due to a disability, please contact us and we will provide it promptly.
+                            </p>
+                        </div>
+                    </div>
                 </section>
 
                 {/* Feedback */}
@@ -277,10 +365,10 @@ const Accessibility = () => {
                 <section>
                     <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                         <span className="w-1 h-6 bg-emerald-600 rounded-full" aria-hidden="true"></span>
-                        Formal Complaints
+                        External Complaints
                     </h2>
                     <p className="text-slate-700 leading-relaxed">
-                        If you are not satisfied with our response to your accessibility feedback, you may file a complaint with the{' '}
+                        If you are not satisfied with our response to your accessibility feedback or Section 504 grievance, you may file a complaint with the{' '}
                         <a
                             href="https://www.hhs.gov/civil-rights/filing-a-complaint/index.html"
                             target="_blank"
@@ -290,8 +378,35 @@ const Accessibility = () => {
                             U.S. Department of Health and Human Services, Office for Civil Rights
                             <ExternalLink size={14} aria-hidden="true" />
                         </a>
-                        .
+                        . Complaints must generally be filed within 180 days of the alleged discriminatory act.
                     </p>
+                    <div className="bg-slate-50 rounded-lg p-4 mt-4 space-y-2">
+                        <p className="text-slate-700"><strong>HHS Office for Civil Rights</strong></p>
+                        <p className="text-slate-700">
+                            Phone:{' '}
+                            <a href="tel:1-800-368-1019" className="text-emerald-600 hover:text-emerald-700 underline">
+                                1-800-368-1019
+                            </a>
+                        </p>
+                        <p className="text-slate-700">
+                            TDD:{' '}
+                            <a href="tel:1-800-537-7697" className="text-emerald-600 hover:text-emerald-700 underline">
+                                1-800-537-7697
+                            </a>
+                        </p>
+                        <p className="text-slate-700">
+                            Online:{' '}
+                            <a
+                                href="https://ocrportal.hhs.gov/ocr/smartscreen/main.jsf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
+                            >
+                                HHS OCR Complaint Portal
+                                <ExternalLink size={14} aria-hidden="true" />
+                            </a>
+                        </p>
+                    </div>
                 </section>
             </div>
 
