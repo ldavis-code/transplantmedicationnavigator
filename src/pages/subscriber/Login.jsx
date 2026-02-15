@@ -168,7 +168,7 @@ export default function SubscriberLogin() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">New here?</span>
+              <span className="px-2 bg-white text-gray-600">New here?</span>
             </div>
           </div>
 

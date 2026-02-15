@@ -20,7 +20,7 @@ const SubscribeSuccess = () => {
         <article className="max-w-2xl mx-auto text-center py-12 space-y-8">
             {/* Success Icon */}
             <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full">
-                <CheckCircle size={48} className="text-emerald-600" />
+                <CheckCircle size={48} className="text-emerald-600" aria-hidden="true" />
             </div>
 
             {/* Header */}

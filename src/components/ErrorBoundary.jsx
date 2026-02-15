@@ -74,6 +74,7 @@ class ErrorBoundary extends React.Component {
                 <AlertTriangle
                   size={48}
                   style={{ color: '#dc2626' }}
+                  aria-hidden="true"
                 />
               </div>
 
@@ -116,8 +117,10 @@ class ErrorBoundary extends React.Component {
                 }}
                 onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
                 onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+                onFocus={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
+                onBlur={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
               >
-                <Home size={20} />
+                <Home size={20} aria-hidden="true" />
                 Return to Home
               </button>
 

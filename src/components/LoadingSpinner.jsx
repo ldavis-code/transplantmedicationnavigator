@@ -7,12 +7,14 @@ import { Loader2 } from 'lucide-react';
  */
 const LoadingSpinner = ({ size = 24, className = '' }) => {
   return (
-    <Loader2
-      size={size}
-      className={`animate-spin ${className}`}
-      aria-label="Loading"
-      role="status"
-    />
+    <span role="status">
+      <Loader2
+        size={size}
+        className={`animate-spin ${className}`}
+        aria-hidden="true"
+      />
+      <span className="sr-only">Loading</span>
+    </span>
   );
 };
 

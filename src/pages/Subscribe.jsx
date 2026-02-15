@@ -239,7 +239,7 @@ const Subscribe = () => {
             {/* Header */}
             <header className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-6">
-                    <CreditCard size={32} className="text-emerald-700" />
+                    <CreditCard size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl font-extrabold text-slate-900 mb-2">
                     Subscribe to Pro
@@ -266,15 +266,16 @@ const Subscribe = () => {
                         {/* Name (optional) */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
-                                Name <span className="text-slate-400">(optional)</span>
+                                Name <span className="text-slate-500">(optional)</span>
                             </label>
                             <div className="relative">
-                                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" aria-hidden="true" />
                                 <input
                                     type="text"
                                     id="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    autoComplete="name"
                                     className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                     placeholder="Your name"
                                 />
@@ -287,13 +288,14 @@ const Subscribe = () => {
                                 Email Address <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" aria-hidden="true" />
                                 <input
                                     type="email"
                                     id="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
+                                    autoComplete="email"
                                     className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                     placeholder="you@example.com"
                                 />
@@ -306,13 +308,14 @@ const Subscribe = () => {
                                 Password <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" aria-hidden="true" />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     id="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
+                                    autoComplete="new-password"
                                     className="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                     placeholder="Create a password (8+ characters)"
                                 />
@@ -320,8 +323,9 @@ const Subscribe = () => {
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                                 >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    {showPassword ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
                                 </button>
                             </div>
                             {password.length > 0 && !isPasswordValid && (
@@ -335,13 +339,14 @@ const Subscribe = () => {
                                 Confirm Password <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" aria-hidden="true" />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     id="confirmPassword"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     required
+                                    autoComplete="new-password"
                                     className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
                                         confirmPassword.length > 0
                                             ? passwordsMatch
@@ -434,8 +439,8 @@ const Subscribe = () => {
 
                 {/* Error Message */}
                 {error && (
-                    <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-xl mb-6">
-                        <AlertCircle size={20} className="text-red-600" />
+                    <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-xl mb-6" role="alert">
+                        <AlertCircle size={20} className="text-red-600" aria-hidden="true" />
                         <span className="text-red-700">{error}</span>
                     </div>
                 )}
@@ -502,6 +507,7 @@ const Subscribe = () => {
                                 value={patientCode}
                                 onChange={(e) => setPatientCode(e.target.value)}
                                 placeholder="Enter patient code"
+                                aria-label="Patient assistance code"
                                 className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                 disabled={codeLoading}
                             />
@@ -521,8 +527,8 @@ const Subscribe = () => {
                             </button>
                         </div>
                         {codeError && (
-                            <div className="flex items-center gap-2 text-red-600 text-sm">
-                                <AlertCircle size={16} />
+                            <div className="flex items-center gap-2 text-red-600 text-sm" role="alert">
+                                <AlertCircle size={16} aria-hidden="true" />
                                 <span>{codeError}</span>
                             </div>
                         )}
