@@ -6136,6 +6136,25 @@ ${patientName || "[Your Name]"}`;
                                 <p className="text-amber-900 text-base font-medium bg-amber-50 border border-amber-200 p-3 rounded-lg">
                                     <strong>Who can use copay cards:</strong> Only for insurance you get through work or buy on your own. Not for Medicare, Medicaid, or VA benefits. If you have these, look at Patient Assistance Programs instead.
                                 </p>
+                                <div className="flex justify-center mt-4">
+                                    <img
+                                        src="/photos/copay-card-process.png"
+                                        alt="How to find and apply for copay cards"
+                                        aria-describedby="copay-card-desc"
+                                        className="max-w-full h-auto rounded-lg shadow-md"
+                                    />
+                                </div>
+                                <div id="copay-card-desc" className="sr-only">
+                                    This infographic explains how to find and apply for medication copay cards.
+                                    The process has 3 main steps. First, visit the medication manufacturer's website
+                                    or use our Copay Card Finder tool. Second, check eligibility requirements - most
+                                    copay cards are available if you have commercial insurance and your medication
+                                    costs more than $50 per month. Third, complete the online application which takes
+                                    5-10 minutes and requires your prescription information and insurance details.
+                                    Most copay cards are approved instantly and can be used at your pharmacy the same day.
+                                    Copay cards can reduce your out-of-pocket cost from hundreds of dollars to as little
+                                    as $0-$25 per month.
+                                </div>
                             </section>
 
                             <section className="bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200">
