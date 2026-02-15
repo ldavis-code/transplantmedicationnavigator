@@ -78,16 +78,16 @@
   <h1>Transplant Medication Navigator</h1>
 
   <!-- User status bar -->
-  <div id="user-bar">
+  <nav id="user-bar" aria-label="Account actions">
     <span id="logged-out-bar">
-      <a href="#" onclick="showAuthModal('login')">Login</a> |
-      <a href="#" onclick="showAuthModal('signup')">Sign Up</a>
+      <button type="button" onclick="showAuthModal('login')" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Login</button> |
+      <button type="button" onclick="showAuthModal('signup')" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Sign Up</button>
     </span>
     <span id="logged-in-bar" class="hidden">
       Logged in as: <span id="user-email"></span> |
-      <a href="#" onclick="handleLogout()">Logout</a>
+      <button type="button" onclick="handleLogout()" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Logout</button>
     </span>
-  </div>
+  </nav>
 
   <hr>
 
@@ -95,9 +95,13 @@
   <h2>Save a Medication</h2>
   <p>Enter as much or as little info as you have.</p>
 
-  <input type="text" id="med-name" placeholder="Medication name (required)">
+  <label for="med-name">Medication name (required)</label>
+  <input type="text" id="med-name" placeholder="Medication name (required)" required aria-required="true">
+  <label for="med-brand">Brand name (optional)</label>
   <input type="text" id="med-brand" placeholder="Brand name (optional)">
+  <label for="med-dosage">Dosage (optional)</label>
   <input type="text" id="med-dosage" placeholder="Dosage (optional)">
+  <label for="med-cost">Monthly cost $ (optional)</label>
   <input type="number" id="med-cost" placeholder="Monthly cost $ (optional)" step="0.01">
   <label for="med-renewal">Renewal date (optional)</label>
   <input type="date" id="med-renewal">
@@ -122,31 +126,35 @@
   </div>
 
   <div id="logged-out-section">
-    <p><a href="#" onclick="showAuthModal('login')">Log in</a> to see your saved medications.</p>
+    <p><button type="button" onclick="showAuthModal('login')" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Log in</button> to see your saved medications.</p>
   </div>
 
   <!-- Login/Signup Modal -->
-  <div id="auth-modal" class="modal hidden">
+  <div id="auth-modal" class="modal hidden" role="dialog" aria-labelledby="auth-modal-title" aria-modal="true">
     <div class="modal-content">
-      <button class="close-btn" onclick="closeAuthModal()">✕ Close</button>
+      <button class="close-btn" onclick="closeAuthModal()" aria-label="Close login dialog">✕ Close</button>
 
       <div id="modal-login">
-        <h2>Login</h2>
-        <input type="email" id="login-email" placeholder="Email">
-        <input type="password" id="login-password" placeholder="Password">
+        <h2 id="auth-modal-title">Login</h2>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="Email" autocomplete="email">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
         <button onclick="handleLogin()">Login</button>
-        <p>Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>
+        <p>Don't have an account? <button type="button" onclick="switchToSignup()" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Sign up</button></p>
       </div>
 
       <div id="modal-signup" class="hidden">
         <h2>Sign Up</h2>
-        <input type="email" id="signup-email" placeholder="Email">
-        <input type="password" id="signup-password" placeholder="Password (min 6 characters)">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="Email" autocomplete="email">
+        <label for="signup-password">Password (min 6 characters)</label>
+        <input type="password" id="signup-password" placeholder="Password (min 6 characters)" autocomplete="new-password">
         <button onclick="handleSignup()">Create Account</button>
-        <p>Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+        <p>Already have an account? <button type="button" onclick="switchToLogin()" style="display:inline;width:auto;background:none;color:#2563eb;cursor:pointer;padding:0;margin:0;text-decoration:underline;">Login</button></p>
       </div>
 
-      <p id="auth-message"></p>
+      <p id="auth-message" aria-live="polite"></p>
     </div>
   </div>
 

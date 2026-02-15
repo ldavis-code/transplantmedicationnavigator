@@ -934,16 +934,22 @@ Contact: [Your Phone Number]
             <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="sp-appeal-builder" className="text-xl font-bold text-indigo-900">Specialty Pharmacy Appeal Letter Builder</h3></div>
             <p className="text-sm text-indigo-800 mb-6">Fill in your details below to make a letter you can copy and send to your insurance company.</p>
             <div className="grid md:grid-cols-3 gap-4 mb-4">
-              <label htmlFor="sp-appeal-name" className="sr-only">Your Name</label>
-              <input id="sp-appeal-name" type="text" placeholder="Your Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealName} onChange={(e) => setSpAppealName(e.target.value)} />
-              <label htmlFor="sp-appeal-drug" className="sr-only">Medication Name</label>
-              <input id="sp-appeal-drug" type="text" placeholder="Medication Name" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealDrug} onChange={(e) => setSpAppealDrug(e.target.value)} />
-              <label htmlFor="sp-appeal-reason" className="sr-only">Reason for Appeal</label>
-              <select id="sp-appeal-reason" className="p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={spAppealReason} onChange={(e) => setSpAppealReason(e.target.value)}>
+              <div>
+                <label htmlFor="sp-appeal-name" className="block text-sm font-medium text-indigo-900 mb-1">Your Name</label>
+                <input id="sp-appeal-name" type="text" placeholder="Your Name" autoComplete="name" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealName} onChange={(e) => setSpAppealName(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor="sp-appeal-drug" className="block text-sm font-medium text-indigo-900 mb-1">Medication Name</label>
+                <input id="sp-appeal-drug" type="text" placeholder="Medication Name" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealDrug} onChange={(e) => setSpAppealDrug(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor="sp-appeal-reason" className="block text-sm font-medium text-indigo-900 mb-1">Reason for Appeal</label>
+                <select id="sp-appeal-reason" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={spAppealReason} onChange={(e) => setSpAppealReason(e.target.value)}>
                 <option value="Financial Hardship">Financial Hardship</option>
                 <option value="Access Issues">Access Issues (Timing/Delivery)</option>
                 <option value="Clinical Stability">Clinical Stability (Already stable)</option>
               </select>
+              </div>
             </div>
             <button onClick={generateSpAppealLetter} disabled={!spAppealName || !spAppealDrug} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Generate specialty pharmacy appeal letter">Generate Letter</button>
             {spGeneratedLetter && (

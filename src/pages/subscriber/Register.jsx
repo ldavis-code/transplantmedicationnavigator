@@ -106,7 +106,7 @@ export default function SubscriberRegister() {
             {/* Name (optional) */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Name <span className="text-gray-400">(optional)</span>
+                Name <span className="text-gray-500">(optional)</span>
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -173,7 +173,7 @@ export default function SubscriberRegister() {
               {password.length > 0 && (
                 <ul className="mt-2 space-y-1">
                   {passwordRequirements.map((req, i) => (
-                    <li key={i} className={`flex items-center gap-2 text-xs ${req.met ? 'text-emerald-600' : 'text-gray-400'}`}>
+                    <li key={i} className={`flex items-center gap-2 text-xs ${req.met ? 'text-emerald-600' : 'text-gray-600'}`}>
                       <CheckCircle className={`h-3 w-3 ${req.met ? 'opacity-100' : 'opacity-40'}`} />
                       {req.text}
                     </li>
@@ -249,7 +249,7 @@ export default function SubscriberRegister() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+              <span className="px-2 bg-white text-gray-600">Already have an account?</span>
             </div>
           </div>
 
