@@ -5182,9 +5182,18 @@ const Education = () => {
                         <div className="flex justify-center mb-8">
                             <img
                                 src="/photos/tmn_infographic.jpg"
-                                alt="Healthcare insurance infographic showing key insurance concepts simplified"
+                                alt="Comparison chart of transplant medication help by insurance type: Commercial, Medicare, Medicaid, and Uninsured"
+                                aria-describedby="insurance-infographic-desc"
                                 className="max-w-full h-auto rounded-lg shadow-md"
                             />
+                        </div>
+                        <div id="insurance-infographic-desc" className="sr-only">
+                            This infographic compares what transplant medication help is available across four insurance types.
+                            Commercial Insurance: Insurance through your job or that you buy on your own. You may qualify for manufacturer copay cards, patient assistance programs, and copay foundations. You pay monthly premiums, copays, and deductibles, then insurance covers the rest. Common problems include high deductibles, prior authorization requirements, and copay accumulators. Next step: search your medications to find copay cards and assistance programs.
+                            Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include the coverage gap, Part D costs, and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs.
+                            Medicaid: Government insurance for people with low income. You may qualify for patient assistance programs and state-specific programs. Covers most transplant drugs with very low or no copays. Common problems include limited pharmacy networks, formulary restrictions, and coverage ending if income changes. Next step: search your medications and check with your state Medicaid office.
+                            Uninsured or Self-Pay: No current insurance coverage. You may qualify for manufacturer patient assistance programs for free medications, state programs, and discount cards. You pay the full retail price without help. Common problems include very high costs, no negotiated rates, and difficulty affording specialty medications. Next step: apply for patient assistance programs immediately as most offer free medications for qualifying patients.
+                            The infographic concludes with an encouraging message: You are not alone and there is help available no matter what type of insurance you have.
                         </div>
 
                         {/* Insurance Change Simulation */}
