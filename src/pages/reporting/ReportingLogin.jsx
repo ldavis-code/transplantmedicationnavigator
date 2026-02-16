@@ -42,8 +42,9 @@ export default function ReportingLogin() {
 
     if (authLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50" role="status">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+                <span className="sr-only">Loading...</span>
             </div>
         );
     }
@@ -99,8 +100,8 @@ export default function ReportingLogin() {
 
                         {/* Error Message */}
                         {error && (
-                            <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
-                                <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                            <div role="alert" className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+                                <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                                 {error}
                             </div>
                         )}
@@ -113,7 +114,7 @@ export default function ReportingLogin() {
                         >
                             {submitting ? (
                                 <>
-                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" aria-hidden="true" />
                                     Signing in...
                                 </>
                             ) : (

@@ -60,8 +60,9 @@ export default function AdminDashboard() {
 
   if (tenantLoading || !isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" role="status">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <span className="sr-only">Loading...</span>
       </div>
     );
   }
