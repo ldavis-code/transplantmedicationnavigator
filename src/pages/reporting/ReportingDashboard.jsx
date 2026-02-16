@@ -72,8 +72,9 @@ export default function ReportingDashboard() {
 
     if (authLoading || !isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50" role="status">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+                <span className="sr-only">Loading...</span>
             </div>
         );
     }
@@ -213,7 +214,7 @@ export default function ReportingDashboard() {
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {error && (
-                    <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                    <div role="alert" className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
                         {error}
                     </div>
                 )}

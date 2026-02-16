@@ -96,8 +96,9 @@ export default function OrganizationSettings() {
 
   if (tenantLoading || !isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" role="status">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <span className="sr-only">Loading...</span>
       </div>
     );
   }
@@ -297,7 +298,7 @@ export default function OrganizationSettings() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+            <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
               {error}
             </div>
           )}
@@ -317,7 +318,7 @@ export default function OrganizationSettings() {
             >
               {saving ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" aria-hidden="true" />
                   Saving...
                 </>
               ) : saved ? (

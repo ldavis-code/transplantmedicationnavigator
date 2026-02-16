@@ -127,8 +127,9 @@ export default function ReportingPrograms() {
 
     if (authLoading || !isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50" role="status">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+                <span className="sr-only">Loading...</span>
             </div>
         );
     }
@@ -242,7 +243,7 @@ export default function ReportingPrograms() {
                 </div>
 
                 {error && (
-                    <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                    <div role="alert" className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
                         {error}
                     </div>
                 )}
@@ -266,8 +267,9 @@ export default function ReportingPrograms() {
                         <tbody className="bg-white divide-y divide-gray-200">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center">
+                                    <td colSpan={5} className="px-6 py-12 text-center" role="status">
                                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto" />
+                                        <span className="sr-only">Loading program data...</span>
                                     </td>
                                 </tr>
                             ) : sortedPrograms.length === 0 ? (
