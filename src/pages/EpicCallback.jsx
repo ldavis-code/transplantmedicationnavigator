@@ -3,23 +3,51 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
 
 /**
- * EpicCallback - Handles the OAuth2 callback from Epic MyChart.
+ * EpicCallback - Handles the OAuth2 PKCE callback from Epic.
  * Route: /auth/epic/callback
  *
  * Flow:
  * 1. Epic redirects here with ?code=...&state=...
  * 2. Verify the state matches what we stored (CSRF protection)
- * 3. Exchange the code for an access token via /api/epic-token-exchange
+ * 3. Exchange the code + PKCE code_verifier for an access token via /api/epic-token-exchange
  * 4. Fetch medications via /api/epic-medications
- * 5. Store matched medication IDs in sessionStorage
+ * 5. Store matched medication IDs + assistance programs in sessionStorage
  * 6. Redirect back to the page the user came from
  */
+
+// ── PKCE Helpers ──────────────────────────────────────────────────────────────
+
+function generateCodeVerifier() {
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return base64UrlEncode(array);
+}
+
+async function generateCodeChallenge(codeVerifier) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(codeVerifier);
+    const digest = await crypto.subtle.digest('SHA-256', data);
+    return base64UrlEncode(new Uint8Array(digest));
+}
+
+function base64UrlEncode(bytes) {
+    let binary = '';
+    for (const byte of bytes) {
+        binary += String.fromCharCode(byte);
+    }
+    return btoa(binary)
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+}
+
 const EpicCallback = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [status, setStatus] = useState('processing'); // processing | success | error
-    const [message, setMessage] = useState('Connecting to Epic MyChart...');
+    const [message, setMessage] = useState('Connecting to your health system...');
     const [matchedCount, setMatchedCount] = useState(0);
+    const [programCount, setProgramCount] = useState(0);
 
     useEffect(() => {
         const processCallback = async () => {
@@ -38,7 +66,7 @@ const EpicCallback = () => {
 
                 if (!code) {
                     setStatus('error');
-                    setMessage('No authorization code received from Epic.');
+                    setMessage('No authorization code received from your health system.');
                     return;
                 }
 
@@ -51,19 +79,29 @@ const EpicCallback = () => {
                 }
                 sessionStorage.removeItem('epic_oauth_state');
 
-                // Step 1: Exchange code for token
+                // Retrieve PKCE code_verifier
+                const codeVerifier = sessionStorage.getItem('epic_pkce_code_verifier');
+                sessionStorage.removeItem('epic_pkce_code_verifier');
+
+                if (!codeVerifier) {
+                    setStatus('error');
+                    setMessage('PKCE verification data not found. Please try connecting again.');
+                    return;
+                }
+
+                // Step 1: Exchange code + code_verifier for token
                 setMessage('Exchanging authorization...');
                 const tokenResponse = await fetch('/api/epic-token-exchange', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code })
+                    body: JSON.stringify({ code, code_verifier: codeVerifier })
                 });
 
                 const tokenData = await tokenResponse.json();
 
                 if (!tokenResponse.ok || !tokenData.access_token) {
                     setStatus('error');
-                    setMessage(tokenData.error || 'Failed to authorize with Epic.');
+                    setMessage(tokenData.error || 'Failed to authorize with your health system.');
                     return;
                 }
 
@@ -82,7 +120,7 @@ const EpicCallback = () => {
 
                 if (!medsResponse.ok) {
                     setStatus('error');
-                    setMessage(medsData.error || 'Failed to fetch medications from Epic.');
+                    setMessage(medsData.error || 'Failed to fetch medications from your health system.');
                     return;
                 }
 
@@ -91,12 +129,14 @@ const EpicCallback = () => {
                     matched: medsData.matched || [],
                     unmatched: medsData.unmatched || [],
                     totalFhirMeds: medsData.totalFhirMeds || 0,
+                    assistancePrograms: medsData.assistancePrograms || [],
                     timestamp: Date.now()
                 }));
 
                 setMatchedCount(medsData.matched?.length || 0);
+                setProgramCount(medsData.assistancePrograms?.length || 0);
                 setStatus('success');
-                setMessage(`Found ${medsData.matched?.length || 0} transplant medication${(medsData.matched?.length || 0) !== 1 ? 's' : ''} in your Epic MyChart.`);
+                setMessage(`Found ${medsData.matched?.length || 0} transplant medication${(medsData.matched?.length || 0) !== 1 ? 's' : ''} in your health system.`);
 
                 // Auto-redirect back after a brief delay
                 const returnPath = sessionStorage.getItem('epic_return_path') || '/wizard';
@@ -140,7 +180,7 @@ const EpicCallback = () => {
 
                 {/* Title */}
                 <h1 className="text-2xl font-bold text-slate-900 mb-2">
-                    {status === 'processing' && 'Connecting to Epic'}
+                    {status === 'processing' && 'Connecting to Your Health System'}
                     {status === 'success' && 'Medications Imported'}
                     {status === 'error' && 'Connection Issue'}
                 </h1>
@@ -156,12 +196,21 @@ const EpicCallback = () => {
 
                 {/* Success details */}
                 {status === 'success' && (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
-                        <div className="flex items-center justify-center gap-2 text-emerald-800">
-                            <ShieldCheck size={18} aria-hidden="true" />
-                            <span className="font-medium">Redirecting you back automatically...</span>
+                    <>
+                        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-4">
+                            <div className="flex items-center justify-center gap-2 text-emerald-800">
+                                <ShieldCheck size={18} aria-hidden="true" />
+                                <span className="font-medium">Redirecting you back automatically...</span>
+                            </div>
                         </div>
-                    </div>
+                        {programCount > 0 && (
+                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                                <p className="text-blue-800 font-medium text-sm">
+                                    {programCount} assistance program{programCount !== 1 ? 's' : ''} found for your medications.
+                                </p>
+                            </div>
+                        )}
+                    </>
                 )}
 
                 {/* Error retry */}
@@ -175,14 +224,14 @@ const EpicCallback = () => {
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                         <p className="text-sm text-slate-500">
-                            If this continues, your transplant center may not support Epic MyChart integration. You can always add medications manually.
+                            If this continues, your transplant center may not support this integration. You can always add medications manually.
                         </p>
                     </div>
                 )}
 
                 {/* Privacy note */}
                 <p className="text-xs text-slate-400 mt-6">
-                    Your Epic MyChart credentials were handled securely by Epic. We only received your medication list.
+                    Your health system credentials were handled securely. We only received your medication list.
                 </p>
             </div>
         </div>

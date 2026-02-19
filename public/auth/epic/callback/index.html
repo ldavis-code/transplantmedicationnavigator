@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecting to Your Health System - Transplant Medication Navigator</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem 2rem;
+            max-width: 28rem;
+            width: 100%;
+            text-align: center;
+        }
+        .icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+        }
+        .icon-wrap.processing { background: #dbeafe; }
+        .icon-wrap.success { background: #d1fae5; }
+        .icon-wrap.error { background: #fee2e2; }
+
+        .icon-wrap svg { width: 2rem; height: 2rem; }
+        .icon-wrap.processing svg { color: #2563eb; animation: spin 1s linear infinite; }
+        .icon-wrap.success svg { color: #059669; }
+        .icon-wrap.error svg { color: #dc2626; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .message { margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .message.processing { color: #1d4ed8; }
+        .message.success { color: #047857; }
+        .message.error { color: #b91c1c; }
+
+        .success-banner {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #065f46;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .success-banner svg { width: 1.125rem; height: 1.125rem; flex-shrink: 0; }
+
+        .programs-summary {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: 0.875rem;
+            color: #0c4a6e;
+        }
+        .programs-summary h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #075985;
+        }
+        .programs-summary ul { padding-left: 1.25rem; margin: 0; }
+        .programs-summary li { margin-bottom: 0.25rem; }
+        .program-type { font-weight: 600; text-transform: capitalize; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: background 0.15s;
+            border: none;
+            cursor: pointer;
+            min-height: 44px;
+        }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn svg { width: 1rem; height: 1rem; }
+
+        .privacy-note {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 1.5rem;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <main class="card" role="main" aria-live="polite">
+        <!-- Processing state -->
+        <div id="state-processing">
+            <div class="icon-wrap processing">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+            </div>
+            <h1>Connecting to Your Health System</h1>
+            <p id="processing-msg" class="message processing">Exchanging authorization...</p>
+        </div>
+
+        <!-- Success state -->
+        <div id="state-success" class="hidden">
+            <div class="icon-wrap success">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </div>
+            <h1>Medications Imported</h1>
+            <p id="success-msg" class="message success"></p>
+            <div class="success-banner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Redirecting you back automatically...</span>
+            </div>
+            <div id="programs-summary" class="programs-summary hidden"></div>
+        </div>
+
+        <!-- Error state -->
+        <div id="state-error" class="hidden">
+            <div class="icon-wrap error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            </div>
+            <h1>Connection Issue</h1>
+            <p id="error-msg" class="message error"></p>
+            <a id="retry-link" href="/wizard" class="btn btn-primary">
+                Go Back and Try Again
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            <p style="font-size:0.85rem;color:#64748b;margin-top:0.75rem;">
+                If this continues, your transplant center may not support this integration. You can always add medications manually.
+            </p>
+        </div>
+
+        <p class="privacy-note">
+            Your health system credentials were handled securely. We only received your medication list.
+        </p>
+    </main>
+
+    <script type="module">
+        import {
+            verifyState,
+            exchangeCodeForToken,
+            fetchEpicMedications,
+            storeImportedMeds,
+            getReturnPath
+        } from '/js/epic-connect.js';
+
+        const $ = (id) => document.getElementById(id);
+
+        function showState(state) {
+            $('state-processing').classList.toggle('hidden', state !== 'processing');
+            $('state-success').classList.toggle('hidden', state !== 'success');
+            $('state-error').classList.toggle('hidden', state !== 'error');
+        }
+
+        function showError(msg) {
+            $('error-msg').textContent = msg;
+            const returnPath = sessionStorage.getItem('epic_return_path') || '/wizard';
+            $('retry-link').href = returnPath;
+            showState('error');
+        }
+
+        function renderProgramsSummary(programs) {
+            if (!programs || programs.length === 0) return;
+
+            const byType = {};
+            for (const p of programs) {
+                if (!byType[p.type]) byType[p.type] = [];
+                byType[p.type].push(p);
+            }
+
+            const typeLabels = {
+                pap: 'Patient Assistance Programs',
+                copay: 'Copay Card Programs',
+                foundation: 'Foundation Grants'
+            };
+
+            let html = '<h3>Assistance Programs Found</h3><ul>';
+            for (const [type, list] of Object.entries(byType)) {
+                const label = typeLabels[type] || type;
+                html += `<li><span class="program-type">${label}:</span> ${list.length} program${list.length !== 1 ? 's' : ''} available</li>`;
+            }
+            html += '</ul>';
+
+            const el = $('programs-summary');
+            el.innerHTML = html;
+            el.classList.remove('hidden');
+        }
+
+        async function processCallback() {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            const state = params.get('state');
+            const errorParam = params.get('error');
+
+            // Handle Epic-side errors (user denied consent, etc.)
+            if (errorParam) {
+                const desc = params.get('error_description') || 'Authorization was not completed.';
+                showError(desc);
+                return;
+            }
+
+            if (!code) {
+                showError('No authorization code received from your health system.');
+                return;
+            }
+
+            // Verify CSRF state
+            if (state && !verifyState(state)) {
+                showError('Security verification failed. Please try connecting again.');
+                return;
+            }
+
+            try {
+                // Step 1: Exchange code for token
+                $('processing-msg').textContent = 'Exchanging authorization...';
+                const tokenData = await exchangeCodeForToken(code);
+
+                // Step 2: Fetch medications
+                $('processing-msg').textContent = 'Importing your medications...';
+                const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient);
+
+                // Step 3: Store results for the calling page
+                storeImportedMeds(medsData);
+
+                // Step 4: Show success
+                const count = medsData.matched ? medsData.matched.length : 0;
+                $('success-msg').textContent =
+                    `Found ${count} transplant medication${count !== 1 ? 's' : ''} in your health system.` +
+                    (medsData.unmatched && medsData.unmatched.length > 0
+                        ? ` ${medsData.unmatched.length} non-transplant medication${medsData.unmatched.length !== 1 ? 's were' : ' was'} skipped.`
+                        : '');
+
+                // Show assistance program summary if any
+                renderProgramsSummary(medsData.assistancePrograms);
+
+                showState('success');
+
+                // Redirect back after a brief delay
+                const returnPath = getReturnPath();
+                setTimeout(() => {
+                    window.location.href = returnPath;
+                }, 2500);
+
+            } catch (err) {
+                console.error('Epic callback error:', err);
+                showError(err.message || 'An unexpected error occurred. Please try again.');
+            }
+        }
+
+        processCallback();
+    </script>
+</body>
+</html>

@@ -13,7 +13,7 @@
 
 [functions."*"]
   external_node_modules = ["@anthropic-ai/sdk", "@neondatabase/serverless"]
-  included_files = ["src/data/medications.json"]
+  included_files = ["src/data/medications.json", "src/data/programs.json"]
 
 # WWW to non-WWW redirect (301 permanent) - must come first
 # This ensures all traffic goes to the canonical non-www domain
@@ -151,6 +151,12 @@
   to = "/accessibility/index.html"
   status = 200
 
+# Epic FHIR OAuth callback - serve static HTML (must come before SPA fallback)
+[[redirects]]
+  from = "/auth/epic/callback"
+  to = "/auth/epic/callback/index.html"
+  status = 200
+
 # SPA fallback - must come AFTER prerendered pages and API routes
 # This catches all other routes and serves the React SPA
 [[redirects]]
@@ -223,6 +229,12 @@
   for = "/index.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# Epic callback page - no cache
+[[headers]]
+  for = "/auth/epic/callback/*"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate"
 
 # Security headers for all responses
 [[headers]]
