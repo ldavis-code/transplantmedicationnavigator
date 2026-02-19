@@ -2874,6 +2874,7 @@ const MedicationSearch = () => {
     const MEDICATIONS = useMedicationsList();
     const {
         answers: quizAnswers,
+        setAnswer: setContextAnswer,
         incrementQuizCompletions,
         isQuizLimitReached,
         remainingQuizzes
@@ -2882,9 +2883,9 @@ const MedicationSearch = () => {
 
     // Determine if copay cards should be shown based on insurance type from quiz
     // Copay cards are only for commercial/employer insurance
-    // If insurance type is not set (user hasn't completed quiz), default to showing copay cards
+    // If insurance type is not set, we'll prompt the user to select it
     const insuranceType = quizAnswers?.insurance_type;
-    const isCommercialInsurance = insuranceType === 'commercial' || !insuranceType;
+    const isCommercialInsurance = insuranceType === 'commercial';
     const showCopayCards = isCommercialInsurance;
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -3227,6 +3228,45 @@ const MedicationSearch = () => {
                         ))}
                     </div>
 
+                    {/* Insurance Type Selection - shown when user hasn't set insurance via quiz */}
+                    {!insuranceType && (
+                        <div className="mb-6 bg-amber-50 border-2 border-amber-300 rounded-xl p-5" role="group" aria-labelledby="insurance-select-heading">
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-amber-100 rounded-full flex-shrink-0">
+                                    <Shield className="text-amber-600" size={28} aria-hidden="true" />
+                                </div>
+                                <div className="flex-1">
+                                    <h2 id="insurance-select-heading" className="font-bold text-lg text-amber-800 mb-2">
+                                        What is your insurance type?
+                                    </h2>
+                                    <p className="text-amber-700 mb-4 text-sm">
+                                        We need your insurance type to show the correct savings options. Copay cards are only available for commercial insurance, while other programs vary by coverage.
+                                    </p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        {[
+                                            { value: 'commercial', label: 'Commercial / Employer', icon: Building },
+                                            { value: 'medicare', label: 'Medicare', icon: ShieldCheck },
+                                            { value: 'medicaid', label: 'Medicaid (State)', icon: HeartHandshake },
+                                            { value: 'tricare_va', label: 'TRICARE / VA', icon: Award },
+                                            { value: 'ihs', label: 'Indian Health Service', icon: Users },
+                                            { value: 'uninsured', label: 'Uninsured / Self-pay', icon: AlertCircle },
+                                        ].map(opt => (
+                                            <button
+                                                key={opt.value}
+                                                onClick={() => setContextAnswer('insurance_type', opt.value)}
+                                                className="flex items-center gap-3 p-3 rounded-lg border-2 border-amber-200 bg-white hover:border-emerald-500 hover:bg-emerald-50 transition text-left min-h-[48px]"
+                                                aria-label={`Select ${opt.label} as your insurance type`}
+                                            >
+                                                <opt.icon size={20} className="text-slate-600 flex-shrink-0" aria-hidden="true" />
+                                                <span className="font-medium text-slate-800 text-sm">{opt.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Guidance to click My Medication Savings */}
                     <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 no-print">
                         <div className="flex items-start gap-3">
@@ -3322,7 +3362,7 @@ const MedicationSearch = () => {
 
             {/* My Medication Savings Button */}
             {hasItems && !showSavings && (
-                <div className="flex justify-center no-print">
+                <div className="flex flex-col items-center gap-2 no-print">
                     <button
                         onClick={() => {
                             // Pro users and promo code users always have access
@@ -3340,10 +3380,14 @@ const MedicationSearch = () => {
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }, 100);
                         }}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2"
+                        disabled={!insuranceType}
+                        className={`px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 ${!insuranceType ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700 text-white'}`}
                     >
                         My Medication Savings
                     </button>
+                    {!insuranceType && (
+                        <p className="text-amber-700 text-sm font-medium">Please select your insurance type above to continue</p>
+                    )}
                 </div>
             )}
 
@@ -5870,11 +5914,12 @@ const ApplicationHelp = () => {
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
-    const { answers: quizAnswers, selectedMedications: quizSelectedMeds } = useChatQuiz();
+    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer } = useChatQuiz();
 
     // Determine if copay cards should be shown based on insurance type
+    // If insurance type is not set, we'll prompt the user to select it
     const insuranceType = quizAnswers?.insurance_type;
-    const isCommercialInsurance = insuranceType === 'commercial' || !insuranceType;
+    const isCommercialInsurance = insuranceType === 'commercial';
     const showCopayCards = isCommercialInsurance;
 
     const [activeTab, setActiveTab] = useState('START');
@@ -6454,6 +6499,45 @@ ${patientName || "[Your Name]"}`;
                                 )}
                             </div>
                         </div>
+
+                        {/* Insurance Type Selection - shown when user hasn't set insurance */}
+                        {displayMeds.length > 0 && !insuranceType && (
+                            <div className="mb-6 bg-amber-50 border-2 border-amber-300 rounded-xl p-5" role="group" aria-labelledby="apphelp-insurance-heading">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 bg-amber-100 rounded-full flex-shrink-0">
+                                        <Shield className="text-amber-600" size={28} aria-hidden="true" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 id="apphelp-insurance-heading" className="font-bold text-lg text-amber-800 mb-2">
+                                            What is your insurance type?
+                                        </h3>
+                                        <p className="text-amber-700 mb-4 text-sm">
+                                            Select your insurance type so we can show the correct assistance programs and savings options for your medications.
+                                        </p>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                            {[
+                                                { value: 'commercial', label: 'Commercial / Employer', icon: Building },
+                                                { value: 'medicare', label: 'Medicare', icon: ShieldCheck },
+                                                { value: 'medicaid', label: 'Medicaid (State)', icon: HeartHandshake },
+                                                { value: 'tricare_va', label: 'TRICARE / VA', icon: Award },
+                                                { value: 'ihs', label: 'Indian Health Service', icon: Users },
+                                                { value: 'uninsured', label: 'Uninsured / Self-pay', icon: AlertCircle },
+                                            ].map(opt => (
+                                                <button
+                                                    key={opt.value}
+                                                    onClick={() => setContextAnswer('insurance_type', opt.value)}
+                                                    className="flex items-center gap-3 p-3 rounded-lg border-2 border-amber-200 bg-white hover:border-teal-500 hover:bg-teal-50 transition text-left min-h-[48px]"
+                                                    aria-label={`Select ${opt.label} as your insurance type`}
+                                                >
+                                                    <opt.icon size={20} className="text-slate-600 flex-shrink-0" aria-hidden="true" />
+                                                    <span className="font-medium text-slate-800 text-sm">{opt.label}</span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Medication cards with PAP info */}
                         {displayMeds.length > 0 ? (
