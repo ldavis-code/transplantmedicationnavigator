@@ -5916,11 +5916,46 @@ const ApplicationHelp = () => {
     // Get quiz context for pre-selected medications
     const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer } = useChatQuiz();
 
-    // Determine if copay cards should be shown based on insurance type
-    // If insurance type is not set, we'll prompt the user to select it
-    const insuranceType = quizAnswers?.insurance_type;
-    const isCommercialInsurance = insuranceType === 'commercial';
-    const showCopayCards = isCommercialInsurance;
+    // Local commercial insurance state - independent of quiz answers
+    // This is the yes/no question shown in the MEDS tab
+    const [localCommercialInsurance, setLocalCommercialInsurance] = useState(null);
+
+    // Load commercial insurance preference from localStorage on mount
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem('tmn_meds_commercial_insurance');
+            if (stored) {
+                setLocalCommercialInsurance(stored);
+            }
+        } catch (e) {
+            // ignore
+        }
+    }, []);
+
+    // Save commercial insurance preference when it changes
+    useEffect(() => {
+        if (localCommercialInsurance !== null) {
+            try {
+                localStorage.setItem('tmn_meds_commercial_insurance', localCommercialInsurance);
+                // Also sync to quiz context so MedicationCard sees it
+                if (localCommercialInsurance === 'yes') {
+                    setContextAnswer('insurance_type', 'commercial');
+                }
+            } catch (e) {
+                // ignore
+            }
+        }
+    }, [localCommercialInsurance, setContextAnswer]);
+
+    // Determine if copay cards should be shown based on the local yes/no answer
+    const showCopayCards = localCommercialInsurance === 'yes';
+
+    // Build quizAnswers override for MedicationCard display
+    const cardQuizAnswers = localCommercialInsurance === 'yes'
+        ? { ...quizAnswers, insurance_type: 'commercial' }
+        : localCommercialInsurance === 'no'
+            ? { ...quizAnswers, insurance_type: quizAnswers?.insurance_type || 'medicare' }
+            : quizAnswers || {};
 
     const [activeTab, setActiveTab] = useState('START');
     const checklistItems = APPLICATION_CHECKLIST_DATA;
@@ -6500,44 +6535,62 @@ ${patientName || "[Your Name]"}`;
                             </div>
                         </div>
 
-                        {/* Insurance Type Selection - shown when user hasn't set insurance */}
-                        {displayMeds.length > 0 && !insuranceType && (
-                            <div className="mb-6 bg-amber-50 border-2 border-amber-300 rounded-xl p-5" role="group" aria-labelledby="apphelp-insurance-heading">
-                                <div className="flex items-start gap-4">
-                                    <div className="p-2 bg-amber-100 rounded-full flex-shrink-0">
-                                        <Shield className="text-amber-600" size={28} aria-hidden="true" />
+                        {/* Commercial Insurance Question - always shown before medication cards */}
+                        <div className="mb-6 bg-white border-2 border-blue-200 rounded-xl p-5" role="group" aria-labelledby="apphelp-insurance-heading">
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-blue-100 rounded-full flex-shrink-0">
+                                    <ShieldCheck className="text-blue-600" size={28} aria-hidden="true" />
+                                </div>
+                                <div className="flex-1">
+                                    <h3 id="apphelp-insurance-heading" className="font-bold text-lg text-slate-900 mb-2">
+                                        Do you have commercial insurance?
+                                    </h3>
+                                    <p className="text-slate-600 mb-4 text-sm">
+                                        Copay cards are only available with commercial (employer or marketplace) insurance. This helps us show you the right savings programs.
+                                    </p>
+                                    <div className="flex gap-4">
+                                        <button
+                                            onClick={() => setLocalCommercialInsurance('yes')}
+                                            className={`flex-1 py-3 px-4 rounded-lg font-bold text-center transition min-h-[48px] text-base ${
+                                                localCommercialInsurance === 'yes'
+                                                    ? 'bg-blue-600 text-white ring-2 ring-blue-600 shadow-md'
+                                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-2 border-slate-300'
+                                            }`}
+                                            role="radio"
+                                            aria-checked={localCommercialInsurance === 'yes'}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            onClick={() => setLocalCommercialInsurance('no')}
+                                            className={`flex-1 py-3 px-4 rounded-lg font-bold text-center transition min-h-[48px] text-base ${
+                                                localCommercialInsurance === 'no'
+                                                    ? 'bg-blue-600 text-white ring-2 ring-blue-600 shadow-md'
+                                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-2 border-slate-300'
+                                            }`}
+                                            role="radio"
+                                            aria-checked={localCommercialInsurance === 'no'}
+                                        >
+                                            No
+                                        </button>
                                     </div>
-                                    <div className="flex-1">
-                                        <h3 id="apphelp-insurance-heading" className="font-bold text-lg text-amber-800 mb-2">
-                                            What is your insurance type?
-                                        </h3>
-                                        <p className="text-amber-700 mb-4 text-sm">
-                                            Select your insurance type so we can show the correct assistance programs and savings options for your medications.
-                                        </p>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            {[
-                                                { value: 'commercial', label: 'Commercial / Employer', icon: Building },
-                                                { value: 'medicare', label: 'Medicare', icon: ShieldCheck },
-                                                { value: 'medicaid', label: 'Medicaid (State)', icon: HeartHandshake },
-                                                { value: 'tricare_va', label: 'TRICARE / VA', icon: Award },
-                                                { value: 'ihs', label: 'Indian Health Service', icon: Users },
-                                                { value: 'uninsured', label: 'Uninsured / Self-pay', icon: AlertCircle },
-                                            ].map(opt => (
-                                                <button
-                                                    key={opt.value}
-                                                    onClick={() => setContextAnswer('insurance_type', opt.value)}
-                                                    className="flex items-center gap-3 p-3 rounded-lg border-2 border-amber-200 bg-white hover:border-teal-500 hover:bg-teal-50 transition text-left min-h-[48px]"
-                                                    aria-label={`Select ${opt.label} as your insurance type`}
-                                                >
-                                                    <opt.icon size={20} className="text-slate-600 flex-shrink-0" aria-hidden="true" />
-                                                    <span className="font-medium text-slate-800 text-sm">{opt.label}</span>
-                                                </button>
-                                            ))}
+                                    {localCommercialInsurance === 'yes' && (
+                                        <div className="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                                            <p className="text-emerald-800 text-sm">
+                                                <strong>Copay cards can help!</strong> With commercial insurance, manufacturer copay cards can lower your cost to $0-$50/month for many transplant medications.
+                                            </p>
                                         </div>
-                                    </div>
+                                    )}
+                                    {localCommercialInsurance === 'no' && (
+                                        <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                                            <p className="text-purple-800 text-sm">
+                                                <strong>Patient Assistance Programs (PAPs) can help.</strong> Drug manufacturers offer free medication programs for patients who qualify based on income. Foundations may also help with copays.
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                        )}
+                        </div>
 
                         {/* Medication cards with PAP info */}
                         {displayMeds.length > 0 ? (
@@ -6574,7 +6627,7 @@ ${patientName || "[Your Name]"}`;
                                         onRemove={() => removeMedFromList(med.id)}
                                         onPriceReportSubmit={() => {}}
                                         showCopayCards={showCopayCards}
-                                        quizAnswers={quizAnswers}
+                                        quizAnswers={cardQuizAnswers}
                                     />
                                 ))}
 
