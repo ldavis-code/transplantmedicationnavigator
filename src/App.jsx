@@ -26,6 +26,7 @@ const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
+const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -68,6 +69,8 @@ import FeedbackWidget from './components/FeedbackWidget.jsx';
 import ReadAloudButton from './components/ReadAloudButton.jsx';
 // Route change announcer for screen readers (Section 504 / WCAG 2.1 AA)
 import RouteAnnouncer from './components/RouteAnnouncer.jsx';
+// Epic MyChart FHIR integration - imports medications from patient's EHR
+import EpicConnectButton from './components/EpicConnectButton.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -2057,6 +2060,19 @@ const Wizard = () => {
                 ) : (
                     <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
+
+                {/* Epic MyChart Integration */}
+                <EpicConnectButton
+                    className="mb-6"
+                    onMedicationsImported={(matchedIds) => {
+                        const currentMeds = answers.medications || [];
+                        const newMeds = matchedIds.filter(id => !currentMeds.includes(id));
+                        if (newMeds.length > 0) {
+                            setAnswers(prev => ({ ...prev, medications: [...prev.medications, ...newMeds] }));
+                            setMedicationsVerified(false);
+                        }
+                    }}
+                />
 
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
@@ -6464,6 +6480,16 @@ ${patientName || "[Your Name]"}`;
                             </aside>
                         )}
 
+                        {/* Epic MyChart Integration */}
+                        <EpicConnectButton
+                            onMedicationsImported={(matchedIds) => {
+                                const newIds = matchedIds.filter(id => !medsTabListIds.includes(id));
+                                if (newIds.length > 0) {
+                                    setMedsTabListIds(prev => [...prev, ...newIds]);
+                                }
+                            }}
+                        />
+
                         {/* Search bar to add medications */}
                         <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
                             <h3 className="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2">
@@ -6878,6 +6904,7 @@ const MainSiteRoutes = () => (
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="/demo" element={<LazyDemo />} />
                 <Route path="/demo/:demoType" element={<LazyDemo />} />
+                <Route path="/auth/epic/callback" element={<LazyEpicCallback />} />
                 <Route path="*" element={<LazyNotFound />} />
             </Routes>
         </Suspense>

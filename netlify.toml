@@ -13,6 +13,7 @@
 
 [functions."*"]
   external_node_modules = ["@anthropic-ai/sdk", "@neondatabase/serverless"]
+  included_files = ["src/data/medications.json"]
 
 # WWW to non-WWW redirect (301 permanent) - must come first
 # This ensures all traffic goes to the canonical non-www domain
@@ -234,6 +235,6 @@
     # HSTS - Enforce HTTPS for 1 year, include subdomains
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     # CSP - Control what resources can be loaded
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://*.supabase.co https://*.neon.tech wss://*.supabase.co https://www.google-analytics.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://*.supabase.co https://*.neon.tech wss://*.supabase.co https://www.google-analytics.com https://fhir.epic.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self' https://fhir.epic.com"
     # Permissions Policy - Restrict browser features
     Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(self), usb=()"
