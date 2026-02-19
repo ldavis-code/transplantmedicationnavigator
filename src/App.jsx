@@ -4789,7 +4789,7 @@ const Education = () => {
             aria-selected={activeTab === id}
             aria-controls={`${id}-panel`}
             aria-label={label}
-            className={`flex items-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 whitespace-nowrap min-h-[48px] ${
+            className={`flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 ${
                 activeTab === id
                     ? 'border-emerald-600 text-emerald-800 bg-emerald-50'
                     : 'border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100'
@@ -4828,8 +4828,8 @@ const Education = () => {
                 </div>
             </Link>
 
-            <nav className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto" role="tablist" aria-label="Education topics">
-                <div className="flex min-w-max">
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
+                <div className="flex flex-wrap">
                     <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
                     <TabButton id="DIVERSION" label="Diversion Programs" icon={AlertOctagon} />
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
@@ -6152,7 +6152,7 @@ ${patientName || "[Your Name]"}`;
     );
 
     const TabButton = ({ id, label, icon: Icon, iconBg, iconColor }) => (
-        <button onClick={() => setActiveTab(id)} role="tab" id={`${id}-tab`} aria-selected={activeTab === id} aria-controls={`${id}-panel`} tabIndex={activeTab === id ? 0 : -1} className={`flex items-center gap-3 px-5 py-4 font-bold text-base md:text-lg transition-all border-b-4 min-h-[52px] ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
+        <button onClick={() => setActiveTab(id)} role="tab" id={`${id}-tab`} aria-selected={activeTab === id} aria-controls={`${id}-panel`} tabIndex={activeTab === id ? 0 : -1} className={`flex items-center justify-center gap-3 px-4 py-4 font-bold text-base md:text-lg transition-all border-b-4 min-h-[52px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
             <span className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg ${iconBg} transition-transform ${activeTab === id ? 'scale-110' : ''}`} aria-hidden="true">
                 <Icon size={20} className={iconColor} strokeWidth={2.5} />
             </span>
@@ -6178,8 +6178,8 @@ ${patientName || "[Your Name]"}`;
                     <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={24} aria-hidden="true" />
                 </div>
             </Link>
-            <nav className="bg-white rounded-xl shadow-md border border-slate-200 overflow-x-auto" role="tablist" aria-label="Application help sections">
-                <div className="flex min-w-max">
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Application help sections">
+                <div className="flex flex-wrap">
                     <TabButton id="START" label="Getting Started" icon={HeartHandshake} iconBg="bg-rose-100" iconColor="text-rose-600" />
                     <TabButton id="INCOME" label="Income" icon={DollarSign} iconBg="bg-emerald-100" iconColor="text-emerald-600" />
                     <TabButton id="STEPS" label="Steps" icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
