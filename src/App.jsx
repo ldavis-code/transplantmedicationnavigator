@@ -6201,7 +6201,7 @@ ${patientName || "[Your Name]"}`;
                     <TabButton id="STEPS" label="Steps" icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
                     <TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} iconBg="bg-amber-100" iconColor="text-amber-600" />
                     <TabButton id="LETTERS" label="Letters" icon={FileText} iconBg="bg-purple-100" iconColor="text-purple-600" />
-                    <TabButton id="MEDS" label="My Medications" icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
+                    <TabButton id="MEDS" label="Medications" icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
@@ -6463,7 +6463,7 @@ ${patientName || "[Your Name]"}`;
                         {/* Header with context */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                             <div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">My Medications & PAP Programs</h2>
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Medications & PAP Programs</h2>
                                 <p className="text-slate-600">View your medications alongside their Patient Assistance Programs. Search for medications to see application links.</p>
                             </div>
                         </div>
