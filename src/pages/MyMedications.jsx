@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator, Bell, ShieldCheck, ExternalLink, CreditCard, Heart } from 'lucide-react';
+import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator, Bell, ShieldCheck, ExternalLink, CreditCard, Heart, ClipboardCheck } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
@@ -8,6 +8,7 @@ import programsData from '../data/programs.json';
 
 const STORAGE_KEY = 'tmn_my_medications';
 const INSURANCE_STORAGE_KEY = 'tmn_has_commercial_insurance';
+const ADHERENCE_STORAGE_KEY = 'tmn_adherence_answer';
 
 /**
  * Find matching copay card programs for a medication name.
@@ -95,6 +96,7 @@ export default function MyMedications() {
     renewal: '',
     renewalType: ''
   });
+  const [adherenceAnswer, setAdherenceAnswer] = useState(null);
   const { showConfirm, DialogComponent } = useConfirmDialog();
 
   const renewalTypeLabels = {
@@ -120,6 +122,18 @@ export default function MyMedications() {
       }
     } catch (e) {
       console.error('Error loading insurance preference:', e);
+    }
+    try {
+      const adherenceStored = localStorage.getItem(ADHERENCE_STORAGE_KEY);
+      if (adherenceStored) {
+        const parsed = JSON.parse(adherenceStored);
+        // Only restore if answered today
+        if (parsed.date === new Date().toISOString().slice(0, 10)) {
+          setAdherenceAnswer(parsed.answer);
+        }
+      }
+    } catch (e) {
+      console.error('Error loading adherence answer:', e);
     }
   }, []);
 
@@ -200,6 +214,18 @@ export default function MyMedications() {
     });
     if (!confirmed) return;
     setMedications(prev => prev.filter(med => med.id !== id));
+  }
+
+  function handleAdherenceAnswer(answer) {
+    setAdherenceAnswer(answer);
+    try {
+      localStorage.setItem(ADHERENCE_STORAGE_KEY, JSON.stringify({
+        answer,
+        date: new Date().toISOString().slice(0, 10)
+      }));
+    } catch (e) {
+      console.error('Error saving adherence answer:', e);
+    }
   }
 
   function handleExport() {
@@ -675,6 +701,55 @@ export default function MyMedications() {
           </div>
         )}
       </div>
+
+      {/* Medication Adherence Check-In - shown when user has medications */}
+      {medications.length > 0 && (
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mt-6">
+          <fieldset>
+            <legend className="text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
+              <ClipboardCheck className="w-5 h-5 text-emerald-600" aria-hidden="true" />
+              Did you get your medication today?
+            </legend>
+            <div className="space-y-2 mt-4" role="radiogroup" aria-label="Medication adherence check-in">
+              {[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no_expensive', label: 'No \u2013 still too expensive' },
+                { value: 'no_another_pharmacy', label: 'No \u2013 will try another pharmacy' },
+                { value: 'no_other', label: 'No \u2013 other reason' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleAdherenceAnswer(option.value)}
+                  className={`w-full text-left py-3 px-4 rounded-lg font-medium transition min-h-[44px] focus:outline-none focus:ring-4 focus:ring-emerald-500/50 ${
+                    adherenceAnswer === option.value
+                      ? 'bg-emerald-600 text-white ring-2 ring-emerald-600'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300'
+                  }`}
+                  role="radio"
+                  aria-checked={adherenceAnswer === option.value}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            {adherenceAnswer === 'yes' && (
+              <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                <p className="text-emerald-800 text-sm font-medium">
+                  Great! Staying on track with your medications is one of the most important things you can do for your transplant health.
+                </p>
+              </div>
+            )}
+            {adherenceAnswer && adherenceAnswer !== 'yes' && (
+              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-amber-800 text-sm font-medium">
+                  Missing doses can put your transplant at risk. If cost is a barrier, check the assistance programs listed with your medications above or talk to your transplant team.
+                </p>
+              </div>
+            )}
+          </fieldset>
+        </div>
+      )}
       </div>
     </>
   );
