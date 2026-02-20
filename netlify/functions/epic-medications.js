@@ -1,20 +1,31 @@
 // netlify/functions/epic-medications.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers };
+  }
+
   try {
-    const { accessToken, patientId } = JSON.parse(event.body);
+    const { access_token, patient } = JSON.parse(event.body);
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('Fetching meds for patient:', patientId);
+    console.log('Fetching meds for patient:', patient);
     console.log('Using FHIR base URL:', baseUrl);
 
     // Fetch MedicationRequests (no status filter for sandbox)
     const medRequestResponse = await fetch(
-      `${baseUrl}/MedicationRequest?patient=${patientId}`,
+      `${baseUrl}/MedicationRequest?patient=${patient}`,
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/fhir+json'
         }
       }

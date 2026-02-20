@@ -50,7 +50,12 @@ export async function handler(event) {
         const redirectUri = process.env.EPIC_REDIRECT_URI;
         const fhirBaseUrl = process.env.EPIC_FHIR_BASE_URL || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4';
 
+        console.log('EPIC_CLIENT_ID present:', !!clientId);
+        console.log('EPIC_REDIRECT_URI:', redirectUri);
+        console.log('EPIC_FHIR_BASE_URL:', fhirBaseUrl);
+
         if (!clientId || !redirectUri) {
+            console.error('Missing env vars - EPIC_CLIENT_ID:', !!clientId, 'EPIC_REDIRECT_URI:', !!redirectUri);
             return {
                 statusCode: 500,
                 headers,

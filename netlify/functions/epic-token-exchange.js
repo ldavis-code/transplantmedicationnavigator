@@ -1,7 +1,18 @@
 // netlify/functions/epic-token-exchange.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers };
+  }
+
   try {
     const { code, code_verifier: codeVerifier } = JSON.parse(event.body);
 
@@ -23,7 +34,7 @@ export async function handler(event) {
           code: code,
           redirect_uri: process.env.EPIC_REDIRECT_URI,
           client_id: process.env.EPIC_CLIENT_ID,
-          code_verifier: codeVerifier
+          code_verifier: code_verifier
         })
       }
     );
@@ -40,7 +51,7 @@ export async function handler(event) {
       console.error('Token error:', JSON.stringify(tokenData));
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           error: 'Token exchange failed',
           details: tokenData
@@ -50,10 +61,7 @@ export async function handler(event) {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers,
       body: JSON.stringify({
         access_token: tokenData.access_token,
         patient: tokenData.patient,
@@ -65,7 +73,7 @@ export async function handler(event) {
     console.error('Token exchange error:', error.message);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
         error: 'Token exchange failed',
         details: error.message
