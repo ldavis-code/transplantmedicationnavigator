@@ -1,10 +1,11 @@
 // Epic FHIR Medications Fetcher
-// Uses a patient access token to retrieve MedicationRequest resources
-// and maps them back to the app's medication IDs via RxCUI and drug name matching
+// Uses a patient access token to retrieve MedicationRequest resources,
+// maps them to the app's medication IDs via RxCUI and drug name matching,
+// and returns matching assistance programs (PAPs, copay cards, foundations).
 
 import MEDICATIONS_DATA from '../../src/data/medications.json';
+import PROGRAMS_DATA from '../../src/data/programs.json';
 
-// CORS headers
 const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -18,17 +19,14 @@ function buildLookups() {
     const nameTerms = []; // { term, id }
 
     for (const med of MEDICATIONS_DATA) {
-        // Index by RxCUI
         if (med.rxcui) {
             byRxcui[med.rxcui] = med.id;
         }
 
-        // Index generic name (lowercase)
         if (med.genericName) {
             nameTerms.push({ term: med.genericName.toLowerCase(), id: med.id });
         }
 
-        // Index brand names (may contain slashes for multiple brands)
         if (med.brandName) {
             for (const brand of med.brandName.split('/')) {
                 const trimmed = brand.trim();
@@ -71,6 +69,79 @@ function matchMedication(resource, byRxcui, nameTerms) {
     return null;
 }
 
+// Find assistance programs for a set of matched medication IDs
+function findAssistancePrograms(matchedIds) {
+    const programs = [];
+    const medIdSet = new Set(matchedIds);
+
+    // Build a medication ID lookup from the data
+    const medsById = {};
+    for (const med of MEDICATIONS_DATA) {
+        medsById[med.id] = med;
+    }
+
+    // Check copay programs
+    if (PROGRAMS_DATA.copayPrograms) {
+        for (const [programId, program] of Object.entries(PROGRAMS_DATA.copayPrograms)) {
+            const overlapping = (program.medications || []).filter(medId => medIdSet.has(medId));
+            if (overlapping.length > 0) {
+                programs.push({
+                    type: 'copay',
+                    programId,
+                    name: program.name,
+                    manufacturer: program.manufacturer,
+                    url: program.url,
+                    phone: program.phone,
+                    maxBenefit: program.maxBenefit,
+                    eligibility: program.eligibility,
+                    matchedMedications: overlapping
+                });
+            }
+        }
+    }
+
+    // Check PAP programs
+    if (PROGRAMS_DATA.papPrograms) {
+        for (const [programId, program] of Object.entries(PROGRAMS_DATA.papPrograms)) {
+            const overlapping = (program.medications || []).filter(medId => medIdSet.has(medId));
+            if (overlapping.length > 0) {
+                programs.push({
+                    type: 'pap',
+                    programId,
+                    name: program.name,
+                    manufacturer: program.manufacturer,
+                    url: program.url,
+                    phone: program.phone,
+                    maxBenefit: program.maxBenefit,
+                    eligibility: program.eligibility,
+                    matchedMedications: overlapping
+                });
+            }
+        }
+    }
+
+    // Check foundation programs
+    if (PROGRAMS_DATA.foundationPrograms) {
+        for (const [programId, program] of Object.entries(PROGRAMS_DATA.foundationPrograms)) {
+            const overlapping = (program.medications || []).filter(medId => medIdSet.has(medId));
+            if (overlapping.length > 0) {
+                programs.push({
+                    type: 'foundation',
+                    programId,
+                    name: program.name,
+                    url: program.url,
+                    phone: program.phone,
+                    maxBenefit: program.maxBenefit,
+                    eligibility: program.eligibility,
+                    matchedMedications: overlapping
+                });
+            }
+        }
+    }
+
+    return programs;
+}
+
 export async function handler(event) {
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 204, headers };
@@ -98,7 +169,7 @@ export async function handler(event) {
         const fhirBaseUrl = process.env.EPIC_FHIR_BASE_URL || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4';
 
         // Fetch active MedicationRequest resources for the patient
-        const fhirUrl = `${fhirBaseUrl}/MedicationRequest?patient=${patient}&status=active&_count=100`;
+        const fhirUrl = `${fhirBaseUrl}/MedicationRequest?patient=${encodeURIComponent(patient)}&status=active&_count=100`;
 
         const fhirResponse = await fetch(fhirUrl, {
             headers: {
@@ -138,7 +209,6 @@ export async function handler(event) {
             if (matchedId) {
                 matchedIds.add(matchedId);
             } else {
-                // Collect unmatched medication names for display
                 const name = resource.medicationCodeableConcept?.text ||
                     resource.medicationCodeableConcept?.coding?.[0]?.display ||
                     'Unknown medication';
@@ -146,13 +216,19 @@ export async function handler(event) {
             }
         }
 
+        const matchedArray = Array.from(matchedIds);
+
+        // Find assistance programs that cover the matched medications
+        const assistancePrograms = findAssistancePrograms(matchedArray);
+
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
-                matched: Array.from(matchedIds),
+                matched: matchedArray,
                 unmatched: [...new Set(unmatchedNames)],
-                totalFhirMeds: entries.length
+                totalFhirMeds: entries.length,
+                assistancePrograms
             })
         };
 

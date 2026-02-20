@@ -1,7 +1,10 @@
-// Epic FHIR OAuth2 Authorization URL Generator
-// Returns the URL to redirect the user to Epic's authorization page
+// Epic FHIR OAuth2 Authorization URL Generator (PKCE / SMART on FHIR standalone launch)
+// Accepts a code_challenge from the client and returns the authorization URL.
+// The client is responsible for generating the PKCE code_verifier / code_challenge
+// pair and storing the code_verifier for the token exchange step.
 
-// CORS headers
+import crypto from 'crypto';
+
 const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -35,13 +38,24 @@ export async function handler(event) {
             };
         }
 
+        // Accept PKCE code_challenge from the client
+        const qs = event.queryStringParameters || {};
+        const codeChallenge = qs.code_challenge;
+
+        if (!codeChallenge) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ error: 'code_challenge query parameter is required for PKCE' })
+            };
+        }
+
         // Epic OAuth2 authorize endpoint derived from FHIR base URL
-        // Standard: {base}/oauth2/authorize
         const authorizeUrl = process.env.EPIC_AUTHORIZE_URL ||
             fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/authorize');
 
-        // Generate a random state parameter for CSRF protection
-        const state = [...Array(32)].map(() => Math.random().toString(36)[2]).join('');
+        // Generate a cryptographically random state parameter for CSRF protection
+        const state = crypto.randomBytes(24).toString('base64url');
 
         // SMART on FHIR scopes for reading patient medication data
         const scope = 'patient/MedicationRequest.read patient/Patient.read launch/patient openid fhirUser';
@@ -52,7 +66,9 @@ export async function handler(event) {
             redirect_uri: redirectUri,
             scope,
             state,
-            aud: fhirBaseUrl
+            aud: fhirBaseUrl,
+            code_challenge: codeChallenge,
+            code_challenge_method: 'S256'
         });
 
         const authUrl = `${authorizeUrl}?${params.toString()}`;

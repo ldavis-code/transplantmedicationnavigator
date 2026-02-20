@@ -1,7 +1,7 @@
-// Epic FHIR OAuth2 Token Exchange
-// Exchanges an authorization code for an access token
+// Epic FHIR OAuth2 Token Exchange (PKCE / public client)
+// Exchanges an authorization code + PKCE code_verifier for an access token.
+// No client_secret is used — this is a public client relying on PKCE.
 
-// CORS headers
 const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -23,13 +23,21 @@ export async function handler(event) {
     }
 
     try {
-        const { code } = JSON.parse(event.body || '{}');
+        const { code, code_verifier } = JSON.parse(event.body || '{}');
 
         if (!code) {
             return {
                 statusCode: 400,
                 headers,
                 body: JSON.stringify({ error: 'Authorization code is required' })
+            };
+        }
+
+        if (!code_verifier) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ error: 'code_verifier is required for PKCE' })
             };
         }
 
@@ -49,12 +57,13 @@ export async function handler(event) {
         const tokenUrl = process.env.EPIC_TOKEN_URL ||
             fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/token');
 
-        // Exchange authorization code for access token
+        // Exchange authorization code for access token with PKCE code_verifier
         const tokenParams = new URLSearchParams({
             grant_type: 'authorization_code',
             code,
             redirect_uri: redirectUri,
-            client_id: clientId
+            client_id: clientId,
+            code_verifier
         });
 
         const tokenResponse = await fetch(tokenUrl, {
@@ -77,8 +86,6 @@ export async function handler(event) {
 
         const tokenData = await tokenResponse.json();
 
-        // Return the access token and patient ID to the frontend
-        // The frontend will use these to call epic-medications
         return {
             statusCode: 200,
             headers,
