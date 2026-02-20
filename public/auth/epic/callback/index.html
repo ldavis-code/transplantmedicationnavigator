@@ -298,7 +298,7 @@
 
                 // Step 2: Fetch medications
                 $('processing-msg').textContent = 'Importing your medications...';
-                const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient);
+                const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient, grantedScope);
 
                 // Step 3: Store results for the calling page
                 storeImportedMeds(medsData);
