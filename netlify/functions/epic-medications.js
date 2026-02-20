@@ -7,23 +7,25 @@ export async function handler(event) {
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
     console.log('=== EPIC MEDICATIONS DEBUG ===');
+    console.log('Access token first 50 chars:', accessToken?.substring(0, 50));
+    console.log('Access token last 20 chars:', accessToken?.substring(accessToken.length - 20));
     console.log('Patient ID:', patientId);
-    console.log('Access token exists:', !!accessToken);
-    console.log('Access token length:', accessToken?.length);
-    console.log('FHIR base URL:', baseUrl);
-    console.log('Full request URL:', `${baseUrl}/MedicationRequest?patient=${patientId}`);
+
+    if (typeof accessToken !== 'string') {
+      console.error('accessToken is not a string! Type:', typeof accessToken, 'Value:', JSON.stringify(accessToken)?.substring(0, 100));
+    }
 
     // Fetch MedicationRequests (no status filter for sandbox)
-    const medRequestResponse = await fetch(
-      `${baseUrl}/MedicationRequest?patient=${patientId}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Accept': 'application/fhir+json',
-          'Epic-Client-ID': process.env.EPIC_CLIENT_ID
-        }
+    const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
+    console.log('Calling FHIR URL:', fhirUrl);
+
+    const medRequestResponse = await fetch(fhirUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Accept': 'application/fhir+json'
       }
-    );
+    });
 
     console.log('Response status:', medRequestResponse.status);
     console.log('Response status text:', medRequestResponse.statusText);
