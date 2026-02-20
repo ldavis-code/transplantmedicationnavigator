@@ -11,8 +11,13 @@ export async function handler(event) {
     console.log('Client ID:', process.env.EPIC_CLIENT_ID);
     console.log('Redirect URI:', process.env.EPIC_REDIRECT_URI);
 
+    const fhirBaseUrl = process.env.EPIC_FHIR_BASE_URL || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4';
+    const tokenUrl = process.env.EPIC_TOKEN_URL ||
+      fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/token');
+    console.log('Token URL:', tokenUrl);
+
     const tokenResponse = await fetch(
-      'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
+      tokenUrl,
       {
         method: 'POST',
         headers: {
