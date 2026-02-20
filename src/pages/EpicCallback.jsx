@@ -9,37 +9,12 @@ import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'luci
  * Flow:
  * 1. Epic redirects here with ?code=...&state=...
  * 2. Verify the state matches what we stored (CSRF protection)
- * 3. Exchange the code + PKCE code_verifier for an access token via /api/epic-token-exchange
- * 4. Fetch medications via /api/epic-medications
- * 5. Store matched medication IDs + assistance programs in sessionStorage
- * 6. Redirect back to the page the user came from
+ * 3. Retrieve PKCE code_verifier from sessionStorage (stored before redirect)
+ * 4. Exchange the code + code_verifier for an access token via /api/epic-token-exchange
+ * 5. Fetch medications via /api/epic-medications
+ * 6. Store matched medication IDs + assistance programs in sessionStorage
+ * 7. Redirect back to the page the user came from
  */
-
-// ── PKCE Helpers ──────────────────────────────────────────────────────────────
-
-function generateCodeVerifier() {
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return base64UrlEncode(array);
-}
-
-async function generateCodeChallenge(codeVerifier) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(codeVerifier);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return base64UrlEncode(new Uint8Array(digest));
-}
-
-function base64UrlEncode(bytes) {
-    let binary = '';
-    for (const byte of bytes) {
-        binary += String.fromCharCode(byte);
-    }
-    return btoa(binary)
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/, '');
-}
 
 const EpicCallback = () => {
     const [searchParams] = useSearchParams();

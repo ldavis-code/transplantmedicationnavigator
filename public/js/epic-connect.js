@@ -1,12 +1,12 @@
 /**
  * epic-connect.js - Shared Epic FHIR PKCE + Connect logic
  *
- * Provides PKCE utilities (code_verifier / code_challenge generation) and
- * the "Connect to My Health System" flow:
- *   1. Generate PKCE pair and store code_verifier in sessionStorage
- *   2. Call /api/epic-auth-url?code_challenge=... to get the authorization URL
- *   3. Save OAuth state + return path in sessionStorage
- *   4. Redirect to Epic authorization page
+ * The "Connect to My Health System" flow:
+ *   1. Call /api/epic-auth-url — the server generates PKCE code_verifier +
+ *      code_challenge, builds the authorization URL, and returns:
+ *      { url, state, code_verifier }
+ *   2. Store code_verifier + state + return path in sessionStorage
+ *   3. Redirect to Epic authorization page
  *
  * After the user authorizes, Epic redirects to /auth/epic/callback which
  * uses the helpers below to exchange the code and fetch medications.
@@ -14,42 +14,6 @@
  * Usage (from React or plain HTML):
  *   import { startEpicConnect, exchangeCodeForToken, fetchEpicMedications, ... } from '/js/epic-connect.js';
  */
-
-// ── PKCE Helpers ──────────────────────────────────────────────────────────────
-
-/**
- * Generate a cryptographically random code_verifier (43-128 chars, base64url).
- */
-export function generateCodeVerifier() {
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return base64UrlEncode(array);
-}
-
-/**
- * Compute the S256 code_challenge from a code_verifier.
- * Returns a Promise<string> (base64url-encoded SHA-256 hash).
- */
-export async function generateCodeChallenge(codeVerifier) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(codeVerifier);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return base64UrlEncode(new Uint8Array(digest));
-}
-
-/**
- * Base64url encode a Uint8Array (no padding, URL-safe alphabet).
- */
-function base64UrlEncode(bytes) {
-    let binary = '';
-    for (const byte of bytes) {
-        binary += String.fromCharCode(byte);
-    }
-    return btoa(binary)
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/, '');
-}
 
 // ── Session Storage Keys ──────────────────────────────────────────────────────
 
@@ -64,34 +28,30 @@ const STORAGE_KEYS = {
 
 /**
  * Initiate the Epic FHIR SMART on FHIR standalone launch with PKCE.
- * Generates PKCE values, calls the auth URL endpoint, and redirects.
+ * Calls the server to generate PKCE values and the auth URL, then redirects.
  *
  * @returns {Promise<void>} Resolves after redirect (page will navigate away)
  * @throws {Error} If the auth URL request fails
  */
 export async function startEpicConnect() {
-    // 1. Generate PKCE code_verifier + code_challenge
-    const codeVerifier = generateCodeVerifier();
-    const codeChallenge = await generateCodeChallenge(codeVerifier);
-
-    // 2. Store code_verifier for the token exchange step
-    sessionStorage.setItem(STORAGE_KEYS.CODE_VERIFIER, codeVerifier);
-
-    // 3. Request the authorization URL from our serverless function
-    const response = await fetch('/api/epic-auth-url?code_challenge=' + encodeURIComponent(codeChallenge));
+    // 1. Request the authorization URL — server generates PKCE pair
+    const response = await fetch('/api/epic-auth-url');
     const data = await response.json();
 
     if (!response.ok || !data.url) {
         throw new Error(data.error || 'Could not generate Epic authorization URL');
     }
 
-    // 4. Save state for CSRF verification on callback
+    // 2. Store code_verifier for the token exchange step
+    sessionStorage.setItem(STORAGE_KEYS.CODE_VERIFIER, data.code_verifier);
+
+    // 3. Save state for CSRF verification on callback
     sessionStorage.setItem(STORAGE_KEYS.OAUTH_STATE, data.state);
 
-    // 5. Save the current page path so the callback can redirect back
+    // 4. Save the current page path so the callback can redirect back
     sessionStorage.setItem(STORAGE_KEYS.RETURN_PATH, window.location.pathname + window.location.search);
 
-    // 6. Redirect to Epic authorization
+    // 5. Redirect to Epic authorization
     window.location.href = data.url;
 }
 

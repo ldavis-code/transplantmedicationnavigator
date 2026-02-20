@@ -7,44 +7,18 @@ import { Loader2, ShieldCheck, AlertCircle, Zap } from 'lucide-react';
  *
  * The flow:
  * 1. User clicks "Connect to My Health System"
- * 2. We generate PKCE code_verifier + code_challenge (SHA-256)
- * 3. We call /api/epic-auth-url?code_challenge=... to get the authorization URL
- * 4. State + code_verifier are saved to sessionStorage
- * 5. User is redirected to Epic's authorization page
- * 6. After consent, Epic redirects to /auth/epic/callback with an auth code
- * 7. The callback page exchanges the code (with code_verifier), fetches meds, stores results
- * 8. On return, the calling page reads the matched medication IDs + assistance programs
+ * 2. We call /api/epic-auth-url which generates PKCE server-side and returns
+ *    the authorization URL, state, and code_verifier
+ * 3. We store code_verifier + state in sessionStorage
+ * 4. User is redirected to Epic's authorization page
+ * 5. After consent, Epic redirects to /auth/epic/callback with an auth code
+ * 6. The callback page exchanges the code (with code_verifier), fetches meds, stores results
+ * 7. On return, the calling page reads the matched medication IDs + assistance programs
  *
  * @param {function} onMedicationsImported - Called with (matchedIds[], unmatchedNames[])
  *   after the user returns from the Epic callback and meds are ready.
  * @param {string} className - Optional additional CSS classes for the wrapper div
  */
-
-// ── PKCE Helpers (browser-native crypto) ──────────────────────────────────────
-
-function generateCodeVerifier() {
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return base64UrlEncode(array);
-}
-
-async function generateCodeChallenge(codeVerifier) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(codeVerifier);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return base64UrlEncode(new Uint8Array(digest));
-}
-
-function base64UrlEncode(bytes) {
-    let binary = '';
-    for (const byte of bytes) {
-        binary += String.fromCharCode(byte);
-    }
-    return btoa(binary)
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/, '');
-}
 
 const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
     const [loading, setLoading] = useState(false);
@@ -75,15 +49,10 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
         setError(null);
 
         try {
-            // Generate PKCE code_verifier + code_challenge
-            const codeVerifier = generateCodeVerifier();
-            const codeChallenge = await generateCodeChallenge(codeVerifier);
-
-            // Store code_verifier for the token exchange step
-            sessionStorage.setItem('epic_pkce_code_verifier', codeVerifier);
-
-            // Request the authorization URL with code_challenge
-            const response = await fetch('/api/epic-auth-url?code_challenge=' + encodeURIComponent(codeChallenge));
+            // Request the authorization URL — the server generates the PKCE
+            // code_verifier + code_challenge and returns both the URL and
+            // the code_verifier for us to store.
+            const response = await fetch('/api/epic-auth-url');
             const data = await response.json();
 
             if (!response.ok || !data.url) {
@@ -91,6 +60,9 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
                 setLoading(false);
                 return;
             }
+
+            // Store code_verifier for the token exchange step
+            sessionStorage.setItem('epic_pkce_code_verifier', data.code_verifier);
 
             // Save state for CSRF verification on callback
             sessionStorage.setItem('epic_oauth_state', data.state);

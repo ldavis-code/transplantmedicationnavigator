@@ -1,7 +1,7 @@
 // Epic FHIR OAuth2 Authorization URL Generator (PKCE / SMART on FHIR standalone launch)
-// Accepts a code_challenge from the client and returns the authorization URL.
-// The client is responsible for generating the PKCE code_verifier / code_challenge
-// pair and storing the code_verifier for the token exchange step.
+// Generates a PKCE code_verifier + code_challenge pair server-side,
+// includes the code_challenge in the Epic authorization URL,
+// and returns the code_verifier to the frontend for the token exchange step.
 
 import crypto from 'crypto';
 
@@ -11,6 +11,26 @@ const headers = {
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
 };
+
+/**
+ * Generate a random code_verifier (43-128 characters, base64url-encoded).
+ * Per RFC 7636 Section 4.1.
+ */
+function generateCodeVerifier() {
+    // 32 random bytes → 43 base64url characters
+    return crypto.randomBytes(32).toString('base64url');
+}
+
+/**
+ * Create a code_challenge by SHA-256 hashing the code_verifier
+ * and base64url-encoding the result. Per RFC 7636 Section 4.2.
+ */
+function generateCodeChallenge(codeVerifier) {
+    return crypto
+        .createHash('sha256')
+        .update(codeVerifier, 'ascii')
+        .digest('base64url');
+}
 
 export async function handler(event) {
     if (event.httpMethod === 'OPTIONS') {
@@ -38,17 +58,9 @@ export async function handler(event) {
             };
         }
 
-        // Accept PKCE code_challenge from the client
-        const qs = event.queryStringParameters || {};
-        const codeChallenge = qs.code_challenge;
-
-        if (!codeChallenge) {
-            return {
-                statusCode: 400,
-                headers,
-                body: JSON.stringify({ error: 'code_challenge query parameter is required for PKCE' })
-            };
-        }
+        // Generate PKCE code_verifier and code_challenge server-side
+        const codeVerifier = generateCodeVerifier();
+        const codeChallenge = generateCodeChallenge(codeVerifier);
 
         // Epic OAuth2 authorize endpoint derived from FHIR base URL
         const authorizeUrl = process.env.EPIC_AUTHORIZE_URL ||
@@ -76,7 +88,11 @@ export async function handler(event) {
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ url: authUrl, state })
+            body: JSON.stringify({
+                url: authUrl,
+                state,
+                code_verifier: codeVerifier
+            })
         };
 
     } catch (error) {
