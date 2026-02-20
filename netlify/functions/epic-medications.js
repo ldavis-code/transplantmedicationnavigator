@@ -3,7 +3,9 @@
 
 export async function handler(event) {
   try {
-    const { accessToken, patientId } = JSON.parse(event.body);
+    const body = JSON.parse(event.body);
+    const accessToken = body.accessToken || body.access_token;
+    const patientId = body.patientId || body.patient;
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
     console.log('=== EPIC MEDICATIONS DEBUG ===');
