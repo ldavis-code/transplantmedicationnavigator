@@ -264,6 +264,12 @@
                 $('processing-msg').textContent = 'Exchanging authorization...';
                 const tokenData = await exchangeCodeForToken(code);
 
+                console.log('Token data received:', JSON.stringify({
+                    patient: tokenData.patient,
+                    scope: tokenData.scope,
+                    tokenLength: tokenData.access_token?.length
+                }));
+
                 // Check for error in token response
                 if (tokenData.error) {
                     const errorMsg = tokenData.details

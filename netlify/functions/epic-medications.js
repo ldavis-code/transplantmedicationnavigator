@@ -19,7 +19,8 @@ export async function handler(event) {
       {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
-          'Accept': 'application/fhir+json'
+          'Accept': 'application/fhir+json',
+          'Epic-Client-ID': process.env.EPIC_CLIENT_ID
         }
       }
     );
