@@ -34,7 +34,8 @@ export async function handler(event) {
     console.log('Token response body:', responseText);
 
     const tokenData = JSON.parse(responseText);
-    console.log('Patient ID received:', tokenData.patient);
+    console.log('=== FULL TOKEN RESPONSE ===');
+    console.log(JSON.stringify(tokenData));
 
     if (!tokenResponse.ok) {
       console.error('Token error:', JSON.stringify(tokenData));
@@ -54,12 +55,7 @@ export async function handler(event) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({
-        access_token: tokenData.access_token,
-        patient: tokenData.patient,
-        expires_in: tokenData.expires_in,
-        scope: tokenData.scope
-      })
+      body: JSON.stringify(tokenData)
     };
   } catch (error) {
     console.error('Token exchange error:', error.message);

@@ -6,22 +6,39 @@ export async function handler(event) {
     const { accessToken, patientId } = JSON.parse(event.body);
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('Fetching meds for patient:', patientId);
-    console.log('Using FHIR base URL:', baseUrl);
+    console.log('=== EPIC MEDICATIONS DEBUG ===');
+    console.log('Access token first 50 chars:', accessToken?.substring(0, 50));
+    console.log('Access token last 20 chars:', accessToken?.substring(accessToken.length - 20));
+    console.log('Patient ID:', patientId);
+
+    if (typeof accessToken !== 'string') {
+      console.error('accessToken is not a string! Type:', typeof accessToken, 'Value:', JSON.stringify(accessToken)?.substring(0, 100));
+    }
 
     // Fetch MedicationRequests (no status filter for sandbox)
-    const medRequestResponse = await fetch(
-      `${baseUrl}/MedicationRequest?patient=${patientId}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Accept': 'application/fhir+json'
-        }
-      }
-    );
+    const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
+    console.log('Calling FHIR URL:', fhirUrl);
 
-    console.log('FHIR response status:', medRequestResponse.status);
-    const medRequestData = await medRequestResponse.json();
+    const medRequestResponse = await fetch(fhirUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Accept': 'application/fhir+json'
+      }
+    });
+
+    console.log('Response status:', medRequestResponse.status);
+    console.log('Response status text:', medRequestResponse.statusText);
+    const rawText = await medRequestResponse.text();
+    console.log('Raw response (first 500 chars):', rawText.substring(0, 500));
+
+    let medRequestData;
+    try {
+      medRequestData = JSON.parse(rawText);
+    } catch(e) {
+      medRequestData = { error: 'Not JSON', raw: rawText.substring(0, 200) };
+    }
+
     console.log('FHIR response entries:',
       medRequestData.entry ? medRequestData.entry.length : 0);
 
