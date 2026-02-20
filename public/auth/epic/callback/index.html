@@ -287,6 +287,15 @@
                     return;
                 }
 
+                // Verify MedicationRequest scope was granted
+                const grantedScope = tokenData.scope || '';
+                console.log('Granted scope:', grantedScope);
+                if (!grantedScope.toLowerCase().includes('medicationrequest')) {
+                    console.error('MedicationRequest scope not granted. Scope:', grantedScope);
+                    showError('Your health system did not grant medication access. Granted scopes: ' + grantedScope + '. The app registration may need MedicationRequest.Read enabled.');
+                    return;
+                }
+
                 // Step 2: Fetch medications
                 $('processing-msg').textContent = 'Importing your medications...';
                 const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient);

@@ -54,6 +54,9 @@ export async function handler(event) {
       };
     }
 
+    // Log granted scope at ERROR level so it's visible in filtered logs
+    console.error('TOKEN GRANTED: scope="' + (tokenData.scope || 'NONE') + '" patient=' + tokenData.patient);
+
     return {
       statusCode: 200,
       headers: {
