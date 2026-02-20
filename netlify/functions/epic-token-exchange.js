@@ -3,9 +3,13 @@
 
 export async function handler(event) {
   try {
-    const { code, codeVerifier } = JSON.parse(event.body);
+    const { code, code_verifier: codeVerifier } = JSON.parse(event.body);
 
-    console.log('Exchanging token with code length:', code?.length);
+    // Detailed pre-fetch logging
+    console.log('Code length:', code?.length);
+    console.log('Code verifier length:', codeVerifier?.length);
+    console.log('Client ID:', process.env.EPIC_CLIENT_ID);
+    console.log('Redirect URI:', process.env.EPIC_REDIRECT_URI);
 
     const tokenResponse = await fetch(
       'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
@@ -24,8 +28,12 @@ export async function handler(event) {
       }
     );
 
-    const tokenData = await tokenResponse.json();
+    // Log full response before parsing
+    const responseText = await tokenResponse.text();
     console.log('Token response status:', tokenResponse.status);
+    console.log('Token response body:', responseText);
+
+    const tokenData = JSON.parse(responseText);
     console.log('Patient ID received:', tokenData.patient);
 
     if (!tokenResponse.ok) {

@@ -249,10 +249,29 @@
                 return;
             }
 
+            // Check that codeVerifier exists before attempting token exchange
+            const codeVerifier = sessionStorage.getItem('epic_pkce_code_verifier');
+            if (!codeVerifier) {
+                showError('Session expired - please try again');
+                return;
+            }
+
+            // Log what's being sent to the token exchange
+            console.log('Sending to token exchange:', { codeLength: code?.length, verifierLength: codeVerifier?.length });
+
             try {
                 // Step 1: Exchange code for token
                 $('processing-msg').textContent = 'Exchanging authorization...';
                 const tokenData = await exchangeCodeForToken(code);
+
+                // Check for error in token response
+                if (tokenData.error) {
+                    const errorMsg = tokenData.details
+                        ? `${tokenData.error}: ${JSON.stringify(tokenData.details)}`
+                        : tokenData.error;
+                    showError(errorMsg);
+                    return;
+                }
 
                 // Step 2: Fetch medications
                 $('processing-msg').textContent = 'Importing your medications...';
@@ -282,7 +301,19 @@
 
             } catch (err) {
                 console.error('Epic callback error:', err);
-                showError(err.message || 'An unexpected error occurred. Please try again.');
+                // Show actual error details from the token exchange response
+                let errorMsg = err.message || 'An unexpected error occurred. Please try again.';
+                try {
+                    const parsed = JSON.parse(err.message);
+                    if (parsed.error) {
+                        errorMsg = parsed.details
+                            ? `${parsed.error}: ${JSON.stringify(parsed.details)}`
+                            : parsed.error;
+                    }
+                } catch {
+                    // err.message is not JSON, use as-is
+                }
+                showError(errorMsg);
             }
         }
 
