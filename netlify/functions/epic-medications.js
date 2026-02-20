@@ -6,9 +6,12 @@ export async function handler(event) {
     const { accessToken, patientId } = JSON.parse(event.body);
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('Access token length:', accessToken?.length);
+    console.log('=== EPIC MEDICATIONS DEBUG ===');
     console.log('Patient ID:', patientId);
-    console.log('Request URL:', `${baseUrl}/MedicationRequest?patient=${patientId}`);
+    console.log('Access token exists:', !!accessToken);
+    console.log('Access token length:', accessToken?.length);
+    console.log('FHIR base URL:', baseUrl);
+    console.log('Full request URL:', `${baseUrl}/MedicationRequest?patient=${patientId}`);
 
     // Fetch MedicationRequests (no status filter for sandbox)
     const medRequestResponse = await fetch(
@@ -21,24 +24,16 @@ export async function handler(event) {
       }
     );
 
-    console.log('FHIR response status:', medRequestResponse.status);
-    console.log('FHIR response headers:', JSON.stringify(Object.fromEntries(medRequestResponse.headers.entries())));
-
-    const rawResponse = await medRequestResponse.text();
-    console.log('FHIR raw response body:', rawResponse);
+    console.log('Response status:', medRequestResponse.status);
+    console.log('Response status text:', medRequestResponse.statusText);
+    const rawText = await medRequestResponse.text();
+    console.log('Raw response (first 500 chars):', rawText.substring(0, 500));
 
     let medRequestData;
     try {
-      medRequestData = JSON.parse(rawResponse);
-    } catch (e) {
-      console.error('Response is not JSON:', rawResponse.substring(0, 200));
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          error: 'Invalid FHIR response',
-          raw: rawResponse.substring(0, 200)
-        })
-      };
+      medRequestData = JSON.parse(rawText);
+    } catch(e) {
+      medRequestData = { error: 'Not JSON', raw: rawText.substring(0, 200) };
     }
 
     console.log('FHIR response entries:',
