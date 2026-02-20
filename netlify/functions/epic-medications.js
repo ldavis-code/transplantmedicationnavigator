@@ -21,7 +21,26 @@ export async function handler(event) {
     );
 
     console.log('FHIR response status:', medRequestResponse.status);
-    const medRequestData = await medRequestResponse.json();
+    console.log('FHIR response headers:', JSON.stringify(Object.fromEntries(medRequestResponse.headers.entries())));
+
+    const responseText = await medRequestResponse.text();
+    console.log('FHIR raw response body:', responseText);
+
+    let medRequestData;
+    try {
+      medRequestData = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('Failed to parse FHIR response as JSON:', parseError.message);
+      return {
+        statusCode: 502,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          error: 'Invalid JSON from FHIR API',
+          details: responseText.substring(0, 500)
+        })
+      };
+    }
+
     console.log('FHIR response entries:',
       medRequestData.entry ? medRequestData.entry.length : 0);
 
