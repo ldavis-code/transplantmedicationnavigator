@@ -43,6 +43,8 @@ export async function handler(event) {
     const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
     console.log('Calling FHIR URL:', fhirUrl);
 
+    console.log('Token prefix:', accessToken.substring(0, 20) + '...');
+
     const medRequestResponse = await fetch(fhirUrl, {
       method: 'GET',
       headers: {
@@ -51,10 +53,15 @@ export async function handler(event) {
       }
     });
 
-    console.log('Response status:', medRequestResponse.status);
-    console.log('Response status text:', medRequestResponse.statusText);
     const rawText = await medRequestResponse.text();
-    console.log('Raw response (first 500 chars):', rawText.substring(0, 500));
+
+    // Log everything at ERROR level so it always shows in filtered logs
+    const wwwAuth = medRequestResponse.headers.get('WWW-Authenticate') || 'none';
+    console.error('FHIR RESPONSE: status=' + medRequestResponse.status,
+      'redirected=' + medRequestResponse.redirected,
+      'url=' + medRequestResponse.url,
+      'WWW-Authenticate=' + wwwAuth,
+      'body=' + rawText.substring(0, 300));
 
     let medRequestData;
     try {
@@ -63,16 +70,15 @@ export async function handler(event) {
       medRequestData = { error: 'Not JSON', raw: rawText.substring(0, 200) };
     }
 
-    console.log('FHIR response entries:',
-      medRequestData.entry ? medRequestData.entry.length : 0);
-
     if (!medRequestResponse.ok) {
-      console.error('FHIR error:', JSON.stringify(medRequestData));
+      console.error('FHIR error: status=' + medRequestResponse.status, JSON.stringify(medRequestData));
       return {
         statusCode: medRequestResponse.status,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           error: 'FHIR API error',
+          status: medRequestResponse.status,
+          wwwAuthenticate: wwwAuth,
           details: medRequestData
         })
       };
