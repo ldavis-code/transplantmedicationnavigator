@@ -1,11 +1,25 @@
 // netlify/functions/epic-token-exchange.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers };
+  }
+
   try {
-    const { code, codeVerifier } = JSON.parse(event.body);
+    const { code, code_verifier } = JSON.parse(event.body);
 
     console.log('Exchanging token with code length:', code?.length);
+    console.log('code_verifier present:', !!code_verifier);
+    console.log('EPIC_CLIENT_ID present:', !!process.env.EPIC_CLIENT_ID);
+    console.log('EPIC_REDIRECT_URI:', process.env.EPIC_REDIRECT_URI);
 
     const tokenResponse = await fetch(
       'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
@@ -19,7 +33,7 @@ export async function handler(event) {
           code: code,
           redirect_uri: process.env.EPIC_REDIRECT_URI,
           client_id: process.env.EPIC_CLIENT_ID,
-          code_verifier: codeVerifier
+          code_verifier: code_verifier
         })
       }
     );
@@ -32,7 +46,7 @@ export async function handler(event) {
       console.error('Token error:', JSON.stringify(tokenData));
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           error: 'Token exchange failed',
           details: tokenData
@@ -42,10 +56,7 @@ export async function handler(event) {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers,
       body: JSON.stringify({
         access_token: tokenData.access_token,
         patient: tokenData.patient,
@@ -57,7 +68,7 @@ export async function handler(event) {
     console.error('Token exchange error:', error.message);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
         error: 'Token exchange failed',
         details: error.message

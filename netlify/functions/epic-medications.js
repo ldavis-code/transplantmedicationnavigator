@@ -3,18 +3,18 @@
 
 export async function handler(event) {
   try {
-    const { accessToken, patientId } = JSON.parse(event.body);
+    const { access_token, patient } = JSON.parse(event.body);
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('Fetching meds for patient:', patientId);
+    console.log('Fetching meds for patient:', patient);
     console.log('Using FHIR base URL:', baseUrl);
 
     // Fetch MedicationRequests (no status filter for sandbox)
     const medRequestResponse = await fetch(
-      `${baseUrl}/MedicationRequest?patient=${patientId}`,
+      `${baseUrl}/MedicationRequest?patient=${patient}`,
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/fhir+json'
         }
       }
