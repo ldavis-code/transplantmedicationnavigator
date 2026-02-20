@@ -6,8 +6,9 @@ export async function handler(event) {
     const { accessToken, patientId } = JSON.parse(event.body);
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('Fetching meds for patient:', patientId);
-    console.log('Using FHIR base URL:', baseUrl);
+    console.log('Access token length:', accessToken?.length);
+    console.log('Patient ID:', patientId);
+    console.log('Request URL:', `${baseUrl}/MedicationRequest?patient=${patientId}`);
 
     // Fetch MedicationRequests (no status filter for sandbox)
     const medRequestResponse = await fetch(
@@ -23,20 +24,19 @@ export async function handler(event) {
     console.log('FHIR response status:', medRequestResponse.status);
     console.log('FHIR response headers:', JSON.stringify(Object.fromEntries(medRequestResponse.headers.entries())));
 
-    const responseText = await medRequestResponse.text();
-    console.log('FHIR raw response body:', responseText);
+    const rawResponse = await medRequestResponse.text();
+    console.log('FHIR raw response body:', rawResponse);
 
     let medRequestData;
     try {
-      medRequestData = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('Failed to parse FHIR response as JSON:', parseError.message);
+      medRequestData = JSON.parse(rawResponse);
+    } catch (e) {
+      console.error('Response is not JSON:', rawResponse.substring(0, 200));
       return {
-        statusCode: 502,
-        headers: { 'Content-Type': 'application/json' },
+        statusCode: 500,
         body: JSON.stringify({
-          error: 'Invalid JSON from FHIR API',
-          details: responseText.substring(0, 500)
+          error: 'Invalid FHIR response',
+          raw: rawResponse.substring(0, 200)
         })
       };
     }
