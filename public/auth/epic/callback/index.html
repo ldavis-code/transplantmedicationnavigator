@@ -267,7 +267,8 @@
                 console.log('Token data received:', JSON.stringify({
                     patient: tokenData.patient,
                     scope: tokenData.scope,
-                    tokenLength: tokenData.access_token?.length
+                    tokenLength: tokenData.access_token?.length,
+                    keys: Object.keys(tokenData)
                 }));
 
                 // Check for error in token response
@@ -276,6 +277,13 @@
                         ? `${tokenData.error}: ${JSON.stringify(tokenData.details)}`
                         : tokenData.error;
                     showError(errorMsg);
+                    return;
+                }
+
+                // Verify patient context was returned (requires launch/patient scope)
+                if (!tokenData.patient) {
+                    console.error('No patient ID in token response. Keys:', Object.keys(tokenData));
+                    showError('Your health system did not return a patient identifier. Please ensure the app has the launch/patient scope and try again.');
                     return;
                 }
 

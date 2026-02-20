@@ -9,12 +9,34 @@ export async function handler(event) {
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
     console.log('=== EPIC MEDICATIONS DEBUG ===');
-    console.log('Access token first 50 chars:', accessToken?.substring(0, 50));
-    console.log('Access token last 20 chars:', accessToken?.substring(accessToken.length - 20));
-    console.log('Patient ID:', patientId);
+    console.log('accessToken type:', typeof accessToken, 'length:', accessToken?.length);
+    console.log('patientId type:', typeof patientId, 'value:', patientId);
+    console.log('baseUrl:', baseUrl);
+    console.log('Request body keys:', Object.keys(body));
 
-    if (typeof accessToken !== 'string') {
-      console.error('accessToken is not a string! Type:', typeof accessToken, 'Value:', JSON.stringify(accessToken)?.substring(0, 100));
+    // Validate required fields before making the FHIR call
+    if (!accessToken || typeof accessToken !== 'string') {
+      console.error('Missing or invalid accessToken:', typeof accessToken);
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          error: 'Missing access token. The token exchange may not have returned an access_token field.',
+          bodyKeys: Object.keys(body)
+        })
+      };
+    }
+
+    if (!patientId || typeof patientId !== 'string') {
+      console.error('Missing or invalid patientId:', typeof patientId);
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          error: 'Missing patient ID. The token exchange may not have returned a patient field. Check that launch/patient scope is granted.',
+          bodyKeys: Object.keys(body)
+        })
+      };
     }
 
     // Fetch MedicationRequests (no status filter for sandbox)
