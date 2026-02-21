@@ -107,11 +107,11 @@ export async function exchangeCodeForToken(code) {
  * @param {string} patientId - The patient ID from the token exchange
  * @returns {Promise<{matched: string[], unmatched: string[], totalFhirMeds: number, assistancePrograms: Array}>}
  */
-export async function fetchEpicMedications(accessToken, patientId) {
+export async function fetchEpicMedications(accessToken, patientId, grantedScope) {
     const response = await fetch('/api/epic-medications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ access_token: accessToken, patient: patientId })
+        body: JSON.stringify({ access_token: accessToken, patient: patientId, scope: grantedScope })
     });
 
     const data = await response.json();

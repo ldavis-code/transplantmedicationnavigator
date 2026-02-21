@@ -8,11 +8,13 @@ export async function handler(event) {
     const patientId = body.patientId || body.patient;
     const baseUrl = process.env.EPIC_FHIR_BASE_URL;
 
-    console.log('=== EPIC MEDICATIONS DEBUG ===');
-    console.log('accessToken type:', typeof accessToken, 'length:', accessToken?.length);
-    console.log('patientId type:', typeof patientId, 'value:', patientId);
-    console.log('baseUrl:', baseUrl);
-    console.log('Request body keys:', Object.keys(body));
+    const grantedScope = body.scope || 'NOT_PROVIDED';
+
+    console.error('=== EPIC MEDICATIONS ===',
+      'token_len=' + accessToken?.length,
+      'patient=' + patientId,
+      'scope="' + grantedScope + '"',
+      'baseUrl=' + baseUrl);
 
     // Validate required fields before making the FHIR call
     if (!accessToken || typeof accessToken !== 'string') {

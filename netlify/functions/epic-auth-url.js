@@ -70,7 +70,8 @@ export async function handler(event) {
         const state = crypto.randomBytes(24).toString('base64url');
 
         // SMART on FHIR scopes for reading patient medication data
-        const scope = 'patient/MedicationRequest.read patient/Patient.read launch/patient openid fhirUser';
+        // Request both v1 (.read) and v2 (.rs) formats — Epic grants whichever it supports
+        const scope = 'patient/MedicationRequest.read patient/MedicationRequest.rs patient/Patient.read patient/Patient.rs launch/patient openid fhirUser';
 
         const params = new URLSearchParams({
             response_type: 'code',
