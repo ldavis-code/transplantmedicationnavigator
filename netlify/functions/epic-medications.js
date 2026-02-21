@@ -1,6 +1,38 @@
 // netlify/functions/epic-medications.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const FHIR_HEADERS = (token) => ({
+  'Authorization': `Bearer ${token}`,
+  'Accept': 'application/fhir+json'
+});
+
+/**
+ * Make a FHIR GET request with retry logic.
+ * Retries once after a short delay on 403 to handle token propagation delays
+ * between Epic's authorization server and resource server.
+ */
+async function fhirFetchWithRetry(url, accessToken, { retries = 1, delayMs = 1000 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: FHIR_HEADERS(accessToken)
+    });
+
+    // If success or a non-retryable error, return immediately
+    if (response.ok || (response.status !== 403 && response.status !== 401)) {
+      return response;
+    }
+
+    // On 403/401, retry after delay (except on last attempt)
+    if (attempt < retries) {
+      console.log(`FHIR request returned ${response.status}, retrying in ${delayMs}ms (attempt ${attempt + 1}/${retries + 1})`);
+      await new Promise(r => setTimeout(r, delayMs));
+    } else {
+      return response;
+    }
+  }
+}
+
 export async function handler(event) {
   try {
     const body = JSON.parse(event.body);
@@ -53,18 +85,50 @@ export async function handler(event) {
       };
     }
 
-    // Fetch MedicationRequests (no status filter for sandbox)
+    // Step 1: Validate the token by fetching the Patient resource first.
+    // This serves two purposes:
+    //  - Confirms the token is valid and has patient-level access
+    //  - Warms up Epic's token cache on the resource server (handles propagation delay)
+    const patientUrl = `${baseUrl}/Patient/${patientId}`;
+    console.log('Validating token with Patient endpoint:', patientUrl);
+
+    const patientResponse = await fetch(patientUrl, {
+      method: 'GET',
+      headers: FHIR_HEADERS(accessToken)
+    });
+
+    if (!patientResponse.ok) {
+      const patientRaw = await patientResponse.text();
+      const patientWwwAuth = patientResponse.headers.get('WWW-Authenticate') || 'none';
+      console.error('Patient validation failed: status=' + patientResponse.status,
+        'WWW-Authenticate=' + patientWwwAuth,
+        'body=' + patientRaw.substring(0, 300));
+
+      // If Patient endpoint also fails with 403, the token itself is the problem
+      if (patientResponse.status === 403 || patientResponse.status === 401) {
+        return {
+          statusCode: patientResponse.status,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            error: 'Your health system authorization does not have sufficient permissions. Please reconnect and ensure you approve all requested permissions.',
+            status: patientResponse.status,
+            wwwAuthenticate: patientWwwAuth,
+            scope: grantedScope
+          })
+        };
+      }
+    } else {
+      console.log('Patient validation succeeded');
+    }
+
+    // Step 2: Fetch MedicationRequests with retry logic
     const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
     console.log('Calling FHIR URL:', fhirUrl);
-
     console.log('Token prefix:', accessToken.substring(0, 20) + '...');
 
-    const medRequestResponse = await fetch(fhirUrl, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept': 'application/fhir+json'
-      }
+    const medRequestResponse = await fhirFetchWithRetry(fhirUrl, accessToken, {
+      retries: 2,
+      delayMs: 1500
     });
 
     const rawText = await medRequestResponse.text();
@@ -86,11 +150,20 @@ export async function handler(event) {
 
     if (!medRequestResponse.ok) {
       console.error('FHIR error: status=' + medRequestResponse.status, JSON.stringify(medRequestData));
+
+      // Provide specific error messages based on status
+      let userError = 'FHIR API error';
+      if (medRequestResponse.status === 403) {
+        userError = 'Your health system did not grant permission to read medication data. This may happen if the required scopes were not approved during sign-in, or if your health system does not support medication access for third-party apps.';
+      } else if (medRequestResponse.status === 401) {
+        userError = 'Your authorization has expired. Please reconnect to your health system.';
+      }
+
       return {
         statusCode: medRequestResponse.status,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          error: 'FHIR API error',
+          error: userError,
           status: medRequestResponse.status,
           wwwAuthenticate: wwwAuth,
           details: medRequestData
