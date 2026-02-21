@@ -10,10 +10,22 @@ export async function handler(event) {
 
     const grantedScope = body.scope || 'NOT_PROVIDED';
 
+    // Decode JWT payload to see actual granted scopes (no verification needed for logging)
+    let jwtClaims = {};
+    try {
+      const parts = accessToken.split('.');
+      if (parts.length === 3) {
+        jwtClaims = JSON.parse(Buffer.from(parts[1], 'base64url').toString());
+      }
+    } catch(e) { /* not a JWT or malformed */ }
+
     console.error('=== EPIC MEDICATIONS ===',
       'token_len=' + accessToken?.length,
       'patient=' + patientId,
-      'scope="' + grantedScope + '"',
+      'scope_from_client="' + grantedScope + '"',
+      'jwt_scope="' + (jwtClaims.scope || jwtClaims.scp || 'NONE') + '"',
+      'jwt_aud=' + JSON.stringify(jwtClaims.aud),
+      'jwt_sub=' + jwtClaims.sub,
       'baseUrl=' + baseUrl);
 
     // Validate required fields before making the FHIR call
