@@ -247,6 +247,6 @@
     # HSTS - Enforce HTTPS for 1 year, include subdomains
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     # CSP - Control what resources can be loaded
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://*.supabase.co https://*.neon.tech wss://*.supabase.co https://www.google-analytics.com https://fhir.epic.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self' https://fhir.epic.com"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://*.supabase.co https://*.neon.tech wss://*.supabase.co https://www.google-analytics.com https://fhir.epic.com https://*.epic.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self' https://fhir.epic.com https://*.epic.com"
     # Permissions Policy - Restrict browser features
     Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(self), usb=()"

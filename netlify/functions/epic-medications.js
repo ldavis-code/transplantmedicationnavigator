@@ -1,6 +1,13 @@
 // netlify/functions/epic-medications.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 const FHIR_HEADERS = (token) => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/fhir+json'
@@ -34,6 +41,10 @@ async function fhirFetchWithRetry(url, accessToken, { retries = 1, delayMs = 100
 }
 
 export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: CORS_HEADERS };
+  }
+
   try {
     const body = JSON.parse(event.body);
     const accessToken = body.accessToken || body.access_token;
