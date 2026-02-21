@@ -53,11 +53,22 @@ export async function handler(event) {
       };
     }
 
+    // Diagnostic: try Patient read first to verify token has ANY clinical scope
+    try {
+      const patientUrl = `${baseUrl}/Patient/${patientId}`;
+      const patientResp = await fetch(patientUrl, {
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/fhir+json' }
+      });
+      const patientBody = await patientResp.text();
+      console.error('DIAG Patient/' + patientId + ': status=' + patientResp.status,
+        'body=' + patientBody.substring(0, 200));
+    } catch(e) {
+      console.error('DIAG Patient fetch error:', e.message);
+    }
+
     // Fetch MedicationRequests (no status filter for sandbox)
     const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
     console.log('Calling FHIR URL:', fhirUrl);
-
-    console.log('Token prefix:', accessToken.substring(0, 20) + '...');
 
     const medRequestResponse = await fetch(fhirUrl, {
       method: 'GET',
