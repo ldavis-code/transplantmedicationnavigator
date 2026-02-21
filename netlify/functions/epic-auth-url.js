@@ -70,10 +70,11 @@ export async function handler(event) {
         const state = crypto.randomBytes(24).toString('base64url');
 
         // SMART on FHIR scopes for reading patient medication data
-        // Request both v1 (.read) and v2 (.rs) formats — Epic grants whichever it supports
+        // Use only SMART v1 (.read) format — v2 (.rs) scopes are not universally supported
+        // and mixing v1+v2 causes many Epic environments to reject with "invalid request".
         // Include both Medication and MedicationRequest scopes — Epic's resource server
         // may require Medication.read to resolve medication references within MedicationRequest
-        const scope = 'patient/MedicationRequest.read patient/MedicationRequest.rs patient/Medication.read patient/Medication.rs patient/Patient.read patient/Patient.rs launch/patient openid fhirUser';
+        const scope = 'patient/MedicationRequest.read patient/Medication.read patient/Patient.read launch/patient openid fhirUser';
 
         const params = new URLSearchParams({
             response_type: 'code',

@@ -1,7 +1,18 @@
 // netlify/functions/epic-token-exchange.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: CORS_HEADERS };
+  }
+
   try {
     const { code, code_verifier: codeVerifier } = JSON.parse(event.body);
 
