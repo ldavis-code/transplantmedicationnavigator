@@ -87,7 +87,8 @@ const EpicCallback = () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         access_token: tokenData.access_token,
-                        patient: tokenData.patient
+                        patient: tokenData.patient,
+                        scope: tokenData.scope || ''
                     })
                 });
 
@@ -95,7 +96,13 @@ const EpicCallback = () => {
 
                 if (!medsResponse.ok) {
                     setStatus('error');
-                    setMessage(medsData.error || 'Failed to fetch medications from your health system.');
+                    if (medsResponse.status === 403) {
+                        setMessage('Your health system did not grant permission to read medication data. Please try reconnecting and approve all requested permissions.');
+                    } else if (medsResponse.status === 401) {
+                        setMessage('Your authorization has expired. Please try connecting again.');
+                    } else {
+                        setMessage(medsData.error || 'Failed to fetch medications from your health system.');
+                    }
                     return;
                 }
 
