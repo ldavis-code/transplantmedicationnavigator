@@ -73,9 +73,11 @@ export async function handler(event) {
         // IMPORTANT: Epic rejects the entire authorization request if ANY scope
         // is not enabled in the app registration. Use EPIC_SCOPES env var to
         // match exactly what is configured in your Epic Developer portal.
-        // Default is the minimal set needed for medication import.
+        // Default uses only FHIR resource scopes (no openid/launch/patient which
+        // are OIDC/SMART launch scopes that need separate configuration).
+        // For patient-facing apps, Epic returns the patient ID automatically.
         const scope = process.env.EPIC_SCOPES ||
-            'openid launch/patient patient/MedicationRequest.read patient/Patient.read';
+            'patient/MedicationRequest.read patient/Patient.read patient/Medication.read';
 
         const params = new URLSearchParams({
             response_type: 'code',
