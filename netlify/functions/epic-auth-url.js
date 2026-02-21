@@ -77,7 +77,7 @@ export async function handler(event) {
         // are OIDC/SMART launch scopes that need separate configuration).
         // For patient-facing apps, Epic returns the patient ID automatically.
         const scope = process.env.EPIC_SCOPES ||
-            'patient/MedicationRequest.read patient/Patient.read patient/Medication.read';
+            'patient/MedicationRequest.read patient/Patient.read';
 
         const params = new URLSearchParams({
             response_type: 'code',
