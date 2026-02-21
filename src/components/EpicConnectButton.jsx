@@ -61,6 +61,12 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
                 return;
             }
 
+            // Log auth URL debug info for diagnosing "request is invalid" errors
+            if (data._debug) {
+                console.log('[EpicConnect] Auth URL debug:', data._debug);
+                console.log('[EpicConnect] Full URL:', data.url);
+            }
+
             // Store code_verifier for the token exchange step
             sessionStorage.setItem('epic_pkce_code_verifier', data.code_verifier);
 

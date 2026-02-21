@@ -69,12 +69,13 @@ export async function handler(event) {
         // Generate a cryptographically random state parameter for CSRF protection
         const state = crypto.randomBytes(24).toString('base64url');
 
-        // SMART on FHIR scopes for reading patient medication data
-        // Use only SMART v1 (.read) format — v2 (.rs) scopes are not universally supported
-        // and mixing v1+v2 causes many Epic environments to reject with "invalid request".
-        // Include both Medication and MedicationRequest scopes — Epic's resource server
-        // may require Medication.read to resolve medication references within MedicationRequest
-        const scope = 'patient/MedicationRequest.read patient/Medication.read patient/Patient.read launch/patient openid fhirUser';
+        // SMART on FHIR scopes for reading patient medication data.
+        // IMPORTANT: Epic rejects the entire authorization request if ANY scope
+        // is not enabled in the app registration. Use EPIC_SCOPES env var to
+        // match exactly what is configured in your Epic Developer portal.
+        // Default is the minimal set needed for medication import.
+        const scope = process.env.EPIC_SCOPES ||
+            'openid launch/patient patient/MedicationRequest.read patient/Patient.read';
 
         const params = new URLSearchParams({
             response_type: 'code',
@@ -89,13 +90,30 @@ export async function handler(event) {
 
         const authUrl = `${authorizeUrl}?${params.toString()}`;
 
+        // Log the full authorization URL for debugging Epic "request is invalid" errors
+        console.error('ERROR [epic-auth-url] Authorization URL:', authUrl);
+        console.error('ERROR [epic-auth-url] Params:', JSON.stringify({
+            client_id: clientId,
+            redirect_uri: redirectUri,
+            scope,
+            aud: fhirBaseUrl,
+            authorize_endpoint: authorizeUrl
+        }));
+
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
                 url: authUrl,
                 state,
-                code_verifier: codeVerifier
+                code_verifier: codeVerifier,
+                // Include debug info so frontend can log it
+                _debug: {
+                    scope,
+                    redirect_uri: redirectUri,
+                    aud: fhirBaseUrl,
+                    authorize_endpoint: authorizeUrl
+                }
             })
         };
 
