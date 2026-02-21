@@ -87,7 +87,8 @@ const EpicCallback = () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         access_token: tokenData.access_token,
-                        patient: tokenData.patient
+                        patient: tokenData.patient,
+                        scope: tokenData.scope
                     })
                 });
 
