@@ -122,9 +122,7 @@ export async function handler(event) {
     try {
         const clientId = process.env.EPIC_CLIENT_ID;
         const redirectUri = process.env.EPIC_REDIRECT_URI;
-        const fhirBaseUrl = normalizeUrl(
-            process.env.EPIC_FHIR_BASE_URL || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4'
-        );
+        const rawFhirBaseUrl = process.env.EPIC_FHIR_BASE_URL;
 
         if (!clientId || !redirectUri) {
             return {
@@ -132,6 +130,23 @@ export async function handler(event) {
                 headers,
                 body: JSON.stringify({ error: 'Epic FHIR integration is not configured. Set EPIC_CLIENT_ID and EPIC_REDIRECT_URI.' })
             };
+        }
+
+        if (!rawFhirBaseUrl) {
+            return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({
+                    error: 'EPIC_FHIR_BASE_URL is not set. This must be your health system\'s production FHIR endpoint (e.g., https://fhir.yourhealthsystem.org/FHIR/R4). Do NOT use the Epic sandbox URL in production.'
+                })
+            };
+        }
+
+        const fhirBaseUrl = normalizeUrl(rawFhirBaseUrl);
+
+        // Warn if still using Epic sandbox in what appears to be production
+        if (fhirBaseUrl.includes('interconnect-fhir-oauth') && process.env.URL && !process.env.URL.includes('localhost')) {
+            console.warn('[epic-auth-url] WARNING: EPIC_FHIR_BASE_URL points to Epic SANDBOX but this appears to be a production deployment. Patients cannot authorize against the sandbox. Set EPIC_FHIR_BASE_URL to your health system\'s production FHIR endpoint.');
         }
 
         // Generate PKCE code_verifier and code_challenge server-side
