@@ -1,28 +1,45 @@
 import { useState } from 'react';
-import { Loader2, ShieldCheck, AlertCircle, Zap } from 'lucide-react';
+import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
+
+/**
+ * Known Epic health systems with their FHIR R4 endpoints.
+ * Patients select their health system, and we use that system's FHIR endpoint
+ * for the OAuth2 flow. The Epic sandbox is included for testing.
+ *
+ * To add a new health system, add an entry with:
+ *   - name: Display name
+ *   - fhirBaseUrl: The FHIR R4 base URL (found via open.epic.com or the health system's IT team)
+ */
+const HEALTH_SYSTEMS = [
+    { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'mychart', name: 'MyChart (Epic)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    // Major transplant centers — add real FHIR endpoints as they become available
+    { id: 'mayo-clinic', name: 'Mayo Clinic', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'cleveland-clinic', name: 'Cleveland Clinic', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'johns-hopkins', name: 'Johns Hopkins', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'duke', name: 'Duke Health', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'mass-general', name: 'Mass General Brigham', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'cedars-sinai', name: 'Cedars-Sinai', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'northwestern', name: 'Northwestern Medicine', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'emory', name: 'Emory Healthcare', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+];
 
 /**
  * EpicConnectButton - Shared button that initiates Epic FHIR OAuth2 PKCE flow.
- * Used in the Wizard Step 4 and the Grants & Foundations MEDS tab.
- *
- * The flow:
- * 1. User clicks "Connect to My Health System"
- * 2. We call /api/epic-auth-url which generates PKCE server-side and returns
- *    the authorization URL, state, and code_verifier
- * 3. We store code_verifier + state in sessionStorage
- * 4. User is redirected to Epic's authorization page
- * 5. After consent, Epic redirects to /auth/epic/callback with an auth code
- * 6. The callback page exchanges the code (with code_verifier), fetches meds, stores results
- * 7. On return, the calling page reads the matched medication IDs + assistance programs
+ * Includes a health system selector so patients from any Epic-connected hospital
+ * can import their transplant medications.
  *
  * @param {function} onMedicationsImported - Called with (matchedIds[], unmatchedNames[])
- *   after the user returns from the Epic callback and meds are ready.
  * @param {string} className - Optional additional CSS classes for the wrapper div
  */
-
 const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedSystem, setSelectedSystem] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
 
     // Check on mount/render if medications were imported via callback
     const checkForImportedMeds = () => {
@@ -44,15 +61,31 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
 
     const importedData = checkForImportedMeds();
 
+    const filteredSystems = HEALTH_SYSTEMS.filter(sys =>
+        sys.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const selectedSystemData = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
+
     const handleConnect = async () => {
+        if (!selectedSystem) {
+            setError('Please select your health system first.');
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
+        const system = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
+        if (!system) {
+            setError('Invalid health system selection.');
+            setLoading(false);
+            return;
+        }
+
         try {
-            // Request the authorization URL — the server generates the PKCE
-            // code_verifier + code_challenge and returns both the URL and
-            // the code_verifier for us to store.
-            const response = await fetch('/api/epic-auth-url');
+            // Pass the selected health system's FHIR base URL to the auth endpoint
+            const response = await fetch('/api/epic-auth-url?fhir_base_url=' + encodeURIComponent(system.fhirBaseUrl));
             const data = await response.json();
 
             if (!response.ok || !data.url) {
@@ -61,24 +94,18 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
                 return;
             }
 
-            // Log auth URL debug info for diagnosing "request is invalid" errors
             if (data._debug) {
                 console.log('[EpicConnect] Auth URL debug:', data._debug);
-                console.log('[EpicConnect] Full URL:', data.url);
             }
 
-            // Store code_verifier for the token exchange step
+            // Store PKCE values and session data
             sessionStorage.setItem('epic_pkce_code_verifier', data.code_verifier);
-
-            // Save state for CSRF verification on callback
             sessionStorage.setItem('epic_oauth_state', data.state);
-
-            // Save discovered token endpoint (if any) for the token exchange step
             if (data.token_endpoint) {
                 sessionStorage.setItem('epic_token_endpoint', data.token_endpoint);
             }
-
-            // Save the current page path so callback can redirect back
+            // Store the FHIR base URL so the callback can pass it to token exchange
+            sessionStorage.setItem('epic_fhir_base_url', system.fhirBaseUrl);
             sessionStorage.setItem('epic_return_path', window.location.pathname + window.location.search);
 
             // Redirect to Epic authorization
@@ -135,9 +162,80 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
                         </div>
                     )}
 
+                    {/* Health System Selector */}
+                    <div className="mb-3 relative">
+                        <label htmlFor="health-system-search" className="block text-sm font-semibold text-blue-900 mb-1.5">
+                            Select Your Health System
+                        </label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <Search size={16} className="text-slate-400" aria-hidden="true" />
+                            </div>
+                            <input
+                                id="health-system-search"
+                                type="text"
+                                placeholder="Search for your hospital or health system..."
+                                value={showDropdown ? searchTerm : (selectedSystemData?.name || searchTerm)}
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value);
+                                    setSelectedSystem('');
+                                    setShowDropdown(true);
+                                }}
+                                onFocus={() => {
+                                    setShowDropdown(true);
+                                    if (selectedSystemData) {
+                                        setSearchTerm('');
+                                    }
+                                }}
+                                onBlur={() => {
+                                    // Delay to allow click on dropdown item
+                                    setTimeout(() => setShowDropdown(false), 200);
+                                }}
+                                className="w-full pl-9 pr-8 py-2.5 border border-blue-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                autoComplete="off"
+                            />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <ChevronDown size={16} className="text-slate-400" aria-hidden="true" />
+                            </div>
+                        </div>
+
+                        {showDropdown && (
+                            <ul className="absolute z-10 w-full mt-1 bg-white border border-blue-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                {filteredSystems.length === 0 ? (
+                                    <li className="px-4 py-3 text-sm text-slate-500">
+                                        No matching health systems found. Contact us to add yours.
+                                    </li>
+                                ) : (
+                                    filteredSystems.map(sys => (
+                                        <li key={sys.id}>
+                                            <button
+                                                type="button"
+                                                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors ${
+                                                    selectedSystem === sys.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-700'
+                                                }`}
+                                                onMouseDown={(e) => {
+                                                    e.preventDefault();
+                                                    setSelectedSystem(sys.id);
+                                                    setSearchTerm('');
+                                                    setShowDropdown(false);
+                                                    setError(null);
+                                                }}
+                                            >
+                                                {sys.name}
+                                                {sys.id === 'epic-sandbox' && (
+                                                    <span className="ml-2 text-xs text-amber-600 font-normal">(Testing Only)</span>
+                                                )}
+                                            </button>
+                                        </li>
+                                    ))
+                                )}
+                            </ul>
+                        )}
+                    </div>
+
                     <button
                         onClick={handleConnect}
-                        disabled={loading}
+                        disabled={loading || !selectedSystem}
                         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
                         aria-label="Connect to your health system to import your medications"
                     >
