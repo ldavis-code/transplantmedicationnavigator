@@ -93,7 +93,7 @@ export async function handler(event) {
   }
 
   // Check scope compatibility
-  const requestedScopes = (scopes || 'patient/Patient.read patient/MedicationRequest.read patient/Medication.read').split(' ');
+  const requestedScopes = (scopes || 'patient/Patient.read patient/MedicationRequest.read').split(' ');
   if (discoveryResult?.scopes_supported?.length > 0) {
     const unsupported = requestedScopes.filter(s => !discoveryResult.scopes_supported.includes(s));
     if (unsupported.length > 0) {
@@ -107,7 +107,7 @@ export async function handler(event) {
     epic_fhir_base_url: fhirBaseUrl || '(NOT SET — using sandbox default)',
     epic_authorize_url: authorizeUrl || '(NOT SET — will use SMART discovery)',
     epic_token_url: tokenUrl || '(NOT SET — will use SMART discovery)',
-    epic_scopes: scopes || '(NOT SET — using default: patient/Patient.read patient/MedicationRequest.read patient/Medication.read)',
+    epic_scopes: scopes || '(NOT SET — using default: patient/Patient.read patient/MedicationRequest.read)',
     netlify_url: process.env.URL || '(NOT SET)',
     node_env: process.env.NODE_ENV || '(NOT SET)',
   };

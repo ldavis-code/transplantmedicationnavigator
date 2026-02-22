@@ -197,8 +197,37 @@ export async function handler(event) {
         // IMPORTANT: Epic rejects the ENTIRE authorization request if ANY scope
         // is not enabled in the app registration. Use EPIC_SCOPES env var to
         // match EXACTLY what is configured in your Epic Developer portal.
+        //
+        // Default scopes are intentionally minimal — only Patient.read and
+        // MedicationRequest.read. Adding Medication.read or other scopes that
+        // aren't enabled in your Epic app registration will cause Epic to reject
+        // the ENTIRE authorization request with "request is invalid".
         const scope = process.env.EPIC_SCOPES ||
-            'patient/Patient.read patient/MedicationRequest.read patient/Medication.read';
+            'patient/Patient.read patient/MedicationRequest.read';
+
+        // Pre-flight: warn if any requested scopes aren't in the server's supported list
+        const requestedScopes = scope.split(' ');
+        let scopeWarnings = [];
+        try {
+            const smartRes = await fetch(`${fhirBaseUrl}/.well-known/smart-configuration`, {
+                headers: { 'Accept': 'application/json' },
+                signal: AbortSignal.timeout(3000)
+            });
+            if (smartRes.ok) {
+                const smartConfig = await smartRes.json();
+                if (smartConfig.scopes_supported && smartConfig.scopes_supported.length > 0) {
+                    const unsupported = requestedScopes.filter(s => !smartConfig.scopes_supported.includes(s));
+                    if (unsupported.length > 0) {
+                        scopeWarnings = unsupported;
+                        console.warn('[epic-auth-url] WARNING: These scopes are NOT in the server\'s supported list:', unsupported.join(', '),
+                            'Supported scopes:', smartConfig.scopes_supported.join(', '));
+                    }
+                }
+            }
+        } catch (e) {
+            // Don't block on scope check failure
+            console.log('[epic-auth-url] Scope pre-flight check skipped:', e.message);
+        }
 
         const params = new URLSearchParams({
             response_type: 'code',
@@ -221,7 +250,8 @@ export async function handler(event) {
             aud: fhirBaseUrl,
             authorize_endpoint: authorizeUrl,
             token_endpoint: tokenUrl || '(will derive at token exchange)',
-            discovery_method: discoveryMethod
+            discovery_method: discoveryMethod,
+            scope_warnings: scopeWarnings.length > 0 ? scopeWarnings : undefined
         };
         console.log('[epic-auth-url] Authorization URL:', authUrl);
         console.log('[epic-auth-url] Parameters:', JSON.stringify(debugInfo));
@@ -235,6 +265,8 @@ export async function handler(event) {
                 code_verifier: codeVerifier,
                 // Pass discovered token endpoint so the callback can use it
                 token_endpoint: tokenUrl || null,
+                // Pass FHIR base URL so callback can forward to token exchange
+                fhir_base_url: fhirBaseUrl,
                 // Include debug info so frontend can log it
                 _debug: debugInfo
             })
