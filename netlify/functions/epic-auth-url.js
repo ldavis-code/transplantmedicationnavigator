@@ -171,7 +171,7 @@ export async function handler(event) {
         // is not enabled in the app registration. Use EPIC_SCOPES env var to
         // match EXACTLY what is configured in your Epic Developer portal.
         const scope = process.env.EPIC_SCOPES ||
-            'patient/Patient.read patient/MedicationRequest.read';
+            'patient/Patient.read patient/MedicationRequest.read patient/Medication.read';
 
         const params = new URLSearchParams({
             response_type: 'code',
