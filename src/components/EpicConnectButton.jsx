@@ -73,6 +73,11 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
             // Save state for CSRF verification on callback
             sessionStorage.setItem('epic_oauth_state', data.state);
 
+            // Save discovered token endpoint (if any) for the token exchange step
+            if (data.token_endpoint) {
+                sessionStorage.setItem('epic_token_endpoint', data.token_endpoint);
+            }
+
             // Save the current page path so callback can redirect back
             sessionStorage.setItem('epic_return_path', window.location.pathname + window.location.search);
 

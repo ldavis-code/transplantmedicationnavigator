@@ -21,7 +21,8 @@ const STORAGE_KEYS = {
     CODE_VERIFIER: 'epic_pkce_code_verifier',
     OAUTH_STATE: 'epic_oauth_state',
     RETURN_PATH: 'epic_return_path',
-    IMPORTED_MEDS: 'epic_imported_meds'
+    IMPORTED_MEDS: 'epic_imported_meds',
+    TOKEN_ENDPOINT: 'epic_token_endpoint'
 };
 
 // ── Connect Flow ──────────────────────────────────────────────────────────────
@@ -48,10 +49,15 @@ export async function startEpicConnect() {
     // 3. Save state for CSRF verification on callback
     sessionStorage.setItem(STORAGE_KEYS.OAUTH_STATE, data.state);
 
-    // 4. Save the current page path so the callback can redirect back
+    // 4. Save discovered token endpoint (if any) for the token exchange step
+    if (data.token_endpoint) {
+        sessionStorage.setItem(STORAGE_KEYS.TOKEN_ENDPOINT, data.token_endpoint);
+    }
+
+    // 5. Save the current page path so the callback can redirect back
     sessionStorage.setItem(STORAGE_KEYS.RETURN_PATH, window.location.pathname + window.location.search);
 
-    // 5. Redirect to Epic authorization
+    // 6. Redirect to Epic authorization
     window.location.href = data.url;
 }
 
@@ -81,6 +87,9 @@ export async function exchangeCodeForToken(code) {
     const codeVerifier = sessionStorage.getItem(STORAGE_KEYS.CODE_VERIFIER);
     sessionStorage.removeItem(STORAGE_KEYS.CODE_VERIFIER);
 
+    const tokenEndpoint = sessionStorage.getItem(STORAGE_KEYS.TOKEN_ENDPOINT);
+    sessionStorage.removeItem(STORAGE_KEYS.TOKEN_ENDPOINT);
+
     if (!codeVerifier) {
         throw new Error('PKCE code_verifier not found. Please try connecting again.');
     }
@@ -88,7 +97,11 @@ export async function exchangeCodeForToken(code) {
     const response = await fetch('/api/epic-token-exchange', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, code_verifier: codeVerifier })
+        body: JSON.stringify({
+            code,
+            code_verifier: codeVerifier,
+            token_endpoint: tokenEndpoint || undefined
+        })
     });
 
     const data = await response.json();

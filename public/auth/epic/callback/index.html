@@ -257,7 +257,12 @@
             }
 
             // Log what's being sent to the token exchange
-            console.log('Sending to token exchange:', { codeLength: code?.length, verifierLength: codeVerifier?.length });
+            // Note: epic_token_endpoint in sessionStorage is read by exchangeCodeForToken()
+            console.log('Sending to token exchange:', {
+                codeLength: code?.length,
+                verifierLength: codeVerifier?.length,
+                tokenEndpoint: sessionStorage.getItem('epic_token_endpoint') || 'default'
+            });
 
             try {
                 // Step 1: Exchange code for token
