@@ -132,6 +132,14 @@ export async function handler(event) {
             };
         }
 
+        // Auto-fix redirect URI if protocol is missing
+        let safeRedirectUri = redirectUri;
+        if (redirectUri && !redirectUri.startsWith('http://') && !redirectUri.startsWith('https://')) {
+            safeRedirectUri = 'https://' + redirectUri;
+            console.warn('[epic-auth-url] EPIC_REDIRECT_URI is missing https:// protocol. Auto-correcting to:', safeRedirectUri,
+                '— Please update EPIC_REDIRECT_URI in Netlify env vars to include https://');
+        }
+
         if (!rawFhirBaseUrl) {
             return {
                 statusCode: 500,
@@ -191,7 +199,7 @@ export async function handler(event) {
         const params = new URLSearchParams({
             response_type: 'code',
             client_id: clientId,
-            redirect_uri: redirectUri,
+            redirect_uri: safeRedirectUri,
             scope,
             state,
             aud: fhirBaseUrl,
@@ -204,7 +212,7 @@ export async function handler(event) {
         // Log all parameters for debugging Epic "request is invalid" errors
         const debugInfo = {
             client_id: clientId,
-            redirect_uri: redirectUri,
+            redirect_uri: safeRedirectUri,
             scope,
             aud: fhirBaseUrl,
             authorize_endpoint: authorizeUrl,

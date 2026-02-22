@@ -106,6 +106,13 @@ export async function handler(event) {
 
     console.log('[epic-token-exchange] Token URL:', tokenUrl);
 
+    // Auto-fix redirect URI if protocol is missing
+    let redirectUri = process.env.EPIC_REDIRECT_URI;
+    if (redirectUri && !redirectUri.startsWith('http://') && !redirectUri.startsWith('https://')) {
+      redirectUri = 'https://' + redirectUri;
+      console.warn('[epic-token-exchange] EPIC_REDIRECT_URI is missing https:// protocol. Auto-correcting to:', redirectUri);
+    }
+
     const tokenResponse = await fetch(
       tokenUrl,
       {
@@ -116,7 +123,7 @@ export async function handler(event) {
         body: new URLSearchParams({
           grant_type: 'authorization_code',
           code,
-          redirect_uri: process.env.EPIC_REDIRECT_URI,
+          redirect_uri: redirectUri,
           client_id: process.env.EPIC_CLIENT_ID,
           code_verifier: codeVerifier
         })
