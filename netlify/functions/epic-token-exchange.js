@@ -48,7 +48,7 @@ export async function handler(event) {
 
   try {
     const body = JSON.parse(event.body);
-    const { code, code_verifier: codeVerifier, token_endpoint: clientTokenEndpoint } = body;
+    const { code, code_verifier: codeVerifier, token_endpoint: clientTokenEndpoint, fhir_base_url: clientFhirBaseUrl } = body;
 
     if (!code || !codeVerifier) {
       return {
@@ -66,21 +66,24 @@ export async function handler(event) {
     console.log('[epic-token-exchange] Client ID:', process.env.EPIC_CLIENT_ID);
     console.log('[epic-token-exchange] Redirect URI:', process.env.EPIC_REDIRECT_URI);
 
-    if (!process.env.EPIC_FHIR_BASE_URL) {
-      console.error('[epic-token-exchange] EPIC_FHIR_BASE_URL is not set');
+    // Support dynamic FHIR base URL from request body (for multi-health-system support)
+    const rawFhirBaseUrl = clientFhirBaseUrl || process.env.EPIC_FHIR_BASE_URL;
+
+    if (!rawFhirBaseUrl) {
+      console.error('[epic-token-exchange] No FHIR base URL available');
       return {
         statusCode: 500,
         headers: CORS_HEADERS,
         body: JSON.stringify({
-          error: 'EPIC_FHIR_BASE_URL is not configured. Set it to your health system\'s production FHIR endpoint in Netlify environment variables.'
+          error: 'No FHIR base URL provided. Please select your health system and try again.'
         })
       };
     }
 
-    const fhirBaseUrl = normalizeUrl(process.env.EPIC_FHIR_BASE_URL);
+    const fhirBaseUrl = normalizeUrl(rawFhirBaseUrl);
 
     if (fhirBaseUrl.includes('interconnect-fhir-oauth')) {
-      console.warn('[epic-token-exchange] WARNING: EPIC_FHIR_BASE_URL points to Epic SANDBOX. Production token exchange will fail for real patients.');
+      console.warn('[epic-token-exchange] NOTE: Using Epic SANDBOX endpoint.');
     }
 
     // Determine token endpoint:
@@ -106,6 +109,13 @@ export async function handler(event) {
 
     console.log('[epic-token-exchange] Token URL:', tokenUrl);
 
+    // Auto-fix redirect URI if protocol is missing
+    let redirectUri = process.env.EPIC_REDIRECT_URI;
+    if (redirectUri && !redirectUri.startsWith('http://') && !redirectUri.startsWith('https://')) {
+      redirectUri = 'https://' + redirectUri;
+      console.warn('[epic-token-exchange] EPIC_REDIRECT_URI is missing https:// protocol. Auto-correcting to:', redirectUri);
+    }
+
     const tokenResponse = await fetch(
       tokenUrl,
       {
@@ -116,7 +126,7 @@ export async function handler(event) {
         body: new URLSearchParams({
           grant_type: 'authorization_code',
           code,
-          redirect_uri: process.env.EPIC_REDIRECT_URI,
+          redirect_uri: redirectUri,
           client_id: process.env.EPIC_CLIENT_ID,
           code_verifier: codeVerifier
         })

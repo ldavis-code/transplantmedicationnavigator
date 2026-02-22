@@ -122,7 +122,11 @@ export async function handler(event) {
     try {
         const clientId = process.env.EPIC_CLIENT_ID;
         const redirectUri = process.env.EPIC_REDIRECT_URI;
-        const rawFhirBaseUrl = process.env.EPIC_FHIR_BASE_URL;
+
+        // Support dynamic FHIR base URL from query param (for multi-health-system support)
+        // Falls back to env var for backward compatibility
+        const queryFhirBaseUrl = event.queryStringParameters?.fhir_base_url;
+        const rawFhirBaseUrl = queryFhirBaseUrl || process.env.EPIC_FHIR_BASE_URL;
 
         if (!clientId || !redirectUri) {
             return {
@@ -132,12 +136,20 @@ export async function handler(event) {
             };
         }
 
+        // Auto-fix redirect URI if protocol is missing
+        let safeRedirectUri = redirectUri;
+        if (redirectUri && !redirectUri.startsWith('http://') && !redirectUri.startsWith('https://')) {
+            safeRedirectUri = 'https://' + redirectUri;
+            console.warn('[epic-auth-url] EPIC_REDIRECT_URI is missing https:// protocol. Auto-correcting to:', safeRedirectUri,
+                '— Please update EPIC_REDIRECT_URI in Netlify env vars to include https://');
+        }
+
         if (!rawFhirBaseUrl) {
             return {
                 statusCode: 500,
                 headers,
                 body: JSON.stringify({
-                    error: 'EPIC_FHIR_BASE_URL is not set. This must be your health system\'s production FHIR endpoint (e.g., https://fhir.yourhealthsystem.org/FHIR/R4). Do NOT use the Epic sandbox URL in production.'
+                    error: 'No FHIR base URL provided. Please select your health system or set EPIC_FHIR_BASE_URL.'
                 })
             };
         }
@@ -146,7 +158,7 @@ export async function handler(event) {
 
         // Warn if still using Epic sandbox in what appears to be production
         if (fhirBaseUrl.includes('interconnect-fhir-oauth') && process.env.URL && !process.env.URL.includes('localhost')) {
-            console.warn('[epic-auth-url] WARNING: EPIC_FHIR_BASE_URL points to Epic SANDBOX but this appears to be a production deployment. Patients cannot authorize against the sandbox. Set EPIC_FHIR_BASE_URL to your health system\'s production FHIR endpoint.');
+            console.warn('[epic-auth-url] NOTE: Using Epic SANDBOX endpoint. This is fine for testing with Epic test patients but will not work for real patients.');
         }
 
         // Generate PKCE code_verifier and code_challenge server-side
@@ -191,7 +203,7 @@ export async function handler(event) {
         const params = new URLSearchParams({
             response_type: 'code',
             client_id: clientId,
-            redirect_uri: redirectUri,
+            redirect_uri: safeRedirectUri,
             scope,
             state,
             aud: fhirBaseUrl,
@@ -204,7 +216,7 @@ export async function handler(event) {
         // Log all parameters for debugging Epic "request is invalid" errors
         const debugInfo = {
             client_id: clientId,
-            redirect_uri: redirectUri,
+            redirect_uri: safeRedirectUri,
             scope,
             aud: fhirBaseUrl,
             authorize_endpoint: authorizeUrl,

@@ -22,7 +22,8 @@ const STORAGE_KEYS = {
     OAUTH_STATE: 'epic_oauth_state',
     RETURN_PATH: 'epic_return_path',
     IMPORTED_MEDS: 'epic_imported_meds',
-    TOKEN_ENDPOINT: 'epic_token_endpoint'
+    TOKEN_ENDPOINT: 'epic_token_endpoint',
+    FHIR_BASE_URL: 'epic_fhir_base_url'
 };
 
 // ── Connect Flow ──────────────────────────────────────────────────────────────
@@ -31,12 +32,18 @@ const STORAGE_KEYS = {
  * Initiate the Epic FHIR SMART on FHIR standalone launch with PKCE.
  * Calls the server to generate PKCE values and the auth URL, then redirects.
  *
+ * @param {string} [fhirBaseUrl] - Optional FHIR base URL for the selected health system.
+ *   If not provided, the server uses the EPIC_FHIR_BASE_URL env var.
  * @returns {Promise<void>} Resolves after redirect (page will navigate away)
  * @throws {Error} If the auth URL request fails
  */
-export async function startEpicConnect() {
+export async function startEpicConnect(fhirBaseUrl) {
     // 1. Request the authorization URL — server generates PKCE pair
-    const response = await fetch('/api/epic-auth-url');
+    let url = '/api/epic-auth-url';
+    if (fhirBaseUrl) {
+        url += '?fhir_base_url=' + encodeURIComponent(fhirBaseUrl);
+    }
+    const response = await fetch(url);
     const data = await response.json();
 
     if (!response.ok || !data.url) {
@@ -54,10 +61,15 @@ export async function startEpicConnect() {
         sessionStorage.setItem(STORAGE_KEYS.TOKEN_ENDPOINT, data.token_endpoint);
     }
 
-    // 5. Save the current page path so the callback can redirect back
+    // 5. Save the FHIR base URL so the callback can pass it to token exchange
+    if (fhirBaseUrl) {
+        sessionStorage.setItem(STORAGE_KEYS.FHIR_BASE_URL, fhirBaseUrl);
+    }
+
+    // 6. Save the current page path so the callback can redirect back
     sessionStorage.setItem(STORAGE_KEYS.RETURN_PATH, window.location.pathname + window.location.search);
 
-    // 6. Redirect to Epic authorization
+    // 7. Redirect to Epic authorization
     window.location.href = data.url;
 }
 
@@ -90,6 +102,9 @@ export async function exchangeCodeForToken(code) {
     const tokenEndpoint = sessionStorage.getItem(STORAGE_KEYS.TOKEN_ENDPOINT);
     sessionStorage.removeItem(STORAGE_KEYS.TOKEN_ENDPOINT);
 
+    const fhirBaseUrl = sessionStorage.getItem(STORAGE_KEYS.FHIR_BASE_URL);
+    sessionStorage.removeItem(STORAGE_KEYS.FHIR_BASE_URL);
+
     if (!codeVerifier) {
         throw new Error('PKCE code_verifier not found. Please try connecting again.');
     }
@@ -100,7 +115,8 @@ export async function exchangeCodeForToken(code) {
         body: JSON.stringify({
             code,
             code_verifier: codeVerifier,
-            token_endpoint: tokenEndpoint || undefined
+            token_endpoint: tokenEndpoint || undefined,
+            fhir_base_url: fhirBaseUrl || undefined
         })
     });
 
