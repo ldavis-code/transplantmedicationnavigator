@@ -66,9 +66,22 @@ export async function handler(event) {
     console.log('[epic-token-exchange] Client ID:', process.env.EPIC_CLIENT_ID);
     console.log('[epic-token-exchange] Redirect URI:', process.env.EPIC_REDIRECT_URI);
 
-    const fhirBaseUrl = normalizeUrl(
-      process.env.EPIC_FHIR_BASE_URL || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4'
-    );
+    if (!process.env.EPIC_FHIR_BASE_URL) {
+      console.error('[epic-token-exchange] EPIC_FHIR_BASE_URL is not set');
+      return {
+        statusCode: 500,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({
+          error: 'EPIC_FHIR_BASE_URL is not configured. Set it to your health system\'s production FHIR endpoint in Netlify environment variables.'
+        })
+      };
+    }
+
+    const fhirBaseUrl = normalizeUrl(process.env.EPIC_FHIR_BASE_URL);
+
+    if (fhirBaseUrl.includes('interconnect-fhir-oauth')) {
+      console.warn('[epic-token-exchange] WARNING: EPIC_FHIR_BASE_URL points to Epic SANDBOX. Production token exchange will fail for real patients.');
+    }
 
     // Determine token endpoint:
     // 1. Explicit env var override (highest priority)
