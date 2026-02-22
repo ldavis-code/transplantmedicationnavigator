@@ -5,6 +5,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 
 // Initialize Supabase with service role key for admin access
@@ -424,6 +425,82 @@ export async function handler(event) {
         body: JSON.stringify({
           success: true,
           migrated: results,
+        }),
+      };
+    }
+
+    // DELETE /subscriber-data/account - Delete all user data and account
+    if (event.httpMethod === 'DELETE' && path === '/account') {
+      const deletionResults = {
+        quiz_data: false,
+        medications: false,
+        savings: false,
+        profile: false,
+      };
+
+      // 1. Delete quiz data
+      const { error: quizError } = await supabase
+        .from('user_quiz_data')
+        .delete()
+        .eq('user_id', user.id);
+      deletionResults.quiz_data = !quizError;
+
+      // 2. Delete medications
+      const { error: medsError } = await supabase
+        .from('user_medications')
+        .delete()
+        .eq('user_id', user.id);
+      deletionResults.medications = !medsError;
+
+      // 3. Delete savings data from Neon DB (linked via legacy_savings_id)
+      try {
+        // Look up the user's legacy savings ID
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('legacy_savings_id')
+          .eq('id', user.id)
+          .single();
+
+        if (profile?.legacy_savings_id && process.env.DATABASE_URL) {
+          const neonSql = neon(process.env.DATABASE_URL);
+          await neonSql`
+            DELETE FROM user_savings
+            WHERE user_id = ${profile.legacy_savings_id}
+          `;
+        }
+        deletionResults.savings = true;
+      } catch (savingsErr) {
+        console.error('Error deleting savings data:', savingsErr);
+        // Non-fatal: continue with account deletion
+        deletionResults.savings = false;
+      }
+
+      // 4. Delete the user profile (must be last since other tables reference it)
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .delete()
+        .eq('id', user.id);
+      deletionResults.profile = !profileError;
+
+      if (profileError) {
+        console.error('Error deleting user profile:', profileError);
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({
+            error: 'Failed to delete account',
+            details: deletionResults,
+          }),
+        };
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          message: 'Account and all associated data have been deleted',
+          deleted: deletionResults,
         }),
       };
     }

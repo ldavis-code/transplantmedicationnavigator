@@ -21,6 +21,7 @@ import {
   CloudOff,
   Upload,
   Gift,
+  Trash2,
 } from 'lucide-react';
 import { useSubscriberAuth } from '../context/SubscriberAuthContext';
 import { useSubscription } from '../hooks/useSubscription';
@@ -45,6 +46,12 @@ const Account = () => {
   const [codeLoading, setCodeLoading] = useState(false);
   const [codeError, setCodeError] = useState(null);
   const [codeSuccess, setCodeSuccess] = useState(false);
+
+  // Delete account state
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
 
   const handleLogout = () => {
     logout();
@@ -109,6 +116,45 @@ const Account = () => {
       setCodeError(err.message);
     } finally {
       setCodeLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== 'DELETE') return;
+
+    setDeleteLoading(true);
+    setDeleteError(null);
+
+    try {
+      const token = localStorage.getItem('tmn_subscriber_token');
+      const response = await fetch('/api/subscriber-data/account', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to delete account');
+      }
+
+      // Clear all local data
+      localStorage.removeItem('tmn_subscriber_token');
+      localStorage.removeItem('tmn_my_medications');
+      localStorage.removeItem('tmn_savings_user_id');
+      localStorage.removeItem('medication_navigator_progress');
+      localStorage.removeItem('tmn_subscription');
+      sessionStorage.clear();
+
+      // Log out and redirect
+      logout();
+      navigate('/');
+    } catch (err) {
+      setDeleteError(err.message);
+      setDeleteLoading(false);
     }
   };
 
@@ -457,6 +503,73 @@ const Account = () => {
             <span className="font-medium">Sign Out</span>
           </button>
         </div>
+      </div>
+
+      {/* Delete Account */}
+      <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6">
+        <h2 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
+          <Trash2 size={20} className="text-red-500" />
+          Delete Account
+        </h2>
+        <p className="text-slate-600 text-sm mb-4">
+          Permanently delete your account and all associated data, including saved medications, quiz progress, and savings history. This action cannot be undone.
+        </p>
+
+        {!showDeleteConfirm ? (
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            className="px-4 py-2 text-red-600 hover:bg-red-50 border border-red-200 rounded-lg font-medium transition text-sm"
+          >
+            Delete My Account
+          </button>
+        ) : (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 space-y-3">
+            <p className="text-red-800 text-sm font-medium">
+              This will permanently delete all your data. Type <strong>DELETE</strong> to confirm.
+            </p>
+            <input
+              type="text"
+              value={deleteConfirmText}
+              onChange={(e) => setDeleteConfirmText(e.target.value)}
+              placeholder="Type DELETE to confirm"
+              className="w-full px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+              disabled={deleteLoading}
+            />
+            {deleteError && (
+              <div className="flex items-center gap-2 text-red-600 text-sm">
+                <AlertCircle size={14} />
+                <span>{deleteError}</span>
+              </div>
+            )}
+            <div className="flex gap-3">
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleteConfirmText !== 'DELETE' || deleteLoading}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm"
+              >
+                {deleteLoading ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  'Permanently Delete Account'
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setShowDeleteConfirm(false);
+                  setDeleteConfirmText('');
+                  setDeleteError(null);
+                }}
+                disabled={deleteLoading}
+                className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition text-sm"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Help Section */}
