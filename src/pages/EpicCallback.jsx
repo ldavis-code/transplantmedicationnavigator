@@ -58,6 +58,10 @@ const EpicCallback = () => {
                 const codeVerifier = sessionStorage.getItem('epic_pkce_code_verifier');
                 sessionStorage.removeItem('epic_pkce_code_verifier');
 
+                // Retrieve discovered token endpoint (if any)
+                const tokenEndpoint = sessionStorage.getItem('epic_token_endpoint');
+                sessionStorage.removeItem('epic_token_endpoint');
+
                 if (!codeVerifier) {
                     setStatus('error');
                     setMessage('PKCE verification data not found. Please try connecting again.');
@@ -69,7 +73,11 @@ const EpicCallback = () => {
                 const tokenResponse = await fetch('/api/epic-token-exchange', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code, code_verifier: codeVerifier })
+                    body: JSON.stringify({
+                        code,
+                        code_verifier: codeVerifier,
+                        token_endpoint: tokenEndpoint || undefined
+                    })
                 });
 
                 const tokenData = await tokenResponse.json();
