@@ -96,6 +96,9 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
 
             if (data._debug) {
                 console.log('[EpicConnect] Auth URL debug:', data._debug);
+                if (data._debug.scope_warnings && data._debug.scope_warnings.length > 0) {
+                    console.warn('[EpicConnect] Scope warnings — these scopes may not be supported:', data._debug.scope_warnings);
+                }
             }
 
             // Store PKCE values and session data
@@ -104,8 +107,8 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
             if (data.token_endpoint) {
                 sessionStorage.setItem('epic_token_endpoint', data.token_endpoint);
             }
-            // Store the FHIR base URL so the callback can pass it to token exchange
-            sessionStorage.setItem('epic_fhir_base_url', system.fhirBaseUrl);
+            // Store the FHIR base URL (use server-normalized version if available)
+            sessionStorage.setItem('epic_fhir_base_url', data.fhir_base_url || system.fhirBaseUrl);
             sessionStorage.setItem('epic_return_path', window.location.pathname + window.location.search);
 
             // Redirect to Epic authorization
