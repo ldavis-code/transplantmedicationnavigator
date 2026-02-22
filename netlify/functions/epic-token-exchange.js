@@ -135,12 +135,19 @@ export async function handler(event) {
 
       // Provide specific guidance based on the error
       let userMessage = 'Token exchange failed';
+      const errorDesc = tokenData.error_description || '';
       if (tokenData.error === 'invalid_grant') {
         userMessage = 'The authorization code has expired or was already used. Please try connecting again.';
       } else if (tokenData.error === 'invalid_client') {
-        userMessage = 'The app client ID is not recognized by this FHIR server. Check EPIC_CLIENT_ID.';
+        userMessage = 'The app client ID is not recognized by this FHIR server. Verify EPIC_CLIENT_ID is set to your production (not sandbox) client ID in Netlify environment variables.';
       } else if (tokenData.error === 'invalid_request') {
-        userMessage = 'The token request was invalid. Check that EPIC_REDIRECT_URI matches your Epic app registration exactly.';
+        userMessage = 'The token request was rejected by Epic. This usually means EPIC_REDIRECT_URI (' +
+          (process.env.EPIC_REDIRECT_URI || 'NOT SET') +
+          ') does not exactly match what is registered in Epic App Orchard, or the PKCE code_verifier is invalid.';
+      } else if (tokenData.error === 'unauthorized_client') {
+        userMessage = 'This client is not authorized for the authorization_code grant type. Ensure your Epic app is registered for the SMART App Launch (standalone) flow.';
+      } else if (tokenData.error) {
+        userMessage = `Epic token error: ${tokenData.error}${errorDesc ? ' — ' + errorDesc : ''}. Visit /api/epic-config-check to diagnose configuration issues.`;
       }
 
       return {
