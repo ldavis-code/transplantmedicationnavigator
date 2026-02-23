@@ -727,6 +727,112 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* What's New - TrumpRx Announcement */}
+            <section className="max-w-4xl mx-auto" aria-labelledby="whats-new-heading">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200 p-6 md:p-8 shadow-lg">
+                    <div className="text-center mb-4">
+                        <span className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-bold">
+                            <Zap size={16} aria-hidden="true" />
+                            What's New — February 2026
+                        </span>
+                    </div>
+
+                    <h2 id="whats-new-heading" className="text-xl md:text-2xl font-bold text-slate-900 text-center mb-4">
+                        TrumpRx.gov — New Savings on 43+ Medications
+                    </h2>
+
+                    <p className="text-slate-700 text-center mb-6 max-w-2xl mx-auto leading-relaxed">
+                        The White House launched <a href="https://trumprx.gov" target="_blank" rel="noopener noreferrer" className="text-blue-700 font-semibold underline hover:text-blue-800">TrumpRx.gov</a>, offering
+                        Most-Favored-Nation pricing on 43+ brand-name drugs for <strong>cash-paying patients</strong>.
+                        Discounts range from 40% to 93% off list prices.
+                    </p>
+
+                    {/* Transplant-Relevant Drugs Highlight */}
+                    <div className="bg-white/80 rounded-xl border border-blue-100 p-5 mb-5">
+                        <h3 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                            <Pill size={18} className="text-blue-600" aria-hidden="true" />
+                            Transplant-Relevant Drugs on TrumpRx
+                        </h3>
+                        <div className="grid sm:grid-cols-2 gap-3">
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Wegovy (Semaglutide)</p>
+                                <p className="text-slate-600 text-xs">Pre-transplant weight loss</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">Pen: $199/mo · Pill: $149/mo</p>
+                                <p className="text-slate-400 text-xs line-through">Was $1,349/mo</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Ozempic (Semaglutide)</p>
+                                <p className="text-slate-600 text-xs">Diabetes management</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">As low as $199/mo</p>
+                                <p className="text-slate-400 text-xs line-through">Was $1,028/mo</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Diflucan (Fluconazole)</p>
+                                <p className="text-slate-600 text-xs">Antifungal — post-transplant infections</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$14.06</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Vfend (Voriconazole)</p>
+                                <p className="text-slate-600 text-xs">Antifungal — post-transplant infections</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$306.98</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Farxiga (Dapagliflozin)</p>
+                                <p className="text-slate-600 text-xs">Diabetes & cardiovascular</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$181.59/mo</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Protonix (Pantoprazole)</p>
+                                <p className="text-slate-600 text-xs">Heartburn & stomach protection</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$200.10</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Medrol (Methylprednisolone)</p>
+                                <p className="text-slate-600 text-xs">Anti-rejection steroid</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$3.15</p>
+                            </div>
+                            <div className="bg-blue-50 rounded-lg p-3">
+                                <p className="font-bold text-slate-900 text-sm">Zyvox (Linezolid)</p>
+                                <p className="text-slate-600 text-xs">Antibiotic — resistant infections</p>
+                                <p className="text-blue-700 font-bold text-sm mt-1">$122.74</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Important Notes */}
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-5">
+                        <div className="flex items-start gap-2">
+                            <AlertTriangle size={18} className="text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <div>
+                                <p className="font-bold text-slate-900 text-sm mb-1">Important: Cash-Pay Patients Only</p>
+                                <p className="text-slate-600 text-sm leading-relaxed">
+                                    TrumpRx prices are for <strong>cash-paying patients not using insurance</strong>.
+                                    If you have Medicare, Medicaid, or private insurance, your plan may still offer a lower price.
+                                    Always compare your insurance copay with TrumpRx pricing before choosing.
+                                    TrumpRx does not sell drugs directly — it links you to the manufacturer's website.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-center">
+                        <a
+                            href="https://trumprx.gov"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-md"
+                            aria-label="Visit TrumpRx.gov to check prices"
+                        >
+                            <ExternalLink size={18} aria-hidden="true" />
+                            Visit TrumpRx.gov
+                        </a>
+                        <p className="text-slate-500 text-xs mt-3">
+                            More drugs from Amgen, Bristol Myers Squibb, Gilead, GSK, Merck, Novartis, and Sanofi coming soon.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* Features Grid */}
             <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-100 transition">
@@ -4895,6 +5001,48 @@ const Education = () => {
                                  <p className="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once (like when you hit the donut hole).</p>
                                  <p className="text-slate-700 text-sm mb-4">This program makes your costs more steady and easier to manage.</p>
                                  <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about this payment plan during open enrollment.</p>
+                             </section>
+                             <section className="bg-blue-50 p-6 rounded-xl border border-blue-100 md:col-span-2">
+                                 <div className="flex items-center gap-2 mb-3">
+                                    <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">New — February 2026</span>
+                                    <h3 className="font-bold text-blue-900">TrumpRx.gov — Cash-Pay Drug Discounts</h3>
+                                 </div>
+                                 <p className="text-sm text-blue-900 mb-4 font-medium">A White House program offering Most-Favored-Nation pricing on 43+ brand-name medications for cash-paying patients.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The government launched <a href="https://trumprx.gov" target="_blank" rel="noopener noreferrer" className="text-blue-700 font-semibold underline">TrumpRx.gov</a> with deep discounts from 5 manufacturers (AstraZeneca, Eli Lilly, EMD Serono, Novo Nordisk, Pfizer). Drugs from 9 more companies are coming soon.</p>
+                                 <div className="grid sm:grid-cols-2 gap-3 mb-4">
+                                     <div className="bg-white p-3 rounded-lg border border-blue-100">
+                                         <p className="font-bold text-slate-900 text-sm">Transplant-Relevant Drugs</p>
+                                         <ul className="text-slate-700 text-xs mt-1 space-y-1">
+                                             <li><strong>Wegovy</strong> (pre-transplant weight loss) — Pen $199/mo, Pill $149/mo (was $1,349)</li>
+                                             <li><strong>Ozempic</strong> (diabetes) — as low as $199/mo (was $1,028)</li>
+                                             <li><strong>Diflucan</strong> (antifungal) — $14.06</li>
+                                             <li><strong>Vfend</strong> (antifungal) — $306.98</li>
+                                             <li><strong>Farxiga</strong> (diabetes/cardiovascular) — $181.59/mo</li>
+                                             <li><strong>Medrol</strong> (steroid) — $3.15</li>
+                                             <li><strong>Protonix</strong> (stomach) — $200.10</li>
+                                             <li><strong>Zyvox</strong> (antibiotic) — $122.74</li>
+                                         </ul>
+                                     </div>
+                                     <div className="bg-white p-3 rounded-lg border border-blue-100">
+                                         <p className="font-bold text-slate-900 text-sm">Who This Helps</p>
+                                         <ul className="text-slate-700 text-xs mt-1 space-y-1">
+                                             <li><CheckCircle size={12} className="inline text-blue-500" aria-hidden="true" /> Cash-pay / uninsured patients</li>
+                                             <li><CheckCircle size={12} className="inline text-blue-500" aria-hidden="true" /> Patients with high deductibles</li>
+                                             <li><CheckCircle size={12} className="inline text-blue-500" aria-hidden="true" /> Pre-transplant patients needing Wegovy</li>
+                                         </ul>
+                                         <p className="font-bold text-slate-900 text-sm mt-3">Who Should Compare First</p>
+                                         <ul className="text-slate-700 text-xs mt-1 space-y-1">
+                                             <li><AlertTriangle size={12} className="inline text-amber-500" aria-hidden="true" /> Medicare/Medicaid patients (your plan may be cheaper)</li>
+                                             <li><AlertTriangle size={12} className="inline text-amber-500" aria-hidden="true" /> Patients with commercial insurance copay cards</li>
+                                         </ul>
+                                     </div>
+                                 </div>
+                                 <div className="flex items-center gap-3">
+                                     <a href="https://trumprx.gov" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition">
+                                         <ExternalLink size={14} aria-hidden="true" /> Visit TrumpRx.gov
+                                     </a>
+                                     <p className="text-slate-500 text-xs">Does not sell drugs directly — links to manufacturer sites.</p>
+                                 </div>
                              </section>
                         </div>
 

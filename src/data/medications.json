@@ -269,7 +269,9 @@
     "cost_tier": "low",
     "generic_available": true,
     "typical_copay_tier": 1,
-    "papProgramId": "pfizer-pap"
+    "papProgramId": "pfizer-pap",
+    "trumpRxPrice": "$3.15 (Medrol oral)",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "valcyte",
@@ -434,7 +436,9 @@
     "typical_copay_tier": 1,
     "papProgramId": "pfizer-pap",
     "copayUrl": "https://www.pfizerrxpathways.com/",
-    "copayProgramId": "pfizer-copay"
+    "copayProgramId": "pfizer-copay",
+    "trumpRxPrice": "$14.06",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "nystatin",
@@ -491,7 +495,9 @@
     "typical_copay_tier": 3,
     "papProgramId": "pfizer-pap",
     "copayUrl": "https://www.pfizerrxpathways.com/",
-    "copayProgramId": "pfizer-copay"
+    "copayProgramId": "pfizer-copay",
+    "trumpRxPrice": "$306.98",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "cresemba",
@@ -742,7 +748,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 3,
-    "papProgramId": "astrazeneca-pap"
+    "papProgramId": "astrazeneca-pap",
+    "trumpRxPrice": "$181.59/mo",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "renvela",
@@ -858,7 +866,9 @@
     ],
     "cost_tier": "low",
     "generic_available": true,
-    "typical_copay_tier": 1
+    "typical_copay_tier": 1,
+    "trumpRxPrice": "$200.10",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "revatio",
@@ -1860,7 +1870,9 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": 4,
-    "papProgramId": "novo-nordisk-pap"
+    "papProgramId": "novo-nordisk-pap",
+    "trumpRxPrice": "Wegovy Pen $199/mo, Wegovy Pill $149/mo, Ozempic $199/mo",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "dulaglutide",
@@ -1898,7 +1910,9 @@
     ],
     "cost_tier": "low",
     "generic_available": true,
-    "typical_copay_tier": 1
+    "typical_copay_tier": 1,
+    "trumpRxPrice": "$35.10 (Levoxyl brand)",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "liothyronine",
@@ -1914,7 +1928,9 @@
     ],
     "cost_tier": "low",
     "generic_available": true,
-    "typical_copay_tier": 1
+    "typical_copay_tier": 1,
+    "trumpRxPrice": "$6",
+    "trumpRxUrl": "https://trumprx.gov"
   },
   {
     "id": "albuterol",

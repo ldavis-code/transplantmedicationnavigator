@@ -1612,5 +1612,50 @@
       "maxBenefit": "Varies by fund",
       "notes": "Multiple disease-specific funds available."
     }
+  },
+  "governmentDiscountPrograms": {
+    "trumprx": {
+      "programId": "trumprx",
+      "name": "TrumpRx.gov — Most-Favored-Nation Drug Pricing",
+      "url": "https://trumprx.gov",
+      "phone": null,
+      "eligibility": {
+        "commercial": false,
+        "medicare": false,
+        "medicaid": false,
+        "uninsured": true,
+        "cashPay": true
+      },
+      "description": "A White House program offering Most-Favored-Nation (MFN) pricing on 43+ brand-name medications. Patients pay the lowest price available in developed nations. Cash-pay patients only — not for use with Medicare, Medicaid, or insurance.",
+      "launchDate": "2026-02-05",
+      "manufacturers": ["AstraZeneca", "Eli Lilly", "EMD Serono", "Novo Nordisk", "Pfizer"],
+      "upcomingManufacturers": ["Amgen", "Bristol Myers Squibb", "Boehringer Ingelheim", "Genentech", "Gilead Sciences", "GSK", "Merck", "Novartis", "Sanofi"],
+      "medications": {
+        "semaglutide": { "drug": "Wegovy Pen (Semaglutide)", "trumpRxPrice": "$199/mo", "wasPriceNote": "$1,349/mo", "use": "Pre-transplant weight loss" },
+        "semaglutide-pill": { "drug": "Wegovy Pill (Semaglutide)", "trumpRxPrice": "$149/mo", "wasPriceNote": "$1,349/mo", "use": "Pre-transplant weight loss" },
+        "ozempic": { "drug": "Ozempic Pen (Semaglutide)", "trumpRxPrice": "As low as $199/mo", "wasPriceNote": "$1,028/mo", "use": "Diabetes management" },
+        "diflucan": { "drug": "Diflucan (Fluconazole)", "trumpRxPrice": "$14.06", "wasPriceNote": null, "use": "Antifungal — post-transplant infections" },
+        "vfend": { "drug": "Vfend (Voriconazole)", "trumpRxPrice": "$306.98", "wasPriceNote": null, "use": "Antifungal — post-transplant infections" },
+        "farxiga": { "drug": "Farxiga (Dapagliflozin)", "trumpRxPrice": "$181.59/mo", "wasPriceNote": null, "use": "Diabetes & cardiovascular" },
+        "protonix": { "drug": "Protonix (Pantoprazole)", "trumpRxPrice": "$200.10", "wasPriceNote": null, "use": "Heartburn & stomach protection" },
+        "medrol": { "drug": "Medrol (Methylprednisolone)", "trumpRxPrice": "$3.15", "wasPriceNote": null, "use": "Anti-inflammatory steroid" },
+        "zyvox": { "drug": "Zyvox (Linezolid)", "trumpRxPrice": "$122.74", "wasPriceNote": null, "use": "Antibiotic — resistant infections" },
+        "zepbound": { "drug": "Zepbound (Tirzepatide)", "trumpRxPrice": "As low as $299/mo", "wasPriceNote": "$1,088/mo", "use": "Weight loss & sleep apnea" },
+        "xeljanz": { "drug": "Xeljanz (Tofacitinib)", "trumpRxPrice": "$1,518 (40% off)", "wasPriceNote": null, "use": "Autoimmune diseases" },
+        "levoxyl": { "drug": "Levoxyl (Levothyroxine)", "trumpRxPrice": "$35.10", "wasPriceNote": null, "use": "Thyroid" },
+        "cortef": { "drug": "Cortef (Hydrocortisone)", "trumpRxPrice": "$45", "wasPriceNote": null, "use": "Inflammation" },
+        "airsupra": { "drug": "Airsupra (Albuterol/Budesonide)", "trumpRxPrice": "$201", "wasPriceNote": "$504", "use": "Asthma" },
+        "bevespi": { "drug": "Bevespi Aerosphere", "trumpRxPrice": "$51", "wasPriceNote": "$458", "use": "COPD" },
+        "eucrisa": { "drug": "Eucrisa (Crisaborole)", "trumpRxPrice": "$158", "wasPriceNote": "$792", "use": "Skin conditions" },
+        "insulin-lispro": { "drug": "Insulin Lispro (Humalog)", "trumpRxPrice": "$25/mo", "wasPriceNote": null, "use": "Diabetes" },
+        "chantix": { "drug": "Chantix (Varenicline)", "trumpRxPrice": "$106.20", "wasPriceNote": null, "use": "Smoking cessation" },
+        "pristiq": { "drug": "Pristiq (Desvenlafaxine)", "trumpRxPrice": "$200.10", "wasPriceNote": null, "use": "Depression" },
+        "cytomel": { "drug": "Cytomel (Liothyronine)", "trumpRxPrice": "$6", "wasPriceNote": null, "use": "Thyroid" },
+        "gonal-f": { "drug": "Gonal-F (Follitropin alfa)", "trumpRxPrice": "$168/pen", "wasPriceNote": null, "use": "Fertility" },
+        "cetrotide": { "drug": "Cetrotide (Cetrorelix)", "trumpRxPrice": "$22.50", "wasPriceNote": "$316", "use": "Fertility" },
+        "ovidrel": { "drug": "Ovidrel (Choriogonadotropin alfa)", "trumpRxPrice": "$84", "wasPriceNote": "$251", "use": "Fertility" }
+      },
+      "notes": "TrumpRx prices are for cash-paying patients only. Patients with Medicare, Medicaid, or private insurance may pay less through their plan. TrumpRx does not sell drugs directly — it redirects to manufacturer websites. More drugs from additional manufacturers will be added over time."
+    }
   }
 }
