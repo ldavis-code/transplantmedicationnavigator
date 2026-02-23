@@ -2,6 +2,11 @@
 // Diagnostic endpoint to verify Epic OAuth2 configuration in production.
 // Returns masked values so you can verify env vars are set correctly
 // without exposing secrets. Hit GET /api/epic-config-check to use.
+//
+// Also checks Backend Systems OAuth / JKU configuration per Breaking Change
+// Notification Q-7365177 (JWK Set URL requirement for backend OAuth apps).
+
+import crypto from 'crypto';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -101,6 +106,104 @@ export async function handler(event) {
     }
   }
 
+  // --- Backend Systems OAuth / JKU diagnostics (Q-7365177) ---
+  const backendClientId = process.env.EPIC_BACKEND_CLIENT_ID;
+  const privateKey = process.env.EPIC_PRIVATE_KEY;
+  const keyId = process.env.EPIC_KEY_ID;
+  const jwksUrl = process.env.EPIC_JWKS_URL;
+  const siteUrl = (process.env.URL || '').replace(/\/+$/, '');
+
+  const backendIssues = [];
+  let jkuResult = null;
+  let keyInfo = null;
+
+  const hasBackendConfig = !!(privateKey || backendClientId);
+
+  if (hasBackendConfig) {
+    if (!privateKey) {
+      backendIssues.push('EPIC_PRIVATE_KEY is not set. Required for backend OAuth JWT assertions.');
+    }
+    if (!backendClientId && !clientId) {
+      backendIssues.push('Neither EPIC_BACKEND_CLIENT_ID nor EPIC_CLIENT_ID is set. A client ID is required.');
+    }
+
+    // Validate the private key can be parsed
+    if (privateKey) {
+      try {
+        const normalizedPem = privateKey.replace(/\\n/g, '\n').trim();
+        const privKeyObj = crypto.createPrivateKey(normalizedPem);
+        const pubKeyObj = crypto.createPublicKey(privKeyObj);
+        const jwk = pubKeyObj.export({ format: 'jwk' });
+
+        const derivedKid = keyId || crypto.createHash('sha256')
+          .update(pubKeyObj.export({ type: 'spki', format: 'der' }))
+          .digest('hex').substring(0, 16);
+
+        keyInfo = {
+          status: 'OK',
+          key_type: jwk.kty,
+          algorithm: 'RS384',
+          kid: derivedKid,
+          kid_source: keyId ? 'EPIC_KEY_ID env var' : 'derived from public key',
+          modulus_length: jwk.n ? Math.ceil(jwk.n.length * 6 / 8) * 8 + ' bits (approx)' : 'unknown'
+        };
+
+        // Check key size (Epic requires at least 2048 bits)
+        if (jwk.n && jwk.n.length < 340) {
+          backendIssues.push('RSA key appears to be smaller than 2048 bits. Epic requires at least 2048-bit RSA keys.');
+        }
+      } catch (e) {
+        keyInfo = { status: 'ERROR', message: e.message };
+        backendIssues.push(`EPIC_PRIVATE_KEY could not be parsed: ${e.message}. Ensure it is a valid RSA private key in PEM format. If stored as a single line, use literal \\n for newlines.`);
+      }
+    }
+
+    // Determine and test the JKU URL
+    const effectiveJkuUrl = jwksUrl || (siteUrl ? `${siteUrl}/.well-known/jwks.json` : null);
+    if (!effectiveJkuUrl) {
+      backendIssues.push('Cannot determine JKU URL. Set EPIC_JWKS_URL or ensure the Netlify URL environment variable is set.');
+    } else {
+      // Try fetching the JWKS endpoint
+      try {
+        const jkuRes = await fetch(effectiveJkuUrl, {
+          headers: { 'Accept': 'application/json' },
+          signal: AbortSignal.timeout(5000)
+        });
+        if (jkuRes.ok) {
+          const jwks = await jkuRes.json();
+          const keyCount = jwks.keys?.length || 0;
+          jkuResult = {
+            status: 'OK',
+            url: effectiveJkuUrl,
+            url_source: jwksUrl ? 'EPIC_JWKS_URL env var' : 'derived from site URL',
+            keys_found: keyCount,
+            key_ids: jwks.keys?.map(k => k.kid) || []
+          };
+          if (keyCount === 0) {
+            backendIssues.push('JWKS endpoint returned an empty key set. Ensure EPIC_PRIVATE_KEY is configured.');
+          }
+        } else {
+          jkuResult = { status: 'FAILED', url: effectiveJkuUrl, http_status: jkuRes.status };
+          backendIssues.push(`JWKS endpoint returned HTTP ${jkuRes.status}. The endpoint may not be deployed yet.`);
+        }
+      } catch (e) {
+        jkuResult = { status: 'ERROR', url: effectiveJkuUrl, message: e.message };
+        backendIssues.push(`Could not reach JWKS endpoint at ${effectiveJkuUrl}: ${e.message}`);
+      }
+    }
+
+    // Check for rotation key
+    if (process.env.EPIC_PRIVATE_KEY_2) {
+      try {
+        const pem2 = process.env.EPIC_PRIVATE_KEY_2.replace(/\\n/g, '\n').trim();
+        crypto.createPrivateKey(pem2);
+        // Key is valid, no issue
+      } catch (e) {
+        backendIssues.push(`EPIC_PRIVATE_KEY_2 (rotation key) could not be parsed: ${e.message}`);
+      }
+    }
+  }
+
   const config = {
     epic_client_id: mask(clientId, 8),
     epic_redirect_uri: redirectUri || '(NOT SET)',
@@ -108,24 +211,47 @@ export async function handler(event) {
     epic_authorize_url: authorizeUrl || '(NOT SET — will use SMART discovery)',
     epic_token_url: tokenUrl || '(NOT SET — will use SMART discovery)',
     epic_scopes: scopes || '(NOT SET — using default: patient/Patient.read patient/MedicationRequest.read)',
-    netlify_url: process.env.URL || '(NOT SET)',
+    netlify_url: siteUrl || '(NOT SET)',
     node_env: process.env.NODE_ENV || '(NOT SET)',
   };
+
+  const backendConfig = {
+    epic_backend_client_id: mask(backendClientId, 8),
+    epic_private_key: privateKey ? `(SET — ${privateKey.length} chars)` : '(NOT SET)',
+    epic_key_id: keyId || '(NOT SET — will derive from key)',
+    epic_jwks_url: jwksUrl || (siteUrl ? `(NOT SET — will use ${siteUrl}/.well-known/jwks.json)` : '(NOT SET)'),
+    epic_private_key_2: process.env.EPIC_PRIVATE_KEY_2 ? '(SET — rotation key)' : '(NOT SET — no rotation key)',
+  };
+
+  const allIssues = [...issues, ...backendIssues];
 
   return {
     statusCode: 200,
     headers: CORS_HEADERS,
     body: JSON.stringify({
-      status: issues.length === 0 ? 'OK' : 'ISSUES_FOUND',
-      issues,
+      status: allIssues.length === 0 ? 'OK' : 'ISSUES_FOUND',
+      issues: allIssues,
       config,
       smart_discovery: discoveryResult,
+      backend_oauth: hasBackendConfig ? {
+        status: backendIssues.length === 0 ? 'OK' : 'ISSUES_FOUND',
+        issues: backendIssues,
+        config: backendConfig,
+        key_info: keyInfo,
+        jwks_endpoint: jkuResult
+      } : {
+        status: 'NOT_CONFIGURED',
+        message: 'Backend Systems OAuth is not configured. Set EPIC_PRIVATE_KEY and optionally EPIC_BACKEND_CLIENT_ID to enable. Required by Epic Breaking Change Q-7365177 for apps with "Backend Systems" user type.'
+      },
       checklist: [
         `1. EPIC_CLIENT_ID must be your PRODUCTION client ID from Epic App Orchard (not sandbox)`,
         `2. EPIC_REDIRECT_URI must EXACTLY match what's registered in Epic (currently: ${redirectUri || 'NOT SET'})`,
         `3. EPIC_FHIR_BASE_URL must point to the production FHIR server (currently: ${fhirBaseUrl ? (fhirBaseUrl.includes('interconnect-fhir-oauth') ? 'SANDBOX' : 'custom') : 'NOT SET — defaulting to SANDBOX'})`,
         `4. All requested scopes must be enabled in your Epic app registration`,
-        `5. Your app must be approved for production use in Epic App Orchard`
+        `5. Your app must be approved for production use in Epic App Orchard`,
+        `6. [Backend OAuth] EPIC_PRIVATE_KEY must contain your RSA private key in PEM format`,
+        `7. [Backend OAuth] JWKS endpoint must be publicly accessible at /.well-known/jwks.json`,
+        `8. [Backend OAuth] Register your JKU URL in Epic App Orchard / Vendor Services (per Q-7365177)`
       ]
     }, null, 2)
   };

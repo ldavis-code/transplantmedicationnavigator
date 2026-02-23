@@ -43,6 +43,13 @@
   status = 200
   force = true
 
+# JWK Set URL - serves public keys for Epic Backend Systems OAuth (Q-7365177)
+[[redirects]]
+  from = "/.well-known/jwks.json"
+  to = "/.netlify/functions/epic-jwks"
+  status = 200
+  force = true
+
 # Generic API route (must come AFTER specific routes)
 [[redirects]]
   from = "/api/*"
@@ -218,6 +225,13 @@
   for = "*.ico"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# JWKS endpoint - cache for 1 hour, must be publicly accessible for Epic
+[[headers]]
+  for = "/.well-known/jwks.json"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=3600"
 
 # HTML files - short cache, must revalidate
 [[headers]]
