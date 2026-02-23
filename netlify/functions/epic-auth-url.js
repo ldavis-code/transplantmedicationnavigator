@@ -144,6 +144,12 @@ export async function handler(event) {
                 '— Please update EPIC_REDIRECT_URI in Netlify env vars to include https://');
         }
 
+        // Normalize redirect URI: remove trailing slash.
+        // Epic requires redirect_uri to EXACTLY match the registered value.
+        if (safeRedirectUri) {
+            safeRedirectUri = safeRedirectUri.replace(/\/+$/, '');
+        }
+
         if (!rawFhirBaseUrl) {
             return {
                 statusCode: 500,
@@ -229,18 +235,26 @@ export async function handler(event) {
             console.log('[epic-auth-url] Scope pre-flight check skipped:', e.message);
         }
 
-        const params = new URLSearchParams({
-            response_type: 'code',
-            client_id: clientId,
-            redirect_uri: safeRedirectUri,
-            scope,
-            state,
-            aud: fhirBaseUrl,
-            code_challenge: codeChallenge,
-            code_challenge_method: 'S256'
-        });
+        // Build the authorization URL manually using encodeURIComponent.
+        // URLSearchParams encodes spaces as '+' (form-encoding), but OAuth2
+        // authorization endpoints expect '%20' for spaces in query parameters.
+        // Epic's authorization server may reject requests with '+'-encoded
+        // scope values, showing a generic "OAuth2 Error" page.
+        const authParams = [
+            ['response_type', 'code'],
+            ['client_id', clientId],
+            ['redirect_uri', safeRedirectUri],
+            ['scope', scope],
+            ['state', state],
+            ['aud', fhirBaseUrl],
+            ['code_challenge', codeChallenge],
+            ['code_challenge_method', 'S256']
+        ];
+        const queryString = authParams
+            .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+            .join('&');
 
-        const authUrl = `${authorizeUrl}?${params.toString()}`;
+        const authUrl = `${authorizeUrl}?${queryString}`;
 
         // Log all parameters for debugging Epic "request is invalid" errors
         const debugInfo = {
