@@ -25,6 +25,7 @@ const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
+const LazyTrumpRx = lazy(() => import('./pages/TrumpRx.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
 
@@ -497,6 +498,18 @@ const Layout = ({ children }) => {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
+            {/* TrumpRx Banner */}
+            <Link
+                to="/trumprx"
+                className="block bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 text-white px-4 py-2.5 text-center no-print hover:from-blue-800 hover:via-blue-700 hover:to-indigo-700 transition-all"
+                aria-label="Learn about TrumpRx.gov discounts for transplant patients"
+            >
+                <span className="inline-flex items-center justify-center gap-2 text-sm md:text-base font-semibold">
+                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse flex-shrink-0" aria-hidden="true"></span>
+                    NEW: TrumpRx.gov — 22 of 43 drugs are relevant to transplant patients. See which ones matter for you →
+                </span>
+            </Link>
+
             {/* Safety Banner */}
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
@@ -725,6 +738,48 @@ const Home = () => {
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
                     </div>
                 </div>
+            </section>
+
+            {/* TrumpRx Resource Section */}
+            <section className="max-w-4xl mx-auto" aria-labelledby="trumprx-heading">
+                <Link to="/trumprx" className="block group">
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-lg hover:border-blue-300 transition-all">
+                        <div className="flex flex-col md:flex-row md:items-center gap-5">
+                            <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white">
+                                <Globe size={28} aria-hidden="true" />
+                            </div>
+                            <div className="flex-1">
+                                <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-2">
+                                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse"></span>
+                                    New Resource — Feb 2026
+                                </div>
+                                <h2 id="trumprx-heading" className="text-xl md:text-2xl font-extrabold text-slate-900 mb-1.5">
+                                    TrumpRx.gov: What Transplant Patients Need to Know
+                                </h2>
+                                <p className="text-sm md:text-base text-slate-600 leading-relaxed">
+                                    The government launched a drug discount site with 43 medications. We reviewed every one — <strong className="text-blue-700">22 are relevant to transplant patients</strong>. See which drugs matter, Medicare restrictions, and how it compares to copay cards and PAPs.
+                                </p>
+                            </div>
+                            <div className="hidden md:flex items-center text-blue-600 group-hover:translate-x-1 transition-transform">
+                                <ArrowRight size={24} aria-hidden="true" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-blue-200">
+                            <div className="text-center">
+                                <div className="text-lg md:text-xl font-extrabold text-blue-700">43</div>
+                                <div className="text-xs text-slate-500">Drugs on TrumpRx</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-lg md:text-xl font-extrabold text-blue-700">22</div>
+                                <div className="text-xs text-slate-500">Transplant-Relevant</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-lg md:text-xl font-extrabold text-blue-700">Up to 89%</div>
+                                <div className="text-xs text-slate-500">Off Retail Price</div>
+                            </div>
+                        </div>
+                    </div>
+                </Link>
             </section>
 
             {/* Features Grid */}
@@ -6871,6 +6926,8 @@ const MainSiteRoutes = () => (
                 <Route path="/education" element={<Education />} />
                 <Route path="/resources" element={<Navigate to="/education" replace />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
+                <Route path="/trumprx" element={<LazyTrumpRx />} />
+                <Route path="/resources/trumprx" element={<Navigate to="/trumprx" replace />} />
                 <Route path="/application-help" element={<ApplicationHelp />} />
                 <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
                 <Route path="/grants" element={<Navigate to="/application-help" replace />} />

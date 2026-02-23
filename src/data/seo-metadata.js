@@ -282,6 +282,17 @@ export const seoMetadata = {
     twitterDescription: 'Section 504 compliance, WCAG 2.1 AA conformance, and accessibility features for Transplant Medication Navigator.',
     breadcrumbName: 'Accessibility & Section 504',
   },
+
+  trumprx: {
+    title: 'TrumpRx.gov Guide for Transplant Patients | Transplant Medication Navigator\u2122',
+    description: 'Everything transplant patients need to know about TrumpRx.gov \u2014 which of the 43 discounted drugs are relevant before and after transplant, Medicare/Medicaid restrictions, and how it compares to copay cards and PAPs.',
+    canonical: `${BASE_URL}/trumprx`,
+    ogTitle: 'TrumpRx.gov: What Transplant Patients Need to Know',
+    ogDescription: '22 of 43 TrumpRx drugs are relevant to transplant patients. See discounted prices, Medicare restrictions, and how it compares to copay cards and PAPs.',
+    twitterTitle: 'TrumpRx.gov Guide for Transplant Patients',
+    twitterDescription: '22 of 43 TrumpRx drugs matter for transplant patients. See which ones, Medicare restrictions, and how it compares to other savings options.',
+    breadcrumbName: 'TrumpRx Guide',
+  },
 };
 
 /**
