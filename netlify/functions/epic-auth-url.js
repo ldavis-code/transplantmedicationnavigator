@@ -144,6 +144,12 @@ export async function handler(event) {
                 '— Please update EPIC_REDIRECT_URI in Netlify env vars to include https://');
         }
 
+        // Normalize redirect URI: remove trailing slash.
+        // Epic requires redirect_uri to EXACTLY match the registered value.
+        if (safeRedirectUri) {
+            safeRedirectUri = safeRedirectUri.replace(/\/+$/, '');
+        }
+
         if (!rawFhirBaseUrl) {
             return {
                 statusCode: 500,
@@ -193,17 +199,27 @@ export async function handler(event) {
         // Generate a cryptographically random state parameter for CSRF protection
         const state = crypto.randomBytes(24).toString('base64url');
 
-        // SMART on FHIR scopes for reading patient medication data.
+        // SMART on FHIR scopes for standalone patient-facing launch.
+        //
+        // launch/patient - REQUIRED for standalone launch. Tells Epic's authorization
+        //   server to present a patient selection screen and include a patient ID in the
+        //   token response. Without this, Epic may show a generic "OAuth2 Error" page
+        //   because it doesn't know the app needs patient context.
+        //   (See SMART App Launch spec: "Apps using the standalone launch flow can
+        //   declare launch context requirements by adding launch/patient".)
+        //
+        // openid fhirUser - Recommended for patient identity. Provides an id_token
+        //   so the app can verify the logged-in user.
+        //
+        // patient/Patient.read - Read patient demographics.
+        // patient/MedicationRequest.read - Read medication orders.
+        //
         // IMPORTANT: Epic rejects the ENTIRE authorization request if ANY scope
         // is not enabled in the app registration. Use EPIC_SCOPES env var to
         // match EXACTLY what is configured in your Epic Developer portal.
-        //
-        // Default scopes are intentionally minimal — only Patient.read and
-        // MedicationRequest.read. Adding Medication.read or other scopes that
-        // aren't enabled in your Epic app registration will cause Epic to reject
-        // the ENTIRE authorization request with "request is invalid".
+        // Do NOT include 'launch' (without /patient) — that is for EHR launch only.
         const scope = process.env.EPIC_SCOPES ||
-            'patient/Patient.read patient/MedicationRequest.read';
+            'launch/patient openid fhirUser patient/Patient.read patient/MedicationRequest.read';
 
         // Pre-flight: warn if any requested scopes aren't in the server's supported list
         const requestedScopes = scope.split(' ');
@@ -229,18 +245,26 @@ export async function handler(event) {
             console.log('[epic-auth-url] Scope pre-flight check skipped:', e.message);
         }
 
-        const params = new URLSearchParams({
-            response_type: 'code',
-            client_id: clientId,
-            redirect_uri: safeRedirectUri,
-            scope,
-            state,
-            aud: fhirBaseUrl,
-            code_challenge: codeChallenge,
-            code_challenge_method: 'S256'
-        });
+        // Build the authorization URL manually using encodeURIComponent.
+        // URLSearchParams encodes spaces as '+' (form-encoding), but OAuth2
+        // authorization endpoints expect '%20' for spaces in query parameters.
+        // Epic's authorization server may reject requests with '+'-encoded
+        // scope values, showing a generic "OAuth2 Error" page.
+        const authParams = [
+            ['response_type', 'code'],
+            ['client_id', clientId],
+            ['redirect_uri', safeRedirectUri],
+            ['scope', scope],
+            ['state', state],
+            ['aud', fhirBaseUrl],
+            ['code_challenge', codeChallenge],
+            ['code_challenge_method', 'S256']
+        ];
+        const queryString = authParams
+            .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+            .join('&');
 
-        const authUrl = `${authorizeUrl}?${params.toString()}`;
+        const authUrl = `${authorizeUrl}?${queryString}`;
 
         // Log all parameters for debugging Epic "request is invalid" errors
         const debugInfo = {

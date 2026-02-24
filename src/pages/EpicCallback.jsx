@@ -62,6 +62,12 @@ const EpicCallback = () => {
                 const tokenEndpoint = sessionStorage.getItem('epic_token_endpoint');
                 sessionStorage.removeItem('epic_token_endpoint');
 
+                // Retrieve the FHIR base URL for the health system the user authorized with.
+                // This must be passed to token exchange and medications so they use the
+                // correct endpoints (not just the env var default).
+                const fhirBaseUrl = sessionStorage.getItem('epic_fhir_base_url');
+                sessionStorage.removeItem('epic_fhir_base_url');
+
                 if (!codeVerifier) {
                     setStatus('error');
                     setMessage('PKCE verification data not found. Please try connecting again.');
@@ -76,7 +82,8 @@ const EpicCallback = () => {
                     body: JSON.stringify({
                         code,
                         code_verifier: codeVerifier,
-                        token_endpoint: tokenEndpoint || undefined
+                        token_endpoint: tokenEndpoint || undefined,
+                        fhir_base_url: fhirBaseUrl || undefined
                     })
                 });
 
@@ -96,7 +103,8 @@ const EpicCallback = () => {
                     body: JSON.stringify({
                         access_token: tokenData.access_token,
                         patient: tokenData.patient,
-                        scope: tokenData.scope || ''
+                        scope: tokenData.scope || '',
+                        fhir_base_url: fhirBaseUrl || undefined
                     })
                 });
 

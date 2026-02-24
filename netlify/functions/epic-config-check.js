@@ -93,7 +93,10 @@ export async function handler(event) {
   }
 
   // Check scope compatibility
-  const requestedScopes = (scopes || 'patient/Patient.read patient/MedicationRequest.read').split(' ');
+  const requestedScopes = (scopes || 'launch/patient openid fhirUser patient/Patient.read patient/MedicationRequest.read').split(' ');
+  if (!requestedScopes.includes('launch/patient')) {
+    issues.push('EPIC_SCOPES is missing "launch/patient". This scope is REQUIRED for standalone patient-facing launch — without it, Epic cannot provide patient context and may show a generic "OAuth2 Error" page.');
+  }
   if (discoveryResult?.scopes_supported?.length > 0) {
     const unsupported = requestedScopes.filter(s => !discoveryResult.scopes_supported.includes(s));
     if (unsupported.length > 0) {

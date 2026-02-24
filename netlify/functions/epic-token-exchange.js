@@ -116,6 +116,12 @@ export async function handler(event) {
       console.warn('[epic-token-exchange] EPIC_REDIRECT_URI is missing https:// protocol. Auto-correcting to:', redirectUri);
     }
 
+    // Normalize redirect URI: remove trailing slash.
+    // Must match exactly what was sent in the authorization request.
+    if (redirectUri) {
+      redirectUri = redirectUri.replace(/\/+$/, '');
+    }
+
     const tokenResponse = await fetch(
       tokenUrl,
       {

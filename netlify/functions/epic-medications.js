@@ -49,7 +49,9 @@ export async function handler(event) {
     const body = JSON.parse(event.body);
     const accessToken = body.accessToken || body.access_token;
     const patientId = body.patientId || body.patient;
-    const baseUrl = process.env.EPIC_FHIR_BASE_URL;
+    // Support dynamic FHIR base URL from request body (for multi-health-system support).
+    // Falls back to env var for backward compatibility.
+    const baseUrl = body.fhir_base_url || process.env.EPIC_FHIR_BASE_URL;
 
     const grantedScope = body.scope || 'NOT_PROVIDED';
 
