@@ -497,6 +497,37 @@ const Layout = ({ children }) => {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
+            {/* TrumpRx Breaking News Banner */}
+            <a
+                href="/trumprx"
+                className="block no-print"
+                style={{
+                    background: 'linear-gradient(135deg, #0F766E 0%, #0D9488 40%, #14B8A6 100%)',
+                    color: 'white',
+                    padding: '12px 24px',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                }}
+            >
+                <span className="inline-flex items-center justify-center gap-3 flex-wrap text-sm md:text-base">
+                    <span
+                        className="text-xs font-semibold tracking-wider uppercase whitespace-nowrap"
+                        style={{
+                            background: 'rgba(255,255,255,0.2)',
+                            border: '1px solid rgba(255,255,255,0.3)',
+                            padding: '3px 10px',
+                            borderRadius: '20px',
+                        }}
+                    >
+                        New Resource
+                    </span>
+                    <span className="font-medium">
+                        <strong>TrumpRx.gov</strong> launched with 43 discounted medications — several relevant to transplant patients.{' '}
+                        <span className="underline font-semibold" style={{ color: '#FEF3C7' }}>See which ones →</span>
+                    </span>
+                </span>
+            </a>
+
             {/* Safety Banner */}
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
@@ -723,6 +754,81 @@ const Home = () => {
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">65+</div>
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
+                    </div>
+                </div>
+            </section>
+
+            {/* TrumpRx What's New Section */}
+            <section className="max-w-4xl mx-auto mt-10" aria-label="New savings resource: TrumpRx.gov">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+                    {/* Card Header */}
+                    <div className="flex flex-col sm:flex-row items-start gap-4 p-6 md:p-8" style={{ background: 'linear-gradient(135deg, #0F766E 0%, #115E59 100%)' }}>
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: 'rgba(255,255,255,0.15)' }}>
+                            &#127963;
+                        </div>
+                        <div className="flex-1 text-white">
+                            <h2 className="text-xl md:text-2xl font-bold mb-1" style={{ fontFamily: "'Fraunces', serif" }}>New Savings Option: TrumpRx.gov</h2>
+                            <p className="text-sm opacity-85 leading-relaxed">A new government website offering discounted cash prices on 43 brand-name medications through Most-Favored-Nation pricing agreements with pharmaceutical manufacturers.</p>
+                        </div>
+                        <span className="text-xs font-medium whitespace-nowrap px-3 py-1 rounded-md flex-shrink-0" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>Feb 2026</span>
+                    </div>
+                    {/* Card Body */}
+                    <div className="p-6 md:p-8">
+                        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                            On February 5, 2026, the White House launched <strong className="text-slate-900">TrumpRx.gov</strong> — a portal offering discounted cash prices on select brand-name drugs. While it <strong className="text-slate-900">does not include transplant immunosuppressants</strong> (like tacrolimus, mycophenolate, or sirolimus), several listed medications are commonly prescribed to transplant patients for related conditions.
+                        </p>
+
+                        {/* Medicare/Medicaid Alert */}
+                        <div className="flex items-start gap-3 p-4 rounded-xl mb-6" style={{ background: '#FEE2E2', border: '1px solid #FECACA' }}>
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ background: '#DC2626' }}>!</div>
+                            <p className="text-sm leading-relaxed" style={{ color: '#991B1B' }}>
+                                <strong style={{ color: '#7F1D1D' }}>Medicare &amp; Medicaid Patients:</strong> Some TrumpRx discounts are <strong>not available</strong> if you are enrolled in a government insurance program. Always check your current plan's copay first.
+                            </p>
+                        </div>
+
+                        {/* Key Highlights Grid */}
+                        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                            <div className="border border-slate-200 rounded-xl p-4" style={{ background: '#F8FAFC' }}>
+                                <div className="text-xs font-bold tracking-wider uppercase mb-3 flex items-center gap-2" style={{ color: '#F59E0B' }}>
+                                    <span className="w-2 h-2 rounded-full" style={{ background: '#F59E0B' }}></span>
+                                    Pre-Transplant
+                                </div>
+                                <div className="space-y-2 text-sm">
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Wegovy® Pill</span><span className="font-semibold" style={{ color: '#0F766E' }}>$149/mo</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Zepbound®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$299/mo</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Ozempic®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$199/mo</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Chantix®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$106.20</span></div>
+                                </div>
+                            </div>
+                            <div className="border border-slate-200 rounded-xl p-4" style={{ background: '#F8FAFC' }}>
+                                <div className="text-xs font-bold tracking-wider uppercase mb-3 flex items-center gap-2" style={{ color: '#0D9488' }}>
+                                    <span className="w-2 h-2 rounded-full" style={{ background: '#0D9488' }}></span>
+                                    Post-Transplant
+                                </div>
+                                <div className="space-y-2 text-sm">
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Diflucan®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$14.06</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Medrol®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$3.15</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Insulin Lispro</span><span className="font-semibold" style={{ color: '#0F766E' }}>$25.00</span></div>
+                                    <div className="flex justify-between items-baseline"><span className="font-semibold text-slate-900">Farxiga®</span><span className="font-semibold" style={{ color: '#0F766E' }}>$181.59</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* CTA Link */}
+                        <a
+                            href="/trumprx"
+                            className="flex items-center gap-3 p-4 rounded-xl transition-all hover:-translate-y-0.5"
+                            style={{ background: '#CCFBF1', border: '1px solid #99F6E4', textDecoration: 'none' }}
+                        >
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg flex-shrink-0" style={{ background: '#0D9488' }}>
+                                <ArrowRight size={18} />
+                            </div>
+                            <div className="flex-1">
+                                <div className="font-semibold text-sm" style={{ color: '#0F766E' }}>Read Our Full TrumpRx Guide</div>
+                                <div className="text-xs text-slate-600 mt-0.5">22 transplant-relevant drugs, FAQ, comparison chart, and Medicare warnings</div>
+                            </div>
+                            <span className="text-lg font-semibold" style={{ color: '#0D9488' }}>&rarr;</span>
+                        </a>
                     </div>
                 </div>
             </section>

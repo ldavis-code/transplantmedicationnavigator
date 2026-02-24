@@ -69,6 +69,12 @@
   status = 200
   force = true
 
+# TrumpRx resource page - serve static HTML
+[[redirects]]
+  from = "/trumprx"
+  to = "/trumprx.html"
+  status = 200
+
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
 [[redirects]]
