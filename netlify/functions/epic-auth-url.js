@@ -199,17 +199,27 @@ export async function handler(event) {
         // Generate a cryptographically random state parameter for CSRF protection
         const state = crypto.randomBytes(24).toString('base64url');
 
-        // SMART on FHIR scopes for reading patient medication data.
+        // SMART on FHIR scopes for standalone patient-facing launch.
+        //
+        // launch/patient - REQUIRED for standalone launch. Tells Epic's authorization
+        //   server to present a patient selection screen and include a patient ID in the
+        //   token response. Without this, Epic may show a generic "OAuth2 Error" page
+        //   because it doesn't know the app needs patient context.
+        //   (See SMART App Launch spec: "Apps using the standalone launch flow can
+        //   declare launch context requirements by adding launch/patient".)
+        //
+        // openid fhirUser - Recommended for patient identity. Provides an id_token
+        //   so the app can verify the logged-in user.
+        //
+        // patient/Patient.read - Read patient demographics.
+        // patient/MedicationRequest.read - Read medication orders.
+        //
         // IMPORTANT: Epic rejects the ENTIRE authorization request if ANY scope
         // is not enabled in the app registration. Use EPIC_SCOPES env var to
         // match EXACTLY what is configured in your Epic Developer portal.
-        //
-        // Default scopes are intentionally minimal — only Patient.read and
-        // MedicationRequest.read. Adding Medication.read or other scopes that
-        // aren't enabled in your Epic app registration will cause Epic to reject
-        // the ENTIRE authorization request with "request is invalid".
+        // Do NOT include 'launch' (without /patient) — that is for EHR launch only.
         const scope = process.env.EPIC_SCOPES ||
-            'patient/Patient.read patient/MedicationRequest.read';
+            'launch/patient openid fhirUser patient/Patient.read patient/MedicationRequest.read';
 
         // Pre-flight: warn if any requested scopes aren't in the server's supported list
         const requestedScopes = scope.split(' ');
