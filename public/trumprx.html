@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrumpRx.gov Guide for Transplant Patients | Transplant Medication Navigator™</title>
+<meta name="description" content="Everything transplant patients need to know about TrumpRx.gov — which of the 43 discounted drugs are relevant before and after transplant, Medicare/Medicaid restrictions, and how it compares to copay cards and PAPs.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #0D9488;
+    --teal-dark: #0F766E;
+    --teal-deeper: #115E59;
+    --teal-light: #CCFBF1;
+    --teal-50: #F0FDFA;
+    --amber: #F59E0B;
+    --amber-light: #FEF3C7;
+    --amber-dark: #92400E;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --red-dark: #991B1B;
+    --navy: #1E293B;
+    --slate: #475569;
+    --slate-light: #94A3B8;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --white: #FFFFFF;
+    --indigo: #6366F1;
+    --indigo-light: #EEF2FF;
+    --pink: #EC4899;
+    --pink-light: #FDF2F8;
+    --green: #16A34A;
+    --green-light: #DCFCE7;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    background: var(--gray-50);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============================================
+     PAGE HERO
+     ============================================ */
+  .page-hero {
+    background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-dark) 35%, var(--teal) 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+
+  .breadcrumb a { color: white; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero-badge .pulse {
+    width: 8px; height: 8px;
+    background: #34D399;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  .page-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    opacity: 0.9;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .hero-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .hero-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ============================================
+     MAIN CONTENT
+     ============================================ */
+  .page-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+
+  /* Quick Jump Nav */
+  .jump-nav {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+
+  .jump-nav-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--slate-light);
+    margin-bottom: 12px;
+  }
+
+  .jump-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .jump-links a {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal-dark);
+    background: var(--teal-50);
+    border: 1px solid #99F6E4;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .jump-links a:hover {
+    background: var(--teal-light);
+    transform: translateY(-1px);
+  }
+
+  /* Visit Button */
+  .visit-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--white);
+    border: 2px solid var(--teal);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .visit-box:hover {
+    background: var(--teal-50);
+    box-shadow: 0 4px 16px rgba(13,148,136,0.15);
+    transform: translateY(-1px);
+  }
+
+  .visit-icon {
+    width: 52px; height: 52px;
+    background: var(--teal);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .visit-text { flex: 1; }
+
+  .visit-text .vt-title {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--teal-dark);
+  }
+
+  .visit-text .vt-desc {
+    font-size: 13px;
+    color: var(--slate);
+    margin-top: 2px;
+  }
+
+  .visit-arrow {
+    font-size: 22px;
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* Section Headers */
+  .section-header {
+    margin-top: 44px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gray-200);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-header .section-desc {
+    font-size: 14px;
+    color: var(--slate);
+    margin-top: 4px;
+  }
+
+  /* Alert Boxes */
+  .alert-box {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .alert-box.red {
+    background: var(--red-light);
+    border: 1px solid #FECACA;
+  }
+
+  .alert-box.amber {
+    background: var(--amber-light);
+    border: 1px solid #FDE68A;
+  }
+
+  .alert-box.teal {
+    background: var(--teal-50);
+    border: 1px solid #99F6E4;
+  }
+
+  .alert-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .alert-box.red .alert-icon { background: var(--red); color: white; }
+  .alert-box.amber .alert-icon { background: var(--amber); color: white; }
+  .alert-box.teal .alert-icon { background: var(--teal); color: white; }
+
+  .alert-body h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .alert-box.red .alert-body h3 { color: #7F1D1D; }
+  .alert-box.amber .alert-body h3 { color: #78350F; }
+  .alert-box.teal .alert-body h3 { color: var(--teal-deeper); }
+
+  .alert-body p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .alert-box.red .alert-body p { color: var(--red-dark); }
+  .alert-box.amber .alert-body p { color: #92400E; }
+  .alert-box.teal .alert-body p { color: var(--teal-dark); }
+
+  /* FAQ Accordion */
+  .faq-group {
+    margin-bottom: 28px;
+  }
+
+  .faq-group-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--teal);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .faq-group-title .faq-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  details.faq-item {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+
+  details.faq-item:hover {
+    border-color: #99F6E4;
+  }
+
+  details.faq-item[open] {
+    border-color: var(--teal);
+    box-shadow: 0 2px 8px rgba(13,148,136,0.08);
+  }
+
+  details.faq-item summary {
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--navy);
+    user-select: none;
+  }
+
+  details.faq-item summary::-webkit-details-marker { display: none; }
+
+  details.faq-item summary::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--teal);
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: transform 0.2s;
+  }
+
+  details.faq-item[open] summary::after {
+    content: '\2212';
+  }
+
+  .faq-answer {
+    padding: 0 20px 18px;
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.7;
+  }
+
+  .faq-answer p { margin-bottom: 10px; }
+  .faq-answer p:last-child { margin-bottom: 0; }
+
+  .faq-answer strong { color: var(--navy); }
+
+  .faq-answer .transplant-note {
+    background: var(--teal-50);
+    border-left: 3px solid var(--teal);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--teal-dark);
+  }
+
+  .faq-answer .transplant-note strong {
+    color: var(--teal-deeper);
+  }
+
+  .faq-answer .warning-note {
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #78350F;
+  }
+
+  /* Drug Table */
+  .drug-table-wrap {
+    overflow-x: auto;
+    margin: 20px 0 28px;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+  }
+
+  .drug-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .drug-table thead th {
+    background: var(--gray-100);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--slate);
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+  }
+
+  .drug-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+
+  .drug-table tbody tr:last-child td { border-bottom: none; }
+
+  .drug-table tbody tr:hover { background: var(--gray-50); }
+
+  .med-name { font-weight: 600; color: var(--navy); }
+  .med-use { font-size: 12px; color: var(--slate); margin-top: 2px; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tag-pretx { background: var(--amber-light); color: var(--amber-dark); }
+  .tag-posttx { background: var(--teal-light); color: var(--teal-dark); }
+  .tag-diabetes { background: var(--indigo-light); color: var(--indigo); }
+  .tag-other { background: var(--pink-light); color: var(--pink); }
+
+  .price-cell {
+    font-weight: 700;
+    color: var(--teal-dark);
+    white-space: nowrap;
+  }
+
+  .original-price {
+    font-size: 12px;
+    color: var(--slate-light);
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+
+  .discount-badge {
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .note-cell {
+    font-size: 12px;
+    color: var(--slate);
+    font-style: italic;
+  }
+
+  /* Comparison Section */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0 28px;
+  }
+
+  .compare-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .compare-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .compare-list {
+    list-style: none;
+    font-size: 13px;
+    color: var(--slate);
+  }
+
+  .compare-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .compare-list li:last-child { border-bottom: none; }
+
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); font-weight: 700; }
+
+  /* Bottom CTA */
+  .bottom-cta {
+    background: linear-gradient(135deg, var(--teal-50) 0%, #ECFDF5 100%);
+    border: 2px solid #A7F3D0;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .bottom-cta h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .bottom-cta p {
+    font-size: 15px;
+    color: var(--teal-dark);
+    max-width: 560px;
+    margin: 0 auto 16px;
+  }
+
+  .bottom-cta .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .bottom-cta .stat {
+    text-align: center;
+  }
+
+  .bottom-cta .stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--teal-dark);
+  }
+
+  .bottom-cta .stat .label {
+    font-size: 12px;
+    color: var(--slate);
+    margin-top: 2px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: all 0.2s;
+  }
+
+  .cta-button:hover {
+    background: var(--teal-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+  }
+
+  /* Last updated */
+  .last-updated {
+    text-align: center;
+    font-size: 12px;
+    color: var(--slate-light);
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .page-hero { padding: 32px 16px; }
+    .page-hero h1 { font-size: 26px; }
+    .page-content { padding: 24px 16px 48px; }
+    .visit-box { flex-direction: column; text-align: center; gap: 12px; }
+    .visit-arrow { display: none; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .drug-table { font-size: 13px; }
+    .drug-table thead th, .drug-table tbody td { padding: 10px 12px; }
+    .bottom-cta .stats-row { gap: 20px; }
+    .hero-meta { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     HERO SECTION
+     ============================================ -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/education">Resources</a> / TrumpRx.gov Guide
+    </div>
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      New Savings Resource — February 2026
+    </div>
+    <h1>TrumpRx.gov: What Transplant Patients Need to Know</h1>
+    <p class="hero-subtitle">
+      The government launched a new drug discount website with 43 medications. We reviewed every single one to tell you which matter for transplant patients, what the limitations are, and how it fits alongside your existing options.
+    </p>
+    <div class="hero-meta">
+      <span>Launched: February 5, 2026</span>
+      <span>43 Medications Listed</span>
+      <span>22 Relevant to Transplant</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     MAIN CONTENT
+     ============================================ -->
+<div class="page-content">
+
+  <!-- Quick Navigation -->
+  <nav class="jump-nav">
+    <div class="jump-nav-title">On This Page</div>
+    <div class="jump-links">
+      <a href="#what-is">What Is TrumpRx?</a>
+      <a href="#transplant-alert">Transplant Alerts</a>
+      <a href="#faq">Full FAQ</a>
+      <a href="#drugs">Transplant Drug List</a>
+      <a href="#compare">How It Compares</a>
+    </div>
+  </nav>
+
+  <!-- Visit TrumpRx Box -->
+  <a href="https://trumprx.gov" target="_blank" rel="noopener" class="visit-box">
+    <div class="visit-icon">&#127963;</div>
+    <div class="visit-text">
+      <div class="vt-title">Visit TrumpRx.gov</div>
+      <div class="vt-desc">Browse all 43 medications, see discounted prices, and access coupons</div>
+    </div>
+    <span class="visit-arrow">&rarr;</span>
+  </a>
+
+  <!-- ==========================================
+       SECTION: WHAT IS IT
+       ========================================== -->
+  <div class="section-header" id="what-is">
+    <h2>What Is TrumpRx.gov?</h2>
+    <p class="section-desc">The basics — in plain language</p>
+  </div>
+
+  <p style="font-size:15px; color:var(--slate); margin-bottom:20px; line-height:1.7;">
+    TrumpRx.gov is a government website that lists discounted cash prices on 43 brand-name medications. It was launched on February 5, 2026, as part of President Trump's "Most-Favored-Nation" drug pricing initiative. The site doesn't sell drugs directly — it provides coupons you take to a pharmacy or links you to manufacturer websites where you can purchase at the discounted price. Currently, 5 pharmaceutical companies are participating (AstraZeneca, Eli Lilly, EMD Serono, Novo Nordisk, and Pfizer), with more expected soon.
+  </p>
+
+  <!-- ==========================================
+       SECTION: TRANSPLANT-SPECIFIC ALERTS
+       ========================================== -->
+  <div class="section-header" id="transplant-alert">
+    <h2>Critical Information for Transplant Patients</h2>
+    <p class="section-desc">Read these before using TrumpRx</p>
+  </div>
+
+  <!-- Medicare/Medicaid Alert -->
+  <div class="alert-box red">
+    <div class="alert-icon">!</div>
+    <div class="alert-body">
+      <h3>Medicare &amp; Medicaid Patients: Restrictions Apply</h3>
+      <p>
+        Some TrumpRx discounts require you to <strong>certify that you are NOT enrolled in a government insurance program</strong> (Medicare, Medicaid, VA, TRICARE). If you are a transplant recipient on Medicare, you may not be able to use certain coupons. Some discounts also cannot be applied toward your deductible or out-of-pocket maximum. <strong>Always check your plan's copay before using TrumpRx.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- No Immunosuppressants Alert -->
+  <div class="alert-box amber">
+    <div class="alert-icon">&#9888;</div>
+    <div class="alert-body">
+      <h3>No Transplant Immunosuppressants Listed (Yet)</h3>
+      <p>
+        TrumpRx does <strong>NOT</strong> currently include core transplant medications like <strong>tacrolimus (Prograf/Envarsus), mycophenolate (CellCept/Myfortic), sirolimus (Rapamune), cyclosporine (Neoral/Gengraf), or belatacept (Nulojix)</strong>. For these medications, continue using manufacturer copay cards and patient assistance programs through our Navigator. More drugs are expected to be added — we'll update this page when transplant-relevant additions appear.
+      </p>
+    </div>
+  </div>
+
+  <!-- Pre-Transplant Opportunity -->
+  <div class="alert-box teal">
+    <div class="alert-icon">&#9733;</div>
+    <div class="alert-body">
+      <h3>Pre-Transplant Opportunity: GLP-1 Weight Loss Medications</h3>
+      <p>
+        Many transplant centers require patients to meet <strong>BMI thresholds</strong> before listing. GLP-1 medications like <strong>Wegovy ($149&ndash;$199/mo)</strong> and <strong>Zepbound ($299/mo)</strong> are on TrumpRx and are often NOT covered by insurance for weight loss. For patients working to qualify for transplant, this could be a significant savings opportunity. <strong>Always discuss with your transplant team before starting any new medication.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SECTION: FAQ
+       ========================================== -->
+  <div class="section-header" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <p class="section-desc">Official TrumpRx FAQs + transplant-specific context from our team</p>
+  </div>
+
+  <!-- FOR PATIENTS -->
+  <div class="faq-group">
+    <div class="faq-group-title"><span class="faq-dot"></span> For Patients</div>
+
+    <details class="faq-item">
+      <summary>What is TrumpRx?</summary>
+      <div class="faq-answer">
+        <p>TrumpRx is a government website that lists discounted drug prices from manufacturers that have agreed to Most Favored Nation (MFN) pricing. Americans can use TrumpRx to purchase drugs with cash (outside of their insurance). These drugs can be obtained at participating pharmacies using coupon cards displayed on TrumpRx or directly through manufacturers' websites. Not all drugs are currently listed but many more are coming soon.</p>
+        <div class="transplant-note">
+          <strong>Transplant Context:</strong> Think of TrumpRx as another tool alongside GoodRx, Cost Plus Drugs, and manufacturer copay cards. It's one more place to compare prices — but it currently covers only 43 brand-name drugs and none of the core immunosuppressants transplant patients depend on.
+        </div>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which drugs are listed on the website?</summary>
+      <div class="faq-answer">
+        <p>Currently 43 brand-name medications from 5 manufacturers: AstraZeneca, Eli Lilly, EMD Serono, Novo Nordisk, and Pfizer. Categories include weight loss/diabetes (Wegovy, Ozempic, Zepbound), fertility (Gonal-F, Cetrotide, Ovidrel), respiratory (Airsupra, Bevespi), cardiovascular, antifungal, and more. A total of 16 manufacturers have signed agreements, so additional drugs will be added over time.</p>
+        <div class="transplant-note">
+          <strong>Transplant Context:</strong> We identified 22 of the 43 drugs as relevant to transplant patients — see our <a href="#drugs" style="color:var(--teal-dark); font-weight:600;">complete transplant drug list below</a>. This includes pre-transplant weight loss drugs, post-transplant antifungals and steroids, diabetes medications for NODAT (new-onset diabetes after transplant), and cholesterol drugs commonly needed due to immunosuppressant side effects.
+        </div>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need to create an account or register?</summary>
+      <div class="faq-answer">
+        <p>No. TrumpRx does not require registration or account creation. You can browse medications and access coupons without signing up. You will need a valid prescription from your doctor to actually purchase any medication.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use my insurance to buy drugs listed on TrumpRx?</summary>
+      <div class="faq-answer">
+        <p><strong>No. TrumpRx discounted pricing is only available for cash-paying patients.</strong> You cannot use health insurance, and your TrumpRx purchases will typically NOT count toward your deductible or out-of-pocket maximum.</p>
+        <div class="warning-note">
+          <strong>Transplant Warning:</strong> This is especially important for transplant patients. If you have commercial insurance or Medicare, your copay may already be lower than the TrumpRx cash price. Using TrumpRx instead of your insurance means those dollars don't count toward your deductible — and you could end up paying MORE over the course of the year. <strong>Always compare your insurance copay first.</strong>
+        </div>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I get TrumpRx prices at my local pharmacy?</summary>
+      <div class="faq-answer">
+        <p>It depends on the medication. Some drugs provide a coupon you can print or download to your phone and present at participating pharmacies (CVS, Walgreens, Walmart, Kroger, Costco, and many independents). Other drugs require you to purchase directly through the manufacturer's website (like LillyDirect for Zepbound or AstraZeneca Direct for Airsupra). The TrumpRx listing for each drug will tell you which option applies.</p>
+        <div class="transplant-note">
+          <strong>Transplant Context:</strong> If you use a specialty pharmacy for your transplant medications, check whether that pharmacy participates in TrumpRx coupons. Some transplant medications are only dispensed through specialty pharmacies, which may have different pricing structures.
+        </div>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does my doctor send prescriptions to TrumpRx?</summary>
+      <div class="faq-answer">
+        <p>Your doctor does not send prescriptions to TrumpRx directly. TrumpRx is not a pharmacy. You get a coupon from TrumpRx and bring it to your pharmacy along with your existing prescription, OR you go to the manufacturer's website and follow their process for filling your prescription. Some manufacturer sites may require your doctor to send a prescription to their designated pharmacy.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does TrumpRx cost anything?</summary>
+      <div class="faq-answer">
+        <p>No. Using TrumpRx is free. The site is a government-operated portal. You only pay for the medications themselves at the discounted cash price.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are there generic alternatives that might be cheaper?</summary>
+      <div class="faq-answer">
+        <p>TrumpRx only lists brand-name drugs. For some medications on TrumpRx, generic versions are available at significantly lower prices through other sources.</p>
+        <div class="warning-note">
+          <strong>Example:</strong> Protonix (pantoprazole) is listed on TrumpRx at $200.10. The generic version costs approximately $30 with a GoodRx coupon or through Cost Plus Drugs. <strong>Always check if a generic exists before paying the TrumpRx price.</strong> Our Navigator can help you compare options.
+        </div>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if I'm on Medicare or Medicaid?</summary>
+      <div class="faq-answer">
+        <p>Some TrumpRx discounts are <strong>not available</strong> to people enrolled in government insurance programs including Medicare, Medicaid, VA, TRICARE, or other federally or state-funded programs. For certain drugs, you may be required to click a button certifying that you are not enrolled in these programs and won't seek insurance reimbursement.</p>
+        <div class="warning-note">
+          <strong>Transplant Warning:</strong> Many transplant patients are on Medicare (especially kidney transplant recipients who qualify for Medicare coverage of immunosuppressants). If you're on Medicare Part D, your drug copays through your plan will likely be lower than TrumpRx cash prices for most medications. Check with your plan or use our Navigator to find Medicare-compatible assistance programs instead.
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- FOR PRESCRIBERS & PHARMACIES -->
+  <div class="faq-group">
+    <div class="faq-group-title"><span class="faq-dot" style="background:var(--indigo)"></span> For Prescribers &amp; Pharmacies</div>
+
+    <details class="faq-item">
+      <summary>Where do I send prescriptions for TrumpRx medications?</summary>
+      <div class="faq-answer">
+        <p>It depends on the drug. Some medications allow coupon-based dispensing at any participating retail pharmacy. Others (like Zepbound, Airsupra, and Xigduo XR) must be purchased through manufacturer-direct websites that have their own pharmacy fulfillment process. The TrumpRx listing for each drug specifies where prescriptions should be directed.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How will a pharmacist process a TrumpRx claim?</summary>
+      <div class="faq-answer">
+        <p>For coupon-based drugs, the patient presents a printed or digital coupon at the pharmacy counter. The pharmacist processes the coupon similarly to a GoodRx or manufacturer copay card. GoodRx is the integrated pricing partner for many TrumpRx drugs (including Pfizer's 30+ medications), so pharmacies already familiar with GoodRx processing should find the workflow similar.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How will pharmacies get paid for TrumpRx prescriptions?</summary>
+      <div class="faq-answer">
+        <p>Payment processes vary by manufacturer. For GoodRx-integrated coupons, the standard GoodRx pharmacy reimbursement process applies. For manufacturer-direct purchases, the pharmacy may not be involved at all (e.g., LillyDirect ships directly to patients). This is still an evolving area — the National Community Pharmacists Association (NCPA) has been working with the administration to address pharmacy reimbursement concerns.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is a pharmacy required to dispense a TrumpRx drug if reimbursement is below cost?</summary>
+      <div class="faq-answer">
+        <p>No. Pharmacies are not required to dispense medications at a loss. If the TrumpRx coupon reimbursement is below a pharmacy's acquisition cost, the pharmacy can decline to fill at that price. Patients may need to use the manufacturer-direct option or find a different participating pharmacy.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ==========================================
+       SECTION: TRANSPLANT-RELEVANT DRUG TABLE
+       ========================================== -->
+  <div class="section-header" id="drugs">
+    <h2>TrumpRx Medications Relevant to Transplant Patients</h2>
+    <p class="section-desc">22 of 43 drugs that matter for our community — organized by when you might need them</p>
+  </div>
+
+  <div class="drug-table-wrap">
+    <table class="drug-table">
+      <thead>
+        <tr>
+          <th>Medication</th>
+          <th>Category</th>
+          <th>TrumpRx Price</th>
+          <th>Savings</th>
+          <th>Notes for Transplant Patients</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- PRE-TRANSPLANT -->
+        <tr>
+          <td>
+            <div class="med-name">Wegovy&reg; Pill</div>
+            <div class="med-use">semaglutide oral</div>
+          </td>
+          <td><span class="tag tag-pretx">Pre-TX</span></td>
+          <td class="price-cell">$149/mo <br><span class="original-price">$1,349</span></td>
+          <td><span class="discount-badge">89% off</span></td>
+          <td class="note-cell">GLP-1 for weight loss — can help patients meet BMI listing requirements</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Wegovy&reg; Pen</div>
+            <div class="med-use">semaglutide injection</div>
+          </td>
+          <td><span class="tag tag-pretx">Pre-TX</span></td>
+          <td class="price-cell">$199/mo <br><span class="original-price">$1,349</span></td>
+          <td><span class="discount-badge">Up to 85% off</span></td>
+          <td class="note-cell">Injectable version; dose varies by price tier</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Zepbound&reg;</div>
+            <div class="med-use">tirzepatide</div>
+          </td>
+          <td><span class="tag tag-pretx">Pre-TX</span></td>
+          <td class="price-cell">$299/mo <br><span class="original-price">$1,087</span></td>
+          <td><span class="discount-badge">72% off</span></td>
+          <td class="note-cell">Weight loss + sleep apnea; purchased via LillyDirect</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Ozempic&reg; Pen</div>
+            <div class="med-use">semaglutide injection</div>
+          </td>
+          <td><span class="tag tag-pretx">Pre-TX</span></td>
+          <td class="price-cell">$199/mo <br><span class="original-price">$1,028</span></td>
+          <td><span class="discount-badge">Up to 81% off</span></td>
+          <td class="note-cell">Diabetes + weight management; also relevant post-TX for NODAT</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Chantix&reg;</div>
+            <div class="med-use">varenicline</div>
+          </td>
+          <td><span class="tag tag-pretx">Pre-TX</span></td>
+          <td class="price-cell">$106.20 <br><span class="original-price">~$212</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Smoking cessation — many centers require 6 months smoke-free to list</td>
+        </tr>
+
+        <!-- POST-TRANSPLANT: INFECTION & STEROIDS -->
+        <tr>
+          <td>
+            <div class="med-name">Diflucan&reg;</div>
+            <div class="med-use">fluconazole</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$14.06 <br><span class="original-price">~$35</span></td>
+          <td><span class="discount-badge">~60% off</span></td>
+          <td class="note-cell">Antifungal — commonly prescribed post-transplant; generic may be cheaper</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Vfend&reg;</div>
+            <div class="med-use">voriconazole</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$306.98 <br><span class="original-price">~$614</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Serious fungal infections in immunocompromised patients</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Zyvox&reg;</div>
+            <div class="med-use">linezolid</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$122.74 <br><span class="original-price">~$307</span></td>
+          <td><span class="discount-badge">~60% off</span></td>
+          <td class="note-cell">Antibiotic for resistant infections — used when standard antibiotics fail</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Cleocin&reg;</div>
+            <div class="med-use">clindamycin</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$94.35 <br><span class="original-price">~$189</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Antibiotic; generic widely available and may be cheaper</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Medrol&reg;</div>
+            <div class="med-use">methylprednisolone</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$3.15 <br><span class="original-price">~$8</span></td>
+          <td><span class="discount-badge">~60% off</span></td>
+          <td class="note-cell">Steroid — used in rejection treatment protocols</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Cortef&reg;</div>
+            <div class="med-use">hydrocortisone</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$45.00 <br><span class="original-price">~$90</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Adrenal support — some transplant patients need this long-term</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Protonix&reg;</div>
+            <div class="med-use">pantoprazole</div>
+          </td>
+          <td><span class="tag tag-posttx">Post-TX</span></td>
+          <td class="price-cell">$200.10 <br><span class="original-price">~$400</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell"><strong>Generic is ~$30 on GoodRx/CostPlus!</strong> Check generic first</td>
+        </tr>
+
+        <!-- DIABETES & CARDIOVASCULAR -->
+        <tr>
+          <td>
+            <div class="med-name">Insulin Lispro</div>
+            <div class="med-use">rapid-acting insulin</div>
+          </td>
+          <td><span class="tag tag-diabetes">Diabetes</span></td>
+          <td class="price-cell">$25.00 <br><span class="original-price">~$71</span></td>
+          <td><span class="discount-badge">~65% off</span></td>
+          <td class="note-cell">Post-transplant diabetes (NODAT) is very common</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Farxiga&reg;</div>
+            <div class="med-use">dapagliflozin</div>
+          </td>
+          <td><span class="tag tag-diabetes">Diabetes</span></td>
+          <td class="price-cell">$181.59 <br><span class="original-price">~$600</span></td>
+          <td><span class="discount-badge">70% off</span></td>
+          <td class="note-cell">Diabetes + kidney &amp; heart protection — increasingly used post-transplant</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Xigduo&reg; XR</div>
+            <div class="med-use">dapagliflozin/metformin</div>
+          </td>
+          <td><span class="tag tag-diabetes">Diabetes</span></td>
+          <td class="price-cell">$181.59 <br><span class="original-price">~$600</span></td>
+          <td><span class="discount-badge">70% off</span></td>
+          <td class="note-cell">Combo diabetes med; purchased via AstraZeneca Direct</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Tikosyn&reg;</div>
+            <div class="med-use">dofetilide</div>
+          </td>
+          <td><span class="tag tag-diabetes">Cardio</span></td>
+          <td class="price-cell">$336.00 <br><span class="original-price">~$560</span></td>
+          <td><span class="discount-badge">~40% off</span></td>
+          <td class="note-cell">Heart rhythm — relevant for heart transplant patients</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Colestid&reg;</div>
+            <div class="med-use">colestipol</div>
+          </td>
+          <td><span class="tag tag-diabetes">Cholesterol</span></td>
+          <td class="price-cell">$127.91 <br><span class="original-price">~$256</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Cholesterol management — immunosuppressants can raise cholesterol</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Lopid&reg;</div>
+            <div class="med-use">gemfibrozil</div>
+          </td>
+          <td><span class="tag tag-diabetes">Cholesterol</span></td>
+          <td class="price-cell">$39.60 <br><span class="original-price">~$88</span></td>
+          <td><span class="discount-badge">~55% off</span></td>
+          <td class="note-cell">Triglycerides/cholesterol; generic available — compare prices</td>
+        </tr>
+
+        <!-- OTHER RELEVANT -->
+        <tr>
+          <td>
+            <div class="med-name">Pristiq&reg;</div>
+            <div class="med-use">desvenlafaxine</div>
+          </td>
+          <td><span class="tag tag-other">Mental Health</span></td>
+          <td class="price-cell">$200.10 <br><span class="original-price">~$364</span></td>
+          <td><span class="discount-badge">~45% off</span></td>
+          <td class="note-cell">Antidepressant — mental health support is critical for transplant patients</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Cytomel&reg;</div>
+            <div class="med-use">liothyronine</div>
+          </td>
+          <td><span class="tag tag-other">Thyroid</span></td>
+          <td class="price-cell">$6.00 <br><span class="original-price">~$15</span></td>
+          <td><span class="discount-badge">~60% off</span></td>
+          <td class="note-cell">Thyroid — thyroid issues can develop post-transplant</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Levoxyl&reg;</div>
+            <div class="med-use">levothyroxine</div>
+          </td>
+          <td><span class="tag tag-other">Thyroid</span></td>
+          <td class="price-cell">$35.10 <br><span class="original-price">~$70</span></td>
+          <td><span class="discount-badge">~50% off</span></td>
+          <td class="note-cell">Hypothyroidism; generic widely available</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="med-name">Xeljanz&reg;</div>
+            <div class="med-use">tofacitinib</div>
+          </td>
+          <td><span class="tag tag-other">Autoimmune</span></td>
+          <td class="price-cell">$1,518 <br><span class="original-price">~$2,267</span></td>
+          <td><span class="discount-badge">33% off</span></td>
+          <td class="note-cell">JAK inhibitor — studied in transplant immunosuppression research</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==========================================
+       SECTION: HOW IT COMPARES
+       ========================================== -->
+  <div class="section-header" id="compare">
+    <h2>How TrumpRx Compares to Your Other Options</h2>
+    <p class="section-desc">TrumpRx is one tool — here's how it fits in your medication savings toolkit</p>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>&#127963; TrumpRx.gov</h4>
+      <ul class="compare-list">
+        <li><span class="check">&#10003;</span> 43 brand-name drugs</li>
+        <li><span class="check">&#10003;</span> Government-negotiated prices</li>
+        <li><span class="check">&#10003;</span> Free to use</li>
+        <li><span class="cross">&#10007;</span> Cash-pay only, no insurance</li>
+        <li><span class="cross">&#10007;</span> No generics</li>
+        <li><span class="cross">&#10007;</span> No immunosuppressants</li>
+        <li><span class="cross">&#10007;</span> Some exclude Medicare/Medicaid</li>
+      </ul>
+    </div>
+
+    <div class="compare-card">
+      <h4>&#128138; Our Navigator</h4>
+      <ul class="compare-list">
+        <li><span class="check">&#10003;</span> 184 transplant medications</li>
+        <li><span class="check">&#10003;</span> 65+ copay cards</li>
+        <li><span class="check">&#10003;</span> 60+ patient assistance programs</li>
+        <li><span class="check">&#10003;</span> Insurance-smart routing</li>
+        <li><span class="check">&#10003;</span> Works with ALL insurance types</li>
+        <li><span class="check">&#10003;</span> Immunosuppressants covered</li>
+        <li><span class="check">&#10003;</span> Step-by-step how to apply</li>
+      </ul>
+    </div>
+
+    <div class="compare-card">
+      <h4>&#128176; GoodRx</h4>
+      <ul class="compare-list">
+        <li><span class="check">&#10003;</span> 6,000+ medications</li>
+        <li><span class="check">&#10003;</span> Generics included</li>
+        <li><span class="check">&#10003;</span> Local pharmacy price compare</li>
+        <li><span class="check">&#10003;</span> Partners with TrumpRx</li>
+        <li><span class="cross">&#10007;</span> Not transplant-specific</li>
+        <li><span class="cross">&#10007;</span> No insurance-smart routing</li>
+      </ul>
+    </div>
+
+    <div class="compare-card">
+      <h4>&#127978; Cost Plus Drugs</h4>
+      <ul class="compare-list">
+        <li><span class="check">&#10003;</span> Transparent cost-plus pricing</li>
+        <li><span class="check">&#10003;</span> Generics often cheapest</li>
+        <li><span class="check">&#10003;</span> Mail-order delivery</li>
+        <li><span class="cross">&#10007;</span> Limited brand-name options</li>
+        <li><span class="cross">&#10007;</span> Not all transplant meds</li>
+        <li><span class="cross">&#10007;</span> No insurance accepted</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="bottom-cta">
+    <h3>TrumpRx Is One More Tool — But We Cover What It Doesn't</h3>
+    <p>
+      For your immunosuppressants, antiviral prophylaxis, and the full range of transplant medications, our Navigator matches you to copay cards and patient assistance programs based on YOUR insurance type.
+    </p>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="num">184</div>
+        <div class="label">Transplant Medications</div>
+      </div>
+      <div class="stat">
+        <div class="num">65+</div>
+        <div class="label">Copay Cards</div>
+      </div>
+      <div class="stat">
+        <div class="num">60+</div>
+        <div class="label">Patient Assistance Programs</div>
+      </div>
+    </div>
+    <a href="/" class="cta-button">Search Your Medications &rarr;</a>
+  </div>
+
+  <div class="last-updated">
+    Last updated: February 23, 2026 &middot; Source: <a href="https://trumprx.gov" target="_blank" style="color:var(--teal)">TrumpRx.gov</a>, <a href="https://www.whitehouse.gov/fact-sheets/2026/02/fact-sheet-president-donald-j-trump-launches-trumprx-gov-to-bring-lower-drug-prices-to-american-patients/" target="_blank" style="color:var(--teal)">White House Fact Sheet</a> &middot; We will update this page as new drugs are added.
+  </div>
+
+</div>
+
+</body>
+</html>
