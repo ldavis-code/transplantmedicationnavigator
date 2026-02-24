@@ -1,0 +1,71 @@
+{
+  "lastUpdated": "2026-02-23",
+  "source": "TrumpRx.gov",
+  "note": "TrumpRx prices are fixed cash prices (not ranges). Cash-pay only — does NOT count toward deductible or out-of-pocket max. Some drugs exclude Medicare/Medicaid patients.",
+  "medications": {
+    "semaglutide": {
+      "trumprxPrice": 149,
+      "trumprxPriceMax": 199,
+      "originalPrice": 1349,
+      "discount": "Up to 89% off",
+      "note": "Wegovy Pill $149/mo, Wegovy Pen/Ozempic Pen $199/mo",
+      "medicareRestriction": true
+    },
+    "diflucan": {
+      "trumprxPrice": 14.06,
+      "originalPrice": 35,
+      "discount": "~60% off",
+      "note": "Generic may be cheaper",
+      "medicareRestriction": true
+    },
+    "vfend": {
+      "trumprxPrice": 306.98,
+      "originalPrice": 614,
+      "discount": "~50% off",
+      "note": "Serious fungal infections in immunocompromised patients",
+      "medicareRestriction": true
+    },
+    "solumedrol": {
+      "trumprxPrice": 3.15,
+      "originalPrice": 8,
+      "discount": "~60% off",
+      "note": "Medrol (oral methylprednisolone) — used in rejection treatment",
+      "medicareRestriction": true
+    },
+    "protonix": {
+      "trumprxPrice": 200.10,
+      "originalPrice": 400,
+      "discount": "~50% off",
+      "note": "Generic pantoprazole is ~$30 on GoodRx — check generic first!",
+      "medicareRestriction": true
+    },
+    "farxiga": {
+      "trumprxPrice": 181.59,
+      "originalPrice": 600,
+      "discount": "70% off",
+      "note": "Diabetes + kidney & heart protection — increasingly used post-transplant",
+      "medicareRestriction": true
+    },
+    "insulin-lispro": {
+      "trumprxPrice": 25,
+      "originalPrice": 71,
+      "discount": "~65% off",
+      "note": "Post-transplant diabetes (NODAT) is very common",
+      "medicareRestriction": false
+    },
+    "levothyroxine": {
+      "trumprxPrice": 35.10,
+      "originalPrice": 70,
+      "discount": "~50% off",
+      "note": "Levoxyl brand; generic widely available",
+      "medicareRestriction": true
+    },
+    "liothyronine": {
+      "trumprxPrice": 6,
+      "originalPrice": 15,
+      "discount": "~60% off",
+      "note": "Cytomel — thyroid issues can develop post-transplant",
+      "medicareRestriction": true
+    }
+  }
+}
