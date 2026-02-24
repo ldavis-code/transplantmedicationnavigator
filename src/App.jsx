@@ -104,6 +104,7 @@ import QUICK_ACTIONS_DATA from './data/quick-actions.json';
 import COST_PLUS_EXCLUSIONS_DATA from './data/cost-plus-exclusions.json';
 import GOODRX_EXCLUSIONS_DATA from './data/goodrx-exclusions.json';
 import SINGLECARE_EXCLUSIONS_DATA from './data/singlecare-exclusions.json';
+import TRUMPRX_PRICES_DATA from './data/trumprx-prices.json';
 import CATEGORY_ORDER_DATA from './data/category-order.json';
 import APPLICATION_CHECKLIST_DATA from './data/application-checklist.json';
 import FAQS_DATA from './data/faqs.json';
@@ -3724,6 +3725,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const isGoodRxAvailable = !GOODRX_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isSingleCareAvailable = !SINGLECARE_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
 
+    // TrumpRx availability - check if this medication has a TrumpRx discounted price
+    const trumpRxData = TRUMPRX_PRICES_DATA.medications[med.id] || null;
+    const isTrumpRxAvailable = !!trumpRxData;
+
     // Extract program info from new nested structure or legacy flat fields
     const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: `${med.manufacturer} Copay Card` } : null);
     const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: `${med.manufacturer} Patient Assistance` } : null);
@@ -3980,6 +3985,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>
                                             <td className="p-3 text-slate-600">Online pharmacy with cost-plus pricing model; often lowest for generics</td>
+                                        </tr>
+                                        <tr className="bg-white hover:bg-slate-50">
+                                            <td className="p-3 font-medium text-slate-900">TrumpRx.gov</td>
+                                            <td className="p-3 text-slate-600">Government-negotiated cash prices on 43 brand-name drugs; cash-pay only, some exclude Medicare/Medicaid. <a href="/trumprx" className="text-teal-600 hover:underline font-medium">See our transplant guide</a></td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Walmart Pharmacy</td>
@@ -4265,6 +4274,13 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         <div className="text-slate-500">Baseline comparison</div>
                                     </div>
                                 </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-teal-500 flex-shrink-0"></span>
+                                    <div>
+                                        <div className="font-semibold text-teal-600">TrumpRx.gov</div>
+                                        <div className="text-slate-500">Gov't discounted cash</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -4443,6 +4459,47 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         </td>
                                     </tr>
                                     )}
+
+                                    {/* TrumpRx Row - Teal */}
+                                    {isTrumpRxAvailable && (
+                                    <tr className="bg-teal-50/50 hover:bg-teal-50">
+                                        <td className="p-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="w-2.5 h-2.5 rounded-full bg-teal-500 flex-shrink-0"></span>
+                                                <div className="font-bold text-teal-700">TrumpRx.gov</div>
+                                            </div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Government discounted cash price</div>
+                                            {trumpRxData.medicareRestriction && (
+                                                <div className="text-xs text-red-600 flex items-center gap-1 mt-1 ml-4.5">
+                                                    <AlertCircle size={12} />
+                                                    May exclude Medicare/Medicaid
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td className="p-3">
+                                            <div className="text-teal-700 font-bold">
+                                                ${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}/mo
+                                            </div>
+                                            <div className="text-xs text-slate-500 mt-0.5">
+                                                <span className="line-through">${trumpRxData.originalPrice}</span>
+                                                {' '}<span className="text-teal-600 font-semibold">{trumpRxData.discount}</span>
+                                            </div>
+                                            {trumpRxData.note && (
+                                                <div className="text-xs text-slate-500 mt-1 italic">{trumpRxData.note}</div>
+                                            )}
+                                        </td>
+                                        <td className="p-3 no-print">
+                                            <div className="flex flex-col gap-1">
+                                                <a href="/trumprx" className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label="View TrumpRx guide for transplant patients">
+                                                    Our Guide <ArrowRight size={14} aria-hidden="true" />
+                                                </a>
+                                                <a href="https://trumprx.gov" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label="Visit TrumpRx.gov (opens in new tab)">
+                                                    <ExternalLink size={14} aria-hidden="true" /> TrumpRx.gov
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -4485,6 +4542,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         {isCostPlusAvailable && (
                                             <div className="bg-amber-100 border border-amber-300 rounded p-2 mb-3 text-xs text-amber-900">
                                                 <strong>About Cost Plus Drugs:</strong> This is a cash pharmacy. What you pay there does not count toward your deductible. But the price might still be lower than your insurance copay. Compare before you decide!
+                                            </div>
+                                        )}
+                                        {isTrumpRxAvailable && (
+                                            <div className="bg-teal-100 border border-teal-300 rounded p-2 mb-3 text-xs text-teal-900">
+                                                <strong>About TrumpRx.gov:</strong> This is a cash-pay discount — it does NOT count toward your deductible or out-of-pocket max.{trumpRxData.medicareRestriction ? ' Some TrumpRx coupons may exclude Medicare/Medicaid patients.' : ''} Always compare with your insurance copay first. <a href="/trumprx" className="text-teal-700 font-bold underline">Read our full guide</a>.
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
@@ -4553,6 +4615,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                     <div className="flex justify-between">
                                         <span>Cost Plus Drugs:</span>
                                         <strong className="text-slate-600">{getPriceEstimate(med.id, med.category, 'costplus')}</strong>
+                                    </div>
+                                )}
+                                {isTrumpRxAvailable && (
+                                    <div className="flex justify-between">
+                                        <span>TrumpRx.gov:</span>
+                                        <strong className="text-teal-600">${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}/mo</strong>
                                     </div>
                                 )}
                             </div>
