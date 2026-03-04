@@ -589,7 +589,7 @@ export default function MyMedications() {
                               </div>
                               {program.url && (
                                 <a
-                                  href={program.url}
+                                  href={`/out/copay/${program.programId}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition flex-shrink-0 min-h-[32px]"
@@ -630,7 +630,7 @@ export default function MyMedications() {
                               </div>
                               {program.url && (
                                 <a
-                                  href={program.url}
+                                  href={`/out/pap/${program.programId}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition flex-shrink-0 min-h-[32px]"
@@ -661,19 +661,19 @@ export default function MyMedications() {
                         </p>
                         <ul className="mt-2 space-y-1 text-sm text-purple-700">
                           <li>
-                            <a href="https://www.healthwellfoundation.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href="/out/foundation/healthwell-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               HealthWell Foundation
                             </a>
                             {' '}- copay and premium assistance
                           </li>
                           <li>
-                            <a href="https://www.panfoundation.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href="/out/foundation/pan-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               PAN Foundation
                             </a>
                             {' '}- medication and insurance help
                           </li>
                           <li>
-                            <a href="https://www.patientadvocate.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href="/out/foundation/paf-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               Patient Advocate Foundation
                             </a>
                             {' '}- copay relief programs
@@ -693,7 +693,7 @@ export default function MyMedications() {
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                         <p className="text-blue-800 text-sm">
                           No specific copay card found for this medication name. Try searching with the exact brand name, or visit{' '}
-                          <a href="https://www.medicineassistancetool.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">
+                          <a href="/out/pap/phrma-mat" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">
                             PhRMA Medicine Assistance Tool
                           </a>
                           {' '}to search for available programs.
