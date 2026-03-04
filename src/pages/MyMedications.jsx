@@ -5,6 +5,7 @@ import { useConfirmDialog } from '../components/ConfirmDialog';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 import programsData from '../data/programs.json';
+import { trackMedicationAddToList, trackProgramClick } from '../lib/medicationTrackingApi.js';
 
 const STORAGE_KEY = 'tmn_my_medications';
 const INSURANCE_STORAGE_KEY = 'tmn_has_commercial_insurance';
@@ -199,6 +200,9 @@ export default function MyMedications() {
     setMedications(prev => [medication, ...prev]);
     setMedMessage({ text: 'Medication saved!', type: 'success' });
     setNewMed({ name: '', brand: '', dosage: '', cost: '', renewal: '', renewalType: '' });
+
+    // Track medication added to personal list
+    trackMedicationAddToList(medication.medication_name);
 
     // Clear success message after 3 seconds
     setTimeout(() => setMedMessage({ text: '', type: '' }), 3000);
@@ -589,6 +593,7 @@ export default function MyMedications() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition flex-shrink-0 min-h-[32px]"
+                                  onClick={() => trackProgramClick(med.medication_name)}
                                 >
                                   Apply
                                   <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -629,6 +634,7 @@ export default function MyMedications() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition flex-shrink-0 min-h-[32px]"
+                                  onClick={() => trackProgramClick(med.medication_name)}
                                 >
                                   Apply
                                   <ExternalLink className="w-3 h-3" aria-hidden="true" />
