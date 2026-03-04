@@ -113,6 +113,7 @@ import { useMetaTags } from './hooks/useMetaTags.js';
 import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
 import { fetchAllMedications } from './lib/medicationsApi.js';
+import { trackMedicationSearch, trackMedicationView, trackMedicationAddToList } from './lib/medicationTrackingApi.js';
 
 // Initialize data from imported JSON files - MEDICATIONS_DATA is used as fallback
 // Medications will be fetched from the database API when available
@@ -3058,6 +3059,11 @@ const MedicationSearch = () => {
         const internalMatches = fuseResults.map(result => result.item);
         setSearchResult({ internal: internalMatches, showExternalOption: true });
         setIsSearching(false);
+
+        // Track search interactions for analytics
+        if (internalMatches.length > 0) {
+            trackMedicationSearch(internalMatches[0].genericName || internalMatches[0].brandName, searchTerm.trim());
+        }
     }, [searchTerm, fuse]);
 
     useEffect(() => {
@@ -3075,7 +3081,14 @@ const MedicationSearch = () => {
     }, [searchTerm, handleSearch]);
 
     const addInternalToList = (id) => {
-        if (!myListIds.includes(id)) setMyListIds([...myListIds, id]);
+        if (!myListIds.includes(id)) {
+            setMyListIds([...myListIds, id]);
+            // Track when user adds a medication to their search list
+            const med = MEDICATIONS.find(m => m.id === id);
+            if (med) {
+                trackMedicationAddToList(med.genericName || med.brandName);
+            }
+        }
         setSearchTerm('');
         setSearchResult(null);
     };
