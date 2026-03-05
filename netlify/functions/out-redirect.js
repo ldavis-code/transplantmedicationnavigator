@@ -126,6 +126,15 @@ export async function handler(event) {
             console.warn('Failed to log event:', logError.message);
         }
 
+        // Substitute {query} placeholder if the URL is a search template
+        const searchQuery = event.queryStringParameters?.q || null;
+        if (redirectUrl.includes('{query}') && searchQuery) {
+            redirectUrl = redirectUrl.replace('{query}', encodeURIComponent(searchQuery));
+        } else if (redirectUrl.includes('{query}')) {
+            // Remove the placeholder if no query was provided
+            redirectUrl = redirectUrl.replace('{query}', '');
+        }
+
         // 302 redirect to the official URL
         return {
             statusCode: 302,
