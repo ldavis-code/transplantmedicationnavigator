@@ -831,6 +831,54 @@
       },
       "maxBenefit": "Pay as little as $25 per month",
       "notes": "Commercial insurance only. Not valid for government insurance."
+    },
+    "goodrx-search": {
+      "programId": "goodrx-search",
+      "name": "GoodRx",
+      "manufacturer": "GoodRx",
+      "medications": [],
+      "url": "https://www.goodrx.com/search?s={query}",
+      "phone": "",
+      "eligibility": {
+        "commercial": true,
+        "medicare": true,
+        "medicaid": true,
+        "uninsured": true
+      },
+      "maxBenefit": "Free discount card",
+      "notes": "Search and compare prescription drug prices."
+    },
+    "singlecare-search": {
+      "programId": "singlecare-search",
+      "name": "SingleCare",
+      "manufacturer": "SingleCare",
+      "medications": [],
+      "url": "https://www.singlecare.com/search?search={query}",
+      "phone": "",
+      "eligibility": {
+        "commercial": true,
+        "medicare": true,
+        "medicaid": true,
+        "uninsured": true
+      },
+      "maxBenefit": "Free discount card",
+      "notes": "Free card at 35,000+ pharmacies."
+    },
+    "costplus-search": {
+      "programId": "costplus-search",
+      "name": "Cost Plus Drugs",
+      "manufacturer": "Cost Plus Drugs",
+      "medications": [],
+      "url": "https://costplusdrugs.com/medications/?query={query}",
+      "phone": "",
+      "eligibility": {
+        "commercial": true,
+        "medicare": true,
+        "medicaid": true,
+        "uninsured": true
+      },
+      "maxBenefit": "Cost-plus pricing",
+      "notes": "Online pharmacy with cost-plus pricing model."
     }
   },
   "papPrograms": {
@@ -1471,6 +1519,40 @@
       "incomeLimit": "400% FPL",
       "maxBenefit": "Free medication",
       "notes": "Covers Dupixent and other Regeneron medications."
+    },
+    "drugs-com-search": {
+      "programId": "drugs-com-search",
+      "name": "Drugs.com",
+      "manufacturer": "Drugs.com",
+      "medications": [],
+      "url": "https://www.drugs.com/search.php?searchterm={query}",
+      "phone": "",
+      "eligibility": {
+        "commercial": true,
+        "medicare": true,
+        "medicaid": true,
+        "uninsured": true
+      },
+      "incomeLimit": "None",
+      "maxBenefit": "Drug information and PAP search",
+      "notes": "Search for drug facts and patient assistance programs."
+    },
+    "trumprx-gov": {
+      "programId": "trumprx-gov",
+      "name": "TrumpRx.gov",
+      "manufacturer": "U.S. Government",
+      "medications": [],
+      "url": "https://trumprx.gov",
+      "phone": "",
+      "eligibility": {
+        "commercial": true,
+        "medicare": false,
+        "medicaid": false,
+        "uninsured": true
+      },
+      "incomeLimit": "None",
+      "maxBenefit": "Government-negotiated cash prices",
+      "notes": "Government discounted cash prices on select brand-name drugs."
     }
   },
   "foundationPrograms": {
