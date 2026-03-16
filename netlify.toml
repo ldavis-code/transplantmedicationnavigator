@@ -43,6 +43,18 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/admin-licenses/*"
+  to = "/.netlify/functions/admin-licenses/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/admin-licenses"
+  to = "/.netlify/functions/admin-licenses"
+  status = 200
+  force = true
+
 # Generic API route (must come AFTER specific routes)
 [[redirects]]
   from = "/api/*"
