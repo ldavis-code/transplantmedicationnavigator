@@ -69,3 +69,8 @@ export const corsHeaders = {
 export function handleCorsPreFlight() {
   return { statusCode: 204, headers: corsHeaders };
 }
+
+// ---------- Default export: Neon SQL client ----------
+
+const sql = getNeonClient();
+export default sql;
