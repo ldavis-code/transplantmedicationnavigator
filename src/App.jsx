@@ -27,6 +27,12 @@ const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
+const LazyNotLicensed = lazy(() => import('./pages/NotLicensed.jsx'));
+
+// Admin pages (lazy loaded)
+const LazyAdminLogin = lazy(() => import('./pages/admin/Login.jsx'));
+const LazyAdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'));
+const LazyOrganizationSettings = lazy(() => import('./pages/admin/OrganizationSettings.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -75,6 +81,9 @@ import EpicConnectButton from './components/EpicConnectButton.jsx';
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
 import { ReportingAuthProvider } from './context/ReportingAuthContext.jsx';
+// Hospital Admin Auth + Tenant Providers
+import { AuthProvider } from './context/AuthContext.jsx';
+import { TenantProvider } from './context/TenantContext.jsx';
 import {
     Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck, Award,
     Menu, X, ShieldAlert, HeartHandshake, CheckCircle, ChevronLeft, DollarSign,
@@ -6986,6 +6995,7 @@ const MainSiteRoutes = () => (
                 <Route path="/demo" element={<LazyDemo />} />
                 <Route path="/demo/:demoType" element={<LazyDemo />} />
                 <Route path="/auth/epic/callback" element={<LazyEpicCallback />} />
+                <Route path="/not-licensed" element={<LazyNotLicensed />} />
                 <Route path="*" element={<LazyNotFound />} />
             </Routes>
         </Suspense>
@@ -7016,13 +7026,40 @@ const ReportingRoutes = () => {
     );
 };
 
+// Wrapper component for hospital admin routes (no main site layout)
+const AdminRoutes = () => {
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith('/admin');
+
+    if (!isAdminRoute) return null;
+
+    return (
+        <TenantProvider>
+            <AuthProvider>
+                <Suspense fallback={<PageLoadingFallback />}>
+                    <Routes>
+                        <Route path="/admin/login" element={<LazyAdminLogin />} />
+                        <Route path="/admin" element={<LazyAdminDashboard />} />
+                        <Route path="/admin/settings" element={<LazyOrganizationSettings />} />
+                    </Routes>
+                </Suspense>
+            </AuthProvider>
+        </TenantProvider>
+    );
+};
+
 // Route switcher component
 const AppRoutes = () => {
     const location = useLocation();
     const isReportingRoute = location.pathname.startsWith('/reporting');
+    const isAdminRoute = location.pathname.startsWith('/admin');
 
     if (isReportingRoute) {
         return <ReportingRoutes />;
+    }
+
+    if (isAdminRoute) {
+        return <AdminRoutes />;
     }
 
     return (
