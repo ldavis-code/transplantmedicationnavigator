@@ -27,6 +27,7 @@ const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
+const LazyNotLicensed = lazy(() => import('./pages/NotLicensed.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -6986,6 +6987,7 @@ const MainSiteRoutes = () => (
                 <Route path="/demo" element={<LazyDemo />} />
                 <Route path="/demo/:demoType" element={<LazyDemo />} />
                 <Route path="/auth/epic/callback" element={<LazyEpicCallback />} />
+                <Route path="/not-licensed" element={<LazyNotLicensed />} />
                 <Route path="*" element={<LazyNotFound />} />
             </Routes>
         </Suspense>
