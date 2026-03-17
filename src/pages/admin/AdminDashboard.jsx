@@ -6,25 +6,25 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
-  Building2,
   Users,
-  Pill,
-  Settings,
   BarChart3,
   FileText,
   ExternalLink,
   ChevronRight,
-  Shield,
   Heart,
-  LogOut,
   Key,
+  Zap,
+  Building2,
+  Pill,
+  Settings,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
+import AdminLayout from './AdminLayout';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const { user, isAdmin, logout, getToken } = useAuth();
+  const { user, isAdmin, getToken } = useAuth();
   const { org, loading: tenantLoading } = useTenant();
   const [stats, setStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
@@ -57,7 +57,6 @@ export default function AdminDashboard() {
             uniqueSessions: data.uniqueSessionsThisMonth || 0,
           });
         } else {
-          // Fallback if API fails
           setStats({ totalEvents: 0, eventsThisMonth: 0, quizCompletes: 0, uniqueSessions: 0 });
         }
       } catch (error) {
@@ -142,203 +141,187 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center gap-3">
-              <Shield className="h-8 w-8 text-blue-600" />
+    <AdminLayout title="Dashboard" subtitle={org.name}>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {statCards.map((stat) => (
+          <div key={stat.label} className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
-                <p className="text-sm text-gray-500">{org.name}</p>
+                <p className="text-sm text-gray-500">{stat.label}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">
+                  {loadingStats ? '...' : stat.value.toLocaleString()}
+                </p>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link
-                to="/"
-                className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1"
-              >
-                <ExternalLink className="h-4 w-4" />
-                View Site
-              </Link>
-              <div className="text-sm text-gray-600">
-                {user?.name || user?.email}
-              </div>
-              <button
-                onClick={logout}
-                className="text-sm text-red-600 hover:text-red-700 flex items-center gap-1"
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </button>
+              <stat.icon className="h-8 w-8 text-gray-400" />
             </div>
           </div>
-        </div>
-      </header>
+        ))}
+      </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {statCards.map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-white rounded-lg shadow-sm border p-6"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">
-                    {loadingStats ? '...' : stat.value.toLocaleString()}
-                  </p>
-                </div>
-                <stat.icon className="h-8 w-8 text-gray-400" />
-              </div>
-            </div>
-          ))}
+      {/* Epic EHR Status */}
+      <div className="mb-8 bg-emerald-50 rounded-lg p-5 border border-emerald-200 flex items-start gap-4">
+        <div className="bg-emerald-100 text-emerald-700 p-2.5 rounded-lg">
+          <Zap className="h-6 w-6" />
         </div>
-
-        {/* Menu Grid */}
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Management</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {menuItems.map((item) => (
-            <Link
-              key={item.title}
-              to={item.href}
-              className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow group"
-            >
-              <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-lg ${item.color}`}>
-                  <item.icon className="h-6 w-6" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-1">{item.description}</p>
-                </div>
-                <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Quick Actions */}
-        <div className="mt-8 bg-blue-50 rounded-lg p-6 border border-blue-100">
-          <h3 className="font-semibold text-blue-900 mb-2">Getting Started</h3>
-          <ul className="text-sm text-blue-800 space-y-2">
-            <li>• Upload your hospital logo in Organization Settings</li>
-            <li>• Invite staff members in User Management</li>
-            <li>• Customize which medications to feature for your patients</li>
-            <li>• Add hospital-specific resources and links</li>
-          </ul>
-        </div>
-
-        {/* Change Password */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Key className="h-5 w-5 text-gray-600" />
-            <h3 className="font-semibold text-gray-900">Change Password</h3>
+        <div className="flex-1">
+          <h3 className="font-semibold text-emerald-900">Epic EHR Integration — Active</h3>
+          <p className="text-sm text-emerald-700 mt-1">
+            SMART on FHIR EHR launch and patient standalone launch are configured.
+            Clinicians can launch TMN directly from Epic MyChart or the EHR sidebar.
+          </p>
+          <div className="flex gap-4 mt-3 text-xs text-emerald-600">
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" /> EHR Launch
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" /> Patient Standalone
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" /> Medication Import
+            </span>
           </div>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              setPwMsg(null);
+        </div>
+      </div>
 
-              if (newPassword !== confirmPassword) {
-                setPwMsg({ type: 'error', text: 'New passwords do not match' });
-                return;
-              }
-              if (newPassword.length < 8) {
-                setPwMsg({ type: 'error', text: 'New password must be at least 8 characters' });
-                return;
-              }
-
-              setPwSubmitting(true);
-              try {
-                const res = await fetch('/.netlify/functions/auth/change-password', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${getToken()}`,
-                  },
-                  body: JSON.stringify({ currentPassword, newPassword }),
-                });
-                const data = await res.json();
-                if (res.ok) {
-                  setPwMsg({ type: 'success', text: 'Password changed successfully' });
-                  setCurrentPassword('');
-                  setNewPassword('');
-                  setConfirmPassword('');
-                } else {
-                  setPwMsg({ type: 'error', text: data.error || 'Failed to change password' });
-                }
-              } catch {
-                setPwMsg({ type: 'error', text: 'Network error — try again' });
-              } finally {
-                setPwSubmitting(false);
-              }
-            }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      {/* Menu Grid */}
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Management</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {menuItems.map((item) => (
+          <Link
+            key={item.title}
+            to={item.href}
+            className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow group"
           >
-            <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                Current Password
-              </label>
-              <input
-                type="password"
-                id="currentPassword"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-              />
+            <div className="flex items-start gap-4">
+              <div className={`p-3 rounded-lg ${item.color}`}>
+                <item.icon className="h-6 w-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 group-hover:text-[#006838] transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-[#006838] transition-colors" />
             </div>
-            <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                New Password
-              </label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-                minLength={8}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-              />
-            </div>
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                Confirm New Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                minLength={8}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-              />
-            </div>
-            <div className="md:col-span-3 flex items-center gap-4">
-              <button
-                type="submit"
-                disabled={pwSubmitting}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
-              >
-                {pwSubmitting ? 'Changing...' : 'Change Password'}
-              </button>
-              {pwMsg && (
-                <span className={`text-sm ${pwMsg.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-                  {pwMsg.text}
-                </span>
-              )}
-            </div>
-          </form>
+          </Link>
+        ))}
+      </div>
+
+      {/* Getting Started */}
+      <div className="mt-8 bg-[#006838]/5 rounded-lg p-6 border border-[#006838]/20">
+        <h3 className="font-semibold text-[#006838] mb-2">Getting Started</h3>
+        <ul className="text-sm text-[#006838]/80 space-y-2">
+          <li>• Upload your hospital logo in Organization Settings</li>
+          <li>• Invite staff members in User Management</li>
+          <li>• Customize which medications to feature for your patients</li>
+          <li>• Add hospital-specific resources and links</li>
+        </ul>
+      </div>
+
+      {/* Change Password */}
+      <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Key className="h-5 w-5 text-gray-600" />
+          <h3 className="font-semibold text-gray-900">Change Password</h3>
         </div>
-      </main>
-    </div>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setPwMsg(null);
+            if (newPassword !== confirmPassword) {
+              setPwMsg({ type: 'error', text: 'New passwords do not match' });
+              return;
+            }
+            if (newPassword.length < 8) {
+              setPwMsg({ type: 'error', text: 'New password must be at least 8 characters' });
+              return;
+            }
+            setPwSubmitting(true);
+            try {
+              const res = await fetch('/.netlify/functions/auth/change-password', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${getToken()}`,
+                },
+                body: JSON.stringify({ currentPassword, newPassword }),
+              });
+              const data = await res.json();
+              if (res.ok) {
+                setPwMsg({ type: 'success', text: 'Password changed successfully' });
+                setCurrentPassword('');
+                setNewPassword('');
+                setConfirmPassword('');
+              } else {
+                setPwMsg({ type: 'error', text: data.error || 'Failed to change password' });
+              }
+            } catch {
+              setPwMsg({ type: 'error', text: 'Network error — try again' });
+            } finally {
+              setPwSubmitting(false);
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        >
+          <div>
+            <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              Current Password
+            </label>
+            <input
+              type="password"
+              id="currentPassword"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006838] focus:border-[#006838] text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              New Password
+            </label>
+            <input
+              type="password"
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+              minLength={8}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006838] focus:border-[#006838] text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              Confirm New Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              minLength={8}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006838] focus:border-[#006838] text-sm"
+            />
+          </div>
+          <div className="md:col-span-3 flex items-center gap-4">
+            <button
+              type="submit"
+              disabled={pwSubmitting}
+              className="px-4 py-2 bg-[#006838] text-white rounded-lg text-sm font-medium hover:bg-[#005530] disabled:opacity-50"
+            >
+              {pwSubmitting ? 'Changing...' : 'Change Password'}
+            </button>
+            {pwMsg && (
+              <span className={`text-sm ${pwMsg.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                {pwMsg.text}
+              </span>
+            )}
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
   );
 }
