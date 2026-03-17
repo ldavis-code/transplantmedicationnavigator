@@ -26,8 +26,21 @@ export default function ImpactReport() {
     if (!isAdmin) return;
     setLoading(true);
     fetch(`${API}?days=${days}`, { headers: { Authorization: `Bearer ${getToken()}` } })
-      .then(r => r.ok ? r.json() : Promise.reject('Failed to load'))
-      .then(setData)
+      .then(async r => {
+        const json = await r.json();
+        if (!r.ok) {
+          // Surface setup instructions if env vars are missing
+          if (json.setup) {
+            setError(json.error);
+            setData({ _setup: json.setup });
+          } else {
+            throw new Error(json.error || 'Failed to load');
+          }
+          return;
+        }
+        setError(null);
+        setData(json);
+      })
       .catch(e => setError(typeof e === 'string' ? e : e.message))
       .finally(() => setLoading(false));
   }, [isAdmin, days, getToken]);
@@ -90,6 +103,76 @@ export default function ImpactReport() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
+        )}
+
+        {/* Environment Variable Setup Warning */}
+        {data?._setup && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5">
+            <h3 className="font-semibold text-amber-800 mb-2">Environment Variables Not Configured</h3>
+            <p className="text-sm text-amber-700 mb-3">{data._setup.instructions}</p>
+            <div className="space-y-1">
+              {Object.entries(data._setup.required).map(([key, status]) => (
+                <div key={key} className="flex items-center gap-2 text-sm">
+                  <span className={status === 'OK' ? 'text-green-600' : 'text-red-600'}>
+                    {status === 'OK' ? '\u2713' : '\u2717'}
+                  </span>
+                  <code className="font-mono text-xs bg-amber-100 px-1.5 py-0.5 rounded">{key}</code>
+                  <span className="text-amber-700">{status !== 'OK' ? `\u2014 ${status}` : ''}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Netlify Analytics Traffic Warning */}
+        {data?.siteTraffic && !data.siteTraffic.available && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-700 text-sm">
+            <strong>Site traffic data unavailable:</strong> {data.siteTraffic.error}
+            {data.siteTraffic.hint && <span className="block mt-1 text-amber-600">{data.siteTraffic.hint}</span>}
+          </div>
+        )}
+
+        {/* Netlify Analytics Site Traffic */}
+        {data?.siteTraffic?.available && (
+          <section>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Site Traffic (Netlify Analytics)</h2>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <StatCard
+                icon={TrendingUp}
+                label="Total Pageviews"
+                value={data.siteTraffic.pageviews}
+                color="bg-indigo-50 text-indigo-600"
+              />
+              <StatCard
+                icon={Users}
+                label="Unique Visitors"
+                value={data.siteTraffic.uniques}
+                color="bg-teal-50 text-teal-600"
+              />
+            </div>
+            {data.siteTraffic.topPages?.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Page</th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Views</th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Unique</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {data.siteTraffic.topPages.map((p, i) => (
+                      <tr key={i} className="hover:bg-gray-50">
+                        <td className="px-6 py-3 text-sm font-mono text-gray-900">{p.path}</td>
+                        <td className="px-6 py-3 text-sm text-right text-gray-600">{p.views.toLocaleString()}</td>
+                        <td className="px-6 py-3 text-sm text-right text-gray-600">{p.uniques.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
         )}
 
         {/* Hero Stats — The Funding Story */}
