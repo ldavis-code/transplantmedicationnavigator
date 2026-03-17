@@ -6,6 +6,9 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 # Admin auth API (must be before generic /api/*)
 /api/admin-auth/*  /.netlify/functions/admin-auth/:splat  200!
 
+# Admin seed (one-time setup — DELETE after use)
+/api/admin-seed  /.netlify/functions/admin-seed  200!
+
 # Admin API (must be before generic /api/*)
 /api/admin-api/*  /.netlify/functions/admin-api/:splat  200!
 
