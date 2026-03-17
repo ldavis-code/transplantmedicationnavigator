@@ -12,6 +12,9 @@
 -- If you want a different initial password, generate it with:
 --   node -e "const c=require('crypto'); const s=c.randomBytes(16).toString('hex'); const h=c.pbkdf2Sync('YOUR_PASSWORD',s,10000,64,'sha512').toString('hex'); console.log(h+':'+s)"
 
+-- Ensure email_verified column exists (table may predate this column)
+ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT false;
+
 -- Get the public org ID
 DO $$
 DECLARE

@@ -64,6 +64,11 @@ export async function handler(event) {
       )
     `;
 
+    // Add email_verified column if it doesn't exist (table may predate this column)
+    await sql`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT false
+    `;
+
     // Check if any admin user exists
     const existing = await sql`
       SELECT id, email FROM users WHERE role IN ('super_admin', 'org_admin') LIMIT 1
