@@ -24,8 +24,10 @@ const getDb = () => {
     return sql;
 };
 
-// Token secret for verification
-const TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || 'admin-secret-change-me';
+// Token secret for verification — must match auth.js
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+// Legacy admin-auth token secret (kept for backward compatibility)
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || 'admin-secret-change-me';
 
 const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -41,12 +43,42 @@ const csvHeaders = {
     'Content-Type': 'text/csv',
 };
 
-// Verify admin token
-function verifyAdminToken(token) {
+// Verify token signed by auth.js (DB-backed login)
+function verifyAuthToken(token) {
     try {
         const [data, signature] = token.split('.');
         const expectedSignature = crypto
-            .createHmac('sha256', TOKEN_SECRET)
+            .createHmac('sha256', JWT_SECRET)
+            .update(data)
+            .digest('hex');
+
+        if (signature !== expectedSignature) {
+            return null;
+        }
+
+        const payload = JSON.parse(Buffer.from(data, 'base64').toString());
+
+        if (payload.exp < Date.now()) {
+            return null;
+        }
+
+        // Must be an admin role
+        if (payload.role !== 'super_admin' && payload.role !== 'org_admin') {
+            return null;
+        }
+
+        return payload;
+    } catch {
+        return null;
+    }
+}
+
+// Verify legacy admin-auth token (password-only login)
+function verifyLegacyAdminToken(token) {
+    try {
+        const [data, signature] = token.split('.');
+        const expectedSignature = crypto
+            .createHmac('sha256', LEGACY_TOKEN_SECRET)
             .update(data)
             .digest('hex');
 
@@ -68,6 +100,11 @@ function verifyAdminToken(token) {
     } catch {
         return null;
     }
+}
+
+// Try both token formats
+function verifyAdminToken(token) {
+    return verifyAuthToken(token) || verifyLegacyAdminToken(token);
 }
 
 // Check admin auth from request
