@@ -12,10 +12,20 @@
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 
-const sql = neon(process.env.DATABASE_URL);
-
 // Simple JWT-like token (for demo - use proper JWT in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+
+// Lazy-init DB connection (avoid crash at module load if DATABASE_URL is unset)
+let _sql;
+function getDb() {
+  if (!_sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not configured');
+    }
+    _sql = neon(process.env.DATABASE_URL);
+  }
+  return _sql;
+}
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -102,7 +112,8 @@ export async function handler(event) {
       }
 
       // Find user
-      const users = await sql`
+      const db = getDb();
+      const users = await db`
         SELECT id, email, password_hash, name, role, org_id, is_active
         FROM users
         WHERE email = ${email.toLowerCase()}
@@ -137,8 +148,12 @@ export async function handler(event) {
         };
       }
 
-      // Update last login
-      await sql`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
+      // Update last login (non-fatal if column doesn't exist)
+      try {
+        await db`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
+      } catch {
+        // last_login_at column may not exist on older schemas
+      }
 
       // Generate token
       const token = generateToken(user);
@@ -180,7 +195,8 @@ export async function handler(event) {
       }
 
       // Check if user exists
-      const existing = await sql`SELECT id FROM users WHERE email = ${email.toLowerCase()}`;
+      const db = getDb();
+      const existing = await db`SELECT id FROM users WHERE email = ${email.toLowerCase()}`;
       if (existing.length > 0) {
         return {
           statusCode: 400,
@@ -194,7 +210,7 @@ export async function handler(event) {
       const passwordHash = `${hash}:${salt}`;
 
       // Create user
-      const result = await sql`
+      const result = await db`
         INSERT INTO users (email, password_hash, name, org_id, role)
         VALUES (${email.toLowerCase()}, ${passwordHash}, ${name || null}, ${orgId || null}, 'viewer')
         RETURNING id, email, name, role, org_id
@@ -272,7 +288,8 @@ export async function handler(event) {
         };
       }
 
-      const users = await sql`
+      const db = getDb();
+      const users = await db`
         SELECT u.id, u.email, u.name, u.role, u.org_id, o.name as org_name, o.slug as org_slug
         FROM users u
         LEFT JOIN organizations o ON u.org_id = o.id
@@ -294,6 +311,83 @@ export async function handler(event) {
       };
     }
 
+    // POST /auth/change-password
+    if (event.httpMethod === 'POST' && path === '/change-password') {
+      const authHeader = event.headers.authorization || event.headers.Authorization;
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'No token provided' }),
+        };
+      }
+
+      const token = authHeader.substring(7);
+      const payload = verifyToken(token);
+
+      if (!payload) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'Invalid or expired token' }),
+        };
+      }
+
+      const { currentPassword, newPassword } = JSON.parse(event.body);
+
+      if (!currentPassword || !newPassword) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Current password and new password required' }),
+        };
+      }
+
+      if (newPassword.length < 8) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'New password must be at least 8 characters' }),
+        };
+      }
+
+      const db = getDb();
+      const users = await db`
+        SELECT id, password_hash FROM users WHERE id = ${payload.id}
+      `;
+
+      if (users.length === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'User not found' }),
+        };
+      }
+
+      const user = users[0];
+      const [storedHash, salt] = user.password_hash.split(':');
+
+      if (!verifyPassword(currentPassword, storedHash, salt)) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'Current password is incorrect' }),
+        };
+      }
+
+      const { hash: newHash, salt: newSalt } = hashPassword(newPassword);
+      const newPasswordHash = `${newHash}:${newSalt}`;
+
+      await db`UPDATE users SET password_hash = ${newPasswordHash} WHERE id = ${payload.id}`;
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, message: 'Password changed successfully' }),
+      };
+    }
+
     return {
       statusCode: 404,
       headers,
@@ -304,7 +398,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' }),
+      body: JSON.stringify({ error: `Auth error: ${error.message}` }),
     };
   }
 }

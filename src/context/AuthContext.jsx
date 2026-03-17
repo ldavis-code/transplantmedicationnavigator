@@ -62,10 +62,16 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ email, password, orgId: org?.id }),
       });
 
-      const data = await response.json();
+      let data;
+      const text = await response.text();
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(`Server returned non-JSON (${response.status}): ${text.substring(0, 200)}`);
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
+        throw new Error(data.error || data.message || `Login failed (${response.status})`);
       }
 
       localStorage.setItem(AUTH_TOKEN_KEY, data.token);

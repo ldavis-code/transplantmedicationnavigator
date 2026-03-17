@@ -33,6 +33,11 @@ const LazyNotLicensed = lazy(() => import('./pages/NotLicensed.jsx'));
 const LazyAdminLogin = lazy(() => import('./pages/admin/Login.jsx'));
 const LazyAdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'));
 const LazyOrganizationSettings = lazy(() => import('./pages/admin/OrganizationSettings.jsx'));
+const LazyAnalytics = lazy(() => import('./pages/admin/Analytics.jsx'));
+const LazyUserManagement = lazy(() => import('./pages/admin/UserManagement.jsx'));
+const LazyMedicationConfig = lazy(() => import('./pages/admin/MedicationConfig.jsx'));
+const LazySurveyResponses = lazy(() => import('./pages/admin/SurveyResponses.jsx'));
+const LazyFeatureSettings = lazy(() => import('./pages/admin/FeatureSettings.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -7043,6 +7048,11 @@ const AdminRoutes = () => {
                         <Route path="/admin/login" element={<LazyAdminLogin />} />
                         <Route path="/admin" element={<LazyAdminDashboard />} />
                         <Route path="/admin/settings" element={<LazyOrganizationSettings />} />
+                        <Route path="/admin/analytics" element={<LazyAnalytics />} />
+                        <Route path="/admin/users" element={<LazyUserManagement />} />
+                        <Route path="/admin/medications" element={<LazyMedicationConfig />} />
+                        <Route path="/admin/surveys" element={<LazySurveyResponses />} />
+                        <Route path="/admin/features" element={<LazyFeatureSettings />} />
                     </Routes>
                 </Suspense>
             </AuthProvider>

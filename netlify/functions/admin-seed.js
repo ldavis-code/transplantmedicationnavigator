@@ -44,7 +44,7 @@ export async function handler(event) {
 
     const sql = neon(process.env.DATABASE_URL);
 
-    // Ensure users table exists
+    // Ensure users table exists (omit email_verified — column may not exist on older schemas)
     await sql`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -57,7 +57,6 @@ export async function handler(event) {
         role TEXT DEFAULT 'viewer',
         avatar_url TEXT,
         is_active BOOLEAN DEFAULT true,
-        email_verified BOOLEAN DEFAULT false,
         last_login_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ DEFAULT NOW(),
         updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -94,8 +93,8 @@ export async function handler(event) {
     const passwordHash = hashPassword(password);
 
     await sql`
-      INSERT INTO users (org_id, email, password_hash, name, role, is_active, email_verified)
-      VALUES (${orgId}, ${email}, ${passwordHash}, 'TMN Admin', 'super_admin', true, true)
+      INSERT INTO users (org_id, email, password_hash, name, role, is_active)
+      VALUES (${orgId}, ${email}, ${passwordHash}, 'TMN Admin', 'super_admin', true)
     `;
 
     return {
