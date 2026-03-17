@@ -12,8 +12,94 @@ const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
 
 let _sql;
 function getDb() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error(
+      'DATABASE_URL is not configured. Set it in Netlify Dashboard > Site Settings > Environment Variables. ' +
+      'Get your connection string from console.neon.tech'
+    );
+  }
   if (!_sql) _sql = neon(process.env.DATABASE_URL);
   return _sql;
+}
+
+/**
+ * Fetch site traffic from Netlify Analytics API
+ * Requires NETLIFY_API_TOKEN and NETLIFY_SITE_ID env variables
+ */
+async function fetchNetlifyAnalytics(days) {
+  const token = process.env.NETLIFY_API_TOKEN;
+  const siteId = process.env.NETLIFY_SITE_ID;
+
+  if (!token || !siteId) {
+    return {
+      available: false,
+      error: !token && !siteId
+        ? 'NETLIFY_API_TOKEN and NETLIFY_SITE_ID are not configured'
+        : !token
+          ? 'NETLIFY_API_TOKEN is not configured'
+          : 'NETLIFY_SITE_ID is not configured',
+      hint: 'Set these in Netlify Dashboard > Site Settings > Environment Variables',
+    };
+  }
+
+  try {
+    const now = Date.now();
+    const from = now - days * 24 * 60 * 60 * 1000;
+    const baseUrl = `https://analytics.services.netlify.com/v2/${siteId}`;
+    const qs = `from=${from}&to=${now}&timezone=-0500&resolution=day`;
+
+    const [pagesRes, sourcesRes] = await Promise.all([
+      fetch(`${baseUrl}/pages?${qs}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      fetch(`${baseUrl}/sources?${qs}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+    ]);
+
+    if (!pagesRes.ok) {
+      const errText = await pagesRes.text();
+      return {
+        available: false,
+        error: `Netlify Analytics API returned ${pagesRes.status}: ${errText}`,
+      };
+    }
+
+    const pages = await pagesRes.json();
+    const sources = sourcesRes.ok ? await sourcesRes.json() : [];
+
+    // Aggregate page view totals
+    let totalPageviews = 0;
+    let totalUniques = 0;
+    const topPages = [];
+
+    if (Array.isArray(pages.data)) {
+      pages.data.forEach(p => {
+        totalPageviews += p.count || 0;
+        totalUniques += p.uniques || 0;
+        topPages.push({ path: p.path, views: p.count || 0, uniques: p.uniques || 0 });
+      });
+      topPages.sort((a, b) => b.views - a.views);
+    }
+
+    const topSources = [];
+    if (Array.isArray(sources.data)) {
+      sources.data.forEach(s => {
+        topSources.push({ source: s.path || s.resource, views: s.count || 0 });
+      });
+      topSources.sort((a, b) => b.views - a.views);
+    }
+
+    return {
+      available: true,
+      pageviews: totalPageviews,
+      uniques: totalUniques,
+      topPages: topPages.slice(0, 10),
+      topSources: topSources.slice(0, 10),
+    };
+  } catch (err) {
+    return { available: false, error: err.message };
+  }
 }
 
 const headers = {
@@ -79,7 +165,6 @@ exports.handler = async function handler(event) {
   }
 
   try {
-    const db = getDb();
     const params = event.queryStringParameters || {};
     const days = parseInt(params.days) || 90;
     const now = new Date();
@@ -254,6 +339,9 @@ exports.handler = async function handler(event) {
     var totalPageviews = hasNetlifyData ? netlifyPageviews : parseInt(c.db_page_views || 0);
     var totalVisitors = hasNetlifyData ? netlifyVisitors : parseInt(c.unique_sessions || 0);
 
+    // Await Netlify Analytics result
+    const siteTraffic = await analyticsPromise;
+
     return {
       statusCode: 200,
       headers: headers,
@@ -323,6 +411,26 @@ exports.handler = async function handler(event) {
     };
   } catch (error) {
     console.error('Impact report error:', error);
-    return { statusCode: 500, headers: headers, body: JSON.stringify({ error: error.message }) };
+
+    // Surface helpful setup instructions for missing env variables
+    const isEnvError = error.message?.includes('is not configured') ||
+      error.message?.includes('DATABASE_URL') ||
+      error.message?.includes('fetch failed');
+
+    return {
+      statusCode: isEnvError ? 503 : 500,
+      headers,
+      body: JSON.stringify({
+        error: error.message,
+        setup: isEnvError ? {
+          instructions: 'Configure required environment variables in Netlify Dashboard > Site Settings > Environment Variables',
+          required: {
+            DATABASE_URL: !process.env.DATABASE_URL ? 'MISSING — Get from console.neon.tech' : 'OK',
+            NETLIFY_API_TOKEN: !process.env.NETLIFY_API_TOKEN ? 'MISSING — Get from app.netlify.com/user/applications > Personal access tokens' : 'OK',
+            NETLIFY_SITE_ID: !process.env.NETLIFY_SITE_ID ? 'MISSING — Get from Site Settings > General > Site ID' : 'OK',
+          },
+        } : undefined,
+      }),
+    };
   }
 };
