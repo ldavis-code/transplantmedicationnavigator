@@ -311,6 +311,83 @@ export async function handler(event) {
       };
     }
 
+    // POST /auth/change-password
+    if (event.httpMethod === 'POST' && path === '/change-password') {
+      const authHeader = event.headers.authorization || event.headers.Authorization;
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'No token provided' }),
+        };
+      }
+
+      const token = authHeader.substring(7);
+      const payload = verifyToken(token);
+
+      if (!payload) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'Invalid or expired token' }),
+        };
+      }
+
+      const { currentPassword, newPassword } = JSON.parse(event.body);
+
+      if (!currentPassword || !newPassword) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Current password and new password required' }),
+        };
+      }
+
+      if (newPassword.length < 8) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'New password must be at least 8 characters' }),
+        };
+      }
+
+      const db = getDb();
+      const users = await db`
+        SELECT id, password_hash FROM users WHERE id = ${payload.id}
+      `;
+
+      if (users.length === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'User not found' }),
+        };
+      }
+
+      const user = users[0];
+      const [storedHash, salt] = user.password_hash.split(':');
+
+      if (!verifyPassword(currentPassword, storedHash, salt)) {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({ error: 'Current password is incorrect' }),
+        };
+      }
+
+      const { hash: newHash, salt: newSalt } = hashPassword(newPassword);
+      const newPasswordHash = `${newHash}:${newSalt}`;
+
+      await db`UPDATE users SET password_hash = ${newPasswordHash} WHERE id = ${payload.id}`;
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, message: 'Password changed successfully' }),
+      };
+    }
+
     return {
       statusCode: 404,
       headers,

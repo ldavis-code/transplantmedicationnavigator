@@ -16,16 +16,22 @@ import {
   ChevronRight,
   Shield,
   LogOut,
+  Key,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const { user, isAdmin, logout } = useAuth();
+  const { user, isAdmin, logout, getToken } = useAuth();
   const { org, loading: tenantLoading } = useTenant();
   const [stats, setStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [pwMsg, setPwMsg] = useState(null);
+  const [pwSubmitting, setPwSubmitting] = useState(false);
 
   // Redirect if not admin
   useEffect(() => {
@@ -210,6 +216,111 @@ export default function AdminDashboard() {
             <li>• Customize which medications to feature for your patients</li>
             <li>• Add hospital-specific resources and links</li>
           </ul>
+        </div>
+
+        {/* Change Password */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Key className="h-5 w-5 text-gray-600" />
+            <h3 className="font-semibold text-gray-900">Change Password</h3>
+          </div>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              setPwMsg(null);
+
+              if (newPassword !== confirmPassword) {
+                setPwMsg({ type: 'error', text: 'New passwords do not match' });
+                return;
+              }
+              if (newPassword.length < 8) {
+                setPwMsg({ type: 'error', text: 'New password must be at least 8 characters' });
+                return;
+              }
+
+              setPwSubmitting(true);
+              try {
+                const res = await fetch('/.netlify/functions/auth/change-password', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${getToken()}`,
+                  },
+                  body: JSON.stringify({ currentPassword, newPassword }),
+                });
+                const data = await res.json();
+                if (res.ok) {
+                  setPwMsg({ type: 'success', text: 'Password changed successfully' });
+                  setCurrentPassword('');
+                  setNewPassword('');
+                  setConfirmPassword('');
+                } else {
+                  setPwMsg({ type: 'error', text: data.error || 'Failed to change password' });
+                }
+              } catch {
+                setPwMsg({ type: 'error', text: 'Network error — try again' });
+              } finally {
+                setPwSubmitting(false);
+              }
+            }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          >
+            <div>
+              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                Current Password
+              </label>
+              <input
+                type="password"
+                id="currentPassword"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                New Password
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={8}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                Confirm New Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={8}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              />
+            </div>
+            <div className="md:col-span-3 flex items-center gap-4">
+              <button
+                type="submit"
+                disabled={pwSubmitting}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+              >
+                {pwSubmitting ? 'Changing...' : 'Change Password'}
+              </button>
+              {pwMsg && (
+                <span className={`text-sm ${pwMsg.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                  {pwMsg.text}
+                </span>
+              )}
+            </div>
+          </form>
         </div>
       </main>
     </div>
