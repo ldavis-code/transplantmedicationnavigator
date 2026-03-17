@@ -24,13 +24,29 @@ export default function ImpactReport() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!isAdmin) {
+      setLoading(false);
+      setError('You must be logged in as an admin to view the Impact Report.');
+      return;
+    }
     setLoading(true);
     setError(null);
-    fetch(`${API}?days=${days}`, { headers: { Authorization: `Bearer ${getToken()}` } })
-      .then(r => r.ok ? r.json() : Promise.reject('Failed to load'))
+    const token = getToken();
+    if (!token) {
+      setLoading(false);
+      setError('No auth token found. Please log in at /admin/login first.');
+      return;
+    }
+    fetch(`${API}?days=${days}`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(async r => {
+        if (!r.ok) {
+          const body = await r.json().catch(() => ({}));
+          throw new Error(body.error || `Server returned ${r.status}`);
+        }
+        return r.json();
+      })
       .then(setData)
-      .catch(e => setError(typeof e === 'string' ? e : e.message))
+      .catch(e => setError(e.message || 'Failed to load impact data'))
       .finally(() => setLoading(false));
   }, [isAdmin, days, getToken]);
 
@@ -41,7 +57,7 @@ export default function ImpactReport() {
       <AdminLayout title="Impact Report">
         <div className="flex items-center justify-center py-20" role="status">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#006838]" />
-          <span className="sr-only">Loading...</span>
+          <span className="sr-only">Loading impact report...</span>
         </div>
       </AdminLayout>
     );
@@ -51,7 +67,10 @@ export default function ImpactReport() {
   const conn = data?.programConnections || {};
   const funnel = data?.funnel || {};
   const period = data?.period || {};
-  const hasNetlify = data?.dataSource === 'netlify+db';
+  const sources = data?.dataSources || {};
+  const hasNetlify = sources.netlify;
+  const hasDb = sources.database;
+  const noData = data?.dataSource === 'none';
 
   return (
     <AdminLayout
@@ -71,16 +90,23 @@ export default function ImpactReport() {
             <option value={180}>Last 6 months</option>
             <option value={365}>Last year</option>
           </select>
-          {hasNetlify && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-full">
-              <Globe className="h-3 w-3" /> Netlify Analytics
-            </span>
-          )}
-          {!hasNetlify && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">
-              Database events only — add NETLIFY_API_TOKEN for full traffic data
-            </span>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {hasNetlify && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-full">
+                <Globe className="h-3 w-3" /> Netlify Analytics
+              </span>
+            )}
+            {hasDb && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
+                <BarChart3 className="h-3 w-3" /> Database Events
+              </span>
+            )}
+            {!hasNetlify && !noData && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">
+                Add NETLIFY_API_TOKEN for traffic data
+              </span>
+            )}
+          </div>
         </div>
         <button
           onClick={handlePrint}

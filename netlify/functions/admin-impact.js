@@ -130,55 +130,67 @@ export async function handler(event) {
     const hasNetlifyData = !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID);
 
     // --- Database: program interaction metrics ---
-    const [connections, reach, topPrograms, weeklyTrend] = await Promise.all([
-      db`
-        SELECT
-          COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_connections,
-          COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_connections,
-          COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_connections,
-          COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as total_connections,
-          COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
-          COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completions,
-          COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches,
-          COUNT(*) FILTER (WHERE event_name = 'page_view') as db_page_views,
-          COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
-            CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
-          )) as unique_sessions,
-          COUNT(DISTINCT partner) FILTER (WHERE partner IS NOT NULL) as partner_count
-        FROM events
-        WHERE ts >= ${cutoff}
-      `,
-      // Funnel data for conversion rates
-      db`
-        SELECT event_name, COUNT(*) as count
-        FROM events
-        WHERE ts >= ${cutoff}
-        GROUP BY event_name
-      `,
-      // Top programs by clicks
-      db`
-        SELECT program_id, program_type, COUNT(*) as clicks
-        FROM events
-        WHERE program_id IS NOT NULL AND ts >= ${cutoff}
-        GROUP BY program_id, program_type
-        ORDER BY clicks DESC
-        LIMIT 15
-      `,
-      // Weekly trend
-      db`
-        SELECT
-          DATE_TRUNC('week', ts) as week,
-          COUNT(*) as events,
-          COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as program_connections,
-          COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
-            CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
-          )) as unique_sessions
-        FROM events
-        WHERE ts >= ${cutoff}
-        GROUP BY DATE_TRUNC('week', ts)
-        ORDER BY week ASC
-      `,
-    ]);
+    // Wrapped in try/catch — events table may not exist yet
+    let connections = [{}];
+    let reach = [];
+    let topPrograms = [];
+    let weeklyTrend = [];
+    let dbAvailable = false;
+    try {
+      const results = await Promise.all([
+        db`
+          SELECT
+            COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_connections,
+            COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_connections,
+            COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_connections,
+            COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as total_connections,
+            COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
+            COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completions,
+            COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches,
+            COUNT(*) FILTER (WHERE event_name = 'page_view') as db_page_views,
+            COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
+              CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
+            )) as unique_sessions,
+            COUNT(DISTINCT partner) FILTER (WHERE partner IS NOT NULL) as partner_count
+          FROM events
+          WHERE ts >= ${cutoff}
+        `,
+        db`
+          SELECT event_name, COUNT(*) as count
+          FROM events
+          WHERE ts >= ${cutoff}
+          GROUP BY event_name
+        `,
+        db`
+          SELECT program_id, program_type, COUNT(*) as clicks
+          FROM events
+          WHERE program_id IS NOT NULL AND ts >= ${cutoff}
+          GROUP BY program_id, program_type
+          ORDER BY clicks DESC
+          LIMIT 15
+        `,
+        db`
+          SELECT
+            DATE_TRUNC('week', ts) as week,
+            COUNT(*) as events,
+            COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as program_connections,
+            COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
+              CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
+            )) as unique_sessions
+          FROM events
+          WHERE ts >= ${cutoff}
+          GROUP BY DATE_TRUNC('week', ts)
+          ORDER BY week ASC
+        `,
+      ]);
+      connections = results[0];
+      reach = results[1];
+      topPrograms = results[2];
+      weeklyTrend = results[3];
+      dbAvailable = true;
+    } catch (dbErr) {
+      console.warn('Events table query failed (table may not exist):', dbErr.message);
+    }
 
     // Medication insights (table may not exist)
     let medicationInsights = [];
@@ -248,7 +260,15 @@ export async function handler(event) {
           start: cutoff.split('T')[0],
           end: now.toISOString().split('T')[0],
         },
-        dataSource: hasNetlifyData ? 'netlify+db' : 'db',
+        dataSource: hasNetlifyData && dbAvailable ? 'netlify+db'
+          : hasNetlifyData ? 'netlify'
+          : dbAvailable ? 'db'
+          : 'none',
+        dataSources: {
+          netlify: hasNetlifyData,
+          netlifyConfigured: !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID),
+          database: dbAvailable,
+        },
         // Traffic metrics (from Netlify if available, else DB)
         traffic: {
           pageviews: totalPageviews,
