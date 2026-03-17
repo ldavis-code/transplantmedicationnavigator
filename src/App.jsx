@@ -651,6 +651,8 @@ const Layout = ({ children }) => {
                         <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility & Section 504</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">Admin</Link>
                     </div>
                 </div>
             </footer>
