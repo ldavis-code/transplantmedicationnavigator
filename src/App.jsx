@@ -38,6 +38,7 @@ const LazyUserManagement = lazy(() => import('./pages/admin/UserManagement.jsx')
 const LazyMedicationConfig = lazy(() => import('./pages/admin/MedicationConfig.jsx'));
 const LazySurveyResponses = lazy(() => import('./pages/admin/SurveyResponses.jsx'));
 const LazyFeatureSettings = lazy(() => import('./pages/admin/FeatureSettings.jsx'));
+const LazyImpactReport = lazy(() => import('./pages/admin/ImpactReport.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
@@ -7053,6 +7054,7 @@ const AdminRoutes = () => {
                         <Route path="/admin/medications" element={<LazyMedicationConfig />} />
                         <Route path="/admin/surveys" element={<LazySurveyResponses />} />
                         <Route path="/admin/features" element={<LazyFeatureSettings />} />
+                        <Route path="/admin/impact" element={<LazyImpactReport />} />
                     </Routes>
                 </Suspense>
             </AuthProvider>

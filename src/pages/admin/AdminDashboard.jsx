@@ -15,6 +15,7 @@ import {
   ExternalLink,
   ChevronRight,
   Shield,
+  Heart,
   LogOut,
   Key,
 } from 'lucide-react';
@@ -116,6 +117,13 @@ export default function AdminDashboard() {
       icon: FileText,
       href: '/admin/surveys',
       color: 'bg-pink-100 text-pink-600',
+    },
+    {
+      title: 'Impact Report',
+      description: 'Funding-ready metrics & growth',
+      icon: Heart,
+      href: '/admin/impact',
+      color: 'bg-red-100 text-red-600',
     },
     {
       title: 'Feature Settings',
