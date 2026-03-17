@@ -12,10 +12,20 @@
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 
-const sql = neon(process.env.DATABASE_URL);
-
 // Simple JWT-like token (for demo - use proper JWT in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+
+// Lazy-init DB connection (avoid crash at module load if DATABASE_URL is unset)
+let _sql;
+function getDb() {
+  if (!_sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not configured');
+    }
+    _sql = neon(process.env.DATABASE_URL);
+  }
+  return _sql;
+}
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -102,7 +112,8 @@ export async function handler(event) {
       }
 
       // Find user
-      const users = await sql`
+      const db = getDb();
+      const users = await db`
         SELECT id, email, password_hash, name, role, org_id, is_active
         FROM users
         WHERE email = ${email.toLowerCase()}
@@ -138,7 +149,7 @@ export async function handler(event) {
       }
 
       // Update last login
-      await sql`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
+      await db`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
 
       // Generate token
       const token = generateToken(user);
@@ -180,7 +191,8 @@ export async function handler(event) {
       }
 
       // Check if user exists
-      const existing = await sql`SELECT id FROM users WHERE email = ${email.toLowerCase()}`;
+      const db = getDb();
+      const existing = await db`SELECT id FROM users WHERE email = ${email.toLowerCase()}`;
       if (existing.length > 0) {
         return {
           statusCode: 400,
@@ -194,7 +206,7 @@ export async function handler(event) {
       const passwordHash = `${hash}:${salt}`;
 
       // Create user
-      const result = await sql`
+      const result = await db`
         INSERT INTO users (email, password_hash, name, org_id, role)
         VALUES (${email.toLowerCase()}, ${passwordHash}, ${name || null}, ${orgId || null}, 'viewer')
         RETURNING id, email, name, role, org_id
@@ -272,7 +284,8 @@ export async function handler(event) {
         };
       }
 
-      const users = await sql`
+      const db = getDb();
+      const users = await db`
         SELECT u.id, u.email, u.name, u.role, u.org_id, o.name as org_name, o.slug as org_slug
         FROM users u
         LEFT JOIN organizations o ON u.org_id = o.id
