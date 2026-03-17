@@ -17,6 +17,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [seedStatus, setSeedStatus] = useState(null);
+  const [seeding, setSeeding] = useState(false);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -137,6 +139,47 @@ export default function Login() {
             </Link>
           </div>
         </div>
+
+        {/* First-time setup */}
+        {!seedStatus && (
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500 mb-2">First time? Set up your admin account:</p>
+            <button
+              onClick={async () => {
+                setSeeding(true);
+                setSeedStatus(null);
+                try {
+                  const res = await fetch('/.netlify/functions/admin-seed', { method: 'POST' });
+                  const data = await res.json();
+                  if (res.status === 201) {
+                    setSeedStatus({ type: 'success', message: `Admin account created! Email: ${data.email} — Password: ${data.temporaryPassword}` });
+                  } else if (res.status === 409) {
+                    setSeedStatus({ type: 'info', message: `Admin already exists: ${data.email}` });
+                  } else {
+                    setSeedStatus({ type: 'error', message: data.error || 'Setup failed' });
+                  }
+                } catch (err) {
+                  setSeedStatus({ type: 'error', message: 'Network error — try again' });
+                } finally {
+                  setSeeding(false);
+                }
+              }}
+              disabled={seeding}
+              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 disabled:opacity-50"
+            >
+              {seeding ? 'Setting up...' : 'Initialize Admin Account'}
+            </button>
+          </div>
+        )}
+        {seedStatus && (
+          <div className={`mt-4 p-3 rounded-lg text-sm text-center ${
+            seedStatus.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' :
+            seedStatus.type === 'info' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+            'bg-red-50 text-red-700 border border-red-200'
+          }`}>
+            {seedStatus.message}
+          </div>
+        )}
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
