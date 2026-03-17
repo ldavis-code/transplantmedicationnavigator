@@ -148,8 +148,12 @@ export async function handler(event) {
         };
       }
 
-      // Update last login
-      await db`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
+      // Update last login (non-fatal if column doesn't exist)
+      try {
+        await db`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;
+      } catch {
+        // last_login_at column may not exist on older schemas
+      }
 
       // Generate token
       const token = generateToken(user);
