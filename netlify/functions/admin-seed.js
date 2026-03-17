@@ -34,6 +34,14 @@ export async function handler(event) {
   }
 
   try {
+    if (!process.env.DATABASE_URL) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'DATABASE_URL environment variable is not configured' }),
+      };
+    }
+
     const sql = neon(process.env.DATABASE_URL);
 
     // Ensure users table exists
@@ -105,7 +113,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to seed admin user', details: error.message }),
+      body: JSON.stringify({ error: `Failed to seed admin user: ${error.message}` }),
     };
   }
 }
