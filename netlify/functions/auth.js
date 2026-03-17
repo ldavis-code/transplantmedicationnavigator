@@ -304,7 +304,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' }),
+      body: JSON.stringify({ error: `Auth error: ${error.message}` }),
     };
   }
 }
