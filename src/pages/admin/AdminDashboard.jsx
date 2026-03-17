@@ -40,20 +40,28 @@ export default function AdminDashboard() {
     }
   }, [isAdmin, tenantLoading, navigate]);
 
-  // Load dashboard stats
+  // Load dashboard stats from admin API
   useEffect(() => {
     async function loadStats() {
       try {
-        // TODO: Implement stats API
-        setStats({
-          totalUsers: 5,
-          activeUsers: 3,
-          priceReports: 127,
-          surveyResponses: 45,
-          pageViews: 1234,
+        const res = await fetch('/.netlify/functions/admin-api/stats', {
+          headers: { Authorization: `Bearer ${getToken()}` },
         });
+        if (res.ok) {
+          const data = await res.json();
+          setStats({
+            totalEvents: data.totalEvents || 0,
+            eventsThisMonth: data.eventsThisMonth || 0,
+            quizCompletes: data.quizCompletes || 0,
+            uniqueSessions: data.uniqueSessionsThisMonth || 0,
+          });
+        } else {
+          // Fallback if API fails
+          setStats({ totalEvents: 0, eventsThisMonth: 0, quizCompletes: 0, uniqueSessions: 0 });
+        }
       } catch (error) {
         console.error('Error loading stats:', error);
+        setStats({ totalEvents: 0, eventsThisMonth: 0, quizCompletes: 0, uniqueSessions: 0 });
       } finally {
         setLoadingStats(false);
       }
@@ -62,7 +70,7 @@ export default function AdminDashboard() {
     if (isAdmin) {
       loadStats();
     }
-  }, [isAdmin]);
+  }, [isAdmin, getToken]);
 
   if (tenantLoading || !isAdmin) {
     return (
@@ -119,10 +127,10 @@ export default function AdminDashboard() {
   ];
 
   const statCards = [
-    { label: 'Total Users', value: stats?.totalUsers || 0, icon: Users },
-    { label: 'Price Reports', value: stats?.priceReports || 0, icon: FileText },
-    { label: 'Survey Responses', value: stats?.surveyResponses || 0, icon: BarChart3 },
-    { label: 'Page Views (30d)', value: stats?.pageViews || 0, icon: ExternalLink },
+    { label: 'Total Events', value: stats?.totalEvents || 0, icon: BarChart3 },
+    { label: 'Events This Month', value: stats?.eventsThisMonth || 0, icon: FileText },
+    { label: 'Quiz Completions', value: stats?.quizCompletes || 0, icon: ExternalLink },
+    { label: 'Unique Sessions (Mo)', value: stats?.uniqueSessions || 0, icon: Users },
   ];
 
   return (
