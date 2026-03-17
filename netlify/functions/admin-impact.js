@@ -1,12 +1,14 @@
 /**
  * Admin Impact Report API
- * Aggregates funding-ready metrics: patient reach, program connections, medication insights
+ * Combines Netlify Analytics (real traffic) with DB events (program interactions)
  */
 
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
+const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
 
 let _sql;
 function getDb() {
@@ -37,6 +39,29 @@ function checkAuth(event) {
   }
 }
 
+/**
+ * Fetch from Netlify Analytics API
+ * Docs: https://analytics.services.netlify.com/v2/{site_id}/...
+ */
+async function fetchNetlifyAnalytics(endpoint, from, to, extraParams = '') {
+  if (!NETLIFY_API_TOKEN || !NETLIFY_SITE_ID) return null;
+
+  const url = `https://analytics.services.netlify.com/v2/${NETLIFY_SITE_ID}/${endpoint}?from=${from}&to=${to}&timezone=America/New_York${extraParams}`;
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${NETLIFY_API_TOKEN}` },
+    });
+    if (!res.ok) {
+      console.error(`Netlify Analytics ${endpoint} error: ${res.status} ${res.statusText}`);
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(`Netlify Analytics ${endpoint} fetch error:`, err.message);
+    return null;
+  }
+}
+
 export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
@@ -55,53 +80,110 @@ export async function handler(event) {
     const db = getDb();
     const params = event.queryStringParameters || {};
     const days = parseInt(params.days) || 90;
-    const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+    const now = new Date();
+    const cutoffDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+    const cutoff = cutoffDate.toISOString();
 
-    // 1. Patient Reach metrics
-    const reach = await db`
-      SELECT
-        COUNT(*) as total_events,
-        COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
-          CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
-        )) as unique_sessions,
-        COUNT(*) FILTER (WHERE event_name = 'page_view') as page_views,
-        COUNT(DISTINCT partner) FILTER (WHERE partner IS NOT NULL) as partner_count
-      FROM events
-      WHERE ts >= ${cutoff}
-    `;
+    // Unix timestamps in seconds for Netlify API
+    const fromTs = Math.floor(cutoffDate.getTime() / 1000);
+    const toTs = Math.floor(now.getTime() / 1000);
 
-    // 2. Program connection metrics (the funding story)
-    const connections = await db`
-      SELECT
-        COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_connections,
-        COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_connections,
-        COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_connections,
-        COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as total_connections,
-        COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
-        COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completions,
-        COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches
-      FROM events
-      WHERE ts >= ${cutoff}
-    `;
+    // --- Netlify Analytics (real traffic data) ---
+    const [pageviewsData, visitorsData, topPagesData, topSourcesData] = await Promise.all([
+      fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
+      fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
+      fetchNetlifyAnalytics('ranking/pages', fromTs, toTs, '&limit=20'),
+      fetchNetlifyAnalytics('ranking/sources', fromTs, toTs, '&limit=15'),
+    ]);
 
-    // 3. Top programs by clicks (which programs drive the most value)
-    const topPrograms = await db`
-      SELECT
-        program_id,
-        program_type,
-        COUNT(*) as clicks
-      FROM events
-      WHERE program_id IS NOT NULL
-        AND ts >= ${cutoff}
-      GROUP BY program_id, program_type
-      ORDER BY clicks DESC
-      LIMIT 15
-    `;
+    // Aggregate Netlify totals
+    let netlifyPageviews = 0;
+    let netlifyVisitors = 0;
+    let dailyTraffic = [];
 
-    // 4. Top medications searched/viewed
-    let topMedications = [];
+    if (pageviewsData?.data) {
+      netlifyPageviews = pageviewsData.data.reduce((sum, d) => sum + (d.count || 0), 0);
+      dailyTraffic = pageviewsData.data.map(d => ({ date: d.date, pageviews: d.count || 0 }));
+    }
+    if (visitorsData?.data) {
+      netlifyVisitors = visitorsData.data.reduce((sum, d) => sum + (d.count || 0), 0);
+      // Merge visitor counts into daily traffic
+      visitorsData.data.forEach((d, i) => {
+        if (dailyTraffic[i]) {
+          dailyTraffic[i].visitors = d.count || 0;
+        }
+      });
+    }
+
+    // Top pages from Netlify
+    const topPages = (topPagesData?.data || []).map(p => ({
+      path: p.resource,
+      count: p.count || 0,
+    }));
+
+    // Top referral sources from Netlify
+    const topSources = (topSourcesData?.data || []).map(s => ({
+      source: s.resource || 'Direct',
+      count: s.count || 0,
+    }));
+
+    const hasNetlifyData = !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID);
+
+    // --- Database: program interaction metrics ---
+    const [connections, reach, topPrograms, weeklyTrend] = await Promise.all([
+      db`
+        SELECT
+          COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_connections,
+          COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_connections,
+          COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_connections,
+          COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as total_connections,
+          COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
+          COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completions,
+          COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches,
+          COUNT(*) FILTER (WHERE event_name = 'page_view') as db_page_views,
+          COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
+            CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
+          )) as unique_sessions,
+          COUNT(DISTINCT partner) FILTER (WHERE partner IS NOT NULL) as partner_count
+        FROM events
+        WHERE ts >= ${cutoff}
+      `,
+      // Funnel data for conversion rates
+      db`
+        SELECT event_name, COUNT(*) as count
+        FROM events
+        WHERE ts >= ${cutoff}
+        GROUP BY event_name
+      `,
+      // Top programs by clicks
+      db`
+        SELECT program_id, program_type, COUNT(*) as clicks
+        FROM events
+        WHERE program_id IS NOT NULL AND ts >= ${cutoff}
+        GROUP BY program_id, program_type
+        ORDER BY clicks DESC
+        LIMIT 15
+      `,
+      // Weekly trend
+      db`
+        SELECT
+          DATE_TRUNC('week', ts) as week,
+          COUNT(*) as events,
+          COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as program_connections,
+          COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
+            CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
+          )) as unique_sessions
+        FROM events
+        WHERE ts >= ${cutoff}
+        GROUP BY DATE_TRUNC('week', ts)
+        ORDER BY week ASC
+      `,
+    ]);
+
+    // Medication insights (table may not exist)
+    let medicationInsights = [];
     try {
-      topMedications = await db`
+      const topMedications = await db`
         SELECT medication_name, interaction_type, COUNT(*) as count
         FROM medication_tracking
         WHERE created_at >= ${cutoff}
@@ -109,80 +191,79 @@ export async function handler(event) {
         ORDER BY count DESC
         LIMIT 30
       `;
+      const medMap = {};
+      topMedications.forEach(row => {
+        if (!medMap[row.medication_name]) {
+          medMap[row.medication_name] = { name: row.medication_name, searches: 0, views: 0, clicks: 0, adds: 0 };
+        }
+        const m = medMap[row.medication_name];
+        if (row.interaction_type === 'search') m.searches = parseInt(row.count);
+        if (row.interaction_type === 'view') m.views = parseInt(row.count);
+        if (row.interaction_type === 'program_click') m.clicks = parseInt(row.count);
+        if (row.interaction_type === 'add_to_list') m.adds = parseInt(row.count);
+      });
+      medicationInsights = Object.values(medMap)
+        .sort((a, b) => (b.searches + b.views + b.clicks) - (a.searches + a.views + a.clicks))
+        .slice(0, 15);
     } catch {
       // medication_tracking table may not exist yet
     }
 
-    // 5. Weekly trend (for growth chart)
-    const weeklyTrend = await db`
-      SELECT
-        DATE_TRUNC('week', ts) as week,
-        COUNT(*) as events,
-        COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as program_connections,
-        COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
-          CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
-        )) as unique_sessions
-      FROM events
-      WHERE ts >= ${cutoff}
-      GROUP BY DATE_TRUNC('week', ts)
-      ORDER BY week ASC
-    `;
-
-    // 6. Price report stats
+    // Price reports (table may not exist)
     let priceReportStats = { total_reports: 0, unique_medications: 0 };
     try {
       const pr = await db`
         SELECT COUNT(*) as total_reports, COUNT(DISTINCT medication_id) as unique_medications
-        FROM price_reports
-        WHERE created_at >= ${cutoff}
+        FROM price_reports WHERE created_at >= ${cutoff}
       `;
       priceReportStats = pr[0] || priceReportStats;
     } catch {
-      // price_reports table may not exist
+      // table may not exist
     }
 
-    // 7. Quiz email leads
+    // Quiz email leads (table may not exist)
     let leadCount = 0;
     try {
       const leads = await db`
-        SELECT COUNT(*) as count FROM quiz_email_leads
-        WHERE created_at >= ${cutoff}
+        SELECT COUNT(*) as count FROM quiz_email_leads WHERE created_at >= ${cutoff}
       `;
       leadCount = parseInt(leads[0]?.count || 0);
     } catch {
       // table may not exist
     }
 
-    // Aggregate top medications by unique medication name
-    const medMap = {};
-    topMedications.forEach(row => {
-      if (!medMap[row.medication_name]) {
-        medMap[row.medication_name] = { name: row.medication_name, searches: 0, views: 0, clicks: 0, adds: 0 };
-      }
-      const m = medMap[row.medication_name];
-      if (row.interaction_type === 'search') m.searches = parseInt(row.count);
-      if (row.interaction_type === 'view') m.views = parseInt(row.count);
-      if (row.interaction_type === 'program_click') m.clicks = parseInt(row.count);
-      if (row.interaction_type === 'add_to_list') m.adds = parseInt(row.count);
-    });
-    const medicationInsights = Object.values(medMap)
-      .sort((a, b) => (b.searches + b.views + b.clicks) - (a.searches + a.views + a.clicks))
-      .slice(0, 15);
-
-    const r = reach[0] || {};
     const c = connections[0] || {};
+    const funnelCounts = Object.fromEntries(reach.map(r => [r.event_name, parseInt(r.count)]));
+
+    // Use Netlify data for traffic, fall back to DB events
+    const totalPageviews = hasNetlifyData ? netlifyPageviews : parseInt(c.db_page_views || 0);
+    const totalVisitors = hasNetlifyData ? netlifyVisitors : parseInt(c.unique_sessions || 0);
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        period: { days, start: cutoff.split('T')[0], end: new Date().toISOString().split('T')[0] },
-        patientReach: {
-          uniqueSessions: parseInt(r.unique_sessions || 0),
-          pageViews: parseInt(r.page_views || 0),
-          totalEvents: parseInt(r.total_events || 0),
-          partnerOrgs: parseInt(r.partner_count || 0),
+        period: {
+          days,
+          start: cutoff.split('T')[0],
+          end: now.toISOString().split('T')[0],
         },
+        dataSource: hasNetlifyData ? 'netlify+db' : 'db',
+        // Traffic metrics (from Netlify if available, else DB)
+        traffic: {
+          pageviews: totalPageviews,
+          uniqueVisitors: totalVisitors,
+          topPages,
+          topSources,
+          dailyTraffic: hasNetlifyData ? dailyTraffic : [],
+        },
+        // Patient reach (from DB events)
+        patientReach: {
+          uniqueSessions: parseInt(c.unique_sessions || 0),
+          pageViews: parseInt(c.db_page_views || 0),
+          partnerOrgs: parseInt(c.partner_count || 0),
+        },
+        // Program connections (from DB events)
         programConnections: {
           total: parseInt(c.total_connections || 0),
           copay: parseInt(c.copay_connections || 0),
@@ -191,6 +272,16 @@ export async function handler(event) {
           quizStarts: parseInt(c.quiz_starts || 0),
           quizCompletions: parseInt(c.quiz_completions || 0),
           medSearches: parseInt(c.med_searches || 0),
+        },
+        // Conversion funnel
+        funnel: {
+          pageViews: funnelCounts.page_view || 0,
+          quizStarts: funnelCounts.quiz_start || 0,
+          quizCompletes: funnelCounts.quiz_complete || 0,
+          medSearches: funnelCounts.med_search || 0,
+          applicationClicks: (funnelCounts.copay_card_click || 0) +
+            (funnelCounts.foundation_click || 0) +
+            (funnelCounts.pap_click || 0),
         },
         topPrograms: topPrograms.map(p => ({
           programId: p.program_id,
