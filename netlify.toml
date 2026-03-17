@@ -44,6 +44,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/admin-seed"
+  to = "/.netlify/functions/admin-seed"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/admin-licenses/*"
   to = "/.netlify/functions/admin-licenses/:splat"
   status = 200
