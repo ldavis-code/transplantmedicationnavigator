@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { trackServerEvent } from '../lib/trackServerEvent';
 
 /**
  * Google Analytics 4 Integration Component
@@ -97,6 +98,7 @@ const GoogleAnalytics = () => {
     // Small delay to ensure the page title has updated
     const timeoutId = setTimeout(() => {
       trackPageView(location.pathname + location.search, document.title);
+      trackServerEvent('page_view');
     }, 100);
 
     return () => clearTimeout(timeoutId);

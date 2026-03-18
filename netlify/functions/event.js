@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless';
 
 // Initialize Neon client lazily
 let sql;
+let schemaFixed = false;
 const getDb = () => {
     if (!sql) {
         sql = neon(process.env.DATABASE_URL);
@@ -175,19 +176,31 @@ export async function handler(event) {
             }
         }
 
+        // Extract program info from meta if available
+        const programType = (sanitizedMeta && sanitizedMeta.programType) || null;
+        const programId = (sanitizedMeta && sanitizedMeta.programId) || null;
+
         // Fire-and-forget: Start the DB write but don't await it
         // This makes analytics non-blocking under high load
         const writeEvent = async () => {
             try {
                 const db = getDb();
+
+                // Ensure columns are nullable (self-healing for old schema, runs once per cold start)
+                if (!schemaFixed) {
+                    await db`ALTER TABLE events ALTER COLUMN program_type DROP NOT NULL`.catch(() => {});
+                    await db`ALTER TABLE events ALTER COLUMN program_id DROP NOT NULL`.catch(() => {});
+                    schemaFixed = true;
+                }
+
                 await db`
                     INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json)
                     VALUES (
                         ${event_name},
                         ${sanitizedPartner},
                         ${sanitizedPageSource},
-                        ${null},
-                        ${null},
+                        ${programType},
+                        ${programId},
                         ${sanitizedMeta ? JSON.stringify(sanitizedMeta) : null}
                     )
                 `;
