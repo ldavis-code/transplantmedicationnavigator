@@ -259,17 +259,16 @@ async function getEvents(db, params) {
 async function getEventsByPartner(db, params) {
     const dates = parseDateRange(params);
 
+    const startIso = params.start ? new Date(params.start).toISOString() : '1970-01-01T00:00:00.000Z';
+    const endIso = params.end ? (() => { const d = new Date(params.end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
+
     const result = await db`
-        SELECT
-            COALESCE(partner, '(none)') as partner,
-            COUNT(*) as total,
+        SELECT COALESCE(partner, '(none)') as partner, COUNT(*) as total,
             COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
             COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
         FROM events
-        WHERE (${params.start ? db`ts >= ${new Date(params.start).toISOString()}` : db`TRUE`})
-          AND (${params.end ? db`ts <= ${new Date(params.end).toISOString()}` : db`TRUE`})
-        GROUP BY partner
-        ORDER BY total DESC
+        WHERE ts >= ${startIso} AND ts <= ${endIso}
+        GROUP BY partner ORDER BY total DESC
     `;
 
     // Get top program for each partner
@@ -299,39 +298,28 @@ async function getEventsByPartner(db, params) {
 // Get events by program
 async function getEventsByProgram(db, params) {
     const dates = parseDateRange(params);
-    const { program_type } = params;
+    const { program_type, start, end } = params;
+    const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
+    const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
     let result;
     if (program_type) {
         result = await db`
-            SELECT
-                program_id,
-                program_type,
-                COUNT(*) as total,
+            SELECT program_id, program_type, COUNT(*) as total,
                 COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
                 COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
-            FROM events
-            WHERE program_id IS NOT NULL
-              AND program_type = ${program_type}
-              AND (${params.start ? db`ts >= ${new Date(params.start).toISOString()}` : db`TRUE`})
-              AND (${params.end ? db`ts <= ${new Date(params.end).toISOString()}` : db`TRUE`})
-            GROUP BY program_id, program_type
-            ORDER BY total DESC
+            FROM events WHERE program_id IS NOT NULL AND program_type = ${program_type}
+              AND ts >= ${startIso} AND ts <= ${endIso}
+            GROUP BY program_id, program_type ORDER BY total DESC
         `;
     } else {
         result = await db`
-            SELECT
-                program_id,
-                program_type,
-                COUNT(*) as total,
+            SELECT program_id, program_type, COUNT(*) as total,
                 COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
                 COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
-            FROM events
-            WHERE program_id IS NOT NULL
-              AND (${params.start ? db`ts >= ${new Date(params.start).toISOString()}` : db`TRUE`})
-              AND (${params.end ? db`ts <= ${new Date(params.end).toISOString()}` : db`TRUE`})
-            GROUP BY program_id, program_type
-            ORDER BY total DESC
+            FROM events WHERE program_id IS NOT NULL
+              AND ts >= ${startIso} AND ts <= ${endIso}
+            GROUP BY program_id, program_type ORDER BY total DESC
         `;
     }
 
@@ -347,23 +335,23 @@ async function getEventsByProgram(db, params) {
 // Get funnel metrics
 async function getFunnel(db, params) {
     const { partner, start, end } = params;
+    // Use extreme date bounds as defaults to avoid nested tagged templates
+    const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
+    const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
     let result;
     if (partner) {
         result = await db`
             SELECT event_name, COUNT(*) as count
             FROM events
-            WHERE partner = ${partner}
-              AND (${start ? db`ts >= ${new Date(start).toISOString()}` : db`TRUE`})
-              AND (${end ? db`ts <= ${new Date(end).toISOString()}` : db`TRUE`})
+            WHERE partner = ${partner} AND ts >= ${startIso} AND ts <= ${endIso}
             GROUP BY event_name
         `;
     } else {
         result = await db`
             SELECT event_name, COUNT(*) as count
             FROM events
-            WHERE (${start ? db`ts >= ${new Date(start).toISOString()}` : db`TRUE`})
-              AND (${end ? db`ts <= ${new Date(end).toISOString()}` : db`TRUE`})
+            WHERE ts >= ${startIso} AND ts <= ${endIso}
             GROUP BY event_name
         `;
     }
@@ -397,26 +385,23 @@ async function getFunnel(db, params) {
 // Generate CSV export
 async function exportCsv(db, params) {
     const { partner, start, end } = params;
+    const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
+    const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
     let result;
     if (partner) {
         result = await db`
             SELECT id, ts, event_name, partner, page_source, program_type, program_id
             FROM events
-            WHERE partner = ${partner}
-              AND (${start ? db`ts >= ${new Date(start).toISOString()}` : db`TRUE`})
-              AND (${end ? db`ts <= ${new Date(end).toISOString()}` : db`TRUE`})
-            ORDER BY ts DESC
-            LIMIT 10000
+            WHERE partner = ${partner} AND ts >= ${startIso} AND ts <= ${endIso}
+            ORDER BY ts DESC LIMIT 10000
         `;
     } else {
         result = await db`
             SELECT id, ts, event_name, partner, page_source, program_type, program_id
             FROM events
-            WHERE (${start ? db`ts >= ${new Date(start).toISOString()}` : db`TRUE`})
-              AND (${end ? db`ts <= ${new Date(end).toISOString()}` : db`TRUE`})
-            ORDER BY ts DESC
-            LIMIT 10000
+            WHERE ts >= ${startIso} AND ts <= ${endIso}
+            ORDER BY ts DESC LIMIT 10000
         `;
     }
 
