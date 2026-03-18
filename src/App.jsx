@@ -129,6 +129,7 @@ import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
 import { fetchAllMedications } from './lib/medicationsApi.js';
 import { trackMedicationSearch, trackMedicationView, trackMedicationAddToList } from './lib/medicationTrackingApi.js';
+import { trackServerEvent } from './lib/trackServerEvent.js';
 
 // Initialize data from imported JSON files - MEDICATIONS_DATA is used as fallback
 // Medications will be fetched from the database API when available
@@ -1574,6 +1575,7 @@ const Wizard = () => {
         const matches = fuseResults.map(result => result.item);
         setMedSearchResult(matches);
         setIsMedSearching(false);
+        trackServerEvent('med_search', { resultCount: matches.length, context: 'wizard' });
     }, [medSearchTerm, medFuse]);
 
     // Debounced search effect
@@ -1628,7 +1630,7 @@ const Wizard = () => {
     const prevStep = () => setStep(step - 1);
 
     // Navigation Logic - Updated for grouped sections
-    const handleNextFromAboutYou = () => setStep(2);
+    const handleNextFromAboutYou = () => { trackServerEvent('quiz_start'); setStep(2); };
     const handleNextFromTransplant = () => setStep(3);
     const handleNextFromCoverage = () => setStep(4);
     const handleNextFromMeds = () => setStep(5);
@@ -1696,6 +1698,11 @@ const Wizard = () => {
             setIsSubmittingEmail(false);
         }
     };
+
+    // Track quiz completion when user reaches results
+    useEffect(() => {
+        if (step === 7) trackServerEvent('quiz_complete');
+    }, [step]);
 
     // Check if commercial insurance for specialty pharmacy question
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
@@ -2972,6 +2979,7 @@ const MedicationSearch = () => {
         setIsSearching(false);
 
         // Track search interactions for analytics
+        trackServerEvent('med_search', { resultCount: internalMatches.length });
         if (internalMatches.length > 0) {
             trackMedicationSearch(internalMatches[0].genericName || internalMatches[0].brandName, searchTerm.trim());
         }
