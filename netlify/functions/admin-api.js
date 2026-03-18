@@ -14,6 +14,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
 
 // Initialize Neon client lazily
 let sql;
@@ -22,6 +23,19 @@ const getDb = () => {
         sql = neon(process.env.DATABASE_URL);
     }
     return sql;
+};
+
+// Initialize Supabase client lazily (for subscriber data)
+let supabaseClient;
+const getSupabase = () => {
+    if (!supabaseClient && process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY) {
+        supabaseClient = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_SERVICE_KEY,
+            { auth: { autoRefreshToken: false, persistSession: false } }
+        );
+    }
+    return supabaseClient;
 };
 
 // Token secret for verification — must match auth.js
@@ -522,6 +536,81 @@ async function getPartnerReport(db, partner, params) {
     };
 }
 
+// Get subscriber stats from Supabase
+async function getSubscriberStats() {
+    const sb = getSupabase();
+    if (!sb) {
+        return { available: false };
+    }
+
+    try {
+        // Total registered users
+        const { count: totalUsers } = await sb
+            .from('user_profiles')
+            .select('id', { count: 'exact', head: true });
+
+        // Active subscribers (have a paid plan)
+        const { count: activeSubscribers } = await sb
+            .from('user_profiles')
+            .select('id', { count: 'exact', head: true })
+            .eq('subscription_status', 'active');
+
+        // Users who registered this month
+        const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+        const { count: newUsersThisMonth } = await sb
+            .from('user_profiles')
+            .select('id', { count: 'exact', head: true })
+            .gte('created_at', startOfMonth);
+
+        // Plan breakdown
+        const { data: planData } = await sb
+            .from('user_profiles')
+            .select('plan, subscription_status');
+
+        const plans = {};
+        (planData || []).forEach(u => {
+            const key = u.plan || 'free';
+            plans[key] = (plans[key] || 0) + 1;
+        });
+
+        // Users with synced data (have quiz data or medications)
+        const { count: usersWithMeds } = await sb
+            .from('user_medications')
+            .select('user_id', { count: 'exact', head: true });
+
+        const { count: usersWithQuizData } = await sb
+            .from('user_quiz_data')
+            .select('user_id', { count: 'exact', head: true });
+
+        // Recent signups (last 10)
+        const { data: recentSignups } = await sb
+            .from('user_profiles')
+            .select('id, email, plan, subscription_status, created_at')
+            .order('created_at', { ascending: false })
+            .limit(10);
+
+        return {
+            available: true,
+            totalUsers: totalUsers || 0,
+            activeSubscribers: activeSubscribers || 0,
+            newUsersThisMonth: newUsersThisMonth || 0,
+            plans,
+            syncedMedications: usersWithMeds || 0,
+            syncedQuizData: usersWithQuizData || 0,
+            recentSignups: (recentSignups || []).map(u => ({
+                id: u.id,
+                email: u.email,
+                plan: u.plan || 'free',
+                status: u.subscription_status || 'none',
+                createdAt: u.created_at,
+            })),
+        };
+    } catch (error) {
+        console.error('Error fetching subscriber stats:', error);
+        return { available: false, error: error.message };
+    }
+}
+
 export async function handler(event) {
     // Handle CORS preflight
     if (event.httpMethod === 'OPTIONS') {
@@ -560,6 +649,16 @@ export async function handler(event) {
                 statusCode: 200,
                 headers,
                 body: JSON.stringify(stats),
+            };
+        }
+
+        // GET /admin-api/subscribers
+        if (path === '/subscribers') {
+            const subscriberStats = await getSubscriberStats();
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify(subscriberStats),
             };
         }
 
