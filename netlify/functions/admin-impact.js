@@ -3,8 +3,8 @@
  * Combines Netlify Analytics (real traffic) with DB events (program interactions)
  */
 
-import { neon } from '@neondatabase/serverless';
-import crypto from 'crypto';
+const { neon } = require('@neondatabase/serverless');
+const crypto = require('crypto');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
@@ -111,55 +111,57 @@ const headers = {
 
 function checkAuth(event) {
   const authHeader = event.headers.authorization || event.headers.Authorization;
-  if (!authHeader?.startsWith('Bearer ')) return null;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
   try {
-    const [data, signature] = authHeader.substring(7).split('.');
+    const parts = authHeader.substring(7).split('.');
+    const data = parts[0];
+    const signature = parts[1];
     const expected = crypto.createHmac('sha256', JWT_SECRET).update(data).digest('hex');
     if (signature !== expected) return null;
     const payload = JSON.parse(Buffer.from(data, 'base64').toString());
     if (payload.exp < Date.now()) return null;
     if (payload.role !== 'super_admin' && payload.role !== 'org_admin') return null;
     return payload;
-  } catch {
+  } catch (e) {
     return null;
   }
 }
 
 /**
  * Fetch from Netlify Analytics API
- * Docs: https://analytics.services.netlify.com/v2/{site_id}/...
  */
-async function fetchNetlifyAnalytics(endpoint, from, to, extraParams = '') {
+async function fetchNetlifyAnalytics(endpoint, from, to, extraParams) {
+  if (!extraParams) extraParams = '';
   if (!NETLIFY_API_TOKEN || !NETLIFY_SITE_ID) return null;
 
-  const url = `https://analytics.services.netlify.com/v2/${NETLIFY_SITE_ID}/${endpoint}?from=${from}&to=${to}&timezone=America/New_York${extraParams}`;
+  const url = 'https://analytics.services.netlify.com/v2/' + NETLIFY_SITE_ID + '/' + endpoint + '?from=' + from + '&to=' + to + '&timezone=America/New_York' + extraParams;
   try {
     const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${NETLIFY_API_TOKEN}` },
+      headers: { Authorization: 'Bearer ' + NETLIFY_API_TOKEN },
     });
     if (!res.ok) {
-      console.error(`Netlify Analytics ${endpoint} error: ${res.status} ${res.statusText}`);
+      console.error('Netlify Analytics ' + endpoint + ' error: ' + res.status + ' ' + res.statusText);
       return null;
     }
     return await res.json();
   } catch (err) {
-    console.error(`Netlify Analytics ${endpoint} fetch error:`, err.message);
+    console.error('Netlify Analytics ' + endpoint + ' fetch error:', err.message);
     return null;
   }
 }
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+    return { statusCode: 200, headers: headers, body: '' };
   }
 
   if (event.httpMethod !== 'GET') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return { statusCode: 405, headers: headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   const auth = checkAuth(event);
   if (!auth) {
-    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
+    return { statusCode: 401, headers: headers, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 
   try {
@@ -174,26 +176,29 @@ export async function handler(event) {
     const toTs = Math.floor(now.getTime() / 1000);
 
     // --- Netlify Analytics (real traffic data) ---
-    const [pageviewsData, visitorsData, topPagesData, topSourcesData] = await Promise.all([
+    var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('ranking/pages', fromTs, toTs, '&limit=20'),
       fetchNetlifyAnalytics('ranking/sources', fromTs, toTs, '&limit=15'),
     ]);
+    var pageviewsData = results[0];
+    var visitorsData = results[1];
+    var topPagesData = results[2];
+    var topSourcesData = results[3];
 
     // Aggregate Netlify totals
-    let netlifyPageviews = 0;
-    let netlifyVisitors = 0;
-    let dailyTraffic = [];
+    var netlifyPageviews = 0;
+    var netlifyVisitors = 0;
+    var dailyTraffic = [];
 
-    if (pageviewsData?.data) {
-      netlifyPageviews = pageviewsData.data.reduce((sum, d) => sum + (d.count || 0), 0);
-      dailyTraffic = pageviewsData.data.map(d => ({ date: d.date, pageviews: d.count || 0 }));
+    if (pageviewsData && pageviewsData.data) {
+      netlifyPageviews = pageviewsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
+      dailyTraffic = pageviewsData.data.map(function(d) { return { date: d.date, pageviews: d.count || 0 }; });
     }
-    if (visitorsData?.data) {
-      netlifyVisitors = visitorsData.data.reduce((sum, d) => sum + (d.count || 0), 0);
-      // Merge visitor counts into daily traffic
-      visitorsData.data.forEach((d, i) => {
+    if (visitorsData && visitorsData.data) {
+      netlifyVisitors = visitorsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
+      visitorsData.data.forEach(function(d, i) {
         if (dailyTraffic[i]) {
           dailyTraffic[i].visitors = d.count || 0;
         }
@@ -201,28 +206,25 @@ export async function handler(event) {
     }
 
     // Top pages from Netlify
-    const topPages = (topPagesData?.data || []).map(p => ({
-      path: p.resource,
-      count: p.count || 0,
-    }));
+    var topPages = ((topPagesData && topPagesData.data) || []).map(function(p) {
+      return { path: p.resource, count: p.count || 0 };
+    });
 
     // Top referral sources from Netlify
-    const topSources = (topSourcesData?.data || []).map(s => ({
-      source: s.resource || 'Direct',
-      count: s.count || 0,
-    }));
+    var topSources = ((topSourcesData && topSourcesData.data) || []).map(function(s) {
+      return { source: s.resource || 'Direct', count: s.count || 0 };
+    });
 
-    const hasNetlifyData = !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID);
+    var hasNetlifyData = !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID);
 
     // --- Database: program interaction metrics ---
-    // Wrapped in try/catch — events table may not exist yet
-    let connections = [{}];
-    let reach = [];
-    let topPrograms = [];
-    let weeklyTrend = [];
-    let dbAvailable = false;
+    var connections = [{}];
+    var reach = [];
+    var topPrograms = [];
+    var weeklyTrend = [];
+    var dbAvailable = false;
     try {
-      const results = await Promise.all([
+      var dbResults = await Promise.all([
         db`
           SELECT
             COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_connections,
@@ -268,19 +270,19 @@ export async function handler(event) {
           ORDER BY week ASC
         `,
       ]);
-      connections = results[0];
-      reach = results[1];
-      topPrograms = results[2];
-      weeklyTrend = results[3];
+      connections = dbResults[0];
+      reach = dbResults[1];
+      topPrograms = dbResults[2];
+      weeklyTrend = dbResults[3];
       dbAvailable = true;
     } catch (dbErr) {
       console.warn('Events table query failed (table may not exist):', dbErr.message);
     }
 
     // Medication insights (table may not exist)
-    let medicationInsights = [];
+    var medicationInsights = [];
     try {
-      const topMedications = await db`
+      var topMedications = await db`
         SELECT medication_name, interaction_type, COUNT(*) as count
         FROM medication_tracking
         WHERE created_at >= ${cutoff}
@@ -288,63 +290,64 @@ export async function handler(event) {
         ORDER BY count DESC
         LIMIT 30
       `;
-      const medMap = {};
-      topMedications.forEach(row => {
+      var medMap = {};
+      topMedications.forEach(function(row) {
         if (!medMap[row.medication_name]) {
           medMap[row.medication_name] = { name: row.medication_name, searches: 0, views: 0, clicks: 0, adds: 0 };
         }
-        const m = medMap[row.medication_name];
+        var m = medMap[row.medication_name];
         if (row.interaction_type === 'search') m.searches = parseInt(row.count);
         if (row.interaction_type === 'view') m.views = parseInt(row.count);
         if (row.interaction_type === 'program_click') m.clicks = parseInt(row.count);
         if (row.interaction_type === 'add_to_list') m.adds = parseInt(row.count);
       });
       medicationInsights = Object.values(medMap)
-        .sort((a, b) => (b.searches + b.views + b.clicks) - (a.searches + a.views + a.clicks))
+        .sort(function(a, b) { return (b.searches + b.views + b.clicks) - (a.searches + a.views + a.clicks); })
         .slice(0, 15);
-    } catch {
+    } catch (e) {
       // medication_tracking table may not exist yet
     }
 
     // Price reports (table may not exist)
-    let priceReportStats = { total_reports: 0, unique_medications: 0 };
+    var priceReportStats = { total_reports: 0, unique_medications: 0 };
     try {
-      const pr = await db`
+      var pr = await db`
         SELECT COUNT(*) as total_reports, COUNT(DISTINCT medication_id) as unique_medications
         FROM price_reports WHERE created_at >= ${cutoff}
       `;
       priceReportStats = pr[0] || priceReportStats;
-    } catch {
+    } catch (e) {
       // table may not exist
     }
 
     // Quiz email leads (table may not exist)
-    let leadCount = 0;
+    var leadCount = 0;
     try {
-      const leads = await db`
+      var leads = await db`
         SELECT COUNT(*) as count FROM quiz_email_leads WHERE created_at >= ${cutoff}
       `;
-      leadCount = parseInt(leads[0]?.count || 0);
-    } catch {
+      leadCount = parseInt((leads[0] && leads[0].count) || 0);
+    } catch (e) {
       // table may not exist
     }
 
-    const c = connections[0] || {};
-    const funnelCounts = Object.fromEntries(reach.map(r => [r.event_name, parseInt(r.count)]));
+    var c = connections[0] || {};
+    var funnelCounts = {};
+    reach.forEach(function(r) { funnelCounts[r.event_name] = parseInt(r.count); });
 
     // Use Netlify data for traffic, fall back to DB events
-    const totalPageviews = hasNetlifyData ? netlifyPageviews : parseInt(c.db_page_views || 0);
-    const totalVisitors = hasNetlifyData ? netlifyVisitors : parseInt(c.unique_sessions || 0);
+    var totalPageviews = hasNetlifyData ? netlifyPageviews : parseInt(c.db_page_views || 0);
+    var totalVisitors = hasNetlifyData ? netlifyVisitors : parseInt(c.unique_sessions || 0);
 
     // Await Netlify Analytics result
     const siteTraffic = await analyticsPromise;
 
     return {
       statusCode: 200,
-      headers,
+      headers: headers,
       body: JSON.stringify({
         period: {
-          days,
+          days: days,
           start: cutoff.split('T')[0],
           end: now.toISOString().split('T')[0],
         },
@@ -357,21 +360,18 @@ export async function handler(event) {
           netlifyConfigured: !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID),
           database: dbAvailable,
         },
-        // Traffic metrics (from Netlify if available, else DB)
         traffic: {
           pageviews: totalPageviews,
           uniqueVisitors: totalVisitors,
-          topPages,
-          topSources,
+          topPages: topPages,
+          topSources: topSources,
           dailyTraffic: hasNetlifyData ? dailyTraffic : [],
         },
-        // Patient reach (from DB events)
         patientReach: {
           uniqueSessions: parseInt(c.unique_sessions || 0),
           pageViews: parseInt(c.db_page_views || 0),
           partnerOrgs: parseInt(c.partner_count || 0),
         },
-        // Program connections (from DB events)
         programConnections: {
           total: parseInt(c.total_connections || 0),
           copay: parseInt(c.copay_connections || 0),
@@ -381,7 +381,6 @@ export async function handler(event) {
           quizCompletions: parseInt(c.quiz_completions || 0),
           medSearches: parseInt(c.med_searches || 0),
         },
-        // Conversion funnel
         funnel: {
           pageViews: funnelCounts.page_view || 0,
           quizStarts: funnelCounts.quiz_start || 0,
@@ -391,18 +390,18 @@ export async function handler(event) {
             (funnelCounts.foundation_click || 0) +
             (funnelCounts.pap_click || 0),
         },
-        topPrograms: topPrograms.map(p => ({
-          programId: p.program_id,
-          programType: p.program_type,
-          clicks: parseInt(p.clicks),
-        })),
-        medicationInsights,
-        weeklyTrend: weeklyTrend.map(w => ({
-          week: w.week,
-          events: parseInt(w.events),
-          programConnections: parseInt(w.program_connections),
-          uniqueSessions: parseInt(w.unique_sessions),
-        })),
+        topPrograms: topPrograms.map(function(p) {
+          return { programId: p.program_id, programType: p.program_type, clicks: parseInt(p.clicks) };
+        }),
+        medicationInsights: medicationInsights,
+        weeklyTrend: weeklyTrend.map(function(w) {
+          return {
+            week: w.week,
+            events: parseInt(w.events),
+            programConnections: parseInt(w.program_connections),
+            uniqueSessions: parseInt(w.unique_sessions),
+          };
+        }),
         communityPricing: {
           totalReports: parseInt(priceReportStats.total_reports || 0),
           uniqueMedications: parseInt(priceReportStats.unique_medications || 0),
@@ -434,4 +433,4 @@ export async function handler(event) {
       }),
     };
   }
-}
+};
