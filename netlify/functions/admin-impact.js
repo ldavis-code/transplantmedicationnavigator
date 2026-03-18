@@ -22,86 +22,6 @@ function getDb() {
   return _sql;
 }
 
-/**
- * Fetch site traffic from Netlify Analytics API
- * Requires NETLIFY_API_TOKEN and NETLIFY_SITE_ID env variables
- */
-async function fetchNetlifyAnalytics(days) {
-  const token = process.env.NETLIFY_API_TOKEN;
-  const siteId = process.env.NETLIFY_SITE_ID;
-
-  if (!token || !siteId) {
-    return {
-      available: false,
-      error: !token && !siteId
-        ? 'NETLIFY_API_TOKEN and NETLIFY_SITE_ID are not configured'
-        : !token
-          ? 'NETLIFY_API_TOKEN is not configured'
-          : 'NETLIFY_SITE_ID is not configured',
-      hint: 'Set these in Netlify Dashboard > Site Settings > Environment Variables',
-    };
-  }
-
-  try {
-    const now = Date.now();
-    const from = now - days * 24 * 60 * 60 * 1000;
-    const baseUrl = `https://analytics.services.netlify.com/v2/${siteId}`;
-    const qs = `from=${from}&to=${now}&timezone=-0500&resolution=day`;
-
-    const [pagesRes, sourcesRes] = await Promise.all([
-      fetch(`${baseUrl}/pages?${qs}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      fetch(`${baseUrl}/sources?${qs}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-    ]);
-
-    if (!pagesRes.ok) {
-      const errText = await pagesRes.text();
-      return {
-        available: false,
-        error: `Netlify Analytics API returned ${pagesRes.status}: ${errText}`,
-      };
-    }
-
-    const pages = await pagesRes.json();
-    const sources = sourcesRes.ok ? await sourcesRes.json() : [];
-
-    // Aggregate page view totals
-    let totalPageviews = 0;
-    let totalUniques = 0;
-    const topPages = [];
-
-    if (Array.isArray(pages.data)) {
-      pages.data.forEach(p => {
-        totalPageviews += p.count || 0;
-        totalUniques += p.uniques || 0;
-        topPages.push({ path: p.path, views: p.count || 0, uniques: p.uniques || 0 });
-      });
-      topPages.sort((a, b) => b.views - a.views);
-    }
-
-    const topSources = [];
-    if (Array.isArray(sources.data)) {
-      sources.data.forEach(s => {
-        topSources.push({ source: s.path || s.resource, views: s.count || 0 });
-      });
-      topSources.sort((a, b) => b.views - a.views);
-    }
-
-    return {
-      available: true,
-      pageviews: totalPageviews,
-      uniques: totalUniques,
-      topPages: topPages.slice(0, 10),
-      topSources: topSources.slice(0, 10),
-    };
-  } catch (err) {
-    return { available: false, error: err.message };
-  }
-}
-
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -222,8 +142,10 @@ exports.handler = async function handler(event) {
     var reach = [];
     var topPrograms = [];
     var weeklyTrend = [];
+    var db;
     var dbAvailable = false;
     try {
+      db = getDb();
       var dbResults = await Promise.all([
         db`
           SELECT
@@ -282,6 +204,7 @@ exports.handler = async function handler(event) {
     // Medication insights (table may not exist)
     var medicationInsights = [];
     try {
+      if (!db) db = getDb();
       var topMedications = await db`
         SELECT medication_name, interaction_type, COUNT(*) as count
         FROM medication_tracking
@@ -311,6 +234,7 @@ exports.handler = async function handler(event) {
     // Price reports (table may not exist)
     var priceReportStats = { total_reports: 0, unique_medications: 0 };
     try {
+      if (!db) db = getDb();
       var pr = await db`
         SELECT COUNT(*) as total_reports, COUNT(DISTINCT medication_id) as unique_medications
         FROM price_reports WHERE created_at >= ${cutoff}
@@ -323,6 +247,7 @@ exports.handler = async function handler(event) {
     // Quiz email leads (table may not exist)
     var leadCount = 0;
     try {
+      if (!db) db = getDb();
       var leads = await db`
         SELECT COUNT(*) as count FROM quiz_email_leads WHERE created_at >= ${cutoff}
       `;
@@ -338,9 +263,6 @@ exports.handler = async function handler(event) {
     // Use Netlify data for traffic, fall back to DB events
     var totalPageviews = hasNetlifyData ? netlifyPageviews : parseInt(c.db_page_views || 0);
     var totalVisitors = hasNetlifyData ? netlifyVisitors : parseInt(c.unique_sessions || 0);
-
-    // Await Netlify Analytics result
-    const siteTraffic = await analyticsPromise;
 
     return {
       statusCode: 200,
