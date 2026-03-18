@@ -17,6 +17,10 @@ import {
   Building2,
   Pill,
   Settings,
+  UserPlus,
+  CreditCard,
+  Database,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -28,6 +32,8 @@ export default function AdminDashboard() {
   const { org, loading: tenantLoading } = useTenant();
   const [stats, setStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
+  const [subscribers, setSubscribers] = useState(null);
+  const [loadingSubs, setLoadingSubs] = useState(true);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -69,6 +75,31 @@ export default function AdminDashboard() {
 
     if (isAdmin) {
       loadStats();
+    }
+  }, [isAdmin, getToken]);
+
+  // Load subscriber stats from Supabase via admin API
+  useEffect(() => {
+    async function loadSubscribers() {
+      try {
+        const res = await fetch('/.netlify/functions/admin-api/subscribers', {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.available) {
+            setSubscribers(data);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading subscriber stats:', error);
+      } finally {
+        setLoadingSubs(false);
+      }
+    }
+
+    if (isAdmin) {
+      loadSubscribers();
     }
   }, [isAdmin, getToken]);
 
@@ -158,6 +189,110 @@ export default function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      {/* Subscriber Stats */}
+      {subscribers && (
+        <>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Subscribers (Supabase)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Total Registered</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">
+                    {loadingSubs ? '...' : subscribers.totalUsers.toLocaleString()}
+                  </p>
+                </div>
+                <Users className="h-8 w-8 text-blue-400" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Active Subscribers</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">
+                    {loadingSubs ? '...' : subscribers.activeSubscribers.toLocaleString()}
+                  </p>
+                </div>
+                <CreditCard className="h-8 w-8 text-green-400" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">New This Month</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">
+                    {loadingSubs ? '...' : subscribers.newUsersThisMonth.toLocaleString()}
+                  </p>
+                </div>
+                <UserPlus className="h-8 w-8 text-purple-400" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Synced Med Lists</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">
+                    {loadingSubs ? '...' : subscribers.syncedMedications.toLocaleString()}
+                  </p>
+                </div>
+                <Database className="h-8 w-8 text-orange-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Plan Breakdown */}
+          {subscribers.plans && Object.keys(subscribers.plans).length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white rounded-lg shadow-sm border p-6">
+                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-gray-500" />
+                  Plan Breakdown
+                </h3>
+                <div className="space-y-2">
+                  {Object.entries(subscribers.plans).sort((a, b) => b[1] - a[1]).map(([plan, count]) => (
+                    <div key={plan} className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 capitalize">{plan}</span>
+                      <span className="text-sm font-semibold text-gray-900">{count.toLocaleString()}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Recent Signups */}
+              {subscribers.recentSignups && subscribers.recentSignups.length > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                    <UserPlus className="h-5 w-5 text-gray-500" />
+                    Recent Signups
+                  </h3>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {subscribers.recentSignups.map((u) => (
+                      <div key={u.id} className="flex items-center justify-between text-sm">
+                        <div className="truncate mr-2">
+                          <span className="text-gray-700">{u.email}</span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                            u.status === 'active' ? 'bg-green-100 text-green-700' :
+                            u.plan !== 'free' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-gray-100 text-gray-600'
+                          }`}>
+                            {u.plan}
+                          </span>
+                          <span className="text-gray-400 text-xs">
+                            {new Date(u.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
 
       {/* Epic EHR Status */}
       <div className="mb-8 bg-emerald-50 rounded-lg p-5 border border-emerald-200 flex items-start gap-4">

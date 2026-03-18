@@ -34,7 +34,7 @@ Only **anonymized interaction events** are sent. These contain no patient names,
 | Program link clicks (copay, PAP, foundation) | `/.netlify/functions/out-redirect` | `events` |
 | Helpful votes | `/.netlify/functions/event` | `events` |
 | Survey responses | `/.netlify/functions/admin-surveys` | Neon DB |
-| Subscriber data sync (opt-in only) | `/.netlify/functions/subscriber-data` | Neon DB |
+| Subscriber data sync (opt-in only) | `/.netlify/functions/subscriber-data` | Supabase (`user_quiz_data`, `user_medications`) |
 
 ### PHI Protection
 
@@ -42,9 +42,21 @@ The `event.js` endpoint has a strict blocklist. It rejects any request containin
 
 ---
 
-## 2. Database Tables (Neon PostgreSQL)
+## 2. Dual-Database Architecture
 
-### Core Tables
+TMN runs **two databases** side by side:
+
+| Database | Purpose | Env Variables |
+|----------|---------|---------------|
+| **Neon PostgreSQL** | Admin system — events, medications, orgs, users, features, surveys, analytics | `DATABASE_URL` |
+| **Supabase PostgreSQL** | Subscriber/patient system — auth, profiles, subscriptions, synced data | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` |
+
+### Why Two Databases?
+- **Neon** was set up for the admin/analytics backend (event tracking, org management, medication configs)
+- **Supabase** was set up for the subscriber/payment flow (Stripe integration, patient profiles, data sync)
+- Both are PostgreSQL, but they serve different audiences and have different access patterns
+
+### Neon Tables (Admin & Analytics)
 
 | Table | Purpose | Written By |
 |-------|---------|-----------|
@@ -57,9 +69,31 @@ The `event.js` endpoint has a strict blocklist. It rejects any request containin
 | `user_savings` | Savings tracker entries | `savings-tracker.js` |
 | `quiz_email_leads` | Email addresses submitted during quiz | `quiz-email.js` |
 | `programs` | Assistance programs (copay cards, PAPs, foundations) | Migrations |
-| `user_subscriptions` | Subscriber payment records | `stripe-webhook.js` |
 | `community_price_reports` | User-submitted price reports | `price-reports.js` |
 | `survey_responses` | Patient survey submissions | Survey functions |
+
+### Supabase Tables (Subscribers & Patients)
+
+| Table | Purpose | Written By |
+|-------|---------|-----------|
+| `user_profiles` | Patient accounts (email, password hash, plan, Stripe customer ID, last login) | `subscriber-auth.js`, `stripe-webhook.js` |
+| `user_quiz_data` | Synced quiz answers for subscribers | `subscriber-data.js` |
+| `user_medications` | Synced medication lists for subscribers | `subscriber-data.js` |
+| `user_subscriptions` | Stripe subscription records | `stripe-webhook.js` |
+
+### Which Netlify Functions Use Supabase?
+
+| Function | What It Does with Supabase |
+|----------|---------------------------|
+| `subscriber-auth.js` | Patient login/register, password reset, profile lookups |
+| `subscriber-data.js` | Sync quiz data, medication lists, and profiles for subscribed patients |
+| `get-subscription.js` | Look up subscription status and profile |
+| `create-portal-session.js` | Fetch Stripe customer ID to open billing portal |
+| `stripe-webhook.js` | Create/update/cancel subscriber profiles on payment events |
+| `quiz-email.js` | Save email leads submitted during quiz |
+| `subscribe-alerts.js` | Store alert subscription preferences |
+| `redeem-patient-code.js` | Look up patient profiles for redeemed codes |
+| `admin-api.js` | Fetch subscriber stats for admin dashboard (read-only) |
 
 ### What the Events Table Captures
 
@@ -100,7 +134,8 @@ Patient's browser
 ```
 Admin Dashboard
   │
-  ├── /admin (Dashboard) ────────→ GET /admin-api/stats
+  ├── /admin (Dashboard) ────────→ GET /admin-api/stats (Neon)
+  │                                GET /admin-api/subscribers (Supabase)
   ├── /admin/analytics ──────────→ GET /admin-api/funnel
   │                                GET /admin-api/events/by-partner
   │                                GET /admin-api/events/by-program
@@ -118,8 +153,8 @@ Admin Dashboard
 ## 4. Admin Pages — What Each One Does
 
 ### Dashboard (`/admin`)
-- **Shows:** Total events, events this month, quiz completions, unique sessions
-- **Source:** `events` table aggregated by `admin-api.js`
+- **Shows:** Total events, events this month, quiz completions, unique sessions + subscriber stats (total registered, active subscribers, new this month, synced med lists, plan breakdown, recent signups)
+- **Source:** `events` table (Neon) + `user_profiles`/`user_medications` tables (Supabase) via `admin-api.js`
 
 ### Analytics (`/admin/analytics`)
 - **Shows:** Conversion funnel (page views → quiz starts → quiz completes → med searches → program clicks), events by partner, events by program type
@@ -213,7 +248,8 @@ Admins configure medications via `org_medication_configs`:
 
 | Service | Purpose | Env Variable |
 |---------|---------|-------------|
-| Neon PostgreSQL | Primary database | `DATABASE_URL` |
+| Neon PostgreSQL | Admin database (events, orgs, medications, analytics) | `DATABASE_URL` |
+| Supabase PostgreSQL | Subscriber database (profiles, synced data, subscriptions) | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` |
 | Stripe | Subscription payments | `STRIPE_SECRET_KEY` |
 | Resend | Transactional email | `RESEND_API_KEY` |
 | Google Analytics 4 | Client-side analytics (in addition to DB tracking) | Hardcoded `G-MRRECSDQWC` |
@@ -241,8 +277,8 @@ Separate from admin, the reporting portal (`/reporting`) provides read-only anal
 
 | Data Type | Where It Lives | Sent to Server? |
 |-----------|---------------|-----------------|
-| Quiz answers | Patient's localStorage | No (unless subscribed) |
-| Medication list | Patient's localStorage | No (unless subscribed) |
+| Quiz answers | Patient's localStorage | No (unless subscribed → synced to Supabase `user_quiz_data`) |
+| Medication list | Patient's localStorage | No (unless subscribed → synced to Supabase `user_medications`) |
 | Insurance selection | Patient's localStorage | No |
 | Page views | Server `events` table | Yes (anonymized) |
 | Quiz start/complete | Server `events` table | Yes (anonymized, no answers) |
