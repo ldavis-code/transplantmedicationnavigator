@@ -15,6 +15,8 @@ const crypto = require('crypto');
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 let _sql;
+let _tablesEnsured = false;
+
 function getDb() {
   if (!process.env.DATABASE_URL) {
     throw new Error(
@@ -23,6 +25,55 @@ function getDb() {
   }
   if (!_sql) _sql = neon(process.env.DATABASE_URL);
   return _sql;
+}
+
+async function ensureTables(db) {
+  if (_tablesEnsured) return;
+  await db`
+    CREATE TABLE IF NOT EXISTS compliance_events (
+      id SERIAL PRIMARY KEY,
+      org_id INTEGER REFERENCES organizations(id),
+      patient_id TEXT NOT NULL,
+      medication_id TEXT NOT NULL,
+      event_type TEXT NOT NULL CHECK (event_type IN ('taken', 'missed', 'late', 'skipped', 'refill')),
+      scheduled_at TIMESTAMP WITH TIME ZONE NOT NULL,
+      recorded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      notes TEXT,
+      source TEXT DEFAULT 'manual' CHECK (source IN ('manual', 'ehr', 'app', 'import')),
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
+  await db`
+    CREATE TABLE IF NOT EXISTS compliance_scores (
+      id SERIAL PRIMARY KEY,
+      org_id INTEGER REFERENCES organizations(id),
+      patient_id TEXT NOT NULL,
+      medication_id TEXT NOT NULL,
+      score_date DATE NOT NULL,
+      adherence_rate DECIMAL(5,2) NOT NULL CHECK (adherence_rate >= 0 AND adherence_rate <= 100),
+      doses_scheduled INTEGER NOT NULL DEFAULT 0,
+      doses_taken INTEGER NOT NULL DEFAULT 0,
+      doses_missed INTEGER NOT NULL DEFAULT 0,
+      doses_late INTEGER NOT NULL DEFAULT 0,
+      risk_level TEXT DEFAULT 'low' CHECK (risk_level IN ('low', 'medium', 'high', 'critical')),
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      UNIQUE(org_id, patient_id, medication_id, score_date)
+    )
+  `;
+  await db`
+    CREATE TABLE IF NOT EXISTS compliance_audit_log (
+      id SERIAL PRIMARY KEY,
+      org_id INTEGER REFERENCES organizations(id),
+      admin_user_id INTEGER REFERENCES users(id),
+      action TEXT NOT NULL CHECK (action IN ('review', 'flag', 'dismiss', 'escalate', 'note', 'export')),
+      target_patient_id TEXT,
+      target_medication_id TEXT,
+      details JSONB,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `;
+  _tablesEnsured = true;
 }
 
 const headers = {
@@ -255,6 +306,7 @@ exports.handler = async function handler(event) {
 
   try {
     const db = getDb();
+    await ensureTables(db);
 
     // POST: Create audit log entry
     if (event.httpMethod === 'POST') {
