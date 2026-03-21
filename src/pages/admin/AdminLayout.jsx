@@ -6,7 +6,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Building2, Users, Pill, BarChart3, FileText,
-  Heart, Settings, ExternalLink, LogOut, Zap,
+  Heart, Settings, ExternalLink, LogOut, Zap, ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { label: 'Medications', href: '/admin/medications', icon: Pill },
   { label: 'Surveys', href: '/admin/surveys', icon: FileText },
   { label: 'Settings', href: '/admin/settings', icon: Building2 },
+  { label: 'Compliance', href: '/admin/compliance', icon: ShieldCheck },
   { label: 'Features', href: '/admin/features', icon: Settings },
 ];
 
