@@ -271,6 +271,10 @@
   [headers.values]
     Cache-Control = "no-store, no-cache, must-revalidate"
 
+# Scheduled compliance checks - runs every 6 hours
+[functions."compliance-checks"]
+  schedule = "0 */6 * * *"
+
 # Security headers for all responses
 [[headers]]
   for = "/*"
