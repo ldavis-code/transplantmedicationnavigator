@@ -49,6 +49,18 @@
   force = true
 
 [[redirects]]
+  from = "/api/admin-compliance/*"
+  to = "/.netlify/functions/admin-compliance/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/admin-compliance"
+  to = "/.netlify/functions/admin-compliance"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/admin-licenses/*"
   to = "/.netlify/functions/admin-licenses/:splat"
   status = 200
