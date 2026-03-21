@@ -21,6 +21,7 @@ import {
   CreditCard,
   Database,
   TrendingUp,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -154,6 +155,13 @@ export default function AdminDashboard() {
       icon: Heart,
       href: '/admin/impact',
       color: 'bg-red-100 text-red-600',
+    },
+    {
+      title: 'Compliance',
+      description: 'Medication adherence & risk monitoring',
+      icon: ShieldCheck,
+      href: '/admin/compliance',
+      color: 'bg-teal-100 text-teal-600',
     },
     {
       title: 'Feature Settings',
