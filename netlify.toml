@@ -72,6 +72,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/netlify-analytics"
+  to = "/.netlify/functions/netlify-analytics"
+  status = 200
+  force = true
+
 # Generic API route (must come AFTER specific routes)
 [[redirects]]
   from = "/api/*"
