@@ -22,6 +22,9 @@ import {
     Heart,
     Pill,
     ClipboardList,
+    Globe,
+    Eye,
+    HardDrive,
 } from 'lucide-react';
 import { useReportingAuth } from '../../context/ReportingAuthContext';
 
@@ -33,6 +36,8 @@ export default function ReportingDashboard() {
 
     const [stats, setStats] = useState(null);
     const [loadingStats, setLoadingStats] = useState(true);
+    const [webAnalytics, setWebAnalytics] = useState(null);
+    const [loadingWebAnalytics, setLoadingWebAnalytics] = useState(true);
     const [error, setError] = useState(null);
 
     // Redirect if not authenticated
@@ -62,6 +67,29 @@ export default function ReportingDashboard() {
 
         if (isAuthenticated) {
             loadStats();
+        }
+    }, [isAuthenticated, fetchWithAuth]);
+
+    // Load web analytics
+    useEffect(() => {
+        async function loadWebAnalytics() {
+            try {
+                const response = await fetchWithAuth('/.netlify/functions/netlify-analytics');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.available) {
+                        setWebAnalytics(data);
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading web analytics:', err);
+            } finally {
+                setLoadingWebAnalytics(false);
+            }
+        }
+
+        if (isAuthenticated) {
+            loadWebAnalytics();
         }
     }, [isAuthenticated, fetchWithAuth]);
 
@@ -241,6 +269,57 @@ export default function ReportingDashboard() {
                         </div>
                     ))}
                 </div>
+
+                {/* Web Analytics (Last 30 Days) */}
+                {webAnalytics && (
+                    <div className="mb-8">
+                        <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                            <Globe className="h-5 w-5 text-cyan-600" />
+                            Web Analytics
+                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                {webAnalytics.period.from} to {webAnalytics.period.to}
+                            </span>
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg shadow-sm border border-cyan-200 p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-cyan-700">Total Pageviews</p>
+                                        <p className="text-3xl font-bold text-cyan-900 mt-1">
+                                            {loadingWebAnalytics ? '...' : webAnalytics.totalPageviews.toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-cyan-600 mt-1">Last 30 days</p>
+                                    </div>
+                                    <Eye className="h-10 w-10 text-cyan-400" />
+                                </div>
+                            </div>
+                            <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg shadow-sm border border-cyan-200 p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-cyan-700">Total Unique Visitors</p>
+                                        <p className="text-3xl font-bold text-cyan-900 mt-1">
+                                            {loadingWebAnalytics ? '...' : webAnalytics.totalUniqueVisitors.toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-cyan-600 mt-1">Last 30 days</p>
+                                    </div>
+                                    <Users className="h-10 w-10 text-cyan-400" />
+                                </div>
+                            </div>
+                            <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg shadow-sm border border-cyan-200 p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-cyan-700">Total Bandwidth Used</p>
+                                        <p className="text-3xl font-bold text-cyan-900 mt-1">
+                                            {loadingWebAnalytics ? '...' : webAnalytics.totalBandwidthFormatted}
+                                        </p>
+                                        <p className="text-xs text-cyan-600 mt-1">Last 30 days</p>
+                                    </div>
+                                    <HardDrive className="h-10 w-10 text-cyan-400" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
