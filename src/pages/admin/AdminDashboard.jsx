@@ -276,12 +276,6 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-          {/* Temporary debug output */}
-          {webAnalytics.debug && (
-            <pre className="mt-4 p-3 bg-gray-900 text-green-400 rounded-lg text-xs overflow-auto max-h-64">
-              {JSON.stringify(webAnalytics.debug, null, 2)}
-            </pre>
-          )}
         </div>
       )}
 

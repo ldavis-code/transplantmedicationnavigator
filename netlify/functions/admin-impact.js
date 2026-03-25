@@ -112,15 +112,27 @@ exports.handler = async function handler(event) {
     var netlifyVisitors = 0;
     var dailyTraffic = [];
 
+    // Netlify Analytics returns arrays: [[timestamp, value], ...]
+    function sumAnalyticsData(dataArray) {
+      if (!dataArray || !dataArray.length) return 0;
+      return dataArray.reduce(function(sum, d) {
+        if (Array.isArray(d)) return sum + (d[1] || 0);
+        return sum + (d.count || 0);
+      }, 0);
+    }
+
     if (pageviewsData && pageviewsData.data) {
-      netlifyPageviews = pageviewsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
-      dailyTraffic = pageviewsData.data.map(function(d) { return { date: d.date, pageviews: d.count || 0 }; });
+      netlifyPageviews = sumAnalyticsData(pageviewsData.data);
+      dailyTraffic = pageviewsData.data.map(function(d) {
+        if (Array.isArray(d)) return { date: new Date(d[0]).toISOString().split('T')[0], pageviews: d[1] || 0 };
+        return { date: d.date, pageviews: d.count || 0 };
+      });
     }
     if (visitorsData && visitorsData.data) {
-      netlifyVisitors = visitorsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
+      netlifyVisitors = sumAnalyticsData(visitorsData.data);
       visitorsData.data.forEach(function(d, i) {
         if (dailyTraffic[i]) {
-          dailyTraffic[i].visitors = d.count || 0;
+          dailyTraffic[i].visitors = Array.isArray(d) ? (d[1] || 0) : (d.count || 0);
         }
       });
     }
