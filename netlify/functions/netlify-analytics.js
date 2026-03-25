@@ -125,9 +125,12 @@ export async function handler(event) {
     let totalBandwidth = 0;
     let dailyPageviews = [];
     let dailyVisitors = [];
+    const debug = {};
 
     if (pageviewsRes.ok) {
       const data = await pageviewsRes.json();
+      debug.pageviewsKeys = Object.keys(data);
+      debug.pageviewsSample = data.data ? data.data.slice(0, 2) : data;
       // Netlify analytics returns { data: [{ ts, count }, ...] }
       if (data.data) {
         dailyPageviews = data.data;
@@ -135,25 +138,37 @@ export async function handler(event) {
       } else if (typeof data === 'number') {
         totalPageviews = data;
       }
+    } else {
+      debug.pageviewsStatus = pageviewsRes.status;
+      debug.pageviewsError = await pageviewsRes.text().catch(() => 'unable to read');
     }
 
     if (visitorsRes.ok) {
       const data = await visitorsRes.json();
+      debug.visitorsKeys = Object.keys(data);
+      // Netlify analytics returns { data: [{ ts, count }, ...] }
       if (data.data) {
         dailyVisitors = data.data;
         totalVisitors = data.data.reduce((sum, d) => sum + (d.count || 0), 0);
       } else if (typeof data === 'number') {
         totalVisitors = data;
       }
+    } else {
+      debug.visitorsStatus = visitorsRes.status;
+      debug.visitorsError = await visitorsRes.text().catch(() => 'unable to read');
     }
 
     if (bandwidthRes.ok) {
       const data = await bandwidthRes.json();
+      debug.bandwidthKeys = Object.keys(data);
       if (data.data) {
         totalBandwidth = data.data.reduce((sum, d) => sum + (d.count || 0), 0);
       } else if (typeof data === 'number') {
         totalBandwidth = data;
       }
+    } else {
+      debug.bandwidthStatus = bandwidthRes.status;
+      debug.bandwidthError = await bandwidthRes.text().catch(() => 'unable to read');
     }
 
     return {
@@ -172,6 +187,7 @@ export async function handler(event) {
         totalBandwidthFormatted: formatBytes(totalBandwidth),
         dailyPageviews,
         dailyVisitors,
+        debug,
       }),
     };
   } catch (error) {
