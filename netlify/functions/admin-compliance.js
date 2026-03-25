@@ -302,6 +302,17 @@ exports.handler = async function handler(event) {
   } catch (error) {
     console.error('Compliance API error:', error);
 
+    // If the compliance tables don't exist yet, return empty data instead of an error
+    const isTableMissing = error.message?.includes('does not exist') && error.message?.includes('relation');
+    if (isTableMissing) {
+      const emptyData = {
+        totalPatients: 0, avgAdherenceRate: 0, totalScheduled: 0, totalTaken: 0,
+        totalMissed: 0, totalLate: 0, riskDistribution: [], criticalCount: 0,
+        highRiskCount: 0, mediumRiskCount: 0, lowRiskCount: 0, eventBreakdown: [],
+      };
+      return { statusCode: 200, headers: headers, body: JSON.stringify(emptyData) };
+    }
+
     const isEnvError = error.message?.includes('is not configured') || error.message?.includes('DATABASE_URL');
     return {
       statusCode: isEnvError ? 503 : 500,
