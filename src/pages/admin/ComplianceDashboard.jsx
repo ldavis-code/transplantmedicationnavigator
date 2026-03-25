@@ -7,7 +7,8 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   ShieldCheck, AlertTriangle, Users, Pill, TrendingUp,
   ChevronDown, ChevronUp, Clock, FileText, Activity,
-  Download, RefreshCw,
+  Download, RefreshCw, Settings, MessageSquare, Phone,
+  UserCheck, Send, X,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -74,6 +75,13 @@ export default function ComplianceDashboard() {
   const [riskFilter, setRiskFilter] = useState('');
   const [patientPage, setPatientPage] = useState(1);
   const [expandedPatient, setExpandedPatient] = useState(null);
+  const [settings, setSettings] = useState(null);
+  const [editingSettings, setEditingSettings] = useState(false);
+  const [settingsForm, setSettingsForm] = useState({ criticalThreshold: 50, highThreshold: 70, mediumThreshold: 85 });
+  const [interventionModal, setInterventionModal] = useState(null);
+  const [interventionForm, setInterventionForm] = useState({ interventionType: 'phone_call', notes: '', outcome: '' });
+  const [patientInterventions, setPatientInterventions] = useState({});
+  const [savingIntervention, setSavingIntervention] = useState(false);
 
   const fetchData = useCallback(async (endpoint, extraParams) => {
     const token = getToken();
@@ -86,6 +94,21 @@ export default function ComplianceDashboard() {
     }
     return res.json();
   }, [days, getToken]);
+
+  const postData = useCallback(async (endpoint, data) => {
+    const token = getToken();
+    if (!token) throw new Error('No auth token');
+    const res = await fetch(API + '/' + endpoint, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Server returned ' + res.status);
+    }
+    return res.json();
+  }, [getToken]);
 
   // Load summary data
   useEffect(() => {
@@ -120,6 +143,61 @@ export default function ComplianceDashboard() {
     if (activeTab !== 'audit' || !isAdmin) return;
     fetchData('audit-log').then(setAuditLog).catch(console.error);
   }, [activeTab, isAdmin, fetchData]);
+
+  // Load settings when tab is active
+  useEffect(() => {
+    if (activeTab !== 'settings' || !isAdmin) return;
+    fetchData('settings')
+      .then(s => {
+        setSettings(s);
+        setSettingsForm({
+          criticalThreshold: s.critical_threshold,
+          highThreshold: s.high_threshold,
+          mediumThreshold: s.medium_threshold,
+        });
+      })
+      .catch(console.error);
+  }, [activeTab, isAdmin, fetchData]);
+
+  // Load interventions for expanded patient
+  useEffect(() => {
+    if (!expandedPatient || !isAdmin) return;
+    fetchData('interventions', '&patient_id=' + expandedPatient)
+      .then(data => setPatientInterventions(prev => ({ ...prev, [expandedPatient]: data.interventions || [] })))
+      .catch(console.error);
+  }, [expandedPatient, isAdmin, fetchData]);
+
+  const handleSaveSettings = async () => {
+    try {
+      const result = await postData('settings', settingsForm);
+      setSettings(result);
+      setEditingSettings(false);
+    } catch (e) {
+      alert('Failed to save settings: ' + e.message);
+    }
+  };
+
+  const handleSubmitIntervention = async () => {
+    if (!interventionModal || !interventionForm.notes.trim()) return;
+    setSavingIntervention(true);
+    try {
+      await postData('interventions', {
+        patientId: interventionModal,
+        interventionType: interventionForm.interventionType,
+        notes: interventionForm.notes,
+        outcome: interventionForm.outcome || null,
+      });
+      // Reload interventions for this patient
+      const data = await fetchData('interventions', '&patient_id=' + interventionModal);
+      setPatientInterventions(prev => ({ ...prev, [interventionModal]: data.interventions || [] }));
+      setInterventionModal(null);
+      setInterventionForm({ interventionType: 'phone_call', notes: '', outcome: '' });
+    } catch (e) {
+      alert('Failed to save intervention: ' + e.message);
+    } finally {
+      setSavingIntervention(false);
+    }
+  };
 
   const handleRefresh = () => {
     setSummary(null);
@@ -183,6 +261,7 @@ export default function ComplianceDashboard() {
     { id: 'patients', label: 'Patients', icon: Users },
     { id: 'trends', label: 'Trends', icon: TrendingUp },
     { id: 'audit', label: 'Audit Log', icon: FileText },
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (
@@ -240,6 +319,39 @@ export default function ComplianceDashboard() {
             subtitle={summary.totalLate.toLocaleString() + ' taken late'}
             color="text-orange-600"
           />
+        </div>
+      )}
+
+      {/* Immunosuppressant Alert */}
+      {summary && summary.immunosuppressants && summary.immunosuppressants.patientsTracked > 0 && (
+        <div className={'rounded-xl border p-5 mb-6 ' + (summary.immunosuppressants.highRiskCount > 0 ? 'bg-red-50 border-red-200' : 'bg-blue-50 border-blue-200')}>
+          <div className="flex items-center gap-3 mb-3">
+            <ShieldCheck className={'h-5 w-5 ' + (summary.immunosuppressants.highRiskCount > 0 ? 'text-red-600' : 'text-blue-600')} />
+            <h3 className="text-sm font-semibold text-gray-900">Immunosuppressant Adherence</h3>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-medium">High Priority</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div>
+              <p className="text-xs text-gray-500">Patients Tracked</p>
+              <p className="text-lg font-bold text-gray-900">{summary.immunosuppressants.patientsTracked}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Avg Adherence</p>
+              <p className={'text-lg font-bold ' + (summary.immunosuppressants.avgAdherence >= 80 ? 'text-green-600' : summary.immunosuppressants.avgAdherence >= 60 ? 'text-yellow-600' : 'text-red-600')}>
+                {summary.immunosuppressants.avgAdherence}%
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Doses Missed</p>
+              <p className="text-lg font-bold text-red-600">{summary.immunosuppressants.dosesMissed.toLocaleString()}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">High/Critical Risk</p>
+              <p className={'text-lg font-bold ' + (summary.immunosuppressants.highRiskCount > 0 ? 'text-red-600' : 'text-gray-900')}>
+                {summary.immunosuppressants.highRiskCount}
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -374,16 +486,25 @@ export default function ComplianceDashboard() {
               </thead>
               <tbody>
                 {patients && patients.patients && patients.patients.length > 0 ? (
-                  patients.patients.map(p => (
+                  patients.patients.flatMap(p => {
+                    const isExpanded = expandedPatient === p.patientId;
+                    const interventions = patientInterventions[p.patientId] || [];
+                    return [
                     <tr
                       key={p.patientId}
                       className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors"
-                      onClick={() => setExpandedPatient(expandedPatient === p.patientId ? null : p.patientId)}
+                      onClick={() => setExpandedPatient(isExpanded ? null : p.patientId)}
                     >
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          {expandedPatient === p.patientId ? <ChevronUp className="h-3.5 w-3.5 text-gray-400" /> : <ChevronDown className="h-3.5 w-3.5 text-gray-400" />}
+                          {isExpanded ? <ChevronUp className="h-3.5 w-3.5 text-gray-400" /> : <ChevronDown className="h-3.5 w-3.5 text-gray-400" />}
                           <span className="text-sm font-medium text-gray-900">{p.patientId}</span>
+                          {p.hasHighPriorityMeds && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700" title="Taking immunosuppressants or other high-priority transplant medications">
+                              <Pill className="h-3 w-3" />
+                              IMM
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td className="px-4 py-3 w-48">
@@ -399,8 +520,49 @@ export default function ComplianceDashboard() {
                       <td className="px-4 py-3 hidden lg:table-cell text-sm text-gray-500">
                         {p.lastScoreDate ? new Date(p.lastScoreDate).toLocaleDateString() : '—'}
                       </td>
-                    </tr>
-                  ))
+                    </tr>,
+                    isExpanded && (
+                      <tr key={p.patientId + '-detail'} className="bg-gray-50 border-b border-gray-200">
+                        <td colSpan={6} className="px-6 py-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="text-sm font-semibold text-gray-700">Intervention Notes</h4>
+                            <button
+                              onClick={e => { e.stopPropagation(); setInterventionModal(p.patientId); }}
+                              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-[#006838] text-white rounded-lg hover:bg-[#005530] transition-colors"
+                            >
+                              <MessageSquare className="h-3.5 w-3.5" />
+                              Add Intervention
+                            </button>
+                          </div>
+                          {interventions.length > 0 ? (
+                            <div className="space-y-2">
+                              {interventions.slice(0, 5).map(iv => (
+                                <div key={iv.id} className="bg-white rounded-lg border border-gray-200 p-3">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-xs font-medium text-gray-500 capitalize">
+                                      {iv.interventionType.replace('_', ' ')}
+                                    </span>
+                                    {iv.outcome && (
+                                      <span className={'text-xs px-1.5 py-0.5 rounded ' + (iv.outcome === 'resolved' ? 'bg-green-100 text-green-700' : iv.outcome === 'escalated' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700')}>
+                                        {iv.outcome}
+                                      </span>
+                                    )}
+                                    <span className="text-xs text-gray-400 ml-auto">
+                                      {iv.createdByName || iv.createdByEmail || 'Admin'} · {new Date(iv.createdAt).toLocaleDateString()}
+                                    </span>
+                                  </div>
+                                  <p className="text-sm text-gray-700">{iv.notes}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-sm text-gray-400 italic">No interventions recorded for this patient.</p>
+                          )}
+                        </td>
+                      </tr>
+                    ),
+                    ];
+                  })
                 ) : (
                   <tr>
                     <td colSpan={6} className="px-4 py-12 text-center text-sm text-gray-500">
@@ -545,6 +707,174 @@ export default function ComplianceDashboard() {
               <p className="text-sm text-gray-500">Audit log entries will appear as compliance reviews and actions are recorded.</p>
             </div>
           )}
+        </div>
+      )}
+      {activeTab === 'settings' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">Alert Thresholds</h3>
+                <p className="text-xs text-gray-500 mt-1">Configure when patients are flagged at each risk level based on adherence percentage.</p>
+              </div>
+              {!editingSettings && (
+                <button
+                  onClick={() => setEditingSettings(true)}
+                  className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+
+            {editingSettings ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-red-700 mb-1">Critical (below %)</label>
+                    <input
+                      type="number" min="0" max="100" step="1"
+                      value={settingsForm.criticalThreshold}
+                      onChange={e => setSettingsForm(f => ({ ...f, criticalThreshold: e.target.value }))}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-300"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-orange-700 mb-1">High Risk (below %)</label>
+                    <input
+                      type="number" min="0" max="100" step="1"
+                      value={settingsForm.highThreshold}
+                      onChange={e => setSettingsForm(f => ({ ...f, highThreshold: e.target.value }))}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-300"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-yellow-700 mb-1">Medium Risk (below %)</label>
+                    <input
+                      type="number" min="0" max="100" step="1"
+                      value={settingsForm.mediumThreshold}
+                      onChange={e => setSettingsForm(f => ({ ...f, mediumThreshold: e.target.value }))}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-300"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500">Patients at or above the medium threshold are classified as low risk.</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleSaveSettings}
+                    className="px-4 py-2 text-sm bg-[#006838] text-white rounded-lg hover:bg-[#005530] transition-colors"
+                  >
+                    Save Thresholds
+                  </button>
+                  <button
+                    onClick={() => { setEditingSettings(false); if (settings) setSettingsForm({ criticalThreshold: settings.critical_threshold, highThreshold: settings.high_threshold, mediumThreshold: settings.medium_threshold }); }}
+                    className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-red-50 border border-red-100">
+                  <span className="h-3 w-3 rounded-full bg-red-500" />
+                  <div>
+                    <p className="text-xs text-gray-500">Critical</p>
+                    <p className="text-sm font-semibold text-gray-900">Below {settingsForm.criticalThreshold}%</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-orange-50 border border-orange-100">
+                  <span className="h-3 w-3 rounded-full bg-orange-500" />
+                  <div>
+                    <p className="text-xs text-gray-500">High Risk</p>
+                    <p className="text-sm font-semibold text-gray-900">Below {settingsForm.highThreshold}%</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-yellow-50 border border-yellow-100">
+                  <span className="h-3 w-3 rounded-full bg-yellow-500" />
+                  <div>
+                    <p className="text-xs text-gray-500">Medium Risk</p>
+                    <p className="text-sm font-semibold text-gray-900">Below {settingsForm.mediumThreshold}%</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Intervention Modal */}
+      {interventionModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setInterventionModal(null)}>
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-5 border-b border-gray-200">
+              <h3 className="text-base font-semibold text-gray-900">Record Intervention</h3>
+              <button onClick={() => setInterventionModal(null)} className="text-gray-400 hover:text-gray-600">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-5 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Patient</label>
+                <p className="text-sm text-gray-900 font-mono bg-gray-50 rounded px-3 py-2">{interventionModal}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <select
+                  value={interventionForm.interventionType}
+                  onChange={e => setInterventionForm(f => ({ ...f, interventionType: e.target.value }))}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                >
+                  <option value="phone_call">Phone Call</option>
+                  <option value="message">Message</option>
+                  <option value="in_person">In Person</option>
+                  <option value="care_plan_update">Care Plan Update</option>
+                  <option value="referral">Referral</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                <textarea
+                  value={interventionForm.notes}
+                  onChange={e => setInterventionForm(f => ({ ...f, notes: e.target.value }))}
+                  rows={3}
+                  placeholder="Describe the intervention and discussion..."
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm resize-none focus:ring-2 focus:ring-[#006838]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Outcome</label>
+                <select
+                  value={interventionForm.outcome}
+                  onChange={e => setInterventionForm(f => ({ ...f, outcome: e.target.value }))}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                >
+                  <option value="">Pending</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="pending">Follow-up Needed</option>
+                  <option value="escalated">Escalated</option>
+                  <option value="no_response">No Response</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 p-5 border-t border-gray-200">
+              <button
+                onClick={() => setInterventionModal(null)}
+                className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitIntervention}
+                disabled={savingIntervention || !interventionForm.notes.trim()}
+                className="flex items-center gap-2 px-4 py-2 text-sm bg-[#006838] text-white rounded-lg hover:bg-[#005530] transition-colors disabled:opacity-50"
+              >
+                <Send className="h-3.5 w-3.5" />
+                {savingIntervention ? 'Saving...' : 'Save Intervention'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </AdminLayout>

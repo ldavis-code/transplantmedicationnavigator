@@ -6,7 +6,11 @@
  * GET /api/admin-compliance/patients - Patient-level compliance list
  * GET /api/admin-compliance/trends - Compliance trend data over time
  * GET /api/admin-compliance/audit-log - Audit log entries
+ * GET /api/admin-compliance/settings - Org compliance threshold settings
+ * GET /api/admin-compliance/interventions?patient_id=X - Patient interventions
  * POST /api/admin-compliance/audit-log - Record an audit action
+ * POST /api/admin-compliance/settings - Update org threshold settings
+ * POST /api/admin-compliance/interventions - Record a patient intervention
  */
 
 const { neon } = require('@neondatabase/serverless');
@@ -50,10 +54,13 @@ function checkAuth(event) {
   }
 }
 
+// High-priority medication categories where missed doses are more critical
+var HIGH_PRIORITY_CATEGORIES = ['Immunosuppressant', 'Induction', 'Acute Rejection', 'Antibody-Mediated Rejection'];
+
 async function getSummary(db, orgId, days) {
   const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
 
-  const [summary, riskDistribution, recentEvents] = await Promise.all([
+  const [summary, riskDistribution, recentEvents, immunosuppressantStats] = await Promise.all([
     db`
       SELECT
         COUNT(DISTINCT patient_id) AS total_patients,
@@ -91,9 +98,22 @@ async function getSummary(db, orgId, days) {
       GROUP BY event_type
       ORDER BY count DESC
     `,
+    db`
+      SELECT
+        COUNT(DISTINCT cs.patient_id) AS patients_tracked,
+        ROUND(AVG(cs.adherence_rate)::numeric, 1) AS avg_adherence,
+        SUM(cs.doses_missed) AS doses_missed,
+        COUNT(DISTINCT cs.patient_id) FILTER (WHERE cs.risk_level IN ('high', 'critical')) AS high_risk_count
+      FROM compliance_scores cs
+      INNER JOIN medications m ON cs.medication_id = m.id
+      WHERE cs.score_date >= ${cutoff}::date
+        AND m.category = ANY(${HIGH_PRIORITY_CATEGORIES})
+        AND (${orgId ? orgId : null}::int IS NULL OR cs.org_id = ${orgId})
+    `,
   ]);
 
   const s = summary[0] || {};
+  const imm = immunosuppressantStats[0] || {};
   return {
     totalPatients: parseInt(s.total_patients || 0),
     avgAdherenceRate: parseFloat(s.avg_adherence_rate || 0),
@@ -111,6 +131,12 @@ async function getSummary(db, orgId, days) {
     eventBreakdown: recentEvents.map(function(e) {
       return { type: e.event_type, count: parseInt(e.count) };
     }),
+    immunosuppressants: {
+      patientsTracked: parseInt(imm.patients_tracked || 0),
+      avgAdherence: parseFloat(imm.avg_adherence || 0),
+      dosesMissed: parseInt(imm.doses_missed || 0),
+      highRiskCount: parseInt(imm.high_risk_count || 0),
+    },
   };
 }
 
@@ -118,32 +144,36 @@ async function getPatients(db, orgId, days, riskFilter, page, limit) {
   const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
   const offset = (page - 1) * limit;
 
-  const patients = await db`
-    SELECT
-      patient_id,
-      ROUND(AVG(adherence_rate)::numeric, 1) AS avg_adherence,
-      SUM(doses_scheduled) AS total_scheduled,
-      SUM(doses_taken) AS total_taken,
-      SUM(doses_missed) AS total_missed,
-      COUNT(DISTINCT medication_id) AS medication_count,
-      MAX(score_date) AS last_score_date,
-      MODE() WITHIN GROUP (ORDER BY risk_level) AS primary_risk_level
-    FROM compliance_scores
-    WHERE score_date >= ${cutoff}::date
-      AND (${orgId ? orgId : null}::int IS NULL OR org_id = ${orgId})
-      AND (${riskFilter || null}::text IS NULL OR risk_level = ${riskFilter})
-    GROUP BY patient_id
-    ORDER BY avg_adherence ASC
-    LIMIT ${limit} OFFSET ${offset}
-  `;
-
-  const countResult = await db`
-    SELECT COUNT(DISTINCT patient_id) AS total
-    FROM compliance_scores
-    WHERE score_date >= ${cutoff}::date
-      AND (${orgId ? orgId : null}::int IS NULL OR org_id = ${orgId})
-      AND (${riskFilter || null}::text IS NULL OR risk_level = ${riskFilter})
-  `;
+  const [patients, countResult] = await Promise.all([
+    db`
+      SELECT
+        cs.patient_id,
+        ROUND(AVG(cs.adherence_rate)::numeric, 1) AS avg_adherence,
+        SUM(cs.doses_scheduled) AS total_scheduled,
+        SUM(cs.doses_taken) AS total_taken,
+        SUM(cs.doses_missed) AS total_missed,
+        COUNT(DISTINCT cs.medication_id) AS medication_count,
+        MAX(cs.score_date) AS last_score_date,
+        MODE() WITHIN GROUP (ORDER BY cs.risk_level) AS primary_risk_level,
+        BOOL_OR(m.category = ANY(${HIGH_PRIORITY_CATEGORIES})) AS has_high_priority_meds,
+        ARRAY_AGG(DISTINCT cs.medication_id) FILTER (WHERE m.category = ANY(${HIGH_PRIORITY_CATEGORIES})) AS high_priority_med_ids
+      FROM compliance_scores cs
+      LEFT JOIN medications m ON cs.medication_id = m.id
+      WHERE cs.score_date >= ${cutoff}::date
+        AND (${orgId ? orgId : null}::int IS NULL OR cs.org_id = ${orgId})
+        AND (${riskFilter || null}::text IS NULL OR cs.risk_level = ${riskFilter})
+      GROUP BY cs.patient_id
+      ORDER BY avg_adherence ASC
+      LIMIT ${limit} OFFSET ${offset}
+    `,
+    db`
+      SELECT COUNT(DISTINCT patient_id) AS total
+      FROM compliance_scores
+      WHERE score_date >= ${cutoff}::date
+        AND (${orgId ? orgId : null}::int IS NULL OR org_id = ${orgId})
+        AND (${riskFilter || null}::text IS NULL OR risk_level = ${riskFilter})
+    `,
+  ]);
 
   return {
     patients: patients.map(function(p) {
@@ -156,6 +186,8 @@ async function getPatients(db, orgId, days, riskFilter, page, limit) {
         medicationCount: parseInt(p.medication_count),
         lastScoreDate: p.last_score_date,
         riskLevel: p.primary_risk_level,
+        hasHighPriorityMeds: p.has_high_priority_meds || false,
+        highPriorityMedIds: p.high_priority_med_ids || [],
       };
     }),
     total: parseInt((countResult[0] && countResult[0].total) || 0),
@@ -222,6 +254,81 @@ async function getAuditLog(db, orgId, page, limit) {
   });
 }
 
+async function getSettings(db, orgId) {
+  const rows = await db`
+    SELECT critical_threshold, high_threshold, medium_threshold
+    FROM org_compliance_settings
+    WHERE org_id = ${orgId}
+  `;
+  return rows[0] || { critical_threshold: 50, high_threshold: 70, medium_threshold: 85 };
+}
+
+async function updateSettings(db, orgId, body) {
+  var critical = parseFloat(body.criticalThreshold);
+  var high = parseFloat(body.highThreshold);
+  var medium = parseFloat(body.mediumThreshold);
+
+  if (isNaN(critical) || isNaN(high) || isNaN(medium)) {
+    throw new Error('All thresholds must be numbers');
+  }
+  if (critical >= high || high >= medium || medium > 100 || critical < 0) {
+    throw new Error('Thresholds must be: 0 <= critical < high < medium <= 100');
+  }
+
+  const result = await db`
+    INSERT INTO org_compliance_settings (org_id, critical_threshold, high_threshold, medium_threshold)
+    VALUES (${orgId}, ${critical}, ${high}, ${medium})
+    ON CONFLICT (org_id)
+    DO UPDATE SET critical_threshold = ${critical}, high_threshold = ${high}, medium_threshold = ${medium}, updated_at = NOW()
+    RETURNING critical_threshold, high_threshold, medium_threshold
+  `;
+  return result[0];
+}
+
+async function getInterventions(db, orgId, patientId) {
+  const interventions = await db`
+    SELECT ci.id, ci.patient_id, ci.medication_id, ci.intervention_type, ci.notes,
+           ci.outcome, ci.created_at, u.name AS created_by_name, u.email AS created_by_email
+    FROM compliance_interventions ci
+    LEFT JOIN users u ON ci.created_by = u.id
+    WHERE ci.patient_id = ${patientId}
+      AND (${orgId ? orgId : null}::int IS NULL OR ci.org_id = ${orgId})
+    ORDER BY ci.created_at DESC
+    LIMIT 50
+  `;
+  return interventions.map(function(i) {
+    return {
+      id: i.id,
+      patientId: i.patient_id,
+      medicationId: i.medication_id,
+      interventionType: i.intervention_type,
+      notes: i.notes,
+      outcome: i.outcome,
+      createdAt: i.created_at,
+      createdByName: i.created_by_name,
+      createdByEmail: i.created_by_email,
+    };
+  });
+}
+
+async function createIntervention(db, orgId, userId, body) {
+  var { patientId, medicationId, interventionType, notes, outcome } = body;
+  var validTypes = ['phone_call', 'message', 'in_person', 'care_plan_update', 'referral', 'other'];
+  if (!patientId || !interventionType || !notes) {
+    throw new Error('patientId, interventionType, and notes are required');
+  }
+  if (!validTypes.includes(interventionType)) {
+    throw new Error('Invalid interventionType. Must be one of: ' + validTypes.join(', '));
+  }
+
+  const result = await db`
+    INSERT INTO compliance_interventions (org_id, patient_id, medication_id, intervention_type, notes, outcome, created_by)
+    VALUES (${orgId || null}, ${patientId}, ${medicationId || null}, ${interventionType}, ${notes}, ${outcome || null}, ${userId || null})
+    RETURNING id, created_at
+  `;
+  return { id: result[0].id, createdAt: result[0].created_at };
+}
+
 async function createAuditEntry(db, orgId, userId, body) {
   const { action, targetPatientId, targetMedicationId, details } = body;
 
@@ -256,11 +363,22 @@ exports.handler = async function handler(event) {
   try {
     const db = getDb();
 
-    // POST: Create audit log entry
+    // POST endpoints
     if (event.httpMethod === 'POST') {
       if (path === 'audit-log') {
         const body = JSON.parse(event.body || '{}');
         const result = await createAuditEntry(db, orgId, auth.user_id, body);
+        return { statusCode: 201, headers: headers, body: JSON.stringify(result) };
+      }
+      if (path === 'settings') {
+        if (!orgId) return { statusCode: 400, headers: headers, body: JSON.stringify({ error: 'Org context required' }) };
+        const body = JSON.parse(event.body || '{}');
+        const result = await updateSettings(db, orgId, body);
+        return { statusCode: 200, headers: headers, body: JSON.stringify(result) };
+      }
+      if (path === 'interventions') {
+        const body = JSON.parse(event.body || '{}');
+        const result = await createIntervention(db, orgId, auth.user_id, body);
         return { statusCode: 201, headers: headers, body: JSON.stringify(result) };
       }
       return { statusCode: 404, headers: headers, body: JSON.stringify({ error: 'Not found' }) };
@@ -296,6 +414,18 @@ exports.handler = async function handler(event) {
       const limit = Math.min(parseInt(params.limit) || 25, 100);
       const logs = await getAuditLog(db, orgId, page, limit);
       return { statusCode: 200, headers: headers, body: JSON.stringify({ logs: logs }) };
+    }
+
+    if (path === 'settings') {
+      const settings = await getSettings(db, orgId);
+      return { statusCode: 200, headers: headers, body: JSON.stringify(settings) };
+    }
+
+    if (path === 'interventions') {
+      const patientId = params.patient_id;
+      if (!patientId) return { statusCode: 400, headers: headers, body: JSON.stringify({ error: 'patient_id required' }) };
+      const interventions = await getInterventions(db, orgId, patientId);
+      return { statusCode: 200, headers: headers, body: JSON.stringify({ interventions: interventions }) };
     }
 
     return { statusCode: 404, headers: headers, body: JSON.stringify({ error: 'Not found' }) };
