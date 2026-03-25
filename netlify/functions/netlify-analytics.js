@@ -102,27 +102,11 @@ exports.handler = async function handler(event) {
     var fromTs = Math.floor(thirtyDaysAgo.getTime() / 1000);
     var toTs = Math.floor(now.getTime() / 1000);
 
-    // Try with seconds first (same as admin-impact.js)
     var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('bandwidth', fromTs, toTs, '&resolution=day'),
     ]);
-
-    // If seconds returned empty, try with milliseconds
-    var fromMs = thirtyDaysAgo.getTime();
-    var toMs = now.getTime();
-    if (results[0] && results[0].data && results[0].data.length === 0) {
-      var msResults = await Promise.all([
-        fetchNetlifyAnalytics('pageviews', fromMs, toMs, '&resolution=day'),
-        fetchNetlifyAnalytics('visitors', fromMs, toMs, '&resolution=day'),
-        fetchNetlifyAnalytics('bandwidth', fromMs, toMs, '&resolution=day'),
-      ]);
-      // Check if ms version has data
-      if (msResults[0] && msResults[0].data && msResults[0].data.length > 0) {
-        results = msResults;
-      }
-    }
 
     var pageviewsData = results[0];
     var visitorsData = results[1];
@@ -131,42 +115,27 @@ exports.handler = async function handler(event) {
     var totalPageviews = 0;
     var totalVisitors = 0;
     var totalBandwidth = 0;
-    var debug = {
-      siteId: NETLIFY_SITE_ID,
-      fromTs: fromTs,
-      toTs: toTs,
-      fromDate: thirtyDaysAgo.toISOString(),
-      toDate: now.toISOString(),
-      urlSeconds: 'https://analytics.services.netlify.com/v2/' + NETLIFY_SITE_ID + '/pageviews?from=' + fromTs + '&to=' + toTs + '&timezone=America/New_York&resolution=day',
-      urlMilliseconds: 'https://analytics.services.netlify.com/v2/' + NETLIFY_SITE_ID + '/pageviews?from=' + fromMs + '&to=' + toMs + '&timezone=America/New_York&resolution=day',
-      triedMilliseconds: results[0] && results[0].data && results[0].data.length === 0 ? false : 'not needed',
-      pageviewsKeys: pageviewsData ? Object.keys(pageviewsData) : [],
-      pageviewsDataLength: (pageviewsData && pageviewsData.data) ? pageviewsData.data.length : 'no data array',
-      visitorsKeys: visitorsData ? Object.keys(visitorsData) : [],
-      bandwidthKeys: bandwidthData ? Object.keys(bandwidthData) : [],
-    };
+
+    // Netlify Analytics returns arrays: [[timestamp, value], ...]
+    function sumData(dataArray) {
+      if (!dataArray || !dataArray.length) return 0;
+      return dataArray.reduce(function(sum, d) {
+        // Handle both formats: [ts, value] arrays and {count: value} objects
+        if (Array.isArray(d)) return sum + (d[1] || 0);
+        return sum + (d.count || d.value || 0);
+      }, 0);
+    }
 
     if (pageviewsData && pageviewsData.data) {
-      // Show FULL first entry so we can see exact field names
-      debug.firstPageviewEntry = pageviewsData.data[0] || 'empty array';
-      debug.pageviewsLength = pageviewsData.data.length;
-      totalPageviews = pageviewsData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
-    } else if (pageviewsData) {
-      debug.pageviewsRaw = JSON.stringify(pageviewsData).substring(0, 500);
+      totalPageviews = sumData(pageviewsData.data);
     }
 
     if (visitorsData && visitorsData.data) {
-      debug.firstVisitorEntry = visitorsData.data[0] || 'empty array';
-      totalVisitors = visitorsData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
-    } else if (visitorsData) {
-      debug.visitorsRaw = JSON.stringify(visitorsData).substring(0, 500);
+      totalVisitors = sumData(visitorsData.data);
     }
 
     if (bandwidthData && bandwidthData.data) {
-      debug.firstBandwidthEntry = bandwidthData.data[0] || 'empty array';
-      totalBandwidth = bandwidthData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
-    } else if (bandwidthData) {
-      debug.bandwidthRaw = JSON.stringify(bandwidthData).substring(0, 500);
+      totalBandwidth = sumData(bandwidthData.data);
     }
 
     return {
@@ -183,7 +152,6 @@ exports.handler = async function handler(event) {
         totalUniqueVisitors: totalVisitors,
         totalBandwidthBytes: totalBandwidth,
         totalBandwidthFormatted: formatBytes(totalBandwidth),
-        debug: debug,
       }),
     };
   } catch (error) {
