@@ -102,12 +102,27 @@ exports.handler = async function handler(event) {
     var fromTs = Math.floor(thirtyDaysAgo.getTime() / 1000);
     var toTs = Math.floor(now.getTime() / 1000);
 
-    // Fetch all three in parallel — same as admin-impact.js
+    // Try with seconds first (same as admin-impact.js)
     var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('bandwidth', fromTs, toTs, '&resolution=day'),
     ]);
+
+    // If seconds returned empty, try with milliseconds
+    var fromMs = thirtyDaysAgo.getTime();
+    var toMs = now.getTime();
+    if (results[0] && results[0].data && results[0].data.length === 0) {
+      var msResults = await Promise.all([
+        fetchNetlifyAnalytics('pageviews', fromMs, toMs, '&resolution=day'),
+        fetchNetlifyAnalytics('visitors', fromMs, toMs, '&resolution=day'),
+        fetchNetlifyAnalytics('bandwidth', fromMs, toMs, '&resolution=day'),
+      ]);
+      // Check if ms version has data
+      if (msResults[0] && msResults[0].data && msResults[0].data.length > 0) {
+        results = msResults;
+      }
+    }
 
     var pageviewsData = results[0];
     var visitorsData = results[1];
@@ -117,11 +132,17 @@ exports.handler = async function handler(event) {
     var totalVisitors = 0;
     var totalBandwidth = 0;
     var debug = {
-      pageviewsType: pageviewsData ? typeof pageviewsData : 'null',
+      siteId: NETLIFY_SITE_ID,
+      fromTs: fromTs,
+      toTs: toTs,
+      fromDate: thirtyDaysAgo.toISOString(),
+      toDate: now.toISOString(),
+      urlSeconds: 'https://analytics.services.netlify.com/v2/' + NETLIFY_SITE_ID + '/pageviews?from=' + fromTs + '&to=' + toTs + '&timezone=America/New_York&resolution=day',
+      urlMilliseconds: 'https://analytics.services.netlify.com/v2/' + NETLIFY_SITE_ID + '/pageviews?from=' + fromMs + '&to=' + toMs + '&timezone=America/New_York&resolution=day',
+      triedMilliseconds: results[0] && results[0].data && results[0].data.length === 0 ? false : 'not needed',
       pageviewsKeys: pageviewsData ? Object.keys(pageviewsData) : [],
-      visitorsType: visitorsData ? typeof visitorsData : 'null',
+      pageviewsDataLength: (pageviewsData && pageviewsData.data) ? pageviewsData.data.length : 'no data array',
       visitorsKeys: visitorsData ? Object.keys(visitorsData) : [],
-      bandwidthType: bandwidthData ? typeof bandwidthData : 'null',
       bandwidthKeys: bandwidthData ? Object.keys(bandwidthData) : [],
     };
 
