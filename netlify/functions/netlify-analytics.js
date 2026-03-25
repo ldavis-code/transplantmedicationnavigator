@@ -147,24 +147,26 @@ exports.handler = async function handler(event) {
     };
 
     if (pageviewsData && pageviewsData.data) {
-      totalPageviews = pageviewsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
-      debug.pageviewsSample = pageviewsData.data.slice(0, 2);
+      // Show FULL first entry so we can see exact field names
+      debug.firstPageviewEntry = pageviewsData.data[0] || 'empty array';
       debug.pageviewsLength = pageviewsData.data.length;
+      totalPageviews = pageviewsData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
     } else if (pageviewsData) {
-      debug.pageviewsRaw = JSON.stringify(pageviewsData).substring(0, 200);
+      debug.pageviewsRaw = JSON.stringify(pageviewsData).substring(0, 500);
     }
 
     if (visitorsData && visitorsData.data) {
-      totalVisitors = visitorsData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
-      debug.visitorsSample = visitorsData.data.slice(0, 2);
+      debug.firstVisitorEntry = visitorsData.data[0] || 'empty array';
+      totalVisitors = visitorsData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
     } else if (visitorsData) {
-      debug.visitorsRaw = JSON.stringify(visitorsData).substring(0, 200);
+      debug.visitorsRaw = JSON.stringify(visitorsData).substring(0, 500);
     }
 
     if (bandwidthData && bandwidthData.data) {
-      totalBandwidth = bandwidthData.data.reduce(function(sum, d) { return sum + (d.count || 0); }, 0);
+      debug.firstBandwidthEntry = bandwidthData.data[0] || 'empty array';
+      totalBandwidth = bandwidthData.data.reduce(function(sum, d) { return sum + (d.count || d.value || 0); }, 0);
     } else if (bandwidthData) {
-      debug.bandwidthRaw = JSON.stringify(bandwidthData).substring(0, 200);
+      debug.bandwidthRaw = JSON.stringify(bandwidthData).substring(0, 500);
     }
 
     return {
