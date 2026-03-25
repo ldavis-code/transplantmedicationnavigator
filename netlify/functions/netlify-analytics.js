@@ -138,17 +138,6 @@ exports.handler = async function handler(event) {
       totalBandwidth = sumData(bandwidthData.data);
     }
 
-    // Log to Netlify function logs for debugging
-    console.log('WEB ANALYTICS RESULT:', JSON.stringify({
-      totalPageviews: totalPageviews,
-      totalVisitors: totalVisitors,
-      totalBandwidth: totalBandwidth,
-      hasPageviewsData: !!(pageviewsData && pageviewsData.data),
-      pageviewsDataLength: pageviewsData && pageviewsData.data ? pageviewsData.data.length : 0,
-      firstEntry: pageviewsData && pageviewsData.data && pageviewsData.data[0] ? pageviewsData.data[0] : 'none',
-      isArray: pageviewsData && pageviewsData.data && pageviewsData.data[0] ? Array.isArray(pageviewsData.data[0]) : 'no data',
-    }));
-
     return {
       statusCode: 200,
       headers: headers,
