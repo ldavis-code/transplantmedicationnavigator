@@ -100,21 +100,22 @@ export async function handler(event) {
   try {
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-    const from = thirtyDaysAgo.getTime();
-    const to = now.getTime();
+    // Netlify Analytics API expects Unix timestamps in seconds
+    const from = Math.floor(thirtyDaysAgo.getTime() / 1000);
+    const to = Math.floor(now.getTime() / 1000);
 
     const netlifyApi = `https://analytics.services.netlify.com/v2/${siteId}`;
     const authHeader = { Authorization: `Bearer ${netlifyToken}` };
 
     // Fetch pageviews, visitors, and bandwidth in parallel
     const [pageviewsRes, visitorsRes, bandwidthRes] = await Promise.all([
-      fetch(`${netlifyApi}/pageviews?from=${from}&to=${to}&timezone=-0500&resolution=day`, {
+      fetch(`${netlifyApi}/pageviews?from=${from}&to=${to}&timezone=America/New_York&resolution=day`, {
         headers: authHeader,
       }),
-      fetch(`${netlifyApi}/visitors?from=${from}&to=${to}&timezone=-0500&resolution=day`, {
+      fetch(`${netlifyApi}/visitors?from=${from}&to=${to}&timezone=America/New_York&resolution=day`, {
         headers: authHeader,
       }),
-      fetch(`${netlifyApi}/bandwidth?from=${from}&to=${to}&timezone=-0500&resolution=day`, {
+      fetch(`${netlifyApi}/bandwidth?from=${from}&to=${to}&timezone=America/New_York&resolution=day`, {
         headers: authHeader,
       }),
     ]);
