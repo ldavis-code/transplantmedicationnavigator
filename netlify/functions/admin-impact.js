@@ -91,9 +91,9 @@ exports.handler = async function handler(event) {
     const cutoffDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
     const cutoff = cutoffDate.toISOString();
 
-    // Unix timestamps in seconds for Netlify API
-    const fromTs = Math.floor(cutoffDate.getTime() / 1000);
-    const toTs = Math.floor(now.getTime() / 1000);
+    // Netlify Analytics API expects timestamps in milliseconds
+    const fromTs = cutoffDate.getTime();
+    const toTs = now.getTime();
 
     // --- Netlify Analytics (real traffic data) ---
     var results = await Promise.all([

@@ -98,9 +98,9 @@ exports.handler = async function handler(event) {
     var now = new Date();
     var thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-    // Unix timestamps in seconds for Netlify API
-    var fromTs = Math.floor(thirtyDaysAgo.getTime() / 1000);
-    var toTs = Math.floor(now.getTime() / 1000);
+    // Netlify Analytics API expects timestamps in milliseconds
+    var fromTs = thirtyDaysAgo.getTime();
+    var toTs = now.getTime();
 
     var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
