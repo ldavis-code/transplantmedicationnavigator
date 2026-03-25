@@ -164,9 +164,15 @@ export default function ComplianceDashboard() {
         <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
           <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-3" />
           <p className="text-red-800 font-medium">{error}</p>
-          <p className="text-red-600 text-sm mt-2">
-            Ensure the compliance tables have been created by running migration 018_compliance_tracking.sql
-          </p>
+          {error.includes('Unauthorized') ? (
+            <p className="text-red-600 text-sm mt-2">
+              Please log in with an admin account to access the compliance dashboard.
+            </p>
+          ) : (
+            <p className="text-red-600 text-sm mt-2">
+              If this error persists, please contact support or check that the database is properly configured.
+            </p>
+          )}
         </div>
       </AdminLayout>
     );
