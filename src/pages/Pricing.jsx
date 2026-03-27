@@ -32,7 +32,7 @@ const Pricing = () => {
             description: 'For hospitals & healthcare organizations',
             price: 'Custom',
             priceSubtext: 'pricing',
-            color: 'indigo',
+            color: 'emerald',
             icon: Building2,
             features: [
                 'Volume licensing for your organization',
