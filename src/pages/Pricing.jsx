@@ -35,12 +35,15 @@ const Pricing = () => {
             color: 'emerald',
             icon: Building2,
             features: [
+                'Epic Connection Hub integrated',
+                'Reduces 30-day readmission risk',
+                'Supports CMS patient education documentation',
+                'HIPAA-compliant deployment',
                 'Volume licensing for your organization',
                 'Dedicated account manager',
                 'Custom onboarding and training',
                 'Priority support',
                 'Analytics and reporting dashboard',
-                'HIPAA-compliant deployment options',
                 'Integration with existing systems',
                 'Custom branding options'
             ],
