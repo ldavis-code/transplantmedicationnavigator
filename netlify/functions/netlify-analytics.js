@@ -2,12 +2,14 @@
  * Netlify Analytics API Proxy
  *
  * Fetches site analytics (pageviews, unique visitors, bandwidth)
- * from the Netlify API for the last 30 days.
+ * from the Netlify API for the last 30 days, plus all-time totals
+ * from the events table in the database.
  *
  * Uses the same pattern as admin-impact.js which successfully fetches
  * from the Netlify Analytics API.
  */
 
+const { neon } = require('@neondatabase/serverless');
 const crypto = require('crypto');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
@@ -102,15 +104,55 @@ exports.handler = async function handler(event) {
     var fromTs = thirtyDaysAgo.getTime();
     var toTs = now.getTime();
 
+    // Fetch Netlify analytics and database event counts in parallel
+    var dbPageviewsPromise = (function() {
+      if (!process.env.DATABASE_URL) return Promise.resolve(null);
+      try {
+        var db = neon(process.env.DATABASE_URL);
+        return db`
+          SELECT
+            COUNT(*) AS all_time_total,
+            COUNT(*) FILTER (WHERE ts >= NOW() - INTERVAL '7 days') AS last_7_days,
+            COUNT(*) FILTER (WHERE ts >= NOW() - INTERVAL '30 days') AS last_30_days,
+            COUNT(*) FILTER (WHERE ts >= CURRENT_DATE) AS today
+          FROM events
+          WHERE event_name = 'page_view'
+        `.then(function(rows) { return rows[0]; })
+         .catch(function(err) { console.error('DB pageview query error:', err.message); return null; });
+      } catch (e) {
+        return Promise.resolve(null);
+      }
+    })();
+
+    var dailyPageviewsPromise = (function() {
+      if (!process.env.DATABASE_URL) return Promise.resolve([]);
+      try {
+        var db = neon(process.env.DATABASE_URL);
+        return db`
+          SELECT ts::date AS day, COUNT(*) AS count
+          FROM events
+          WHERE event_name = 'page_view' AND ts >= NOW() - INTERVAL '30 days'
+          GROUP BY ts::date
+          ORDER BY day ASC
+        `.catch(function(err) { console.error('DB daily pageview query error:', err.message); return []; });
+      } catch (e) {
+        return Promise.resolve([]);
+      }
+    })();
+
     var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('bandwidth', fromTs, toTs, '&resolution=day'),
+      dbPageviewsPromise,
+      dailyPageviewsPromise,
     ]);
 
     var pageviewsData = results[0];
     var visitorsData = results[1];
     var bandwidthData = results[2];
+    var dbPageviews = results[3];
+    var dailyPageviews = results[4];
 
     var totalPageviews = 0;
     var totalVisitors = 0;
@@ -138,6 +180,22 @@ exports.handler = async function handler(event) {
       totalBandwidth = sumData(bandwidthData.data);
     }
 
+    // Build running totals from database events
+    var runningTotals = null;
+    if (dbPageviews) {
+      runningTotals = {
+        allTime: parseInt(dbPageviews.all_time_total || 0),
+        last30Days: parseInt(dbPageviews.last_30_days || 0),
+        last7Days: parseInt(dbPageviews.last_7_days || 0),
+        today: parseInt(dbPageviews.today || 0),
+      };
+    }
+
+    // Format daily pageview data for chart display
+    var dailyData = (dailyPageviews || []).map(function(d) {
+      return { date: d.day, count: parseInt(d.count) };
+    });
+
     return {
       statusCode: 200,
       headers: headers,
@@ -152,6 +210,8 @@ exports.handler = async function handler(event) {
         totalUniqueVisitors: totalVisitors,
         totalBandwidthBytes: totalBandwidth,
         totalBandwidthFormatted: formatBytes(totalBandwidth),
+        runningTotals: runningTotals,
+        dailyPageviews: dailyData,
       }),
     };
   } catch (error) {

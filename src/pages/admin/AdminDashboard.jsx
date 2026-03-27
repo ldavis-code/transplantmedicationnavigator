@@ -238,11 +238,72 @@ export default function AdminDashboard() {
               {webAnalytics.period.from} to {webAnalytics.period.to}
             </span>
           </h2>
+
+          {/* Running Totals */}
+          {webAnalytics.runningTotals && (
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-6 mb-4 text-white">
+              <div className="flex items-center gap-2 mb-4">
+                <TrendingUp className="h-5 w-5" />
+                <h3 className="text-sm font-semibold uppercase tracking-wide opacity-90">Pageview Running Totals</h3>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <p className="text-emerald-200 text-xs font-medium">All Time</p>
+                  <p className="text-3xl font-bold">{webAnalytics.runningTotals.allTime.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-emerald-200 text-xs font-medium">Last 30 Days</p>
+                  <p className="text-3xl font-bold">{webAnalytics.runningTotals.last30Days.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-emerald-200 text-xs font-medium">Last 7 Days</p>
+                  <p className="text-3xl font-bold">{webAnalytics.runningTotals.last7Days.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-emerald-200 text-xs font-medium">Today</p>
+                  <p className="text-3xl font-bold">{webAnalytics.runningTotals.today.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Daily Pageviews Chart */}
+          {webAnalytics.dailyPageviews && webAnalytics.dailyPageviews.length > 0 && (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 mb-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Daily Pageviews (Last 30 Days)</h3>
+              <div className="flex items-end gap-[2px] h-24">
+                {(() => {
+                  var maxCount = Math.max(...webAnalytics.dailyPageviews.map(d => d.count), 1);
+                  return webAnalytics.dailyPageviews.map(function(d, i) {
+                    var heightPct = Math.max(2, (d.count / maxCount) * 100);
+                    var dateStr = new Date(d.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                    return (
+                      <div
+                        key={i}
+                        className="flex-1 bg-emerald-400 hover:bg-emerald-500 rounded-t transition-colors cursor-default"
+                        style={{ height: heightPct + '%' }}
+                        title={dateStr + ': ' + d.count.toLocaleString() + ' views'}
+                      />
+                    );
+                  });
+                })()}
+              </div>
+              <div className="flex justify-between mt-1">
+                <span className="text-[10px] text-gray-400">
+                  {webAnalytics.dailyPageviews.length > 0 ? new Date(webAnalytics.dailyPageviews[0].date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''}
+                </span>
+                <span className="text-[10px] text-gray-400">
+                  {webAnalytics.dailyPageviews.length > 0 ? new Date(webAnalytics.dailyPageviews[webAnalytics.dailyPageviews.length - 1].date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''}
+                </span>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg shadow-sm border border-cyan-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-cyan-700">Total Pageviews</p>
+                  <p className="text-sm font-medium text-cyan-700">Netlify Pageviews</p>
                   <p className="text-3xl font-bold text-cyan-900 mt-1">
                     {loadingWebAnalytics ? '...' : webAnalytics.totalPageviews.toLocaleString()}
                   </p>
