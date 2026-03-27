@@ -748,6 +748,18 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Epic / MyChart Badge */}
+            <div className="flex justify-center max-w-4xl mx-auto">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-emerald-200 rounded-full shadow-sm">
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-emerald-500 rounded-full" aria-hidden="true" />
+                        <span className="text-sm font-bold text-slate-900">Listed in Epic Connection Hub</span>
+                    </div>
+                    <span className="text-slate-300">|</span>
+                    <span className="text-sm font-bold text-emerald-700">MyChart Integrated</span>
+                </div>
+            </div>
+
             {/* Features Grid */}
             <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-100 transition">
@@ -898,7 +910,7 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help — no investors, no ads, just patients helping patients.
+                    Take our free quiz to see how we can help — Patient Founded. Patient First.
                 </p>
             </section>
 
