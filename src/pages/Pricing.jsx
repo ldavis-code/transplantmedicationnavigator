@@ -35,14 +35,13 @@ const Pricing = () => {
             color: 'indigo',
             icon: Building2,
             features: [
-                'Volume licensing for your organization',
-                'Dedicated account manager',
-                'Custom onboarding and training',
-                'Priority support',
-                'Analytics and reporting dashboard',
-                'HIPAA-compliant deployment options',
-                'Integration with existing systems',
-                'Custom branding options'
+                'Epic MyChart integration with SMART on FHIR R4',
+                'Branded patient portal with the center\'s logo and colors',
+                'Patient engagement and adherence dashboard',
+                'Copay card and PAP matching for full transplant medication formulary',
+                'CMS/IOTA-ready compliance documentation and reporting',
+                'Implementation support and transplant coordinator training',
+                'Multi-organ program support (kidney, liver, heart, lung)'
             ],
             cta: 'Contact Us',
             ctaLink: 'mailto:info@transplantmedicationnavigator.com?subject=Enterprise%20Pricing%20Inquiry',
@@ -176,7 +175,7 @@ const Pricing = () => {
                                 <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What does Enterprise include?</h3>
                                     <p className="text-slate-600">
-                                        Enterprise plans include volume licensing, dedicated account management, custom onboarding and training, priority support, analytics and reporting dashboards, HIPAA-compliant deployment options, system integrations, and custom branding. Contact us to learn more.
+                                        Enterprise plans include Epic MyChart integration with SMART on FHIR R4, a branded patient portal with your center's logo and colors, patient engagement and adherence dashboards, copay card and PAP matching for your full transplant medication formulary, CMS/IOTA-ready compliance documentation and reporting, implementation support with transplant coordinator training, and multi-organ program support. Contact us to learn more.
                                     </p>
                                 </div>
                             </div>
