@@ -477,8 +477,7 @@ export default function MyMedications() {
             Do you have commercial insurance?
           </legend>
           <p className="text-slate-600 text-sm mb-4">
-            This helps us find the right savings programs for your medications.
-            Copay cards are only available with commercial (employer/marketplace) insurance.
+            Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately — not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
           </p>
           <div className="flex gap-4" role="radiogroup" aria-label="Commercial insurance status">
             <button

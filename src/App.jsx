@@ -6691,7 +6691,7 @@ ${patientName || "[Your Name]"}`;
                                         Do you have commercial insurance?
                                     </h3>
                                     <p className="text-slate-600 mb-4 text-sm">
-                                        Copay cards are only available with commercial (employer or marketplace) insurance. This helps us show you the right savings programs.
+                                        Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately — not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
                                     </p>
                                     <div className="flex gap-4">
                                         <button
