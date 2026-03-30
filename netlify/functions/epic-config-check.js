@@ -100,7 +100,23 @@ export async function handler(event) {
   if (discoveryResult?.scopes_supported?.length > 0) {
     const unsupported = requestedScopes.filter(s => !discoveryResult.scopes_supported.includes(s));
     if (unsupported.length > 0) {
-      issues.push(`These requested scopes are NOT in the server's supported list: ${unsupported.join(', ')}. This will cause authorization to fail.`);
+      issues.push(`These requested scopes are NOT in the server's supported list: ${unsupported.join(', ')}. The auth-url endpoint will automatically remove unsupported scopes, but you should update EPIC_SCOPES to match your app registration.`);
+    }
+  }
+
+  // Check FHIR base URL reachability and aud parameter validity
+  if (fhirBaseUrl) {
+    const normalizedBase = normalizeUrl(fhirBaseUrl);
+    try {
+      const metaRes = await fetch(`${normalizedBase}/metadata`, {
+        headers: { 'Accept': 'application/fhir+json' },
+        signal: AbortSignal.timeout(5000)
+      });
+      if (!metaRes.ok) {
+        issues.push(`FHIR server metadata endpoint returned HTTP ${metaRes.status}. The EPIC_FHIR_BASE_URL may be incorrect or the server may be down.`);
+      }
+    } catch (e) {
+      issues.push(`Could not reach FHIR server at ${normalizedBase}/metadata: ${e.message}. Verify EPIC_FHIR_BASE_URL is correct.`);
     }
   }
 

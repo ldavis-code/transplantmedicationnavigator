@@ -241,14 +241,28 @@
             const state = params.get('state');
             const errorParam = params.get('error');
 
-            // Handle Epic-side errors (user denied consent, etc.)
+            // Handle Epic-side errors (user denied consent, invalid client, etc.)
             if (errorParam) {
-                const desc = params.get('error_description') || 'Authorization was not completed.';
+                let desc = params.get('error_description') || 'Authorization was not completed.';
+
+                // Provide specific guidance based on the error type
+                const errorGuide = {
+                    'invalid_client': 'The EPIC_CLIENT_ID is not recognized by this FHIR server. Verify it matches your Epic App Orchard registration.',
+                    'unauthorized_client': 'This app is not authorized for the requested flow. Check that your Epic app is registered for SMART App Launch (standalone).',
+                    'invalid_scope': 'One or more requested scopes are not registered for this app in Epic App Orchard.',
+                    'access_denied': 'Access was denied. The user may have declined consent, or the app is not approved for this health system.',
+                    'invalid_request': 'The authorization request was malformed. The redirect_uri or aud parameter may not match what is registered in Epic.'
+                };
+
+                if (errorGuide[errorParam]) {
+                    desc += ' ' + errorGuide[errorParam];
+                }
+
                 showError(desc, {
                     error: errorParam,
                     error_description: params.get('error_description'),
                     error_uri: params.get('error_uri'),
-                    source: 'Epic authorization server rejected the request. This is NOT a Supabase or Netlify issue — check your Epic App Orchard configuration.',
+                    guidance: errorGuide[errorParam] || 'Check your Epic App Orchard configuration.',
                     debug_url: '/api/epic-config-check'
                 });
                 return;

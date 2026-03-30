@@ -103,7 +103,25 @@ export async function handler(event) {
     }
 
     if (!tokenUrl) {
-      tokenUrl = fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/token');
+      // Try multiple URL patterns (must match the patterns in epic-auth-url.js)
+      if (/\/api\/FHIR\/R4\/?$/.test(fhirBaseUrl)) {
+        tokenUrl = fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/token');
+      } else if (/\/FHIR\/R4\/?$/.test(fhirBaseUrl)) {
+        tokenUrl = fhirBaseUrl.replace(/\/FHIR\/R4\/?$/, '/oauth2/token');
+      } else if (/\/FHIR\/DSTU2\/?$/.test(fhirBaseUrl)) {
+        tokenUrl = fhirBaseUrl.replace(/\/FHIR\/DSTU2\/?$/, '/oauth2/token');
+      } else {
+        console.error('[epic-token-exchange] Cannot derive token URL from:', fhirBaseUrl);
+        return {
+          statusCode: 500,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({
+            error: 'Could not determine the token endpoint for this FHIR server. ' +
+              'Set EPIC_TOKEN_URL in your environment variables.',
+            fhir_base_url: fhirBaseUrl
+          })
+        };
+      }
       console.warn('[epic-token-exchange] Using URL derivation fallback for token endpoint:', tokenUrl);
     }
 
