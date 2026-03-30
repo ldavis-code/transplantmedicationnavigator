@@ -125,30 +125,35 @@ export default function ComplianceOverview() {
     return res.json();
   }, [getToken]);
 
+  const safeFetch = useCallback(async (table, fallback = []) => {
+    try { return await fetchTable(table); }
+    catch (_) { return fallback; }
+  }, [fetchTable]);
+
   const loadAll = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const [c, v, p, r, i, ak] = await Promise.all([
-        fetchTable('controls'),
-        fetchTable('vendors'),
-        fetchTable('policies'),
-        fetchTable('risks'),
-        fetchTable('incidents'),
-        fetchTable('auto_checks'),
+        safeFetch('controls'),
+        safeFetch('vendors'),
+        safeFetch('policies'),
+        safeFetch('risks'),
+        safeFetch('incidents'),
+        safeFetch('auto_checks'),
       ]);
-      setControls(c);
-      setVendors(v);
-      setPolicies(p);
-      setRisks(r);
-      setIncidents(i);
-      setChecks(ak);
+      setControls(Array.isArray(c) ? c : []);
+      setVendors(Array.isArray(v) ? v : []);
+      setPolicies(Array.isArray(p) ? p : []);
+      setRisks(Array.isArray(r) ? r : []);
+      setIncidents(Array.isArray(i) ? i : []);
+      setChecks(Array.isArray(ak) ? ak : []);
     } catch (e) {
       setError(e.message);
     } finally {
       setLoading(false);
     }
-  }, [fetchTable]);
+  }, [safeFetch]);
 
   useEffect(() => {
     if (isAdmin) loadAll();
