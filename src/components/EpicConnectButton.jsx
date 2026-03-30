@@ -84,6 +84,31 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
         }
 
         try {
+            // Pre-flight: verify Epic configuration before redirecting.
+            // This catches misconfigurations that would otherwise show as a
+            // cryptic "OAuth2 Error" page on Epic's site with no details.
+            try {
+                const configRes = await fetch('/api/epic-config-check');
+                if (configRes.ok) {
+                    const configData = await configRes.json();
+                    if (configData.status === 'ISSUES_FOUND' && configData.issues?.length > 0) {
+                        console.warn('[EpicConnect] Configuration issues detected:', configData.issues);
+                        // Only block on critical issues (missing required vars)
+                        const critical = configData.issues.filter(i =>
+                            i.includes('is not set') || i.includes('does not start with https')
+                        );
+                        if (critical.length > 0) {
+                            setError('Epic integration is not configured correctly: ' + critical[0]);
+                            setLoading(false);
+                            return;
+                        }
+                    }
+                }
+            } catch (configErr) {
+                // Don't block on config check failure — proceed with the flow
+                console.warn('[EpicConnect] Config pre-flight check failed:', configErr.message);
+            }
+
             // Pass the selected health system's FHIR base URL to the auth endpoint
             const response = await fetch('/api/epic-auth-url?fhir_base_url=' + encodeURIComponent(system.fhirBaseUrl));
             const data = await response.json();
@@ -96,8 +121,8 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
 
             if (data._debug) {
                 console.log('[EpicConnect] Auth URL debug:', data._debug);
-                if (data._debug.scope_warnings && data._debug.scope_warnings.length > 0) {
-                    console.warn('[EpicConnect] Scope warnings — these scopes may not be supported:', data._debug.scope_warnings);
+                if (data._debug.scope_removed && data._debug.scope_removed.length > 0) {
+                    console.warn('[EpicConnect] Unsupported scopes removed:', data._debug.scope_removed);
                 }
             }
 

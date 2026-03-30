@@ -162,6 +162,34 @@ export async function handler(event) {
 
         const fhirBaseUrl = normalizeUrl(rawFhirBaseUrl);
 
+        // Validate redirect URI format before sending to Epic.
+        // Epic shows a generic "OAuth2 Error — Something went wrong trying to
+        // authorize the client" page when the redirect_uri doesn't match, with
+        // no diagnostic details. Catch common misconfigurations here so the
+        // user sees an actionable error instead.
+        if (!safeRedirectUri.startsWith('https://') && !safeRedirectUri.startsWith('http://localhost')) {
+            return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({
+                    error: 'EPIC_REDIRECT_URI must use HTTPS. Current value: ' + safeRedirectUri +
+                        '. Update EPIC_REDIRECT_URI in your Netlify environment variables.',
+                    config_check_url: '/api/epic-config-check'
+                })
+            };
+        }
+        if (!safeRedirectUri.includes('/auth/epic/callback')) {
+            return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({
+                    error: 'EPIC_REDIRECT_URI must end with /auth/epic/callback. Current value: ' + safeRedirectUri +
+                        '. Update EPIC_REDIRECT_URI in your Netlify environment variables.',
+                    config_check_url: '/api/epic-config-check'
+                })
+            };
+        }
+
         // Warn if still using Epic sandbox in what appears to be production
         if (fhirBaseUrl.includes('interconnect-fhir-oauth') && process.env.URL && !process.env.URL.includes('localhost')) {
             console.warn('[epic-auth-url] NOTE: Using Epic SANDBOX endpoint. This is fine for testing with Epic test patients but will not work for real patients.');
@@ -190,7 +218,31 @@ export async function handler(event) {
 
         // Final fallback: derive from FHIR base URL pattern
         if (!authorizeUrl) {
-            authorizeUrl = fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/authorize');
+            // Try multiple URL patterns health systems use:
+            //   Epic sandbox: /interconnect-fhir-oauth/api/FHIR/R4 → /interconnect-fhir-oauth/oauth2/authorize
+            //   Some systems: /FHIR/R4 → /oauth2/authorize
+            //   Some systems: /api/FHIR/R4 → /oauth2/authorize
+            if (/\/api\/FHIR\/R4\/?$/.test(fhirBaseUrl)) {
+                authorizeUrl = fhirBaseUrl.replace(/\/api\/FHIR\/R4\/?$/, '/oauth2/authorize');
+            } else if (/\/FHIR\/R4\/?$/.test(fhirBaseUrl)) {
+                authorizeUrl = fhirBaseUrl.replace(/\/FHIR\/R4\/?$/, '/oauth2/authorize');
+            } else if (/\/FHIR\/DSTU2\/?$/.test(fhirBaseUrl)) {
+                authorizeUrl = fhirBaseUrl.replace(/\/FHIR\/DSTU2\/?$/, '/oauth2/authorize');
+            } else {
+                // Cannot derive — return an error instead of sending the user
+                // to a URL that will definitely fail
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({
+                        error: 'Could not determine the authorization endpoint for this FHIR server. ' +
+                            'SMART discovery failed and the URL pattern is not recognized. ' +
+                            'Set EPIC_AUTHORIZE_URL and EPIC_TOKEN_URL manually, or verify EPIC_FHIR_BASE_URL is correct.',
+                        fhir_base_url: fhirBaseUrl,
+                        discovery_attempted: true
+                    })
+                };
+            }
             discoveryMethod = 'url_derivation';
             console.warn('[epic-auth-url] Using URL derivation fallback for authorize endpoint. ' +
                 'Set EPIC_AUTHORIZE_URL or ensure the FHIR server supports .well-known/smart-configuration.');
@@ -221,9 +273,13 @@ export async function handler(event) {
         const scope = process.env.EPIC_SCOPES ||
             'launch/patient openid fhirUser patient/Patient.read patient/MedicationRequest.read';
 
-        // Pre-flight: warn if any requested scopes aren't in the server's supported list
+        // Pre-flight: check if any requested scopes aren't in the server's supported list.
+        // Epic rejects the ENTIRE authorization request if ANY scope is unregistered,
+        // showing a generic "OAuth2 Error" page with no details. If we detect unsupported
+        // scopes, remove them automatically to prevent this error.
         const requestedScopes = scope.split(' ');
         let scopeWarnings = [];
+        let effectiveScope = scope;
         try {
             const smartRes = await fetch(`${fhirBaseUrl}/.well-known/smart-configuration`, {
                 headers: { 'Accept': 'application/json' },
@@ -237,6 +293,18 @@ export async function handler(event) {
                         scopeWarnings = unsupported;
                         console.warn('[epic-auth-url] WARNING: These scopes are NOT in the server\'s supported list:', unsupported.join(', '),
                             'Supported scopes:', smartConfig.scopes_supported.join(', '));
+
+                        // Remove unsupported scopes to prevent Epic from rejecting
+                        // the entire request. Keep only scopes the server recognizes.
+                        const supportedRequested = requestedScopes.filter(s => smartConfig.scopes_supported.includes(s));
+
+                        // Ensure we still have the minimum required scopes
+                        if (supportedRequested.length > 0) {
+                            effectiveScope = supportedRequested.join(' ');
+                            console.log('[epic-auth-url] Adjusted scopes to:', effectiveScope);
+                        }
+                        // If no scopes are supported, proceed with original (server may
+                        // not accurately report supported scopes in all cases)
                     }
                 }
             }
@@ -254,7 +322,7 @@ export async function handler(event) {
             ['response_type', 'code'],
             ['client_id', clientId],
             ['redirect_uri', safeRedirectUri],
-            ['scope', scope],
+            ['scope', effectiveScope],
             ['state', state],
             ['aud', fhirBaseUrl],
             ['code_challenge', codeChallenge],
@@ -270,12 +338,13 @@ export async function handler(event) {
         const debugInfo = {
             client_id: clientId,
             redirect_uri: safeRedirectUri,
-            scope,
+            scope: effectiveScope,
+            scope_requested: scope !== effectiveScope ? scope : undefined,
+            scope_removed: scopeWarnings.length > 0 ? scopeWarnings : undefined,
             aud: fhirBaseUrl,
             authorize_endpoint: authorizeUrl,
             token_endpoint: tokenUrl || '(will derive at token exchange)',
             discovery_method: discoveryMethod,
-            scope_warnings: scopeWarnings.length > 0 ? scopeWarnings : undefined
         };
         console.log('[epic-auth-url] Authorization URL:', authUrl);
         console.log('[epic-auth-url] Parameters:', JSON.stringify(debugInfo));

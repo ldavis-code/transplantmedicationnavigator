@@ -31,9 +31,23 @@ const EpicCallback = () => {
                 const state = searchParams.get('state');
                 const errorParam = searchParams.get('error');
 
-                // Handle Epic-side errors (user denied consent, etc.)
+                // Handle Epic-side errors (user denied consent, invalid client, etc.)
                 if (errorParam) {
-                    const errorDesc = searchParams.get('error_description') || 'Authorization was not completed.';
+                    let errorDesc = searchParams.get('error_description') || 'Authorization was not completed.';
+
+                    // Add specific guidance based on the error type
+                    const guides = {
+                        'invalid_client': ' The app client ID is not recognized by this health system.',
+                        'unauthorized_client': ' This app is not authorized for the standalone launch flow.',
+                        'invalid_scope': ' One or more requested permissions are not registered for this app.',
+                        'access_denied': ' Access was denied. You may have declined consent, or the app is not approved for your health system.',
+                        'invalid_request': ' The authorization request was invalid. The redirect URI or audience may not match the app registration.'
+                    };
+
+                    if (guides[errorParam]) {
+                        errorDesc += guides[errorParam];
+                    }
+
                     setStatus('error');
                     setMessage(errorDesc);
                     return;
