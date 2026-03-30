@@ -750,13 +750,13 @@ const Home = () => {
 
             {/* Epic / MyChart Badge */}
             <div className="flex justify-center max-w-4xl mx-auto">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-emerald-200 rounded-full shadow-sm">
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-emerald-500 rounded-full" aria-hidden="true" />
-                        <span className="text-sm font-bold text-slate-900">Listed in Epic Connection Hub</span>
+                <div className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-2xl shadow-md">
+                    <div className="flex items-center gap-3">
+                        <div className="w-4 h-4 bg-emerald-500 rounded-full ring-4 ring-emerald-100" aria-hidden="true" />
+                        <span className="text-base md:text-lg font-extrabold text-slate-900">Listed in Epic Connection Hub</span>
                     </div>
-                    <span className="text-slate-300">|</span>
-                    <span className="text-sm font-bold text-emerald-700">MyChart Integrated</span>
+                    <div className="w-px h-8 bg-emerald-300" aria-hidden="true" />
+                    <span className="text-base md:text-lg font-extrabold text-emerald-700">MyChart Integrated</span>
                 </div>
             </div>
 
