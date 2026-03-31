@@ -511,6 +511,7 @@ const Layout = ({ children }) => {
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
         { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
+        { path: '/for-hospitals', label: 'For Hospitals', ariaLabel: 'Information for hospital administrators and transplant coordinators' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
         { path: '/feedback', label: 'Feedback', ariaLabel: 'Share your feedback' },
