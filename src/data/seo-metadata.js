@@ -106,6 +106,17 @@ export const seoMetadata = {
     breadcrumbName: 'For Employers',
   },
 
+  forHospitalAdmin: {
+    title: 'For Hospital Administrators | Transplant Medication Navigator\u2122',
+    description: 'Improve SRTR outcomes, reduce readmissions, and strengthen CMS compliance. HIPAA-compliant medication assistance tool with Epic integration for transplant programs.',
+    canonical: `${BASE_URL}/for-hospitals`,
+    ogTitle: 'For Hospital Administrators & Transplant Coordinators',
+    ogDescription: 'Protect graft survival by removing medication cost barriers. HIPAA-compliant, Epic-integrated tool supporting SRTR outcomes and CMS documentation compliance.',
+    twitterTitle: 'For Hospital Administrators',
+    twitterDescription: 'Improve SRTR outcomes and reduce readmissions with a HIPAA-compliant medication assistance tool for transplant programs.',
+    breadcrumbName: 'For Hospitals',
+  },
+
   forPayers: {
     title: 'For Payers | Transplant Medication Navigator™',
     description: 'Help members access manufacturer assistance programs for transplant medications. Reduce plan spend on high-cost drugs with our privacy-safe resource.',

@@ -11,6 +11,7 @@ const LazyGeneralMedicationSurvey = lazy(() => import('./pages/GeneralMedication
 const LazyForTransplantPrograms = lazy(() => import('./pages/ForTransplantPrograms.jsx'));
 const LazyForEmployers = lazy(() => import('./pages/ForEmployers.jsx'));
 const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
+const LazyForHospitalAdmin = lazy(() => import('./pages/ForHospitalAdmin.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyDemo = lazy(() => import('./pages/Demo.jsx'));
@@ -660,6 +661,8 @@ const Layout = ({ children }) => {
                         <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility & Section 504</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">For Hospitals</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">Admin</Link>
                     </div>
@@ -7004,6 +7007,7 @@ const MainSiteRoutes = () => (
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
                 <Route path="/feedback" element={<LazyFeedbackSurvey />} />
+                <Route path="/for-hospitals" element={<LazyForHospitalAdmin />} />
                 <Route path="/for-transplant-programs" element={<Navigate to="/pricing#transplant-programs" replace />} />
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
