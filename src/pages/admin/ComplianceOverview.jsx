@@ -10,9 +10,13 @@ import {
   ShieldCheck, Shield, FileText, AlertTriangle, Users2, Building2,
   RefreshCw, CheckCircle2, XCircle, Clock, AlertCircle, Minus,
   ChevronDown, ChevronUp, Printer, Activity, ExternalLink,
+  Pencil, Check, X,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AdminLayout from './AdminLayout';
+import {
+  updateControl, updateVendor, updatePolicy, upsertRisk, upsertIncident,
+} from '../../lib/compliance-db';
 
 const API = '/.netlify/functions/compliance-state';
 const CHECKS_URL = '/.netlify/functions/compliance-checks';
@@ -115,6 +119,49 @@ export default function ComplianceOverview() {
   const [incidents, setIncidents] = useState([]);
   const [checks, setChecks] = useState([]);
   const [checksRunning, setChecksRunning] = useState(false);
+
+  // Inline editing state: { type: 'control'|'vendor'|'policy'|'risk'|'incident', id: string }
+  const [editing, setEditing] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [saving, setSaving] = useState(false);
+
+  const startEdit = (type, item) => {
+    setEditing({ type, id: item.id });
+    setEditForm({ ...item });
+  };
+
+  const cancelEdit = () => { setEditing(null); setEditForm({}); };
+
+  const saveEdit = async () => {
+    setSaving(true);
+    try {
+      const { type, id } = editing;
+      if (type === 'control') {
+        await updateControl(id, { status: editForm.status, evidence: editForm.evidence, due_date: editForm.due_date, owner: editForm.owner });
+        setControls(prev => prev.map(c => c.id === id ? { ...c, ...editForm } : c));
+      } else if (type === 'vendor') {
+        await updateVendor(id, { baa_status: editForm.baa_status, baa_date: editForm.baa_date, notes: editForm.notes });
+        setVendors(prev => prev.map(v => v.id === id ? { ...v, ...editForm } : v));
+      } else if (type === 'policy') {
+        await updatePolicy(id, { status: editForm.status, last_reviewed: editForm.last_reviewed, next_review: editForm.next_review, file_link: editForm.file_link });
+        setPolicies(prev => prev.map(p => p.id === id ? { ...p, ...editForm } : p));
+      } else if (type === 'risk') {
+        await upsertRisk(editForm);
+        setRisks(prev => prev.map(r => r.id === id ? { ...r, ...editForm } : r));
+      } else if (type === 'incident') {
+        await upsertIncident(editForm);
+        setIncidents(prev => prev.map(i => i.id === id ? { ...i, ...editForm } : i));
+      }
+      setEditing(null);
+      setEditForm({});
+    } catch (e) {
+      alert('Save failed: ' + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const isEditing = (type, id) => editing?.type === type && editing?.id === id;
 
   const fetchTable = useCallback(async (table) => {
     const token = getToken();
@@ -296,19 +343,44 @@ export default function ComplianceOverview() {
                           <th className="text-left py-2 pr-3 font-medium text-gray-500">Control</th>
                           <th className="text-left py-2 pr-3 font-medium text-gray-500 w-32">Category</th>
                           <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Status</th>
-                          <th className="text-left py-2 font-medium text-gray-500 w-28">Owner</th>
+                          <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Owner</th>
+                          <th className="w-20 print:hidden" />
                         </tr>
                       </thead>
                       <tbody>
                         {items.map(c => (
-                          <tr key={c.id} className="border-b border-gray-100">
+                          <tr key={c.id} className="border-b border-gray-100 group">
                             <td className="py-2 pr-3 text-gray-400 font-mono text-xs">{c.id}</td>
                             <td className="py-2 pr-3 text-gray-900">{c.name}</td>
                             <td className="py-2 pr-3 text-gray-500 text-xs">{c.category}</td>
                             <td className="py-2 pr-3">
-                              <StatusPill status={c.status} />
+                              {isEditing('control', c.id) ? (
+                                <select value={editForm.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                                  <option value="implemented">Implemented</option>
+                                  <option value="in-progress">In Progress</option>
+                                  <option value="not-started">Not Started</option>
+                                </select>
+                              ) : (
+                                <StatusPill status={c.status} />
+                              )}
                             </td>
-                            <td className="py-2 text-gray-500 text-xs">{c.owner || '—'}</td>
+                            <td className="py-2 pr-3">
+                              {isEditing('control', c.id) ? (
+                                <input type="text" value={editForm.owner || ''} onChange={e => setEditForm(f => ({ ...f, owner: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 w-full focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" placeholder="Owner" />
+                              ) : (
+                                <span className="text-gray-500 text-xs">{c.owner || '—'}</span>
+                              )}
+                            </td>
+                            <td className="py-2 w-20 print:hidden">
+                              {isEditing('control', c.id) ? (
+                                <span className="flex items-center gap-1">
+                                  <button onClick={saveEdit} disabled={saving} className="p-1 rounded hover:bg-green-100 text-green-600" title="Save"><Check className="h-3.5 w-3.5" /></button>
+                                  <button onClick={cancelEdit} className="p-1 rounded hover:bg-red-100 text-red-500" title="Cancel"><X className="h-3.5 w-3.5" /></button>
+                                </span>
+                              ) : (
+                                <button onClick={() => startEdit('control', c)} className="p-1 rounded hover:bg-gray-100 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit"><Pencil className="h-3.5 w-3.5" /></button>
+                              )}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -325,19 +397,35 @@ export default function ComplianceOverview() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-4">
             {vendors.map(v => {
               const style = BAA_COLORS[v.baa_status] || BAA_COLORS.pending;
-              const Icon = style.icon;
+              const VIcon = style.icon;
+              const ed = isEditing('vendor', v.id);
               return (
-                <div key={v.id} className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 bg-gray-50">
+                <div key={v.id} className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 bg-gray-50 group">
                   <div className={'p-2 rounded-lg ' + style.bg}>
-                    <Icon className={'h-4 w-4 ' + style.text} />
+                    <VIcon className={'h-4 w-4 ' + style.text} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{v.name}</p>
                     <p className="text-xs text-gray-500">{v.type}</p>
                   </div>
-                  <span className={'text-xs font-medium px-2 py-0.5 rounded-full ' + style.bg + ' ' + style.text}>
-                    {v.baa_status === 'n/a' ? 'N/A' : v.baa_status.charAt(0).toUpperCase() + v.baa_status.slice(1)}
-                  </span>
+                  {ed ? (
+                    <div className="flex items-center gap-2">
+                      <select value={editForm.baa_status} onChange={e => setEditForm(f => ({ ...f, baa_status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                        <option value="signed">Signed</option>
+                        <option value="pending">Pending</option>
+                        <option value="n/a">N/A</option>
+                      </select>
+                      <button onClick={saveEdit} disabled={saving} className="p-1 rounded hover:bg-green-100 text-green-600" title="Save"><Check className="h-3.5 w-3.5" /></button>
+                      <button onClick={cancelEdit} className="p-1 rounded hover:bg-red-100 text-red-500" title="Cancel"><X className="h-3.5 w-3.5" /></button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className={'text-xs font-medium px-2 py-0.5 rounded-full ' + style.bg + ' ' + style.text}>
+                        {v.baa_status === 'n/a' ? 'N/A' : v.baa_status.charAt(0).toUpperCase() + v.baa_status.slice(1)}
+                      </span>
+                      <button onClick={() => startEdit('vendor', v)} className="p-1 rounded hover:bg-gray-100 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity print:hidden" title="Edit"><Pencil className="h-3.5 w-3.5" /></button>
+                    </>
+                  )}
                 </div>
               );
             })}
@@ -354,22 +442,49 @@ export default function ComplianceOverview() {
                   <th className="text-left py-2 pr-3 font-medium text-gray-500 w-32">Framework</th>
                   <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Status</th>
                   <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Last Reviewed</th>
-                  <th className="text-left py-2 font-medium text-gray-500 w-28">Next Review</th>
+                  <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Next Review</th>
+                  <th className="w-20 print:hidden" />
                 </tr>
               </thead>
               <tbody>
                 {policies.map(p => (
-                  <tr key={p.id} className="border-b border-gray-100">
+                  <tr key={p.id} className="border-b border-gray-100 group">
                     <td className="py-2 pr-3 text-gray-900">{p.name}</td>
                     <td className="py-2 pr-3 text-gray-500 text-xs">{p.framework || '—'}</td>
                     <td className="py-2 pr-3">
-                      <StatusPill status={p.status} />
+                      {isEditing('policy', p.id) ? (
+                        <select value={editForm.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                          <option value="approved">Approved</option>
+                          <option value="draft">Draft</option>
+                          <option value="not-started">Not Started</option>
+                        </select>
+                      ) : (
+                        <StatusPill status={p.status} />
+                      )}
                     </td>
                     <td className="py-2 pr-3 text-gray-500 text-xs">
-                      {p.last_reviewed ? new Date(p.last_reviewed).toLocaleDateString() : '—'}
+                      {isEditing('policy', p.id) ? (
+                        <input type="date" value={editForm.last_reviewed || ''} onChange={e => setEditForm(f => ({ ...f, last_reviewed: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" />
+                      ) : (
+                        p.last_reviewed ? new Date(p.last_reviewed).toLocaleDateString() : '—'
+                      )}
                     </td>
-                    <td className="py-2 text-gray-500 text-xs">
-                      {p.next_review ? new Date(p.next_review).toLocaleDateString() : '—'}
+                    <td className="py-2 pr-3 text-gray-500 text-xs">
+                      {isEditing('policy', p.id) ? (
+                        <input type="date" value={editForm.next_review || ''} onChange={e => setEditForm(f => ({ ...f, next_review: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" />
+                      ) : (
+                        p.next_review ? new Date(p.next_review).toLocaleDateString() : '—'
+                      )}
+                    </td>
+                    <td className="py-2 w-20 print:hidden">
+                      {isEditing('policy', p.id) ? (
+                        <span className="flex items-center gap-1">
+                          <button onClick={saveEdit} disabled={saving} className="p-1 rounded hover:bg-green-100 text-green-600" title="Save"><Check className="h-3.5 w-3.5" /></button>
+                          <button onClick={cancelEdit} className="p-1 rounded hover:bg-red-100 text-red-500" title="Cancel"><X className="h-3.5 w-3.5" /></button>
+                        </span>
+                      ) : (
+                        <button onClick={() => startEdit('policy', p)} className="p-1 rounded hover:bg-gray-100 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit"><Pencil className="h-3.5 w-3.5" /></button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -386,20 +501,41 @@ export default function ComplianceOverview() {
             ) : (
               risks.map(r => {
                 const sev = RISK_SEVERITY[r.impact] || RISK_SEVERITY.medium;
+                const ed = isEditing('risk', r.id);
                 return (
-                  <div key={r.id} className="flex items-start gap-3 p-4 rounded-lg border border-gray-200">
+                  <div key={r.id} className="flex items-start gap-3 p-4 rounded-lg border border-gray-200 group">
                     <span className={'mt-1 h-2.5 w-2.5 rounded-full shrink-0 ' + sev.dot} />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900">{r.description}</p>
                       {r.mitigation && <p className="text-xs text-gray-500 mt-1">Mitigation: {r.mitigation}</p>}
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + sev.bg + ' ' + sev.text}>
-                        {r.impact}
-                      </span>
-                      <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + (r.status === 'open' ? 'bg-red-100 text-red-700' : r.status === 'mitigated' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600')}>
-                        {r.status}
-                      </span>
+                      {ed ? (
+                        <>
+                          <select value={editForm.impact} onChange={e => setEditForm(f => ({ ...f, impact: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                          </select>
+                          <select value={editForm.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                            <option value="open">Open</option>
+                            <option value="mitigated">Mitigated</option>
+                            <option value="closed">Closed</option>
+                          </select>
+                          <button onClick={saveEdit} disabled={saving} className="p-1 rounded hover:bg-green-100 text-green-600" title="Save"><Check className="h-3.5 w-3.5" /></button>
+                          <button onClick={cancelEdit} className="p-1 rounded hover:bg-red-100 text-red-500" title="Cancel"><X className="h-3.5 w-3.5" /></button>
+                        </>
+                      ) : (
+                        <>
+                          <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + sev.bg + ' ' + sev.text}>
+                            {r.impact}
+                          </span>
+                          <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + (r.status === 'open' ? 'bg-red-100 text-red-700' : r.status === 'mitigated' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600')}>
+                            {r.status}
+                          </span>
+                          <button onClick={() => startEdit('risk', r)} className="p-1 rounded hover:bg-gray-100 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity print:hidden" title="Edit"><Pencil className="h-3.5 w-3.5" /></button>
+                        </>
+                      )}
                     </div>
                   </div>
                 );
@@ -425,26 +561,61 @@ export default function ComplianceOverview() {
                       <th className="text-left py-2 pr-3 font-medium text-gray-500">Description</th>
                       <th className="text-left py-2 pr-3 font-medium text-gray-500 w-24">Severity</th>
                       <th className="text-left py-2 pr-3 font-medium text-gray-500 w-28">Status</th>
-                      <th className="text-left py-2 font-medium text-gray-500 w-24">HHS Notified</th>
+                      <th className="text-left py-2 pr-3 font-medium text-gray-500 w-24">HHS Notified</th>
+                      <th className="w-20 print:hidden" />
                     </tr>
                   </thead>
                   <tbody>
                     {incidents.map(inc => (
-                      <tr key={inc.id} className="border-b border-gray-100">
+                      <tr key={inc.id} className="border-b border-gray-100 group">
                         <td className="py-2 pr-3 text-gray-500 text-xs">
                           {new Date(inc.incident_date).toLocaleDateString()}
                         </td>
                         <td className="py-2 pr-3 text-gray-900">{inc.description}</td>
                         <td className="py-2 pr-3">
-                          <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + (RISK_SEVERITY[inc.severity]?.bg || 'bg-gray-100') + ' ' + (RISK_SEVERITY[inc.severity]?.text || 'text-gray-600')}>
-                            {inc.severity}
-                          </span>
+                          {isEditing('incident', inc.id) ? (
+                            <select value={editForm.severity} onChange={e => setEditForm(f => ({ ...f, severity: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                              <option value="high">High</option>
+                              <option value="medium">Medium</option>
+                              <option value="low">Low</option>
+                            </select>
+                          ) : (
+                            <span className={'text-xs px-2 py-0.5 rounded-full font-medium ' + (RISK_SEVERITY[inc.severity]?.bg || 'bg-gray-100') + ' ' + (RISK_SEVERITY[inc.severity]?.text || 'text-gray-600')}>
+                              {inc.severity}
+                            </span>
+                          )}
                         </td>
                         <td className="py-2 pr-3">
-                          <StatusPill status={inc.status} />
+                          {isEditing('incident', inc.id) ? (
+                            <select value={editForm.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
+                              <option value="open">Open</option>
+                              <option value="investigating">Investigating</option>
+                              <option value="resolved">Resolved</option>
+                              <option value="closed">Closed</option>
+                            </select>
+                          ) : (
+                            <StatusPill status={inc.status} />
+                          )}
                         </td>
-                        <td className="py-2 text-xs text-gray-500">
-                          {inc.hhs_notified ? 'Yes' : 'No'}
+                        <td className="py-2 pr-3 text-xs text-gray-500">
+                          {isEditing('incident', inc.id) ? (
+                            <label className="flex items-center gap-1.5 cursor-pointer">
+                              <input type="checkbox" checked={!!editForm.hhs_notified} onChange={e => setEditForm(f => ({ ...f, hhs_notified: e.target.checked }))} className="rounded border-gray-300 text-[#006838] focus:ring-[#006838]" />
+                              <span className="text-xs">Yes</span>
+                            </label>
+                          ) : (
+                            inc.hhs_notified ? 'Yes' : 'No'
+                          )}
+                        </td>
+                        <td className="py-2 w-20 print:hidden">
+                          {isEditing('incident', inc.id) ? (
+                            <span className="flex items-center gap-1">
+                              <button onClick={saveEdit} disabled={saving} className="p-1 rounded hover:bg-green-100 text-green-600" title="Save"><Check className="h-3.5 w-3.5" /></button>
+                              <button onClick={cancelEdit} className="p-1 rounded hover:bg-red-100 text-red-500" title="Cancel"><X className="h-3.5 w-3.5" /></button>
+                            </span>
+                          ) : (
+                            <button onClick={() => startEdit('incident', inc)} className="p-1 rounded hover:bg-gray-100 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit"><Pencil className="h-3.5 w-3.5" /></button>
+                          )}
                         </td>
                       </tr>
                     ))}
