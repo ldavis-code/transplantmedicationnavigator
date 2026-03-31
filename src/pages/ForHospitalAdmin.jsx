@@ -66,8 +66,8 @@ const ForHospitalAdmin = () => {
             label: 'Typical monthly cost with copay card enrollment'
         },
         {
-            stat: '25-35%',
-            label: 'Non-adherence rate among transplant recipients citing cost as primary barrier (Milliman, 2023)'
+            stat: '~36%',
+            label: 'of graft losses are associated with immunosuppressant non-adherence — the leading modifiable cause of transplant failure (Dew MA et al., Transplantation, 2007)'
         }
     ];
 
@@ -118,7 +118,7 @@ const ForHospitalAdmin = () => {
                     ))}
                 </div>
                 <p className="text-emerald-300 text-xs text-center mt-6">
-                    Sources: Milliman Research Report (2023); manufacturer copay card programs; SRTR Annual Data Report
+                    Sources: Dew MA et al., Transplantation 2007 (PMID: 17460556); Chisholm-Burns MA et al., Clinical Transplantation 2008 (PMID: 18673373); Samoylova ML et al., Transplant International 2022 (DOI: 10.3389/ti.2022.10422); Milliman Report: 2025 U.S. Organ and Tissue Transplants (February 2025); Manufacturer copay card programs; SRTR Annual Data Report
                 </p>
             </section>
 
@@ -191,7 +191,7 @@ const ForHospitalAdmin = () => {
                     Connecting even a fraction of at-risk patients to manufacturer assistance programs that eliminate the cost barrier to adherence generates measurable ROI in reduced readmissions, preserved grafts, and improved SRTR performance.
                 </p>
                 <p className="text-slate-700 leading-relaxed">
-                    Milliman actuarial analysis estimates that targeted financial navigation for transplant recipients can reduce total cost of care by helping sustain medication adherence during the critical first year post-transplant.
+                    A single graft loss costs the healthcare system over $150,000 in incremental annual costs from dialysis and re-transplant workup (Samoylova ML et al., Transplant International, 2022). Connecting even a fraction of at-risk patients to manufacturer assistance programs — which can reduce monthly out-of-pocket costs from $624 to under $15 — represents a compelling return on investment for any transplant program.
                 </p>
             </section>
 
