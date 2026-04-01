@@ -82,8 +82,11 @@ const ForHospitalAdmin = () => {
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
                     Protect Graft Survival by Removing Medication Cost Barriers
                 </h1>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+                <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
                     A HIPAA-compliant, Epic-integrated medication assistance tool that supports SRTR outcomes, reduces readmissions, and strengthens CMS compliance documentation.
+                </p>
+                <p className="text-base text-slate-500 italic max-w-3xl mx-auto mb-8">
+                    This tool was built by a transplant recipient with a seat at OPTN, not by a software company. When you recommend it to your patients, you are connecting them to a resource developed from lived experience, validated by published research, and grounded in seven years of post-transplant patient advocacy.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -290,17 +293,6 @@ const ForHospitalAdmin = () => {
                     Preview the patient experience
                     <ArrowRight size={16} aria-hidden="true" />
                 </Link>
-            </section>
-
-            {/* Built by a Patient Advocate */}
-            <section className="bg-white border-2 border-emerald-200 rounded-2xl p-8 text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                    <HeartPulse size={24} className="text-emerald-700" aria-hidden="true" />
-                    <h2 className="text-xl font-bold text-emerald-900">Built by a Patient Advocate</h2>
-                </div>
-                <p className="text-slate-700 leading-relaxed max-w-3xl mx-auto">
-                    This tool was built by a transplant recipient with a seat at OPTN, not by a software company. When you recommend it to your patients, you are connecting them to a resource developed from lived experience, validated by published research, and grounded in seven years of post-transplant patient advocacy.
-                </p>
             </section>
 
             {/* CTA */}
