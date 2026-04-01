@@ -292,6 +292,17 @@ const ForHospitalAdmin = () => {
                 </Link>
             </section>
 
+            {/* Built by a Patient Advocate */}
+            <section className="bg-white border-2 border-emerald-200 rounded-2xl p-8 text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                    <HeartPulse size={24} className="text-emerald-700" aria-hidden="true" />
+                    <h2 className="text-xl font-bold text-emerald-900">Built by a Patient Advocate</h2>
+                </div>
+                <p className="text-slate-700 leading-relaxed max-w-3xl mx-auto">
+                    This tool was built by a transplant recipient with a seat at OPTN, not by a software company. When you recommend it to your patients, you are connecting them to a resource developed from lived experience, validated by published research, and grounded in seven years of post-transplant patient advocacy.
+                </p>
+            </section>
+
             {/* CTA */}
             <section className="text-center py-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Ready to Improve Outcomes for Your Program?</h2>
