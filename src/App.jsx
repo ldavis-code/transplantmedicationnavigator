@@ -6144,6 +6144,10 @@ const ApplicationHelp = () => {
         const internalMatches = fuseResults.map(result => result.item);
         setSearchResult({ internal: internalMatches });
         setIsSearching(false);
+        trackServerEvent('med_search', { resultCount: internalMatches.length, context: 'meds_tab' });
+        if (internalMatches.length > 0) {
+            trackMedicationSearch(internalMatches[0].genericName || internalMatches[0].brandName, searchTerm.trim());
+        }
     }, [searchTerm, fuse]);
 
     // Debounced search effect
