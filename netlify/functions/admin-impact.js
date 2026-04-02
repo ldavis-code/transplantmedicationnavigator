@@ -5,6 +5,18 @@
 
 const { neon } = require('@neondatabase/serverless');
 const crypto = require('crypto');
+const programsJson = require('../../src/data/programs.json');
+
+// Build a lookup: programId -> manufacturer
+const programManufacturerMap = {};
+for (const section of ['copayPrograms', 'papPrograms']) {
+  const programs = programsJson[section] || {};
+  for (const [id, prog] of Object.entries(programs)) {
+    if (prog.manufacturer) {
+      programManufacturerMap[id] = prog.manufacturer;
+    }
+  }
+}
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
@@ -325,8 +337,28 @@ exports.handler = async function handler(event) {
             (funnelCounts.pap_click || 0),
         },
         topPrograms: topPrograms.map(function(p) {
-          return { programId: p.program_id, programType: p.program_type, clicks: parseInt(p.clicks) };
+          return {
+            programId: p.program_id,
+            programType: p.program_type,
+            clicks: parseInt(p.clicks),
+            manufacturer: programManufacturerMap[p.program_id] || null,
+          };
         }),
+        connectionsByCompany: (function() {
+          var companyMap = {};
+          topPrograms.forEach(function(p) {
+            var company = programManufacturerMap[p.program_id] || 'Other';
+            if (!companyMap[company]) {
+              companyMap[company] = { company: company, copay: 0, pap: 0, foundation: 0, total: 0 };
+            }
+            var clicks = parseInt(p.clicks);
+            companyMap[company].total += clicks;
+            if (p.program_type === 'copay') companyMap[company].copay += clicks;
+            else if (p.program_type === 'pap') companyMap[company].pap += clicks;
+            else if (p.program_type === 'foundation') companyMap[company].foundation += clicks;
+          });
+          return Object.values(companyMap).sort(function(a, b) { return b.total - a.total; });
+        })(),
         medicationInsights: medicationInsights,
         weeklyTrend: weeklyTrend.map(function(w) {
           return {

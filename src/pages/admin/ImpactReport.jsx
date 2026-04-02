@@ -246,6 +246,37 @@ export default function ImpactReport() {
         </div>
       </section>
 
+      {/* Connections by Company */}
+      {data?.connectionsByCompany?.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Program Connections by Company</h2>
+          <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Copay Cards</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">PAP</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Foundations</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {data.connectionsByCompany.map((c, i) => (
+                  <tr key={`${c.company}-${i}`} className="hover:bg-gray-50">
+                    <td className="px-6 py-3 text-sm font-medium text-gray-900">{c.company}</td>
+                    <td className="px-6 py-3 text-sm text-right text-gray-600">{c.copay.toLocaleString()}</td>
+                    <td className="px-6 py-3 text-sm text-right text-gray-600">{c.pap.toLocaleString()}</td>
+                    <td className="px-6 py-3 text-sm text-right text-gray-600">{c.foundation.toLocaleString()}</td>
+                    <td className="px-6 py-3 text-sm text-right text-gray-900 font-bold">{c.total.toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
       {/* Top Programs */}
       {data?.topPrograms?.length > 0 && (
         <section className="mb-8">
@@ -255,6 +286,7 @@ export default function ImpactReport() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Program</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Patient Clicks</th>
                 </tr>
@@ -263,6 +295,7 @@ export default function ImpactReport() {
                 {data.topPrograms.map((p, i) => (
                   <tr key={`${p.programId}-${i}`} className="hover:bg-gray-50">
                     <td className="px-6 py-3 text-sm font-medium text-gray-900">{p.programId}</td>
+                    <td className="px-6 py-3 text-sm text-gray-600">{p.manufacturer || '—'}</td>
                     <td className="px-6 py-3">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         p.programType === 'copay' ? 'bg-blue-100 text-blue-800' :

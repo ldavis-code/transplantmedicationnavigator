@@ -3685,6 +3685,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const medicarePartD = med.medicarePartD || (med.medicarePartDUrl ? { url: med.medicarePartDUrl, notes: med.medicare2026Note } : null);
 
     // Determine URLs for copay and PAP programs
+    // Route through /out/ tracker when a programId exists (all IDs must be in programs.json)
     const copayProgramId = copayProgram?.programId || med.copayProgramId;
     const copayUrl = copayProgramId ? `/out/copay/${copayProgramId}` : (copayProgram?.url || med.copayUrl);
     const papProgramId = papProgram?.programId || med.papProgramId;
