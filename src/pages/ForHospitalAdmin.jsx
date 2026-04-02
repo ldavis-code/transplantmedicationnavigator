@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Building2, ShieldCheck, BarChart3, Lock, CheckCircle, ArrowRight, Users, TrendingUp, Mail, Activity, FileCheck, Server, HeartPulse, ClipboardCheck, DollarSign } from 'lucide-react';
+import { Building2, ShieldCheck, BarChart3, Lock, CheckCircle, ArrowRight, Users, TrendingUp, Mail, Activity, FileCheck, Server, HeartPulse, ClipboardCheck, DollarSign, BookOpen } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -102,6 +102,32 @@ const ForHospitalAdmin = () => {
                     </Link>
                 </div>
             </header>
+
+            {/* AST Study Citation Banner */}
+            <section className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-8 md:p-10 shadow-md">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <BookOpen size={24} />
+                    </div>
+                    <h2 className="text-xl md:text-2xl font-extrabold text-slate-900">Landmark Study: The Urgent Need for New Treatments</h2>
+                </div>
+                <blockquote className="border-l-4 border-amber-400 pl-6 py-2 mb-5">
+                    <p className="text-slate-800 text-lg leading-relaxed italic">
+                        "The AST Therapeutic Needs Study (Taber et al., 2025) — the largest patient survey of its kind, representing 10,091 transplant recipients across 232 centers — concluded that immunosuppression <strong className="text-slate-900">'induces a heavy toll on transplant recipients'</strong> and that there is <strong className="text-slate-900">'an urgent need for new treatments to address these unmet needs.'</strong> With <strong className="text-slate-900">40% of recipients skipping doses due to cost.</strong>"
+                    </p>
+                </blockquote>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                    <span className="font-semibold text-slate-700">Citation:</span> Taber DJ, Gordon EJ, Myaskovsky L, et al. Therapeutic needs in solid organ transplant recipients: The American Society of Transplantation patient survey. <em>American Journal of Transplantation.</em> 2025;25:2565–2577.{' '}
+                    <a
+                        href="https://doi.org/10.1016/j.ajt.2025.07.2474"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-amber-700 hover:text-amber-900 underline font-medium"
+                    >
+                        https://doi.org/10.1016/j.ajt.2025.07.2474
+                    </a>
+                </p>
+            </section>
 
             {/* Cost Impact Stats */}
             <section className="bg-gradient-to-br from-emerald-800 to-teal-900 rounded-2xl p-8 md:p-10">
