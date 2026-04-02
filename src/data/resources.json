@@ -66,9 +66,9 @@
     "category": "Foundation"
   },
   {
-    "name": "PAN Foundation",
-    "url": "https://www.panfoundation.org/",
-    "description": "Helps people without enough insurance coverage pay for medications for serious and long-term illnesses.",
+    "name": "Patient Advocate Foundation (includes PAN Foundation)",
+    "url": "https://www.patientadvocate.org/",
+    "description": "PAF and PAN Foundation merged in 2026 to form the nation's most comprehensive patient assistance nonprofit. Starting July 1, 2026, their new TotalAssist program offers 130+ disease-specific funds to help with copays, premiums, and out-of-pocket costs.",
     "category": "Foundation"
   },
   {
@@ -76,12 +76,6 @@
     "url": "https://fundfinder.panfoundation.org/",
     "description": "A list of over 150 patient groups that offer helplines, support, and education for specific diseases.",
     "category": "Foundation Directory"
-  },
-  {
-    "name": "Patient Advocate Foundation (PAF)",
-    "url": "https://www.patientadvocate.org/",
-    "description": "Helps patients with serious illnesses get the care and treatment their doctor recommends.",
-    "category": "Foundation"
   },
   {
     "name": "Accessia Health (formerly Patient Services Inc)",
