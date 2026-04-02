@@ -1,7 +1,5 @@
 import { neon } from '@neondatabase/serverless';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const programsJson = require('../../src/data/programs.json');
+import programsJson from '../../src/data/programs.json' with { type: 'json' };
 
 // Get URL from JSON fallback
 const getUrlFromJson = (programType, programId) => {
