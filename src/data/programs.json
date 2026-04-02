@@ -879,6 +879,48 @@
       },
       "maxBenefit": "Cost-plus pricing",
       "notes": "Online pharmacy with cost-plus pricing model."
+    },
+    "prevymis-copay": {
+      "programId": "prevymis-copay",
+      "name": "Merck Helps - Prevymis Copay Assistance",
+      "manufacturer": "Merck",
+      "medications": ["prevymis"],
+      "url": "https://www.merckhelps.com/"
+    },
+    "livtencity-copay": {
+      "programId": "livtencity-copay",
+      "name": "Takeda Patient Services - Livtencity Copay",
+      "manufacturer": "Takeda",
+      "medications": ["livtencity"],
+      "url": "https://www.takeda.com/en-us/what-we-do/patient-services/"
+    },
+    "cresemba-copay": {
+      "programId": "cresemba-copay",
+      "name": "Astellas Patient Support - Cresemba Copay",
+      "manufacturer": "Astellas",
+      "medications": ["cresemba"],
+      "url": "https://www.astellaspharmasupportsolutions.com/"
+    },
+    "vemlidy-copay": {
+      "programId": "vemlidy-copay",
+      "name": "Gilead Advancing Access - Vemlidy Copay",
+      "manufacturer": "Gilead",
+      "medications": ["vemlidy"],
+      "url": "https://www.gileadadvancingaccess.com/"
+    },
+    "epclusa-copay": {
+      "programId": "epclusa-copay",
+      "name": "Gilead Advancing Access - Epclusa Copay",
+      "manufacturer": "Gilead",
+      "medications": ["epclusa"],
+      "url": "https://www.gileadadvancingaccess.com/"
+    },
+    "xifaxan-copay": {
+      "programId": "xifaxan-copay",
+      "name": "Xifaxan Copay Savings Program",
+      "manufacturer": "Bausch Health",
+      "medications": ["xifaxan"],
+      "url": "https://xifaxan.copaysavingsprogram.com/"
     }
   },
   "papPrograms": {
@@ -1553,6 +1595,69 @@
       "incomeLimit": "None",
       "maxBenefit": "Government-negotiated cash prices",
       "notes": "Government discounted cash prices on select brand-name drugs."
+    },
+    "abbvie-creon-pap": {
+      "programId": "abbvie-creon-pap",
+      "name": "AbbVie Patient Assistance - Creon",
+      "manufacturer": "AbbVie",
+      "medications": ["creon"],
+      "url": "https://www.creoninfo.com/"
+    },
+    "boehringer-ingelheim-pap": {
+      "programId": "boehringer-ingelheim-pap",
+      "name": "Boehringer Ingelheim Patient Assistance - Jardiance",
+      "manufacturer": "Boehringer Ingelheim",
+      "medications": ["jardiance"],
+      "url": "https://www.boehringer-ingelheim.com/us/patient-assistance"
+    },
+    "bayer-adempas-pap": {
+      "programId": "bayer-adempas-pap",
+      "name": "Bayer Patient Assistance - Adempas",
+      "manufacturer": "Bayer",
+      "medications": ["adempas"],
+      "url": "https://www.adempas-us.com/"
+    },
+    "american-regent-venofer-pap": {
+      "programId": "american-regent-venofer-pap",
+      "name": "American Regent AR Assist - Venofer",
+      "manufacturer": "American Regent",
+      "medications": ["venofer"],
+      "url": "https://www.venofer.com/arassist"
+    },
+    "amag-feraheme-pap": {
+      "programId": "amag-feraheme-pap",
+      "name": "Feraheme Patient Support",
+      "manufacturer": "AMAG Pharmaceuticals",
+      "medications": ["feraheme"],
+      "url": "https://feraheme.com/patient-support/"
+    },
+    "dsi-pap": {
+      "programId": "dsi-pap",
+      "name": "DSI Access Central - Injectafer",
+      "manufacturer": "Daiichi Sankyo",
+      "medications": ["injectafer"],
+      "url": "https://www.dsiaccesscentral.com/"
+    },
+    "akebia-auryxia-pap": {
+      "programId": "akebia-auryxia-pap",
+      "name": "Akebia Cares - Auryxia",
+      "manufacturer": "Akebia Therapeutics",
+      "medications": ["auryxia"],
+      "url": "https://www.akebiacares.com/"
+    },
+    "takeda-gammagard-pap": {
+      "programId": "takeda-gammagard-pap",
+      "name": "Takeda Patient Services - Gammagard",
+      "manufacturer": "Takeda",
+      "medications": ["gammagard"],
+      "url": "https://www.gammagard.com/primary-immunodeficiency/copay-support"
+    },
+    "sanofi-dupixent-pap": {
+      "programId": "sanofi-dupixent-pap",
+      "name": "Dupixent MyWay Patient Support",
+      "manufacturer": "Sanofi / Regeneron",
+      "medications": ["dupixent"],
+      "url": "https://www.dupixent.com/support-savings/dupixent-my-way"
     }
   },
   "foundationPrograms": {
