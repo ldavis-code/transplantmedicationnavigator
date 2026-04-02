@@ -80,10 +80,10 @@ const ForHospitalAdmin = () => {
                 </div>
                 <p className="text-emerald-700 font-semibold text-lg mb-2">For Hospital Administrators & Transplant Coordinators</p>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-                    Protect Graft Survival by Removing Medication Cost Barriers
+                    Built at the Intersection of Patient Experience and Health Policy
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    A HIPAA-compliant, Epic-integrated medication assistance tool that supports SRTR outcomes, reduces readmissions, and strengthens CMS compliance documentation.
+                    This platform was developed by a liver transplant recipient who serves on the OPTN Patient Affairs Committee and holds a seat at the national table where transplant policy is made. TransplantMedicationNavigator isn't a software product — it's a policy intervention, built to address a documented, systemic gap in post-transplant care and CMS-recognized medication access barriers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
