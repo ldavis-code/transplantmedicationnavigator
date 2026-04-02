@@ -527,6 +527,15 @@ const Layout = ({ children }) => {
                 </span>
             </div>
 
+            {/* PAF + PAN Foundation Merger Banner */}
+            <Link to="/education" className="block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 text-sm text-center font-medium no-print hover:from-blue-700 hover:to-indigo-700 transition-all">
+                <span className="inline-flex items-center justify-center gap-2 flex-wrap">
+                    <Info size={16} className="text-blue-200 flex-shrink-0" aria-hidden="true" />
+                    <span><strong>Patient Advocate Foundation & PAN Foundation have merged.</strong> New TotalAssist program launches July 1, 2026.</span>
+                    <span className="underline underline-offset-2">Learn more →</span>
+                </span>
+            </Link>
+
             {/* Skip to Main Content Link - Accessibility */}
             <a
                 href="#main-content"
