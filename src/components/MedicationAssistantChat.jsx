@@ -13,6 +13,8 @@ import {
   Gift, Shield
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
+import { trackServerEvent } from '../lib/trackServerEvent.js';
+import { trackMedicationSearch } from '../lib/medicationTrackingApi.js';
 import PaywallModal from './PaywallModal.jsx';
 
 // Demo mode storage keys (must match DemoModeContext)
@@ -370,6 +372,10 @@ const MedicationAssistantChat = () => {
 
       const data = await response.json();
       setMedicationResults(data.medications || []);
+      trackServerEvent('med_search', { resultCount: data.medications?.length || 0, context: 'chat_quiz' });
+      if (data.medications && data.medications.length > 0) {
+        trackMedicationSearch(data.medications[0].brand_name || data.medications[0].generic_name, query);
+      }
 
       // Increment search count after successful search
       incrementSearchCount();
