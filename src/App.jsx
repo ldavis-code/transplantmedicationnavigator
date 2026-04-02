@@ -3685,11 +3685,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
     const medicarePartD = med.medicarePartD || (med.medicarePartDUrl ? { url: med.medicarePartDUrl, notes: med.medicare2026Note } : null);
 
     // Determine URLs for copay and PAP programs
-    // Route through /out/ tracker when a programId exists (all IDs must be in programs.json)
+    // Use direct URLs for reliability; track clicks client-side via onClick
     const copayProgramId = copayProgram?.programId || med.copayProgramId;
-    const copayUrl = copayProgramId ? `/out/copay/${copayProgramId}` : (copayProgram?.url || med.copayUrl);
+    const copayUrl = copayProgram?.url || med.copayUrl;
     const papProgramId = papProgram?.programId || med.papProgramId;
-    const papUrl = papProgramId ? `/out/pap/${papProgramId}` : (papProgram?.url || med.papUrl);
+    const papUrl = papProgram?.url || med.papUrl;
     const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
     const hasPapProgram = !!(papProgram || papProgramId || med.papUrl);
 
@@ -4040,7 +4040,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                             <div className="text-xs text-slate-500">/month</div>
                                         </div>
                                     </div>
-                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { if (!copayProgramId) { trackServerEvent('copay_card_click', { medication: med.brandName }); trackMedicationSearch(med.genericName || med.brandName, 'copay_click'); } }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
+                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                         Get Card <ArrowRight size={14} aria-hidden="true" />
                                     </a>
                                 </div>
@@ -4073,7 +4073,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         <div className="text-xs text-slate-500">if eligible</div>
                                     </div>
                                 </div>
-                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { if (!papProgramId) { trackServerEvent('pap_click', { medication: med.brandName }); trackMedicationSearch(med.genericName || med.brandName, 'pap_click'); } }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
+                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
                                     Apply <ArrowRight size={14} aria-hidden="true" />
                                 </a>
                             </section>
