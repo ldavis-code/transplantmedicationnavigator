@@ -764,13 +764,10 @@ textarea {
     line-height: inherit;
 }
 
-/* Ensure cards and containers expand rather than clip.
-   Exclude replaced elements (img, video, iframe, etc.) to avoid
-   the deprecated OverflowVisibleOnReplacedElement behavior. */
-.rounded-xl:not(img, video, iframe, canvas, object, embed),
-.rounded-lg:not(img, video, iframe, canvas, object, embed),
-.rounded-2xl:not(img, video, iframe, canvas, object, embed),
-.rounded-full:not(img, video, iframe, canvas, object, embed) {
+/* Ensure text-containing cards expand for custom text spacing.
+   Only apply to elements that explicitly opt in, to avoid breaking
+   Tailwind overflow-hidden layout on containers and progress bars. */
+.text-spacing-safe {
     overflow: visible;
 }
 
@@ -784,20 +781,9 @@ textarea {
     -webkit-overflow-scrolling: touch;
 }
 
-/* Loading animation */
-.fade-in {
-    animation: fadeIn 0.15s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
+/* Smooth scrolling - only for anchor navigation, not global.
+   Global scroll-behavior: smooth can cause perceived blank space
+   during fast scrolling on slower devices. */
 
 /* ========================================
    SIMPLE VIEW MODE
