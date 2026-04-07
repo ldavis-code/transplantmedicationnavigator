@@ -508,10 +508,10 @@ const Layout = ({ children }) => {
     const navLinks = [
         { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
         { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
+        { path: '/education', label: 'Education & Resources', ariaLabel: 'Browse education and resources' },
         { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
         { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
-        { path: '/education', label: 'Resources & Education', ariaLabel: 'Browse resources and education' },
-        { path: '/for-hospitals', label: 'For Hospitals', ariaLabel: 'Information for hospital administrators and transplant coordinators' },
+        { path: '/for-hospitals', label: 'Hospitals', ariaLabel: 'Information for hospital administrators and transplant coordinators' },
         { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
         { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
         { path: '/feedback', label: 'Feedback', ariaLabel: 'Share your feedback' },
@@ -663,7 +663,7 @@ const Layout = ({ children }) => {
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">For Hospitals</Link>
+                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">Hospitals</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">Admin</Link>
                     </div>
@@ -797,7 +797,7 @@ const Home = () => {
                     <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <Search size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Resources & Education</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">Education & Resources</h2>
                     <p className="text-slate-600 mb-4">
                         Direct, safe links to manufacturer programs, foundations, and government sites. No scams.
                     </p>
@@ -4740,7 +4740,7 @@ const Education = () => {
     return (
         <article className="max-w-6xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8">
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Resources & Education</h1>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Education & Resources</h1>
                 <p className="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
             </header>
 
