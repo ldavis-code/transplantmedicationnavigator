@@ -292,7 +292,7 @@ Contact: [Your Phone Number]
       {/* Back link */}
       <Link to="/education" className="inline-flex items-center gap-2 text-slate-600 hover:text-emerald-600 mb-6 transition-colors">
         <ArrowLeft size={16} aria-hidden="true" />
-        Back to Resources & Education
+        Back to Education & Resources
       </Link>
 
       {/* Page Header - Color coded hero */}

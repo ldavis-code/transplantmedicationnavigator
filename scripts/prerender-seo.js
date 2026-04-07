@@ -43,7 +43,7 @@ const pages = [
   },
   {
     route: '/education',
-    title: 'Resources & Education for Transplant Patients | Transplant Medication Navigator™',
+    title: 'Education & Resources for Transplant Patients | Transplant Medication Navigator™',
     description: 'Educational guides on transplant medication coverage: Medicare Part D, Medicaid, insurance appeals, specialty pharmacies, the deductible trap, and copay foundation eligibility. Learn before you apply.',
     ogTitle: 'Transplant Medication Education & Resources',
     ogDescription: 'Learn about Medicare, Medicaid, insurance coverage, specialty pharmacies, and how to avoid the deductible trap.',

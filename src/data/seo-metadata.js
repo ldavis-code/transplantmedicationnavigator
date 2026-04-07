@@ -41,14 +41,14 @@ export const seoMetadata = {
   },
 
   education: {
-    title: 'Resources & Education for Transplant Patients | Transplant Medication Navigator™',
+    title: 'Education & Resources for Transplant Patients | Transplant Medication Navigator™',
     description: 'Educational guides on transplant medication coverage: Medicare Part D, Medicaid, insurance appeals, specialty pharmacies, the deductible trap, and copay foundation eligibility. Learn before you apply.',
     canonical: `${BASE_URL}/education`,
     ogTitle: 'Transplant Medication Education & Resources',
     ogDescription: 'Learn about Medicare, Medicaid, insurance coverage, specialty pharmacies, and how to avoid the deductible trap. Educational guides for transplant patients.',
     twitterTitle: 'Transplant Medication Education Resources',
     twitterDescription: 'Educational guides on Medicare, insurance, specialty pharmacies and medication coverage for transplant patients.',
-    breadcrumbName: 'Resources & Education',
+    breadcrumbName: 'Education & Resources',
   },
 
   applicationHelp: {
@@ -114,7 +114,7 @@ export const seoMetadata = {
     ogDescription: 'Protect graft survival by removing medication cost barriers. HIPAA-compliant, Epic-integrated tool supporting SRTR outcomes and CMS documentation compliance.',
     twitterTitle: 'For Hospital Administrators',
     twitterDescription: 'Improve SRTR outcomes and reduce readmissions with a HIPAA-compliant medication assistance tool for transplant programs.',
-    breadcrumbName: 'For Hospitals',
+    breadcrumbName: 'Hospitals',
   },
 
   forPayers: {
