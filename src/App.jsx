@@ -1256,7 +1256,10 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
-    const [expandedOrgan, setExpandedOrgan] = useState(null);
+    // Auto-expand the user's selected organ(s) — first selected organ is expanded by default
+    const selectedOrgans = answers.organs || [];
+    const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
+    const [expandedOrgan, setExpandedOrgan] = useState(defaultExpanded);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
 
     const handleOrganClick = (organ) => {
@@ -1355,7 +1358,10 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
-    const [expandedOrgan, setExpandedOrgan] = useState(null);
+    // Auto-expand the user's selected organ(s) — first selected organ is expanded by default
+    const selectedOrgans = answers.organs || [];
+    const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
+    const [expandedOrgan, setExpandedOrgan] = useState(defaultExpanded);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
 
     const handleOrganClick = (organ) => {
