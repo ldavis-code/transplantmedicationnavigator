@@ -2611,7 +2611,7 @@ const Wizard = () => {
 // --- PRICE REPORTING HELPERS ---
 const PRICE_REPORTS_KEY = 'transplant_med_price_reports';
 const PRICE_STATS_KEY = 'transplant_med_price_stats';
-const PRICE_ESTIMATES_LAST_UPDATED = '2025-12-24'; // December 24, 2025
+const PRICE_ESTIMATES_LAST_UPDATED = '2026-04-07'; // April 7, 2026
 
 // Get cached stats from localStorage (for immediate render)
 const getCachedStats = () => {
