@@ -536,6 +536,103 @@ async function getPartnerReport(db, partner, params) {
     };
 }
 
+// Get quiz analytics from Supabase quiz_email_leads table
+async function getQuizAnalytics() {
+    const sb = getSupabase();
+    if (!sb) {
+        return { available: false };
+    }
+
+    try {
+        const now = new Date();
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        startOfWeek.setHours(0, 0, 0, 0);
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        // Total leads
+        const { count: totalLeads } = await sb
+            .from('quiz_email_leads')
+            .select('id', { count: 'exact', head: true });
+
+        // Leads this week
+        const { count: leadsThisWeek } = await sb
+            .from('quiz_email_leads')
+            .select('id', { count: 'exact', head: true })
+            .gte('created_at', startOfWeek.toISOString());
+
+        // Leads this month
+        const { count: leadsThisMonth } = await sb
+            .from('quiz_email_leads')
+            .select('id', { count: 'exact', head: true })
+            .gte('created_at', startOfMonth.toISOString());
+
+        // Converted leads
+        const { count: convertedLeads } = await sb
+            .from('quiz_email_leads')
+            .select('id', { count: 'exact', head: true })
+            .eq('converted_to_user', true);
+
+        // Marketing opt-ins
+        const { count: marketingOptIns } = await sb
+            .from('quiz_email_leads')
+            .select('id', { count: 'exact', head: true })
+            .eq('marketing_opt_in', true);
+
+        // Recent leads (last 20)
+        const { data: recentLeads } = await sb
+            .from('quiz_email_leads')
+            .select('id, email, marketing_opt_in, selected_medications, source, created_at, converted_to_user')
+            .order('created_at', { ascending: false })
+            .limit(20);
+
+        // Count medications across all leads to find top medications
+        const { data: allLeads } = await sb
+            .from('quiz_email_leads')
+            .select('selected_medications');
+
+        const medCounts = {};
+        (allLeads || []).forEach(lead => {
+            const meds = lead.selected_medications || [];
+            meds.forEach(med => {
+                const name = typeof med === 'string' ? med : (med.name || med.id || 'Unknown');
+                medCounts[name] = (medCounts[name] || 0) + 1;
+            });
+        });
+
+        const topMedications = Object.entries(medCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([name, count]) => ({ name, count }));
+
+        return {
+            available: true,
+            totalLeads: totalLeads || 0,
+            leadsThisWeek: leadsThisWeek || 0,
+            leadsThisMonth: leadsThisMonth || 0,
+            convertedLeads: convertedLeads || 0,
+            conversionRate: totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0,
+            marketingOptIns: marketingOptIns || 0,
+            optInRate: totalLeads > 0 ? Math.round((marketingOptIns / totalLeads) * 100) : 0,
+            topMedications,
+            recentLeads: (recentLeads || []).map(l => ({
+                id: l.id,
+                email: l.email,
+                marketingOptIn: l.marketing_opt_in,
+                medications: (l.selected_medications || []).map(m =>
+                    typeof m === 'string' ? m : (m.name || m.id || 'Unknown')
+                ),
+                source: l.source,
+                createdAt: l.created_at,
+                converted: l.converted_to_user,
+            })),
+        };
+    } catch (error) {
+        console.error('Error fetching quiz analytics:', error);
+        return { available: false, error: error.message };
+    }
+}
+
 // Get subscriber stats from Supabase
 async function getSubscriberStats() {
     const sb = getSupabase();
@@ -659,6 +756,16 @@ export async function handler(event) {
                 statusCode: 200,
                 headers,
                 body: JSON.stringify(subscriberStats),
+            };
+        }
+
+        // GET /admin-api/quiz-analytics
+        if (path === '/quiz-analytics') {
+            const quizData = await getQuizAnalytics();
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify(quizData),
             };
         }
 
