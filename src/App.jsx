@@ -3243,6 +3243,13 @@ const MedicationSearch = () => {
             )}
 
             {/* Grants & Foundations */}
+            {/* Feedback Widget - at bottom of page */}
+            {hasItems && showSavings && (
+                <div className="no-print">
+                    <FeedbackWidget />
+                </div>
+            )}
+
             {hasItems && !showSavings && (
                 <section className="bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200 rounded-xl p-6 shadow-sm no-print" aria-labelledby="app-guide-heading">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -4422,11 +4429,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                         </div>
                     </div>
                 )}
-            </div>
-
-            {/* Feedback Widget */}
-            <div className="px-6 pb-6 no-print">
-                <FeedbackWidget medicationName={med.brandName} />
             </div>
         </article>
         </>
