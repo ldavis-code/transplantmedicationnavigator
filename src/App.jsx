@@ -995,7 +995,7 @@ const Home = () => {
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                         <BookOpen size={18} className="text-emerald-600" aria-hidden="true" />
-                        <h3 className="text-base md:text-lg font-bold text-slate-900">Published Research & Presentations (6 Publications)</h3>
+                        <h3 className="text-base md:text-lg font-bold text-slate-900">Published Research & Presentations (7 Publications)</h3>
                     </div>
                     <div className="space-y-4">
                         {/* Peer-Reviewed Journal */}
@@ -1009,6 +1009,20 @@ const Home = () => {
                             </p>
                             <p className="text-slate-400 text-xs mt-1">
                                 PMID: 41543482 · DOI: 10.1097/HC9.0000000000000843
+                            </p>
+                        </div>
+
+                        {/* Peer-Reviewed Journal 2 */}
+                        <div className="bg-white/80 border border-emerald-100 rounded-xl p-4">
+                            <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded mb-2">Peer-Reviewed Journal</span>
+                            <p className="text-slate-900 font-semibold text-sm leading-snug mb-1">
+                                Fight Songs: Why Transplant Patients Battling for Life Deserve Positive Anthems, Too
+                            </p>
+                            <p className="text-slate-500 text-xs leading-relaxed">
+                                Liver Transplantation, 2026 · First Author
+                            </p>
+                            <p className="text-slate-400 text-xs mt-1">
+                                DOI: 10.1097/LVT.0000000000000852
                             </p>
                         </div>
 
