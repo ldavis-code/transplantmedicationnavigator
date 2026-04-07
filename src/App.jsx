@@ -1588,7 +1588,7 @@ const Wizard = () => {
         // Also announce page change for screen readers
         const announcement = document.getElementById('step-announcement');
         if (announcement) {
-            announcement.textContent = `Step ${step} of 6`;
+            announcement.textContent = `Step ${step}`;
         }
     }, [step]);
 
@@ -1804,7 +1804,7 @@ const Wizard = () => {
             aria-atomic="true"
             role="status"
         >
-            Step {step} of 7
+            Step {step}
         </div>
     );
 
@@ -2241,7 +2241,7 @@ const Wizard = () => {
                     className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"
                     aria-label="Continue to next section"
                 >
-                    Next Section
+                    My medications look right — continue →
                 </button>
             </div>
         );
@@ -2271,7 +2271,7 @@ const Wizard = () => {
                         { val: FinancialStatus.MANAGEABLE, label: 'Manageable', desc: 'I can afford my medications but would like to save money', color: 'emerald' },
                         { val: FinancialStatus.CHALLENGING, label: 'Challenging', desc: 'Medication costs are a significant burden', color: 'amber' },
                         { val: FinancialStatus.UNAFFORDABLE, label: 'Unaffordable', desc: 'I struggle to pay for my medications', color: 'orange' },
-                        { val: FinancialStatus.CRISIS, label: 'Crisis', desc: 'I cannot afford my medications without help', color: 'rose' },
+                        { val: FinancialStatus.CRISIS, label: 'I can\'t afford my medications', desc: 'I cannot afford my medications without help', color: 'rose' },
                     ].map(opt => {
                         const isSelected = answers.financialStatus === opt.val;
                         const colorStyles = {
@@ -4796,7 +4796,7 @@ const Education = () => {
                     <TabButton id="OOP" label="Out-of-Pocket Max" icon={DollarSign} />
                 </div>
             </nav>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'OOP' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
@@ -6150,7 +6150,7 @@ ${patientName || "[Your Name]"}`;
                     <TabButton id="MEDS" label="Medications" icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
                 </div>
             </nav>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
                         <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-xl mb-3 flex items-center gap-2"><CheckCircle size={24} aria-hidden="true" /> Good News</h2><ul className="list-disc pl-5 text-emerald-900 space-y-2 text-lg leading-relaxed"><li><strong>PAPs and Foundations ask for the same information.</strong></li><li>Gather documents once → apply to multiple programs.</li></ul></aside>
@@ -6794,7 +6794,7 @@ const NotFound = () => {
 
 // Loading fallback for lazy-loaded components
 const PageLoadingFallback = () => (
-    <div className="flex items-center justify-center min-h-[400px]">
+    <div className="flex items-center justify-center min-h-[120px]">
         <div className="text-center">
             <Loader2 size={40} className="animate-spin text-emerald-600 mx-auto mb-4" aria-hidden="true" />
             <p className="text-slate-600 font-medium">Loading...</p>
