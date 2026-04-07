@@ -31,6 +31,11 @@ const DisclaimerModal = () => {
       // Prevent scrolling when modal is open
       document.body.style.overflow = 'hidden';
     }
+
+    return () => {
+      // Always restore scrolling when component unmounts
+      document.body.style.overflow = '';
+    };
   }, []);
 
   // Focus the accept button when modal opens
