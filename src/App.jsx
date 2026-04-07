@@ -2458,9 +2458,10 @@ const Wizard = () => {
                                 {answers.medications.length > 0 && (
                                     <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
-                                        className="w-full block text-center py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 font-medium text-sm"
+                                        className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
                                         aria-label="View price estimates for your selected medications"
                                     >
+                                        <DollarSign size={22} aria-hidden="true" />
                                         View Price Estimates for These Meds
                                     </Link>
                                 )}
@@ -2732,7 +2733,8 @@ const MedicationSearch = () => {
     const [linkCopied, setLinkCopied] = useState(false);
     const [priceReportRefresh, setPriceReportRefresh] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
-    const [showSavings, setShowSavings] = useState(false);
+    // Skip straight to medication cards when arriving with medication IDs in the URL
+    const [showSavings, setShowSavings] = useState(!!searchParams.get('ids'));
     const [showPaywall, setShowPaywall] = useState(false);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
