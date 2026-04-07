@@ -1548,7 +1548,6 @@ const Wizard = () => {
     });
 
     // Medication verification state - patient confirms their medications
-    const [medicationsVerified, setMedicationsVerified] = useState(false);
 
     // Search state for Step 5
     const [medSearchTerm, setMedSearchTerm] = useState('');
@@ -1616,8 +1615,6 @@ const Wizard = () => {
         const currentMeds = answers.medications || [];
         if (!currentMeds.includes(medId)) {
             setAnswers({ ...answers, medications: [...currentMeds, medId] });
-            // Reset verification when medications change
-            setMedicationsVerified(false);
         }
         setMedSearchTerm('');
         setMedSearchResult(null);
@@ -1638,10 +1635,6 @@ const Wizard = () => {
             ? current.filter((item) => item !== value)
             : [...current, value];
         setAnswers({ ...answers, [key]: updated });
-        // Reset medication verification when medications list changes
-        if (key === 'medications') {
-            setMedicationsVerified(false);
-        }
     };
 
     const nextStep = () => setStep(step + 1);
@@ -2113,7 +2106,6 @@ const Wizard = () => {
                         const newMeds = matchedIds.filter(id => !currentMeds.includes(id));
                         if (newMeds.length > 0) {
                             setAnswers(prev => ({ ...prev, medications: [...prev.medications, ...newMeds] }));
-                            setMedicationsVerified(false);
                         }
                     }}
                 />
@@ -2211,84 +2203,6 @@ const Wizard = () => {
                     </div>
                 )}
 
-                {/* Medication Verification Alert - Accessible alert for patients to confirm medications */}
-                <div
-                    className={`mb-6 border-2 rounded-xl p-5 transition-all ${
-                        medicationsVerified
-                            ? 'bg-emerald-50 border-emerald-400'
-                            : 'bg-blue-50 border-blue-400 ring-2 ring-blue-200'
-                    }`}
-                    role="alert"
-                    aria-live="polite"
-                    aria-atomic="true"
-                >
-                    <div className="flex items-start gap-4">
-                        <div className={`p-2 rounded-full flex-shrink-0 ${
-                            medicationsVerified ? 'bg-emerald-100' : 'bg-blue-100'
-                        }`}>
-                            <AlertCircle
-                                className={medicationsVerified ? 'text-emerald-600' : 'text-blue-600'}
-                                size={28}
-                                aria-hidden="true"
-                            />
-                        </div>
-                        <div className="flex-grow">
-                            <h2 className={`font-bold text-lg mb-2 ${
-                                medicationsVerified ? 'text-emerald-800' : 'text-blue-800'
-                            }`}>
-                                {medicationsVerified
-                                    ? 'Medications Verified!'
-                                    : 'Are these all of your medications?'
-                                }
-                            </h2>
-                            <p className={`mb-4 ${medicationsVerified ? 'text-emerald-700' : 'text-blue-700'}`}>
-                                {medicationsVerified
-                                    ? 'Thank you for verifying your medications. You can continue to the next section.'
-                                    : 'Please review your medication list above. If you take other transplant medications, add them using the search box. Then confirm below to continue.'
-                                }
-                            </p>
-
-                            {/* Accessible checkbox with large touch target */}
-                            <label
-                                className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-all min-h-[56px] ${
-                                    medicationsVerified
-                                        ? 'bg-emerald-100 border-emerald-300'
-                                        : 'bg-white border-blue-200 hover:border-blue-400 hover:bg-blue-50'
-                                }`}
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={medicationsVerified}
-                                    onChange={(e) => setMedicationsVerified(e.target.checked)}
-                                    className="sr-only"
-                                    aria-describedby="verify-medications-description"
-                                />
-                                <span
-                                    className={`flex-shrink-0 w-7 h-7 rounded-md border-2 flex items-center justify-center transition-all ${
-                                        medicationsVerified
-                                            ? 'bg-emerald-600 border-emerald-600'
-                                            : 'bg-white border-slate-400'
-                                    }`}
-                                    aria-hidden="true"
-                                >
-                                    {medicationsVerified && <Check size={18} className="text-white" />}
-                                </span>
-                                <span
-                                    id="verify-medications-description"
-                                    className={`font-semibold text-base ${
-                                        medicationsVerified ? 'text-emerald-800' : 'text-slate-700'
-                                    }`}
-                                >
-                                    {(answers.medications || []).length > 0
-                                        ? `Yes, I have verified my ${(answers.medications || []).length} medication${(answers.medications || []).length > 1 ? 's' : ''} listed above`
-                                        : 'I confirm I have no transplant medications to add'
-                                    }
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Important Medical Information */}
                 <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
                     <div className="flex items-start gap-3">
@@ -2304,16 +2218,10 @@ const Wizard = () => {
 
                 <button
                     onClick={handleNextFromMeds}
-                    disabled={!medicationsVerified}
-                    className={`w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] ${
-                        medicationsVerified
-                            ? 'bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer'
-                            : 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                    }`}
-                    aria-label={medicationsVerified ? "Continue to next section" : "Please verify your medications first"}
-                    aria-disabled={!medicationsVerified}
+                    className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"
+                    aria-label="Continue to next section"
                 >
-                    {medicationsVerified ? 'Next Section' : 'Please Verify Medications Above'}
+                    Next Section
                 </button>
             </div>
         );
