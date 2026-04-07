@@ -681,7 +681,7 @@ const Home = () => {
     useMetaTags(seoMetadata.home);
 
     return (
-        <article className="space-y-12">
+        <article className="space-y-8">
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
@@ -1585,11 +1585,6 @@ const Wizard = () => {
     // Scroll to top when step changes for accessibility
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Also announce page change for screen readers
-        const announcement = document.getElementById('step-announcement');
-        if (announcement) {
-            announcement.textContent = `Step ${step}`;
-        }
     }, [step]);
 
     // Fuse.js instance for fuzzy medication search
@@ -1785,7 +1780,7 @@ const Wizard = () => {
                     })}
                 </div>
                 {/* Progress bar - consistent emerald color for accessibility */}
-                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={`Section ${displayStep} of ${totalVisibleSteps}`}>
+                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
                     <div
                         className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
@@ -1795,24 +1790,12 @@ const Wizard = () => {
         );
     };
 
-    // Screen reader announcement for step changes (accessible navigation)
-    const StepAnnouncement = () => (
-        <div
-            id="step-announcement"
-            className="sr-only"
-            aria-live="polite"
-            aria-atomic="true"
-            role="status"
-        >
-            Step {step}
-        </div>
-    );
 
     // Step 1: About You (combines Role + Status)
     if (step === 1) {
         return (
             <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
+
                 {renderProgress()}
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-emerald-100 p-2 rounded-lg">
@@ -1853,7 +1836,7 @@ const Wizard = () => {
 
                 {/* Question 1b: Status - shows after role is selected */}
                 {answers.role && (
-                    <div className="mb-8 animate-fade-in">
+                    <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1b</span>
                             <h2 className="text-lg font-bold text-slate-800">Where are you in the transplant process?</h2>
@@ -1896,7 +1879,7 @@ const Wizard = () => {
     if (step === 2) {
         return (
             <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
+
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -1979,7 +1962,7 @@ const Wizard = () => {
 
         return (
             <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
+
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -2032,7 +2015,7 @@ const Wizard = () => {
 
                 {/* Question 3b: Specialty Pharmacy - only shows for commercial insurance */}
                 {isCommercialInsurance && answers.insurance && (
-                    <div className="mb-8 animate-fade-in">
+                    <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
                             <h2 className="text-lg font-bold text-slate-800">Does your plan require a specific specialty pharmacy?</h2>
@@ -2089,7 +2072,7 @@ const Wizard = () => {
 
         return (
             <div className="max-w-3xl mx-auto">
-                <StepAnnouncement />
+
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="mb-6">
@@ -2251,7 +2234,7 @@ const Wizard = () => {
     if (step === 5) {
         return (
             <div className="max-w-2xl mx-auto">
-                <StepAnnouncement />
+
                 {renderProgress()}
                 <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
                 <div className="flex items-center gap-3 mb-2">
@@ -2338,7 +2321,7 @@ const Wizard = () => {
 
         return (
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
-                <StepAnnouncement />
+
                 {/* Back Button */}
                 <button
                     onClick={() => setStep(5)}
@@ -3705,7 +3688,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
 
             <div className="p-6" role="tabpanel" id={`${med.id}-${activeTab}-panel`} ref={contentRef}>
                 {activeTab === 'OVERVIEW' && (
-                    <div className="space-y-6 fade-in">
+                    <div className="space-y-6">
                         <p className="text-slate-700 leading-relaxed">
                             Manufacturer: <strong>{med.manufacturer}</strong><br/>
                             Commonly prescribed for: <strong>{med.commonOrgans.join(', ')}</strong> recipients.
@@ -3805,7 +3788,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                     </div>
                 )}
                 {activeTab === 'ASSISTANCE' && (
-                    <div className="space-y-4 fade-in">
+                    <div className="space-y-4">
                         {/* Copay Card Section - RECOMMENDED FOR YOU - For Commercial Insurance ONLY */}
                         {showCopayCards && hasCopayProgram && (activeFilter === 'all' || activeFilter === 'eligible' || activeFilter === 'under50') && (
                             <section className="border-2 border-emerald-400 rounded-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 shadow-md">
@@ -3991,7 +3974,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                     </div>
                 )}
                 {activeTab === 'PRICE' && (
-                    <div className="fade-in">
+                    <div>
                         {/* Color-Coded Legend */}
                         <div className="mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
                             <h4 className="font-bold text-slate-800 mb-3 text-sm">Price Options Guide</h4>
@@ -4321,7 +4304,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                     </div>
                 )}
                 {activeTab === 'PRINT' && (
-                    <div className="fade-in space-y-4 print-friendly">
+                    <div className="space-y-4 print-friendly">
                         {/* Medication Summary for Print */}
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">Medication Details</h3>
@@ -4645,7 +4628,7 @@ const InsuranceChangeSimulator = () => {
             </button>
 
             {showResults && transition && (
-                <div className="mt-8 space-y-6 fade-in">
+                <div className="mt-8 space-y-6">
                     <div className="bg-white rounded-xl p-6 border border-indigo-100">
                         <h3 className="text-xl font-bold text-slate-900 mb-1">{transition.title}</h3>
                         <p className="text-sm text-slate-600 mb-6">{transition.timing}</p>
@@ -5281,7 +5264,7 @@ const Education = () => {
                                     </select>
                                 </div>
                                 {selectedState && (
-                                    <div className="mt-6 text-center fade-in">
+                                    <div className="mt-6 text-center">
                                         <a href={selectedState} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition" aria-label="Visit your state's Medicaid website (opens in new tab)">Go to Official Site <ExternalLink size={18} aria-hidden="true" /></a>
                                         <p className="text-xs text-slate-600 mt-3">You are leaving this app to visit a government website.</p>
                                     </div>
@@ -6271,7 +6254,7 @@ ${patientName || "[Your Name]"}`;
                             <div className="lg:col-span-3 space-y-6">
                                 <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-base font-bold text-slate-700">Your Responsibility</span><span className="text-base font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-4" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-4 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-700 text-base mt-3 italic">Gather these items before you apply. Click to check them off.</p></section>
                                 <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={24} /> : <Square size={24} />}</div><span className={`font-medium text-base leading-relaxed ${isChecked ? 'text-slate-900' : 'text-slate-700'}`}>{item}</span></button> ); })}</div>
-                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center fade-in" role="alert" aria-live="polite"><span className="font-bold text-lg">🎉 You have everything you need! Time to apply.</span></div> )}
+                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center" role="alert" aria-live="polite"><span className="font-bold text-lg">🎉 You have everything you need! Time to apply.</span></div> )}
                             </div>
                             <aside className="lg:col-span-2 space-y-6">
                                 <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={24} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-base text-slate-700 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-base text-slate-700"><CheckCircle size={18} className="text-indigo-500 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
@@ -6405,7 +6388,7 @@ ${patientName || "[Your Name]"}`;
                     </div>
                 )}
                 {activeTab === 'MEDS' && (
-                    <div className="space-y-6 fade-in">
+                    <div className="space-y-6">
                         {/* Header with context */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                             <div>
