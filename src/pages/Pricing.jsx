@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Users, CheckCircle, ArrowRight, Mail, Building2, CreditCard } from 'lucide-react';
+import { CheckCircle, Mail, Building2, CreditCard } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -8,25 +7,6 @@ const Pricing = () => {
     useMetaTags(seoMetadata.pricing);
 
     const tiers = [
-        {
-            name: 'Free for Patients',
-            description: 'For individual patients & caregivers',
-            price: '$0',
-            priceSubtext: '— always free',
-            color: 'emerald',
-            icon: Users,
-            features: [
-                'Unlimited My Path Quizzes — update anytime when your situation changes',
-                'Unlimited medication searches',
-                'Unlimited Savings Calculator estimates',
-                'Access to all educational resources and assistance program links',
-                'No login required',
-                'Your data stays on your device'
-            ],
-            cta: 'Start Searching',
-            ctaLink: '/wizard',
-            highlighted: true
-        },
         {
             name: 'Enterprise',
             description: 'For hospitals & healthcare organizations',
@@ -50,13 +30,6 @@ const Pricing = () => {
     ];
 
     const colorClasses = {
-        emerald: {
-            bg: 'bg-emerald-50',
-            border: 'border-emerald-200',
-            icon: 'bg-emerald-100 text-emerald-600',
-            button: 'bg-emerald-700 hover:bg-emerald-800',
-            check: 'text-emerald-600'
-        },
         indigo: {
             bg: 'bg-indigo-50',
             border: 'border-indigo-200',
@@ -77,7 +50,7 @@ const Pricing = () => {
                     Pricing
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                    Free access to education. Pro features for power users.
+                    Enterprise solutions for hospitals and healthcare organizations.
                 </p>
             </header>
 
@@ -85,19 +58,14 @@ const Pricing = () => {
             <div className="space-y-12">
                 <>
                         {/* Pricing Tiers */}
-                        <section className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <section className="max-w-lg mx-auto">
                             {tiers.map((tier, index) => {
                                 const colors = colorClasses[tier.color];
                                 return (
                                     <div
                                         key={index}
-                                        className={`relative bg-white rounded-2xl shadow-sm border-2 ${tier.highlighted ? colors.border + ' ring-2 ring-emerald-200' : 'border-slate-200'} p-6 flex flex-col`}
+                                        className="relative bg-white rounded-2xl shadow-sm border-2 border-slate-200 p-6 flex flex-col"
                                     >
-                                        {tier.highlighted && (
-                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                100% Free
-                                            </div>
-                                        )}
                                         <div className={`w-12 h-12 ${colors.icon} rounded-full flex items-center justify-center mb-4`} aria-hidden="true">
                                             <tier.icon size={24} />
                                         </div>
@@ -115,23 +83,13 @@ const Pricing = () => {
                                                 </li>
                                             ))}
                                         </ul>
-                                        {tier.ctaLink.startsWith('mailto:') ? (
-                                            <a
-                                                href={tier.ctaLink}
-                                                className={`${colors.button} text-white font-bold py-3 px-6 rounded-xl text-center transition flex items-center justify-center gap-2`}
-                                            >
-                                                <Mail size={18} aria-hidden="true" />
-                                                {tier.cta}
-                                            </a>
-                                        ) : (
-                                            <Link
-                                                to={tier.ctaLink}
-                                                className={`${colors.button} text-white font-bold py-3 px-6 rounded-xl text-center transition flex items-center justify-center gap-2`}
-                                            >
-                                                {tier.cta}
-                                                <ArrowRight size={18} aria-hidden="true" />
-                                            </Link>
-                                        )}
+                                        <a
+                                            href={tier.ctaLink}
+                                            className={`${colors.button} text-white font-bold py-3 px-6 rounded-xl text-center transition flex items-center justify-center gap-2`}
+                                        >
+                                            <Mail size={18} aria-hidden="true" />
+                                            {tier.cta}
+                                        </a>
                                     </div>
                                 );
                             })}
@@ -142,40 +100,20 @@ const Pricing = () => {
                             This tool is designed to help you organize and understand your medications. It does not replace medical advice. Always review medication changes with your transplant team.
                         </p>
 
-                        {/* Our Mission Section */}
-                        <section className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
-                            <h2 className="text-2xl font-bold text-emerald-900 mb-4">Our Mission: Free Tools for Patients</h2>
-                            <p className="text-emerald-800 leading-relaxed">
-                                We are committed to providing free, accessible, and health-literate tools to every transplant patient. Our quizzes, medication searches, educational resources, and assistance program information are completely free for patients. Enterprise partnerships with hospitals and healthcare organizations help fund our mission while keeping patient tools free. Your data is always stored locally on your own device for complete privacy.
-                            </p>
-                        </section>
-
                         {/* FAQ Section */}
                         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6">Common Questions</h2>
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Is this really free for patients?</h3>
-                                    <p className="text-slate-600">
-                                        Yes! All our tools are completely free for individual patients and caregivers. This includes unlimited quizzes, unlimited medication searches, unlimited Savings Calculator estimates, and access to all educational resources and assistance program links. No login is required.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">How is this funded?</h3>
-                                    <p className="text-slate-600">
-                                        We offer enterprise plans for hospitals and healthcare organizations. These partnerships help fund our mission while keeping all patient tools free.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-slate-900 mb-2">Is my medication data private?</h3>
-                                    <p className="text-slate-600">
-                                        Yes. Your medications are stored only on your device (in your browser), not on our servers. Transplant Medication Navigator does not store or access your medication list.
-                                    </p>
-                                </div>
-                                <div>
                                     <h3 className="font-bold text-slate-900 mb-2">What does Enterprise include?</h3>
                                     <p className="text-slate-600">
                                         Enterprise plans include Epic MyChart integration with SMART on FHIR R4, a branded patient portal with your center's logo and colors, patient engagement and adherence dashboards, copay card and PAP matching for your full transplant medication formulary, CMS/IOTA-ready compliance documentation and reporting, implementation support with transplant coordinator training, and multi-organ program support. Contact us to learn more.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-slate-900 mb-2">Is medication data private?</h3>
+                                    <p className="text-slate-600">
+                                        Yes. Transplant Medication Navigator does not store or access medication lists. Data stays on the device.
                                     </p>
                                 </div>
                             </div>
