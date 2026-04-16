@@ -3169,6 +3169,24 @@ const MedicationSearch = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* Income Eligibility Reference - helps users avoid self-disqualifying from PAPs */}
+                            <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-xl p-4" role="note" aria-label="Income eligibility reference">
+                                <div className="flex items-start gap-3">
+                                    <Users size={22} className="text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-bold text-amber-900 mb-2">100% Federal Poverty Level (annual income)</p>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-amber-900 mb-3">
+                                            <div><span className="font-semibold">Family of 1:</span> $15,960</div>
+                                            <div><span className="font-semibold">Family of 2:</span> $21,640</div>
+                                            <div><span className="font-semibold">Family of 3:</span> $27,320</div>
+                                            <div><span className="font-semibold">Family of 4:</span> $33,000</div>
+                                        </div>
+                                        <p className="text-sm text-amber-800">
+                                            <span className="font-bold">Don't disqualify yourself</span> — Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3512,27 +3530,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
         )}
 
         <article className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition hover:shadow-md break-inside-avoid" aria-labelledby={`med-${med.id}-title`}>
-            {/* Income Eligibility Banner - Shows on every card so users don't self-disqualify */}
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-200 px-6 py-3" role="note" aria-label="Income eligibility reference">
-                <div className="flex items-start gap-3">
-                    <Users size={18} className="text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                    <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-amber-900 mb-1">
-                            100% Federal Poverty Level (annual income)
-                        </p>
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-amber-900 mb-2">
-                            <span><span className="font-semibold">Family of 1:</span> $15,960</span>
-                            <span><span className="font-semibold">Family of 2:</span> $21,640</span>
-                            <span><span className="font-semibold">Family of 3:</span> $27,320</span>
-                            <span><span className="font-semibold">Family of 4:</span> $33,000</span>
-                        </div>
-                        <p className="text-xs text-amber-800">
-                            <span className="font-semibold">Don't disqualify yourself</span> — Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             {/* User Context Banner - Shows quiz answers */}
             {(quizAnswers?.insurance_type || quizAnswers?.organ_type || quizAnswers?.cost_burden) && (
                 <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 no-print">
