@@ -3169,6 +3169,24 @@ const MedicationSearch = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* Income Eligibility Reference - helps users avoid self-disqualifying from PAPs */}
+                            <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-xl p-4" role="note" aria-label="Income eligibility reference">
+                                <div className="flex items-start gap-3">
+                                    <Users size={22} className="text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-bold text-amber-900 mb-2">100% Federal Poverty Level (annual income)</p>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-amber-900 mb-3">
+                                            <div><span className="font-semibold">Family of 1:</span> $15,960</div>
+                                            <div><span className="font-semibold">Family of 2:</span> $21,640</div>
+                                            <div><span className="font-semibold">Family of 3:</span> $27,320</div>
+                                            <div><span className="font-semibold">Family of 4:</span> $33,000</div>
+                                        </div>
+                                        <p className="text-sm text-amber-800">
+                                            <span className="font-bold">Don't disqualify yourself</span> — Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
