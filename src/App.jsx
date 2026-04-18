@@ -86,6 +86,7 @@ import ReadAloudButton from './components/ReadAloudButton.jsx';
 import RouteAnnouncer from './components/RouteAnnouncer.jsx';
 // Epic MyChart FHIR integration - imports medications from patient's EHR
 import EpicConnectButton from './components/EpicConnectButton.jsx';
+import Coverage101 from './components/Coverage101.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -805,6 +806,11 @@ const Home = () => {
                         Browse Resources <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
+            </section>
+
+            {/* Coverage 101 Embed */}
+            <section className="max-w-6xl mx-auto px-4 md:px-0" aria-label="Coverage 101">
+                <Coverage101 />
             </section>
 
             {/* Real Patient Savings Story */}
