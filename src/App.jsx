@@ -3468,7 +3468,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
 };
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true, quizAnswers = {} }) => {
-    const [activeTab, setActiveTab] = useState('ASSISTANCE');
+    const [activeTab, setActiveTab] = useState('PRICE');
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
     const [activeFilter, setActiveFilter] = useState('all');
@@ -3685,11 +3685,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                 </div>
             </div>
 
-            {/* Per-card tab navigation - Reordered: Assistance first */}
+            {/* Per-card tab navigation */}
             <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={`Information tabs for ${med.brandName}`}>
                 {[
-                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Heart },
                     { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
+                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Heart },
                     { id: 'OVERVIEW', label: 'Overview', icon: Info },
                     { id: 'PRINT', label: 'Print Summary', icon: Printer },
                 ].map(tab => (
