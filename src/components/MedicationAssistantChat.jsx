@@ -1305,7 +1305,51 @@ const MedicationAssistantChat = () => {
                         Mark Cuban's transparent pricing pharmacy - often 50-90% less than retail
                       </p>
                       <a
-                        href={`https://costplusdrugs.com/medications/${medGroup.generic_name?.toLowerCase().replace(/\s+/g, '-') || ''}/`}
+                        href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                      >
+                        Check Price <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  )}
+                  {/* GoodRx - show for generics regardless of insurance type */}
+                  {medGroup.generic_available !== false && medGroup.generic_name && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="font-semibold text-blue-800 text-sm">GoodRx</div>
+                        <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
+                          Discount Card
+                        </span>
+                      </div>
+                      <p className="text-xs text-blue-600 mt-1">
+                        Free coupons accepted at 70,000+ pharmacies — often 50-80% off retail
+                      </p>
+                      <a
+                        href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                      >
+                        Check Price <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  )}
+                  {/* SingleCare - show for generics regardless of insurance type */}
+                  {medGroup.generic_available !== false && medGroup.generic_name && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="font-semibold text-blue-800 text-sm">SingleCare</div>
+                        <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
+                          Discount Card
+                        </span>
+                      </div>
+                      <p className="text-xs text-blue-600 mt-1">
+                        Free card at 35,000+ pharmacies — compare and save on generic prescriptions
+                      </p>
+                      <a
+                        href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1456,7 +1500,37 @@ const MedicationAssistantChat = () => {
                     <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
                     <p className="text-xs text-blue-600 mt-1">Low-cost transparent pricing</p>
                     <a
-                      href={`https://costplusdrugs.com/medications/${medGroup.generic_name?.toLowerCase().replace(/\s+/g, '-') || ''}/`}
+                      href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                    >
+                      Check Price <ExternalLink size={12} />
+                    </a>
+                  </div>
+                )}
+                {/* GoodRx - show for generics regardless of insurance type */}
+                {medGroup.generic_available !== false && medGroup.generic_name && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="font-semibold text-blue-800 text-sm">GoodRx</div>
+                    <p className="text-xs text-blue-600 mt-1">Free coupons at 70,000+ pharmacies</p>
+                    <a
+                      href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
+                    >
+                      Check Price <ExternalLink size={12} />
+                    </a>
+                  </div>
+                )}
+                {/* SingleCare - show for generics regardless of insurance type */}
+                {medGroup.generic_available !== false && medGroup.generic_name && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="font-semibold text-blue-800 text-sm">SingleCare</div>
+                    <p className="text-xs text-blue-600 mt-1">Free card at 35,000+ pharmacies</p>
+                    <a
+                      href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
