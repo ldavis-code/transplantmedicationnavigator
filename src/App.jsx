@@ -131,6 +131,7 @@ import PRICE_ESTIMATES_DATA from './data/price-estimates.json';
 import { useMetaTags } from './hooks/useMetaTags.js';
 import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
+import { costPlusUrl, goodRxUrl, singleCareUrl } from './components/PricingLinks.jsx';
 import { fetchAllMedications } from './lib/medicationsApi.js';
 import { trackMedicationSearch, trackMedicationView, trackMedicationAddToList } from './lib/medicationTrackingApi.js';
 import { trackServerEvent } from './lib/trackServerEvent.js';
@@ -4132,7 +4133,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={`/out/copay/goodrx-search?q=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on GoodRx for ${med.genericName} (opens in new tab)`}>
+                                                <a href={goodRxUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on GoodRx for ${med.genericName} (opens in new tab)`}>
                                                     Check Live <ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('goodrx', 'GoodRx')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
@@ -4170,7 +4171,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={`/out/copay/singlecare-search?q=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on SingleCare for ${med.genericName} (opens in new tab)`}>
+                                                <a href={singleCareUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on SingleCare for ${med.genericName} (opens in new tab)`}>
                                                     Check Live <ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
@@ -4208,7 +4209,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={`/out/copay/costplus-search?q=${encodeURIComponent(med.genericName)}`} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
+                                                <a href={costPlusUrl(med)} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
                                                     Check Live <ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
