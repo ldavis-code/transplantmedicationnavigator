@@ -47,7 +47,11 @@ function transformMedication(row) {
         // New nested program structure
         copayProgram: row.copay_program || null,
         papProgram: row.pap_program || null,
-        medicarePartD: row.medicare_partd || null
+        medicarePartD: row.medicare_partd || null,
+        // Pricing deep-link slug overrides
+        costPlusSlug: row.cost_plus_slug || null,
+        goodrxSlug: row.goodrx_slug || null,
+        singlecareSlug: row.singlecare_slug || null
     };
 }
 
