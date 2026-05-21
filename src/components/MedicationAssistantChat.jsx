@@ -21,6 +21,27 @@ import PaywallModal from './PaywallModal.jsx';
 const DEMO_MODE_KEY = 'tmn_demo_mode';
 const DEMO_EXPIRY_KEY = 'tmn_demo_expiry';
 
+// Per-drug URLs on these three services often 404 because the slug from the
+// generic name does not match the partner site's URL pattern. Rewrite to the
+// homepage so users land on a working page and can search from there.
+const HOMEPAGE_BY_HOST = {
+  'goodrx.com': 'https://www.goodrx.com/',
+  'www.goodrx.com': 'https://www.goodrx.com/',
+  'singlecare.com': 'https://www.singlecare.com/',
+  'www.singlecare.com': 'https://www.singlecare.com/',
+  'costplusdrugs.com': 'https://costplusdrugs.com/',
+  'www.costplusdrugs.com': 'https://costplusdrugs.com/',
+};
+const normalizeDiscountUrl = (url) => {
+  if (!url) return url;
+  try {
+    const host = new URL(url).host.toLowerCase();
+    return HOMEPAGE_BY_HOST[host] || url;
+  } catch {
+    return url;
+  }
+};
+
 // Check if demo mode is active from localStorage
 const isDemoModeActive = () => {
   try {
@@ -604,7 +625,7 @@ const MedicationAssistantChat = () => {
                 <strong style="color: #065f46;">${program.program_name}</strong>
                 ${program.max_benefit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
                 ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
-                ${program.application_url ? `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply:</strong> <a href="${program.application_url}" style="color: #059669;">${program.application_url}</a></p>` : ''}
+                ${program.application_url ? (() => { const u = normalizeDiscountUrl(program.application_url); return `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply:</strong> <a href="${u}" style="color: #059669;">${u}</a></p>`; })() : ''}
               </div>
             `).join('') : '<p style="color: #64748b;">Contact your transplant center social worker for assistance.</p>'}
           </div>
@@ -1389,7 +1410,7 @@ const MedicationAssistantChat = () => {
                         )}
                         {program.application_url && (
                           <a
-                            href={program.application_url}
+                            href={normalizeDiscountUrl(program.application_url)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1556,7 +1577,7 @@ const MedicationAssistantChat = () => {
                         <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
                         {program.application_url && (
                           <a
-                            href={program.application_url}
+                            href={normalizeDiscountUrl(program.application_url)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
