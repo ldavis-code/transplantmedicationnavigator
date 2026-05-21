@@ -74,7 +74,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic as low as $15-40/month',
-    application_url: 'https://www.goodrx.com/tacrolimus',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Free discount card. Compare prices at pharmacies.',
     is_active: true
   },
@@ -127,7 +127,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic as low as $15-40/month',
-    application_url: 'https://www.goodrx.com/tacrolimus',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Free discount card.',
     is_active: true
   },
@@ -180,7 +180,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic as low as $10-25/month',
-    application_url: 'https://www.goodrx.com/mycophenolate-mofetil',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Generic mycophenolate widely available.',
     is_active: true
   },
@@ -233,7 +233,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic mycophenolic acid available',
-    application_url: 'https://www.goodrx.com/mycophenolic-acid',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Compare generic prices.',
     is_active: true
   },
@@ -286,7 +286,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic cyclosporine modified available',
-    application_url: 'https://www.goodrx.com/cyclosporine',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Generic widely available.',
     is_active: true
   },
@@ -339,7 +339,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic sirolimus available',
-    application_url: 'https://www.goodrx.com/sirolimus',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Compare generic prices.',
     is_active: true
   },
@@ -392,7 +392,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic everolimus available',
-    application_url: 'https://www.goodrx.com/everolimus',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Compare prices.',
     is_active: true
   },
@@ -410,7 +410,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-15/month',
-    application_url: 'https://www.goodrx.com/azathioprine',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very affordable generic. Often on $4 lists.',
     is_active: true
   },
@@ -485,7 +485,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Cash $6,600 → as low as $127 with card',
-    application_url: 'https://www.singlecare.com/prescription/valganciclovir',
+    application_url: 'https://www.singlecare.com/',
     notes: 'HUGE SAVINGS on generic. Compare to insurance copay!',
     is_active: true
   },
@@ -556,7 +556,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Cash $6,600 → as low as $127',
-    application_url: 'https://www.singlecare.com/prescription/valganciclovir',
+    application_url: 'https://www.singlecare.com/',
     notes: 'HUGE SAVINGS on generic.',
     is_active: true
   },
@@ -628,7 +628,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-10/month',
-    application_url: 'https://www.goodrx.com/acyclovir',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very affordable generic. Often on $4 lists.',
     is_active: true
   },
@@ -646,7 +646,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $8-20/month',
-    application_url: 'https://www.goodrx.com/valacyclovir',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Affordable generic available.',
     is_active: true
   },
@@ -742,7 +742,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $3-10',
-    application_url: 'https://www.goodrx.com/fluconazole',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very affordable generic.',
     is_active: true
   },
@@ -795,7 +795,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic voriconazole available',
-    application_url: 'https://www.goodrx.com/voriconazole',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Compare generic prices.',
     is_active: true
   },
@@ -1008,7 +1008,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $3-5/month',
-    application_url: 'https://www.goodrx.com/prednisone',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very cheap generic. Often free or under $5.',
     is_active: true
   },
@@ -1042,7 +1042,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-8/month',
-    application_url: 'https://www.goodrx.com/sulfamethoxazole-trimethoprim',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very affordable generic. PCP prophylaxis.',
     is_active: true
   },
@@ -1060,7 +1060,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $3-8/month',
-    application_url: 'https://www.goodrx.com/omeprazole',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Also available OTC. Very affordable.',
     is_active: true
   },
@@ -1082,7 +1082,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4/month',
-    application_url: 'https://www.goodrx.com/metformin',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very cheap generic. Often on $4 lists.',
     is_active: true
   },
@@ -1231,7 +1231,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $3-5/month',
-    application_url: 'https://www.goodrx.com/amlodipine',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very cheap generic.',
     is_active: true
   },
@@ -1249,7 +1249,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $3-5/month',
-    application_url: 'https://www.goodrx.com/lisinopril',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very cheap generic.',
     is_active: true
   },
@@ -1267,7 +1267,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-8/month',
-    application_url: 'https://www.goodrx.com/losartan',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Affordable generic.',
     is_active: true
   },
@@ -1285,7 +1285,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-10/month',
-    application_url: 'https://www.goodrx.com/carvedilol',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Affordable generic carvedilol.',
     is_active: true
   },
@@ -1307,7 +1307,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $4-8/month',
-    application_url: 'https://www.goodrx.com/atorvastatin',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Very affordable generic.',
     is_active: true
   },
@@ -1325,7 +1325,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'As low as $8-15/month',
-    application_url: 'https://www.goodrx.com/rosuvastatin',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Generic available.',
     is_active: true
   },
@@ -1575,7 +1575,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic sildenafil available',
-    application_url: 'https://www.goodrx.com/sildenafil',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Generic much cheaper than brand.',
     is_active: true
   },
@@ -1669,7 +1669,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Savings on brand (no generic available)',
-    application_url: 'https://www.goodrx.com/xifaxan',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Brand only - no generic rifaximin currently available.',
     is_active: true
   },
@@ -1726,7 +1726,7 @@ const savingsPrograms = [
     ihs_tribal_eligible: true,
     income_limit: 'None',
     max_benefit: 'Generic entecavir available',
-    application_url: 'https://www.goodrx.com/entecavir',
+    application_url: 'https://www.goodrx.com/',
     notes: 'Generic much cheaper.',
     is_active: true
   },
