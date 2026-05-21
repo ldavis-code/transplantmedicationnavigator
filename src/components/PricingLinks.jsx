@@ -1,51 +1,22 @@
 // PricingLinks.jsx
 // Drop-in component for TMN medication detail page.
-// Replaces broken API calls to Cost Plus, GoodRx, and SingleCare with
-// stable deep links to each service's public site.
-//
-// Usage:
-//   <PricingLinks medication={medication} />
-//
-// Required medication fields:
-//   - genericName (string)  e.g. "tacrolimus"
-//   - strength (string, optional)  e.g. "1mg"
-//   - dosageForm (string, optional)  e.g. "capsule"
-//   - costPlusSlug (string, optional)  override for the full Cost Plus slug
-//                                       e.g. "tacrolimus-1mg-capsule"
+// Links out to each pricing service's homepage so users can search there.
 
 import React from "react";
 import { ExternalLink } from "lucide-react";
 
 // --- URL builders ----------------------------------------------------------
 
-const slugify = (s) =>
-  s
-    ?.toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "") || "";
-
-export function costPlusUrl(med) {
-  if (med.costPlusSlug) {
-    return `https://costplusdrugs.com/medications/${med.costPlusSlug}/`;
-  }
-
-  if (med.genericName && med.strength && med.dosageForm) {
-    const slug = slugify(`${med.genericName}-${med.strength}-${med.dosageForm}`);
-    return `https://costplusdrugs.com/medications/${slug}/`;
-  }
-
-  return `https://costplusdrugs.com/search?q=${encodeURIComponent(
-    med.genericName || ""
-  )}`;
+export function costPlusUrl() {
+  return "https://costplusdrugs.com/";
 }
 
-export function goodRxUrl(med) {
-  return `https://www.goodrx.com/${slugify(med.genericName)}`;
+export function goodRxUrl() {
+  return "https://www.goodrx.com/";
 }
 
-export function singleCareUrl(med) {
-  return `https://www.singlecare.com/prescription/${slugify(med.genericName)}`;
+export function singleCareUrl() {
+  return "https://www.singlecare.com/";
 }
 
 // --- Component -------------------------------------------------------------
