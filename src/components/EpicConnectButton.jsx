@@ -12,6 +12,12 @@ import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'luc
  */
 const HEALTH_SYSTEMS = [
     { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    // ── Real production endpoints (from Epic's endpoint directory: open.epic.com) ──
+    // INTEGRIS Health (Oklahoma) — verified live, supports standalone patient launch.
+    { id: 'integris', name: 'INTEGRIS Health', fhirBaseUrl: 'https://fhir.integrisok.com/Interconnect-FHIR/api/FHIR/R4' },
+    // NOTE: the entries below still point at the SANDBOX placeholder. Replace each with
+    // the health system's real production FHIR R4 base URL from open.epic.com before
+    // patients from those systems can connect, or switch to a dynamic endpoint directory.
     { id: 'mychart', name: 'MyChart (Epic)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
     // Major transplant centers — add real FHIR endpoints as they become available
     { id: 'mayo-clinic', name: 'Mayo Clinic', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },

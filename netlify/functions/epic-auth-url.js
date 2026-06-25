@@ -287,16 +287,30 @@ export async function handler(event) {
             });
             if (smartRes.ok) {
                 const smartConfig = await smartRes.json();
-                if (smartConfig.scopes_supported && smartConfig.scopes_supported.length > 0) {
-                    const unsupported = requestedScopes.filter(s => !smartConfig.scopes_supported.includes(s));
+                const supported = smartConfig.scopes_supported || [];
+                // IMPORTANT: Epic's PRODUCTION FHIR servers advertise only a GENERIC
+                // scopes_supported list — e.g. ["launch","openid","profile","fhirUser"] —
+                // that does NOT enumerate granular SMART scopes like
+                // patient/MedicationRequest.read, even though those scopes are valid and
+                // are granted per the app registration. Only treat scopes_supported as an
+                // authoritative allow-list when it actually enumerates granular resource
+                // scopes (i.e. contains a '/'), as Epic's SANDBOX does. Otherwise, trust
+                // the configured scopes and let Epic's authorization server decide.
+                //
+                // Stripping patient/* scopes against a generic list is a silent failure:
+                // the patient logs in fine but the app receives ZERO medications because
+                // it never requested permission to read them.
+                const listIsGranular = supported.some(s => s.includes('/'));
+                if (listIsGranular) {
+                    const unsupported = requestedScopes.filter(s => !supported.includes(s));
                     if (unsupported.length > 0) {
                         scopeWarnings = unsupported;
                         console.warn('[epic-auth-url] WARNING: These scopes are NOT in the server\'s supported list:', unsupported.join(', '),
-                            'Supported scopes:', smartConfig.scopes_supported.join(', '));
+                            'Supported scopes:', supported.join(', '));
 
                         // Remove unsupported scopes to prevent Epic from rejecting
                         // the entire request. Keep only scopes the server recognizes.
-                        const supportedRequested = requestedScopes.filter(s => smartConfig.scopes_supported.includes(s));
+                        const supportedRequested = requestedScopes.filter(s => supported.includes(s));
 
                         // Ensure we still have the minimum required scopes
                         if (supportedRequested.length > 0) {
@@ -306,6 +320,9 @@ export async function handler(event) {
                         // If no scopes are supported, proceed with original (server may
                         // not accurately report supported scopes in all cases)
                     }
+                } else if (supported.length > 0) {
+                    console.log('[epic-auth-url] Server advertises a generic scopes_supported list (' +
+                        supported.join(', ') + '); keeping configured scopes and trusting the app registration.');
                 }
             }
         } catch (e) {
