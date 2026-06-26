@@ -126,6 +126,33 @@ function pickBestMatch(name, candidates) {
 }
 
 /**
+ * Curated fallbacks for generic-name variants Epic sends that don't token-match
+ * our record names — e.g. Epic's "mycophenolate sodium" is our Myfortic, and a
+ * bare "tenofovir" is our Viread. Most specific entries first. These are GENERIC
+ * chemical names, so a synonym hit is treated as the generic.
+ */
+const SYNONYM_MAP = [
+    { tokens: ['mycophenolate', 'sodium'], id: 'myfortic' },
+    { tokens: ['mycophenolic'], id: 'myfortic' },
+    { tokens: ['mycophenolate', 'mofetil'], id: 'mycophenolate' },
+    { tokens: ['mycophenolate'], id: 'mycophenolate' },
+    { tokens: ['tenofovir', 'alafenamide'], id: 'vemlidy' },
+    { tokens: ['tenofovir', 'disoproxil'], id: 'viread' },
+    { tokens: ['tenofovir'], id: 'viread' },
+];
+
+/** Match a name against the curated synonym map; returns the record id or null. */
+function matchSynonym(name, medsList) {
+    const nameWords = new Set((name || '').split(/[^a-z0-9]+/).filter(Boolean));
+    for (const syn of SYNONYM_MAP) {
+        if (syn.tokens.every(t => nameWords.has(t)) && medsList.some(m => m.id === syn.id)) {
+            return syn.id;
+        }
+    }
+    return null;
+}
+
+/**
  * Match raw FHIR medications (name + RxNorm code) from Epic against our
  * transplant medication database, returning internal medication IDs that the
  * My Path Quiz and the Grants & Foundations medications tab can consume.
@@ -157,9 +184,23 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             found = pickBestMatch(name, medsList.filter(m => nameMatchesMed(name, m)));
         }
 
+        // 3) Curated synonym fallback for generic-name variants Epic uses that
+        //    don't token-match our names (e.g. "mycophenolate sodium" -> Myfortic,
+        //    "tenofovir" -> Viread).
+        let viaSynonym = false;
+        if (!found && name) {
+            const synId = matchSynonym(name, medsList);
+            if (synId) {
+                found = medsList.find(m => m.id === synId) || null;
+                viaSynonym = !!found;
+            }
+        }
+
         if (found) {
             matched.add(found.id);
-            if (name && isGenericName(name, found)) {
+            // Synonym hits are generic chemical names; otherwise detect generic
+            // from the name. Either way, show the generic (not a brand).
+            if (viaSynonym || (name && isGenericName(name, found))) {
                 genericIds.add(found.id);
             }
         } else if (cleanName || med.name) {
