@@ -32,6 +32,39 @@ function cleanMedicationName(name) {
 }
 
 /**
+ * Cleaned, lowercased brand-name segments for a medication record. A record's
+ * brandName can list several products (e.g. "Prograf / Envarsus XR / Astagraf
+ * XL"); each segment is cleaned so "Envarsus XR" still matches "Envarsus".
+ */
+function brandSegments(med) {
+    return (med.brandName || '')
+        .split('/')
+        .map(s => cleanMedicationName(s).toLowerCase().trim())
+        .filter(Boolean);
+}
+
+/** Does a (cleaned, lowercased) FHIR name correspond to this medication record? */
+function nameMatchesMed(name, med) {
+    const generic = (med.genericName || '').toLowerCase().trim();
+    if (generic && name.includes(generic)) return true;
+    return brandSegments(med).some(b => name.includes(b));
+}
+
+/**
+ * Is the patient taking the GENERIC (vs a brand) of this medication? Determined
+ * from the name Epic sent: it's the generic when the name matches the generic
+ * name and does not specifically name a brand product. Generics have no
+ * manufacturer copay card, so the UI steers to cash options instead.
+ */
+function isGenericName(name, med) {
+    const generic = (med.genericName || '').toLowerCase().trim();
+    if (!generic) return false;
+    const matchesGeneric = name.includes(generic);
+    const matchesBrand = brandSegments(med).some(b => name.includes(b));
+    return matchesGeneric && !matchesBrand;
+}
+
+/**
  * Match raw FHIR medications (name + RxNorm code) from Epic against our
  * transplant medication database, returning internal medication IDs that the
  * My Path Quiz and the Grants & Foundations medications tab can consume.
@@ -39,10 +72,12 @@ function cleanMedicationName(name) {
  * Strategy: exact RxNorm (rxcui) match first (most reliable), then fall back to
  * brand/generic name matching. Epic returns names like "Tacrolimus 1 MG Oral
  * Capsule" or "Prograf 1 MG Oral Capsule", so we check whether the FHIR name
- * contains our generic name or any brand-name segment.
+ * contains our generic name or any brand-name segment. We also record which
+ * matches are the GENERIC so copay cards (brand-only) can be hidden for them.
  */
 function matchEpicMedications(fhirMeds) {
     const matched = new Set();
+    const genericIds = new Set();
     const unmatched = [];
     for (const med of fhirMeds) {
         const cleanName = cleanMedicationName(med.name);
@@ -57,27 +92,25 @@ function matchEpicMedications(fhirMeds) {
 
         // 2) Brand / generic name match
         if (!found && name) {
-            found = MEDICATIONS_DATA.find(m => {
-                const generic = (m.genericName || '').toLowerCase().trim();
-                if (generic && name.includes(generic)) return true;
-                const brands = (m.brandName || '')
-                    .toLowerCase()
-                    .split('/')
-                    .map(s => s.trim())
-                    .filter(Boolean);
-                return brands.some(b => name.includes(b));
-            });
+            found = MEDICATIONS_DATA.find(m => nameMatchesMed(name, m));
         }
 
         if (found) {
             matched.add(found.id);
+            if (name && isGenericName(name, found)) {
+                genericIds.add(found.id);
+            }
         } else if (cleanName || med.name) {
             // Store the cleaned (name-only) value so skipped meds show without
             // the strength/form clutter.
             unmatched.push(cleanName || med.name);
         }
     }
-    return { matched: Array.from(matched), unmatched };
+    return {
+        matched: Array.from(matched),
+        unmatched,
+        genericIds: Array.from(genericIds)
+    };
 }
 
 /**
@@ -220,7 +253,7 @@ const EpicCallback = () => {
                 // The backend returns { medications: [...] }; matching happens here
                 // so it uses the same medication ID set the UI renders.
                 const fhirMeds = medsData.medications || [];
-                const { matched, unmatched } = matchEpicMedications(fhirMeds);
+                const { matched, unmatched, genericIds } = matchEpicMedications(fhirMeds);
                 const matchedMeds = MEDICATIONS_DATA.filter(m => matched.includes(m.id));
                 const assistancePrograms = matchedMeds
                     .filter(m => m.papProgramId || m.copayProgramId)
@@ -230,9 +263,19 @@ const EpicCallback = () => {
                         copayProgramId: m.copayProgramId || null
                     }));
 
+                // Persist which imported meds the patient takes as the GENERIC so
+                // medication cards can hide the brand-only copay card and point to
+                // cash options (Cost Plus Drugs, GoodRx) instead.
+                try {
+                    localStorage.setItem('tmn_epic_generic_meds', JSON.stringify(genericIds));
+                } catch (e) {
+                    // ignore storage errors (e.g. private mode)
+                }
+
                 sessionStorage.setItem('epic_imported_meds', JSON.stringify({
                     matched,
                     unmatched,
+                    genericIds,
                     totalFhirMeds: fhirMeds.length,
                     assistancePrograms,
                     timestamp: Date.now()

@@ -3468,8 +3468,28 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true, quizAnswers = {} }) => {
+// Reads the set of medication IDs the patient takes as the GENERIC, captured
+// during Epic import (see EpicCallback). Generics have no manufacturer copay
+// card, so cards use this to hide copay cards and steer to cash options.
+function isEpicGenericMed(medId) {
+    try {
+        const raw = localStorage.getItem('tmn_epic_generic_meds');
+        if (!raw) return false;
+        const ids = JSON.parse(raw);
+        return Array.isArray(ids) && ids.includes(medId);
+    } catch (e) {
+        return false;
+    }
+}
+
+const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
+    // If the patient's Epic import shows they take the GENERIC of this med, there
+    // is no manufacturer copay card (those are brand-only). Force copay cards off
+    // so every showCopayCards-gated section hides, and surface a note pointing to
+    // cash options like Cost Plus Drugs instead.
+    const takesGeneric = isEpicGenericMed(med.id);
+    const showCopayCards = showCopayCardsProp && !takesGeneric;
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
     const [activeFilter, setActiveFilter] = useState('all');
@@ -3814,6 +3834,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-4">
+                        {/* Generic notice - copay cards are brand-only; steer to cash options */}
+                        {takesGeneric && (
+                            <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
+                                <h3 className="font-bold text-emerald-800 flex items-center gap-2">
+                                    <CheckCircle size={16} aria-hidden="true" />
+                                    You take the generic{med.genericName ? ` (${med.genericName})` : ''}
+                                </h3>
+                                <p className="text-sm text-slate-700 mt-2">
+                                    Generic medications don't have manufacturer copay cards — those are only for brand-name drugs. The good news: generics are usually much cheaper. Compare the cash prices below, especially <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx, and SingleCare.
+                                </p>
+                            </section>
+                        )}
                         {/* Copay Card Section - RECOMMENDED FOR YOU - For Commercial Insurance ONLY */}
                         {showCopayCards && hasCopayProgram && (activeFilter === 'all' || activeFilter === 'eligible' || activeFilter === 'under50') && (
                             <section className="border-2 border-emerald-400 rounded-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 shadow-md">
