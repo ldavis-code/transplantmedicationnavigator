@@ -1596,11 +1596,12 @@ const Wizard = () => {
         return r && r.answers ? { ...QUIZ_DEFAULTS, ...r.answers } : { ...QUIZ_DEFAULTS };
     });
 
-    // The saved position is only needed across the Epic redirect — clear it once
-    // restored so a later refresh starts fresh.
+    // Persist the quiz position on every change so it survives the Epic MyChart
+    // round-trip (the OAuth redirect reloads the app). Restored by the lazy
+    // initializers above. This is more reliable than only saving on connect.
     useEffect(() => {
-        try { sessionStorage.removeItem('quiz_resume'); } catch (e) { /* ignore */ }
-    }, []);
+        try { sessionStorage.setItem('quiz_resume', JSON.stringify({ step, answers })); } catch (e) { /* ignore */ }
+    }, [step, answers]);
 
     // Medication verification state - patient confirms their medications
 
@@ -2229,7 +2230,7 @@ const Wizard = () => {
                                 return (
                                     <span key={id} className="bg-white text-slate-700 px-3 py-1.5 rounded-full text-sm border border-emerald-200 shadow-sm flex items-center gap-2">
                                         <Pill size={14} className="text-emerald-600" />
-                                        {med?.brandName?.split('/')[0] || id}
+                                        {medDisplayName(med) || id}
                                         <button
                                             onClick={() => handleMultiSelect('medications', id)}
                                             className="text-slate-400 hover:text-red-500 transition"
@@ -2418,7 +2419,7 @@ const Wizard = () => {
                                         const med = MEDICATIONS.find(m => m.id === id);
                                         return (
                                             <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
-                                                {med?.brandName.split('/')[0]}
+                                                {medDisplayName(med)}
                                                 <button
                                                     onClick={() => handleMultiSelect('medications', id)}
                                                     className="text-slate-400 hover:text-red-500 ml-1"
@@ -3511,6 +3512,18 @@ function isEpicGenericMed(medId) {
     } catch (e) {
         return false;
     }
+}
+
+// Label for a medication chip/list item. Shows the GENERIC name when the patient
+// takes the generic (from their Epic import) or when a record bundles multiple
+// brand names — so the quiz shows "Alprazolam", not "Xanax".
+function medDisplayName(med) {
+    if (!med) return '';
+    const multipleBrands = (med.brandName || '').includes('/');
+    if ((med.id && isEpicGenericMed(med.id)) || multipleBrands) {
+        return med.genericName || med.brandName || '';
+    }
+    return (med.brandName || '').split('/')[0];
 }
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
