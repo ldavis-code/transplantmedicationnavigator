@@ -1,11 +1,11 @@
 [
   {
-    "id": "tacrolimus",
-    "brandName": "Prograf / Envarsus XR / Astagraf XL",
+    "id": "tacrolimus-ir",
+    "brandName": "Prograf",
     "genericName": "Tacrolimus",
     "rxcui": "42316",
     "category": "Immunosuppressant",
-    "manufacturer": "Astellas / Veloxis",
+    "manufacturer": "Astellas",
     "stage": "Post-transplant",
     "commonOrgans": [
       "Kidney",
@@ -19,8 +19,54 @@
     "generic_available": true,
     "typical_copay_tier": 2,
     "papProgramId": "astellas-pap",
-    "copayUrl": "https://www.astellaspharmasupportsolutions.com/",
-    "copayProgramId": "astellas-copay"
+    "copayUrl": "https://www.prograf.com/savings-information",
+    "copayProgramId": "prograf-copay"
+  },
+  {
+    "id": "tacrolimus-astagraf",
+    "brandName": "Astagraf XL",
+    "genericName": "Tacrolimus Extended-Release",
+    "rxcui": null,
+    "category": "Immunosuppressant",
+    "manufacturer": "Astellas",
+    "stage": "Post-transplant",
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
+    "papUrl": "https://www.astellaspharmasupportsolutions.com/",
+    "cost_tier": "medium",
+    "generic_available": false,
+    "typical_copay_tier": 2,
+    "papProgramId": "astellas-pap",
+    "copayUrl": "https://www.astagrafxl.com/savings-info",
+    "copayProgramId": "astagraf-copay"
+  },
+  {
+    "id": "tacrolimus-envarsus",
+    "brandName": "Envarsus XR",
+    "genericName": "Tacrolimus Extended-Release",
+    "rxcui": null,
+    "category": "Immunosuppressant",
+    "manufacturer": "Veloxis",
+    "stage": "Post-transplant",
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
+    "papUrl": "https://www.envarsusxr.com/savings-support",
+    "cost_tier": "medium",
+    "generic_available": false,
+    "typical_copay_tier": 2,
+    "papProgramId": null,
+    "copayUrl": "https://www.envarsusxr.com/savings-support",
+    "copayProgramId": "envarsus-copay"
   },
   {
     "id": "cyclosporine",

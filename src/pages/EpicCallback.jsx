@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
 import MEDICATIONS_DATA from '../data/medications.json';
+import { fetchAllMedications } from '../lib/medicationsApi.js';
 
 /**
  * Strip dosage strength (mg/mcg/mL/etc.), dosage form, and route descriptors
@@ -75,7 +76,7 @@ function isGenericName(name, med) {
  * contains our generic name or any brand-name segment. We also record which
  * matches are the GENERIC so copay cards (brand-only) can be hidden for them.
  */
-function matchEpicMedications(fhirMeds) {
+function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
     const matched = new Set();
     const genericIds = new Set();
     const unmatched = [];
@@ -87,12 +88,12 @@ function matchEpicMedications(fhirMeds) {
 
         // 1) RxNorm code match
         if (rx) {
-            found = MEDICATIONS_DATA.find(m => m.rxcui && String(m.rxcui) === rx);
+            found = medsList.find(m => m.rxcui && String(m.rxcui) === rx);
         }
 
         // 2) Brand / generic name match
         if (!found && name) {
-            found = MEDICATIONS_DATA.find(m => nameMatchesMed(name, m));
+            found = medsList.find(m => nameMatchesMed(name, m));
         }
 
         if (found) {
