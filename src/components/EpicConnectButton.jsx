@@ -194,6 +194,9 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
                                             {importedData.assistancePrograms.length} assistance program{importedData.assistancePrograms.length !== 1 ? 's' : ''} found for your medications.
                                         </p>
                                     )}
+                                    <p className="text-slate-500 text-xs mt-2">
+                                        Copay card and patient assistance searches are based on the medication name, not the dose or strength (mg).
+                                    </p>
                                 </div>
                             </div>
                         </div>

@@ -1160,7 +1160,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Heart Transplant',
         description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
             { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
@@ -1171,7 +1172,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Kidney Transplant',
         description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
@@ -1183,7 +1185,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Liver Transplant',
         description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used CNI in liver transplantation.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Most commonly used CNI in liver transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
@@ -1192,7 +1195,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Lung Transplant',
         description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant patients.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
@@ -1201,7 +1205,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Pancreas Transplant',
         description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
@@ -3468,8 +3473,28 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = true, quizAnswers = {} }) => {
+// Reads the set of medication IDs the patient takes as the GENERIC, captured
+// during Epic import (see EpicCallback). Generics have no manufacturer copay
+// card, so cards use this to hide copay cards and steer to cash options.
+function isEpicGenericMed(medId) {
+    try {
+        const raw = localStorage.getItem('tmn_epic_generic_meds');
+        if (!raw) return false;
+        const ids = JSON.parse(raw);
+        return Array.isArray(ids) && ids.includes(medId);
+    } catch (e) {
+        return false;
+    }
+}
+
+const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
+    // If the patient's Epic import shows they take the GENERIC of this med, there
+    // is no manufacturer copay card (those are brand-only). Force copay cards off
+    // so every showCopayCards-gated section hides, and surface a note pointing to
+    // cash options like Cost Plus Drugs instead.
+    const takesGeneric = isEpicGenericMed(med.id);
+    const showCopayCards = showCopayCardsProp && !takesGeneric;
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
     const [activeFilter, setActiveFilter] = useState('all');
@@ -3716,7 +3741,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                     <div className="space-y-6">
                         <p className="text-slate-700 leading-relaxed">
                             Manufacturer: <strong>{med.manufacturer}</strong><br/>
-                            Commonly prescribed for: <strong>{med.commonOrgans.join(', ')}</strong> recipients.
+                            Commonly prescribed for: <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong> recipients.
                             {med.stage && <><br/>Stage: <strong>{med.stage}</strong></>}
                         </p>
                         <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800 flex gap-2 items-start" role="note">
@@ -3814,6 +3839,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-4">
+                        {/* Generic notice - copay cards are brand-only; steer to cash options */}
+                        {takesGeneric && (
+                            <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
+                                <h3 className="font-bold text-emerald-800 flex items-center gap-2">
+                                    <CheckCircle size={16} aria-hidden="true" />
+                                    You take the generic{med.genericName ? ` (${med.genericName})` : ''}
+                                </h3>
+                                <p className="text-sm text-slate-700 mt-2">
+                                    Generic medications don't have manufacturer copay cards — those are only for brand-name drugs. The good news: generics are usually much cheaper. Compare the cash prices below, especially <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx, and SingleCare.
+                                </p>
+                            </section>
+                        )}
                         {/* Copay Card Section - RECOMMENDED FOR YOU - For Commercial Insurance ONLY */}
                         {showCopayCards && hasCopayProgram && (activeFilter === 'all' || activeFilter === 'eligible' || activeFilter === 'under50') && (
                             <section className="border-2 border-emerald-400 rounded-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 shadow-md">
@@ -4338,7 +4375,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards = t
                                 <div><span className="text-slate-600">Generic Name:</span> <strong>{med.genericName}</strong></div>
                                 <div><span className="text-slate-600">Category:</span> <strong>{med.category}</strong></div>
                                 <div><span className="text-slate-600">Manufacturer:</span> <strong>{med.manufacturer}</strong></div>
-                                <div><span className="text-slate-600">Organs:</span> <strong>{med.commonOrgans.join(', ')}</strong></div>
+                                <div><span className="text-slate-600">Organs:</span> <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong></div>
                                 <div><span className="text-slate-600">Stage:</span> <strong>{med.stage || 'N/A'}</strong></div>
                             </div>
                         </div>

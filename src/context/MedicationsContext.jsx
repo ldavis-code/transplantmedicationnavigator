@@ -4,6 +4,35 @@ import MEDICATIONS_FALLBACK from '../data/medications.json';
 
 const MedicationsContext = createContext(null);
 
+/**
+ * Collapse duplicate medication rows (same brand + generic that exist more than
+ * once in the data, e.g. a record imported twice in the database). Keeps the
+ * best copy: a human-readable slug id over a generated UUID, then the record
+ * with the most populated fields.
+ */
+function dedupeMedications(list) {
+    const isUuid = (id) => /^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(String(id || ''));
+    const score = (m) =>
+        ['copayUrl', 'papUrl', 'copayProgramId', 'papProgramId', 'cost_tier', 'rxcui', 'stage']
+            .filter((k) => m && m[k]).length + (m && m.commonOrgans && m.commonOrgans.length ? 1 : 0);
+    const byKey = new Map();
+    for (const m of list) {
+        const key = `${(m.brandName || '').toLowerCase().trim()}|${(m.genericName || '').toLowerCase().trim()}`;
+        const prev = byKey.get(key);
+        if (!prev) {
+            byKey.set(key, m);
+            continue;
+        }
+        const prevUuid = isUuid(prev.id);
+        const curUuid = isUuid(m.id);
+        let keep;
+        if (prevUuid !== curUuid) keep = prevUuid ? m : prev; // prefer the slug id
+        else keep = score(m) > score(prev) ? m : prev; // otherwise the richer record
+        byKey.set(key, keep);
+    }
+    return [...byKey.values()];
+}
+
 export function MedicationsProvider({ children }) {
     const [medications, setMedications] = useState(MEDICATIONS_FALLBACK);
     const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +78,7 @@ export function MedicationsProvider({ children }) {
                     const fallbackIds = new Set(MEDICATIONS_FALLBACK.map(m => m.id));
                     const dbOnlyMedications = dbMedications.filter(m => !fallbackIds.has(m.id));
 
-                    setMedications([...mergedMedications, ...dbOnlyMedications]);
+                    setMedications(dedupeMedications([...mergedMedications, ...dbOnlyMedications]));
                     setSource('database');
                     setError(null);
                 }
