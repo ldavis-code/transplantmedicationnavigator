@@ -12,24 +12,22 @@ import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'luc
  */
 const HEALTH_SYSTEMS = [
     { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    // ── Real production endpoints (from Epic's endpoint directory: open.epic.com) ──
-    // INTEGRIS Health (Oklahoma) — verified live, supports standalone patient launch.
+    // ── Real production Epic FHIR R4 endpoints (from Epic's directory: open.epic.com).
+    //    All verified live + SMART standalone-patient capable. ──
+    { id: 'cedars-sinai', name: 'Cedars-Sinai Health System', fhirBaseUrl: 'https://cslinkmobile.csmc.edu/fhirproxy/api/FHIR/R4' },
+    { id: 'cleveland-clinic', name: 'Cleveland Clinic', fhirBaseUrl: 'https://api.ccf.org/mu/api/FHIR/R4' },
+    { id: 'duke', name: 'Duke Health', fhirBaseUrl: 'https://health-apis.duke.edu/FHIR/api/FHIR/R4' },
+    { id: 'emory', name: 'Emory Healthcare', fhirBaseUrl: 'https://epicrp-prd.eushc.org/OAUTH2-PRD/api/FHIR/R4' },
     { id: 'integris', name: 'INTEGRIS Health', fhirBaseUrl: 'https://fhir.integrisok.com/Interconnect-FHIR/api/FHIR/R4' },
-    // NOTE: the entries below still point at the SANDBOX placeholder. Replace each with
-    // the health system's real production FHIR R4 base URL from open.epic.com before
-    // patients from those systems can connect, or switch to a dynamic endpoint directory.
-    { id: 'mychart', name: 'MyChart (Epic)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    // Major transplant centers — add real FHIR endpoints as they become available
-    { id: 'mayo-clinic', name: 'Mayo Clinic', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'cleveland-clinic', name: 'Cleveland Clinic', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'johns-hopkins', name: 'Johns Hopkins', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'duke', name: 'Duke Health', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'mass-general', name: 'Mass General Brigham', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'cedars-sinai', name: 'Cedars-Sinai', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'northwestern', name: 'Northwestern Medicine', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    { id: 'emory', name: 'Emory Healthcare', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
+    { id: 'johns-hopkins', name: 'Johns Hopkins Medicine', fhirBaseUrl: 'https://epicproxy.et0842.epichosted.com/FHIRProxyPRD/api/FHIR/R4' },
+    { id: 'mass-general', name: 'Mass General Brigham', fhirBaseUrl: 'https://ws-interconnect-fhir.partners.org/Interconnect-FHIR-MU-PRD/api/FHIR/R4' },
+    { id: 'northwestern', name: 'Northwestern Medicine', fhirBaseUrl: 'https://nmepicproxy.nm.org/FHIR-PRD/api/FHIR/R4' },
+    { id: 'stanford', name: 'Stanford Health Care', fhirBaseUrl: 'https://sfd.stanfordmed.org/FHIR/api/FHIR/R4' },
+    { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://unified-api.ucsf.edu/clinical/apex/api/FHIR/R4' },
+    { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://epic-fhir-prd.upmc.com/FHIR-PRD/api/FHIR/R4' },
+    { id: 'vanderbilt', name: 'Vanderbilt Health', fhirBaseUrl: 'https://arr01.service.vumc.org/FHIR-PRD/api/FHIR/R4' },
+    // Mayo Clinic isn't in Epic's public endpoint directory — add its production
+    // FHIR R4 base URL here if obtained from Mayo IT / the Epic Showroom listing.
 ];
 
 /**
