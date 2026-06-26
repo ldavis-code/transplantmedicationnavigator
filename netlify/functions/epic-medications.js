@@ -134,17 +134,21 @@ export async function handler(event) {
       console.log('Patient validation succeeded');
     }
 
-    // Step 2: Fetch MedicationRequests with retry logic
-    const fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
+    // Step 2: Fetch the patient's ACTIVE medications.
+    // Without a status filter Epic returns the ENTIRE medication history —
+    // including discontinued/old prescriptions (past antibiotic, antiviral,
+    // antifungal, pain courses, etc.) — which pulls over many drugs the patient
+    // no longer takes. status=active matches the current medication list.
+    let fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}&status=active`;
     console.log('Calling FHIR URL:', fhirUrl);
     console.log('Token prefix:', accessToken.substring(0, 20) + '...');
 
-    const medRequestResponse = await fhirFetchWithRetry(fhirUrl, accessToken, {
+    let medRequestResponse = await fhirFetchWithRetry(fhirUrl, accessToken, {
       retries: 2,
       delayMs: 1500
     });
 
-    const rawText = await medRequestResponse.text();
+    let rawText = await medRequestResponse.text();
 
     // Log everything at ERROR level so it always shows in filtered logs
     const wwwAuth = medRequestResponse.headers.get('WWW-Authenticate') || 'none';
@@ -159,6 +163,26 @@ export async function handler(event) {
       medRequestData = JSON.parse(rawText);
     } catch(e) {
       medRequestData = { error: 'Not JSON', raw: rawText.substring(0, 200) };
+    }
+
+    // Fallback: if the active filter returns no medications (some Epic orgs use
+    // different status values), retry without the filter so the import still
+    // works rather than showing an empty list.
+    if (medRequestResponse.ok && !(medRequestData && Array.isArray(medRequestData.entry) && medRequestData.entry.length)) {
+      const allUrl = `${baseUrl}/MedicationRequest?patient=${patientId}`;
+      console.log('Active filter returned no meds; retrying without status filter:', allUrl);
+      const fallbackRes = await fhirFetchWithRetry(allUrl, accessToken, { retries: 1, delayMs: 1000 });
+      const fallbackText = await fallbackRes.text();
+      if (fallbackRes.ok) {
+        try {
+          const fallbackData = JSON.parse(fallbackText);
+          if (fallbackData && Array.isArray(fallbackData.entry) && fallbackData.entry.length) {
+            medRequestResponse = fallbackRes;
+            rawText = fallbackText;
+            medRequestData = fallbackData;
+          }
+        } catch (e) { /* keep the active-filter result */ }
+      }
     }
 
     if (!medRequestResponse.ok) {

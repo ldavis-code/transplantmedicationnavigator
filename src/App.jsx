@@ -3511,11 +3511,13 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const trumpRxData = TRUMPRX_PRICES_DATA.medications[med.id] || null;
     const isTrumpRxAvailable = !!trumpRxData;
 
-    // If a record still bundles several brand names (e.g. "Neoral / Sandimmune /
-    // Gengraf"), lead with the drug (generic) name. This keeps an imported
-    // medication showing the patient's actual drug instead of a pile of brands.
+    // Lead with the drug (generic) name when (a) the record bundles several
+    // brands (e.g. "Neoral / Sandimmune / Gengraf"), or (b) the patient's import
+    // shows they take the GENERIC — so we show "Alprazolam", not the brand "Xanax".
+    // Don't substitute a brand the patient isn't actually on.
     const hasMultipleBrands = (med.brandName || '').includes('/');
-    const displayName = hasMultipleBrands ? med.genericName : med.brandName;
+    const leadWithGeneric = takesGeneric || hasMultipleBrands;
+    const displayName = leadWithGeneric ? med.genericName : med.brandName;
 
     // Extract program info from new nested structure or legacy flat fields
     const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: `${med.manufacturer} Copay Card` } : null);
@@ -3621,7 +3623,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     </div>
                     <div>
                         <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{displayName}</h2>
-                        <p className="text-slate-600 font-medium text-sm">{!hasMultipleBrands && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{med.category}</span></p>
+                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{med.category}</span></p>
                         {/* Cost Tier Badges */}
                         <div className="flex flex-wrap gap-2 mt-2">
                             {med.cost_tier && (
