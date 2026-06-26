@@ -1,5 +1,28 @@
 [
   {
+    "id": "tacrolimus",
+    "brandName": "Tacrolimus (generic)",
+    "genericName": "Tacrolimus",
+    "rxcui": "42316",
+    "category": "Immunosuppressant",
+    "manufacturer": "Generic",
+    "stage": "Post-transplant",
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
+    "papUrl": null,
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1,
+    "papProgramId": null,
+    "copayUrl": null,
+    "copayProgramId": null
+  },
+  {
     "id": "prograf",
     "brandName": "Prograf",
     "genericName": "Tacrolimus",

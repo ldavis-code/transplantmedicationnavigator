@@ -1160,7 +1160,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Heart Transplant',
         description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
         medications: [
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
             { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
@@ -1171,7 +1172,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Kidney Transplant',
         description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
         medications: [
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
@@ -1183,7 +1185,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Liver Transplant',
         description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
         medications: [
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'The most commonly used CNI in liver transplantation.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Most commonly used CNI in liver transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
@@ -1192,7 +1195,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Lung Transplant',
         description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
         medications: [
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant patients.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
@@ -1201,7 +1205,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Pancreas Transplant',
         description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
         medications: [
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Standard of care for maintenance therapy.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
