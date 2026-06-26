@@ -356,8 +356,18 @@ const EpicCallback = () => {
                 // The backend returns { medications: [...] }; matching happens here
                 // so it uses the same medication ID set the UI renders.
                 const fhirMeds = medsData.medications || [];
-                const { matched, unmatched, genericIds } = matchEpicMedications(fhirMeds);
-                const matchedMeds = MEDICATIONS_DATA.filter(m => matched.includes(m.id));
+                // Match against the LIVE medication database (the same list the app
+                // renders) so meds added in Neon are recognized without a code change;
+                // fall back to the bundled JSON only if the API is unavailable.
+                let medsList = MEDICATIONS_DATA;
+                try {
+                    const dbMeds = await fetchAllMedications();
+                    if (Array.isArray(dbMeds) && dbMeds.length > 0) medsList = dbMeds;
+                } catch (e) {
+                    // use bundled fallback
+                }
+                const { matched, unmatched, genericIds } = matchEpicMedications(fhirMeds, medsList);
+                const matchedMeds = medsList.filter(m => matched.includes(m.id));
                 const assistancePrograms = matchedMeds
                     .filter(m => m.papProgramId || m.copayProgramId)
                     .map(m => ({
