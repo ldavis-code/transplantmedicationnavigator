@@ -3200,7 +3200,13 @@
     "category": "GI Support",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3212,7 +3218,13 @@
     "category": "Supplement",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3224,7 +3236,9 @@
     "category": "Antiarrhythmic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Heart"],
+    "commonOrgans": [
+      "Heart"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3236,7 +3250,13 @@
     "category": "Antihistamine",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3248,7 +3268,13 @@
     "category": "GI Support",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3260,7 +3286,13 @@
     "category": "Antiemetic",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3272,7 +3304,13 @@
     "category": "GI Support",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3284,7 +3322,13 @@
     "category": "Electrolyte",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3296,7 +3340,13 @@
     "category": "Vitamin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3308,7 +3358,13 @@
     "category": "Vitamin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
@@ -3320,9 +3376,317 @@
     "category": "Vitamin",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
-    "commonOrgans": ["Kidney","Liver","Heart","Lung","Pancreas"],
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
     "generic_available": true,
     "cost_tier": "low",
     "typical_copay_tier": "1"
+  },
+  {
+    "id": "adcirca",
+    "brandName": "Adcirca",
+    "genericName": "Tadalafil",
+    "rxcui": "358263",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "United Therapeutics",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://unitedtherapeuticscares.com/",
+    "copayProgramId": "united-therapeutics-copay",
+    "papUrl": "https://unitedtherapeuticscares.com/",
+    "papProgramId": "united-therapeutics-pap",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "tyvaso",
+    "brandName": "Tyvaso",
+    "genericName": "Treprostinil (Inhaled)",
+    "rxcui": "38663",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "United Therapeutics",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://unitedtherapeuticscares.com/",
+    "copayProgramId": "united-therapeutics-copay",
+    "papUrl": "https://unitedtherapeuticscares.com/",
+    "papProgramId": "united-therapeutics-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "orenitram",
+    "brandName": "Orenitram",
+    "genericName": "Treprostinil (Oral)",
+    "rxcui": "38663",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "United Therapeutics",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://unitedtherapeuticscares.com/",
+    "copayProgramId": "united-therapeutics-copay",
+    "papUrl": "https://unitedtherapeuticscares.com/",
+    "papProgramId": "united-therapeutics-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "ventavis",
+    "brandName": "Ventavis",
+    "genericName": "Iloprost",
+    "rxcui": "54409",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "Actelion/Janssen",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://www.jnjwithme.com/",
+    "copayProgramId": "janssen-copay",
+    "papUrl": "https://www.jnjwithme.com/",
+    "papProgramId": "janssen-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "winrevair",
+    "brandName": "Winrevair",
+    "genericName": "Sotatercept",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "Merck",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://www.merckaccessprogram-winrevair.com/",
+    "copayProgramId": "merck-copay",
+    "papUrl": "https://www.merckhelps.com/",
+    "papProgramId": "merck-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "opsynvi",
+    "brandName": "Opsynvi",
+    "genericName": "Macitentan/Tadalafil",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "Actelion/Janssen",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://www.jnjwithme.com/",
+    "copayProgramId": "janssen-copay",
+    "papUrl": "https://www.jnjwithme.com/",
+    "papProgramId": "janssen-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "veletri",
+    "brandName": "Veletri",
+    "genericName": "Epoprostenol",
+    "rxcui": "8814",
+    "category": "Pulmonary Hypertension",
+    "manufacturer": "Actelion/Janssen",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung",
+      "Heart"
+    ],
+    "copayUrl": "https://www.jnjwithme.com/",
+    "copayProgramId": "janssen-copay",
+    "papUrl": "https://www.jnjwithme.com/",
+    "papProgramId": "janssen-pap",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "esbriet",
+    "brandName": "Esbriet",
+    "genericName": "Pirfenidone",
+    "rxcui": "1373424",
+    "category": "Pulmonary Fibrosis",
+    "manufacturer": "Genentech",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.esbriet.com/financial-support.html",
+    "copayProgramId": "genentech-copay",
+    "papUrl": "https://www.genentech-access.com/",
+    "papProgramId": "genentech-pap",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "ofev",
+    "brandName": "Ofev",
+    "genericName": "Nintedanib",
+    "rxcui": "1599538",
+    "category": "Pulmonary Fibrosis",
+    "manufacturer": "Boehringer Ingelheim",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.ofev.com/financial-support",
+    "copayProgramId": "boehringer-copay",
+    "papUrl": "https://www.bicares.com/",
+    "papProgramId": "boehringer-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "trikafta",
+    "brandName": "Trikafta",
+    "genericName": "Elexacaftor/Tezacaftor/Ivacaftor",
+    "category": "Cystic Fibrosis",
+    "manufacturer": "Vertex",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.vertexgps.com/",
+    "copayProgramId": "vertex-copay",
+    "papUrl": "https://www.vertexgps.com/",
+    "papProgramId": "vertex-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "kalydeco",
+    "brandName": "Kalydeco",
+    "genericName": "Ivacaftor",
+    "rxcui": "1243041",
+    "category": "Cystic Fibrosis",
+    "manufacturer": "Vertex",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.vertexgps.com/",
+    "copayProgramId": "vertex-copay",
+    "papUrl": "https://www.vertexgps.com/",
+    "papProgramId": "vertex-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "symdeko",
+    "brandName": "Symdeko",
+    "genericName": "Tezacaftor/Ivacaftor",
+    "category": "Cystic Fibrosis",
+    "manufacturer": "Vertex",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.vertexgps.com/",
+    "copayProgramId": "vertex-copay",
+    "papUrl": "https://www.vertexgps.com/",
+    "papProgramId": "vertex-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "orkambi",
+    "brandName": "Orkambi",
+    "genericName": "Lumacaftor/Ivacaftor",
+    "category": "Cystic Fibrosis",
+    "manufacturer": "Vertex",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.vertexgps.com/",
+    "copayProgramId": "vertex-copay",
+    "papUrl": "https://www.vertexgps.com/",
+    "papProgramId": "vertex-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "tobramycin-inhaled",
+    "brandName": "TOBI / Bethkis / Kitabis Pak",
+    "genericName": "Tobramycin Inhaled",
+    "rxcui": "1248038",
+    "category": "Inhaled Antibiotic",
+    "manufacturer": "Generic",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "pulmozyme",
+    "brandName": "Pulmozyme",
+    "genericName": "Dornase Alfa",
+    "rxcui": "3414",
+    "category": "Mucolytic",
+    "manufacturer": "Genentech",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.pulmozyme.com/",
+    "copayProgramId": "genentech-copay",
+    "papUrl": "https://www.genentech-access.com/",
+    "papProgramId": "genentech-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "cayston",
+    "brandName": "Cayston",
+    "genericName": "Aztreonam Inhaled",
+    "rxcui": "742627",
+    "category": "Inhaled Antibiotic",
+    "manufacturer": "Gilead",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Lung"
+    ],
+    "copayUrl": "https://www.gileadadvancingaccess.com/",
+    "copayProgramId": "gilead-copay",
+    "papUrl": "https://www.gileadadvancingaccess.com/",
+    "papProgramId": "gilead-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   }
 ]
