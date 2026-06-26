@@ -1220,9 +1220,9 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         description: 'For patients awaiting a heart transplant, the primary goal is to manage advanced heart failure and maintain hemodynamic stability. This is often referred to as "bridge to transplantation."',
         medications: [
             { id: 'lisinopril', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Standard Heart Failure Therapy', notes: 'Reduce afterload and improve cardiac function.' },
-            { id: 'carvedilol', name: 'Carvedilol, Metoprolol', brand: 'Beta-Blockers', class: 'Standard Heart Failure Therapy', notes: 'Improve survival and reduce the workload on the heart.' },
-            { id: 'furosemide', name: 'Furosemide, Bumetanide', brand: 'Diuretics', class: 'Standard Heart Failure Therapy', notes: 'Manage fluid overload and congestion.' },
-            { id: 'spironolactone-hf', name: 'Spironolactone, Eplerenone', brand: 'Mineralocorticoid Receptor Antagonists', class: 'Standard Heart Failure Therapy', notes: 'Block the effects of aldosterone, reducing fibrosis and improving survival.' },
+            { id: 'coreg', name: 'Carvedilol, Metoprolol', brand: 'Beta-Blockers', class: 'Standard Heart Failure Therapy', notes: 'Improve survival and reduce the workload on the heart.' },
+            { id: 'lasix', name: 'Furosemide, Bumetanide', brand: 'Diuretics', class: 'Standard Heart Failure Therapy', notes: 'Manage fluid overload and congestion.' },
+            { id: 'aldactone', name: 'Spironolactone, Eplerenone', brand: 'Mineralocorticoid Receptor Antagonists', class: 'Standard Heart Failure Therapy', notes: 'Block the effects of aldosterone, reducing fibrosis and improving survival.' },
             { id: 'milrinone', name: 'Milrinone, Dobutamine', brand: 'Intravenous Inotropes', class: 'Inotropic Support', notes: 'Provide temporary circulatory support for decompensated patients.' },
             { id: 'amiodarone', name: 'Amiodarone', brand: 'Amiodarone', class: 'Antiarrhythmics', notes: 'Control arrhythmias, though its use is debated due to potential post-transplant complications.' }
         ]
@@ -1231,22 +1231,22 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         title: 'Kidney Transplant',
         description: 'Patients with end-stage renal disease (ESRD) awaiting a kidney transplant require management of various complications arising from kidney failure, most commonly through dialysis.',
         medications: [
-            { id: 'epoetin', name: 'Epoetin alfa, Darbepoetin alfa', brand: 'Erythropoiesis-Stimulating Agents (ESAs)', class: 'Anemia Management', notes: 'Stimulate red blood cell production to treat anemia.' },
-            { id: 'iron-supplements', name: 'IV Iron, Oral Iron', brand: 'Iron Supplements', class: 'Anemia Management', notes: 'Replenish iron stores necessary for red blood cell formation.' },
-            { id: 'sevelamer', name: 'Sevelamer, Calcium Acetate', brand: 'Phosphate Binders', class: 'Mineral and Bone Disorder', notes: 'Control high phosphorus levels in the blood.' },
+            { id: 'procrit', name: 'Epoetin alfa, Darbepoetin alfa', brand: 'Erythropoiesis-Stimulating Agents (ESAs)', class: 'Anemia Management', notes: 'Stimulate red blood cell production to treat anemia.' },
+            { id: 'venofer', name: 'IV Iron, Oral Iron', brand: 'Iron Supplements', class: 'Anemia Management', notes: 'Replenish iron stores necessary for red blood cell formation.' },
+            { id: 'phoslo', name: 'Sevelamer, Calcium Acetate', brand: 'Phosphate Binders', class: 'Mineral and Bone Disorder', notes: 'Control high phosphorus levels in the blood.' },
             { id: 'calcitriol', name: 'Calcitriol, Paricalcitol', brand: 'Vitamin D Analogs', class: 'Mineral and Bone Disorder', notes: 'Suppress parathyroid hormone (PTH) and manage calcium/phosphorus balance.' },
-            { id: 'antihypertensives', name: 'ACE Inhibitors, ARBs, Calcium Channel Blockers', brand: 'Antihypertensives', class: 'Blood Pressure Control', notes: 'Manage hypertension, a common complication of ESRD.' }
+            { id: 'lisinopril', name: 'ACE Inhibitors, ARBs, Calcium Channel Blockers', brand: 'Antihypertensives', class: 'Blood Pressure Control', notes: 'Manage hypertension, a common complication of ESRD.' }
         ]
     },
     Liver: {
         title: 'Liver Transplant',
         description: 'Pre-transplant management for liver transplant candidates focuses on managing the complications of cirrhosis and portal hypertension.',
         medications: [
-            { id: 'spironolactone-ascites', name: 'Spironolactone, Furosemide', brand: 'Diuretics', class: 'Ascites Management', notes: 'Remove excess fluid from the body.' },
+            { id: 'aldactone', name: 'Spironolactone, Furosemide', brand: 'Diuretics', class: 'Ascites Management', notes: 'Remove excess fluid from the body.' },
             { id: 'lactulose', name: 'Lactulose, Rifaximin', brand: 'Ammonia-reducing Agents', class: 'Hepatic Encephalopathy', notes: 'Reduce the buildup of toxins in the blood that affect the brain.' },
-            { id: 'propranolol', name: 'Propranolol, Nadolol', brand: 'Non-selective Beta-Blockers', class: 'Variceal Bleeding Prevention', notes: 'Reduce pressure in the portal vein to prevent bleeding from varices.' },
-            { id: 'norfloxacin', name: 'Norfloxacin, Ciprofloxacin', brand: 'Antibiotics', class: 'Infection Prevention (SBP)', notes: 'Prevent spontaneous bacterial peritonitis in high-risk patients.' },
-            { id: 'calcium-vitd', name: 'Calcium, Vitamin D', brand: 'Supplements', class: 'Bone Health', notes: 'Prevent or treat osteoporosis, which is common in cirrhosis.' }
+            { id: 'inderal', name: 'Propranolol, Nadolol', brand: 'Non-selective Beta-Blockers', class: 'Variceal Bleeding Prevention', notes: 'Reduce pressure in the portal vein to prevent bleeding from varices.' },
+            { id: 'ciprofloxacin', name: 'Norfloxacin, Ciprofloxacin', brand: 'Antibiotics', class: 'Infection Prevention (SBP)', notes: 'Prevent spontaneous bacterial peritonitis in high-risk patients.' },
+            { id: 'cholecalciferol', name: 'Calcium, Vitamin D', brand: 'Supplements', class: 'Bone Health', notes: 'Prevent or treat osteoporosis, which is common in cirrhosis.' }
         ],
         warning: 'It is crucial for patients with cirrhosis to avoid certain medications, such as Nonsteroidal Anti-Inflammatory Drugs (NSAIDs), which can increase the risk of kidney injury and bleeding.'
     },
@@ -1264,9 +1264,9 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         title: 'Pancreas Transplant',
         description: 'For patients awaiting a pancreas transplant, who typically have type 1 diabetes, the focus is on intensive glycemic control and managing diabetes-related complications.',
         medications: [
-            { id: 'insulin', name: 'Basal (Glargine), Bolus (Lispro)', brand: 'Insulin', class: 'Glycemic Control', notes: 'Maintain blood glucose levels within a target range.' },
-            { id: 'ace-arb-pancreas', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Complication Management', notes: 'Provide kidney protection.' },
-            { id: 'statins', name: 'Atorvastatin, Simvastatin', brand: 'Statins', class: 'Complication Management', notes: 'Manage cholesterol and reduce cardiovascular risk.' }
+            { id: 'insulin-glargine', name: 'Basal (Glargine), Bolus (Lispro)', brand: 'Insulin', class: 'Glycemic Control', notes: 'Maintain blood glucose levels within a target range.' },
+            { id: 'lisinopril', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Complication Management', notes: 'Provide kidney protection.' },
+            { id: 'atorvastatin', name: 'Atorvastatin, Simvastatin', brand: 'Statins', class: 'Complication Management', notes: 'Manage cholesterol and reduce cardiovascular risk.' }
         ]
     }
 };
