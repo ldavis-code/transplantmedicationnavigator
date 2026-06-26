@@ -30,6 +30,15 @@ const HEALTH_SYSTEMS = [
     { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://unified-api.ucsf.edu/clinical/apex/api/FHIR/R4' },
     { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://epic-fhir-prd.upmc.com/FHIR-PRD/api/FHIR/R4' },
     { id: 'vanderbilt', name: 'Vanderbilt Health', fhirBaseUrl: 'https://arr01.service.vumc.org/FHIR-PRD/api/FHIR/R4' },
+    // Additional transplant centers
+    { id: 'hackensack-meridian', name: 'Hackensack Meridian Health (NJ)', fhirBaseUrl: 'https://mepic.hmhn.org/fhir/api/FHIR/R4' },
+    { id: 'michigan-medicine', name: 'University of Michigan (Michigan Medicine)', fhirBaseUrl: 'https://mcproxyprd.med.umich.edu/FHIR-PRD/api/FHIR/R4' },
+    { id: 'penn-medicine', name: 'Penn Medicine (Univ. of Pennsylvania)', fhirBaseUrl: 'https://ssproxy.pennhealth.com/PRD-FHIR/api/FHIR/R4' },
+    { id: 'piedmont', name: 'Piedmont Healthcare (Atlanta)', fhirBaseUrl: 'https://webproxy.piedmont.org/ARR-FHIR/api/FHIR/R4' },
+    { id: 'tampa-general', name: 'Tampa General Hospital', fhirBaseUrl: 'https://epicproxy.et0761.epichosted.com/FHIRProxy/api/FHIR/R4' },
+    { id: 'uams', name: 'Univ. of Arkansas for Medical Sciences (UAMS)', fhirBaseUrl: 'https://ucsoap.uams.edu/FHIRProxy/api/FHIR/R4' },
+    { id: 'uc-davis', name: 'UC Davis Health', fhirBaseUrl: 'https://emrrp.ucdmc.ucdavis.edu/FHIR/api/FHIR/R4' },
+    { id: 'ut-southwestern', name: 'UT Southwestern (Clements Univ. Hospital)', fhirBaseUrl: 'https://EpicIntprxyPRD.swmed.edu/FHIR/api/FHIR/R4' },
     // New York systems
     { id: 'montefiore', name: 'Montefiore Medical Center (NY)', fhirBaseUrl: 'https://soapepic.montefiore.org/FhirProxyPrd/api/FHIR/R4' },
     { id: 'mount-sinai', name: 'Mount Sinai Health System (NY)', fhirBaseUrl: 'https://epicsoapproxyprd.mountsinai.org/FHIR-PRD/api/FHIR/R4' },
@@ -37,10 +46,15 @@ const HEALTH_SYSTEMS = [
     { id: 'nyu-langone', name: 'NYU Langone Health (NY)', fhirBaseUrl: 'https://epicfhir.nyumc.org/FHIRPRD/api/FHIR/R4' },
     { id: 'rochester-regional', name: 'Rochester Regional Health (NY)', fhirBaseUrl: 'https://epicarr.rochesterregional.org/FHIR/api/FHIR/R4' },
     { id: 'u-rochester', name: 'University of Rochester Medical Center (NY)', fhirBaseUrl: 'https://ercd-sproxy.urmc.rochester.edu/MIPS/api/FHIR/R4' },
-    // Not in Epic's public endpoint directory — add real production FHIR R4 base
-    // URLs here once obtained from the health system / Epic Showroom:
+    // Not in Epic's public endpoint directory (or didn't verify) — add real
+    // production FHIR R4 base URLs here once obtained from the health system:
     //   - Westchester Medical Center (WMCHealth)
-    //   - Mayo Clinic
+    //   - Mayo Clinic (Arizona / Florida / Rochester)
+    //   - IU Health Methodist (Indianapolis)
+    //   - University of Cincinnati Medical Center (adult)
+    //   - Baystate Medical Center (MA)
+    //   - Beaumont / Corewell Health (endpoint unreachable to verify)
+    // Note: Cleveland Clinic Florida (Weston) uses the Cleveland Clinic endpoint already listed.
 ];
 
 /**
