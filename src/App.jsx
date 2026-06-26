@@ -1568,8 +1568,9 @@ const Wizard = () => {
         return mapping[insuranceValue] || 'other';
     };
 
-    const [step, setStep] = useState(1);
-    const [answers, setAnswers] = useState({
+    // Default quiz answers, and helpers to restore position after the Epic
+    // MyChart round-trip (OAuth redirects away and back, remounting the app).
+    const QUIZ_DEFAULTS = {
         role: null,
         status: null,
         organs: [],
@@ -1577,7 +1578,29 @@ const Wizard = () => {
         medications: [],
         specialtyPharmacyAware: null,
         financialStatus: null,
+    };
+    const readQuizResume = () => {
+        try {
+            const saved = sessionStorage.getItem('quiz_resume');
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            return null;
+        }
+    };
+    const [step, setStep] = useState(() => {
+        const r = readQuizResume();
+        return r && typeof r.step === 'number' ? r.step : 1;
     });
+    const [answers, setAnswers] = useState(() => {
+        const r = readQuizResume();
+        return r && r.answers ? { ...QUIZ_DEFAULTS, ...r.answers } : { ...QUIZ_DEFAULTS };
+    });
+
+    // The saved position is only needed across the Epic redirect — clear it once
+    // restored so a later refresh starts fresh.
+    useEffect(() => {
+        try { sessionStorage.removeItem('quiz_resume'); } catch (e) { /* ignore */ }
+    }, []);
 
     // Medication verification state - patient confirms their medications
 
@@ -2116,6 +2139,9 @@ const Wizard = () => {
                 {/* Epic MyChart Integration */}
                 <EpicConnectButton
                     className="mb-6"
+                    onBeforeConnect={() => {
+                        try { sessionStorage.setItem('quiz_resume', JSON.stringify({ step, answers })); } catch (e) { /* ignore */ }
+                    }}
                     onMedicationsImported={(matchedIds) => {
                         const currentMeds = answers.medications || [];
                         const newMeds = matchedIds.filter(id => !currentMeds.includes(id));

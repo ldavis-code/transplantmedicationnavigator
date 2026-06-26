@@ -38,9 +38,11 @@ const HEALTH_SYSTEMS = [
  * can import their transplant medications.
  *
  * @param {function} onMedicationsImported - Called with (matchedIds[], unmatchedNames[])
+ * @param {function} onBeforeConnect - Called right before redirecting to Epic, so
+ *   the caller can persist its state (e.g. the quiz step) to restore on return.
  * @param {string} className - Optional additional CSS classes for the wrapper div
  */
-const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
+const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className = '' }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedSystem, setSelectedSystem] = useState('');
@@ -144,6 +146,12 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
             // Store the FHIR base URL (use server-normalized version if available)
             sessionStorage.setItem('epic_fhir_base_url', data.fhir_base_url || system.fhirBaseUrl);
             sessionStorage.setItem('epic_return_path', window.location.pathname + window.location.search);
+
+            // Let the caller persist its state (e.g. the quiz step) so the page
+            // can be restored when Epic redirects back, instead of resetting.
+            if (onBeforeConnect) {
+                try { onBeforeConnect(); } catch (e) { /* ignore */ }
+            }
 
             // Redirect to Epic authorization
             window.location.href = data.url;
