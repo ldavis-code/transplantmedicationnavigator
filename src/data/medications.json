@@ -3688,5 +3688,104 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "amiodarone",
+    "brandName": "Pacerone / Cordarone",
+    "genericName": "Amiodarone",
+    "rxcui": "703",
+    "category": "Antiarrhythmic",
+    "manufacturer": "Generic",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Heart"
+    ],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
+  },
+  {
+    "id": "eplerenone",
+    "brandName": "Inspra",
+    "genericName": "Eplerenone",
+    "rxcui": "298869",
+    "category": "Diuretic",
+    "manufacturer": "Generic",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Heart"
+    ],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
+  },
+  {
+    "id": "bumetanide",
+    "brandName": "Bumex",
+    "genericName": "Bumetanide",
+    "rxcui": "1808",
+    "category": "Diuretic",
+    "manufacturer": "Generic",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Heart",
+      "Liver"
+    ],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
+  },
+  {
+    "id": "nadolol",
+    "brandName": "Corgard",
+    "genericName": "Nadolol",
+    "rxcui": "7226",
+    "category": "Beta Blocker",
+    "manufacturer": "Generic",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Liver",
+      "Heart"
+    ],
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1
+  },
+  {
+    "id": "sevelamer",
+    "brandName": "Renvela / Renagel",
+    "genericName": "Sevelamer",
+    "category": "Phosphate Binder (ESRD)",
+    "manufacturer": "Sanofi",
+    "stage": "Pre-transplant",
+    "commonOrgans": [
+      "Kidney"
+    ],
+    "copayUrl": "https://www.sanofipatientconnection.com/",
+    "copayProgramId": "sanofi-copay",
+    "papUrl": "https://www.sanofipatientconnection.com/",
+    "papProgramId": "sanofi-pap",
+    "cost_tier": "high",
+    "generic_available": true,
+    "typical_copay_tier": "Specialty"
+  },
+  {
+    "id": "rifaximin",
+    "brandName": "Xifaxan",
+    "genericName": "Rifaximin",
+    "rxcui": "35619",
+    "category": "Liver Support",
+    "manufacturer": "Salix (Bausch Health)",
+    "stage": "Both (Pre & Post)",
+    "commonOrgans": [
+      "Liver"
+    ],
+    "copayUrl": "https://www.xifaxan.com/",
+    "copayProgramId": "salix-copay",
+    "papUrl": "https://www.bauschhealth.com/patient-resources/",
+    "papProgramId": "bausch-pap",
+    "cost_tier": "high",
+    "generic_available": false,
+    "typical_copay_tier": "Specialty"
   }
 ]

@@ -296,9 +296,14 @@ const getMedicationSuggestions = (answers) => {
         if (!organData || !organData.medications) continue;
 
         for (const med of organData.medications) {
-            if (!seenIds.has(med.id)) {
-                seenIds.add(med.id);
-                medications.push(med.id);
+            // Post-transplant rows carry a single id; pre-transplant rows carry
+            // a class with several example medication ids. Handle both shapes.
+            const rowIds = med.examples ? med.examples.map(e => e.id) : [med.id];
+            for (const medId of rowIds) {
+                if (medId && !seenIds.has(medId)) {
+                    seenIds.add(medId);
+                    medications.push(medId);
+                }
             }
         }
     }
@@ -1219,34 +1224,33 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         title: 'Heart Transplant',
         description: 'For patients awaiting a heart transplant, the primary goal is to manage advanced heart failure and maintain hemodynamic stability. This is often referred to as "bridge to transplantation."',
         medications: [
-            { id: 'lisinopril', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Standard Heart Failure Therapy', notes: 'Reduce afterload and improve cardiac function.' },
-            { id: 'coreg', name: 'Carvedilol, Metoprolol', brand: 'Beta-Blockers', class: 'Standard Heart Failure Therapy', notes: 'Improve survival and reduce the workload on the heart.' },
-            { id: 'lasix', name: 'Furosemide, Bumetanide', brand: 'Diuretics', class: 'Standard Heart Failure Therapy', notes: 'Manage fluid overload and congestion.' },
-            { id: 'aldactone', name: 'Spironolactone, Eplerenone', brand: 'Mineralocorticoid Receptor Antagonists', class: 'Standard Heart Failure Therapy', notes: 'Block the effects of aldosterone, reducing fibrosis and improving survival.' },
-            { id: 'milrinone', name: 'Milrinone, Dobutamine', brand: 'Intravenous Inotropes', class: 'Inotropic Support', notes: 'Provide temporary circulatory support for decompensated patients.' },
-            { id: 'amiodarone', name: 'Amiodarone', brand: 'Amiodarone', class: 'Antiarrhythmics', notes: 'Control arrhythmias, though its use is debated due to potential post-transplant complications.' }
+            { class: 'ACE Inhibitors / ARBs', notes: 'Reduce afterload and improve cardiac function.', examples: [{ id: 'lisinopril', label: 'Lisinopril' }, { id: 'losartan', label: 'Losartan' }] },
+            { class: 'Beta-Blockers', notes: 'Improve survival and reduce the workload on the heart.', examples: [{ id: 'coreg', label: 'Carvedilol' }, { id: 'lopressor', label: 'Metoprolol' }] },
+            { class: 'Diuretics', notes: 'Manage fluid overload and congestion.', examples: [{ id: 'lasix', label: 'Furosemide' }, { id: 'bumetanide', label: 'Bumetanide' }] },
+            { class: 'Mineralocorticoid Receptor Antagonists', notes: 'Block the effects of aldosterone, reducing fibrosis and improving survival.', examples: [{ id: 'aldactone', label: 'Spironolactone' }, { id: 'eplerenone', label: 'Eplerenone' }] },
+            { class: 'Antiarrhythmics', notes: 'Control arrhythmias.', examples: [{ id: 'amiodarone', label: 'Amiodarone' }] }
         ]
     },
     Kidney: {
         title: 'Kidney Transplant',
         description: 'Patients with end-stage renal disease (ESRD) awaiting a kidney transplant require management of various complications arising from kidney failure, most commonly through dialysis.',
         medications: [
-            { id: 'procrit', name: 'Epoetin alfa, Darbepoetin alfa', brand: 'Erythropoiesis-Stimulating Agents (ESAs)', class: 'Anemia Management', notes: 'Stimulate red blood cell production to treat anemia.' },
-            { id: 'venofer', name: 'IV Iron, Oral Iron', brand: 'Iron Supplements', class: 'Anemia Management', notes: 'Replenish iron stores necessary for red blood cell formation.' },
-            { id: 'phoslo', name: 'Sevelamer, Calcium Acetate', brand: 'Phosphate Binders', class: 'Mineral and Bone Disorder', notes: 'Control high phosphorus levels in the blood.' },
-            { id: 'calcitriol', name: 'Calcitriol, Paricalcitol', brand: 'Vitamin D Analogs', class: 'Mineral and Bone Disorder', notes: 'Suppress parathyroid hormone (PTH) and manage calcium/phosphorus balance.' },
-            { id: 'lisinopril', name: 'ACE Inhibitors, ARBs, Calcium Channel Blockers', brand: 'Antihypertensives', class: 'Blood Pressure Control', notes: 'Manage hypertension, a common complication of ESRD.' }
+            { class: 'Erythropoiesis-Stimulating Agents (ESAs)', notes: 'Stimulate red blood cell production to treat anemia.', examples: [{ id: 'procrit', label: 'Epoetin alfa' }, { id: 'aranesp', label: 'Darbepoetin alfa' }] },
+            { class: 'Iron Supplements', notes: 'Replenish iron stores necessary for red blood cell formation.', examples: [{ id: 'venofer', label: 'IV Iron' }, { id: 'ferrous-sulfate', label: 'Oral Iron' }] },
+            { class: 'Phosphate Binders', notes: 'Control high phosphorus levels in the blood.', examples: [{ id: 'sevelamer', label: 'Sevelamer' }, { id: 'phoslo', label: 'Calcium Acetate' }, { id: 'auryxia', label: 'Ferric Citrate' }] },
+            { class: 'Vitamin D Analogs', notes: 'Suppress parathyroid hormone (PTH) and manage calcium/phosphorus balance.', examples: [{ id: 'calcitriol', label: 'Calcitriol' }, { id: 'zemplar', label: 'Paricalcitol' }] },
+            { class: 'Antihypertensives', notes: 'Manage hypertension, a common complication of ESRD.', examples: [{ id: 'lisinopril', label: 'Lisinopril' }, { id: 'losartan', label: 'Losartan' }, { id: 'amlodipine', label: 'Amlodipine' }] }
         ]
     },
     Liver: {
         title: 'Liver Transplant',
         description: 'Pre-transplant management for liver transplant candidates focuses on managing the complications of cirrhosis and portal hypertension.',
         medications: [
-            { id: 'aldactone', name: 'Spironolactone, Furosemide', brand: 'Diuretics', class: 'Ascites Management', notes: 'Remove excess fluid from the body.' },
-            { id: 'lactulose', name: 'Lactulose, Rifaximin', brand: 'Ammonia-reducing Agents', class: 'Hepatic Encephalopathy', notes: 'Reduce the buildup of toxins in the blood that affect the brain.' },
-            { id: 'inderal', name: 'Propranolol, Nadolol', brand: 'Non-selective Beta-Blockers', class: 'Variceal Bleeding Prevention', notes: 'Reduce pressure in the portal vein to prevent bleeding from varices.' },
-            { id: 'ciprofloxacin', name: 'Norfloxacin, Ciprofloxacin', brand: 'Antibiotics', class: 'Infection Prevention (SBP)', notes: 'Prevent spontaneous bacterial peritonitis in high-risk patients.' },
-            { id: 'cholecalciferol', name: 'Calcium, Vitamin D', brand: 'Supplements', class: 'Bone Health', notes: 'Prevent or treat osteoporosis, which is common in cirrhosis.' }
+            { class: 'Diuretics (Ascites)', notes: 'Remove excess fluid from the body.', examples: [{ id: 'aldactone', label: 'Spironolactone' }, { id: 'lasix', label: 'Furosemide' }] },
+            { class: 'Ammonia-reducing Agents', notes: 'Reduce the buildup of toxins in the blood that affect the brain.', examples: [{ id: 'lactulose', label: 'Lactulose' }, { id: 'rifaximin', label: 'Rifaximin' }] },
+            { class: 'Non-selective Beta-Blockers', notes: 'Reduce pressure in the portal vein to prevent bleeding from varices.', examples: [{ id: 'inderal', label: 'Propranolol' }, { id: 'nadolol', label: 'Nadolol' }] },
+            { class: 'Antibiotics (SBP Prevention)', notes: 'Prevent spontaneous bacterial peritonitis in high-risk patients.', examples: [{ id: 'ciprofloxacin', label: 'Ciprofloxacin' }] },
+            { class: 'Bone Health', notes: 'Prevent or treat osteoporosis, which is common in cirrhosis.', examples: [{ id: 'cholecalciferol', label: 'Vitamin D' }] }
         ],
         warning: 'It is crucial for patients with cirrhosis to avoid certain medications, such as Nonsteroidal Anti-Inflammatory Drugs (NSAIDs), which can increase the risk of kidney injury and bleeding.'
     },
@@ -1254,19 +1258,19 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         title: 'Lung Transplant',
         description: 'Medication management for lung transplant candidates is tailored to their specific underlying lung disease, such as idiopathic pulmonary fibrosis (IPF), chronic obstructive pulmonary disease (COPD), or pulmonary hypertension.',
         medications: [
-            { id: 'esbriet', name: 'Pirfenidone, Nintedanib', brand: 'Antifibrotics (Esbriet, Ofev)', class: 'Idiopathic Pulmonary Fibrosis (IPF)', notes: 'Slow the progression of lung scarring.' },
-            { id: 'albuterol', name: 'Albuterol, Tiotropium, Fluticasone', brand: 'Bronchodilators / Inhaled Corticosteroids', class: 'COPD', notes: 'Improve airflow and reduce inflammation.' },
-            { id: 'flolan', name: 'Epoprostenol, Sildenafil, Bosentan', brand: 'Vasodilators (Flolan, Revatio, Tracleer)', class: 'Pulmonary Hypertension', notes: 'Reduce high blood pressure in the lungs.' },
-            { id: 'lasix', name: 'Furosemide', brand: 'Diuretics', class: 'General Supportive Care', notes: 'Manage fluid retention.' }
+            { class: 'IPF Antifibrotics', notes: 'Slow the progression of lung scarring.', examples: [{ id: 'esbriet', label: 'Pirfenidone' }, { id: 'ofev', label: 'Nintedanib' }] },
+            { class: 'COPD Bronchodilators / Inhaled Steroids', notes: 'Improve airflow and reduce inflammation.', examples: [{ id: 'albuterol', label: 'Albuterol' }, { id: 'tiotropium', label: 'Tiotropium' }, { id: 'fluticasone', label: 'Fluticasone' }] },
+            { class: 'Pulmonary Hypertension Vasodilators', notes: 'Reduce high blood pressure in the lungs.', examples: [{ id: 'flolan', label: 'Epoprostenol' }, { id: 'revatio', label: 'Sildenafil' }, { id: 'tracleer', label: 'Bosentan' }] },
+            { class: 'Diuretics (Supportive)', notes: 'Manage fluid retention.', examples: [{ id: 'lasix', label: 'Furosemide' }] }
         ]
     },
     Pancreas: {
         title: 'Pancreas Transplant',
         description: 'For patients awaiting a pancreas transplant, who typically have type 1 diabetes, the focus is on intensive glycemic control and managing diabetes-related complications.',
         medications: [
-            { id: 'insulin-glargine', name: 'Basal (Glargine), Bolus (Lispro)', brand: 'Insulin', class: 'Glycemic Control', notes: 'Maintain blood glucose levels within a target range.' },
-            { id: 'lisinopril', name: 'Lisinopril, Losartan', brand: 'ACE Inhibitors / ARBs', class: 'Complication Management', notes: 'Provide kidney protection.' },
-            { id: 'atorvastatin', name: 'Atorvastatin, Simvastatin', brand: 'Statins', class: 'Complication Management', notes: 'Manage cholesterol and reduce cardiovascular risk.' }
+            { class: 'Insulin', notes: 'Maintain blood glucose levels within a target range.', examples: [{ id: 'insulin-glargine', label: 'Basal (Glargine)' }, { id: 'insulin-lispro', label: 'Bolus (Lispro)' }] },
+            { class: 'ACE Inhibitors / ARBs', notes: 'Provide kidney protection.', examples: [{ id: 'lisinopril', label: 'Lisinopril' }, { id: 'losartan', label: 'Losartan' }] },
+            { class: 'Statins', notes: 'Manage cholesterol and reduce cardiovascular risk.', examples: [{ id: 'atorvastatin', label: 'Atorvastatin' }, { id: 'simvastatin', label: 'Simvastatin' }] }
         ]
     }
 };
@@ -1459,25 +1463,27 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                 <tbody className="divide-y divide-slate-200">
                                     {PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].medications.map(med => {
                                         return (
-                                            <tr key={med.id} className="hover:bg-white">
+                                            <tr key={med.class} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <div>
-                                                        <span className="font-bold text-slate-900">{med.brand}</span>
-                                                        <div className="text-xs text-slate-500 mt-0.5">{med.class}</div>
-                                                    </div>
+                                                    <span className="font-bold text-slate-900">{med.class}</span>
                                                 </td>
                                                 <td className="py-3 px-3">
-                                                    {med.name.split(', ').map((example, idx) => (
-                                                        <span key={idx}>
-                                                            {idx > 0 && ', '}
-                                                            <button
-                                                                onClick={() => onMedicationClick && onMedicationClick(example.trim())}
-                                                                className="text-slate-600 hover:text-blue-700 underline decoration-dotted underline-offset-2 transition-colors"
-                                                            >
-                                                                {example.trim()}
-                                                            </button>
-                                                        </span>
-                                                    ))}
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {med.examples.map((ex) => {
+                                                            const selected = (answers.medications || []).includes(ex.id);
+                                                            return (
+                                                                <button
+                                                                    key={ex.id}
+                                                                    onClick={() => onMedicationClick && onMedicationClick(ex.id)}
+                                                                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border transition-colors ${selected ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-white border-slate-300 text-slate-700 hover:border-blue-400 hover:text-blue-700'}`}
+                                                                    aria-label={selected ? `${ex.label} added to your list` : `Add ${ex.label} to your list`}
+                                                                >
+                                                                    {selected ? <Check size={12} aria-hidden="true" /> : <PlusCircle size={12} aria-hidden="true" />}
+                                                                    {ex.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
                                             </tr>
@@ -2132,7 +2138,7 @@ const Wizard = () => {
 
                 {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
                 {isPreTransplant ? (
-                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
+                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 ) : (
                     <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
                 )}
