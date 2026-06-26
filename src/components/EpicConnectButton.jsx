@@ -26,6 +26,7 @@ const HEALTH_SYSTEMS = [
     { id: 'mass-general', name: 'Mass General Brigham', fhirBaseUrl: 'https://ws-interconnect-fhir.partners.org/Interconnect-FHIR-MU-PRD/api/FHIR/R4' },
     { id: 'northwestern', name: 'Northwestern Medicine', fhirBaseUrl: 'https://nmepicproxy.nm.org/FHIR-PRD/api/FHIR/R4' },
     { id: 'stanford', name: 'Stanford Health Care', fhirBaseUrl: 'https://sfd.stanfordmed.org/FHIR/api/FHIR/R4' },
+    { id: 'uc-san-diego', name: 'UC San Diego Health', fhirBaseUrl: 'https://epicproxy.et0502.epichosted.com/FHIRProxy/api/FHIR/R4' },
     { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://unified-api.ucsf.edu/clinical/apex/api/FHIR/R4' },
     { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://epic-fhir-prd.upmc.com/FHIR-PRD/api/FHIR/R4' },
     { id: 'vanderbilt', name: 'Vanderbilt Health', fhirBaseUrl: 'https://arr01.service.vumc.org/FHIR-PRD/api/FHIR/R4' },
