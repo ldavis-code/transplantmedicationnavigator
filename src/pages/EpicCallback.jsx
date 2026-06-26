@@ -65,6 +65,31 @@ function isGenericName(name, med) {
     return matchesGeneric && !matchesBrand;
 }
 
+/** Is this record the generic itself (vs a brand-name product)? */
+function isGenericRecord(med) {
+    const brand = (med.brandName || '').toLowerCase();
+    const generic = (med.genericName || '').toLowerCase().trim();
+    return (med.manufacturer || '').toLowerCase() === 'generic'
+        || brand.includes('generic')
+        || brand.trim() === generic;
+}
+
+/**
+ * Pick the single best record for a patient's medication name. We want the ONE
+ * product the patient actually takes — never a pile of related brands — so:
+ *   1. an exact brand-name hit (the patient named a specific brand), else
+ *   2. the generic record when the patient's name is the generic, else
+ *   3. the first reasonable name match.
+ */
+function pickBestMatch(name, candidates) {
+    if (candidates.length <= 1) return candidates[0] || null;
+    const brandHit = candidates.find(m => brandSegments(m).includes(name));
+    if (brandHit) return brandHit;
+    const genericHit = candidates.find(m => isGenericRecord(m) && isGenericName(name, m));
+    if (genericHit) return genericHit;
+    return candidates[0];
+}
+
 /**
  * Match raw FHIR medications (name + RxNorm code) from Epic against our
  * transplant medication database, returning internal medication IDs that the
@@ -91,9 +116,10 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             found = medsList.find(m => m.rxcui && String(m.rxcui) === rx);
         }
 
-        // 2) Brand / generic name match
+        // 2) Brand / generic name match — pick the single best product so we
+        //    import only the drug the patient actually takes, not every related brand.
         if (!found && name) {
-            found = medsList.find(m => nameMatchesMed(name, m));
+            found = pickBestMatch(name, medsList.filter(m => nameMatchesMed(name, m)));
         }
 
         if (found) {
