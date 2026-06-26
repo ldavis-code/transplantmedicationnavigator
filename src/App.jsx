@@ -1568,8 +1568,9 @@ const Wizard = () => {
         return mapping[insuranceValue] || 'other';
     };
 
-    const [step, setStep] = useState(1);
-    const [answers, setAnswers] = useState({
+    // Default quiz answers, and helpers to restore position after the Epic
+    // MyChart round-trip (OAuth redirects away and back, remounting the app).
+    const QUIZ_DEFAULTS = {
         role: null,
         status: null,
         organs: [],
@@ -1577,7 +1578,29 @@ const Wizard = () => {
         medications: [],
         specialtyPharmacyAware: null,
         financialStatus: null,
+    };
+    const readQuizResume = () => {
+        try {
+            const saved = sessionStorage.getItem('quiz_resume');
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            return null;
+        }
+    };
+    const [step, setStep] = useState(() => {
+        const r = readQuizResume();
+        return r && typeof r.step === 'number' ? r.step : 1;
     });
+    const [answers, setAnswers] = useState(() => {
+        const r = readQuizResume();
+        return r && r.answers ? { ...QUIZ_DEFAULTS, ...r.answers } : { ...QUIZ_DEFAULTS };
+    });
+
+    // The saved position is only needed across the Epic redirect — clear it once
+    // restored so a later refresh starts fresh.
+    useEffect(() => {
+        try { sessionStorage.removeItem('quiz_resume'); } catch (e) { /* ignore */ }
+    }, []);
 
     // Medication verification state - patient confirms their medications
 
@@ -2116,6 +2139,9 @@ const Wizard = () => {
                 {/* Epic MyChart Integration */}
                 <EpicConnectButton
                     className="mb-6"
+                    onBeforeConnect={() => {
+                        try { sessionStorage.setItem('quiz_resume', JSON.stringify({ step, answers })); } catch (e) { /* ignore */ }
+                    }}
                     onMedicationsImported={(matchedIds) => {
                         const currentMeds = answers.medications || [];
                         const newMeds = matchedIds.filter(id => !currentMeds.includes(id));
@@ -3511,6 +3537,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const trumpRxData = TRUMPRX_PRICES_DATA.medications[med.id] || null;
     const isTrumpRxAvailable = !!trumpRxData;
 
+    // Lead with the drug (generic) name when (a) the record bundles several
+    // brands (e.g. "Neoral / Sandimmune / Gengraf"), or (b) the patient's import
+    // shows they take the GENERIC — so we show "Alprazolam", not the brand "Xanax".
+    // Don't substitute a brand the patient isn't actually on.
+    const hasMultipleBrands = (med.brandName || '').includes('/');
+    const leadWithGeneric = takesGeneric || hasMultipleBrands;
+    const displayName = leadWithGeneric ? med.genericName : med.brandName;
+
     // Extract program info from new nested structure or legacy flat fields
     const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: `${med.manufacturer} Copay Card` } : null);
     const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: `${med.manufacturer} Patient Assistance` } : null);
@@ -3614,8 +3648,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <Pill size={20} className="text-white" aria-hidden="true" />
                     </div>
                     <div>
-                        <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{med.brandName}</h2>
-                        <p className="text-slate-600 font-medium text-sm">{med.genericName} • <span className="text-emerald-600">{med.category}</span></p>
+                        <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{displayName}</h2>
+                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{med.category}</span></p>
                         {/* Cost Tier Badges */}
                         <div className="flex flex-wrap gap-2 mt-2">
                             {med.cost_tier && (

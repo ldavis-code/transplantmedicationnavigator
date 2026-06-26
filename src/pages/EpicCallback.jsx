@@ -44,11 +44,37 @@ function brandSegments(med) {
         .filter(Boolean);
 }
 
+/**
+ * True when EVERY significant word of `phrase` appears in `name`. Word-based
+ * (not substring) so word order doesn't matter — e.g. our generic
+ * "Trimethoprim-Sulfamethoxazole" still matches Epic's "Sulfamethoxazole-
+ * Trimethoprim" — and so similar drugs are distinguished: "tenofovir
+ * disoproxil" (Viread) matches Viread but not "tenofovir alafenamide" (Vemlidy).
+ */
+function wordsAllPresent(phrase, name) {
+    // Whole-word (token) match, NOT substring — so "ganciclovir" does not match
+    // inside "valganciclovir", and "vitamin" does not match inside "multivitamin".
+    const nameWords = new Set((name || '').split(/[^a-z0-9]+/).filter(Boolean));
+    const words = (phrase || '').split(/[^a-z0-9]+/).filter(w => w.length > 2);
+    return words.length > 0 && words.every(w => nameWords.has(w));
+}
+
+/** How specifically a record matches a name — more matched words = more specific. */
+function matchSpecificity(name, med) {
+    const wordCount = phrase => (phrase || '').split(/[^a-z0-9]+/).filter(w => w.length > 2).length;
+    let score = 0;
+    const generic = (med.genericName || '').toLowerCase().trim();
+    if (wordsAllPresent(generic, name)) score = Math.max(score, wordCount(generic));
+    for (const seg of brandSegments(med)) {
+        if (wordsAllPresent(seg, name)) score = Math.max(score, wordCount(seg));
+    }
+    return score;
+}
+
 /** Does a (cleaned, lowercased) FHIR name correspond to this medication record? */
 function nameMatchesMed(name, med) {
-    const generic = (med.genericName || '').toLowerCase().trim();
-    if (generic && name.includes(generic)) return true;
-    return brandSegments(med).some(b => name.includes(b));
+    if (wordsAllPresent((med.genericName || '').toLowerCase().trim(), name)) return true;
+    return brandSegments(med).some(seg => wordsAllPresent(seg, name));
 }
 
 /**
@@ -60,9 +86,43 @@ function nameMatchesMed(name, med) {
 function isGenericName(name, med) {
     const generic = (med.genericName || '').toLowerCase().trim();
     if (!generic) return false;
-    const matchesGeneric = name.includes(generic);
-    const matchesBrand = brandSegments(med).some(b => name.includes(b));
+    const matchesGeneric = wordsAllPresent(generic, name);
+    const matchesBrand = brandSegments(med).some(seg => wordsAllPresent(seg, name));
     return matchesGeneric && !matchesBrand;
+}
+
+/** Is this record the generic itself (vs a brand-name product)? */
+function isGenericRecord(med) {
+    const brand = (med.brandName || '').toLowerCase();
+    const generic = (med.genericName || '').toLowerCase().trim();
+    return (med.manufacturer || '').toLowerCase() === 'generic'
+        || brand.includes('generic')
+        || brand.trim() === generic;
+}
+
+/**
+ * Pick the single best record for a patient's medication name. We want the ONE
+ * product the patient actually takes — never a pile of related brands — so:
+ *   1. an exact brand-name hit (the patient named a specific brand), else
+ *   2. the generic record when the patient's name is the generic, else
+ *   3. the first reasonable name match.
+ */
+function pickBestMatch(name, candidates) {
+    if (candidates.length <= 1) return candidates[0] || null;
+    // Prefer the most SPECIFIC match (most words matched, e.g. "Fluticasone
+    // Nasal" over plain "Fluticasone"); break ties toward the generic record so
+    // a generic name maps to the generic, not a brand.
+    let best = null;
+    let bestScore = -1;
+    for (const m of candidates) {
+        const tieBreak = isGenericRecord(m) && isGenericName(name, m) ? 0.25 : 0;
+        const score = matchSpecificity(name, m) + tieBreak;
+        if (score > bestScore) {
+            bestScore = score;
+            best = m;
+        }
+    }
+    return best;
 }
 
 /**
@@ -91,9 +151,10 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             found = medsList.find(m => m.rxcui && String(m.rxcui) === rx);
         }
 
-        // 2) Brand / generic name match
+        // 2) Brand / generic name match — pick the single best product so we
+        //    import only the drug the patient actually takes, not every related brand.
         if (!found && name) {
-            found = medsList.find(m => nameMatchesMed(name, m));
+            found = pickBestMatch(name, medsList.filter(m => nameMatchesMed(name, m)));
         }
 
         if (found) {
