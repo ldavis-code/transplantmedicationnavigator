@@ -1,6 +1,6 @@
 [
   {
-    "id": "tacrolimus-ir",
+    "id": "prograf",
     "brandName": "Prograf",
     "genericName": "Tacrolimus",
     "rxcui": "42316",
@@ -23,7 +23,7 @@
     "copayProgramId": "prograf-copay"
   },
   {
-    "id": "tacrolimus-astagraf",
+    "id": "astagraf-xl",
     "brandName": "Astagraf XL",
     "genericName": "Tacrolimus Extended-Release",
     "rxcui": null,
@@ -46,7 +46,7 @@
     "copayProgramId": "astagraf-copay"
   },
   {
-    "id": "tacrolimus-envarsus",
+    "id": "envarsus-xr",
     "brandName": "Envarsus XR",
     "genericName": "Tacrolimus Extended-Release",
     "rxcui": null,
