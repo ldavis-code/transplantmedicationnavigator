@@ -4,6 +4,34 @@ import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'luci
 import MEDICATIONS_DATA from '../data/medications.json';
 
 /**
+ * Strip dosage strength (mg/mcg/mL/etc.), dosage form, and route descriptors
+ * from a medication name so only the drug name remains. Epic returns names like
+ * "Tacrolimus 1 MG Oral Capsule"; copay-card and patient-assistance lookups are
+ * keyed on the medication NAME, not the strength, so we normalize the name
+ * before matching and before showing it to the patient.
+ */
+function cleanMedicationName(name) {
+    if (!name) return '';
+    let n = String(name);
+    // Strengths with units, including ratios like "100 mg/5 mL"
+    n = n.replace(/\b\d+(\.\d+)?\s*(mg|mcg|g|gm|ml|l|units?|meq|iu|%)\b(\s*\/\s*\d+(\.\d+)?\s*(mg|mcg|g|ml)?)?/gi, ' ');
+    // Leftover unit-only ratios like "/mL" (when the numerator strength was removed)
+    n = n.replace(/\/\s*(mg|mcg|g|gm|ml|l|units?|meq|iu|%)\b/gi, ' ');
+    // Multi-word dosage forms
+    n = n.replace(/\b(extended|delayed|sustained|immediate|modified|controlled)[ -]release\b/gi, ' ');
+    // Dosage forms / routes of administration
+    n = n.replace(/\b(oral|tablets?|capsules?|caps?|solution|suspension|injectable|injection|intravenous|subcutaneous|intramuscular|topical|transdermal|cream|ointment|gel|lotion|patches?|inhalation|inhaler|nebulizer|spray|drops?|ophthalmic|otic|nasal|syrup|elixir|powder|granules?|kit|pack|disintegrating|chewable)\b/gi, ' ');
+    // Standalone dosage-form abbreviations
+    n = n.replace(/\b(er|xr|xl|sr|dr|cr|la|ec|iv|im)\b/gi, ' ');
+    // Leftover standalone numbers
+    n = n.replace(/\b\d+(\.\d+)?\b/g, ' ');
+    // Tidy punctuation and whitespace
+    n = n.replace(/[(),;]/g, ' ').replace(/\s{2,}/g, ' ').trim();
+    n = n.replace(/\s*[-/]\s*$/, '').trim();
+    return n;
+}
+
+/**
  * Match raw FHIR medications (name + RxNorm code) from Epic against our
  * transplant medication database, returning internal medication IDs that the
  * My Path Quiz and the Grants & Foundations medications tab can consume.
@@ -17,7 +45,8 @@ function matchEpicMedications(fhirMeds) {
     const matched = new Set();
     const unmatched = [];
     for (const med of fhirMeds) {
-        const name = (med.name || '').toLowerCase().trim();
+        const cleanName = cleanMedicationName(med.name);
+        const name = cleanName.toLowerCase().trim();
         const rx = String(med.rxNormCode || '').trim();
         let found = null;
 
@@ -42,8 +71,10 @@ function matchEpicMedications(fhirMeds) {
 
         if (found) {
             matched.add(found.id);
-        } else if (med.name) {
-            unmatched.push(med.name);
+        } else if (cleanName || med.name) {
+            // Store the cleaned (name-only) value so skipped meds show without
+            // the strength/form clutter.
+            unmatched.push(cleanName || med.name);
         }
     }
     return { matched: Array.from(matched), unmatched };
