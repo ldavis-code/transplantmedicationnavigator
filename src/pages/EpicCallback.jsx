@@ -184,23 +184,26 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             found = pickBestMatch(name, medsList.filter(m => nameMatchesMed(name, m)));
         }
 
-        // 3) Curated synonym fallback for generic-name variants Epic uses that
-        //    don't token-match our names (e.g. "mycophenolate sodium" -> Myfortic,
-        //    "tenofovir" -> Viread).
-        let viaSynonym = false;
-        if (!found && name) {
-            const synId = matchSynonym(name, medsList);
-            if (synId) {
-                found = medsList.find(m => m.id === synId) || null;
-                viaSynonym = !!found;
-            }
+        // Curated synonym for generic-name variants Epic uses that don't
+        //    token-match our names (e.g. "mycophenolate sodium" -> Myfortic
+        //    [mycophenolate sodium is the generic of Myfortic], "tenofovir" ->
+        //    Viread). Compute this regardless of how `found` was resolved: these
+        //    are GENERIC chemical names, so a hit means the patient takes the
+        //    generic even when an RxNorm code matched the brand record first.
+        const synId = name ? matchSynonym(name, medsList) : null;
+
+        // 3) Synonym fallback when nothing else matched.
+        if (!found && synId) {
+            found = medsList.find(m => m.id === synId) || null;
         }
 
         if (found) {
             matched.add(found.id);
-            // Synonym hits are generic chemical names; otherwise detect generic
-            // from the name. Either way, show the generic (not a brand).
-            if (viaSynonym || (name && isGenericName(name, found))) {
+            // It's the generic when the name is a generic synonym for this
+            // record, or the name matches the generic (not a brand). Either way,
+            // show the generic — no brand copay card / PAP.
+            const isGenericSynonym = synId && synId === found.id;
+            if (isGenericSynonym || (name && isGenericName(name, found))) {
                 genericIds.add(found.id);
             }
         } else if (cleanName || med.name) {
