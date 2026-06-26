@@ -3570,7 +3570,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const papProgramId = papProgram?.programId || med.papProgramId;
     const papUrl = papProgram?.url || med.papUrl;
     const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
-    const hasPapProgram = !!(papProgram || papProgramId || med.papUrl);
+    // Manufacturer Patient Assistance Programs are brand-specific. If the patient
+    // takes the GENERIC, the brand's PAP (and copay) don't apply — hide both, so a
+    // generic never surfaces e.g. the Genentech program for CellCept/Valcyte.
+    const hasPapProgram = !!(papProgram || papProgramId || med.papUrl) && !takesGeneric;
 
     // Use direct URL from JSON data (bypasses database lookup for reliability)
     const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
@@ -3938,7 +3941,9 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             </section>
                         )}
 
-                        {/* Patient Assistance Program (PAP) - Income Based */}
+                        {/* Patient Assistance Program (PAP) - Income Based.
+                            hasPapProgram is already false for generics (manufacturer PAPs
+                            are brand-specific); Foundations & Grants below still apply. */}
                         {hasPapProgram && (activeFilter === 'all' || activeFilter === 'free') && (
                             <section className="border border-amber-200 rounded-xl p-5 bg-gradient-to-r from-amber-50/50 to-orange-50/50">
                                 <div className="flex items-start justify-between gap-4">
