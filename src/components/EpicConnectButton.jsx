@@ -244,11 +244,6 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
                                 <div className="text-sm">
                                     <p className="text-emerald-700">
                                         Imported {importedData.matched.length} medication{importedData.matched.length !== 1 ? 's' : ''} from your health system.
-                                        {importedData.unmatched && importedData.unmatched.length > 0 && (
-                                            <span className="block mt-1 text-slate-600">
-                                                {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} not in our transplant database were skipped.
-                                            </span>
-                                        )}
                                     </p>
                                     {importedData.assistancePrograms && importedData.assistancePrograms.length > 0 && (
                                         <p className="text-blue-700 mt-2 font-medium">
@@ -257,6 +252,30 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
                                     )}
                                     <p className="text-slate-500 text-xs mt-2">
                                         Copay card and patient assistance searches are based on the medication name, not the dose or strength (mg).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Medications we don't have assistance info for — list them by name
+                        so the patient knows to look these up on their own. Shown even
+                        when nothing matched. */}
+                    {importedData && importedData.unmatched && importedData.unmatched.length > 0 && (
+                        <div className="mb-3 p-3 bg-amber-50 border border-amber-200 rounded-lg" role="status">
+                            <div className="flex items-start gap-2">
+                                <AlertCircle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                <div className="text-sm">
+                                    <p className="text-amber-800 font-medium">
+                                        {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} from your chart {importedData.unmatched.length !== 1 ? 'are' : 'is'} not in our transplant assistance database yet — you'll need to look {importedData.unmatched.length !== 1 ? 'these' : 'this one'} up on your own:
+                                    </p>
+                                    <ul className="mt-1.5 list-disc list-inside text-amber-900 space-y-0.5">
+                                        {importedData.unmatched.map((name, i) => (
+                                            <li key={i}>{name}</li>
+                                        ))}
+                                    </ul>
+                                    <p className="text-amber-700 text-xs mt-2">
+                                        We don't have copay card or patient assistance details for these. Ask your pharmacist, or check the manufacturer's website for a copay card or patient assistance program.
                                     </p>
                                 </div>
                             </div>
