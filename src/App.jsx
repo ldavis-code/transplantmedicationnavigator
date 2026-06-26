@@ -1254,10 +1254,10 @@ const PRE_TRANSPLANT_MEDICATIONS = {
         title: 'Lung Transplant',
         description: 'Medication management for lung transplant candidates is tailored to their specific underlying lung disease, such as idiopathic pulmonary fibrosis (IPF), chronic obstructive pulmonary disease (COPD), or pulmonary hypertension.',
         medications: [
-            { id: 'pirfenidone', name: 'Pirfenidone, Nintedanib', brand: 'Antifibrotics', class: 'Idiopathic Pulmonary Fibrosis (IPF)', notes: 'Slow the progression of lung scarring.' },
+            { id: 'esbriet', name: 'Pirfenidone, Nintedanib', brand: 'Antifibrotics (Esbriet, Ofev)', class: 'Idiopathic Pulmonary Fibrosis (IPF)', notes: 'Slow the progression of lung scarring.' },
             { id: 'albuterol', name: 'Albuterol, Tiotropium, Fluticasone', brand: 'Bronchodilators / Inhaled Corticosteroids', class: 'COPD', notes: 'Improve airflow and reduce inflammation.' },
-            { id: 'epoprostenol', name: 'Epoprostenol, Sildenafil, Bosentan', brand: 'Vasodilators', class: 'Pulmonary Hypertension', notes: 'Reduce high blood pressure in the lungs.' },
-            { id: 'oxygen-diuretics', name: 'Oxygen, Diuretics', brand: 'Supportive Care', class: 'General Supportive Care', notes: 'Improve oxygenation and manage fluid retention.' }
+            { id: 'flolan', name: 'Epoprostenol, Sildenafil, Bosentan', brand: 'Vasodilators (Flolan, Revatio, Tracleer)', class: 'Pulmonary Hypertension', notes: 'Reduce high blood pressure in the lungs.' },
+            { id: 'lasix', name: 'Furosemide', brand: 'Diuretics', class: 'General Supportive Care', notes: 'Manage fluid retention.' }
         ]
     },
     Pancreas: {
