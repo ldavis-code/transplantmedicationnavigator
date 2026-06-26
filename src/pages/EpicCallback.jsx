@@ -1,6 +1,53 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
+import MEDICATIONS_DATA from '../data/medications.json';
+
+/**
+ * Match raw FHIR medications (name + RxNorm code) from Epic against our
+ * transplant medication database, returning internal medication IDs that the
+ * My Path Quiz and the Grants & Foundations medications tab can consume.
+ *
+ * Strategy: exact RxNorm (rxcui) match first (most reliable), then fall back to
+ * brand/generic name matching. Epic returns names like "Tacrolimus 1 MG Oral
+ * Capsule" or "Prograf 1 MG Oral Capsule", so we check whether the FHIR name
+ * contains our generic name or any brand-name segment.
+ */
+function matchEpicMedications(fhirMeds) {
+    const matched = new Set();
+    const unmatched = [];
+    for (const med of fhirMeds) {
+        const name = (med.name || '').toLowerCase().trim();
+        const rx = String(med.rxNormCode || '').trim();
+        let found = null;
+
+        // 1) RxNorm code match
+        if (rx) {
+            found = MEDICATIONS_DATA.find(m => m.rxcui && String(m.rxcui) === rx);
+        }
+
+        // 2) Brand / generic name match
+        if (!found && name) {
+            found = MEDICATIONS_DATA.find(m => {
+                const generic = (m.genericName || '').toLowerCase().trim();
+                if (generic && name.includes(generic)) return true;
+                const brands = (m.brandName || '')
+                    .toLowerCase()
+                    .split('/')
+                    .map(s => s.trim())
+                    .filter(Boolean);
+                return brands.some(b => name.includes(b));
+            });
+        }
+
+        if (found) {
+            matched.add(found.id);
+        } else if (med.name) {
+            unmatched.push(med.name);
+        }
+    }
+    return { matched: Array.from(matched), unmatched };
+}
 
 /**
  * EpicCallback - Handles the OAuth2 PKCE callback from Epic.
@@ -136,19 +183,40 @@ const EpicCallback = () => {
                     return;
                 }
 
-                // Step 3: Store results in sessionStorage for the calling page to pick up
+                // Step 3: Match the raw FHIR medications against our transplant
+                // medication database (by RxNorm code, then brand/generic name) to
+                // produce internal medication IDs the quiz and grants tab consume.
+                // The backend returns { medications: [...] }; matching happens here
+                // so it uses the same medication ID set the UI renders.
+                const fhirMeds = medsData.medications || [];
+                const { matched, unmatched } = matchEpicMedications(fhirMeds);
+                const matchedMeds = MEDICATIONS_DATA.filter(m => matched.includes(m.id));
+                const assistancePrograms = matchedMeds
+                    .filter(m => m.papProgramId || m.copayProgramId)
+                    .map(m => ({
+                        medId: m.id,
+                        papProgramId: m.papProgramId || null,
+                        copayProgramId: m.copayProgramId || null
+                    }));
+
                 sessionStorage.setItem('epic_imported_meds', JSON.stringify({
-                    matched: medsData.matched || [],
-                    unmatched: medsData.unmatched || [],
-                    totalFhirMeds: medsData.totalFhirMeds || 0,
-                    assistancePrograms: medsData.assistancePrograms || [],
+                    matched,
+                    unmatched,
+                    totalFhirMeds: fhirMeds.length,
+                    assistancePrograms,
                     timestamp: Date.now()
                 }));
 
-                setMatchedCount(medsData.matched?.length || 0);
-                setProgramCount(medsData.assistancePrograms?.length || 0);
+                setMatchedCount(matched.length);
+                setProgramCount(assistancePrograms.length);
                 setStatus('success');
-                setMessage(`Found ${medsData.matched?.length || 0} transplant medication${(medsData.matched?.length || 0) !== 1 ? 's' : ''} in your health system.`);
+                if (matched.length > 0) {
+                    setMessage(`Found ${matched.length} transplant medication${matched.length !== 1 ? 's' : ''} in your health system.`);
+                } else if (fhirMeds.length > 0) {
+                    setMessage(`We found ${fhirMeds.length} medication${fhirMeds.length !== 1 ? 's' : ''} in your health system, but none matched our transplant medication database. You can add your medications manually.`);
+                } else {
+                    setMessage('No medications were found in your health system record.');
+                }
 
                 // Auto-redirect back after a brief delay
                 const returnPath = sessionStorage.getItem('epic_return_path') || '/wizard';
