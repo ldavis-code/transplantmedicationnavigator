@@ -14,6 +14,9 @@ const HEALTH_SYSTEMS = [
     { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
     // ── Real production Epic FHIR R4 endpoints (from Epic's directory: open.epic.com).
     //    All verified live + SMART standalone-patient capable. ──
+    { id: 'adventhealth', name: 'AdventHealth', fhirBaseUrl: 'https://mobile.adventhealth.com/oauth2-PRD/api/FHIR/R4' },
+    { id: 'albany-med', name: 'Albany Med Health System (NY)', fhirBaseUrl: 'https://epicproxy.et1299.epichosted.com/FHIRProxy/api/FHIR/R4' },
+    { id: 'catholic-health-buffalo', name: 'Catholic Health System (Buffalo, NY)', fhirBaseUrl: 'https://epicproxy.et1144.epichosted.com/FHIRProxy/api/FHIR/R4' },
     { id: 'cedars-sinai', name: 'Cedars-Sinai Health System', fhirBaseUrl: 'https://cslinkmobile.csmc.edu/fhirproxy/api/FHIR/R4' },
     { id: 'cleveland-clinic', name: 'Cleveland Clinic', fhirBaseUrl: 'https://api.ccf.org/mu/api/FHIR/R4' },
     { id: 'duke', name: 'Duke Health', fhirBaseUrl: 'https://health-apis.duke.edu/FHIR/api/FHIR/R4' },
@@ -26,8 +29,17 @@ const HEALTH_SYSTEMS = [
     { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://unified-api.ucsf.edu/clinical/apex/api/FHIR/R4' },
     { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://epic-fhir-prd.upmc.com/FHIR-PRD/api/FHIR/R4' },
     { id: 'vanderbilt', name: 'Vanderbilt Health', fhirBaseUrl: 'https://arr01.service.vumc.org/FHIR-PRD/api/FHIR/R4' },
-    // Mayo Clinic isn't in Epic's public endpoint directory — add its production
-    // FHIR R4 base URL here if obtained from Mayo IT / the Epic Showroom listing.
+    // New York systems
+    { id: 'montefiore', name: 'Montefiore Medical Center (NY)', fhirBaseUrl: 'https://soapepic.montefiore.org/FhirProxyPrd/api/FHIR/R4' },
+    { id: 'mount-sinai', name: 'Mount Sinai Health System (NY)', fhirBaseUrl: 'https://epicsoapproxyprd.mountsinai.org/FHIR-PRD/api/FHIR/R4' },
+    { id: 'nyp', name: 'NewYork-Presbyterian (NY)', fhirBaseUrl: 'https://epicproxy-pub.et1089.epichosted.com/FHIRProxy/api/FHIR/R4' },
+    { id: 'nyu-langone', name: 'NYU Langone Health (NY)', fhirBaseUrl: 'https://epicfhir.nyumc.org/FHIRPRD/api/FHIR/R4' },
+    { id: 'rochester-regional', name: 'Rochester Regional Health (NY)', fhirBaseUrl: 'https://epicarr.rochesterregional.org/FHIR/api/FHIR/R4' },
+    { id: 'u-rochester', name: 'University of Rochester Medical Center (NY)', fhirBaseUrl: 'https://ercd-sproxy.urmc.rochester.edu/MIPS/api/FHIR/R4' },
+    // Not in Epic's public endpoint directory — add real production FHIR R4 base
+    // URLs here once obtained from the health system / Epic Showroom:
+    //   - Westchester Medical Center (WMCHealth)
+    //   - Mayo Clinic
 ];
 
 /**
