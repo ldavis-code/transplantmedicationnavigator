@@ -397,6 +397,21 @@ const EpicCallback = () => {
                     timestamp: Date.now()
                 }));
 
+                // Aggregate-track the medications we don't have (drug names only,
+                // no patient data) so the team can see what to add next.
+                // Fire-and-forget — never block or fail the import on this.
+                if (unmatched.length > 0) {
+                    try {
+                        fetch('/api/track-missing-medications', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ names: unmatched })
+                        }).catch(() => {});
+                    } catch (e) {
+                        // ignore — tracking is best-effort
+                    }
+                }
+
                 setMatchedCount(matched.length);
                 setProgramCount(assistancePrograms.length);
                 setStatus('success');
