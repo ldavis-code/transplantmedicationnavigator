@@ -18,10 +18,10 @@ const headers = {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
-    // Aggressive caching: medications rarely change
-    // max-age: browser cache (1 hour), s-maxage: CDN cache (6 hours)
-    // stale-while-revalidate: serve stale content while fetching fresh (24 hours)
-    'Cache-Control': 'public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400'
+    // Short cache so medication edits/additions in the database appear quickly
+    // (medications are actively being curated). browser 1 min, CDN 5 min, with
+    // stale-while-revalidate to keep responses fast while refreshing.
+    'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600'
 };
 
 // Transform database row to frontend format (snake_case to camelCase)
