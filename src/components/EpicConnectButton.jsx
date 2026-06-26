@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
 
 /**
@@ -46,26 +46,29 @@ const EpicConnectButton = ({ onMedicationsImported, className = '' }) => {
     const [selectedSystem, setSelectedSystem] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [importedData, setImportedData] = useState(null);
 
-    // Check on mount/render if medications were imported via callback
-    const checkForImportedMeds = () => {
+    // On mount, pick up medications imported via the OAuth callback (stored in
+    // sessionStorage before the redirect back to this page). This MUST run in an
+    // effect, not during render: calling onMedicationsImported (a parent state
+    // setter) during render dispatches an update while rendering this component,
+    // which React refuses to apply — so the imported meds never populated.
+    useEffect(() => {
         try {
             const stored = sessionStorage.getItem('epic_imported_meds');
-            if (stored) {
-                const data = JSON.parse(stored);
-                sessionStorage.removeItem('epic_imported_meds');
-                if (data.matched && data.matched.length > 0 && onMedicationsImported) {
-                    onMedicationsImported(data.matched, data.unmatched || []);
-                }
-                return data;
+            if (!stored) return;
+            const data = JSON.parse(stored);
+            sessionStorage.removeItem('epic_imported_meds');
+            setImportedData(data);
+            if (data.matched && data.matched.length > 0 && onMedicationsImported) {
+                onMedicationsImported(data.matched, data.unmatched || []);
             }
         } catch (e) {
             // ignore parse errors
         }
-        return null;
-    };
-
-    const importedData = checkForImportedMeds();
+        // run once on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const filteredSystems = HEALTH_SYSTEMS.filter(sys =>
         sys.name.toLowerCase().includes(searchTerm.toLowerCase())
