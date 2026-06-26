@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
+import EPIC_ENDPOINTS from '../data/epic-endpoints.json';
 
 /**
- * Known Epic health systems with their FHIR R4 endpoints.
- * Patients select their health system, and we use that system's FHIR endpoint
- * for the OAuth2 flow. The Epic sandbox is included for testing.
- *
- * To add a new health system, add an entry with:
- *   - name: Display name
- *   - fhirBaseUrl: The FHIR R4 base URL (found via open.epic.com or the health system's IT team)
+ * Curated transplant-center Epic endpoints. These are hand-verified
+ * (live + SMART standalone-patient capable) and use patient-friendly display
+ * names with transplant context. They take priority over directory entries
+ * with the same FHIR URL.
  */
-const HEALTH_SYSTEMS = [
-    { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' },
-    // ── Real production Epic FHIR R4 endpoints (from Epic's directory: open.epic.com).
-    //    All verified live + SMART standalone-patient capable. ──
+const CURATED_SYSTEMS = [
     { id: 'adventhealth', name: 'AdventHealth', fhirBaseUrl: 'https://mobile.adventhealth.com/oauth2-PRD/api/FHIR/R4' },
     { id: 'albany-med', name: 'Albany Med Health System (NY)', fhirBaseUrl: 'https://epicproxy.et1299.epichosted.com/FHIRProxy/api/FHIR/R4' },
     { id: 'catholic-health-buffalo', name: 'Catholic Health System (Buffalo, NY)', fhirBaseUrl: 'https://epicproxy.et1144.epichosted.com/FHIRProxy/api/FHIR/R4' },
@@ -30,7 +25,6 @@ const HEALTH_SYSTEMS = [
     { id: 'ucsf', name: 'UCSF Health', fhirBaseUrl: 'https://unified-api.ucsf.edu/clinical/apex/api/FHIR/R4' },
     { id: 'upmc', name: 'UPMC', fhirBaseUrl: 'https://epic-fhir-prd.upmc.com/FHIR-PRD/api/FHIR/R4' },
     { id: 'vanderbilt', name: 'Vanderbilt Health', fhirBaseUrl: 'https://arr01.service.vumc.org/FHIR-PRD/api/FHIR/R4' },
-    // Additional transplant centers
     { id: 'hackensack-meridian', name: 'Hackensack Meridian Health (NJ)', fhirBaseUrl: 'https://mepic.hmhn.org/fhir/api/FHIR/R4' },
     { id: 'michigan-medicine', name: 'University of Michigan (Michigan Medicine)', fhirBaseUrl: 'https://mcproxyprd.med.umich.edu/FHIR-PRD/api/FHIR/R4' },
     { id: 'penn-medicine', name: 'Penn Medicine (Univ. of Pennsylvania)', fhirBaseUrl: 'https://ssproxy.pennhealth.com/PRD-FHIR/api/FHIR/R4' },
@@ -39,23 +33,55 @@ const HEALTH_SYSTEMS = [
     { id: 'uams', name: 'Univ. of Arkansas for Medical Sciences (UAMS)', fhirBaseUrl: 'https://ucsoap.uams.edu/FHIRProxy/api/FHIR/R4' },
     { id: 'uc-davis', name: 'UC Davis Health', fhirBaseUrl: 'https://emrrp.ucdmc.ucdavis.edu/FHIR/api/FHIR/R4' },
     { id: 'ut-southwestern', name: 'UT Southwestern (Clements Univ. Hospital)', fhirBaseUrl: 'https://EpicIntprxyPRD.swmed.edu/FHIR/api/FHIR/R4' },
-    // New York systems
     { id: 'montefiore', name: 'Montefiore Medical Center (NY)', fhirBaseUrl: 'https://soapepic.montefiore.org/FhirProxyPrd/api/FHIR/R4' },
     { id: 'mount-sinai', name: 'Mount Sinai Health System (NY)', fhirBaseUrl: 'https://epicsoapproxyprd.mountsinai.org/FHIR-PRD/api/FHIR/R4' },
     { id: 'nyp', name: 'NewYork-Presbyterian (NY)', fhirBaseUrl: 'https://epicproxy-pub.et1089.epichosted.com/FHIRProxy/api/FHIR/R4' },
     { id: 'nyu-langone', name: 'NYU Langone Health (NY)', fhirBaseUrl: 'https://epicfhir.nyumc.org/FHIRPRD/api/FHIR/R4' },
     { id: 'rochester-regional', name: 'Rochester Regional Health (NY)', fhirBaseUrl: 'https://epicarr.rochesterregional.org/FHIR/api/FHIR/R4' },
     { id: 'u-rochester', name: 'University of Rochester Medical Center (NY)', fhirBaseUrl: 'https://ercd-sproxy.urmc.rochester.edu/MIPS/api/FHIR/R4' },
-    // Not in Epic's public endpoint directory (or didn't verify) — add real
-    // production FHIR R4 base URLs here once obtained from the health system:
-    //   - Westchester Medical Center (WMCHealth)
-    //   - Mayo Clinic (Arizona / Florida / Rochester)
-    //   - IU Health Methodist (Indianapolis)
-    //   - University of Cincinnati Medical Center (adult)
-    //   - Baystate Medical Center (MA)
-    //   - Beaumont / Corewell Health (endpoint unreachable to verify)
-    // Note: Cleveland Clinic Florida (Weston) uses the Cleveland Clinic endpoint already listed.
 ];
+
+/**
+ * Build the full health-system list patients can choose from:
+ *   1. Epic sandbox (testing only) — always first.
+ *   2. Curated transplant centers (patient-friendly names) — next.
+ *   3. The complete Epic production directory (bundled from
+ *      open.epic.com/Endpoints/R4 into src/data/epic-endpoints.json) — so
+ *      patients from ANY Epic-connected hospital can import their meds.
+ *
+ * Entries are deduplicated by normalized FHIR base URL; curated entries win,
+ * so directory rows that point at an already-curated endpoint are dropped.
+ * To refresh the directory, re-run the generator that produces
+ * src/data/epic-endpoints.json and commit the result.
+ */
+const SANDBOX_SYSTEM = { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)', fhirBaseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4' };
+
+const normalizeUrl = (url) => (url || '').replace(/\/+$/, '').toLowerCase();
+
+const HEALTH_SYSTEMS = (() => {
+    const seen = new Set([normalizeUrl(SANDBOX_SYSTEM.fhirBaseUrl)]);
+    const list = [SANDBOX_SYSTEM];
+    for (const sys of CURATED_SYSTEMS) {
+        const key = normalizeUrl(sys.fhirBaseUrl);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        list.push(sys);
+    }
+    const directory = [];
+    for (const sys of EPIC_ENDPOINTS) {
+        const key = normalizeUrl(sys.fhirBaseUrl);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        directory.push(sys);
+    }
+    directory.sort((a, b) => a.name.localeCompare(b.name));
+    return [...list, ...directory];
+})();
+
+// Cap how many options render at once. With the full Epic directory bundled
+// (hundreds of hospitals), rendering every row on an empty search is wasteful;
+// patients narrow it down by typing their hospital's name.
+const MAX_VISIBLE_SYSTEMS = 50;
 
 /**
  * EpicConnectButton - Shared button that initiates Epic FHIR OAuth2 PKCE flow.
@@ -97,9 +123,11 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const filteredSystems = HEALTH_SYSTEMS.filter(sys =>
+    const matchingSystems = HEALTH_SYSTEMS.filter(sys =>
         sys.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const filteredSystems = matchingSystems.slice(0, MAX_VISIBLE_SYSTEMS);
+    const hiddenSystemCount = matchingSystems.length - filteredSystems.length;
 
     const selectedSystemData = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
 
@@ -301,6 +329,11 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
                                             </button>
                                         </li>
                                     ))
+                                )}
+                                {hiddenSystemCount > 0 && (
+                                    <li className="px-4 py-2.5 text-xs text-slate-500 border-t border-slate-100 bg-slate-50">
+                                        {hiddenSystemCount} more — keep typing to narrow your search.
+                                    </li>
                                 )}
                             </ul>
                         )}
