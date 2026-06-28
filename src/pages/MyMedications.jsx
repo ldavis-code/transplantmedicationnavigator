@@ -745,7 +745,28 @@ export default function MyMedications() {
                 </p>
               </div>
             )}
-            {adherenceAnswer && adherenceAnswer !== 'yes' && (
+            {adherenceAnswer === 'no_expensive' && (
+              <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-amber-800 text-sm font-medium mb-3">
+                  Missing doses can put your transplant at risk. Cost should not be the reason &mdash; here is where to get help:
+                </p>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  <Link to="/savings-tracker" className="flex items-center gap-2 bg-emerald-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-emerald-700 transition min-h-[44px]">
+                    <Calculator className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> See ways to save
+                  </Link>
+                  <Link to="/application-help" className="flex items-center gap-2 bg-purple-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-purple-700 transition min-h-[44px]">
+                    <ClipboardCheck className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> Help applying for assistance
+                  </Link>
+                  <Link to="/medications" className="flex items-center gap-2 bg-blue-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition min-h-[44px]">
+                    <Heart className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> Find programs for my meds
+                  </Link>
+                </div>
+                <p className="text-amber-700 text-xs mt-3">
+                  The copay cards and assistance programs for your medications are also listed with each one above. If you are about to run out, call your transplant team&rsquo;s pharmacist or social worker today.
+                </p>
+              </div>
+            )}
+            {adherenceAnswer && adherenceAnswer !== 'yes' && adherenceAnswer !== 'no_expensive' && (
               <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                 <p className="text-amber-800 text-sm font-medium">
                   Missing doses can put your transplant at risk. If cost is a barrier, check the assistance programs listed with your medications above or talk to your transplant team.

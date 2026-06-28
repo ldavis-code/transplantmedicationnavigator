@@ -13,38 +13,30 @@ const ASSISTANCE_SAVINGS = {
     medicare_negotiated: { min: 0.50, max: 0.79, label: 'Medicare Negotiated', description: '50-79% off (2026)' },
 };
 
-// Get retail price estimate for a medication
-function getRetailPrice(medicationId, medicationName) {
+// Get a low–high monthly price range for a medication, plus whether we have
+// medication-specific data. When there is no override we fall back to a category
+// average, so `hasOverride` is false and the UI labels the result as a rough
+// estimate (a range) rather than a false-precise single number.
+function getPriceRange(medicationId, medicationName) {
     const id = medicationId?.toLowerCase() || medicationName?.toLowerCase().split(' ')[0];
+    const override = id ? priceEstimates.medicationOverrides[id] : null;
+    const data = override
+        || priceEstimates.categoryDefaults?.Immunosuppressant
+        || priceEstimates.categoryDefaults?.default
+        || {};
 
-    // Check for specific medication override
-    if (priceEstimates.medicationOverrides[id]) {
-        const override = priceEstimates.medicationOverrides[id];
-        // Use walmart as "retail" baseline (typically higher than discount pharmacies)
-        return override.walmart?.max || override.goodrx?.max || 500;
+    // Retail baseline = Walmart-style cash price (higher than discount pharmacies).
+    const retailLow = data.walmart?.min ?? data.goodrx?.min ?? 30;
+    const retailHigh = data.walmart?.max ?? data.goodrx?.max ?? 85;
+    // Assisted = best discount/cash route (Cost Plus first, then GoodRx).
+    let assistedLow = data.costplus?.min ?? data.goodrx?.min ?? 15;
+    let assistedHigh = data.costplus?.max ?? data.goodrx?.max ?? 45;
+    // A Medicare 2026 negotiated price is a firm figure when present.
+    if (override?.medicare2026?.negotiated) {
+        assistedLow = Math.min(assistedLow, override.medicare2026.negotiated);
+        assistedHigh = override.medicare2026.negotiated;
     }
-
-    // Use category defaults
-    return priceEstimates.categoryDefaults?.Immunosuppressant?.walmart?.max || 85;
-}
-
-// Get assisted price estimate
-function getAssistedPrice(medicationId, medicationName) {
-    const id = medicationId?.toLowerCase() || medicationName?.toLowerCase().split(' ')[0];
-
-    // Check for specific medication override
-    if (priceEstimates.medicationOverrides[id]) {
-        const override = priceEstimates.medicationOverrides[id];
-        // Check for Medicare 2026 negotiated price first
-        if (override.medicare2026?.negotiated) {
-            return override.medicare2026.negotiated;
-        }
-        // Otherwise use best discount price (usually costplus or goodrx min)
-        return override.costplus?.min || override.goodrx?.min || 50;
-    }
-
-    // Use category defaults
-    return priceEstimates.categoryDefaults?.Immunosuppressant?.costplus?.min || 15;
+    return { retailLow, retailHigh, assistedLow, assistedHigh, hasOverride: !!override };
 }
 
 // Fallback medications if none provided from context
@@ -75,6 +67,12 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
 
     // Free for all patients - no medication limit
     const canAddMore = true;
+
+    // Format dollars, and a low–high range. When both ends round to the same
+    // value we show one number; otherwise a range — so default-based estimates
+    // read as approximate, not precise.
+    const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+    const range = (lo, hi) => (Math.round(lo) === Math.round(hi) ? money(lo) : `${money(lo)} – ${money(hi)}`);
 
     // Use medications from context if available, otherwise use fallback
     // This gives access to all 180+ medications from the database
@@ -151,29 +149,37 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
         const results = selectedMeds
             .filter(med => med.id || med.name)
             .map(med => {
-                const retailPrice = getRetailPrice(med.id, med.name);
-                const assistedPrice = getAssistedPrice(med.id, med.name);
-                const monthlySavings = (retailPrice - assistedPrice) * (med.quantity || 1);
-                const annualSavings = monthlySavings * 12;
-
+                const r = getPriceRange(med.id, med.name);
+                const qty = med.quantity || 1;
+                const retailLow = r.retailLow * qty;
+                const retailHigh = r.retailHigh * qty;
+                const assistedLow = r.assistedLow * qty;
+                const assistedHigh = r.assistedHigh * qty;
+                // Savings assume the cheapest assisted route (the one we steer to).
+                // The range then reflects how much the cash/retail price itself varies.
+                const monthlySavingsHigh = Math.max(0, retailHigh - assistedLow);
+                const monthlySavingsLow = Math.max(0, retailLow - assistedLow);
                 return {
                     ...med,
-                    retailPrice: retailPrice * (med.quantity || 1),
-                    assistedPrice: assistedPrice * (med.quantity || 1),
-                    monthlySavings,
-                    annualSavings
+                    hasOverride: r.hasOverride,
+                    retailLow, retailHigh,
+                    assistedLow, assistedHigh,
+                    monthlySavingsLow, monthlySavingsHigh,
+                    annualSavingsLow: monthlySavingsLow * 12,
+                    annualSavingsHigh: monthlySavingsHigh * 12,
                 };
             });
 
-        const totalMonthlyRetail = results.reduce((sum, r) => sum + r.retailPrice, 0);
-        const totalMonthlyAssisted = results.reduce((sum, r) => sum + r.assistedPrice, 0);
-        const totalAnnualSavings = results.reduce((sum, r) => sum + r.annualSavings, 0);
-
+        const sum = (key) => results.reduce((acc, r) => acc + r[key], 0);
         setCalculations({
             medications: results,
-            totalMonthlyRetail,
-            totalMonthlyAssisted,
-            totalAnnualSavings
+            totalMonthlyRetailLow: sum('retailLow'),
+            totalMonthlyRetailHigh: sum('retailHigh'),
+            totalMonthlyAssistedLow: sum('assistedLow'),
+            totalMonthlyAssistedHigh: sum('assistedHigh'),
+            totalAnnualLow: sum('annualSavingsLow'),
+            totalAnnualHigh: sum('annualSavingsHigh'),
+            anyRough: results.some(r => !r.hasOverride),
         });
         setShowResults(true);
     };
@@ -289,13 +295,13 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                     {/* Main Savings Display */}
                     <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-8 text-white text-center">
                         <p className="text-emerald-100 text-sm uppercase tracking-wide mb-2">
-                            Potential Annual Savings
+                            Estimated Annual Savings
                         </p>
-                        <div className="text-6xl font-bold mb-2">
-                            ${calculations.totalAnnualSavings.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                        <div className="text-5xl font-bold mb-2">
+                            {range(calculations.totalAnnualLow, calculations.totalAnnualHigh)}
                         </div>
                         <p className="text-emerald-100">
-                            Based on estimated retail vs. assisted prices
+                            Estimated range from typical cash and discount prices — not a quote
                         </p>
 
                         {/* Monthly Comparison */}
@@ -303,16 +309,28 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                             <div>
                                 <p className="text-emerald-100 text-xs uppercase mb-1">Monthly Retail Cost</p>
                                 <p className="text-2xl font-bold">
-                                    ${calculations.totalMonthlyRetail.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                                    {range(calculations.totalMonthlyRetailLow, calculations.totalMonthlyRetailHigh)}
                                 </p>
                             </div>
                             <div>
                                 <p className="text-emerald-100 text-xs uppercase mb-1">New Monthly Cost</p>
                                 <p className="text-2xl font-bold">
-                                    ${calculations.totalMonthlyAssisted.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                                    {range(calculations.totalMonthlyAssistedLow, calculations.totalMonthlyAssistedHigh)}
                                 </p>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Estimate caveat */}
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+                        <p>
+                            <strong>These are estimates, not a quote.</strong> Your real cost depends on your insurance, pharmacy, and dose.
+                            {calculations.anyRough && " Some medications use category averages because we don't have drug-specific pricing for them yet, so their range is wider."}
+                            {' '}Search the assistance programs below to see your actual options.
+                        </p>
+                        {priceEstimates.lastUpdated && (
+                            <p className="text-amber-700 text-xs mt-1">Price data last updated {priceEstimates.lastUpdated}.</p>
+                        )}
                     </div>
 
                     {/* Savings Breakdown */}
@@ -324,12 +342,13 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                                     <div>
                                         <p className="font-medium text-slate-900">{med.name}</p>
                                         <p className="text-sm text-slate-500">
-                                            ${med.retailPrice}/mo → ${med.assistedPrice}/mo
+                                            {range(med.retailLow, med.retailHigh)}/mo → {range(med.assistedLow, med.assistedHigh)}/mo
+                                            {!med.hasOverride && <span className="ml-1 text-amber-600">(rough estimate)</span>}
                                         </p>
                                     </div>
                                     <div className="text-right">
                                         <p className="font-bold text-emerald-600 text-lg">
-                                            -${med.annualSavings.toLocaleString('en-US', { maximumFractionDigits: 0 })}/yr
+                                            -{range(med.annualSavingsLow, med.annualSavingsHigh)}/yr
                                         </p>
                                     </div>
                                 </div>
