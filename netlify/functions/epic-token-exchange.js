@@ -2,6 +2,17 @@
 // Exchanges an OAuth2 authorization code for an access token using PKCE.
 // Supports SMART on FHIR .well-known discovery for the token endpoint.
 
+import { neon } from '@neondatabase/serverless';
+
+// Lazy Neon client for login tracking. Returns null if DATABASE_URL is unset
+// so the token exchange still works in environments without a database.
+let _sql;
+function getDb() {
+  if (!process.env.DATABASE_URL) return null;
+  if (!_sql) _sql = neon(process.env.DATABASE_URL);
+  return _sql;
+}
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -210,6 +221,28 @@ export async function handler(event) {
 
     // Log granted scope so it's visible in logs
     console.log('[epic-token-exchange] TOKEN GRANTED: scope="' + (tokenData.scope || 'NONE') + '" patient=' + tokenData.patient);
+
+    // Record the completed patient login (analytics only, no PHI). We look up
+    // the health system in fhir_endpoint_directory by its iss URL (case- and
+    // trailing-slash-insensitive) and store the endpoint id, iss, and launch
+    // type — never the patient FHIR id or any token. Best-effort: a tracking
+    // failure must never affect the token response.
+    try {
+      const db = getDb();
+      if (db) {
+        const [endpoint] = await db`
+          SELECT id FROM fhir_endpoint_directory
+          WHERE lower(rtrim(iss_url, '/')) = lower(rtrim(${fhirBaseUrl}, '/'))
+          LIMIT 1
+        `;
+        await db`
+          INSERT INTO patient_login_tracking (endpoint_id, iss_url, launch_type)
+          VALUES (${endpoint?.id ?? null}, ${fhirBaseUrl}, 'standalone')
+        `;
+      }
+    } catch (trackErr) {
+      console.error('[epic-token-exchange] login tracking insert failed:', trackErr.message);
+    }
 
     return {
       statusCode: 200,
