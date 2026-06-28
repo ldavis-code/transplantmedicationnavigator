@@ -93,7 +93,7 @@ const MAX_VISIBLE_SYSTEMS = 50;
  *   the caller can persist its state (e.g. the quiz step) to restore on return.
  * @param {string} className - Optional additional CSS classes for the wrapper div
  */
-const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className = '' }) => {
+const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = null, className = '' }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedSystem, setSelectedSystem] = useState('');
@@ -218,6 +218,9 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
 
     return (
         <div className={`bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5 ${className}`}>
+            {intro && (
+                <p className="text-slate-700 text-sm mb-4">{intro}</p>
+            )}
             <div className="flex items-start gap-4">
                 <div className="bg-blue-600 text-white p-2.5 rounded-lg flex-shrink-0">
                     <Zap size={22} aria-hidden="true" />
