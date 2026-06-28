@@ -2147,6 +2147,9 @@ const Wizard = () => {
                             <>Select your medications from the options below.</>
                         )}
                     </p>
+                    <p className="text-sm font-semibold text-slate-700 mb-1">
+                        Connect to your health system.
+                    </p>
                     <p className="text-sm text-slate-500">
                         First select your core immunosuppressants, then add any other transplant-related medications you take.
                     </p>
