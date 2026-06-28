@@ -1304,6 +1304,13 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                     <Pill size={18} className="text-emerald-600" />
                     <h3 className="font-bold text-slate-800">Common Medications by Organ Type</h3>
                 </div>
+                <p className="text-sm text-slate-600 mb-2">
+                    {answers.organs && answers.organs.length > 0 ? (
+                        <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
+                    ) : (
+                        <>Select your medications from the options below.</>
+                    )}
+                </p>
                 <p className="text-sm font-semibold text-slate-700 mb-2">
                     First select your core immunosuppressants, then add any other transplant-related medications you take.
                 </p>
@@ -2151,11 +2158,6 @@ const Wizard = () => {
                 {/* Epic MyChart Integration */}
                 <EpicConnectButton
                     className="mb-6"
-                    intro={answers.organs && answers.organs.length > 0 ? (
-                        <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
-                    ) : (
-                        <>Select your medications from the options below.</>
-                    )}
                     onBeforeConnect={() => {
                         try { sessionStorage.setItem('quiz_resume', JSON.stringify({ step, answers })); } catch (e) { /* ignore */ }
                     }}
