@@ -196,7 +196,20 @@ const Coverage101 = () => {
 
                         <div className="tmn-c101-block">
                             <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care and some immunosuppressants. <strong>Part D</strong> covers most prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
+                            <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care — and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
+                        </div>
+
+                        <div className="tmn-c101-block">
+                            <h4 className="tmn-c101-block-h">Kidney patients: Part B-ID</h4>
+                            <p>After a kidney transplant, the Medicare you got for kidney failure usually ends 36 months later. <strong>Part B-ID</strong> is a special benefit that keeps paying for your anti-rejection drugs after that. A 2021 law started it in 2023 — before then, this coverage just stopped.</p>
+                            <ul className="tmn-c101-list" style={{ marginTop: '8px' }}>
+                                <li>Covers anti-rejection drugs only — not doctor visits or other prescriptions.</li>
+                                <li>For kidney transplant patients whose kidney-failure Medicare is ending.</li>
+                                <li>Only if you have no other drug coverage — a job plan, Medicaid, TRICARE, or VA counts as other coverage.</li>
+                                <li>2026 cost: $121.60 per month, a $283 deductible, then you pay 20%.</li>
+                                <li>Sign up through Social Security as your Medicare ends — it is not automatic.</li>
+                                <li>Medicare Savings Programs may pay the premium if your income is low.</li>
+                            </ul>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
@@ -210,6 +223,7 @@ const Coverage101 = () => {
                                 <li data-analytics="next-step" data-coverage-name="Medicare" data-step="1">Enroll in Medicare Part A, B, and D (or Advantage).</li>
                                 <li data-analytics="next-step" data-coverage-name="Medicare" data-step="2">Apply for Extra Help if your income is limited.</li>
                                 <li data-analytics="next-step" data-coverage-name="Medicare" data-step="3">Review your Part D drug formulary every fall.</li>
+                                <li data-analytics="next-step" data-coverage-name="Medicare" data-step="4">Kidney transplant? Ask Social Security about Part B-ID before your Medicare ends.</li>
                             </ol>
                         </div>
                     </div>
