@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
     "sync:medications": "node scripts/sync-medications-json.js",
+    "sync:endpoints": "node sync_endpoints_to_neon.js",
     "generate-icons": "node scripts/generate-icons.js",
     "check:readability": "node scripts/check-readability.js",
     "check:readability:strict": "node scripts/check-readability.js --strict"
