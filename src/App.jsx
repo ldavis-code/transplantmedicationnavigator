@@ -1285,12 +1285,13 @@ const organIcons = {
 };
 
 // Organ-Specific Medication Guide Component
-const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
+const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
     // Auto-expand the user's selected organ(s) — first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
     const [expandedOrgan, setExpandedOrgan] = useState(defaultExpanded);
     const organTypes = ['Heart', 'Kidney', 'Liver', 'Lung', 'Pancreas'];
+    const selectedMeds = answers.medications || [];
 
     const handleOrganClick = (organ) => {
         setExpandedOrgan(expandedOrgan === organ ? null : organ);
@@ -1304,7 +1305,7 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                     <h3 className="font-bold text-slate-800">Common Medications by Organ Type</h3>
                 </div>
                 <p className="text-sm text-slate-600 mb-4">
-                    Click on an organ type to see typical medications. You can still use the search bar below to find any medication.
+                    Click an organ type to see typical medications, then tap <span className="font-semibold text-emerald-700">Add</span> next to each one you take. You can also use the search bar below to find any medication.
                 </p>
 
                 {/* Organ Type Tabs */}
@@ -1356,23 +1357,38 @@ const OrganMedicationGuide = ({ answers, onMedicationClick }) => {
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Medication</th>
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Class</th>
                                         <th className="text-left py-2 px-3 font-bold text-slate-700">Notes</th>
+                                        <th className="text-right py-2 px-3 font-bold text-slate-700">Add</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
                                     {ORGAN_MEDICATIONS[expandedOrgan].medications.map(med => {
+                                        const isAdded = selectedMeds.includes(med.id);
                                         return (
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <button
-                                                        onClick={() => onMedicationClick && onMedicationClick(med.id)}
-                                                        className="text-left hover:text-emerald-700 transition-colors group"
-                                                    >
-                                                        <span className="font-bold text-slate-900 group-hover:text-emerald-700 underline decoration-dotted underline-offset-2">{med.brand}</span>
-                                                        <span className="text-slate-500 ml-1">({med.name})</span>
-                                                    </button>
+                                                    <span className="font-bold text-slate-900">{med.brand}</span>
+                                                    <span className="text-slate-500 ml-1">({med.name})</span>
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-right">
+                                                    <button
+                                                        onClick={() => onMedicationToggle && onMedicationToggle(med.id)}
+                                                        className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-bold transition min-h-[36px] ${
+                                                            isAdded
+                                                                ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                                                                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                                                        }`}
+                                                        aria-label={isAdded ? `Remove ${med.brand} from your list` : `Add ${med.brand} to your list`}
+                                                        aria-pressed={isAdded}
+                                                    >
+                                                        {isAdded ? (
+                                                            <><CheckCircle size={12} aria-hidden="true" /> Added</>
+                                                        ) : (
+                                                            <><PlusCircle size={12} aria-hidden="true" /> Add</>
+                                                        )}
+                                                    </button>
+                                                </td>
                                             </tr>
                                         );
                                     })}
@@ -2157,6 +2173,23 @@ const Wizard = () => {
                         }
                     }}
                 />
+
+                {/* Divider: manual options for patients who can't or don't want to connect */}
+                <div className="relative mb-6" role="separator" aria-label="Or add medications yourself">
+                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-slate-200"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="bg-white px-3 text-sm font-semibold text-slate-500">Or add your medications below</span>
+                    </div>
+                </div>
+
+                {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
+                {isPreTransplant ? (
+                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
+                ) : (
+                    <OrganMedicationGuide answers={answers} onMedicationToggle={(id) => handleMultiSelect('medications', id)} />
+                )}
 
                 {/* Medication Search Box */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
