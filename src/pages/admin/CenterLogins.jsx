@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Stethoscope, Users, MapPin, AlertTriangle, Building2, Download, Filter } from 'lucide-react';
+import { Stethoscope, Users, MapPin, AlertTriangle, Building2, Download, Filter, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AdminLayout from './AdminLayout';
 
@@ -34,6 +34,9 @@ export default function CenterLogins() {
   const [unmatched, setUnmatched] = useState([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export default function CenterLogins() {
     return () => {
       cancelled = true;
     };
-  }, [isAdmin, days, getToken]);
+  }, [isAdmin, days, getToken, reloadKey]);
 
   const handleExport = useCallback(async () => {
     setExporting(true);
@@ -89,6 +92,25 @@ export default function CenterLogins() {
     }
   }, [days, getToken]);
 
+  const handleSync = useCallback(async () => {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch('/.netlify/functions/admin-sync-endpoints', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Sync failed (${res.status})`);
+      setSyncMsg(`Synced: ${data.inserted} added, ${data.updated} updated — ${data.total} centers in directory.`);
+      setReloadKey((k) => k + 1); // refresh the tables now that names may resolve
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSyncing(false);
+    }
+  }, [getToken]);
+
   const periodLabel = period?.label || 'Selected period';
 
   const actions = (
@@ -106,6 +128,15 @@ export default function CenterLogins() {
           ))}
         </select>
       </div>
+      <button
+        onClick={handleSync}
+        disabled={syncing}
+        title="Load the FHIR endpoint catalog into the directory so logins resolve to named centers"
+        className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <RefreshCw className={`h-4 w-4 ${syncing ? 'animate-spin' : ''}`} />
+        {syncing ? 'Syncing…' : 'Sync endpoints'}
+      </button>
       <button
         onClick={handleExport}
         disabled={exporting || (centers.length === 0 && unmatched.length === 0)}
@@ -142,6 +173,10 @@ export default function CenterLogins() {
       <div className="space-y-8">
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
+        )}
+
+        {syncMsg && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">{syncMsg}</div>
         )}
 
         {/* Summary cards */}
