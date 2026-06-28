@@ -2643,6 +2643,10 @@ const Wizard = () => {
                                 <h2 id="assistance-heading" className="text-lg font-bold text-rose-800 border-b pb-2 mb-4 flex items-center gap-2">
                                     <AlertTriangle size={20} aria-hidden="true" /> Immediate Assistance Path
                                 </h2>
+                                <Link to="/education?topic=EMERGENCY" className="flex items-center gap-3 bg-rose-600 text-white p-3 rounded-lg font-semibold hover:bg-rose-700 transition mb-4">
+                                    <Clock size={20} aria-hidden="true" />
+                                    <span>Out of medication, or down to your last few days? See emergency steps →</span>
+                                </Link>
                                 {financial === FinancialStatus.CRISIS && (
                                     <p className="text-sm text-slate-600 mb-4 bg-slate-50 p-3 rounded">
                                         You are not alone. Help is available. Please follow these steps in order.
@@ -4824,7 +4828,17 @@ const InsuranceChangeSimulator = () => {
 const Education = () => {
     useMetaTags(seoMetadata.education);
 
-    const [activeTab, setActiveTab] = useState('DEDUCTIBLE_TRAP');
+    const [activeTab, setActiveTab] = useState(() => {
+        // Allow deep-linking to a specific tab, e.g. /education?topic=EMERGENCY
+        // (used by the wizard's crisis path). Falls back to the default tab.
+        try {
+            const valid = ['DEDUCTIBLE_TRAP', 'DIVERSION', 'DIRECTORY', 'INSURANCE', 'MENTAL', 'OOP', 'EMERGENCY'];
+            const params = new URLSearchParams(window.location.search);
+            const topic = (params.get('topic') || window.location.hash.replace('#', '')).toUpperCase();
+            if (valid.includes(topic)) return topic;
+        } catch (e) { /* ignore */ }
+        return 'DEDUCTIBLE_TRAP';
+    });
     const [selectedState, setSelectedState] = useState("");
     const [appealName, setAppealName] = useState("");
     const [appealDrug, setAppealDrug] = useState("");
@@ -4920,6 +4934,7 @@ const Education = () => {
 
             <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
                 <div className="flex flex-wrap">
+                    <TabButton id="EMERGENCY" label="Out of Meds?" icon={Clock} />
                     <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
                     <TabButton id="DIVERSION" label="Diversion Programs" icon={AlertOctagon} />
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
@@ -4929,6 +4944,72 @@ const Education = () => {
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+                {activeTab === 'EMERGENCY' && (
+                    <div className="max-w-4xl mx-auto space-y-8">
+                        <div className="prose prose-slate max-w-none">
+                            <h2 className="text-2xl font-bold text-slate-900">Out of medication — or about to be?</h2>
+                            <p className="text-lg text-slate-700">Anti-rejection medicine is not something you can safely skip. If cost or a refill problem means you are running low, act today. Here is how to get a bridge supply while you sort out the cost.</p>
+                        </div>
+
+                        <div className="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-lg" role="alert">
+                            <p className="text-rose-900 font-bold flex items-center gap-2 mb-1"><AlertTriangle size={18} aria-hidden="true" /> If this is a medical emergency, call 911.</p>
+                            <p className="text-rose-800 text-sm">Signs of rejection — fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell — need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong></p>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-100 flex items-start gap-4">
+                                <div className="bg-emerald-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
+                                <div>
+                                    <h3 className="font-bold text-emerald-900 mb-1 flex items-center gap-2"><Phone size={16} aria-hidden="true" /> Call your transplant team first — today</h3>
+                                    <p className="text-slate-700 text-sm">This is the most important step. Your transplant center handles this all the time. Ask for the <strong>transplant pharmacist</strong> or <strong>social worker</strong>. They can often send an emergency prescription, give you samples, or start a fast assistance request the same day. Tell them plainly: "I am about to run out and I cannot afford the refill."</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-blue-50 p-5 rounded-xl border border-blue-100 flex items-start gap-4">
+                                <div className="bg-blue-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
+                                <div>
+                                    <h3 className="font-bold text-blue-900 mb-1 flex items-center gap-2"><Pill size={16} aria-hidden="true" /> Ask your pharmacy for an emergency supply</h3>
+                                    <p className="text-slate-700 text-sm">Many states let a pharmacist give a few days of a regular medicine in an emergency so you do not miss doses. Ask: <em>"Can you do an emergency fill while I sort out the cost or the refill?"</em> Bring your pill bottle or the medicine name and dose.</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-purple-50 p-5 rounded-xl border border-purple-100 flex items-start gap-4">
+                                <div className="bg-purple-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
+                                <div>
+                                    <h3 className="font-bold text-purple-900 mb-1 flex items-center gap-2"><Clock size={16} aria-hidden="true" /> Ask the drug maker about a bridge supply</h3>
+                                    <p className="text-slate-700 text-sm">Some manufacturers give a free short-term "bridge" or "quick start" supply while your Patient Assistance Program application is reviewed — so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.</p>
+                                    <Link to="/medications" className="text-purple-700 font-semibold text-sm underline mt-1 inline-block">Find your medication and its manufacturer →</Link>
+                                </div>
+                            </div>
+
+                            <div className="bg-amber-50 p-5 rounded-xl border border-amber-100 flex items-start gap-4">
+                                <div className="bg-amber-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
+                                <div>
+                                    <h3 className="font-bold text-amber-900 mb-1 flex items-center gap-2"><Heart size={16} aria-hidden="true" /> Check foundations for urgent help</h3>
+                                    <p className="text-slate-700 text-sm">Some copay foundations review urgent cases faster. It is worth a call when you are in a pinch. See the trusted groups in our directory.</p>
+                                    <Link to="/education?topic=DIRECTORY" className="text-amber-800 font-semibold text-sm underline mt-1 inline-block">Open the resource directory →</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                            <h3 className="text-lg font-bold text-slate-900 mb-3">Have this ready when you call</h3>
+                            <p className="text-slate-600 text-sm mb-3">It makes every call faster:</p>
+                            <ul className="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your medicine names and doses</span></li>
+                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your pharmacy's name and phone</span></li>
+                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your insurance card (if you have one)</span></li>
+                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your transplant center's phone number</span></li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-rose-50 border border-rose-200 p-5 rounded-xl text-center">
+                            <p className="text-rose-900 font-semibold mb-1">Do not just stop taking your medicine.</p>
+                            <p className="text-rose-800 text-sm">Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible — but let them make that call, not you.</p>
+                            <Link to="/application-help" className="inline-block mt-3 bg-rose-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-rose-700 transition text-sm">Get help applying for longer-term assistance</Link>
+                        </div>
+                    </div>
+                )}
                 {activeTab === 'OOP' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
