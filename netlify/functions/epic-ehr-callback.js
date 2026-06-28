@@ -253,21 +253,21 @@ export async function handler(event) {
     );
 
     // ── Record the completed patient login (analytics only, no PHI) ──
-    // One row per successful token exchange. We store the org, iss, launch type,
-    // and granted scope — never the patient FHIR id or any token. Tracking is
-    // best-effort: a failure here must never block the patient's login.
+    // One row per successful token exchange. We look up the launching center in
+    // fhir_endpoint_directory by its iss URL, then store that endpoint id, the
+    // iss, and the launch type — never the patient FHIR id or any token. The
+    // iss match is case- and trailing-slash-insensitive so it lines up with
+    // however the directory rows were entered. Tracking is best-effort: a
+    // failure here must never block the patient's login.
     try {
+      const [endpoint] = await sql`
+        SELECT id FROM fhir_endpoint_directory
+        WHERE lower(rtrim(iss_url, '/')) = lower(rtrim(${iss}, '/'))
+        LIMIT 1
+      `;
       await sql`
-        INSERT INTO patient_login_tracking
-          (epic_org_id, org_name, iss_url, launch_type, granted_scope, has_patient_context)
-        VALUES (
-          ${epicOrgId},
-          ${license.org.name || ''},
-          ${iss},
-          'ehr',
-          ${tokenData.scope || null},
-          ${Boolean(tokenData.patient)}
-        )
+        INSERT INTO patient_login_tracking (endpoint_id, iss_url, launch_type)
+        VALUES (${endpoint?.id ?? null}, ${iss}, 'ehr')
       `;
     } catch (trackErr) {
       console.error(
