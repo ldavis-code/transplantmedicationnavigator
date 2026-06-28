@@ -6140,7 +6140,25 @@ const ApplicationHelp = () => {
             ? { ...quizAnswers, insurance_type: quizAnswers?.insurance_type || 'medicare' }
             : quizAnswers || {};
 
-    const [activeTab, setActiveTab] = useState('START');
+    const [activeTab, setActiveTab] = useState(() => {
+        // After returning from the Epic (MyChart) OAuth redirect we must land back
+        // on the MEDS tab. The EpicConnectButton only renders inside that tab, and
+        // it picks up the imported medications from sessionStorage in its mount
+        // effect. If the page reopens on the default START tab the button never
+        // remounts, the imported meds are never consumed, and the patient sees a
+        // blank list until they click Medications again. onBeforeConnect (below)
+        // stashes this flag right before the redirect so we can restore the tab.
+        try {
+            const resumeTab = sessionStorage.getItem('apphelp_resume_tab');
+            if (resumeTab) {
+                sessionStorage.removeItem('apphelp_resume_tab');
+                return resumeTab;
+            }
+        } catch (e) {
+            // ignore storage errors (e.g. private mode)
+        }
+        return 'START';
+    });
     const checklistItems = APPLICATION_CHECKLIST_DATA;
     const [checkedItems, setCheckedItems] = useState({});
     const toggleCheck = (index) => setCheckedItems(prev => ({...prev, [index]: !prev[index]}));
@@ -6653,6 +6671,14 @@ ${patientName || "[Your Name]"}`;
 
                         {/* Epic MyChart Integration */}
                         <EpicConnectButton
+                            onBeforeConnect={() => {
+                                // Remember we were on the Medications tab so we can
+                                // restore it when Epic redirects back — otherwise the
+                                // page reopens on START, this button never remounts,
+                                // and the imported meds don't appear until the patient
+                                // clicks Medications again.
+                                try { sessionStorage.setItem('apphelp_resume_tab', 'MEDS'); } catch (e) { /* ignore */ }
+                            }}
                             onMedicationsImported={(matchedIds) => {
                                 const newIds = matchedIds.filter(id => !medsTabListIds.includes(id));
                                 if (newIds.length > 0) {
