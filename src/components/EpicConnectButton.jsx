@@ -201,12 +201,21 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, className =
                                 <div className="text-sm">
                                     <p className="text-emerald-700">
                                         Imported {importedData.matched.length} medication{importedData.matched.length !== 1 ? 's' : ''} from your health system.
-                                        {importedData.unmatched && importedData.unmatched.length > 0 && (
-                                            <span className="block mt-1 text-slate-600">
-                                                {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} not in our transplant database were skipped.
-                                            </span>
-                                        )}
                                     </p>
+                                    {importedData.unmatched && importedData.unmatched.length > 0 && (
+                                        <div className="mt-2 text-slate-600">
+                                            <p>
+                                                We could not match {importedData.unmatched.length} of your medication{importedData.unmatched.length !== 1 ? 's' : ''}. If any of these are transplant medications, please search for them below and add them by hand:
+                                            </p>
+                                            <ul className="mt-1 flex flex-wrap gap-1.5">
+                                                {importedData.unmatched.map((name, idx) => (
+                                                    <li key={idx} className="bg-white border border-slate-200 rounded-full px-2.5 py-1 text-xs text-slate-700">
+                                                        {name}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
                                     {importedData.assistancePrograms && importedData.assistancePrograms.length > 0 && (
                                         <p className="text-blue-700 mt-2 font-medium">
                                             {importedData.assistancePrograms.length} assistance program{importedData.assistancePrograms.length !== 1 ? 's' : ''} found for your medications.
