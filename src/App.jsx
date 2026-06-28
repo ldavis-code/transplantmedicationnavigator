@@ -2668,6 +2668,17 @@ const Wizard = () => {
                                         </li>
                                     )}
                                 </ol>
+                                <div className="mt-5 pt-4 border-t border-slate-200">
+                                    <h3 className="font-bold text-slate-800 text-sm mb-2">If you don&rsquo;t qualify &mdash; or a fund is closed</h3>
+                                    <p className="text-sm text-slate-600 mb-2">A &ldquo;no&rdquo; from one program is not the end. Try these next:</p>
+                                    <ul className="space-y-2 text-sm text-slate-700 list-disc pl-6">
+                                        <li><strong>Apply to several programs at once.</strong> Income limits and open funds change often, so don&rsquo;t stop at one.</li>
+                                        <li><strong>Ask your transplant center about charity care.</strong> Many centers have their own financial-assistance or hospital discount programs &mdash; your social worker can start one.</li>
+                                        <li><strong>Ask the pharmacy about cash and sliding-scale prices.</strong> Cost Plus Drugs and pharmacy discount programs are sometimes cheaper than a copay.</li>
+                                        <li><strong>Appeal a denial.</strong> Many denials are overturned. <Link to="/education" className="text-rose-700 font-semibold underline">See how to appeal</Link>.</li>
+                                    </ul>
+                                    <Link to="/application-help" className="inline-block mt-3 text-rose-700 font-semibold underline text-sm">Get step-by-step help applying &rarr;</Link>
+                                </div>
                             </section>
                         )}
                     </div>
