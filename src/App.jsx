@@ -2152,13 +2152,6 @@ const Wizard = () => {
                     </p>
                 </div>
 
-                {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
-                {isPreTransplant ? (
-                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
-                ) : (
-                    <OrganMedicationGuide answers={answers} onMedicationClick={addMedFromSearch} />
-                )}
-
                 {/* Epic MyChart Integration */}
                 <EpicConnectButton
                     className="mb-6"
