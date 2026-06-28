@@ -154,15 +154,14 @@ export async function handler(event) {
       // Overall totals: period vs all-time
       db`
         SELECT
-          COUNT(*)                                                                       AS all_time,
-          COUNT(*) FILTER (WHERE logged_in_at >= NOW() - INTERVAL '1 day' * ${d})        AS period,
-          COUNT(DISTINCT endpoint_id) FILTER (WHERE endpoint_id IS NOT NULL)             AS centers_all,
-          COUNT(DISTINCT endpoint_id) FILTER (
-            WHERE endpoint_id IS NOT NULL AND logged_in_at >= NOW() - INTERVAL '1 day' * ${d}
-          )                                                                              AS centers_period
+          COUNT(*)                                                                AS all_time,
+          COUNT(*) FILTER (WHERE logged_in_at >= NOW() - INTERVAL '1 day' * ${d}) AS period
         FROM patient_login_tracking
       `,
-      // Logins grouped by a known directory endpoint
+      // Logins resolved to a directory center by matching the iss URL at query
+      // time (case- and trailing-slash-insensitive). Matching here rather than
+      // on the stored endpoint_id means logins recorded before the directory
+      // was populated still resolve once their center is catalogued.
       db`
         SELECT
           fed.id                                                                  AS endpoint_id,
@@ -175,32 +174,28 @@ export async function handler(event) {
           COUNT(*)                                                                     AS all_time,
           MAX(plt.logged_in_at)                                                        AS last_login
         FROM patient_login_tracking plt
-        JOIN fhir_endpoint_directory fed ON fed.id = plt.endpoint_id
+        JOIN fhir_endpoint_directory fed
+          ON lower(rtrim(fed.iss_url, '/')) = lower(rtrim(plt.iss_url, '/'))
         GROUP BY fed.id, fed.brand_name, fed.epic_org_id,
                  fed.facility_city, fed.facility_state, fed.is_transplant_ctr
         ORDER BY period_count DESC, all_time DESC, fed.brand_name
       `,
-      // Logins whose iss is not yet catalogued in the directory
+      // Logins whose iss has no matching row in the directory
       db`
         SELECT
-          iss_url,
-          COUNT(*) FILTER (WHERE logged_in_at >= NOW() - INTERVAL '1 day' * ${d}) AS period_count,
-          COUNT(*)                                                                AS all_time,
-          MAX(logged_in_at)                                                       AS last_login
-        FROM patient_login_tracking
-        WHERE endpoint_id IS NULL
-        GROUP BY iss_url
+          plt.iss_url,
+          COUNT(*) FILTER (WHERE plt.logged_in_at >= NOW() - INTERVAL '1 day' * ${d}) AS period_count,
+          COUNT(*)                                                                     AS all_time,
+          MAX(plt.logged_in_at)                                                        AS last_login
+        FROM patient_login_tracking plt
+        WHERE NOT EXISTS (
+          SELECT 1 FROM fhir_endpoint_directory fed
+          WHERE lower(rtrim(fed.iss_url, '/')) = lower(rtrim(plt.iss_url, '/'))
+        )
+        GROUP BY plt.iss_url
         ORDER BY period_count DESC, all_time DESC
       `,
     ]);
-
-    const s = summaryRows[0] || {};
-    const summary = {
-      periodLogins: toInt(s.period),
-      allTimeLogins: toInt(s.all_time),
-      periodCenters: toInt(s.centers_period),
-      allTimeCenters: toInt(s.centers_all),
-    };
 
     const centers = centerRows.map((r) => ({
       endpointId: toInt(r.endpoint_id),
@@ -213,6 +208,14 @@ export async function handler(event) {
       allTime: toInt(r.all_time),
       lastLogin: r.last_login,
     }));
+
+    const s = summaryRows[0] || {};
+    const summary = {
+      periodLogins: toInt(s.period),
+      allTimeLogins: toInt(s.all_time),
+      periodCenters: centers.filter((c) => c.periodCount > 0).length,
+      allTimeCenters: centers.length,
+    };
 
     const unmatched = unmatchedRows.map((r) => ({
       issUrl: r.iss_url,
