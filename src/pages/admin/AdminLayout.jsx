@@ -6,7 +6,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Building2, Users, Pill, BarChart3, FileText,
-  Heart, Settings, ExternalLink, LogOut, Zap, ShieldCheck, Shield,
+  Heart, Settings, ExternalLink, LogOut, Zap, ShieldCheck, Shield, Stethoscope,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -21,6 +21,7 @@ const NAV_ITEMS = [
   { label: 'Settings', href: '/admin/settings', icon: Building2 },
   { label: 'Compliance', href: '/admin/compliance', icon: ShieldCheck },
   { label: 'Compliance Overview', href: '/admin/compliance-overview', icon: Shield },
+  { label: 'Center Logins', href: '/admin/center-logins', icon: Stethoscope },
   { label: 'Features', href: '/admin/features', icon: Settings },
 ];
 
