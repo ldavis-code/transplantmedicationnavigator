@@ -10,6 +10,7 @@
 //   5. Sets an httpOnly session cookie and redirects to the app
 
 import { checkLicense } from '../../lib/licenseCheck.ts';
+import sql from '../../lib/db.ts';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -250,6 +251,30 @@ export async function handler(event) {
       license.org.id,
       license.org.tier
     );
+
+    // ── Record the completed patient login (analytics only, no PHI) ──
+    // One row per successful token exchange. We store the org, iss, launch type,
+    // and granted scope — never the patient FHIR id or any token. Tracking is
+    // best-effort: a failure here must never block the patient's login.
+    try {
+      await sql`
+        INSERT INTO patient_login_tracking
+          (epic_org_id, org_name, iss_url, launch_type, granted_scope, has_patient_context)
+        VALUES (
+          ${epicOrgId},
+          ${license.org.name || ''},
+          ${iss},
+          'ehr',
+          ${tokenData.scope || null},
+          ${Boolean(tokenData.patient)}
+        )
+      `;
+    } catch (trackErr) {
+      console.error(
+        '[epic-ehr-callback] login tracking insert failed:',
+        trackErr.message
+      );
+    }
 
     const sessionPayload = JSON.stringify({
       accessToken: tokenData.access_token,
