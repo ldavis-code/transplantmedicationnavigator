@@ -1584,7 +1584,7 @@ function useLocalSubscriptionStatus(feature = null) {
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
     const MEDICATIONS = useMedicationsList();
-    const { setAnswer: setContextAnswer } = useChatQuiz();
+    const { setAnswer: setContextAnswer, setSelectedMedications } = useChatQuiz();
 
     // Map InsuranceType display values to ChatQuizContext format
     const mapInsuranceToContextFormat = (insuranceValue) => {
@@ -1635,6 +1635,21 @@ const Wizard = () => {
     useEffect(() => {
         try { sessionStorage.setItem('quiz_resume', JSON.stringify({ step, answers })); } catch (e) { /* ignore */ }
     }, [step, answers]);
+
+    // Mirror the quiz's selected medications into the shared ChatQuiz store so
+    // other surfaces — notably the Grants & Foundations "Medications" tab — can
+    // display them. The wizard tracks meds as IDs in answers.medications, while
+    // the context stores full medication records, so map IDs -> records here.
+    // Only sync when the quiz actually has meds so we never clobber a selection
+    // the patient made elsewhere (e.g. the medication chat assistant).
+    useEffect(() => {
+        const ids = answers.medications || [];
+        if (ids.length === 0) return;
+        const objs = ids
+            .map(id => MEDICATIONS.find(m => m.id === id))
+            .filter(Boolean);
+        if (objs.length > 0) setSelectedMedications(objs);
+    }, [answers.medications, MEDICATIONS, setSelectedMedications]);
 
     // Medication verification state - patient confirms their medications
 
@@ -6879,7 +6894,7 @@ ${patientName || "[Your Name]"}`;
                             <div className="text-center py-12 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                                 <div className="text-slate-400 mb-4" aria-hidden="true"><Pill size={64} className="mx-auto" /></div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">No medications added yet</h3>
-                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications and see their Patient Assistance Program information.</p>
+                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications, or take the My Path Quiz to build your list — you can connect to your health system there to import them automatically.</p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                     <Link to="/wizard" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
                                         <Sparkles size={20} aria-hidden="true" />
