@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
+import Fuse from 'fuse.js';
 import EPIC_ENDPOINTS from '../data/epic-endpoints.json';
 
 /**
@@ -123,9 +124,25 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const matchingSystems = HEALTH_SYSTEMS.filter(sys =>
-        sys.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Fuzzy matcher so patients still find their hospital when they misspell it
+    // ("Houstn Methodist" -> "Houston Methodist") or type only part of the name.
+    // threshold 0.4 tolerates typos; ignoreLocation matches anywhere in the name.
+    const fuse = useMemo(() => new Fuse(HEALTH_SYSTEMS, {
+        keys: ['name'],
+        threshold: 0.4,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+    }), []);
+
+    const trimmedSearch = searchTerm.trim();
+    const matchingSystems = (() => {
+        const q = trimmedSearch.toLowerCase();
+        if (!q) return HEALTH_SYSTEMS;
+        // Single character is too short for fuzzy matching — fall back to a plain
+        // substring match so the list still narrows as the patient starts typing.
+        if (q.length < 2) return HEALTH_SYSTEMS.filter(s => s.name.toLowerCase().includes(q));
+        return fuse.search(trimmedSearch).map(r => r.item);
+    })();
     const filteredSystems = matchingSystems.slice(0, MAX_VISIBLE_SYSTEMS);
     const hiddenSystemCount = matchingSystems.length - filteredSystems.length;
 
@@ -301,9 +318,12 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
 
                     {/* Health System Selector */}
                     <div className="mb-3 relative">
-                        <label htmlFor="health-system-search" className="block text-sm font-semibold text-blue-900 mb-1.5">
+                        <label htmlFor="health-system-search" className="block text-sm font-semibold text-blue-900 mb-1">
                             Select Your Health System
                         </label>
+                        <p id="health-system-help" className="text-xs text-blue-700 mb-1.5">
+                            Start typing your hospital or health system name — close spellings still work, so don't worry if you're not sure how to spell it.
+                        </p>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <Search size={16} className="text-slate-400" aria-hidden="true" />
@@ -330,6 +350,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 }}
                                 className="w-full pl-9 pr-8 py-2.5 border border-blue-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 autoComplete="off"
+                                aria-describedby="health-system-help"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <ChevronDown size={16} className="text-slate-400" aria-hidden="true" />
