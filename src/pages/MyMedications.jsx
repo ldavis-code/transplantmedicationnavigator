@@ -692,8 +692,8 @@ export default function MyMedications() {
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                         <p className="text-blue-800 text-sm">
                           No specific copay card found for this medication name. Try searching with the exact brand name, or visit{' '}
-                          <a href="/out/pap/phrma-mat" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">
-                            PhRMA Medicine Assistance Tool
+                          <a href="https://phrma.org/resources/patient-assistance" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">
+                            PhRMA Patient Assistance
                           </a>
                           {' '}to search for available programs.
                         </p>
