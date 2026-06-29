@@ -201,7 +201,7 @@ const Coverage101 = () => {
 
                         <div className="tmn-c101-warn" role="note">
                             <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>Coverage gaps in Part D ("donut hole"). Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.</p>
+                            <p>Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.</p>
                         </div>
 
                         <div className="tmn-c101-next">
