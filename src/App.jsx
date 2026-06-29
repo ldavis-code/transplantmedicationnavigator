@@ -6263,12 +6263,34 @@ const ApplicationHelp = () => {
         setSearchResult(null);
     };
 
-    // Remove medication from list. Also drop it from the persisted quiz
-    // selection so the delete sticks: the list re-seeds from selectedMedications
-    // on reload, and the "We loaded N medications" banner reads the same source.
+    // Strip medications from the My Path Quiz's saved answers (quiz_resume) so the
+    // wizard doesn't re-sync them back into the selection on its next visit. Pass
+    // a medication id to remove one, or null to clear the whole list. Patients
+    // have the right to fully delete a medication; if they need it back they can
+    // re-import via SMART on FHIR (Connect to My Health System).
+    const pruneQuizResumeMeds = (idToRemove) => {
+        try {
+            const saved = sessionStorage.getItem('quiz_resume');
+            if (!saved) return;
+            const parsed = JSON.parse(saved);
+            if (!parsed?.answers || !Array.isArray(parsed.answers.medications)) return;
+            parsed.answers.medications = idToRemove === null
+                ? []
+                : parsed.answers.medications.filter(m => m !== idToRemove);
+            sessionStorage.setItem('quiz_resume', JSON.stringify(parsed));
+        } catch (e) {
+            // ignore storage errors (e.g. private mode)
+        }
+    };
+
+    // Remove a medication everywhere it persists so the delete is global and
+    // sticks: the visible list, the shared quiz selection (also re-seeds the
+    // list and feeds the "We loaded N medications" banner), and the wizard's
+    // own saved answers.
     const removeMedFromList = (id) => {
         setMedsTabListIds(medsTabListIds.filter(m => m !== id));
         if (removeMedication) removeMedication(id);
+        pruneQuizResumeMeds(id);
     };
 
     // Get medication objects for display
@@ -6700,7 +6722,7 @@ ${patientName || "[Your Name]"}`;
                                     </div>
                                     <button
                                         type="button"
-                                        onClick={() => { setSelectedMedications([]); setMedsTabListIds([]); }}
+                                        onClick={() => { setSelectedMedications([]); setMedsTabListIds([]); pruneQuizResumeMeds(null); }}
                                         className="text-emerald-700 hover:text-emerald-900 text-sm font-semibold underline whitespace-nowrap flex-shrink-0 min-h-[44px]"
                                         aria-label="Clear the medications loaded from your My Path Quiz"
                                     >
