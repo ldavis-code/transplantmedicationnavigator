@@ -2199,6 +2199,34 @@ const Wizard = () => {
                     }}
                 />
 
+                {/* Selected Medications Display — imported/downloaded meds appear first */}
+                {(answers.medications || []).length > 0 && (
+                    <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                            <CheckCircle size={18} className="text-emerald-600" />
+                            <h3 className="font-bold text-slate-800">Your Selected Medications ({(answers.medications || []).length})</h3>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {(answers.medications || []).map(id => {
+                                const med = MEDICATIONS.find(m => m.id === id);
+                                return (
+                                    <span key={id} className="bg-white text-slate-700 px-3 py-1.5 rounded-full text-sm border border-emerald-200 shadow-sm flex items-center gap-2">
+                                        <Pill size={14} className="text-emerald-600" />
+                                        {medDisplayName(med) || id}
+                                        <button
+                                            onClick={() => handleMultiSelect('medications', id)}
+                                            className="text-slate-400 hover:text-red-500 transition"
+                                            aria-label={`Remove ${med?.brandName || id}`}
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </span>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
                 {/* Divider: manual options for patients who can't or don't want to connect */}
                 <div className="relative mb-6" role="separator" aria-label="Or add medications yourself">
                     <div className="absolute inset-0 flex items-center" aria-hidden="true">
@@ -2209,14 +2237,7 @@ const Wizard = () => {
                     </div>
                 </div>
 
-                {/* Organ-Specific Medication Guide - show pre-transplant or post-transplant based on status */}
-                {isPreTransplant ? (
-                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
-                ) : (
-                    <OrganMedicationGuide answers={answers} onMedicationToggle={(id) => handleMultiSelect('medications', id)} />
-                )}
-
-                {/* Medication Search Box */}
+                {/* Medication Search Box — add a medication if needed */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                         <Search size={18} className="text-emerald-600" />
@@ -2281,32 +2302,11 @@ const Wizard = () => {
                     )}
                 </div>
 
-                {/* Selected Medications Display */}
-                {(answers.medications || []).length > 0 && (
-                    <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                            <CheckCircle size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Selected Medications ({(answers.medications || []).length})</h3>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {(answers.medications || []).map(id => {
-                                const med = MEDICATIONS.find(m => m.id === id);
-                                return (
-                                    <span key={id} className="bg-white text-slate-700 px-3 py-1.5 rounded-full text-sm border border-emerald-200 shadow-sm flex items-center gap-2">
-                                        <Pill size={14} className="text-emerald-600" />
-                                        {medDisplayName(med) || id}
-                                        <button
-                                            onClick={() => handleMultiSelect('medications', id)}
-                                            className="text-slate-400 hover:text-red-500 transition"
-                                            aria-label={`Remove ${med?.brandName || id}`}
-                                        >
-                                            <X size={14} />
-                                        </button>
-                                    </span>
-                                );
-                            })}
-                        </div>
-                    </div>
+                {/* Organ-Specific Medication Guide — common meds by organ, shown last */}
+                {isPreTransplant ? (
+                    <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
+                ) : (
+                    <OrganMedicationGuide answers={answers} onMedicationToggle={(id) => handleMultiSelect('medications', id)} />
                 )}
 
                 {/* Important Medical Information */}
@@ -6851,9 +6851,6 @@ ${patientName || "[Your Name]"}`;
                                         <Pill size={22} className="text-teal-600" aria-hidden="true" />
                                         Your Medications ({displayMeds.length})
                                     </h3>
-                                    <Link to="/medications" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
-                                        View full savings details <ArrowRight size={16} />
-                                    </Link>
                                 </div>
 
                                 {/* Info box about what they're seeing */}
