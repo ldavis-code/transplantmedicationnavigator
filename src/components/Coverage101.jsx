@@ -199,19 +199,6 @@ const Coverage101 = () => {
                             <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care — and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
                         </div>
 
-                        <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">Kidney patients: Part B-ID</h4>
-                            <p>After a kidney transplant, the Medicare you got for kidney failure usually ends 36 months later. <strong>Part B-ID</strong> is a special benefit that keeps paying for your anti-rejection drugs after that. A 2021 law started it in 2023 — before then, this coverage just stopped.</p>
-                            <ul className="tmn-c101-list" style={{ marginTop: '8px' }}>
-                                <li>Covers anti-rejection drugs only — not doctor visits or other prescriptions.</li>
-                                <li>For kidney transplant patients whose kidney-failure Medicare is ending.</li>
-                                <li>Only if you have no other drug coverage — a job plan, Medicaid, TRICARE, or VA counts as other coverage.</li>
-                                <li>2026 cost: $121.60 per month, a $283 deductible, then you pay 20%.</li>
-                                <li>Sign up through Social Security as your Medicare ends — it is not automatic.</li>
-                                <li>Medicare Savings Programs may pay the premium if your income is low.</li>
-                            </ul>
-                        </div>
-
                         <div className="tmn-c101-warn" role="note">
                             <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
                             <p>Coverage gaps in Part D ("donut hole"). Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.</p>
