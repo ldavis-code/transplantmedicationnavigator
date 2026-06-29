@@ -1621,6 +1621,18 @@ const Wizard = () => {
         }
     };
     const [step, setStep] = useState(() => {
+        // Deep-link: /wizard?step=meds drops the patient straight on the
+        // Medications step (step 3). The Grants & Foundations page uses this to
+        // route patients who just need to build a medication list. Existing quiz
+        // answers are still restored below, so this never wipes progress.
+        try {
+            const stepParam = new URLSearchParams(window.location.search).get('step');
+            if (stepParam && ['meds', 'medications'].includes(stepParam.toLowerCase())) {
+                return 3;
+            }
+        } catch (e) {
+            // ignore and fall through to resume/default
+        }
         const r = readQuizResume();
         return r && typeof r.step === 'number' ? r.step : 1;
     });
@@ -1741,9 +1753,10 @@ const Wizard = () => {
 
     // Navigation Logic - Updated for grouped sections
     const handleNextFromAboutYou = () => { trackServerEvent('quiz_start'); setStep(2); };
+    // Step order: About You (1) → Transplant (2) → Medications (3) → Coverage (4) → Costs (5)
     const handleNextFromTransplant = () => setStep(3);
-    const handleNextFromCoverage = () => setStep(4);
-    const handleNextFromMeds = () => setStep(5);
+    const handleNextFromMeds = () => setStep(4);
+    const handleNextFromCoverage = () => setStep(5);
     const handleNextFromCosts = () => {
         // Go directly to results
         setStep(7);
@@ -1818,7 +1831,7 @@ const Wizard = () => {
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Coverage', 'Medications', 'Costs'];
+    const stepLabels = ['About You', 'Transplant', 'Medications', 'Coverage', 'Costs'];
     const totalVisibleSteps = 5; // 5 sections shown in progress
 
     // Color themes for each step (matching the icon colors)
@@ -2003,8 +2016,8 @@ const Wizard = () => {
         );
     }
 
-    // Step 3: Your Coverage (combines Insurance + Specialty Pharmacy for commercial)
-    if (step === 3) {
+    // Step 4: Your Coverage (combines Insurance + Specialty Pharmacy for commercial)
+    if (step === 4) {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
@@ -2150,8 +2163,8 @@ const Wizard = () => {
         );
     }
 
-    // Step 4: Your Medications
-    if (step === 4) {
+    // Step 3: Your Medications
+    if (step === 3) {
         const isPreTransplant = answers.status === TransplantStatus.PRE_EVAL;
 
         return (
@@ -6896,7 +6909,7 @@ ${patientName || "[Your Name]"}`;
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">No medications added yet</h3>
                                 <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications, or take the My Path Quiz to build your list — you can connect to your health system there to import them automatically.</p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                    <Link to="/wizard" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
+                                    <Link to="/wizard?step=meds" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
                                         <Sparkles size={20} aria-hidden="true" />
                                         Take My Path Quiz
                                     </Link>
