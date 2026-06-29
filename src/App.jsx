@@ -5074,7 +5074,7 @@ const Education = () => {
                                     <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
                                  </div>
                                  <p className="text-sm text-indigo-900 mb-4 font-medium">A big change from new laws</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once (like when you hit the donut hole).</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once.</p>
                                  <p className="text-slate-700 text-sm mb-4">This program makes your costs more steady and easier to manage.</p>
                                  <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about this payment plan during open enrollment.</p>
                              </section>
@@ -5184,7 +5184,7 @@ const Education = () => {
                                     <h4 className="font-bold text-slate-900 text-lg mb-3">Medicare?</h4>
                                     <ol className="space-y-2 text-slate-700 list-decimal pl-5">
                                         <li>Use <strong>Foundations</strong> for copays.</li>
-                                        <li>Check <strong>Cash Prices</strong> for generics during the coverage gap.</li>
+                                        <li>Check <strong>Cash Prices</strong> for generics to compare savings.</li>
                                     </ol>
                                 </section>
                             </div>
@@ -5273,8 +5273,8 @@ const Education = () => {
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Donut Hole (Coverage Gap)</h3>
-                                        <p className="text-slate-700 text-sm">A temporary limit in Medicare Part D coverage. After you and your plan spend a certain amount, you pay more until you reach catastrophic coverage. This happens in the middle of the year for some people.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Out-of-Pocket Cap</h3>
+                                        <p className="text-slate-700 text-sm">A yearly limit on what you pay out of pocket for Medicare Part D drugs. In 2026 the cap is $2,100. Once you reach it, you pay $0 for covered drugs for the rest of the year.</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
@@ -5432,7 +5432,7 @@ const Education = () => {
                         <div id="insurance-infographic-desc" className="sr-only">
                             This infographic compares what transplant medication help is available across four insurance types.
                             Commercial Insurance: Insurance through your job or that you buy on your own. You may qualify for manufacturer copay cards, patient assistance programs, and copay foundations. You pay monthly premiums, copays, and deductibles, then insurance covers the rest. Common problems include high deductibles, prior authorization requirements, and copay accumulators. Next step: search your medications to find copay cards and assistance programs.
-                            Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include the coverage gap, Part D costs, and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs.
+                            Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include Part D costs and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs.
                             Medicaid: Government insurance for people with low income. You may qualify for patient assistance programs and state-specific programs. Covers most transplant drugs with very low or no copays. Common problems include limited pharmacy networks, formulary restrictions, and coverage ending if income changes. Next step: search your medications and check with your state Medicaid office.
                             Uninsured or Self-Pay: No current insurance coverage. You may qualify for manufacturer patient assistance programs for free medications, state programs, and discount cards. You pay the full retail price without help. Common problems include very high costs, no negotiated rates, and difficulty affording specialty medications. Next step: apply for patient assistance programs immediately as most offer free medications for qualifying patients.
                             The infographic concludes with an encouraging message: You are not alone and there is help available no matter what type of insurance you have.
