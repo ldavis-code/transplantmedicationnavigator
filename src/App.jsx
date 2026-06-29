@@ -6125,7 +6125,7 @@ const ApplicationHelp = () => {
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
-    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer } = useChatQuiz();
+    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer, setSelectedMedications } = useChatQuiz();
 
     // Local commercial insurance state - independent of quiz answers
     // This is the yes/no question shown in the MEDS tab
@@ -6688,11 +6688,21 @@ ${patientName || "[Your Name]"}`;
                         {/* Quiz data indicator */}
                         {quizSelectedMeds && quizSelectedMeds.length > 0 && (
                             <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg" role="note">
-                                <div className="flex items-center gap-2">
-                                    <CheckCircle size={20} className="text-emerald-600" aria-hidden="true" />
-                                    <p className="text-emerald-800 font-medium">
-                                        We loaded {quizSelectedMeds.length} medication{quizSelectedMeds.length !== 1 ? 's' : ''} from your My Path Quiz. Add more below or view program details.
-                                    </p>
+                                <div className="flex items-start justify-between gap-3">
+                                    <div className="flex items-center gap-2">
+                                        <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                                        <p className="text-emerald-800 font-medium">
+                                            We loaded {quizSelectedMeds.length} medication{quizSelectedMeds.length !== 1 ? 's' : ''} from your My Path Quiz. Add more below or view program details.
+                                        </p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => { setSelectedMedications([]); setMedsTabListIds([]); }}
+                                        className="text-emerald-700 hover:text-emerald-900 text-sm font-semibold underline whitespace-nowrap flex-shrink-0 min-h-[44px]"
+                                        aria-label="Clear the medications loaded from your My Path Quiz"
+                                    >
+                                        Clear list
+                                    </button>
                                 </div>
                             </aside>
                         )}
