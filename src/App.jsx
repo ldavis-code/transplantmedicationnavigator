@@ -6125,7 +6125,7 @@ const ApplicationHelp = () => {
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
-    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer, setSelectedMedications } = useChatQuiz();
+    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer, setSelectedMedications, removeMedication } = useChatQuiz();
 
     // Local commercial insurance state - independent of quiz answers
     // This is the yes/no question shown in the MEDS tab
@@ -6263,9 +6263,12 @@ const ApplicationHelp = () => {
         setSearchResult(null);
     };
 
-    // Remove medication from list
+    // Remove medication from list. Also drop it from the persisted quiz
+    // selection so the delete sticks: the list re-seeds from selectedMedications
+    // on reload, and the "We loaded N medications" banner reads the same source.
     const removeMedFromList = (id) => {
         setMedsTabListIds(medsTabListIds.filter(m => m !== id));
+        if (removeMedication) removeMedication(id);
     };
 
     // Get medication objects for display
