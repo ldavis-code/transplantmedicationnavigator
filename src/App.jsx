@@ -690,6 +690,25 @@ const Home = () => {
 
     return (
         <article className="space-y-8">
+            {/* Up-to-date Banner */}
+            <Link
+                to="/education"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 px-4 py-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:border-emerald-300 hover:shadow-md transition-all text-center"
+                aria-label="Our resources are up to date — now including the new TotalAssist program"
+            >
+                <span className="inline-flex items-center gap-2 font-bold text-emerald-800">
+                    <CheckCircle size={18} className="flex-shrink-0" aria-hidden="true" />
+                    Verified &amp; up to date
+                </span>
+                <span className="hidden sm:inline text-emerald-300" aria-hidden="true">•</span>
+                <span className="text-sm text-slate-700">
+                    Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).
+                </span>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700">
+                    See what's new <ArrowRight size={14} aria-hidden="true" />
+                </span>
+            </Link>
+
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
