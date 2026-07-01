@@ -4930,22 +4930,26 @@ const Education = () => {
                 <p className="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
             </header>
 
-            {/* PAF + PAN Foundation Merger Announcement */}
+            {/* TotalAssist Launch Announcement */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
                 <div className="flex items-start gap-4">
                     <div className="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
                         <Info size={24} />
                     </div>
                     <div>
-                        <h2 className="text-lg font-bold text-slate-900 mb-2">Patient Advocate Foundation & PAN Foundation Have Merged</h2>
+                        <span className="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">New · Now Live</span>
+                        <h2 className="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here — the Nation's Largest Charitable Patient Assistance Program</h2>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            As of March 2026, the Patient Advocate Foundation and PAN Foundation have merged to create the nation's most comprehensive nonprofit dedicated to helping patients navigate, access, and afford care. Over a combined 50 years, they have helped 3.8 million patients and granted over $7 billion in financial assistance.
+                            The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.
                         </p>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            <strong>Starting July 1, 2026</strong>, the new <strong>TotalAssist</strong> program will combine all financial assistance into one place—with 130+ disease-specific funds, no wait lists, and instant eligibility decisions. TotalAssist helps cover medication copays, coinsurance, deductibles, insurance premiums, and treatment-related charges.
+                            As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place—with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.
                         </p>
-                        <a href="https://uniting.patientadvocate.org/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors">
-                            Learn more about the merger <ExternalLink size={14} aria-hidden="true" />
+                        <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                            Apply online or call <a href="tel:+18665123861" className="font-semibold text-blue-700 hover:text-blue-900">866-512-3861</a> (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).
+                        </p>
+                        <a href="https://totalassist.org/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors">
+                            Learn more about TotalAssist <ExternalLink size={14} aria-hidden="true" />
                         </a>
                     </div>
                 </div>

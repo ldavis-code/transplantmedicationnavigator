@@ -1726,9 +1726,9 @@
         "medicaid": false,
         "uninsured": false
       },
-      "incomeLimit": "400% FPL",
-      "maxBenefit": "Up to $12,000/year",
-      "notes": "PAF merged with PAN Foundation in 2026. Starting July 1, 2026, Co-Pay Relief transitions to the new TotalAssist program with 130+ disease-specific funds, no wait lists, and instant eligibility decisions."
+      "incomeLimit": "500% FPL",
+      "maxBenefit": "Varies by fund",
+      "notes": "PAF merged with PAN Foundation and launched TotalAssist on July 1, 2026. Co-Pay Relief is now part of TotalAssist, the nation's largest charitable patient assistance program, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Apply at portal.totalassist.org or call 866-512-3861."
     },
     "american-kidney-fund": {
       "programId": "american-kidney-fund",
