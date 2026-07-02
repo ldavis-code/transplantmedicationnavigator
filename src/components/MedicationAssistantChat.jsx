@@ -992,7 +992,7 @@ const MedicationAssistantChat = () => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-emerald-800 text-sm mb-1">
-                    {isDemo ? 'Demo mode' : isPro ? 'Pro subscriber' : 'Promo access'} — unlimited access
+                    {isDemo ? 'Demo mode' : isPro ? 'Pro subscriber' : 'Promo access'}, unlimited access
                   </p>
                   <p className="text-emerald-700 text-xs leading-relaxed">
                     You have unlimited pathway quizzes, medication searches, and savings tracking.
@@ -1345,7 +1345,7 @@ const MedicationAssistantChat = () => {
                         </span>
                       </div>
                       <p className="text-xs text-blue-600 mt-1">
-                        Free coupons accepted at 70,000+ pharmacies — often 50-80% off retail
+                        Free coupons accepted at 70,000+ pharmacies, often 50-80% off retail
                       </p>
                       <a
                         href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}`}
@@ -1367,7 +1367,7 @@ const MedicationAssistantChat = () => {
                         </span>
                       </div>
                       <p className="text-xs text-blue-600 mt-1">
-                        Free card at 35,000+ pharmacies — compare and save on generic prescriptions
+                        Free card at 35,000+ pharmacies, compare and save on generic prescriptions
                       </p>
                       <a
                         href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}`}
@@ -1420,7 +1420,7 @@ const MedicationAssistantChat = () => {
                         )}
                         {program.program_type === 'foundation' && (
                           <p className="text-xs text-emerald-600 mt-2 italic">
-                            💡 Tip: Funds open throughout the year—check back if currently closed!
+                            💡 Tip: Funds open throughout the year, check back if currently closed!
                           </p>
                         )}
                       </div>

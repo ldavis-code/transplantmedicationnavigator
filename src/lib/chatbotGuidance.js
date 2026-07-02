@@ -247,7 +247,7 @@ export const generateGuidanceSummary = (answers, medications) => {
         summary.keyMessages.push({
           type: 'info',
           title: 'Special Kidney Coverage',
-          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers anti-rejection drugs after your kidney-failure Medicare ends at 36 months. It covers those drugs only, and only if you have no other drug coverage. Sign up through Social Security — it is not automatic. The 2026 premium is $121.60/month, plus 20% coinsurance after a $283 deductible.',
+          message: 'Kidney transplant patients may qualify for Medicare Part B-ID, which covers anti-rejection drugs after your kidney-failure Medicare ends at 36 months. It covers those drugs only, and only if you have no other drug coverage. Sign up through Social Security, it is not automatic. The 2026 premium is $121.60/month, plus 20% coinsurance after a $283 deductible.',
         });
       }
       break;

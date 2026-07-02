@@ -518,7 +518,7 @@ export default function ComplianceDashboard() {
                         <RiskBadge level={p.riskLevel} />
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell text-sm text-gray-500">
-                        {p.lastScoreDate ? new Date(p.lastScoreDate).toLocaleDateString() : '—'}
+                        {p.lastScoreDate ? new Date(p.lastScoreDate).toLocaleDateString() : 'N/A'}
                       </td>
                     </tr>,
                     isExpanded && (
@@ -687,10 +687,10 @@ export default function ComplianceDashboard() {
                         </span>
                       </td>
                       <td className="px-4 py-3 hidden sm:table-cell text-sm text-gray-600">
-                        {log.adminName || log.adminEmail || '—'}
+                        {log.adminName || log.adminEmail || 'N/A'}
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell text-sm text-gray-600">
-                        {log.targetPatientId || '—'}
+                        {log.targetPatientId || 'N/A'}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-500">
                         {new Date(log.createdAt).toLocaleString()}

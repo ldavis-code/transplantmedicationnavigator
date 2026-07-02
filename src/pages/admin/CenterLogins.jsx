@@ -20,9 +20,9 @@ const RANGE_OPTIONS = [
 ];
 
 function formatDate(value) {
-  if (!value) return '—';
+  if (!value) return 'N/A';
   const d = new Date(value);
-  return Number.isNaN(d.getTime()) ? '—' : d.toLocaleDateString();
+  return Number.isNaN(d.getTime()) ? 'N/A' : d.toLocaleDateString();
 }
 
 export default function CenterLogins() {
@@ -102,7 +102,7 @@ export default function CenterLogins() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `Sync failed (${res.status})`);
-      setSyncMsg(`Synced: ${data.inserted} added, ${data.updated} updated — ${data.total} centers in directory.`);
+      setSyncMsg(`Synced: ${data.inserted} added, ${data.updated} updated, ${data.total} centers in directory.`);
       setReloadKey((k) => k + 1); // refresh the tables now that names may resolve
     } catch (err) {
       setError(err.message);
@@ -235,7 +235,7 @@ export default function CenterLogins() {
                             {[row.city, row.state].filter(Boolean).join(', ')}
                           </span>
                         ) : (
-                          '—'
+                          'N/A'
                         )}
                       </td>
                       <td className="px-6 py-4 text-sm font-semibold text-gray-900 text-right">{row.periodCount.toLocaleString()}</td>
@@ -255,7 +255,7 @@ export default function CenterLogins() {
           )}
         </section>
 
-        {/* Unmatched iss URLs — centers not yet in the directory */}
+        {/* Unmatched iss URLs, centers not yet in the directory */}
         {unmatched.length > 0 && (
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">

@@ -25,7 +25,7 @@ const ForEmployers = () => {
         {
             icon: Lock,
             title: 'No Login Required for Employees',
-            description: 'Employees access resources instantly—no accounts, no app downloads, no personal information required. Frictionless support.'
+            description: 'Employees access resources instantly, no accounts, no app downloads, no personal information required. Frictionless support.'
         }
     ];
 
@@ -33,7 +33,7 @@ const ForEmployers = () => {
         'Reduced employee out-of-pocket medication costs',
         'Lower claims for specialty medications through manufacturer programs',
         'Improved medication adherence for transplant employees',
-        'Privacy-safe—no employee health data collected',
+        'Privacy-safe, no employee health data collected',
         'No integration required with existing benefits',
         'Easy to communicate via benefits portal or HR'
     ];
@@ -49,7 +49,7 @@ const ForEmployers = () => {
                     Reduce Specialty Drug Costs for Your Transplant Employees
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Connect employees to copay cards, manufacturer assistance programs, and foundations—complementing your existing pharmacy benefits.
+                    Connect employees to copay cards, manufacturer assistance programs, and foundations, complementing your existing pharmacy benefits.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -128,7 +128,7 @@ const ForEmployers = () => {
                     <h2 className="text-xl font-bold text-blue-900">What Employees See</h2>
                 </div>
                 <p className="text-blue-800 mb-6 max-w-2xl mx-auto">
-                    Employees get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Employees get access to medication search, assistance programs, and free educational resources, no login required for education.
                 </p>
                 <Link
                     to="/"

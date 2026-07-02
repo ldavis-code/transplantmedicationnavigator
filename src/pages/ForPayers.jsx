@@ -117,7 +117,7 @@ const ForPayers = () => {
                     <h2 className="text-xl font-bold text-slate-900">Privacy & Compliance</h2>
                 </div>
                 <p className="text-slate-700 leading-relaxed mb-4">
-                    We do not collect, store, or transmit PHI. Members use the tool anonymously—no accounts, no personal information required. All tracking is aggregate and privacy-safe.
+                    We do not collect, store, or transmit PHI. Members use the tool anonymously, no accounts, no personal information required. All tracking is aggregate and privacy-safe.
                 </p>
                 <p className="text-slate-700 leading-relaxed">
                     The tool provides educational information and links to official manufacturer programs. Members apply directly with manufacturers, not through our platform.
@@ -131,7 +131,7 @@ const ForPayers = () => {
                     <h2 className="text-xl font-bold text-purple-900">What Members See</h2>
                 </div>
                 <p className="text-purple-800 mb-6 max-w-2xl mx-auto">
-                    Members get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Members get access to medication search, assistance programs, and free educational resources, no login required for education.
                 </p>
                 <Link
                     to="/"

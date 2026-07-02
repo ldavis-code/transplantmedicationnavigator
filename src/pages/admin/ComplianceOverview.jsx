@@ -1,5 +1,5 @@
 /**
- * Compliance Overview — Presentation Dashboard
+ * Compliance Overview, Presentation Dashboard
  * Consolidated view of HIPAA, GDPR, SOC 2 controls, vendor BAAs,
  * policies, risks, incidents, and live system checks.
  * Optimized for screen-sharing and stakeholder presentations.
@@ -368,7 +368,7 @@ export default function ComplianceOverview() {
                               {isEditing('control', c.id) ? (
                                 <input type="text" value={editForm.owner || ''} onChange={e => setEditForm(f => ({ ...f, owner: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 w-full focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" placeholder="Owner" />
                               ) : (
-                                <span className="text-gray-500 text-xs">{c.owner || '—'}</span>
+                                <span className="text-gray-500 text-xs">{c.owner || 'N/A'}</span>
                               )}
                             </td>
                             <td className="py-2 w-20 print:hidden">
@@ -450,7 +450,7 @@ export default function ComplianceOverview() {
                 {policies.map(p => (
                   <tr key={p.id} className="border-b border-gray-100 group">
                     <td className="py-2 pr-3 text-gray-900">{p.name}</td>
-                    <td className="py-2 pr-3 text-gray-500 text-xs">{p.framework || '—'}</td>
+                    <td className="py-2 pr-3 text-gray-500 text-xs">{p.framework || 'N/A'}</td>
                     <td className="py-2 pr-3">
                       {isEditing('policy', p.id) ? (
                         <select value={editForm.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none">
@@ -466,14 +466,14 @@ export default function ComplianceOverview() {
                       {isEditing('policy', p.id) ? (
                         <input type="date" value={editForm.last_reviewed || ''} onChange={e => setEditForm(f => ({ ...f, last_reviewed: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" />
                       ) : (
-                        p.last_reviewed ? new Date(p.last_reviewed).toLocaleDateString() : '—'
+                        p.last_reviewed ? new Date(p.last_reviewed).toLocaleDateString() : 'N/A'
                       )}
                     </td>
                     <td className="py-2 pr-3 text-gray-500 text-xs">
                       {isEditing('policy', p.id) ? (
                         <input type="date" value={editForm.next_review || ''} onChange={e => setEditForm(f => ({ ...f, next_review: e.target.value }))} className="text-xs border border-gray-300 rounded px-1.5 py-1 focus:ring-1 focus:ring-[#006838] focus:border-[#006838] outline-none" />
                       ) : (
-                        p.next_review ? new Date(p.next_review).toLocaleDateString() : '—'
+                        p.next_review ? new Date(p.next_review).toLocaleDateString() : 'N/A'
                       )}
                     </td>
                     <td className="py-2 w-20 print:hidden">
@@ -673,7 +673,7 @@ export default function ComplianceOverview() {
 
       {/* ── Print footer ─────────────────────────────── */}
       <div className="hidden print:block mt-8 pt-4 border-t border-gray-200 text-xs text-gray-400 text-center">
-        Transplant Medication Navigator — Compliance Overview — Generated {new Date().toLocaleDateString()}
+        Transplant Medication Navigator, Compliance Overview, Generated {new Date().toLocaleDateString()}
       </div>
     </AdminLayout>
   );

@@ -15,7 +15,7 @@ const ForTransplantPrograms = () => {
         {
             icon: ShieldCheck,
             title: 'Verified Help Programs, Not Scams',
-            description: 'Every program listed is vetted. We link directly to official manufacturer and foundation sites—no third-party schemes.'
+            description: 'Every program listed is vetted. We link directly to official manufacturer and foundation sites, no third-party schemes.'
         },
         {
             icon: BarChart3,
@@ -125,7 +125,7 @@ const ForTransplantPrograms = () => {
                     <h2 className="text-xl font-bold text-emerald-900">What Patients See</h2>
                 </div>
                 <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                    Patients get access to medication search, assistance programs, and free educational resources—no login required for education.
+                    Patients get access to medication search, assistance programs, and free educational resources, no login required for education.
                 </p>
                 <Link
                     to="/"

@@ -25,7 +25,7 @@ const ForHospitalAdmin = () => {
         {
             icon: Lock,
             title: 'HIPAA-Compliant by Design',
-            description: 'No PHI is collected, stored, or transmitted. Patients use the tool without accounts or personal information. Zero BAA required for educational use—no compliance burden for your IT or legal teams.'
+            description: 'No PHI is collected, stored, or transmitted. Patients use the tool without accounts or personal information. Zero BAA required for educational use, no compliance burden for your IT or legal teams.'
         }
     ];
 
@@ -43,7 +43,7 @@ const ForHospitalAdmin = () => {
         {
             icon: ClipboardCheck,
             title: 'White-Label Admin Dashboard',
-            description: 'Hospital administrators get a dedicated dashboard with engagement analytics, patient resource utilization, and pilot reporting—all aggregate, all privacy-safe.'
+            description: 'Hospital administrators get a dedicated dashboard with engagement analytics, patient resource utilization, and pilot reporting, all aggregate, all privacy-safe.'
         }
     ];
 
@@ -67,7 +67,7 @@ const ForHospitalAdmin = () => {
         },
         {
             stat: '~36%',
-            label: 'of graft losses are associated with immunosuppressant non-adherence — the leading modifiable cause of transplant failure (Dew MA et al., Transplantation, 2007)'
+            label: 'of graft losses are associated with immunosuppressant non-adherence, the leading modifiable cause of transplant failure (Dew MA et al., Transplantation, 2007)'
         }
     ];
 
@@ -83,7 +83,7 @@ const ForHospitalAdmin = () => {
                     Built at the Intersection of Patient Experience and Health Policy
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    This platform was developed by a liver transplant recipient who serves on the OPTN Patient Affairs Committee and holds a seat at the national table where transplant policy is made. TransplantMedicationNavigator isn't a software product — it's a policy intervention, built to address a documented, systemic gap in post-transplant care and CMS-recognized medication access barriers.
+                    This platform was developed by a liver transplant recipient who serves on the OPTN Patient Affairs Committee and holds a seat at the national table where transplant policy is made. TransplantMedicationNavigator isn't a software product, it's a policy intervention, built to address a documented, systemic gap in post-transplant care and CMS-recognized medication access barriers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -113,7 +113,7 @@ const ForHospitalAdmin = () => {
                 </div>
                 <blockquote className="border-l-4 border-amber-400 pl-6 py-2 mb-5">
                     <p className="text-slate-800 text-lg leading-relaxed italic">
-                        "The AST Therapeutic Needs Study (Taber et al., 2025) — the largest patient survey of its kind, representing 10,091 transplant recipients across 232 centers — concluded that immunosuppression <strong className="text-slate-900">'induces a heavy toll on transplant recipients'</strong> and that there is <strong className="text-slate-900">'an urgent need for new treatments to address these unmet needs.'</strong> With <strong className="text-slate-900">40% of recipients skipping doses due to cost.</strong>"
+                        "The AST Therapeutic Needs Study (Taber et al., 2025), the largest patient survey of its kind, representing 10,091 transplant recipients across 232 centers, concluded that immunosuppression <strong className="text-slate-900">'induces a heavy toll on transplant recipients'</strong> and that there is <strong className="text-slate-900">'an urgent need for new treatments to address these unmet needs.'</strong> With <strong className="text-slate-900">40% of recipients skipping doses due to cost.</strong>"
                     </p>
                 </blockquote>
                 <p className="text-slate-600 text-sm leading-relaxed">
@@ -217,7 +217,7 @@ const ForHospitalAdmin = () => {
                     Connecting even a fraction of at-risk patients to manufacturer assistance programs that eliminate the cost barrier to adherence generates measurable ROI in reduced readmissions, preserved grafts, and improved SRTR performance.
                 </p>
                 <p className="text-slate-700 leading-relaxed">
-                    A single graft loss costs the healthcare system over $150,000 in incremental annual costs from dialysis and re-transplant workup (Samoylova ML et al., Transplant International, 2022). Connecting even a fraction of at-risk patients to manufacturer assistance programs — which can reduce monthly out-of-pocket costs from $624 to under $15 — represents a compelling return on investment for any transplant program.
+                    A single graft loss costs the healthcare system over $150,000 in incremental annual costs from dialysis and re-transplant workup (Samoylova ML et al., Transplant International, 2022). Connecting even a fraction of at-risk patients to manufacturer assistance programs, which can reduce monthly out-of-pocket costs from $624 to under $15, represents a compelling return on investment for any transplant program.
                 </p>
             </section>
 
@@ -268,7 +268,7 @@ const ForHospitalAdmin = () => {
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                Anonymous patient access—no accounts needed
+                                Anonymous patient access, no accounts needed
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
@@ -307,7 +307,7 @@ const ForHospitalAdmin = () => {
                     <h2 className="text-xl font-bold text-emerald-900">What Your Patients See</h2>
                 </div>
                 <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                    Patients get a simple, accessible interface to search 200+ transplant medications, find copay cards and assistance programs, and access educational content—no login required.
+                    Patients get a simple, accessible interface to search 200+ transplant medications, find copay cards and assistance programs, and access educational content, no login required.
                 </p>
                 <Link
                     to="/"

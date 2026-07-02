@@ -303,7 +303,7 @@ Contact: [Your Phone Number]
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">Got Denied? Don't Give Up.</h1>
-            <p className="text-emerald-700 font-semibold text-lg mt-1">You can fight back — and WIN!</p>
+            <p className="text-emerald-700 font-semibold text-lg mt-1">You can fight back, and WIN!</p>
           </div>
         </div>
         <p className="text-lg text-slate-700 leading-relaxed">
@@ -436,7 +436,7 @@ Contact: [Your Phone Number]
         <div className="mt-5 p-4 bg-white rounded-lg border-2 border-red-200">
           <p className="text-red-800 font-semibold flex items-center gap-2">
             <Lightbulb size={18} className="text-red-600" aria-hidden="true" />
-            Remember: A denial is NOT the final answer. It's just the first "no" — and you can fight it!
+            Remember: A denial is NOT the final answer. It's just the first "no", and you can fight it!
           </p>
         </div>
       </SectionHeader>
@@ -501,7 +501,7 @@ Contact: [Your Phone Number]
         <div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-300">
           <p className="text-amber-900 font-semibold flex items-center gap-2">
             <Lightbulb size={18} className="text-amber-700" aria-hidden="true" />
-            Pro Tip: Ask your doctor about "step therapy exception" — they can request this on your behalf!
+            Pro Tip: Ask your doctor about "step therapy exception", they can request this on your behalf!
           </p>
         </div>
       </SectionHeader>
@@ -644,7 +644,7 @@ Contact: [Your Phone Number]
             number={6}
             title="Know What Comes Next"
             description="If they say no again, you can ask for an external review by someone outside the company. Your state insurance office can also help."
-            tips="Don't give up after the first appeal denial — external reviews often overturn decisions!"
+            tips="Don't give up after the first appeal denial, external reviews often overturn decisions!"
             isCompleted={completedSteps[6]}
             onToggle={() => toggleStep(6)}
           />

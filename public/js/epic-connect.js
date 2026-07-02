@@ -2,7 +2,7 @@
  * epic-connect.js - Shared Epic FHIR PKCE + Connect logic
  *
  * The "Connect to My Health System" flow:
- *   1. Call /api/epic-auth-url — the server generates PKCE code_verifier +
+ *   1. Call /api/epic-auth-url, the server generates PKCE code_verifier +
  *      code_challenge, builds the authorization URL, and returns:
  *      { url, state, code_verifier }
  *   2. Store code_verifier + state + return path in sessionStorage
@@ -38,7 +38,7 @@ const STORAGE_KEYS = {
  * @throws {Error} If the auth URL request fails
  */
 export async function startEpicConnect(fhirBaseUrl) {
-    // 1. Request the authorization URL — server generates PKCE pair
+    // 1. Request the authorization URL, server generates PKCE pair
     let url = '/api/epic-auth-url';
     if (fhirBaseUrl) {
         url += '?fhir_base_url=' + encodeURIComponent(fhirBaseUrl);

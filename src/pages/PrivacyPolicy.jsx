@@ -50,7 +50,7 @@ const PrivacyPolicy = () => {
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Survey Responses</h3>
                             <p className="text-slate-700">
-                                If you participate in our surveys, we collect your responses. Survey data is collected anonymously—we do not collect names, dates of birth, or medical record numbers in surveys.
+                                If you participate in our surveys, we collect your responses. Survey data is collected anonymously, we do not collect names, dates of birth, or medical record numbers in surveys.
                             </p>
                         </div>
                     </div>

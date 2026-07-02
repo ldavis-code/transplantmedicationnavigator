@@ -536,7 +536,7 @@ const Layout = ({ children }) => {
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
                     <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    Patient Assistance Programs provide FREE medication—never pay to apply. We help you find them.
+                    Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.
                 </span>
             </div>
 
@@ -708,7 +708,7 @@ const Home = () => {
             <Link
                 to="/education"
                 className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 px-4 py-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:border-emerald-300 hover:shadow-md transition-all text-center"
-                aria-label="Our resources are up to date — now including the new TotalAssist program"
+                aria-label="Our resources are up to date, now including the new TotalAssist program"
             >
                 <span className="inline-flex items-center gap-2 font-bold text-emerald-800">
                     <CheckCircle size={18} className="flex-shrink-0" aria-hidden="true" />
@@ -834,7 +834,7 @@ const Home = () => {
                     </div>
                     <h2 className="text-xl font-bold text-slate-900 mb-2">Learn the Process</h2>
                     <p className="text-slate-600 mb-4">
-                        Learn how to fill out Patient Assistance Program (PAP) applications yourself—for free.
+                        Learn how to fill out Patient Assistance Program (PAP) applications yourself, for free.
                     </p>
                     <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="View application guide">
                         View Guide <ArrowRight size={16} aria-hidden="true" />
@@ -890,7 +890,7 @@ const Home = () => {
                                 <div className="text-sm text-slate-600 font-medium">Saved Per Year</div>
                             </div>
                             <div className="text-slate-600 text-sm max-w-xs">
-                                This is why we built this tool — so no patient misses out on savings their pharmacy never mentioned.
+                                This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned.
                             </div>
                         </div>
                     </blockquote>
@@ -1014,11 +1014,11 @@ const Home = () => {
                     Start My Medication Path Quiz
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help — Patient Founded. Patient First.
+                    Take our free quiz to see how we can help, Patient Founded. Patient First.
                 </p>
             </section>
 
-            {/* Created by Someone Who's Been There (condensed — full story on /about) */}
+            {/* Created by Someone Who's Been There (condensed, full story on /about) */}
             <section className="bg-gradient-to-br from-slate-50 to-emerald-50 border-2 border-emerald-200 rounded-2xl p-6 md:p-8 max-w-4xl mx-auto" aria-labelledby="founder-heading">
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                     <img
@@ -1106,8 +1106,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Heart Transplant',
         description: 'Heart transplant recipients typically receive a combination of a calcineurin inhibitor, an antimetabolite, and a corticosteroid.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
             { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
@@ -1118,8 +1118,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Kidney Transplant',
         description: 'Kidney transplant immunosuppression is similar to that for heart transplants, with a focus on balancing efficacy and minimizing side effects.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
@@ -1131,8 +1131,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Liver Transplant',
         description: 'Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver\'s unique immunological properties.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Most commonly used CNI in liver transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Most commonly used CNI in liver transplant. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
@@ -1141,8 +1141,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Lung Transplant',
         description: 'Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
@@ -1151,8 +1151,8 @@ const ORGAN_MEDICATIONS = {
         title: 'Pancreas Transplant',
         description: 'Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together.',
         medications: [
-            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic — lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
-            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version — may qualify for a manufacturer copay card.' },
+            { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
+            { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
@@ -1227,7 +1227,7 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
-    // Auto-expand the user's selected organ(s) — first selected organ is expanded by default
+    // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
     const [expandedOrgan, setExpandedOrgan] = useState(defaultExpanded);
@@ -1355,7 +1355,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
-    // Auto-expand the user's selected organ(s) — first selected organ is expanded by default
+    // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
     const [expandedOrgan, setExpandedOrgan] = useState(defaultExpanded);
@@ -1589,7 +1589,7 @@ const Wizard = () => {
     }, [step, answers]);
 
     // Mirror the quiz's selected medications into the shared ChatQuiz store so
-    // other surfaces — notably the Grants & Foundations "Medications" tab — can
+    // other surfaces, notably the Grants & Foundations "Medications" tab, can
     // display them. The wizard tracks meds as IDs in answers.medications, while
     // the context stores full medication records, so map IDs -> records here.
     // Only sync when the quiz actually has meds so we never clobber a selection
@@ -2139,7 +2139,7 @@ const Wizard = () => {
                     }}
                 />
 
-                {/* Selected Medications Display — imported/downloaded meds appear first */}
+                {/* Selected Medications Display, imported/downloaded meds appear first */}
                 {(answers.medications || []).length > 0 && (
                     <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
@@ -2177,7 +2177,7 @@ const Wizard = () => {
                     </div>
                 </div>
 
-                {/* Medication Search Box — add a medication if needed */}
+                {/* Medication Search Box, add a medication if needed */}
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                         <Search size={18} className="text-emerald-600" />
@@ -2242,7 +2242,7 @@ const Wizard = () => {
                     )}
                 </div>
 
-                {/* Organ-Specific Medication Guide — common meds by organ, shown last */}
+                {/* Organ-Specific Medication Guide, common meds by organ, shown last */}
                 {isPreTransplant ? (
                     <PreTransplantMedicationGuide answers={answers} onMedicationClick={setMedSearchTerm} />
                 ) : (
@@ -2267,7 +2267,7 @@ const Wizard = () => {
                     className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"
                     aria-label="Continue to next section"
                 >
-                    My medications look right — continue →
+                    My medications look right, continue →
                 </button>
             </div>
         );
@@ -3243,7 +3243,7 @@ const MedicationSearch = () => {
                                             <div><span className="font-semibold">Family of 4:</span> $33,000</div>
                                         </div>
                                         <p className="text-sm text-amber-800">
-                                            <span className="font-bold">Don't disqualify yourself</span> — Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
+                                            <span className="font-bold">Don't disqualify yourself</span>, Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
                                         </p>
                                     </div>
                                 </div>
@@ -3538,7 +3538,7 @@ function isEpicGenericMed(medId) {
 
 // Label for a medication chip/list item. Shows the GENERIC name when the patient
 // takes the generic (from their Epic import) or when a record bundles multiple
-// brand names — so the quiz shows "Alprazolam", not "Xanax".
+// brand names, so the quiz shows "Alprazolam", not "Xanax".
 function medDisplayName(med) {
     if (!med) return '';
     const multipleBrands = (med.brandName || '').includes('/');
@@ -3574,7 +3574,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 
     // Lead with the drug (generic) name when (a) the record bundles several
     // brands (e.g. "Neoral / Sandimmune / Gengraf"), or (b) the patient's import
-    // shows they take the GENERIC — so we show "Alprazolam", not the brand "Xanax".
+    // shows they take the GENERIC, so we show "Alprazolam", not the brand "Xanax".
     // Don't substitute a brand the patient isn't actually on.
     const hasMultipleBrands = (med.brandName || '').includes('/');
     const leadWithGeneric = takesGeneric || hasMultipleBrands;
@@ -3593,7 +3593,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const papUrl = papProgram?.url || med.papUrl;
     const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
     // Manufacturer Patient Assistance Programs are brand-specific. If the patient
-    // takes the GENERIC, the brand's PAP (and copay) don't apply — hide both, so a
+    // takes the GENERIC, the brand's PAP (and copay) don't apply, hide both, so a
     // generic never surfaces e.g. the Genentech program for CellCept/Valcyte.
     const hasPapProgram = !!(papProgram || papProgramId || med.papUrl) && !takesGeneric;
 
@@ -3919,7 +3919,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     You take the generic{med.genericName ? ` (${med.genericName})` : ''}
                                 </h3>
                                 <p className="text-sm text-slate-700 mt-2">
-                                    Generic medications don't have manufacturer copay cards — those are only for brand-name drugs. The good news: generics are usually much cheaper. Compare the cash prices below, especially <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx, and SingleCare.
+                                    Generic medications don't have manufacturer copay cards, those are only for brand-name drugs. The good news: generics are usually much cheaper. Compare the cash prices below, especially <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx, and SingleCare.
                                 </p>
                             </section>
                         )}
@@ -4427,7 +4427,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         )}
                                         {isTrumpRxAvailable && (
                                             <div className="bg-teal-100 border border-teal-300 rounded p-2 mb-3 text-xs text-teal-900">
-                                                <strong>About TrumpRx.gov:</strong> This is a cash-pay discount — it does NOT count toward your deductible or out-of-pocket max.{trumpRxData.medicareRestriction ? ' Some TrumpRx coupons may exclude Medicare/Medicaid patients.' : ''} Always compare with your insurance copay first. <a href="/trumprx" className="text-teal-700 font-bold underline">Read our full guide</a>.
+                                                <strong>About TrumpRx.gov:</strong> This is a cash-pay discount, it does NOT count toward your deductible or out-of-pocket max.{trumpRxData.medicareRestriction ? ' Some TrumpRx coupons may exclude Medicare/Medicaid patients.' : ''} Always compare with your insurance copay first. <a href="/trumprx" className="text-teal-700 font-bold underline">Read our full guide</a>.
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
@@ -4891,12 +4891,12 @@ const Education = () => {
                     </div>
                     <div>
                         <span className="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">New · Now Live</span>
-                        <h2 className="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here — the Nation's Largest Charitable Patient Assistance Program</h2>
+                        <h2 className="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program</h2>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
                             The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.
                         </p>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place—with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.
+                            As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.
                         </p>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
                             Apply online or call <a href="tel:+18665123861" className="font-semibold text-blue-700 hover:text-blue-900">866-512-3861</a> (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).
@@ -4920,7 +4920,7 @@ const Education = () => {
                     <div className="flex-1">
                         <h2 className="text-xl font-bold text-red-600 mb-2">Got Denied?</h2>
                         <p className="text-slate-700 mb-3">
-                            Insurance said no? Don't worry—you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.
+                            Insurance said no? Don't worry, you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.
                         </p>
                         <span className="inline-flex items-center gap-1 text-red-600 font-semibold">
                             View Appeal Guide <ArrowRight size={16} aria-hidden="true" />
@@ -4950,20 +4950,20 @@ const Education = () => {
                 {activeTab === 'EMERGENCY' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
-                            <h2 className="text-2xl font-bold text-slate-900">Out of medication — or about to be?</h2>
+                            <h2 className="text-2xl font-bold text-slate-900">Out of medication, or about to be?</h2>
                             <p className="text-lg text-slate-700">Anti-rejection medicine is not something you can safely skip. If cost or a refill problem means you are running low, act today. Here is how to get a bridge supply while you sort out the cost.</p>
                         </div>
 
                         <div className="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-lg" role="alert">
                             <p className="text-rose-900 font-bold flex items-center gap-2 mb-1"><AlertTriangle size={18} aria-hidden="true" /> If this is a medical emergency, call 911.</p>
-                            <p className="text-rose-800 text-sm">Signs of rejection — fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell — need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong></p>
+                            <p className="text-rose-800 text-sm">Signs of rejection, fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell, need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong></p>
                         </div>
 
                         <div className="space-y-4">
                             <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-100 flex items-start gap-4">
                                 <div className="bg-emerald-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
                                 <div>
-                                    <h3 className="font-bold text-emerald-900 mb-1 flex items-center gap-2"><Phone size={16} aria-hidden="true" /> Call your transplant team first — today</h3>
+                                    <h3 className="font-bold text-emerald-900 mb-1 flex items-center gap-2"><Phone size={16} aria-hidden="true" /> Call your transplant team first, today</h3>
                                     <p className="text-slate-700 text-sm">This is the most important step. Your transplant center handles this all the time. Ask for the <strong>transplant pharmacist</strong> or <strong>social worker</strong>. They can often send an emergency prescription, give you samples, or start a fast assistance request the same day. Tell them plainly: "I am about to run out and I cannot afford the refill."</p>
                                 </div>
                             </div>
@@ -4980,7 +4980,7 @@ const Education = () => {
                                 <div className="bg-purple-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
                                 <div>
                                     <h3 className="font-bold text-purple-900 mb-1 flex items-center gap-2"><Clock size={16} aria-hidden="true" /> Ask the drug maker about a bridge supply</h3>
-                                    <p className="text-slate-700 text-sm">Some manufacturers give a free short-term "bridge" or "quick start" supply while your Patient Assistance Program application is reviewed — so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.</p>
+                                    <p className="text-slate-700 text-sm">Some manufacturers give a free short-term "bridge" or "quick start" supply while your Patient Assistance Program application is reviewed, so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.</p>
                                     <Link to="/medications" className="text-purple-700 font-semibold text-sm underline mt-1 inline-block">Find your medication and its manufacturer →</Link>
                                 </div>
                             </div>
@@ -5008,7 +5008,7 @@ const Education = () => {
 
                         <div className="bg-rose-50 border border-rose-200 p-5 rounded-xl text-center">
                             <p className="text-rose-900 font-semibold mb-1">Do not just stop taking your medicine.</p>
-                            <p className="text-rose-800 text-sm">Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible — but let them make that call, not you.</p>
+                            <p className="text-rose-800 text-sm">Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible, but let them make that call, not you.</p>
                             <Link to="/application-help" className="inline-block mt-3 bg-rose-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-rose-700 transition text-sm">Get help applying for longer-term assistance</Link>
                         </div>
                     </div>
@@ -5041,7 +5041,7 @@ const Education = () => {
                                     <h3 className="font-bold text-teal-900">Medicare GLP-1 Coverage for Weight Loss</h3>
                                  </div>
                                  <p className="text-sm text-teal-900 mb-4 font-medium">A big change: Medicare will now cover weight loss drugs.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss—ending a rule that kept these drugs out of Part D.</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss, ending a rule that kept these drugs out of Part D.</p>
                                  <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy and Zepbound will be covered for patients with weight-related health issues. Your copay should be about <strong>$50/month</strong> after you meet your deductible.</p>
                                  <p className="text-slate-700 text-sm italic">Eli Lilly and Novo Nordisk agreed to give these drugs at lower prices for Medicare patients.</p>
                              </section>
@@ -5167,7 +5167,7 @@ const Education = () => {
                         </div>
                         <aside className="bg-emerald-50 p-6 rounded-xl border border-emerald-100" role="note">
                             <h3 className="font-bold text-emerald-900 mb-2">Key Insight</h3>
-                            <p className="text-emerald-800">Many patients mix programs—for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.</p>
+                            <p className="text-emerald-800">Many patients mix programs, for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.</p>
                         </aside>
 
                         <div className="border-t border-slate-200 pt-8">
@@ -5356,7 +5356,7 @@ const Education = () => {
                 )}
                 {activeTab === 'INSURANCE' && (
                     <div className="max-w-4xl mx-auto space-y-12">
-                        {/* Coverage 101 — how each insurance type works (moved from home) */}
+                        {/* Coverage 101, how each insurance type works (moved from home) */}
                         <Coverage101 />
 
                         {/* WISeR Prior Authorization Pilot */}
@@ -5518,7 +5518,7 @@ const Education = () => {
                                     <p className="text-sm text-slate-600 mb-6">Use the official IHS locator to find clinics and pharmacies near you.</p>
                                     <span className="inline-block w-full bg-emerald-700 group-hover:bg-emerald-800 text-white font-bold py-2 rounded-lg">Open IHS Locator</span>
                                 </a>
-                                <section className="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy"><h3 id="ihs-strategy" className="font-bold text-slate-900 mb-4">Best Strategy</h3><p className="text-slate-600 text-sm">Use your local IHS or Urban Indian Program — usually $0 cost.</p></section>
+                                <section className="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy"><h3 id="ihs-strategy" className="font-bold text-slate-900 mb-4">Best Strategy</h3><p className="text-slate-600 text-sm">Use your local IHS or Urban Indian Program, usually $0 cost.</p></section>
                             </div>
                         </section>
                     </div>
@@ -5616,7 +5616,7 @@ const Education = () => {
                                         <CheckCircle size={20} aria-hidden="true" />
                                         Scenario 3: Extremely High Deductible
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If you have a very high deductible AND the cash price is much lower—but even then, think hard about the cost of not reaching your yearly limit.</p>
+                                    <p className="text-slate-700 text-sm">If you have a very high deductible AND the cash price is much lower, but even then, think hard about the cost of not reaching your yearly limit.</p>
                                 </div>
                             </div>
                             <div className="mt-6 bg-red-100 border-2 border-red-300 rounded-lg p-6">
@@ -6075,7 +6075,7 @@ const Education = () => {
                                 Remember
                             </h3>
                             <p className="text-amber-900 text-sm leading-relaxed">
-                                Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out—there are people who want to help.
+                                Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out, there are people who want to help.
                             </p>
                         </aside>
                     </div>
@@ -6702,7 +6702,7 @@ ${patientName || "[Your Name]"}`;
                         <EpicConnectButton
                             onBeforeConnect={() => {
                                 // Remember we were on the Medications tab so we can
-                                // restore it when Epic redirects back — otherwise the
+                                // restore it when Epic redirects back, otherwise the
                                 // page reopens on START, this button never remounts,
                                 // and the imported meds don't appear until the patient
                                 // clicks Medications again.
@@ -6798,7 +6798,7 @@ ${patientName || "[Your Name]"}`;
                                         Do you have commercial insurance?
                                     </h3>
                                     <p className="text-slate-600 mb-4 text-sm">
-                                        Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately — not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
+                                        Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately, not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
                                     </p>
                                     <div className="flex gap-4">
                                         <button
@@ -6905,7 +6905,7 @@ ${patientName || "[Your Name]"}`;
                             <div className="text-center py-12 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                                 <div className="text-slate-400 mb-4" aria-hidden="true"><Pill size={64} className="mx-auto" /></div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">No medications added yet</h3>
-                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications, or take the My Path Quiz to build your list — you can connect to your health system there to import them automatically.</p>
+                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications, or take the My Path Quiz to build your list, you can connect to your health system there to import them automatically.</p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                     <Link to="/wizard?step=meds" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
                                         <Sparkles size={20} aria-hidden="true" />

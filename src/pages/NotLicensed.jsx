@@ -21,7 +21,7 @@ const NotLicensed = () => {
 
         <p className="text-slate-500 mb-6 leading-relaxed">
           Your transplant center hasn't activated TMN yet.
-          Contact us to get your center set up — it takes less than a week
+          Contact us to get your center set up, it takes less than a week
           and integrates directly into Epic.
         </p>
 
@@ -31,7 +31,7 @@ const NotLicensed = () => {
             <Building2 size={18} className="text-green-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <p className="text-sm text-green-800 leading-relaxed">
               <strong>For your transplant center's Epic team:</strong><br />
-              Ask about activating TransplantMedicationNavigator.com —
+              Ask about activating TransplantMedicationNavigator.com, 
               listed in Epic Connection Hub, FHIR R4 compliant,
               zero PHI stored.
             </p>

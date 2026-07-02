@@ -158,7 +158,7 @@ const Pilot = () => {
             {/* Safety Note */}
             <section className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
                 <p className="text-amber-800 font-medium">
-                    <strong>Important:</strong> Patient Assistance Programs provide FREE medication—never pay to apply.
+                    <strong>Important:</strong> Patient Assistance Programs provide FREE medication, never pay to apply.
                     If a site claims to be a PAP but charges fees, it's a scam. Report it.
                 </p>
             </section>

@@ -69,7 +69,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const canAddMore = true;
 
     // Format dollars, and a low–high range. When both ends round to the same
-    // value we show one number; otherwise a range — so default-based estimates
+    // value we show one number; otherwise a range, so default-based estimates
     // read as approximate, not precise.
     const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
     const range = (lo, hi) => (Math.round(lo) === Math.round(hi) ? money(lo) : `${money(lo)} – ${money(hi)}`);
@@ -301,7 +301,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
                             {range(calculations.totalAnnualLow, calculations.totalAnnualHigh)}
                         </div>
                         <p className="text-emerald-100">
-                            Estimated range from typical cash and discount prices — not a quote
+                            Estimated range from typical cash and discount prices, not a quote
                         </p>
 
                         {/* Monthly Comparison */}

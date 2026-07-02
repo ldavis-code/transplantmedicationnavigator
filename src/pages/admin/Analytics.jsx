@@ -220,7 +220,7 @@ export default function Analytics() {
                         <td className="px-6 py-4 text-sm text-gray-600">
                           {lead.medications.length > 0
                             ? lead.medications.slice(0, 3).join(', ') + (lead.medications.length > 3 ? ` +${lead.medications.length - 3}` : '')
-                            : '—'}
+                            : 'N/A'}
                         </td>
                         <td className="px-6 py-4 text-center">
                           <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
@@ -273,7 +273,7 @@ export default function Analytics() {
                       <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.thisWeek.toLocaleString()}</td>
                       <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.thisMonth.toLocaleString()}</td>
                       <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.allTime.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-sm text-gray-500">{row.topProgram || '—'}</td>
+                      <td className="px-6 py-4 text-sm text-gray-500">{row.topProgram || 'N/A'}</td>
                     </tr>
                   ))}
                 </tbody>

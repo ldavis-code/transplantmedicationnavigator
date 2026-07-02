@@ -1,7 +1,7 @@
 {
   "lastUpdated": "2026-04-07",
   "source": "TrumpRx.gov",
-  "note": "TrumpRx prices are fixed cash prices (not ranges). Cash-pay only — does NOT count toward deductible or out-of-pocket max. Some drugs exclude Medicare/Medicaid patients.",
+  "note": "TrumpRx prices are fixed cash prices (not ranges). Cash-pay only, does NOT count toward deductible or out-of-pocket max. Some drugs exclude Medicare/Medicaid patients.",
   "medications": {
     "semaglutide": {
       "trumprxPrice": 149,
@@ -29,21 +29,21 @@
       "trumprxPrice": 3.15,
       "originalPrice": 8,
       "discount": "~60% off",
-      "note": "Medrol (oral methylprednisolone) — used in rejection treatment",
+      "note": "Medrol (oral methylprednisolone), used in rejection treatment",
       "medicareRestriction": true
     },
     "protonix": {
       "trumprxPrice": 200.10,
       "originalPrice": 400,
       "discount": "~50% off",
-      "note": "Generic pantoprazole is ~$30 on GoodRx — check generic first!",
+      "note": "Generic pantoprazole is ~$30 on GoodRx, check generic first!",
       "medicareRestriction": true
     },
     "farxiga": {
       "trumprxPrice": 181.59,
       "originalPrice": 600,
       "discount": "70% off",
-      "note": "Diabetes + kidney & heart protection — increasingly used post-transplant",
+      "note": "Diabetes + kidney & heart protection, increasingly used post-transplant",
       "medicareRestriction": true
     },
     "insulin-lispro": {
@@ -64,7 +64,7 @@
       "trumprxPrice": 6,
       "originalPrice": 15,
       "discount": "~60% off",
-      "note": "Cytomel — thyroid issues can develop post-transplant",
+      "note": "Cytomel, thyroid issues can develop post-transplant",
       "medicareRestriction": true
     }
   }

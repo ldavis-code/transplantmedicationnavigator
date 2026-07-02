@@ -97,7 +97,7 @@ const Coverage101 = () => {
                         How you pay for transplant medications.
                     </h2>
                     <p className="tmn-c101-sub">
-                        The four most common ways patients are covered — what to know, what to watch for, what to do next.
+                        The four most common ways patients are covered, what to know, what to watch for, what to do next.
                     </p>
                 </div>
             </header>
@@ -196,7 +196,7 @@ const Coverage101 = () => {
 
                         <div className="tmn-c101-block">
                             <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care — and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
+                            <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care, and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
@@ -253,12 +253,12 @@ const Coverage101 = () => {
 
                         <div className="tmn-c101-block">
                             <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p>The state pays for most covered services with low or zero out-of-pocket cost. Each state runs its own program — your benefits, prescription rules, and provider list depend on where you live.</p>
+                            <p>The state pays for most covered services with low or zero out-of-pocket cost. Each state runs its own program, your benefits, prescription rules, and provider list depend on where you live.</p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
                             <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>Income and asset limits — exceed them and you can lose coverage. Provider networks may be limited. <strong>Copay cards are not allowed</strong>.</p>
+                            <p>Income and asset limits apply. Exceed them and you can lose coverage. Provider networks may be limited. <strong>Copay cards are not allowed</strong>.</p>
                         </div>
 
                         <div className="tmn-c101-next">
@@ -330,7 +330,7 @@ const Coverage101 = () => {
             </div>
 
             <p className="tmn-c101-footnote">
-                Educational information only. Eligibility rules and coverage details change — verify with your insurer, state Medicaid office, and transplant team.
+                Educational information only. Eligibility rules and coverage details change, verify with your insurer, state Medicaid office, and transplant team.
             </p>
         </section>
     );
