@@ -759,7 +759,7 @@ const Home = () => {
                             <Pill size={20} className="md:hidden" />
                             <Pill size={24} className="hidden md:block" />
                         </div>
-                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">184</div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">218</div>
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Medications</div>
                     </div>
                     <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 md:p-6 text-center border border-amber-200 shadow-sm hover:shadow-md transition-shadow">
