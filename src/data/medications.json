@@ -640,12 +640,12 @@
     "brandName": "HepaGam B / HyperHEP B",
     "genericName": "Hepatitis B Immune Globulin",
     "category": "Hepatitis B",
-    "manufacturer": "Saol / Grifols",
+    "manufacturer": "Kamada / Grifols",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
       "Liver"
     ],
-    "papUrl": "https://www.grifolspatientcare.com/",
+    "papUrl": "https://www.hepagamb.com/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -683,7 +683,7 @@
       "Liver",
       "Kidney"
     ],
-    "copayUrl": "https://www.mavyret.com/savings",
+    "copayUrl": "https://www.mavyret.com/cost",
     "copayProgramId": "mavyret-copay",
     "papUrl": "https://www.abbvie.com/patients/patient-assistance.html",
     "cost_tier": "high",
@@ -749,7 +749,7 @@
       "Pancreas",
       "Lung"
     ],
-    "copayUrl": "https://www.creoninfo.com/savings/",
+    "copayUrl": "https://www.creoninfo.com/cost-savings",
     "copayProgramId": "creon-copay",
     "papUrl": "https://www.creoninfo.com/",
     "cost_tier": "high",
@@ -767,7 +767,7 @@
     "commonOrgans": [
       "Heart"
     ],
-    "copayUrl": "https://www.entresto.com/savings-and-support",
+    "copayUrl": "https://www.entresto.com/financial-support",
     "copayProgramId": "entresto-copay",
     "papUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "cost_tier": "high",
@@ -805,7 +805,7 @@
       "Heart",
       "Kidney"
     ],
-    "copayUrl": "https://www.farxiga.com/savings-and-support",
+    "copayUrl": "https://www.farxiga.com/savings-support",
     "copayProgramId": "farxiga-copay",
     "papUrl": "https://www.azandmeapp.com/",
     "cost_tier": "high",
@@ -1031,7 +1031,7 @@
       "Lung",
       "Heart"
     ],
-    "copayUrl": "https://www.uptravi.com/support",
+    "copayUrl": "https://www.uptravi.com/resources-and-cost-support/support-programs/",
     "copayProgramId": "uptravi-copay",
     "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
@@ -1149,7 +1149,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://feraheme.com/patient-support/",
+    "papUrl": "https://feraheme.com/download-resources/",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1165,7 +1165,7 @@
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.dsiaccesscentral.com/",
+    "papUrl": "https://www.injectafer.com/ida/support-and-savings",
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty",
@@ -1746,7 +1746,7 @@
       "Heart",
       "Kidney"
     ],
-    "copayUrl": "https://www.xarelto-us.com/savings",
+    "copayUrl": "https://www.xarelto-us.com/xarelto-cost/",
     "copayProgramId": "xarelto-copay",
     "papUrl": "https://www.jnjwithme.com/",
     "cost_tier": "high",
@@ -1908,7 +1908,7 @@
     "generic_available": true,
     "typical_copay_tier": 2,
     "papProgramId": "novo-nordisk-pap",
-    "copayUrl": "https://www.novolog.com/savings-card",
+    "copayUrl": "https://www.novolog.com/savings.html",
     "copayProgramId": "novolog-copay"
   },
   {
@@ -2015,7 +2015,7 @@
     "generic_available": true,
     "typical_copay_tier": 2,
     "papProgramId": "gsk-pap",
-    "copayUrl": "https://www.advair.com/savings-and-support/",
+    "copayUrl": "https://gskforyou.com/programs/gsk-coupons-free-trials/",
     "copayProgramId": "advair-copay"
   },
   {
@@ -2158,7 +2158,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "papUrl": "https://www.tevausa.com/patient-resources/",
+    "papUrl": "https://www.qvar.com/redihaler/teva-patient-assistance-program",
     "cost_tier": "medium",
     "generic_available": true,
     "typical_copay_tier": 2,
@@ -2206,7 +2206,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.breoellipta.com/savings/",
+    "copayUrl": "https://gskforyou.com/programs/gsk-coupons-free-trials/",
     "copayProgramId": "breo-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2224,7 +2224,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.dulera.com/savings/",
+    "copayUrl": "https://www.dulera.com/savings-offer/",
     "copayProgramId": "dulera-copay",
     "papUrl": "https://www.organonhelps.com/",
     "cost_tier": "high",
@@ -2242,7 +2242,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.anoro.com/savings-and-support/",
+    "copayUrl": "https://gskforyou.com/programs/gsk-coupons-free-trials/",
     "copayProgramId": "anoro-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2278,7 +2278,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.nucala.com/severe-eosinophilic-asthma/nucala-costs/",
+    "copayUrl": "https://www.nucala.com/support-resources/patient-support-program/",
     "copayProgramId": "nucala-copay",
     "papUrl": "https://www.gskforyou.com/",
     "cost_tier": "high",
@@ -2296,7 +2296,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.fasenra.com/savings-and-support/",
+    "copayUrl": "https://www.fasenra.com/savings-support",
     "copayProgramId": "fasenra-copay",
     "papUrl": "https://www.azandmeapp.com/",
     "cost_tier": "high",
@@ -2332,7 +2332,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.tezspire.com/savings/",
+    "copayUrl": "https://copay.tezspiretogether.com/",
     "copayProgramId": "tezspire-copay",
     "papUrl": "https://www.azandmeapp.com/",
     "cost_tier": "high",
@@ -3536,7 +3536,7 @@
     "commonOrgans": [
       "Lung"
     ],
-    "copayUrl": "https://www.esbriet.com/financial-support.html",
+    "copayUrl": "https://www.esbrietcopay.com/",
     "copayProgramId": "genentech-copay",
     "papUrl": "https://www.genentech-access.com/",
     "papProgramId": "genentech-pap",
@@ -3782,7 +3782,7 @@
     ],
     "copayUrl": "https://www.xifaxan.com/",
     "copayProgramId": "salix-copay",
-    "papUrl": "https://www.bauschhealth.com/patient-resources/",
+    "papUrl": "https://www.bauschhealthpap.com/",
     "papProgramId": "bausch-pap",
     "cost_tier": "high",
     "generic_available": false,

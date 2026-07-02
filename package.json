@@ -12,7 +12,8 @@
     "sync:endpoints": "node sync_endpoints_to_neon.js",
     "generate-icons": "node scripts/generate-icons.js",
     "check:readability": "node scripts/check-readability.js",
-    "check:readability:strict": "node scripts/check-readability.js --strict"
+    "check:readability:strict": "node scripts/check-readability.js --strict",
+    "check:links": "node scripts/check-links.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
