@@ -51,7 +51,7 @@ const Demo = () => {
     {
       icon: FileText,
       title: 'Medication Search',
-      description: 'Search 100+ transplant medications with assistance program details',
+      description: 'Search 200+ transplant medications with assistance program details',
       path: '/medications',
     },
     {

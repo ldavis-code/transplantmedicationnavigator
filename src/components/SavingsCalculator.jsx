@@ -75,7 +75,7 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     const range = (lo, hi) => (Math.round(lo) === Math.round(hi) ? money(lo) : `${money(lo)} – ${money(hi)}`);
 
     // Use medications from context if available, otherwise use fallback
-    // This gives access to all 180+ medications from the database
+    // This gives access to all medications from the database
     const allMedications = medications?.length > 0
         ? medications.map(med => ({
             id: med.id,

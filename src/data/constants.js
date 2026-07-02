@@ -1,6 +1,6 @@
 // Last updated date - Update this when content changes
 // Format: "Month Day, Year" (e.g., "November 24, 2025")
-export const LAST_UPDATED = "May 21, 2026";
+export const LAST_UPDATED = "July 1, 2026";
 
 // Date the full set of assistance-program links was last checked for accuracy.
 // Maintained by scripts/check-links.js — it rewrites these lines after a clean run.
