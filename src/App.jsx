@@ -725,7 +725,7 @@ const Home = () => {
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-                    Compare medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
+                    Compare estimated medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
                 </h1>
                 <p className="text-lg md:text-xl font-medium italic text-slate-500 mb-4 tracking-wide">
                     From Prescription to Possession

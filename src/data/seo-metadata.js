@@ -31,12 +31,12 @@ export const seoMetadata = {
 
   medications: {
     title: 'Search Transplant Medications & Prices | Transplant Medication Navigator™',
-    description: 'Compare transplant medication prices and find FREE assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
+    description: 'Compare estimated transplant medication prices and find FREE assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
     canonical: `${BASE_URL}/medications`,
-    ogTitle: 'Search Transplant Medications - Compare Prices & Find Free Help',
-    ogDescription: 'Search transplant medications, compare retail prices, and find Patient Assistance Programs offering FREE medications. Tacrolimus, mycophenolate, sirolimus, and more.',
+    ogTitle: 'Search Transplant Medications - Compare Estimated Prices & Find Free Help',
+    ogDescription: 'Search transplant medications, compare estimated prices, and find Patient Assistance Programs offering FREE medications. Tacrolimus, mycophenolate, sirolimus, and more.',
     twitterTitle: 'Search Transplant Medications & Find Free Help',
-    twitterDescription: 'Compare prices and find FREE medication assistance for tacrolimus, mycophenolate, prednisone, and other transplant drugs.',
+    twitterDescription: 'Compare estimated prices and find FREE medication assistance for tacrolimus, mycophenolate, prednisone, and other transplant drugs.',
     breadcrumbName: 'Medications',
   },
 
