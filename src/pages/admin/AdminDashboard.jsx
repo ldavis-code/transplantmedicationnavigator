@@ -187,6 +187,13 @@ export default function AdminDashboard() {
       color: 'bg-red-100 text-red-600',
     },
     {
+      title: 'Insights',
+      description: 'Savings, missing meds, adoption & feedback',
+      icon: TrendingUp,
+      href: '/admin/insights',
+      color: 'bg-emerald-100 text-emerald-600',
+    },
+    {
       title: 'Compliance',
       description: 'Medication adherence & risk monitoring',
       icon: ShieldCheck,

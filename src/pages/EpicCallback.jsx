@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Loader2, CheckCircle, AlertCircle, ShieldCheck, ArrowRight } from 'lucide-react';
 import MEDICATIONS_DATA from '../data/medications.json';
 import { fetchAllMedications } from '../lib/medicationsApi.js';
+import { trackServerEvent } from '../lib/trackServerEvent.js';
 
 /**
  * Strip dosage strength (mg/mcg/mL/etc.), dosage form, and route descriptors
@@ -396,6 +397,14 @@ const EpicCallback = () => {
                     assistancePrograms,
                     timestamp: Date.now()
                 }));
+
+                // Track MyChart/Epic import adoption (counts only — no drug names
+                // or PHI) so the admin can measure use of this feature.
+                trackServerEvent('epic_import', {
+                    matched: matched.length,
+                    unmatched: unmatched.length,
+                    totalFhirMeds: fhirMeds.length,
+                });
 
                 // Aggregate-track the medications we don't have (drug names only,
                 // no patient data) so the team can see what to add next.

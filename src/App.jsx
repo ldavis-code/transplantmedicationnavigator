@@ -40,6 +40,7 @@ const LazyMedicationConfig = lazy(() => import('./pages/admin/MedicationConfig.j
 const LazySurveyResponses = lazy(() => import('./pages/admin/SurveyResponses.jsx'));
 const LazyFeatureSettings = lazy(() => import('./pages/admin/FeatureSettings.jsx'));
 const LazyImpactReport = lazy(() => import('./pages/admin/ImpactReport.jsx'));
+const LazyInsights = lazy(() => import('./pages/admin/Insights.jsx'));
 const LazyComplianceDashboard = lazy(() => import('./pages/admin/ComplianceDashboard.jsx'));
 const LazyComplianceOverview = lazy(() => import('./pages/admin/ComplianceOverview.jsx'));
 const LazyCenterLogins = lazy(() => import('./pages/admin/CenterLogins.jsx'));
@@ -5474,7 +5475,7 @@ const Education = () => {
                         {DIRECTORY_RESOURCES && DIRECTORY_RESOURCES.length > 0 ? (
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {DIRECTORY_RESOURCES.map((res) => (
-                                    <a key={res.name} href={res.url} target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition h-full" aria-label={`Visit ${res.name} (opens in new tab)`}>
+                                    <a key={res.name} href={res.url} target="_blank" rel="noreferrer" onClick={() => trackServerEvent('resource_view', { resource: res.name, category: res.category })} className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition h-full" aria-label={`Visit ${res.name} (opens in new tab)`}>
                                         <div className="flex justify-between items-start mb-2">
                                             <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700 pr-2">{res.name}</h3>
                                             <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0 mt-1" aria-hidden="true" />
@@ -7317,6 +7318,7 @@ const AdminRoutes = () => {
                         <Route path="/admin/surveys" element={<LazySurveyResponses />} />
                         <Route path="/admin/features" element={<LazyFeatureSettings />} />
                         <Route path="/admin/impact" element={<LazyImpactReport />} />
+                        <Route path="/admin/insights" element={<LazyInsights />} />
                         <Route path="/admin/compliance" element={<LazyComplianceDashboard />} />
                         <Route path="/admin/compliance-overview" element={<LazyComplianceOverview />} />
                         <Route path="/admin/center-logins" element={<LazyCenterLogins />} />
