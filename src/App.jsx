@@ -118,6 +118,7 @@ import {
     TransplantStage
 } from './data/constants.js';
 import MEDICATIONS_DATA from './data/medications.json';
+import PROGRAMS_DATA from './data/programs.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
 import STATES_DATA from './data/states.json';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
@@ -685,6 +686,15 @@ const Layout = ({ children }) => {
     );
 };
 
+// Home-page stat tiles are computed from the data files so they can never go
+// stale. Copay cards = copay-card programs; Assistance Programs = income-based
+// PAPs + foundation grants (kept separate from copay so the two tiles never
+// double-count the same program).
+const countGroup = (group) => (group ? Object.keys(group).length : 0);
+const STAT_MEDICATIONS = MEDICATIONS_DATA.length;
+const STAT_COPAY_CARDS = countGroup(PROGRAMS_DATA.copayPrograms);
+const STAT_ASSISTANCE_PROGRAMS = countGroup(PROGRAMS_DATA.papPrograms) + countGroup(PROGRAMS_DATA.foundationPrograms);
+
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
@@ -759,7 +769,7 @@ const Home = () => {
                             <Pill size={20} className="md:hidden" />
                             <Pill size={24} className="hidden md:block" />
                         </div>
-                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">218</div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_MEDICATIONS}</div>
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Medications</div>
                     </div>
                     <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 md:p-6 text-center border border-amber-200 shadow-sm hover:shadow-md transition-shadow">
@@ -767,7 +777,7 @@ const Home = () => {
                             <HeartHandshake size={20} className="md:hidden" />
                             <HeartHandshake size={24} className="hidden md:block" />
                         </div>
-                        <div className="text-2xl md:text-4xl font-extrabold text-amber-700">60+</div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-amber-700">{STAT_ASSISTANCE_PROGRAMS}</div>
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Assistance Programs</div>
                     </div>
                     <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 md:p-6 text-center border border-emerald-200 shadow-sm hover:shadow-md transition-shadow">
@@ -775,7 +785,7 @@ const Home = () => {
                             <CreditCard size={20} className="md:hidden" />
                             <CreditCard size={24} className="hidden md:block" />
                         </div>
-                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">65+</div>
+                        <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_COPAY_CARDS}</div>
                         <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
                     </div>
                 </div>
@@ -808,7 +818,7 @@ const Home = () => {
                         </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-4 text-center sm:text-left">
-                        Listed in the Epic Connection Hub • Works with 900+ Epic health systems • Your data stays on your device
+                        Listed in the Epic Connection Hub • Works with 400+ Epic health systems • Your data stays on your device
                     </p>
                 </Link>
             </section>

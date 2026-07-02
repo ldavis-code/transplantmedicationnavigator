@@ -307,7 +307,7 @@ const ForHospitalAdmin = () => {
                     <h2 className="text-xl font-bold text-emerald-900">What Your Patients See</h2>
                 </div>
                 <p className="text-emerald-800 mb-6 max-w-2xl mx-auto">
-                    Patients get a simple, accessible interface to search 218+ transplant medications, find copay cards and assistance programs, and access educational content—no login required.
+                    Patients get a simple, accessible interface to search 200+ transplant medications, find copay cards and assistance programs, and access educational content—no login required.
                 </p>
                 <Link
                     to="/"
