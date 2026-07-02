@@ -813,7 +813,7 @@ const Home = () => {
                                 Your real medication list, in one tap
                             </h2>
                             <p className="text-slate-600 mt-1 md:text-lg">
-                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong> — then instantly see every copay card and assistance program you qualify for. No typing, no errors.
+                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.
                             </p>
                         </div>
                         <span className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white font-bold rounded-xl transition whitespace-nowrap">
@@ -906,7 +906,7 @@ const Home = () => {
                                 <Building2 size={14} aria-hidden="true" /> For hospitals &amp; transplant centers
                             </span>
                             <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                                Give every patient a medication-education platform — under your brand
+                                Give every patient a medication-education platform, under your brand
                             </h2>
                             <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
                                 Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.
@@ -1034,7 +1034,7 @@ const Home = () => {
                         </div>
                         <h3 className="text-lg font-bold text-slate-900">Lorrinda Gray-Davis</h3>
                         <p className="text-emerald-700 font-medium text-sm mb-3">Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee</p>
-                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience — seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
+                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience: seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">Years post-transplant</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">Transplants facilitated</span></span>

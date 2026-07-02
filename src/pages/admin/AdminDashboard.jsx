@@ -274,7 +274,7 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Patient Impact & Engagement — combined reference */}
+      {/* Patient Impact & Engagement (combined reference) */}
       <div className="mb-8">
         <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-emerald-600" />
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Got Medication</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{gotMedRate !== null ? `${gotMedRate}%` : '—'}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{gotMedRate !== null ? `${gotMedRate}%` : 'N/A'}</p>
                 <p className="text-xs text-gray-400 mt-1">{helpfulTotal > 0 ? `${helpfulTotal} responses` : 'No feedback yet'}</p>
               </div>
               <Heart className="h-8 w-8 text-rose-400" />
@@ -526,7 +526,7 @@ export default function AdminDashboard() {
           <Zap className="h-6 w-6" />
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-emerald-900">Epic EHR Integration — Active</h3>
+          <h3 className="font-semibold text-emerald-900">Epic EHR Integration: Active</h3>
           <p className="text-sm text-emerald-700 mt-1">
             SMART on FHIR EHR launch and patient standalone launch are configured.
             Clinicians can launch TMN directly from Epic MyChart or the EHR sidebar.
@@ -619,7 +619,7 @@ export default function AdminDashboard() {
                 setPwMsg({ type: 'error', text: data.error || 'Failed to change password' });
               }
             } catch {
-              setPwMsg({ type: 'error', text: 'Network error — try again' });
+              setPwMsg({ type: 'error', text: 'Network error. Try again' });
             } finally {
               setPwSubmitting(false);
             }

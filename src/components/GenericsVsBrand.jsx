@@ -1,5 +1,5 @@
 /**
- * Generics vs. Brand-Name — patient education.
+ * Generics vs. Brand-Name patient education.
  *
  * Consolidates the guidance that was previously scattered across several FAQ
  * entries into one clear, transplant-specific explainer. Reassures patients
@@ -20,7 +20,7 @@ const GenericsVsBrand = () => {
                 <span className="text-xs font-bold uppercase tracking-wide text-emerald-700">Medication Safety</span>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mt-1">Generics vs. Brand-Name Medicines</h2>
                 <p className="text-slate-700 mt-2 md:text-lg">
-                    Generics can save you a lot of money — and for most medicines they are a smart, safe choice.
+                    Generics can save you a lot of money, and for most medicines they are a smart, safe choice.
                     For transplant patients, there is just one important rule that keeps them safe. Here is what to know.
                 </p>
             </div>
@@ -46,8 +46,8 @@ const GenericsVsBrand = () => {
                     Transplant drugs need extra care
                 </h3>
                 <p className="text-slate-700 text-sm md:text-base mb-2">
-                    Anti-rejection drugs — like <strong>tacrolimus (Prograf)</strong>, <strong>cyclosporine</strong>,
-                    <strong> sirolimus (Rapamune)</strong>, and <strong>everolimus</strong> — are "narrow therapeutic index" drugs.
+                    Anti-rejection drugs like <strong>tacrolimus (Prograf)</strong>, <strong>cyclosporine</strong>,
+                    <strong> sirolimus (Rapamune)</strong>, and <strong>everolimus</strong> are "narrow therapeutic index" drugs.
                     That means even a small change in how much reaches your blood matters:
                 </p>
                 <ul className="space-y-1.5 text-slate-700 text-sm md:text-base">
@@ -55,8 +55,8 @@ const GenericsVsBrand = () => {
                     <li>• <strong>Too much</strong> → more side effects and toxicity.</li>
                 </ul>
                 <p className="text-slate-700 text-sm md:text-base mt-2">
-                    Different makers can be absorbed a little differently. So the real risk is not the generic itself —
-                    it is <strong>switching</strong> (brand to generic, or one generic maker to another).
+                    Different makers can be absorbed a little differently. So the real risk is not the generic itself.
+                    The risk is <strong>switching</strong> (brand to generic, or one generic maker to another).
                 </p>
             </section>
 
@@ -67,7 +67,7 @@ const GenericsVsBrand = () => {
                     The safe way to save with a generic
                 </h3>
                 <ol className="space-y-2 text-slate-700 text-sm md:text-base list-decimal list-inside">
-                    <li>Pick one version and stay on it. A generic is fine — just keep the <strong>same manufacturer</strong> every time you refill.</li>
+                    <li>Pick one version and stay on it. A generic is fine. Just keep the <strong>same manufacturer</strong> every time you refill.</li>
                     <li>Ask your pharmacy to always give you the same maker, and to call you <strong>before</strong> any switch.</li>
                     <li>Ask your doctor to write the maker on your prescription (or <strong>"Do Not Substitute"</strong> if your team wants brand-name).</li>
                     <li>After <strong>any</strong> change, ask for a blood test within a week.</li>
@@ -99,8 +99,8 @@ const GenericsVsBrand = () => {
                     <div>
                         <h3 className="font-bold text-slate-900 mb-1">The bottom line</h3>
                         <p className="text-slate-700 text-sm md:text-base">
-                            Generics can save you money <strong>and</strong> be safe. The key is staying consistent —
-                            the same version every time — and keeping your transplant team in the loop.
+                            Generics can save you money <strong>and</strong> be safe. The key is staying consistent:
+                            use the same version every time, and keep your transplant team in the loop.
                             <strong> Never switch on your own just to save money.</strong>
                         </p>
                     </div>

@@ -1,5 +1,5 @@
 /**
- * About page — the full founder story, credentials, and published research.
+ * About page: the full founder story, credentials, and published research.
  * Moved off the home page to keep it focused; the home page links here.
  */
 
