@@ -103,7 +103,7 @@ import {
     GraduationCap, Phone, ClipboardList, CheckSquare, Square, Stethoscope,
     AlertOctagon, Calendar, Pill, ChevronDown, ChevronUp, Share2, Home as HomeIcon,
     MessageCircle, Send, HelpCircle, Lightbulb, Zap, MinimizeIcon, Users, TrendingUp, Clock, Loader2,
-    CreditCard, Sparkles, Star, Filter, Eye, EyeOff
+    CreditCard, Sparkles, Star, Filter, Eye, EyeOff, Download, Smartphone
 } from 'lucide-react';
 
 // --- CONSTANTS & DATA ---
@@ -781,17 +781,37 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Epic / MyChart Badge */}
-            <div className="flex justify-center max-w-4xl mx-auto">
-                <div className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-2xl shadow-md">
-                    <div className="flex items-center gap-3">
-                        <div className="w-4 h-4 bg-emerald-500 rounded-full ring-4 ring-emerald-100" aria-hidden="true" />
-                        <span className="text-base md:text-lg font-extrabold text-slate-900">Listed in Epic Connection Hub</span>
+            {/* Epic / MyChart Import Headline */}
+            <section className="max-w-4xl mx-auto" aria-labelledby="mychart-heading">
+                <Link
+                    to="/wizard"
+                    className="group block rounded-2xl border-2 border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50 p-6 md:p-8 shadow-md hover:shadow-lg hover:border-emerald-400 transition-all"
+                    aria-label="Connect your MyChart to import your medication list"
+                >
+                    <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                        <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-sm" aria-hidden="true">
+                            <Smartphone size={28} />
+                        </div>
+                        <div className="flex-grow">
+                            <span className="inline-flex items-center gap-1 text-xs font-extrabold tracking-wide text-emerald-700 uppercase mb-1">
+                                <Sparkles size={13} aria-hidden="true" /> New
+                            </span>
+                            <h2 id="mychart-heading" className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">
+                                Your real medication list, in one tap
+                            </h2>
+                            <p className="text-slate-600 mt-1 md:text-lg">
+                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong> — then instantly see every copay card and assistance program you qualify for. No typing, no errors.
+                            </p>
+                        </div>
+                        <span className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white font-bold rounded-xl transition whitespace-nowrap">
+                            <Download size={18} aria-hidden="true" /> Connect MyChart
+                        </span>
                     </div>
-                    <div className="w-px h-8 bg-emerald-300" aria-hidden="true" />
-                    <span className="text-base md:text-lg font-extrabold text-emerald-700">MyChart Integrated</span>
-                </div>
-            </div>
+                    <p className="text-xs text-slate-500 mt-4 text-center sm:text-left">
+                        Listed in the Epic Connection Hub • Works with 900+ Epic health systems • Your data stays on your device
+                    </p>
+                </Link>
+            </section>
 
             {/* Features Grid */}
             <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
@@ -1170,6 +1190,44 @@ const Home = () => {
                     We do not save your info. We do not ask for your social security number.
                     We do not sell your info. This tool is only here to teach you about your options.
                 </p>
+            </section>
+
+            {/* For Hospitals & Transplant Centers */}
+            <section className="max-w-5xl mx-auto" aria-labelledby="for-hospitals-heading">
+                <div className="rounded-2xl bg-slate-900 text-white p-8 md:p-10 shadow-lg">
+                    <div className="flex flex-col md:flex-row md:items-center gap-6">
+                        <div className="flex-grow">
+                            <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide text-emerald-300 uppercase mb-2">
+                                <Building2 size={14} aria-hidden="true" /> For hospitals &amp; transplant centers
+                            </span>
+                            <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
+                                Give every patient a medication-education platform — under your brand
+                            </h2>
+                            <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
+                                Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.
+                            </p>
+                            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-200">
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> White-label admin dashboard</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Epic MyChart integration</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Outcomes &amp; savings reporting</li>
+                            </ul>
+                        </div>
+                        <div className="flex flex-col gap-3 flex-shrink-0 w-full md:w-auto">
+                            <Link
+                                to="/for-hospitals"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold rounded-xl transition whitespace-nowrap"
+                            >
+                                Book a demo <ArrowRight size={18} aria-hidden="true" />
+                            </Link>
+                            <Link
+                                to="/pilot"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border-2 border-slate-600 hover:border-slate-400 text-white font-bold rounded-xl transition whitespace-nowrap"
+                            >
+                                See the pilot program
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* Built by Patient Tagline */}
