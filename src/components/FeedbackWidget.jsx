@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Check, X, DollarSign, HelpCircle, CheckCircle } from 'lucide-react';
+import { trackServerEvent } from '../lib/trackServerEvent.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -27,6 +28,11 @@ const FeedbackWidget = ({ medicationName }) => {
   // Q1: Did you get your medication today?
   const answerQ1 = (value) => {
     updateResponse('got_medication', value);
+    // Record the outcome as a helpful-vote event so it shows in analytics
+    // (yes = the tool helped them get their medication).
+    trackServerEvent(value === 'yes' ? 'helpful_vote_yes' : 'helpful_vote_no', {
+      medication: medicationName || null,
+    });
     if (value === 'yes') {
       setStep('q2'); // Ask about savings
     } else {

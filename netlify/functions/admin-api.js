@@ -195,7 +195,12 @@ async function getStats(db) {
             COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_clicks,
             COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_clicks,
             COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
-            COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completes
+            COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completes,
+            COUNT(*) FILTER (WHERE event_name = 'epic_import') as epic_imports,
+            COUNT(*) FILTER (WHERE event_name = 'epic_import' AND ts >= ${dates.startOfMonth.toISOString()}) as epic_imports_month,
+            COUNT(*) FILTER (WHERE event_name = 'helpful_vote_yes') as helpful_yes,
+            COUNT(*) FILTER (WHERE event_name = 'helpful_vote_no') as helpful_no,
+            COUNT(*) FILTER (WHERE event_name = 'resource_view') as resource_views
         FROM events
     `;
 
@@ -209,6 +214,11 @@ async function getStats(db) {
         papClicks: parseInt(clickStats[0]?.pap_clicks || 0),
         quizStarts: parseInt(clickStats[0]?.quiz_starts || 0),
         quizCompletes: parseInt(clickStats[0]?.quiz_completes || 0),
+        epicImports: parseInt(clickStats[0]?.epic_imports || 0),
+        epicImportsThisMonth: parseInt(clickStats[0]?.epic_imports_month || 0),
+        helpfulVotesYes: parseInt(clickStats[0]?.helpful_yes || 0),
+        helpfulVotesNo: parseInt(clickStats[0]?.helpful_no || 0),
+        resourceViews: parseInt(clickStats[0]?.resource_views || 0),
     };
 }
 
@@ -708,6 +718,143 @@ async function getSubscriberStats() {
     }
 }
 
+// Aggregate patient-logged savings (Neon user_savings). This is the operator's
+// headline impact number and was previously only visible to the patient.
+async function getSavingsSummary(db) {
+    try {
+        const totals = await db`
+            SELECT
+                COUNT(*) as total_entries,
+                COUNT(DISTINCT user_id) as unique_patients,
+                COALESCE(SUM(amount_saved), 0) as total_saved,
+                COALESCE(SUM(original_price), 0) as total_original,
+                COALESCE(ROUND(AVG(amount_saved), 2), 0) as avg_saved_per_fill
+            FROM user_savings
+        `;
+        const byProgram = await db`
+            SELECT
+                COALESCE(program_type, 'other') as program_type,
+                COUNT(*) as entries,
+                COALESCE(SUM(amount_saved), 0) as saved
+            FROM user_savings
+            GROUP BY program_type
+            ORDER BY saved DESC
+        `;
+        const recent = await db`
+            SELECT medication_name, program_name, program_type, amount_saved, fill_date, created_at
+            FROM user_savings
+            ORDER BY created_at DESC
+            LIMIT 15
+        `;
+        const t = totals[0] || {};
+        return {
+            available: true,
+            totalSaved: parseFloat(t.total_saved || 0),
+            totalOriginal: parseFloat(t.total_original || 0),
+            totalEntries: parseInt(t.total_entries || 0),
+            uniquePatients: parseInt(t.unique_patients || 0),
+            avgSavedPerFill: parseFloat(t.avg_saved_per_fill || 0),
+            byProgram: byProgram.map(r => ({
+                programType: r.program_type,
+                entries: parseInt(r.entries || 0),
+                saved: parseFloat(r.saved || 0),
+            })),
+            recent: recent.map(r => ({
+                medicationName: r.medication_name,
+                programName: r.program_name,
+                programType: r.program_type,
+                amountSaved: parseFloat(r.amount_saved || 0),
+                fillDate: r.fill_date,
+                createdAt: r.created_at,
+            })),
+        };
+    } catch (error) {
+        // Table may not exist yet in a fresh environment.
+        console.error('Error fetching savings summary:', error.message);
+        return { available: false, error: error.message };
+    }
+}
+
+// Medications patients searched for that are NOT in the catalog — a ranked
+// "what to add next" list. Written by track-missing-medications.js.
+async function getMissingMedications(db) {
+    try {
+        const rows = await db`
+            SELECT display_name, name_normalized, request_count, last_seen
+            FROM missing_medications
+            ORDER BY request_count DESC, last_seen DESC
+            LIMIT 100
+        `;
+        return {
+            available: true,
+            total: rows.length,
+            medications: rows.map(r => ({
+                displayName: r.display_name,
+                nameNormalized: r.name_normalized,
+                requestCount: parseInt(r.request_count || 0),
+                lastSeen: r.last_seen,
+            })),
+        };
+    } catch (error) {
+        console.error('Error fetching missing medications:', error.message);
+        return { available: false, error: error.message };
+    }
+}
+
+// Patient feedback (Supabase `feedback` table) — written by the FeedbackWidget
+// and the /feedback survey page, but never surfaced in admin until now.
+async function getFeedbackSummary() {
+    const sb = getSupabase();
+    if (!sb) {
+        return { available: false };
+    }
+    try {
+        const { data: rows, error } = await sb
+            .from('feedback')
+            .select('got_medication, program_found, savings_range, without_tool, comment, medication_searched, source, created_at')
+            .order('created_at', { ascending: false })
+            .limit(500);
+        if (error) throw new Error(error.message);
+        const all = rows || [];
+
+        const tally = (key) => {
+            const out = {};
+            all.forEach(r => {
+                const v = r[key];
+                if (v !== null && v !== undefined && v !== '') out[v] = (out[v] || 0) + 1;
+            });
+            return out;
+        };
+        // "Got medication" comes from the widget (got_medication) or the
+        // survey page (program_found) — combine both into one outcome tally.
+        const gotOutcome = {};
+        all.forEach(r => {
+            const v = r.got_medication || r.program_found;
+            if (v) gotOutcome[v] = (gotOutcome[v] || 0) + 1;
+        });
+
+        return {
+            available: true,
+            total: all.length,
+            gotMedication: gotOutcome,
+            savingsRange: tally('savings_range'),
+            withoutTool: tally('without_tool'),
+            recentComments: all
+                .filter(r => r.comment && r.comment.trim())
+                .slice(0, 20)
+                .map(r => ({
+                    comment: r.comment,
+                    medication: r.medication_searched || null,
+                    source: r.source || null,
+                    createdAt: r.created_at,
+                })),
+        };
+    } catch (error) {
+        console.error('Error fetching feedback summary:', error.message);
+        return { available: false, error: error.message };
+    }
+}
+
 export async function handler(event) {
     // Handle CORS preflight
     if (event.httpMethod === 'OPTIONS') {
@@ -767,6 +914,24 @@ export async function handler(event) {
                 headers,
                 body: JSON.stringify(quizData),
             };
+        }
+
+        // GET /admin-api/savings-summary
+        if (path === '/savings-summary') {
+            const result = await getSavingsSummary(db);
+            return { statusCode: 200, headers, body: JSON.stringify(result) };
+        }
+
+        // GET /admin-api/missing-medications
+        if (path === '/missing-medications') {
+            const result = await getMissingMedications(db);
+            return { statusCode: 200, headers, body: JSON.stringify(result) };
+        }
+
+        // GET /admin-api/feedback-summary
+        if (path === '/feedback-summary') {
+            const result = await getFeedbackSummary();
+            return { statusCode: 200, headers, body: JSON.stringify(result) };
         }
 
         // GET /admin-api/events
