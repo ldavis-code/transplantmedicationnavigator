@@ -152,14 +152,14 @@ export default function Login() {
                   const res = await fetch('/api/admin-seed', { method: 'POST' });
                   const data = await res.json();
                   if (res.status === 201) {
-                    setSeedStatus({ type: 'success', message: `Admin account created! Email: ${data.email} — Password: ${data.temporaryPassword}` });
+                    setSeedStatus({ type: 'success', message: `Admin account created! Email: ${data.email}, Password: ${data.temporaryPassword}` });
                   } else if (res.status === 409) {
                     setSeedStatus({ type: 'info', message: `Admin already exists: ${data.email}` });
                   } else {
                     setSeedStatus({ type: 'error', message: data.error || data.details || 'Setup failed' });
                   }
                 } catch (err) {
-                  setSeedStatus({ type: 'error', message: 'Network error — try again' });
+                  setSeedStatus({ type: 'error', message: 'Network error, try again' });
                 } finally {
                   setSeeding(false);
                 }

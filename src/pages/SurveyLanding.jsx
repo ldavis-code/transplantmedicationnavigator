@@ -85,7 +85,7 @@ export default function SurveyLanding() {
             "When you share your story, you help other patients. Together, we are building a guide that we wish we had. Your voice helps us fix a broken system."
           </blockquote>
           <p className="text-sm text-slate-500">
-            — Lorrinda, TRIO President & Liver Transplant Recipient
+, Lorrinda, TRIO President & Liver Transplant Recipient
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function SurveyLanding() {
             <span><strong>Privacy:</strong> No names, dates, or medical records collected</span>
           </div>
           <p className="text-xs text-slate-400 mt-4">
-            Powered by TransplantMedicationNavigator.com — By patients, for patients
+            Powered by TransplantMedicationNavigator.com, By patients, for patients
           </p>
         </div>
       </div>

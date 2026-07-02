@@ -119,19 +119,19 @@ const COBQuiz = () => {
                     <ul className="space-y-2 text-slate-700">
                         <li className="flex items-start gap-2">
                             <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                            <span><strong>Kidney disease</strong> — You may get Medicare even if you're under 65</span>
+                            <span><strong>Kidney disease</strong>: You may get Medicare even if you're under 65</span>
                         </li>
                         <li className="flex items-start gap-2">
                             <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                            <span><strong>Disability</strong> — After 2 years on disability, you get Medicare</span>
+                            <span><strong>Disability</strong>: After 2 years on disability, you get Medicare</span>
                         </li>
                         <li className="flex items-start gap-2">
                             <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                            <span><strong>Still working at 65+</strong> — You have Medicare AND job insurance</span>
+                            <span><strong>Still working at 65+</strong>: You have Medicare AND job insurance</span>
                         </li>
                         <li className="flex items-start gap-2">
                             <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                            <span><strong>Spouse's insurance</strong> — Your spouse's job covers you too</span>
+                            <span><strong>Spouse's insurance</strong>: Your spouse's job covers you too</span>
                         </li>
                     </ul>
                 </div>

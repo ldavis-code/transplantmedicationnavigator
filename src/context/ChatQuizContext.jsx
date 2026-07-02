@@ -116,7 +116,7 @@ const QUIZ_QUESTIONS = [
         description: 'My situation is different from the options above'
       },
     ],
-    tip: "Your insurance combination determines which programs you qualify for. Medicare + active employer coverage is special—the employer plan is primary, so copay cards may be available!",
+    tip: "Your insurance combination determines which programs you qualify for. Medicare + active employer coverage is special, the employer plan is primary, so copay cards may be available!",
     // Only show if user has multiple insurance and selected Medicare
     showIf: (answers) => answers.insurance_type === 'medicare' && answers.has_multiple_insurance === 'yes',
   },
@@ -138,7 +138,7 @@ const QUIZ_QUESTIONS = [
       { value: 'unaffordable', label: 'Unaffordable', description: "I struggle to pay for meds" },
       { value: 'crisis', label: 'Crisis', description: "I've skipped or rationed doses", urgent: true },
     ],
-    tip: "If you're in crisis, reach out to your transplant center social worker immediately. Never skip doses—there are emergency options available.",
+    tip: "If you're in crisis, reach out to your transplant center social worker immediately. Never skip doses, there are emergency options available.",
   },
   {
     id: 'transplant_pharmacy',
@@ -148,9 +148,9 @@ const QUIZ_QUESTIONS = [
       { value: 'yes', label: 'Yes', description: "I use my transplant center's pharmacy" },
       { value: 'no', label: 'No', description: "I use a different pharmacy" },
       { value: 'not_sure', label: "I'm not sure", description: "I don't know if my center has one" },
-      { value: 'will_check', label: "I'll check!", description: "Good idea—I'll call and ask" },
+      { value: 'will_check', label: "I'll check!", description: "Good idea, I'll call and ask" },
     ],
-    tip: "Some transplant centers offer their own pharmacy with lower pricing that patients don't know about. It's worth one phone call to check—you might save significantly on your medications.",
+    tip: "Some transplant centers offer their own pharmacy with lower pricing that patients don't know about. It's worth one phone call to check, you might save significantly on your medications.",
     // This question only shows when patient is uninsured OR struggling with costs
     showIf: (answers) => {
       const isUninsured = answers.insurance_type === 'uninsured';

@@ -210,7 +210,7 @@ export default function UserManagement() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
                 >
                   {ROLES.filter(r => isSuperAdmin || r.value !== 'super_admin').map(r => (
-                    <option key={r.value} value={r.value}>{r.label} — {r.desc}</option>
+                    <option key={r.value} value={r.value}>{r.label}, {r.desc}</option>
                   ))}
                 </select>
               </div>

@@ -44,10 +44,10 @@ const CURATED_SYSTEMS = [
 
 /**
  * Build the full health-system list patients can choose from:
- *   1. Epic sandbox (testing only) — always first.
- *   2. Curated transplant centers (patient-friendly names) — next.
+ *   1. Epic sandbox (testing only), always first.
+ *   2. Curated transplant centers (patient-friendly names), next.
  *   3. The complete Epic production directory (bundled from
- *      open.epic.com/Endpoints/R4 into src/data/epic-endpoints.json) — so
+ *      open.epic.com/Endpoints/R4 into src/data/epic-endpoints.json), so
  *      patients from ANY Epic-connected hospital can import their meds.
  *
  * Entries are deduplicated by normalized FHIR base URL; curated entries win,
@@ -106,7 +106,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
     // sessionStorage before the redirect back to this page). This MUST run in an
     // effect, not during render: calling onMedicationsImported (a parent state
     // setter) during render dispatches an update while rendering this component,
-    // which React refuses to apply — so the imported meds never populated.
+    // which React refuses to apply, so the imported meds never populated.
     useEffect(() => {
         try {
             const stored = sessionStorage.getItem('epic_imported_meds');
@@ -138,7 +138,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
     const matchingSystems = (() => {
         const q = trimmedSearch.toLowerCase();
         if (!q) return HEALTH_SYSTEMS;
-        // Single character is too short for fuzzy matching — fall back to a plain
+        // Single character is too short for fuzzy matching, fall back to a plain
         // substring match so the list still narrows as the patient starts typing.
         if (q.length < 2) return HEALTH_SYSTEMS.filter(s => s.name.toLowerCase().includes(q));
         return fuse.search(trimmedSearch).map(r => r.item);
@@ -186,7 +186,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                     }
                 }
             } catch (configErr) {
-                // Don't block on config check failure — proceed with the flow
+                // Don't block on config check failure, proceed with the flow
                 console.warn('[EpicConnect] Config pre-flight check failed:', configErr.message);
             }
 
@@ -292,7 +292,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                         </div>
                     )}
 
-                    {/* Medications we don't have assistance info for — list them by name
+                    {/* Medications we don't have assistance info for, list them by name
                         so the patient knows to look these up on their own. Shown even
                         when nothing matched. */}
                     {importedData && importedData.unmatched && importedData.unmatched.length > 0 && (
@@ -301,7 +301,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 <AlertCircle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <div className="text-sm">
                                     <p className="text-amber-800 font-medium">
-                                        {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} from your chart {importedData.unmatched.length !== 1 ? 'are' : 'is'} not in our transplant assistance database yet — you'll need to look {importedData.unmatched.length !== 1 ? 'these' : 'this one'} up on your own:
+                                        {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} from your chart {importedData.unmatched.length !== 1 ? 'are' : 'is'} not in our transplant assistance database yet, you'll need to look {importedData.unmatched.length !== 1 ? 'these' : 'this one'} up on your own:
                                     </p>
                                     <ul className="mt-1.5 list-disc list-inside text-amber-900 space-y-0.5">
                                         {importedData.unmatched.map((name, i) => (
@@ -322,7 +322,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                             Select Your Health System
                         </label>
                         <p id="health-system-help" className="text-xs text-blue-700 mb-1.5">
-                            Start typing your hospital or health system name — close spellings still work, so don't worry if you're not sure how to spell it.
+                            Start typing your hospital or health system name, close spellings still work, so don't worry if you're not sure how to spell it.
                         </p>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -389,7 +389,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 )}
                                 {hiddenSystemCount > 0 && (
                                     <li className="px-4 py-2.5 text-xs text-slate-500 border-t border-slate-100 bg-slate-50">
-                                        {hiddenSystemCount} more — keep typing to narrow your search.
+                                        {hiddenSystemCount} more, keep typing to narrow your search.
                                     </li>
                                 )}
                             </ul>

@@ -44,10 +44,10 @@ const PaywallModal = ({ isOpen, onClose, featureType = 'quiz', onPromoSuccess })
   const currentContent = content[featureType] || content.quiz;
 
   const proFeatures = [
-    'Unlimited My Path Quizzes — update anytime',
+    'Unlimited My Path Quizzes, update anytime',
     'Unlimited Savings Calculator estimates',
-    'Savings Dashboard — see how much you\'ve saved',
-    'Track Your Actual Savings — prove ROI',
+    'Savings Dashboard, see how much you\'ve saved',
+    'Track Your Actual Savings, prove ROI',
     'Copay Card Renewal Reminders',
     'Medication Calendar for PAP renewals',
     'Save medication lists on your device',

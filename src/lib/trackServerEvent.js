@@ -1,7 +1,7 @@
 /**
  * Fire-and-forget event tracking to the backend.
  * Sends events to /.netlify/functions/event for the admin dashboard.
- * Never throws — analytics should not break the user experience.
+ * Never throws, analytics should not break the user experience.
  */
 
 const ENDPOINT = '/.netlify/functions/event';
@@ -29,13 +29,13 @@ export function trackServerEvent(eventName, meta) {
     };
     if (meta) body.meta = meta;
 
-    // Fire and forget — don't await, don't block UI
+    // Fire and forget, don't await, don't block UI
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     }).catch(() => {
-      // Silently ignore — analytics must never break the app
+      // Silently ignore, analytics must never break the app
     });
   } catch {
     // Silently ignore

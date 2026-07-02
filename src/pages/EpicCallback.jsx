@@ -47,20 +47,20 @@ function brandSegments(med) {
 
 /**
  * True when EVERY significant word of `phrase` appears in `name`. Word-based
- * (not substring) so word order doesn't matter — e.g. our generic
+ * (not substring) so word order doesn't matter, e.g. our generic
  * "Trimethoprim-Sulfamethoxazole" still matches Epic's "Sulfamethoxazole-
- * Trimethoprim" — and so similar drugs are distinguished: "tenofovir
+ * Trimethoprim", and so similar drugs are distinguished: "tenofovir
  * disoproxil" (Viread) matches Viread but not "tenofovir alafenamide" (Vemlidy).
  */
 function wordsAllPresent(phrase, name) {
-    // Whole-word (token) match, NOT substring — so "ganciclovir" does not match
+    // Whole-word (token) match, NOT substring, so "ganciclovir" does not match
     // inside "valganciclovir", and "vitamin" does not match inside "multivitamin".
     const nameWords = new Set((name || '').split(/[^a-z0-9]+/).filter(Boolean));
     const words = (phrase || '').split(/[^a-z0-9]+/).filter(w => w.length > 2);
     return words.length > 0 && words.every(w => nameWords.has(w));
 }
 
-/** How specifically a record matches a name — more matched words = more specific. */
+/** How specifically a record matches a name, more matched words = more specific. */
 function matchSpecificity(name, med) {
     const wordCount = phrase => (phrase || '').split(/[^a-z0-9]+/).filter(w => w.length > 2).length;
     let score = 0;
@@ -103,7 +103,7 @@ function isGenericRecord(med) {
 
 /**
  * Pick the single best record for a patient's medication name. We want the ONE
- * product the patient actually takes — never a pile of related brands — so:
+ * product the patient actually takes, never a pile of related brands, so:
  *   1. an exact brand-name hit (the patient named a specific brand), else
  *   2. the generic record when the patient's name is the generic, else
  *   3. the first reasonable name match.
@@ -128,7 +128,7 @@ function pickBestMatch(name, candidates) {
 
 /**
  * Curated fallbacks for generic-name variants Epic sends that don't token-match
- * our record names — e.g. Epic's "mycophenolate sodium" is our Myfortic, and a
+ * our record names, e.g. Epic's "mycophenolate sodium" is our Myfortic, and a
  * bare "tenofovir" is our Viread. Most specific entries first. These are GENERIC
  * chemical names, so a synonym hit is treated as the generic.
  */
@@ -179,7 +179,7 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             found = medsList.find(m => m.rxcui && String(m.rxcui) === rx);
         }
 
-        // 2) Brand / generic name match — pick the single best product so we
+        // 2) Brand / generic name match, pick the single best product so we
         //    import only the drug the patient actually takes, not every related brand.
         if (!found && name) {
             found = pickBestMatch(name, medsList.filter(m => nameMatchesMed(name, m)));
@@ -202,7 +202,7 @@ function matchEpicMedications(fhirMeds, medsList = MEDICATIONS_DATA) {
             matched.add(found.id);
             // It's the generic when the name is a generic synonym for this
             // record, or the name matches the generic (not a brand). Either way,
-            // show the generic — no brand copay card / PAP.
+            // show the generic, no brand copay card / PAP.
             const isGenericSynonym = synId && synId === found.id;
             if (isGenericSynonym || (name && isGenericName(name, found))) {
                 genericIds.add(found.id);
@@ -398,7 +398,7 @@ const EpicCallback = () => {
                     timestamp: Date.now()
                 }));
 
-                // Track MyChart/Epic import adoption (counts only — no drug names
+                // Track MyChart/Epic import adoption (counts only, no drug names
                 // or PHI) so the admin can measure use of this feature.
                 trackServerEvent('epic_import', {
                     matched: matched.length,
@@ -408,7 +408,7 @@ const EpicCallback = () => {
 
                 // Aggregate-track the medications we don't have (drug names only,
                 // no patient data) so the team can see what to add next.
-                // Fire-and-forget — never block or fail the import on this.
+                // Fire-and-forget, never block or fail the import on this.
                 if (unmatched.length > 0) {
                     try {
                         fetch('/api/track-missing-medications', {
@@ -417,7 +417,7 @@ const EpicCallback = () => {
                             body: JSON.stringify({ names: unmatched })
                         }).catch(() => {});
                     } catch (e) {
-                        // ignore — tracking is best-effort
+                        // ignore, tracking is best-effort
                     }
                 }
 

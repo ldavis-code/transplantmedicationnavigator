@@ -342,7 +342,7 @@ export default function TransplantMedicationSurvey() {
                 </p>
               </div>
               <p className="text-xs text-slate-400 mt-4">
-                Powered by TransplantMedicationNavigator.com — By patients, for patients
+                Powered by TransplantMedicationNavigator.com, By patients, for patients
               </p>
             </div>
           </>
