@@ -25,6 +25,10 @@ import {
   Globe,
   Eye,
   HardDrive,
+  DollarSign,
+  Smartphone,
+  PlusCircle,
+  MessageSquare,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
@@ -40,6 +44,9 @@ export default function AdminDashboard() {
   const [loadingSubs, setLoadingSubs] = useState(true);
   const [webAnalytics, setWebAnalytics] = useState(null);
   const [loadingWebAnalytics, setLoadingWebAnalytics] = useState(true);
+  const [savings, setSavings] = useState(null);
+  const [missing, setMissing] = useState(null);
+  const [feedback, setFeedback] = useState(null);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -62,7 +69,11 @@ export default function AdminDashboard() {
         });
         if (res.ok) {
           const data = await res.json();
+          // Keep the full payload (program clicks, imports, votes, resource
+          // views) so the combined impact section can reference it, while still
+          // exposing the four headline fields the stat cards use.
           setStats({
+            ...data,
             totalEvents: data.totalEvents || 0,
             eventsThisMonth: data.eventsThisMonth || 0,
             quizCompletes: data.quizCompletes || 0,
@@ -106,6 +117,29 @@ export default function AdminDashboard() {
 
     if (isAdmin) {
       loadSubscribers();
+    }
+  }, [isAdmin, getToken]);
+
+  // Load combined impact data (patient savings, missing meds, feedback) so the
+  // dashboard is one place to reference everything.
+  useEffect(() => {
+    async function loadImpact() {
+      const authHeaders = { Authorization: `Bearer ${getToken()}` };
+      const get = (path) =>
+        fetch(`/.netlify/functions/admin-api/${path}`, { headers: authHeaders })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null);
+      const [s, m, f] = await Promise.all([
+        get('savings-summary'),
+        get('missing-medications'),
+        get('feedback-summary'),
+      ]);
+      setSavings(s);
+      setMissing(m);
+      setFeedback(f);
+    }
+    if (isAdmin) {
+      loadImpact();
     }
   }, [isAdmin, getToken]);
 
@@ -216,6 +250,11 @@ export default function AdminDashboard() {
     { label: 'Unique Sessions (Mo)', value: stats?.uniqueSessions || 0, icon: Users },
   ];
 
+  const money = (n) => (n || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  const programClicks = (stats?.copayClicks || 0) + (stats?.foundationClicks || 0) + (stats?.papClicks || 0);
+  const helpfulTotal = (stats?.helpfulVotesYes || 0) + (stats?.helpfulVotesNo || 0);
+  const gotMedRate = helpfulTotal > 0 ? Math.round(((stats?.helpfulVotesYes || 0) / helpfulTotal) * 100) : null;
+
   return (
     <AdminLayout title="Dashboard" subtitle={org.name}>
       {/* Stats Cards */}
@@ -233,6 +272,97 @@ export default function AdminDashboard() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Patient Impact & Engagement — combined reference */}
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <TrendingUp className="h-5 w-5 text-emerald-600" />
+          Patient Impact &amp; Engagement
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg shadow-sm border border-emerald-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-emerald-700">Total Patient Savings</p>
+                <p className="text-3xl font-bold text-emerald-900 mt-1">{savings?.available ? money(savings.totalSaved) : '$0'}</p>
+                <p className="text-xs text-emerald-600 mt-1">{savings?.available ? `${savings.totalEntries} logs · ${savings.uniquePatients} patients` : 'No savings logged yet'}</p>
+              </div>
+              <DollarSign className="h-10 w-10 text-emerald-400" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">MyChart Imports</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{(stats?.epicImports || 0).toLocaleString()}</p>
+                <p className="text-xs text-gray-400 mt-1">{stats?.epicImportsThisMonth || 0} this month</p>
+              </div>
+              <Smartphone className="h-8 w-8 text-blue-400" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Program Clicks</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{programClicks.toLocaleString()}</p>
+                <p className="text-xs text-gray-400 mt-1">{stats?.copayClicks || 0} copay · {stats?.foundationClicks || 0} found. · {stats?.papClicks || 0} PAP</p>
+              </div>
+              <CreditCard className="h-8 w-8 text-amber-400" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Got Medication</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{gotMedRate !== null ? `${gotMedRate}%` : '—'}</p>
+                <p className="text-xs text-gray-400 mt-1">{helpfulTotal > 0 ? `${helpfulTotal} responses` : 'No feedback yet'}</p>
+              </div>
+              <Heart className="h-8 w-8 text-rose-400" />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Most-requested missing medications */}
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <PlusCircle className="h-5 w-5 text-amber-500" /> Most-Requested Missing Meds
+            </h3>
+            {missing?.available && missing.medications.length > 0 ? (
+              <div className="space-y-1.5">
+                {missing.medications.slice(0, 6).map((m) => (
+                  <div key={m.nameNormalized} className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">{m.displayName}</span>
+                    <span className="bg-amber-100 text-amber-800 rounded-full px-2 py-0.5 text-xs font-semibold">{m.requestCount}</span>
+                  </div>
+                ))}
+                <p className="text-xs text-gray-400 pt-2">Drugs patients searched for that aren't in the catalog.</p>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No missing-medication requests recorded yet.</p>
+            )}
+          </div>
+
+          {/* Recent patient feedback */}
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-blue-500" /> Recent Patient Feedback
+            </h3>
+            {feedback?.available && feedback.recentComments?.length > 0 ? (
+              <div className="space-y-2">
+                {feedback.recentComments.slice(0, 4).map((c, i) => (
+                  <div key={i} className="bg-gray-50 rounded-lg p-3 text-sm">
+                    <p className="text-gray-800">"{c.comment}"</p>
+                    <p className="text-xs text-gray-400 mt-1">{c.createdAt ? new Date(c.createdAt).toLocaleDateString() : ''}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">{feedback && feedback.available === false ? 'Feedback storage not configured, or no feedback yet.' : 'No patient feedback yet.'}</p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Web Analytics (Last 30 Days) */}
