@@ -151,6 +151,54 @@ export default function Insights() {
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
         )}
 
+        {/* IOTA-aligned impact: the one-glance story for transplant programs */}
+        <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6">
+          <div className="flex items-center gap-2 mb-1">
+            <HeartHandshake className="h-5 w-5 text-emerald-700" />
+            <h2 className="text-lg font-bold text-gray-900">IOTA-Aligned Impact</h2>
+          </div>
+          <p className="text-sm text-gray-600 mb-5">
+            How this tool maps to your Increasing Organ Transplant Access (IOTA) performance. Cost-driven non-adherence is a leading modifiable cause of graft loss, so removing cost barriers supports both the Quality domain and your Health Equity Plan.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Quality domain: cost -> adherence -> graft survival */}
+            <div className="rounded-lg bg-white border border-emerald-100 p-5">
+              <div className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-3">Quality domain · graft survival</div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-emerald-700">{helpfulRate !== null ? `${helpfulRate}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Got their medication</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">{savings?.available ? money(savings.totalSaved) : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Patient cost removed</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-rose-600">{coverage?.available ? `${coverage.highBurdenPct}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Faced unaffordable cost</div>
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-400 mt-3 leading-snug">Affording immunosuppressants is what keeps patients adherent, and adherence is what protects the graft-survival measure that drives the IOTA Quality score.</p>
+            </div>
+            {/* Health Equity Plan: underserved reach */}
+            <div className="rounded-lg bg-white border border-emerald-100 p-5">
+              <div className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-3">Health Equity Plan · reach</div>
+              <div className="grid grid-cols-2 gap-3 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-emerald-700">{coverage?.available ? `${coverage.underservedPct}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Medicaid, IHS/Tribal, or uninsured</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">{coverage?.available ? coverage.underservedCount : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Underserved patients reached</div>
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-400 mt-3 leading-snug">A free, no-PHI cost-barrier tool for low-income and public-payer patients is a concrete intervention you can document in your voluntary IOTA Health Equity Plan.</p>
+            </div>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-4">Mapping is directional; confirm against your program's IOTA measures. Figures are anonymous aggregates, no identity or PHI.</p>
+        </section>
+
         {/* Headline metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
