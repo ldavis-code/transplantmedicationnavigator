@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -6,6 +6,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const SITE_URL = 'https://transplantmedicationnavigator.com';
+
+// One SEO landing page per medication at /medications/:id
+const MEDICATIONS = JSON.parse(
+    readFileSync(join(__dirname, '..', 'src', 'data', 'medications.json'), 'utf8')
+);
+const medicationRoutes = MEDICATIONS.map((m) => ({
+    path: `/medications/${m.id}`, changefreq: 'monthly', priority: 0.7,
+}));
 
 // Define all routes with their SEO metadata
 // Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), auth pages, and confirmation pages
@@ -31,7 +39,8 @@ const routes = [
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
 
-    const urls = routes.map(route => `    <url>
+    const allRoutes = [...routes, ...medicationRoutes];
+    const urls = allRoutes.map(route => `    <url>
         <loc>${SITE_URL}${route.path}</loc>
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
@@ -47,7 +56,7 @@ ${urls}
     const outputPath = join(__dirname, '..', 'public', 'sitemap.xml');
     writeFileSync(outputPath, sitemap);
     console.log(`Sitemap generated: ${outputPath}`);
-    console.log(`Pages included: ${routes.length}`);
+    console.log(`Pages included: ${allRoutes.length} (${medicationRoutes.length} medication pages)`);
     console.log(`Last modified: ${today}`);
 }
 

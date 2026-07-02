@@ -127,6 +127,47 @@ const pages = [
   },
 ];
 
+// One SEO landing page per medication at /medications/:id. Each gets a unique
+// title/description plus a real static body (H1 + ways to save) so crawlers that
+// don't run JavaScript still see substance. React hydrates over it on load.
+const MEDICATIONS = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'medications.json'), 'utf8')
+);
+
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+const medicationPages = MEDICATIONS.map((m) => {
+  const brand = esc(m.brandName);
+  const generic = esc(m.genericName);
+  const cat = esc((m.category || 'medication').toLowerCase());
+  // "Brand (Generic)" unless the generic is already part of the brand name.
+  const nameWithGeneric = (m.genericName && !m.brandName.toLowerCase().includes(m.genericName.toLowerCase()))
+    ? `${brand} (${generic})` : brand;
+  const hasCopay = !!(m.copayUrl || m.copayProgramId);
+  const ways = [
+    hasCopay ? 'a manufacturer copay card (for commercial insurance)' : null,
+    'patient assistance programs that can provide it for free if you qualify',
+    'foundation grants',
+    m.generic_available ? 'a lower-cost generic version' : null,
+    'discount cards and cash-price comparison (GoodRx, Cost Plus Drugs, and more)',
+  ].filter(Boolean);
+  return {
+    route: `/medications/${m.id}`,
+    title: `How to Afford ${nameWithGeneric}: Copay Cards & Assistance | Transplant Medication Navigator™`,
+    description: `Find copay cards, patient assistance programs, and foundation grants for ${nameWithGeneric}. See ways to lower the cost of your transplant medication.`,
+    ogTitle: `How to Afford ${brand}: Copay Cards & Patient Assistance`,
+    ogDescription: `Ways to save on ${nameWithGeneric}: copay cards, free-medication programs, foundation grants, and price comparison.`,
+    bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">How to Afford ${brand}</h1>
+      <p style="color:#475569;margin-bottom:16px;">${brand} (${generic}) is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} used by transplant patients. Here are the ways to lower what you pay:</p>
+      <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
+        ${ways.map((w) => `<li>${esc(w[0].toUpperCase() + w.slice(1))}</li>`).join('')}
+      </ul>
+      <p style="margin-bottom:16px;"><a href="/wizard" style="color:#059669;font-weight:600;text-decoration:underline;">Take the free 2-minute quiz</a> to find the programs you qualify for.</p>`,
+  };
+});
+
 /**
  * Generate HTML content for a page with proper meta tags
  * This version includes the main SPA script so React can take over after initial render
@@ -183,8 +224,8 @@ function generatePageHTML(page, mainScriptPath) {
     <div id="root">
         <!-- Static content for SEO - React will replace this when it loads -->
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
-            <h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
-            <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>
+            ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
+            <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
             <p style="color: #64748b; margin-bottom: 16px;">Loading interactive features...</p>
             <a href="/" style="color: #059669; text-decoration: underline;">Go to Homepage</a>
         </main>
@@ -240,7 +281,7 @@ function prerenderPages() {
   let created = 0;
   let errors = 0;
 
-  for (const page of pages) {
+  for (const page of [...pages, ...medicationPages]) {
     try {
       // Create directory for the route
       const routePath = page.route.startsWith('/') ? page.route.slice(1) : page.route;

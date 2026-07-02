@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transplant Medication Navigator: For Transplant Centers</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --teal: #0d9488; --teal-dark: #0f766e; --teal-deep: #115e59;
+    --emerald: #059669; --emerald-dark: #065f46;
+    --ink: #0f172a; --slate: #475569; --slate-light: #64748b;
+    --amber-bg: #fffbeb; --amber-bd: #fcd34d; --amber-tx: #92400e;
+    --line: #e2e8f0; --soft: #f8fafc;
+  }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); line-height: 1.5; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sheet { max-width: 8.5in; margin: 0 auto; padding: 0; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, var(--teal-deep), var(--teal)); color: #fff; padding: 22px 30px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: .2px; }
+  .brand .mark { width: 26px; height: 26px; background: #fff; color: var(--teal-dark); border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; }
+  .tagline { margin-top: 8px; font-size: 13px; opacity: .92; font-weight: 500; }
+  .headline { margin-top: 12px; font-size: 21px; font-weight: 800; line-height: 1.25; max-width: 90%; }
+
+  .body { padding: 20px 30px 12px; }
+
+  /* Problem stat */
+  .stat { display: flex; gap: 16px; align-items: center; background: var(--amber-bg); border: 1px solid var(--amber-bd);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+  .stat .big { font-size: 34px; font-weight: 800; color: var(--amber-tx); line-height: 1; flex-shrink: 0; }
+  .stat .txt { font-size: 12.5px; color: #78350f; }
+  .stat .txt b { color: var(--ink); }
+
+  .lead { font-size: 13px; color: var(--slate); margin-bottom: 18px; }
+  .lead b { color: var(--ink); }
+
+  h2.sec { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--teal-dark); font-weight: 800; margin: 0 0 10px; }
+
+  /* Why it fits: 3 columns */
+  .why { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .why .card { border: 1px solid var(--line); border-radius: 9px; padding: 12px 13px; background: var(--soft); }
+  .why .card h3 { font-size: 13px; color: var(--emerald-dark); margin-bottom: 5px; }
+  .why .card p { font-size: 11px; color: var(--slate); line-height: 1.45; }
+
+  /* Capabilities grid */
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin-bottom: 20px; }
+  .cap { display: flex; gap: 9px; align-items: flex-start; font-size: 12px; }
+  .cap .ck { color: var(--emerald); font-weight: 800; flex-shrink: 0; }
+  .cap b { color: var(--ink); }
+  .cap span { color: var(--slate); }
+
+  /* Founder */
+  .founder { display: flex; gap: 14px; align-items: flex-start; background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+    border: 1px solid #a7f3d0; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; }
+  .founder .q { font-size: 12.5px; color: var(--ink); font-style: italic; line-height: 1.5; }
+  .founder .who { font-size: 11.5px; color: var(--slate); margin-top: 6px; }
+  .founder .who b { color: var(--emerald-dark); }
+
+  /* CTA footer */
+  .cta { background: var(--ink); color: #fff; border-radius: 10px; padding: 16px 20px; display: flex;
+    justify-content: space-between; align-items: center; gap: 16px; }
+  .cta .l h3 { font-size: 15px; margin-bottom: 3px; }
+  .cta .l p { font-size: 12px; opacity: .85; }
+  .cta .r { text-align: right; font-size: 12px; line-height: 1.7; flex-shrink: 0; }
+  .cta .r a { color: #6ee7b7; text-decoration: none; font-weight: 600; }
+  .cta .pill { display: inline-block; background: var(--emerald); color: #fff; font-weight: 700; font-size: 12px;
+    padding: 8px 14px; border-radius: 8px; margin-bottom: 6px; }
+
+  .foot { font-size: 9.5px; color: var(--slate-light); text-align: center; padding: 12px 30px 4px; }
+
+  @page { size: letter; margin: 0; }
+  @media print { body { margin: 0; } .sheet { max-width: none; } }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="header">
+      <div class="brand"><span class="mark">♥</span> Transplant Medication Navigator&trade;</div>
+      <div class="tagline">A patient medication-education platform for transplant centers &middot; Epic MyChart-integrated &middot; HIPAA-by-design</div>
+      <div class="headline">Cost is the leading modifiable driver of graft loss. We help your patients afford their medications.</div>
+    </div>
+
+    <div class="body">
+      <div class="stat">
+        <div class="big">40%</div>
+        <div class="txt"><b>of transplant recipients skip doses because of cost.</b> AST Therapeutic Needs Study (Taber et al., 2025), the largest survey of its kind, 10,091 recipients across 232 centers. Medication non-adherence is the leading modifiable cause of graft loss.</div>
+      </div>
+
+      <p class="lead">Transplant Medication Navigator connects your patients to <b>copay cards, patient assistance programs, and foundation grants</b> across <b>218 transplant medications</b>, and lets them import their real medication list from <b>Epic MyChart</b> in one tap. Offer it as branded patient education, with no PHI collected and no BAA required.</p>
+
+      <h2 class="sec">Why it fits your program</h2>
+      <div class="why">
+        <div class="card"><h3>Improve SRTR outcomes</h3><p>Connecting patients to assistance before cost becomes a barrier directly supports graft survival and your program's SRTR performance.</p></div>
+        <div class="card"><h3>Reduce readmissions</h3><p>Patients who can't afford immunosuppressants end up back in the hospital. Financial navigation at discharge reduces cost-driven non-adherence.</p></div>
+        <div class="card"><h3>Support CMS compliance</h3><p>CMS Conditions of Participation require documented patient education and financial planning. This is a trackable, standardized resource.</p></div>
+      </div>
+
+      <h2 class="sec">What you get</h2>
+      <div class="caps">
+        <div class="cap"><span class="ck">&#10003;</span><span><b>Epic MyChart integration.</b> Listed in the Epic Connection Hub; works with 400+ Epic health systems.</span></div>
+        <div class="cap"><span class="ck">&#10003;</span><span><b>HIPAA-by-design.</b> No PHI collected or stored. Zero BAA required for educational use.</span></div>
+        <div class="cap"><span class="ck">&#10003;</span><span><b>218 medications</b> matched to copay cards, PAPs, and foundation grants.</span></div>
+        <div class="cap"><span class="ck">&#10003;</span><span><b>White-label admin dashboard</b> with engagement, savings, and pilot reporting, all aggregate and privacy-safe.</span></div>
+        <div class="cap"><span class="ck">&#10003;</span><span><b>Discharge workflow</b> ready: branded URL or QR code for discharge packets.</span></div>
+        <div class="cap"><span class="ck">&#10003;</span><span><b>Verified, maintained links</b> to every assistance program, checked automatically.</span></div>
+      </div>
+
+      <div class="founder">
+        <div>
+          <div class="q">"This isn't a software product. It's a policy intervention, built to address a documented, systemic gap in post-transplant care."</div>
+          <div class="who"><b>Lorrinda Gray-Davis</b>, liver transplant recipient, President of TRIO (1,500+ members), and Vice Chair of the OPTN Patient Affairs Committee. Built from lived experience and peer-reviewed research.</div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="l">
+          <span class="pill">Start a no-cost pilot</span>
+          <h3>See it with your patients in 90 days.</h3>
+          <p>Book a walkthrough for your transplant program.</p>
+        </div>
+        <div class="r">
+          <a href="mailto:info@transplantmedicationnavigator.com">info@transplantmedicationnavigator.com</a><br>
+          transplantmedicationnavigator.com<br>
+          <span style="opacity:.7">Ask about the pilot program</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">Educational information only; not a substitute for professional medical advice. Prices shown in the tool are estimates and vary by pharmacy and plan. &copy; 2026 Transplant Medication Navigator&trade;.</div>
+  </div>
+</body>
+</html>
