@@ -109,6 +109,7 @@ import {
 // --- CONSTANTS & DATA ---
 import {
     LAST_UPDATED,
+    LINKS_LAST_VERIFIED_DISPLAY,
     Role,
     TransplantStatus,
     OrganType,
@@ -4035,6 +4036,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
                                         Get Card <ArrowRight size={14} aria-hidden="true" />
                                     </a>
+                                    <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
+                                        <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                                        Link verified {copayProgram?.lastVerified ? new Date(copayProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY}
+                                    </p>
                                 </div>
                             </section>
                         )}
@@ -4070,6 +4075,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
                                     Apply <ArrowRight size={14} aria-hidden="true" />
                                 </a>
+                                {papUrl && (
+                                    <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
+                                        <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                                        Link verified {papProgram?.lastVerified ? new Date(papProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY}
+                                    </p>
+                                )}
                             </section>
                         )}
 
