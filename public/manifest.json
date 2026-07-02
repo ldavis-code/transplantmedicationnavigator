@@ -71,7 +71,7 @@
     {
       "name": "Search Medications",
       "short_name": "Search",
-      "description": "Search and compare medication prices",
+      "description": "Search and compare estimated medication prices",
       "url": "/medications",
       "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
     }
