@@ -90,6 +90,7 @@ import RouteAnnouncer from './components/RouteAnnouncer.jsx';
 // Epic MyChart FHIR integration - imports medications from patient's EHR
 import EpicConnectButton from './components/EpicConnectButton.jsx';
 import Coverage101 from './components/Coverage101.jsx';
+import GenericsVsBrand from './components/GenericsVsBrand.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -812,7 +813,7 @@ const Home = () => {
                                 Your real medication list, in one tap
                             </h2>
                             <p className="text-slate-600 mt-1 md:text-lg">
-                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong> — then instantly see every copay card and assistance program you qualify for. No typing, no errors.
+                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.
                             </p>
                         </div>
                         <span className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white font-bold rounded-xl transition whitespace-nowrap">
@@ -905,7 +906,7 @@ const Home = () => {
                                 <Building2 size={14} aria-hidden="true" /> For hospitals &amp; transplant centers
                             </span>
                             <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                                Give every patient a medication-education platform — under your brand
+                                Give every patient a medication-education platform, under your brand
                             </h2>
                             <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
                                 Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.
@@ -1033,7 +1034,7 @@ const Home = () => {
                         </div>
                         <h3 className="text-lg font-bold text-slate-900">Lorrinda Gray-Davis</h3>
                         <p className="text-emerald-700 font-medium text-sm mb-3">Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee</p>
-                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience — seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
+                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience: seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">Years post-transplant</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">Transplants facilitated</span></span>
@@ -2913,6 +2914,9 @@ const MedicationSearch = () => {
                         <div>
                             <p className="font-bold text-red-800 mb-1">Important Safety Note for Transplant Patients</p>
                             <p className="text-red-700 text-sm">Never switch from brand name to generic (or between different generic manufacturers) without your transplant team's approval. In transplant medicine, slight variations in bioavailability can cause organ rejection. <strong>"Cheaper" isn't always "safe"</strong> if the manufacturer changes.</p>
+                            <Link to="/education?topic=GENERICS" className="inline-flex items-center gap-1 text-red-800 font-semibold text-sm underline mt-1">
+                                Learn about generics vs. brand-name <ArrowRight size={14} aria-hidden="true" />
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -4821,7 +4825,7 @@ const Education = () => {
         // Allow deep-linking to a specific tab, e.g. /education?topic=EMERGENCY
         // (used by the wizard's crisis path). Falls back to the default tab.
         try {
-            const valid = ['DEDUCTIBLE_TRAP', 'DIVERSION', 'DIRECTORY', 'INSURANCE', 'MENTAL', 'OOP', 'EMERGENCY'];
+            const valid = ['GENERICS', 'DEDUCTIBLE_TRAP', 'DIVERSION', 'DIRECTORY', 'INSURANCE', 'MENTAL', 'OOP', 'EMERGENCY'];
             const params = new URLSearchParams(window.location.search);
             const topic = (params.get('topic') || window.location.hash.replace('#', '')).toUpperCase();
             if (valid.includes(topic)) return topic;
@@ -4928,6 +4932,7 @@ const Education = () => {
             <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
                 <div className="flex flex-wrap">
                     <TabButton id="EMERGENCY" label="Out of Meds?" icon={Clock} />
+                    <TabButton id="GENERICS" label="Generics vs. Brand" icon={Pill} />
                     <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
                     <TabButton id="DIVERSION" label="Diversion Programs" icon={AlertOctagon} />
                     <TabButton id="DIRECTORY" label="Directory" icon={Search} />
@@ -4937,6 +4942,11 @@ const Education = () => {
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+                {activeTab === 'GENERICS' && (
+                    <div className="max-w-4xl mx-auto">
+                        <GenericsVsBrand />
+                    </div>
+                )}
                 {activeTab === 'EMERGENCY' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">

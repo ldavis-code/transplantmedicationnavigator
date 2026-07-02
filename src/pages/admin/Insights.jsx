@@ -129,7 +129,7 @@ export default function Insights() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             icon={DollarSign} tone="emerald" label="Total patient savings"
-            value={savings?.available ? money(savings.totalSaved) : '—'}
+            value={savings?.available ? money(savings.totalSaved) : 'N/A'}
             sublabel={savings?.available ? `${savings.totalEntries} logs · ${savings.uniquePatients} patients` : 'No savings logged yet'}
           />
           <StatCard
@@ -139,12 +139,12 @@ export default function Insights() {
           />
           <StatCard
             icon={PlusCircle} tone="amber" label="Missing meds requested"
-            value={missing?.available ? missing.total : '—'}
+            value={missing?.available ? missing.total : 'N/A'}
             sublabel={missing?.available ? 'Drugs searched but not in catalog' : 'None recorded yet'}
           />
           <StatCard
             icon={TrendingUp} tone="purple" label='"Got my medication"'
-            value={helpfulRate !== null ? `${helpfulRate}%` : '—'}
+            value={helpfulRate !== null ? `${helpfulRate}%` : 'N/A'}
             sublabel={helpfulTotal > 0 ? `${helpfulTotal} responses` : 'No responses yet'}
           />
         </div>
@@ -195,12 +195,12 @@ export default function Insights() {
                     <tr key={m.nameNormalized} className="border-b last:border-0">
                       <td className="py-2 pr-4 text-gray-900 font-medium">{m.displayName}</td>
                       <td className="py-2 pr-4 text-right"><span className="inline-block bg-amber-100 text-amber-800 rounded-full px-2 py-0.5 font-semibold">{m.requestCount}</span></td>
-                      <td className="py-2 text-gray-500">{m.lastSeen ? new Date(m.lastSeen).toLocaleDateString() : '—'}</td>
+                      <td className="py-2 text-gray-500">{m.lastSeen ? new Date(m.lastSeen).toLocaleDateString() : 'N/A'}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <p className="text-xs text-gray-400 mt-3">Ranked by how often patients searched for a drug not in the catalog — your "what to add next" list.</p>
+              <p className="text-xs text-gray-400 mt-3">Ranked by how often patients searched for a drug not in the catalog. This is your "what to add next" list.</p>
             </div>
           ) : (
             <p className="text-sm text-gray-500">No missing-medication requests recorded yet.</p>
