@@ -18,7 +18,6 @@ const NAV_ITEMS = [
   { label: 'Insights', href: '/admin/insights', icon: TrendingUp },
   { label: 'Users', href: '/admin/users', icon: Users },
   { label: 'Medications', href: '/admin/medications', icon: Pill },
-  { label: 'Surveys', href: '/admin/surveys', icon: FileText },
   { label: 'Settings', href: '/admin/settings', icon: Building2 },
   { label: 'Compliance', href: '/admin/compliance', icon: ShieldCheck },
   { label: 'Compliance Overview', href: '/admin/compliance-overview', icon: Shield },

@@ -38,7 +38,6 @@ const LazyOrganizationSettings = lazy(() => import('./pages/admin/OrganizationSe
 const LazyAnalytics = lazy(() => import('./pages/admin/Analytics.jsx'));
 const LazyUserManagement = lazy(() => import('./pages/admin/UserManagement.jsx'));
 const LazyMedicationConfig = lazy(() => import('./pages/admin/MedicationConfig.jsx'));
-const LazySurveyResponses = lazy(() => import('./pages/admin/SurveyResponses.jsx'));
 const LazyFeatureSettings = lazy(() => import('./pages/admin/FeatureSettings.jsx'));
 const LazyImpactReport = lazy(() => import('./pages/admin/ImpactReport.jsx'));
 const LazyInsights = lazy(() => import('./pages/admin/Insights.jsx'));
@@ -937,21 +936,6 @@ const Home = () => {
 
             {/* Mission & Vision Section */}
             <section className="bg-emerald-900 rounded-3xl overflow-hidden shadow-2xl text-white my-16 max-w-6xl mx-auto" aria-labelledby="mission-heading">
-
-                {/* 988 Mental Health Hotline Banner */}
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 border-b-2 border-blue-800 px-6 py-4">
-                    <div className="flex items-center justify-center gap-3 text-center">
-                        <Phone size={24} className="text-white flex-shrink-0" aria-hidden="true" />
-                        <div>
-                            <p className="text-white font-bold text-lg">
-                                Mental Health Crisis? Call or Text <a href="tel:988" className="underline hover:text-blue-200 transition-colors">988</a>
-                            </p>
-                            <p className="text-blue-100 text-sm">
-                                24/7 Suicide & Crisis Lifeline - You are not alone
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
                 {/* Centered Badge Header */}
                 <div className="pt-10 pb-2 text-center">
@@ -7178,7 +7162,6 @@ const AdminRoutes = () => {
                         <Route path="/admin/analytics" element={<LazyAnalytics />} />
                         <Route path="/admin/users" element={<LazyUserManagement />} />
                         <Route path="/admin/medications" element={<LazyMedicationConfig />} />
-                        <Route path="/admin/surveys" element={<LazySurveyResponses />} />
                         <Route path="/admin/features" element={<LazyFeatureSettings />} />
                         <Route path="/admin/impact" element={<LazyImpactReport />} />
                         <Route path="/admin/insights" element={<LazyInsights />} />

@@ -207,13 +207,6 @@ export default function AdminDashboard() {
       color: 'bg-orange-100 text-orange-600',
     },
     {
-      title: 'Survey Responses',
-      description: 'View patient survey data',
-      icon: FileText,
-      href: '/admin/surveys',
-      color: 'bg-pink-100 text-pink-600',
-    },
-    {
       title: 'Impact Report',
       description: 'Funding-ready metrics & growth',
       icon: Heart,
