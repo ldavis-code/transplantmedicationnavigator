@@ -17,6 +17,7 @@ const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyDemo = lazy(() => import('./pages/Demo.jsx'));
 const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
+const LazyMedicationDetail = lazy(() => import('./pages/MedicationDetail.jsx'));
 const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazyCopayCardReminders = lazy(() => import('./pages/CopayCardReminders.jsx'));
 const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
@@ -7075,6 +7076,7 @@ const MainSiteRoutes = () => (
                 <Route path="/my-path" element={<Navigate to="/wizard" replace />} />
                 <Route path="/quiz" element={<Navigate to="/wizard" replace />} />
                 <Route path="/medications" element={<MedicationSearch />} />
+                <Route path="/medications/:slug" element={<LazyMedicationDetail />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/resources" element={<Navigate to="/education" replace />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
