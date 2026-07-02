@@ -936,53 +936,57 @@ const Home = () => {
             </section>
 
             {/* Mission & Vision Section */}
-            <section className="bg-emerald-900 rounded-3xl overflow-hidden shadow-2xl text-white my-16 max-w-6xl mx-auto" aria-labelledby="mission-heading">
+            <section className="max-w-5xl mx-auto" aria-labelledby="mission-heading">
+                <div className="bg-gradient-to-br from-emerald-50 to-sky-50 rounded-2xl border-2 border-emerald-200 shadow-lg overflow-hidden">
 
-                {/* Centered Badge Header */}
-                <div className="pt-10 pb-2 text-center">
-                    <div className="inline-flex items-center gap-2 bg-emerald-950/60 border border-emerald-700/50 px-5 py-2 rounded-full text-emerald-100 text-sm font-bold shadow-lg">
-                        <UserCheck size={18} className="text-emerald-400" aria-hidden="true" />
-                        Built by a patient, for patients.
+                    {/* Centered Badge Header */}
+                    <div className="pt-8 pb-2 text-center">
+                        <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
+                            <UserCheck size={16} aria-hidden="true" />
+                            Built by a patient, for patients.
+                        </span>
                     </div>
-                </div>
 
-                <div className="grid md:grid-cols-2">
-                    <div className="p-8 md:p-12 md:pt-8 flex flex-col justify-center border-b md:border-b-0 md:border-r border-emerald-800">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-emerald-800 p-2 rounded-lg" aria-hidden="true"><Anchor size={24} className="text-emerald-200"/></div>
-                            <h2 id="mission-heading" className="text-2xl font-bold tracking-tight">Our Mission</h2>
+                    <div className="grid md:grid-cols-2 gap-6 p-6 md:p-8">
+                        <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Anchor size={24}/></div>
+                                <h2 id="mission-heading" className="text-2xl font-bold text-slate-900 tracking-tight">Our Mission</h2>
+                            </div>
+                            <p className="text-lg text-slate-700 leading-relaxed">
+                                We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.
+                            </p>
                         </div>
-
-                        <p className="text-lg text-emerald-100 leading-relaxed">
-                            We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.
-                        </p>
+                        <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Heart size={24}/></div>
+                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Our Vision</h2>
+                            </div>
+                            <p className="text-lg text-slate-700 leading-relaxed">
+                                Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.
+                            </p>
+                        </div>
                     </div>
-                    <div className="p-8 md:p-12 md:pt-8 flex flex-col justify-center bg-emerald-800/50">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-emerald-700 p-2 rounded-lg" aria-hidden="true"><Heart size={24} className="text-emerald-200"/></div>
-                            <h2 className="text-2xl font-bold tracking-tight">Our Vision</h2>
-                        </div>
-                        <p className="text-lg text-emerald-100 leading-relaxed">
-                            Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.
-                        </p>
-                    </div>
-                </div>
 
-                {/* Core Values / "The Why" */}
-                <div className="bg-emerald-950/50 p-8 md:p-10 border-t border-emerald-800">
-                    <h3 className="text-center font-bold text-emerald-100 uppercase tracking-wider text-sm mb-8">Why We Built This</h3>
-                    <div className="grid md:grid-cols-3 gap-8 text-center">
-                        <div>
-                            <h4 className="font-bold text-white text-lg mb-2">Easy to Understand</h4>
-                            <p className="text-emerald-100 text-sm">We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.</p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white text-lg mb-2">A Safe Place</h4>
-                            <p className="text-emerald-100 text-sm">We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.</p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white text-lg mb-2">Save Money</h4>
-                            <p className="text-emerald-100 text-sm">We show you prices and free medicine programs all in one place. You can pick what works best for you.</p>
+                    {/* Core Values / "The Why" */}
+                    <div className="border-t border-emerald-200 bg-white/50 p-8 md:p-10">
+                        <h3 className="text-center font-bold text-emerald-800 uppercase tracking-wider text-sm mb-8">Why We Built This</h3>
+                        <div className="grid md:grid-cols-3 gap-8 text-center">
+                            <div>
+                                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><BookOpen size={22}/></div>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">Easy to Understand</h4>
+                                <p className="text-slate-600 text-sm">We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.</p>
+                            </div>
+                            <div>
+                                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><ShieldCheck size={22}/></div>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">A Safe Place</h4>
+                                <p className="text-slate-600 text-sm">We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.</p>
+                            </div>
+                            <div>
+                                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><DollarSign size={22}/></div>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">Save Money</h4>
+                                <p className="text-slate-600 text-sm">We show you prices and free medicine programs all in one place. You can pick what works best for you.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
