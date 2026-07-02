@@ -276,7 +276,7 @@ const getAssistantResponse = (userMessage, context = {}) => {
             return ASSISTANT_KNOWLEDGE_BASE.specialtyPharmacy.response;
         }
         if (context.wizardStep === 7) {
-            return "**Financial Status:**\n\nBe honest about your situation - this helps us prioritize the best programs for you:\n\n• **Manageable**: Focus on copay cards and savings\n• **Challenging**: PAPs + foundations recommended\n• **Unaffordable/Crisis**: Immediate PAP applications + Medicaid check\n\nYour answer is never stored or shared.";
+            return "**Financial Status:**\n\nBe honest about your situation - this helps us prioritize the best programs for you:\n\n• **Manageable**: Focus on copay cards and savings\n• **Challenging**: PAPs + foundations recommended\n• **Unaffordable/Crisis**: Immediate PAP applications + Medicaid check\n\nYour answer is anonymous. We never ask for your name and never link it to you.";
         }
     }
 
@@ -1662,6 +1662,12 @@ const Wizard = () => {
         // Sync insurance selection to ChatQuizContext so MedicationSearch can filter copay cards correctly
         if (key === 'insurance') {
             setContextAnswer('insurance_type', mapInsuranceToContextFormat(value));
+            // Anonymous, aggregate coverage-mix tracking (category only, no identity, no PHI)
+            trackServerEvent('coverage_selected', { insuranceType: value });
+        }
+        // Anonymous, aggregate cost-burden tracking (category only, no identity, no PHI)
+        if (key === 'financialStatus') {
+            trackServerEvent('cost_burden', { financialStatus: value });
         }
     };
 
@@ -2274,7 +2280,7 @@ const Wizard = () => {
                 <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
 
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
-                    This helps us prioritize the best assistance programs for you. We do not store this answer.
+                    This helps us prioritize the best assistance programs for you. Your answer is anonymous and never linked to you.
                 </div>
 
                 <div className="space-y-4" role="radiogroup" aria-label="Select your financial status">
