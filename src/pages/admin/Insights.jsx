@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft, DollarSign, PlusCircle, Smartphone, MessageSquare, Pill, TrendingUp,
+  HeartHandshake,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -51,6 +52,29 @@ function StatCard({ icon: Icon, label, value, sublabel, tone = 'emerald' }) {
   );
 }
 
+// Horizontal share bar for a single category (count + % of total).
+function BarRow({ label, count, total, tone = 'emerald', emphasize = false }) {
+  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+  const bar = {
+    emerald: 'bg-emerald-500',
+    blue: 'bg-blue-500',
+    amber: 'bg-amber-500',
+    rose: 'bg-rose-500',
+    slate: 'bg-slate-400',
+  }[tone];
+  return (
+    <div>
+      <div className="flex items-center justify-between text-sm mb-1">
+        <span className={emphasize ? 'font-semibold text-gray-900' : 'text-gray-700'}>{label}</span>
+        <span className="text-gray-500 tabular-nums">{count} · {pct}%</span>
+      </div>
+      <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+        <div className={`h-full rounded-full ${bar}`} style={{ width: `${pct}%` }} />
+      </div>
+    </div>
+  );
+}
+
 function Section({ title, icon: Icon, children }) {
   return (
     <section className="bg-white rounded-xl border border-gray-200 p-6">
@@ -68,6 +92,7 @@ export default function Insights() {
   const [missing, setMissing] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [stats, setStats] = useState(null);
+  const [coverage, setCoverage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -76,13 +101,14 @@ export default function Insights() {
     const authHeaders = { Authorization: `Bearer ${getToken()}` };
     async function load() {
       try {
-        const [s, m, f, st] = await Promise.all([
+        const [s, m, f, st, cov] = await Promise.all([
           fetch(`${API}/savings-summary`, { headers: authHeaders }).then(r => r.json()),
           fetch(`${API}/missing-medications`, { headers: authHeaders }).then(r => r.json()),
           fetch(`${API}/feedback-summary`, { headers: authHeaders }).then(r => r.json()),
           fetch(`${API}/stats`, { headers: authHeaders }).then(r => r.json()),
+          fetch(`${API}/coverage-mix`, { headers: authHeaders }).then(r => r.json()),
         ]);
-        setSavings(s); setMissing(m); setFeedback(f); setStats(st);
+        setSavings(s); setMissing(m); setFeedback(f); setStats(st); setCoverage(cov);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -124,6 +150,54 @@ export default function Insights() {
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
         )}
+
+        {/* IOTA-aligned impact: the one-glance story for transplant programs */}
+        <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6">
+          <div className="flex items-center gap-2 mb-1">
+            <HeartHandshake className="h-5 w-5 text-emerald-700" />
+            <h2 className="text-lg font-bold text-gray-900">IOTA-Aligned Impact</h2>
+          </div>
+          <p className="text-sm text-gray-600 mb-5">
+            How this tool maps to your Increasing Organ Transplant Access (IOTA) performance. Cost-driven non-adherence is a leading modifiable cause of graft loss, so removing cost barriers supports both the Quality domain and your Health Equity Plan.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Quality domain: cost -> adherence -> graft survival */}
+            <div className="rounded-lg bg-white border border-emerald-100 p-5">
+              <div className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-3">Quality domain · graft survival</div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-emerald-700">{helpfulRate !== null ? `${helpfulRate}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Got their medication</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">{savings?.available ? money(savings.totalSaved) : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Patient cost removed</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-rose-600">{coverage?.available ? `${coverage.highBurdenPct}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Faced unaffordable cost</div>
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-400 mt-3 leading-snug">Affording immunosuppressants is what keeps patients adherent, and adherence is what protects the graft-survival measure that drives the IOTA Quality score.</p>
+            </div>
+            {/* Health Equity Plan: underserved reach */}
+            <div className="rounded-lg bg-white border border-emerald-100 p-5">
+              <div className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-3">Health Equity Plan · reach</div>
+              <div className="grid grid-cols-2 gap-3 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-emerald-700">{coverage?.available ? `${coverage.underservedPct}%` : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Medicaid, IHS/Tribal, or uninsured</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">{coverage?.available ? coverage.underservedCount : 'N/A'}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Underserved patients reached</div>
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-400 mt-3 leading-snug">A free, no-PHI cost-barrier tool for low-income and public-payer patients is a concrete intervention you can document in your voluntary IOTA Health Equity Plan.</p>
+            </div>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-4">Mapping is directional; confirm against your program's IOTA measures. Figures are anonymous aggregates, no identity or PHI.</p>
+        </section>
 
         {/* Headline metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -215,6 +289,73 @@ export default function Insights() {
             <div><div className="text-2xl font-bold text-emerald-700">{stats?.helpfulVotesYes ?? 0}</div><div className="text-xs text-gray-500">Got medication (yes)</div></div>
             <div><div className="text-2xl font-bold text-gray-900">{stats?.helpfulVotesNo ?? 0}</div><div className="text-xs text-gray-500">Did not (no)</div></div>
           </div>
+        </Section>
+
+        {/* Coverage mix & cost burden: the Health Equity story for IOTA */}
+        <Section title="Coverage Mix & Cost Burden (Health Equity)" icon={HeartHandshake}>
+          {coverage?.available && (coverage.coverageTotal > 0 || coverage.burdenTotal > 0) ? (
+            <div className="space-y-6">
+              {/* Equity headline */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                  <div className="text-3xl font-bold text-emerald-700">{coverage.underservedPct}%</div>
+                  <div className="text-sm font-medium text-emerald-900 mt-1">On Medicaid, IHS/Tribal, or uninsured</div>
+                  <div className="text-xs text-emerald-700 mt-1">{coverage.underservedCount} of {coverage.coverageTotal} patients who shared coverage. Cite this in your IOTA Health Equity Plan.</div>
+                </div>
+                <div className="rounded-lg border border-rose-200 bg-rose-50 p-4">
+                  <div className="text-3xl font-bold text-rose-700">{coverage.highBurdenPct}%</div>
+                  <div className="text-sm font-medium text-rose-900 mt-1">Report costs unaffordable or in crisis</div>
+                  <div className="text-xs text-rose-700 mt-1">{coverage.highBurdenCount} of {coverage.burdenTotal} patients who shared cost burden.</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {coverage.coverage?.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-500 mb-3">Insurance type selected ({coverage.coverageTotal})</h3>
+                    <div className="space-y-2.5">
+                      {coverage.coverage.map((r) => {
+                        const underserved = ['Medicaid (State)', 'Indian Health Service / Tribal', 'Uninsured / Self-pay'].includes(r.insuranceType);
+                        return (
+                          <BarRow
+                            key={r.insuranceType}
+                            label={r.insuranceType}
+                            count={r.count}
+                            total={coverage.coverageTotal}
+                            tone={underserved ? 'rose' : 'blue'}
+                            emphasize={underserved}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                {coverage.costBurden?.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-500 mb-3">Reported cost burden ({coverage.burdenTotal})</h3>
+                    <div className="space-y-2.5">
+                      {coverage.costBurden.map((r) => {
+                        const tone = { Manageable: 'emerald', Challenging: 'amber', Unaffordable: 'rose', Crisis: 'rose' }[r.financialStatus] || 'slate';
+                        return (
+                          <BarRow
+                            key={r.financialStatus}
+                            label={r.financialStatus}
+                            count={r.count}
+                            total={coverage.burdenTotal}
+                            tone={tone}
+                            emphasize={r.financialStatus === 'Unaffordable' || r.financialStatus === 'Crisis'}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-400">Anonymous, aggregate quiz selections. No identity or PHI is stored. These counts show who the tool reaches and how heavy their medication cost burden is.</p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">No coverage or cost-burden selections recorded yet. These populate as patients choose their insurance type and cost situation in the quiz.</p>
+          )}
         </Section>
 
         {/* Patient feedback */}

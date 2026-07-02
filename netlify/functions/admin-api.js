@@ -801,6 +801,74 @@ async function getMissingMedications(db) {
     }
 }
 
+// Coverage mix + cost burden: anonymous, aggregate counts from the quiz.
+// Powers the Health Equity story for IOTA: what share of patients reached are
+// on Medicaid / IHS / uninsured, and how heavy their reported cost burden is.
+// No identity, no PHI, just category counts.
+async function getCoverageMix(db) {
+    try {
+        const coverage = await db`
+            SELECT meta_json->>'insuranceType' AS insurance_type, COUNT(*) AS count
+            FROM events
+            WHERE event_name = 'coverage_selected'
+              AND meta_json->>'insuranceType' IS NOT NULL
+            GROUP BY meta_json->>'insuranceType'
+            ORDER BY count DESC
+        `;
+        const burden = await db`
+            SELECT meta_json->>'financialStatus' AS financial_status, COUNT(*) AS count
+            FROM events
+            WHERE event_name = 'cost_burden'
+              AND meta_json->>'financialStatus' IS NOT NULL
+            GROUP BY meta_json->>'financialStatus'
+            ORDER BY count DESC
+        `;
+
+        const coverageRows = coverage.map(r => ({
+            insuranceType: r.insurance_type,
+            count: parseInt(r.count || 0),
+        }));
+        const burdenRows = burden.map(r => ({
+            financialStatus: r.financial_status,
+            count: parseInt(r.count || 0),
+        }));
+
+        const coverageTotal = coverageRows.reduce((s, r) => s + r.count, 0);
+        const burdenTotal = burdenRows.reduce((s, r) => s + r.count, 0);
+
+        // Underserved / health-equity segments (public-payer + uninsured).
+        const UNDERSERVED = [
+            'Medicaid (State)',
+            'Indian Health Service / Tribal',
+            'Uninsured / Self-pay',
+        ];
+        const underservedCount = coverageRows
+            .filter(r => UNDERSERVED.includes(r.insuranceType))
+            .reduce((s, r) => s + r.count, 0);
+
+        // High cost burden = Unaffordable + Crisis.
+        const HIGH_BURDEN = ['Unaffordable', 'Crisis'];
+        const highBurdenCount = burdenRows
+            .filter(r => HIGH_BURDEN.includes(r.financialStatus))
+            .reduce((s, r) => s + r.count, 0);
+
+        return {
+            available: true,
+            coverage: coverageRows,
+            costBurden: burdenRows,
+            coverageTotal,
+            burdenTotal,
+            underservedCount,
+            underservedPct: coverageTotal ? Math.round((underservedCount / coverageTotal) * 100) : 0,
+            highBurdenCount,
+            highBurdenPct: burdenTotal ? Math.round((highBurdenCount / burdenTotal) * 100) : 0,
+        };
+    } catch (error) {
+        console.error('Error fetching coverage mix:', error.message);
+        return { available: false, error: error.message };
+    }
+}
+
 // Patient feedback (Supabase `feedback` table) — written by the FeedbackWidget
 // and the /feedback survey page, but never surfaced in admin until now.
 async function getFeedbackSummary() {
@@ -931,6 +999,12 @@ export async function handler(event) {
         // GET /admin-api/feedback-summary
         if (path === '/feedback-summary') {
             const result = await getFeedbackSummary();
+            return { statusCode: 200, headers, body: JSON.stringify(result) };
+        }
+
+        // GET /admin-api/coverage-mix
+        if (path === '/coverage-mix') {
+            const result = await getCoverageMix(db);
             return { statusCode: 200, headers, body: JSON.stringify(result) };
         }
 
