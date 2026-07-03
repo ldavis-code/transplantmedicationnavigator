@@ -1,0 +1,140 @@
+{
+  "faq": {
+    "cob": {
+      "results": {
+        "medicare_employer_working": {
+          "title": "Your Job Insurance Pays First",
+          "primary": "Your employer insurance",
+          "secondary": "Medicare",
+          "summary": "Good news! Since you or your spouse still works, your job insurance pays first. This means you CAN use copay cards to lower your costs.",
+          "tips": [
+            "Show your job insurance card at the pharmacy first",
+            "You can use copay cards from drug makers",
+            "Keep your Medicare card as backup"
+          ]
+        },
+        "medicare_retiree": {
+          "title": "Medicare Pays First",
+          "primary": "Medicare",
+          "secondary": "Your retiree plan",
+          "summary": "Since you retired, Medicare now pays first. You cannot use copay cards with Medicare. But you can still get help from Patient Assistance Programs.",
+          "tips": [
+            "Apply for Patient Assistance Programs (PAPs) for free meds",
+            "Check if foundations can help with your costs",
+            "Your retiree plan helps pay what Medicare does not"
+          ]
+        },
+        "medicare_medicaid": {
+          "title": "You Have Great Coverage",
+          "primary": "Medicare + Medicaid",
+          "secondary": "Both work together",
+          "summary": "You have dual coverage. This usually means very low or no costs for your medicines. Medicaid helps pay what Medicare does not cover.",
+          "tips": [
+            "Your copays should be very low or $0",
+            "Make sure both cards are on file at your pharmacy",
+            "Ask about \"Extra Help\" to lower costs even more"
+          ]
+        },
+        "esrd_employer": {
+          "title": "Special Rules for Kidney Patients",
+          "primary": "Your employer insurance (first 30 months)",
+          "secondary": "Medicare",
+          "summary": "Kidney patients have special rules. For the first 30 months, your job insurance pays first. After 30 months, Medicare pays first and you cannot use copay cards.",
+          "tips": [
+            "Use copay cards now while your job insurance pays first",
+            "Mark your calendar for when 30 months ends",
+            "Plan ahead: apply for PAPs before Medicare takes over"
+          ]
+        },
+        "not_sure": {
+          "title": "Let's Figure This Out",
+          "primary": "We need more info",
+          "secondary": "",
+          "summary": "Insurance rules can be tricky. The best way to know for sure is to call both insurance companies and ask: \"Which plan pays first?\"",
+          "tips": [
+            "Call Medicare: 1-800-MEDICARE",
+            "Call your other insurance company",
+            "Ask your transplant social worker for help"
+          ]
+        }
+      },
+      "start": {
+        "title": "Do You Have Two Insurance Plans?",
+        "subtitle": "Many transplant patients have more than one insurance. This quiz helps you know which one pays first.",
+        "whyTitle": "Why does this matter?",
+        "whyText": "Which insurance pays first changes what help you can get. Some savings programs only work with certain insurance types.",
+        "reasonsTitle": "Common reasons transplant patients have two plans:",
+        "reasons": {
+          "kidney": "<strong>Kidney disease</strong>: You may get Medicare even if you're under 65",
+          "disability": "<strong>Disability</strong>: After 2 years on disability, you get Medicare",
+          "working": "<strong>Still working at 65+</strong>: You have Medicare AND job insurance",
+          "spouse": "<strong>Spouse's insurance</strong>: Your spouse's job covers you too"
+        },
+        "startButton": "Start the Quiz",
+        "duration": "Takes about 1 minute"
+      },
+      "progress": "{{current}} of {{total}}",
+      "questionLabel": "Question {{number}}",
+      "question1": {
+        "title": "Do you have more than one health insurance plan?",
+        "subtitle": "For example: Medicare AND insurance from a job",
+        "yes": "Yes, I have two or more plans",
+        "no": "No, I have just one plan",
+        "startOver": "Start over"
+      },
+      "question2": {
+        "title": "Which best describes your situation?",
+        "subtitle": "Pick the one that fits you best",
+        "options": {
+          "medicare_employer_working": {
+            "label": "I have Medicare AND job insurance",
+            "detail": "I or my spouse still works"
+          },
+          "medicare_retiree": {
+            "label": "I have Medicare AND retiree insurance",
+            "detail": "I'm retired but still have coverage from my old job"
+          },
+          "medicare_medicaid": {
+            "label": "I have Medicare AND Medicaid",
+            "detail": "I have both government programs"
+          },
+          "esrd_employer": {
+            "label": "I have kidney disease Medicare AND job insurance",
+            "detail": "I got Medicare because of kidney failure (ESRD)"
+          },
+          "not_sure": {
+            "label": "I'm not sure / Something else",
+            "detail": "My situation is different"
+          }
+        },
+        "goBack": "Go back"
+      },
+      "result": {
+        "onePlanTitle": "You Have One Insurance Plan",
+        "onePlanText": "Since you have just one plan, you don't need to worry about which pays first. Use our main quiz to find help programs for your situation.",
+        "findHelp": "Find Help Programs",
+        "takeAgain": "Take Quiz Again",
+        "paysFirst": "PAYS FIRST",
+        "paysSecond": "PAYS SECOND",
+        "copayQuestion": "Can you use copay cards?",
+        "copayCards": "Copay Cards",
+        "copayYes": "Yes, you can use them!",
+        "copayNo": "No, not with Medicare first",
+        "copayDepends": "It depends on your situation",
+        "papTitle": "Free Medicine Programs",
+        "papYes": "Yes, you can apply for PAPs",
+        "nextTitle": "What to do next:"
+      }
+    },
+    "page": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions about transplant medications, assistance programs, and using this site.",
+      "emptyTitle": "No FAQs available",
+      "emptyText": "Check back later for frequently asked questions.",
+      "browseResources": "Browse Resources",
+      "stillTitle": "Still have questions?",
+      "stillText": "Your transplant center's social worker or financial coordinator is your best resource for personalized guidance.",
+      "startQuiz": "Start My Path Quiz"
+    }
+  }
+}
