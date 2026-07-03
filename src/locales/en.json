@@ -5,6 +5,805 @@
     "emergency": "In an emergency, call 911",
     "agree": "I Agree"
   },
+  "education": {
+    "header": {
+      "title": "Education & Resources",
+      "subtitle": "Learn about programs that help pay for your medicines. Find out which ones work best for you."
+    },
+    "totalAssist": {
+      "badge": "New · Now Live",
+      "title": "TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program",
+      "p1": "The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.",
+      "p2": "As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.",
+      "applyPre": "Apply online or call ",
+      "phone": "866-512-3861",
+      "applyPost": " (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).",
+      "learnMore": "Learn more about TotalAssist"
+    },
+    "gotDenied": {
+      "title": "Got Denied?",
+      "text": "Insurance said no? Don't worry, you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.",
+      "cta": "View Appeal Guide"
+    },
+    "tabs": {
+      "ariaLabel": "Education topics",
+      "emergency": "Out of Meds?",
+      "generics": "Generics vs. Brand",
+      "deductibleTrap": "Deductible Trap",
+      "diversion": "Diversion Programs",
+      "directory": "Directory",
+      "insurance": "Insurance(s)",
+      "mental": "Mental Health",
+      "oop": "Out-of-Pocket Max"
+    },
+    "emergency": {
+      "title": "Out of medication, or about to be?",
+      "intro": "Anti-rejection medicine is not something you can safely skip. If cost or a refill problem means you are running low, act today. Here is how to get a bridge supply while you sort out the cost.",
+      "call911": "If this is a medical emergency, call 911.",
+      "call911Text": "Signs of rejection, fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell, need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong>",
+      "step1Title": "Call your transplant team first, today",
+      "step1Text": "This is the most important step. Your transplant center handles this all the time. Ask for the <strong>transplant pharmacist</strong> or <strong>social worker</strong>. They can often send an emergency prescription, give you samples, or start a fast assistance request the same day. Tell them plainly: \"I am about to run out and I cannot afford the refill.\"",
+      "step2Title": "Ask your pharmacy for an emergency supply",
+      "step2Pre": "Many states let a pharmacist give a few days of a regular medicine in an emergency so you do not miss doses. Ask: ",
+      "step2Quote": "\"Can you do an emergency fill while I sort out the cost or the refill?\"",
+      "step2Post": " Bring your pill bottle or the medicine name and dose.",
+      "step3Title": "Ask the drug maker about a bridge supply",
+      "step3Text": "Some manufacturers give a free short-term \"bridge\" or \"quick start\" supply while your Patient Assistance Program application is reviewed, so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.",
+      "step3Link": "Find your medication and its manufacturer →",
+      "step4Title": "Check foundations for urgent help",
+      "step4Text": "Some copay foundations review urgent cases faster. It is worth a call when you are in a pinch. See the trusted groups in our directory.",
+      "step4Link": "Open the resource directory →",
+      "readyTitle": "Have this ready when you call",
+      "readySubtitle": "It makes every call faster:",
+      "readyItems": [
+        "Your medicine names and doses",
+        "Your pharmacy's name and phone",
+        "Your insurance card (if you have one)",
+        "Your transplant center's phone number"
+      ],
+      "dontStopTitle": "Do not just stop taking your medicine.",
+      "dontStopText": "Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible, but let them make that call, not you.",
+      "dontStopCta": "Get help applying for longer-term assistance"
+    },
+    "oop": {
+      "title": "Mixing Programs",
+      "intro": "Most transplant patients use a mix of help programs to pay for their medicines. It's like a puzzle.",
+      "negotiation": {
+        "badge": "Effective January 2026",
+        "title": "Medicare Drug Price Negotiation",
+        "lead": "For the first time ever, Medicare talked drug makers into lower prices.",
+        "p1": "The first new prices start January 1, 2026, with big savings. Examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% less), and <strong>Januvia</strong> drops from $527 to $113/month (79% less). This will save Medicare patients $1.5 billion in 2026 alone.",
+        "p2": "The first 10 drugs include medicines for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clots (Eliquis, Xarelto), immune diseases (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).",
+        "p3": "About 8.8 million Medicare Part D patients used these medicines in 2023. A second round of 15 drugs was selected for 2027 prices.",
+        "round3Title": "Third Round Announced January 27, 2026",
+        "round3P1": "CMS selected 15 new drugs for negotiation, including the <strong>first-ever Part B drugs</strong>. New prices take effect January 1, 2028.",
+        "round3P2": "<strong>Transplant-relevant picks:</strong> Orencia (abatacept, related to Belatacept), Trulicity (dulaglutide, for post-transplant diabetes), Xolair (omalizumab, lung transplant), Anoro Ellipta (lung transplant). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz."
+      },
+      "glp1": {
+        "badge": "New in Mid-2026",
+        "title": "Medicare GLP-1 Coverage for Weight Loss",
+        "lead": "A big change: Medicare will now cover weight loss drugs.",
+        "p1": "Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss, ending a rule that kept these drugs out of Part D.",
+        "p2": "<strong>Covered drugs:</strong> Wegovy and Zepbound will be covered for patients with weight-related health issues. Your copay should be about <strong>$50/month</strong> after you meet your deductible.",
+        "p3": "Eli Lilly and Novo Nordisk agreed to give these drugs at lower prices for Medicare patients."
+      },
+      "m3p": {
+        "title": "Medicare Prescription Payment Plan",
+        "lead": "A big change from new laws",
+        "p1": "Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once.",
+        "p2": "This program makes your costs more steady and easier to manage.",
+        "p3": "Ask your Part D plan about this payment plan during open enrollment."
+      },
+      "pick": {
+        "title": "Part D vs Medicare Advantage: Picking Your Plan",
+        "intro": "Knowing the differences can save you a lot of money on transplant medicines.",
+        "partDTitle": "Medicare Part D (Traditional)",
+        "partDDesc": "A drug plan that works with Original Medicare. It's a separate plan just for medicines.",
+        "partDItems": [
+          "Works with any Medicare-accepting provider",
+          "Separate deductible and premium",
+          "$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)"
+        ],
+        "maTitle": "Medicare Advantage (MA-PD)",
+        "maDesc": "An all-in-one plan that covers both doctor visits AND medicines.",
+        "maItems": [
+          "Often lower or $0 premiums",
+          "Provider networks may be limited",
+          "$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)"
+        ]
+      },
+      "compare": {
+        "title": "How to Compare Plans for Your Medicines",
+        "step1Title": "Check Drug Lists",
+        "step1Text": "Use the Medicare Plan Finder tool at medicare.gov to see which plans cover your drugs and how much they cost.",
+        "step1Link": "Medicare Plan Finder",
+        "step1LinkAria": "Visit Medicare Plan Finder (opens in new tab)",
+        "step2Title": "Compare Total Costs",
+        "step2Text": "Look at monthly fees, deductibles, copays, and which pharmacies you can use. Remember the $2,100 yearly limit (2026) when you add up costs.",
+        "step3Title": "Look Into Extra Help",
+        "step3Text": "If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.",
+        "step3Link": "Apply for Extra Help",
+        "step3LinkAria": "Apply for Extra Help (opens in new tab)",
+        "step4Title": "Get Free Help",
+        "step4Text": "Call your State Health Insurance Assistance Program (SHIP) for free help picking a plan.",
+        "step4Link": "Find Your Local SHIP",
+        "step4LinkAria": "Find Your Local SHIP (opens in new tab)"
+      },
+      "parts": {
+        "title": "Medicare Parts for Transplant Drugs",
+        "intro": "Knowing which part of Medicare pays for your transplant medicines is key.",
+        "partATitle": "Part A (Hospital)",
+        "partADesc": "Pays for drugs given while you're in the hospital.",
+        "partAItem": "Induction agents (Thymoglobulin, Simulect)",
+        "partBTitle": "Part B (Medical)",
+        "partBDesc": "Pays for some drugs you get at clinics. Also covers anti-rejection drugs if you don't have Part D.",
+        "partBItem": "IV infusions (Belatacept/Nulojix)",
+        "partDTitle": "Part D (Prescription)",
+        "partDDesc": "Pays for most of the pills you take at home each day.",
+        "partDItem": "Tacrolimus, Mycophenolate, etc."
+      },
+      "strategies": {
+        "title": "Strategies by Insurance Type",
+        "commercialTitle": "Commercial Insurance?",
+        "commercialItem1": "Use <strong>Manufacturer PAPs</strong> for copay cards.",
+        "commercialItem2": "Use <strong>Foundations</strong> for deductibles.",
+        "medicareTitle": "Medicare?",
+        "medicareItem1": "Use <strong>Foundations</strong> for copays.",
+        "medicareItem2": "Check <strong>Cash Prices</strong> for generics to compare savings."
+      },
+      "keyInsightTitle": "Key Insight",
+      "keyInsightText": "Many patients mix programs, for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.",
+      "glossary": {
+        "title": "Insurance Words Made Simple",
+        "intro": "Knowing what these words mean helps you handle costs and find help.",
+        "premiumTerm": "Premium",
+        "premiumDef": "The amount you pay each month to have insurance. Think of it like a gym membership - you pay every month whether you use it or not.",
+        "deductibleTerm": "Deductible",
+        "deductibleDef": "The amount you must pay yourself before your insurance starts helping. If your deductible is $500, you pay the first $500 of medicine costs. After that, insurance helps pay.",
+        "copayTerm": "Copay",
+        "copaySuffix": " (or Co-payment)",
+        "copayDef": "A fixed amount you pay each time you get medicine. Example: You might pay $10 for each prescription, and insurance pays the rest.",
+        "coinsuranceTerm": "Coinsurance",
+        "coinsuranceDef": "The percentage you pay after meeting your deductible. If you have 20% coinsurance, you pay $20 for every $100 of medicine cost. Insurance pays the other $80.",
+        "oopMaxPre": "Yearly Spending Limit (",
+        "oopMaxTerm": "Out-of-Pocket Maximum",
+        "oopMaxPost": ")",
+        "oopMaxDef": "The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.",
+        "formularyPre": "Covered Medicines List (",
+        "formularyTerm": "Formulary",
+        "formularyPost": ")",
+        "formularyDef": "The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.",
+        "tierTerm": "Tier",
+        "tierDef": "How insurance groups medicines by cost. Lower tiers (1-2) cost less. Higher tiers (3-4-5) cost more.",
+        "tier1": "<strong>Tier 1:</strong> Usually generic drugs (lowest cost)",
+        "tier2": "<strong>Tier 2:</strong> Preferred brand drugs",
+        "tier3": "<strong>Tier 3-5:</strong> Non-preferred or specialty drugs (highest cost)",
+        "paTerm": "Prior Authorization",
+        "paDef": "When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.",
+        "paWiserTitle": "New in 2026: CMS WISeR Pilot",
+        "paWiserPre": "The WISeR (Wasteful and Inappropriate Service Reduction) model requires prior authorization for 17 outpatient Medicare Part B services in 6 states: Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington. While it does not directly affect transplant medications, it may add steps for some procedures. ",
+        "paWiserLink": "Learn more on our Appeals page",
+        "paWiserPost": ".",
+        "genericTerm": "Generic",
+        "genericSuffix": " Medicine",
+        "genericDef": "A medicine that works the same as a brand name but costs less. Like store-brand cereal versus name-brand - same thing, different package.",
+        "brandTerm": "Brand Name Medicine",
+        "brandDef": "The original version of a medicine made by the company that invented it. Usually costs more than generic.",
+        "specialtyTerm": "Specialty",
+        "specialtySuffix": " Medication",
+        "specialtyDef": "Expensive medicines that need special handling or monitoring. Most transplant medicines are specialty medications. They often cost $600+ per month.",
+        "partDTerm": "Medicare Part D",
+        "partDDef": "The part of Medicare that helps pay for prescription medicines. You must sign up for this separately.",
+        "oopCapTerm": "Yearly Out-of-Pocket Cap",
+        "oopCapDef": "A yearly limit on what you pay out of pocket for Medicare Part D drugs. In 2026 the cap is $2,100. Once you reach it, you pay $0 for covered drugs for the rest of the year.",
+        "catastrophicTerm": "Catastrophic Coverage",
+        "catastrophicDef": "After you spend a lot on medicines in one year, Medicare pays almost everything. You only pay a small amount (about $4-$12) per prescription.",
+        "inNetworkTerm": "In-Network Pharmacy",
+        "inNetworkDef": "A pharmacy that works with your insurance. You pay less here. Think of it as a preferred partner.",
+        "outNetworkTerm": "Out-of-Network Pharmacy",
+        "outNetworkDef": "A pharmacy that doesn't have a deal with your insurance. You might pay more or get no coverage here.",
+        "pbmTerm": "PBM (Pharmacy Benefit Manager)",
+        "pbmDef": "The company that manages prescription drug coverage for your insurance. They decide which medicines are covered and how much they cost.",
+        "papPre": "Patient Assistance Program (",
+        "papTerm": "PAP",
+        "papPost": ")",
+        "papDef": "Free or low-cost medicine programs run by drug companies. If you can't afford your medicine, these programs might help.",
+        "copayCardTerm": "Copay Card or Coupon",
+        "copayCardDef": "Help from drug companies to lower what you pay for brand name medicines. <strong>Important:</strong> These often don't work with Medicare.",
+        "mfrTerm": "Manufacturer Assistance",
+        "mfrDef": "Help directly from the company that makes your medicine. This can be free medicine, copay help, or discounts.",
+        "mailTerm": "Mail Order Pharmacy",
+        "mailDef": "A pharmacy that ships medicine to your home. Usually gives you 90 days of medicine at once. Often costs less than getting 30 days at a local pharmacy.",
+        "stepTerm": "Step Therapy",
+        "stepDef": "When insurance requires you to try a cheaper medicine first before they'll pay for a more expensive one. Like having to try the basic version before getting the premium version.",
+        "exclusionTerm": "Exclusion",
+        "exclusionDef": "A medicine that insurance will not cover at all. You must pay the full price yourself or find other help.",
+        "whyTitle": "Why This Matters for Transplant Patients",
+        "whyIntro": "Your anti-rejection medicines are specialty medications. They are expensive. Understanding these words helps you:",
+        "whyItems": [
+          "Know what you'll pay",
+          "Find help when costs are too high",
+          "Talk to your transplant team about options",
+          "Apply for assistance programs"
+        ],
+        "askTitle": "Questions to Ask",
+        "askItems": [
+          "What tier are my transplant medicines?",
+          "How much is my deductible?",
+          "When do I reach my yearly spending limit?",
+          "Are my medicines on the covered medicines list?",
+          "Can I use mail order to save money?"
+        ]
+      }
+    },
+    "directory": {
+      "title": "Trusted Resource Directory",
+      "visitAria": "Visit {{name}} (opens in new tab)",
+      "emptyTitle": "No resources available",
+      "emptyText": "We're working on adding trusted resources. Check back soon for helpful links and organizations."
+    },
+    "insurance": {
+      "wiser": {
+        "title": "New in 2026: CMS WISeR Prior Authorization Pilot",
+        "intro": "Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.",
+        "statesTitle": "Affected States",
+        "stateAz": "Arizona",
+        "stateNj": "New Jersey",
+        "stateOh": "Ohio",
+        "stateOk": "Oklahoma",
+        "stateTx": "Texas",
+        "stateWa": "Washington",
+        "knowTitle": "What Transplant Patients Should Know",
+        "know1": "WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications",
+        "know2": "Your immunosuppressant drugs are NOT affected",
+        "know3": "If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization",
+        "know4": "Coverage decisions are made within 72 hours (48 hours for urgent cases)",
+        "footer": "The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process."
+      },
+      "note": "Each type of insurance has its own benefits, costs, and best ways to save.",
+      "infographicAlt": "Comparison chart of transplant medication help by insurance type: Commercial, Medicare, Medicaid, and Uninsured",
+      "infographicDesc": "This infographic compares what transplant medication help is available across four insurance types. Commercial Insurance: Insurance through your job or that you buy on your own. You may qualify for manufacturer copay cards, patient assistance programs, and copay foundations. You pay monthly premiums, copays, and deductibles, then insurance covers the rest. Common problems include high deductibles, prior authorization requirements, and copay accumulators. Next step: search your medications to find copay cards and assistance programs. Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include Part D costs and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs. Medicaid: Government insurance for people with low income. You may qualify for patient assistance programs and state-specific programs. Covers most transplant drugs with very low or no copays. Common problems include limited pharmacy networks, formulary restrictions, and coverage ending if income changes. Next step: search your medications and check with your state Medicaid office. Uninsured or Self-Pay: No current insurance coverage. You may qualify for manufacturer patient assistance programs for free medications, state programs, and discount cards. You pay the full retail price without help. Common problems include very high costs, no negotiated rates, and difficulty affording specialty medications. Next step: apply for patient assistance programs immediately as most offer free medications for qualifying patients. The infographic concludes with an encouraging message: You are not alone and there is help available no matter what type of insurance you have.",
+      "medicareGuide": {
+        "title": "Medicare Guide",
+        "partsTitle": "Medicare Parts for Transplant Drugs",
+        "partATitle": "Part A (Hospital)",
+        "partAItems": ["Induction agents", "(Thymoglobulin, Simulect)"],
+        "partBTitle": "Part B (Medical)",
+        "partBItems": [
+          "IV infusions (Belatacept)",
+          "Anti-rejection drugs (if Part B-ID eligible)",
+          "2026: $202.90/month premium, $283 deductible",
+          "Part B-ID premium: $121.60/month (kidney patients)"
+        ],
+        "partCTitle": "Part C (Medicare Advantage)",
+        "partCItems": ["Combines A, B, and usually D", "May have extra benefits", "You must use certain doctors"],
+        "partDTitle": "Part D (Prescription)",
+        "partDItems": ["Tacrolimus", "Mycophenolate", "Valcyte, etc."],
+        "chooseTitle": "Part D vs Medicare Advantage: Choosing Your Plan",
+        "tradTitle": "Part D (Traditional)",
+        "tradItems": [
+          "Works with any Medicare-accepting provider",
+          "Separate deductible and premium",
+          "$2,100 out-of-pocket cap (2026)"
+        ],
+        "maTitle": "Medicare Advantage (MA-PD)",
+        "maItems": [
+          "Often lower or $0 premiums",
+          "Provider networks may be limited",
+          "$2,100 out-of-pocket cap (2026)"
+        ]
+      },
+      "commercial": {
+        "title": "Commercial Insurance",
+        "intro": "Your main payer for the first 30 months after transplant.",
+        "keyPointsTitle": "Key Points",
+        "keyPoints": [
+          "Can use most drug maker PAPs",
+          "Copay cards often work",
+          "Foundations help with high copays",
+          "May need to use a certain pharmacy"
+        ],
+        "strategyTitle": "Best Strategy",
+        "strategy": "Start with drug maker PAPs, then use foundations for any copays or deductibles left over."
+      },
+      "va": {
+        "title": "VA Health Care",
+        "intro": "For veterans who qualify.",
+        "strategyTitle": "Best Strategy",
+        "strategy": "Priority Groups 1–6: $0 for medicines. Use the VA pharmacy first. Work with your VA transplant team.",
+        "link": "VA Prescription Information",
+        "linkAria": "Visit VA Prescription Information (opens in new tab)"
+      },
+      "tricare": {
+        "title": "TRICARE",
+        "intro": "For military members and families.",
+        "strategyTitle": "Best Strategy",
+        "strategy": "Use the military pharmacy ($0 copay). Use TRICARE mail order for ongoing medicines. Check the drug list search tool.",
+        "link": "TRICARE Drug List Search",
+        "linkAria": "Visit TRICARE Formulary Search (opens in new tab)"
+      },
+      "noInsurance": {
+        "title": "No Insurance",
+        "intro": "For patients without insurance.",
+        "strategyTitle": "Best Strategy",
+        "items": [
+          "Start with drug maker PAPs",
+          "Check Cost Plus Drugs prices",
+          "Use discount tools (GoodRx, SingleCare, etc.)",
+          "Look into Medicaid or Marketplace plans"
+        ],
+        "link": "Find Insurance Options",
+        "linkAria": "Explore Insurance Options on Healthcare.gov (opens in new tab)"
+      },
+      "medicaid": {
+        "title": "Medicaid (State-Based)",
+        "intro": "A program for people with low income. What it covers depends on your state.",
+        "selectLabel": "Select your State:",
+        "selectPlaceholder": "-- Choose a State --",
+        "go": "Go to Official Site",
+        "goAria": "Visit your state's Medicaid website (opens in new tab)",
+        "leaving": "You are leaving this app to visit a government website."
+      },
+      "ihs": {
+        "title": "Indian Health Service / Tribal Programs",
+        "intro": "For American Indian and Alaska Native patients who qualify.",
+        "findTitle": "Find a Facility",
+        "findText": "Use the official IHS locator to find clinics and pharmacies near you.",
+        "findCta": "Open IHS Locator",
+        "findAria": "Find an IHS facility (opens in new tab)",
+        "strategyTitle": "Best Strategy",
+        "strategy": "Use your local IHS or Urban Indian Program, usually $0 cost."
+      }
+    },
+    "deductibleTrap": {
+      "title": "The Deductible Trap",
+      "subtitle": "Why Prescription Discount Cards Can Cost Transplant Patients More",
+      "warning": {
+        "title": "⚠️ Important Warning for Transplant Patients",
+        "lead": "Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars each year.",
+        "boxTitle": "Watch out for the \"deductible trap.\" Here's what happens:",
+        "boxP1Pre": "If you use a discount card, ",
+        "boxP1Highlight": "the money you pay does NOT count toward your deductible",
+        "boxP1Post": ".",
+        "boxP2": "You still have to pay your full deductible later. This can cost you more money over the year.",
+        "boxP3": "What to do: Ask your insurance company when to start using discount cards."
+      },
+      "example": {
+        "title": "Real-World Example",
+        "rightBadge": "✅ The Right Way",
+        "rightTitle": "Using Insurance",
+        "rightM13Label": "Month 1-3:",
+        "rightM13": "Pay $2,100 out-of-pocket (reaching your yearly limit)",
+        "rightM412Label": "Month 4-12:",
+        "rightM412": "Insurance pays 100% = $0 out-of-pocket",
+        "rightTotal": "Total Annual Cost: $2,100",
+        "trapBadge": "❌ The Discount Card Trap",
+        "trapTitle": "Using GoodRx/SingleCare",
+        "trapM112Label": "Month 1-12:",
+        "trapM112": "Pay discounted price (~$200/month) but NONE counts toward yearly limit",
+        "trapResultLabel": "Result:",
+        "trapResult": "You NEVER reach your yearly limit, so you pay all year long",
+        "trapTotal": "Total Annual Cost: $2,400",
+        "takeaway": "Small savings today = thousands of dollars in extra costs over the year."
+      },
+      "whenToUse": {
+        "title": "When Should Transplant Patients Use Discount Cards?",
+        "s1Title": "Scenario 1: Drug NOT Covered by Insurance",
+        "s1Text": "For a medicine NOT on your insurance's list and no cheaper generic option is available.",
+        "s2Title": "Scenario 2: One-Time, Low-Cost Medications",
+        "s2Text": "For short-term medicines not related to your transplant (like a round of antibiotics) where the discount price is less than your copay.",
+        "s3Title": "Scenario 3: Extremely High Deductible",
+        "s3Text": "If you have a very high deductible AND the cash price is much lower, but even then, think hard about the cost of not reaching your yearly limit.",
+        "neverTitle": "🛑 NEVER Use Discount Cards For:",
+        "neverP1": "Your daily anti-rejection medicines like Tacrolimus, Mycophenolate, or Cyclosporine.",
+        "neverP2": "These are the medicines that will help you reach your yearly limit fast."
+      },
+      "alternatives": {
+        "title": "Better Alternatives",
+        "papsTitle": "Patient Assistance Programs (PAPs)",
+        "papsText": "Free or low-cost medicines straight from drug makers.",
+        "foundationsTitle": "Co-pay Foundations",
+        "foundationsText": "Groups that help pay for your copays and deductibles.",
+        "copayTitle": "Drug Maker Copay Cards",
+        "copayText": "Help from drug makers for brand-name medicines (not for Medicare patients).",
+        "counts": "✅ Counts toward your yearly limit"
+      },
+      "takeaways": {
+        "title": "Key Takeaways",
+        "t1Bold": "Your goal every year is to hit your yearly spending limit (the most you pay each year).",
+        "t1Rest": "Once you reach it, insurance pays 100% for the rest of the year.",
+        "t2Bold": "Discount cards stop your payments from counting toward this goal.",
+        "t2Rest": "They may save you a few dollars per medicine, but cost you thousands over the year.",
+        "t3Bold": "Always use PAPs and co-pay foundations first.",
+        "t3Rest": "These programs help you pay for medicines AND help you reach your yearly limit faster.",
+        "t4Bold": "Talk to your transplant team.",
+        "t4Rest": "They can connect you with people who know these programs and can help you through the system."
+      },
+      "questionsTitle": "Questions?",
+      "questionsText": "Not sure if a discount card is right for you? Ask your transplant center's money helper or social worker. They can look at your insurance plan and help you choose."
+    },
+    "diversion": {
+      "title": "When Insurance Sends You Elsewhere",
+      "subtitle": "Some plans try to avoid paying for your drugs. Learn how to spot this and what to do.",
+      "warning": {
+        "title": "Warning: Your Plan May Send You Away",
+        "lead": "Some plans don't want to pay for costly drugs. They may make you get free drugs from drug makers first.",
+        "boxTitle": "What Does This Mean?",
+        "boxP1Pre": "Your plan may say: ",
+        "boxP1Highlight": "\"We won't pay for your drug until you ask a drug maker for free medicine first.\"",
+        "boxP2": "This saves money for your plan. But it can leave you without medicine while you wait. And you might not get the free drugs."
+      },
+      "types": {
+        "title": "Three Ways Plans Do This",
+        "intro": "These tricks have fancy names. But they all do the same thing: make someone else pay for your drugs.",
+        "whyHurts": "Why This Hurts:",
+        "acc": {
+          "title": "Copay Accumulator",
+          "pre": "Drug makers give you copay help. Your plan takes that help. But ",
+          "highlight": "it does not count toward what you owe for the year",
+          "post": ".",
+          "why": [
+            "Your copay card runs out faster",
+            "When it runs out, you owe the full price",
+            "You keep paying all year long"
+          ]
+        },
+        "max": {
+          "title": "Copay Maximizer",
+          "pre": "Your plan spreads your copay card over the year. But ",
+          "highlight": "the plan keeps the savings, not you",
+          "post": ".",
+          "why": [
+            "The drug maker's help goes to your plan, not you",
+            "You still pay more than you should",
+            "When the help runs out, you owe a lot"
+          ]
+        },
+        "afp": {
+          "title": "Alternative Funding (AFP)",
+          "pre": "Your work plan says: ",
+          "highlight": "\"We won't cover this drug. Go get it free from the drug maker.\"",
+          "why": [
+            "You wait weeks or months for your drugs",
+            "You might not get the free drugs",
+            "If you don't get free drugs, you pay full price",
+            "Your plan saves money. You take the risk."
+          ]
+        }
+      },
+      "identify": {
+        "title": "How to Tell If This Is Happening to You",
+        "signsTitle": "Warning Signs:",
+        "signs": [
+          "Your plan papers say \"copay accumulator\"",
+          "Copay card money is not showing on your plan tracker",
+          "They tell you to call another company first",
+          "Your drug is \"carved out\" (not covered)",
+          "You must ask for free drugs before your plan will help"
+        ],
+        "askTitle": "Ask Your Plan These Questions:",
+        "questions": [
+          "\"Do you use a copay accumulator?\"",
+          "\"Will my copay card count toward what I owe?\"",
+          "\"Is my drug fully covered?\"",
+          "\"Do I have to ask for free drugs first?\""
+        ]
+      },
+      "protect": {
+        "title": "How to Protect Yourself",
+        "s1Title": "Read Your Plan Papers",
+        "s1Text": "Look for words like \"accumulator,\" \"maximizer,\" or \"alternative funding.\" These are clues.",
+        "s2Title": "Keep Track of What You Pay",
+        "s2Text": "Save your receipts. Check if your copay card money shows up on your plan's tracker. If not, you may have an accumulator plan.",
+        "s3Title": "Appeal If They Say No",
+        "s3Text": "If your plan won't cover your drug, you can fight back. Ask your transplant team to write a letter saying you need this drug.",
+        "s4Title": "Call Your State for Help",
+        "s4Text": "Many states have laws to protect you. Call your state insurance office. They can tell you your rights and help you file a complaint.",
+        "s5Title": "Talk to Your Boss (If You Get Insurance From Work)",
+        "s5Text": "Your boss picks the plan. Tell HR how this hurts you. Ask them to pick a better plan."
+      },
+      "stateLaws": {
+        "title": "States That Protect You",
+        "intro": "Some states made laws to stop these tricks. In these states, copay card money must count toward what you owe.",
+        "listTitle": "States With Laws to Help (as of 2026):",
+        "list": "Arizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Minnesota, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Puerto Rico, Tennessee, Texas, Virginia, Washington, West Virginia, and more.",
+        "note": "Call your state insurance office to learn about new laws. More states add protections every year."
+      },
+      "whyMatters": {
+        "title": "Why Transplant Patients Must Know This",
+        "t1Bold": "You can't skip your drugs.",
+        "t1Rest": "Missing doses can hurt your transplant. Waiting weeks for free drugs is risky.",
+        "t2Bold": "Free drugs are not a sure thing.",
+        "t2Rest": "Drug makers have rules. You might not qualify. The money might run out.",
+        "t3Bold": "You pay for your plan.",
+        "t3Rest": "You pay every month. But some plans make drug makers pay for your drugs instead.",
+        "t4Bold": "Big bills can hit fast.",
+        "t4Rest": "When your copay card runs out, you may owe a lot of money all at once."
+      },
+      "help": {
+        "title": "Need Help?",
+        "text": "Think this is happening to you? Talk to your transplant center's money helper or social worker. They know how to help.",
+        "pafPre": "You can also call the ",
+        "pafLink": "Patient Advocate Foundation",
+        "pafPost": " for free help."
+      }
+    },
+    "mental": {
+      "title": "Mental Health Resources",
+      "subtitle": "Your mental health matters. Get free, private support when you need it.",
+      "crisis": {
+        "title": "Need to Talk to Someone Right Now?",
+        "name": "National Suicide & Crisis Lifeline",
+        "availability": "24/7 • Free • Private",
+        "callTitle": "Call or Text",
+        "callText": "Dial or text <strong>988</strong> from any phone",
+        "chatTitle": "Online Chat"
+      },
+      "samhsa": {
+        "aria": "Visit SAMHSA (opens in new tab)",
+        "title": "SAMHSA",
+        "badge": "Government Resource",
+        "desc": "<strong>Substance Abuse and Mental Health Services</strong> - Find treatment centers, support groups, and mental health help near you.",
+        "availability": "Help finding treatment any time (24/7)"
+      },
+      "helplineLabel": "Helpline:",
+      "transplant": {
+        "title": "Transplant & Mental Health",
+        "intro": "It's normal to feel worried, sad, or stressed during your transplant journey. You're not alone.",
+        "items": [
+          "Ask your transplant team about counseling services",
+          "Many transplant centers have social workers and mental health experts",
+          "Medicare and most insurance plans cover mental health services"
+        ]
+      },
+      "nami": {
+        "aria": "Visit NAMI Support Groups (opens in new tab)",
+        "title": "NAMI Support Groups",
+        "desc": "NAMI offers free support groups for people with mental health issues and their families."
+      },
+      "findTreatment": {
+        "aria": "Visit FindTreatment.gov (opens in new tab)",
+        "desc": "A government site to help you learn about mental health, find treatment, and find services near you."
+      },
+      "caregivers": {
+        "title": "Support for Caregivers & Care Partners",
+        "intro": "You are essential to the transplant journey. Your well-being matters too. Caring for a loved one can feel rewarding but also physically and emotionally demanding. Take care of yourself so you can keep providing the best support.",
+        "tipsTitle": "Caregiver Self-Care Tips",
+        "tips": [
+          "Set boundaries and ask for help when you need it",
+          "Take breaks and maintain your own health appointments",
+          "Connect with other caregivers who understand your experience",
+          "Consider counseling or support groups for caregivers"
+        ],
+        "nacAria": "Visit National Alliance for Caregiving (opens in new tab)",
+        "nacTitle": "National Alliance for Caregiving",
+        "nacDesc": "A national nonprofit coalition dedicated to advancing family caregiving through research, innovation, and advocacy. Find resources, research, and support for your caregiving journey.",
+        "nacBadge": "Caregiver Resource"
+      },
+      "remember": {
+        "title": "Remember",
+        "text": "Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out, there are people who want to help."
+      }
+    },
+    "simulator": {
+      "title": "Insurance Change Simulator",
+      "subtitle": "See how your medication options change when switching insurance",
+      "currentLabel": "Current Insurance",
+      "futureLabel": "Future Insurance",
+      "selectCurrent": "-- Select current --",
+      "selectFuture": "-- Select future --",
+      "cta": "See What Changes",
+      "recommendedAction": "📋 Recommended Action",
+      "comingSoon": "Detailed transition info for this combination coming soon. Contact your transplant coordinator for guidance.",
+      "selectDifferent": "Please select different insurance types to see the transition changes.",
+      "insuranceTypes": {
+        "commercial": "Commercial/Employer Insurance",
+        "medicare": "Medicare (Part D)",
+        "medicaid": "Medicaid",
+        "marketplace": "ACA Marketplace",
+        "uninsured": "Uninsured"
+      },
+      "transitions": {
+        "commercial_medicare": {
+          "title": "Commercial → Medicare",
+          "timing": "Common at 65 or after 24 months on SSDI",
+          "changes": [
+            { "title": "Copay Cards", "desc": "Most manufacturer copay cards are NOT allowed with Medicare. This is a major change." },
+            { "title": "PAP Access", "desc": "You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients)." },
+            { "title": "Foundation Help", "desc": "Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays." },
+            { "title": "Part B-ID Option", "desc": "Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID). Premium: $121.60/month in 2026 (up from $110.40 in 2025), plus 20% coinsurance after $283 deductible." },
+            { "title": "2026 Cap", "desc": "Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025)." }
+          ],
+          "action": "Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out."
+        },
+        "commercial_medicaid": {
+          "title": "Commercial → Medicaid",
+          "timing": "Due to income change or disability",
+          "changes": [
+            { "title": "Copay Cards", "desc": "Copay cards typically cannot be used with Medicaid." },
+            { "title": "Low/No Cost", "desc": "Medicaid typically has $0-$3 copays for prescriptions." },
+            { "title": "PAP Access", "desc": "Some PAPs still available as secondary assistance." },
+            { "title": "Covered Medicines", "desc": "May need to switch to Medicaid-preferred medications or get prior authorization." }
+          ],
+          "action": "Work with your transplant coordinator to ensure your medications are on the Medicaid covered medicines list before switching."
+        },
+        "medicaid_medicare": {
+          "title": "Medicaid → Medicare (Dual Eligible)",
+          "timing": "At age 65 or qualifying for Medicare",
+          "changes": [
+            { "title": "Dual Eligible Status", "desc": "You may qualify as \"dual eligible\" and keep some Medicaid benefits alongside Medicare." },
+            { "title": "Extra Help/LIS", "desc": "Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs." },
+            { "title": "Primary Payer", "desc": "Medicare becomes primary, Medicaid secondary for covered services." },
+            { "title": "MSP Programs", "desc": "Medicare Savings Programs can pay your Part B premium ($202.90/month in 2026)." }
+          ],
+          "action": "Contact your State Health Insurance Assistance Program (SHIP) for free counseling on dual eligible benefits."
+        },
+        "commercial_marketplace": {
+          "title": "Commercial → ACA Marketplace",
+          "timing": "Job loss, self-employment, or retirement before 65",
+          "changes": [
+            { "title": "Copay Cards OK", "desc": "Manufacturer copay cards CAN be used with Marketplace plans." },
+            { "title": "Subsidies Available", "desc": "Premium tax credits based on income can significantly reduce costs." },
+            { "title": "Network Changes", "desc": "Check if your transplant center and pharmacy are in-network before enrolling." },
+            { "title": "CSR Plans", "desc": "If income <250% FPL, Silver plans offer reduced deductibles and copays." }
+          ],
+          "action": "Use healthcare.gov to compare plans. Filter by your medications and doctors to find the best fit."
+        },
+        "uninsured_medicare": {
+          "title": "Uninsured → Medicare",
+          "timing": "Turning 65 or qualifying through disability",
+          "changes": [
+            { "title": "Drug Coverage", "desc": "Part D provides prescription coverage with $2,100 out-of-pocket cap (2026)." },
+            { "title": "PAPs + Foundations", "desc": "Full access to Patient Assistance Programs and foundation copay help." },
+            { "title": "Discount Cards", "desc": "GoodRx/SingleCare typically not usable once you have Part D coverage." },
+            { "title": "Part B-ID", "desc": "Kidney patients: Part B-ID covers immunosuppressants even without Part A/B. Premium: $121.60/month (2026)." }
+          ],
+          "action": "Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited."
+        },
+        "uninsured_medicaid": {
+          "title": "Uninsured → Medicaid",
+          "timing": "Income qualifies (varies by state)",
+          "changes": [
+            { "title": "Coverage", "desc": "Comprehensive coverage including prescriptions, often $0-$3 copays." },
+            { "title": "Retroactive", "desc": "Coverage goes back up to 3 months before you apply." },
+            { "title": "Covered Medicines", "desc": "Must use Medicaid covered medicines list - may need prior approval for some transplant drugs." }
+          ],
+          "action": "Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant papers."
+        },
+        "uninsured_marketplace": {
+          "title": "Uninsured → ACA Marketplace",
+          "timing": "Open enrollment or qualifying life event",
+          "changes": [
+            { "title": "Subsidies", "desc": "Help paying for insurance based on income - may get $0 premium plans." },
+            { "title": "Copay Cards", "desc": "Can use drug company help with what you owe on Marketplace plans." },
+            { "title": "Pre-existing OK", "desc": "Cannot be denied or charged more for transplant history." },
+            { "title": "Plan Selection", "desc": "Silver plans best value if income 100-250% FPL due to cost-sharing reductions." }
+          ],
+          "action": "Apply at healthcare.gov during Open Enrollment (Nov 1 - Jan 15) or after a qualifying event."
+        }
+      }
+    },
+    "coverage101": {
+      "logoAlt": "Transplant Medication Navigator",
+      "eyebrow": "Coverage 101",
+      "title": "How you pay for transplant medications.",
+      "sub": "The four most common ways patients are covered, what to know, what to watch for, what to do next.",
+      "whoQualifies": "Who qualifies",
+      "howItWorks": "How it works",
+      "watchFor": "Watch for",
+      "nextSteps": "Next steps",
+      "footnote": "Educational information only. Eligibility rules and coverage details change, verify with your insurer, state Medicaid office, and transplant team.",
+      "commercial": {
+        "eyebrow": "Commercial",
+        "name": "Insurance from your job or that you bought yourself.",
+        "tag": "Through an employer, the Marketplace, or a spouse/parent's plan.",
+        "who": [
+          "Employees of companies that offer benefits",
+          "Self-purchased plans through Healthcare.gov",
+          "Dependents on a family member's plan"
+        ],
+        "how": "You pay a monthly premium. Insurance starts paying more after you hit your <strong>deductible</strong>. Copays and coinsurance apply at the pharmacy until you reach your <strong>out-of-pocket max</strong>.",
+        "warn": "High out-of-pocket before you hit your deductible. Narrow networks. Prior-authorization delays.",
+        "steps": [
+          "Check your plan's formulary for transplant medications.",
+          "Know your deductible and out-of-pocket max.",
+          "Confirm your transplant center is in-network."
+        ]
+      },
+      "medicare": {
+        "eyebrow": "Medicare",
+        "name": "Federal insurance for 65+ and certain disabilities.",
+        "tag": "Includes End-Stage Renal Disease and qualifying long-term disability.",
+        "who": [
+          "Adults 65+",
+          "People with qualifying disabilities (24+ months on SSDI)",
+          "Anyone with End-Stage Renal Disease"
+        ],
+        "how": "<strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care, and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.",
+        "warn": "Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.",
+        "steps": [
+          "Enroll in Medicare Part A, B, and D (or Advantage).",
+          "Apply for Extra Help if your income is limited.",
+          "Review your Part D drug formulary every fall.",
+          "Kidney transplant? Ask Social Security about Part B-ID before your Medicare ends."
+        ]
+      },
+      "medicaid": {
+        "eyebrow": "Medicaid",
+        "name": "State-and-federal coverage for limited income.",
+        "tag": "Eligibility, benefits, and rules vary by state.",
+        "who": [
+          "Households below your state's income limit",
+          "Children, pregnant patients, and people with disabilities",
+          "Some long-term care and waiver recipients"
+        ],
+        "how": "The state pays for most covered services with low or zero out-of-pocket cost. Each state runs its own program, your benefits, prescription rules, and provider list depend on where you live.",
+        "warn": "Income and asset limits apply. Exceed them and you can lose coverage. Provider networks may be limited. <strong>Copay cards are not allowed</strong>.",
+        "steps": [
+          "Contact your state Medicaid office to apply.",
+          "Gather income, residency, and household documents.",
+          "Re-verify eligibility on the renewal date."
+        ]
+      },
+      "selfpay": {
+        "eyebrow": "Uninsured / Self-Pay",
+        "name": "Paying full cost yourself, with no insurance.",
+        "tag": "Between jobs, pre-Medicare, or otherwise without coverage.",
+        "who": [
+          "Hospital charity / financial-assistance programs",
+          "Manufacturer Patient Assistance Programs (PAPs)",
+          "Discount cards and pharmacy savings programs"
+        ],
+        "how": "You receive the full retail bill. Cash prices for transplant medications can run hundreds to thousands per month. Hospitals and pharmacies often negotiate or offer payment plans on request.",
+        "warn": "Catastrophic out-of-pocket costs. Risk of medical debt. Skipped doses if cost feels impossible.",
+        "steps": [
+          "Apply for manufacturer Patient Assistance Programs first.",
+          "Negotiate cash prices and ask about payment plans.",
+          "Re-check Medicaid and Marketplace plan eligibility."
+        ]
+      }
+    },
+    "generics": {
+      "eyebrow": "Medication Safety",
+      "title": "Generics vs. Brand-Name Medicines",
+      "intro": "Generics can save you a lot of money, and for most medicines they are a smart, safe choice. For transplant patients, there is just one important rule that keeps them safe. Here is what to know.",
+      "real": {
+        "title": "Generics are real medicine",
+        "li1": "• A generic has the <strong>same active ingredient</strong> as the brand name.",
+        "li2": "• The FDA approves it and requires it to work the same way.",
+        "li3": "• It usually costs a lot less.",
+        "li4": "• For most medicines, choosing the generic is a safe way to save money."
+      },
+      "extraCare": {
+        "title": "Transplant drugs need extra care",
+        "p1": "Anti-rejection drugs like <strong>tacrolimus (Prograf)</strong>, <strong>cyclosporine</strong>,<strong> sirolimus (Rapamune)</strong>, and <strong>everolimus</strong> are \"narrow therapeutic index\" drugs. That means even a small change in how much reaches your blood matters:",
+        "li1": "• <strong>Too little</strong> → your body could reject the organ.",
+        "li2": "• <strong>Too much</strong> → more side effects and toxicity.",
+        "p2": "Different makers can be absorbed a little differently. So the real risk is not the generic itself. The risk is <strong>switching</strong> (brand to generic, or one generic maker to another)."
+      },
+      "safeWay": {
+        "title": "The safe way to save with a generic",
+        "li1": "Pick one version and stay on it. A generic is fine. Just keep the <strong>same manufacturer</strong> every time you refill.",
+        "li2": "Ask your pharmacy to always give you the same maker, and to call you <strong>before</strong> any switch.",
+        "li3": "Ask your doctor to write the maker on your prescription (or <strong>\"Do Not Substitute\"</strong> if your team wants brand-name).",
+        "li4": "After <strong>any</strong> change, ask for a blood test within a week.",
+        "li5": "Always tell your transplant team <strong>before</strong> you change anything."
+      },
+      "brand": {
+        "title": "When to ask for brand-name",
+        "intro": "You may want to ask for brand-name if:",
+        "li1": "• Your drug levels have been steady on it.",
+        "li2": "• You had problems after a past switch.",
+        "li3": "• Your transplant center requires it.",
+        "appealLink": "If insurance says no, learn how to appeal"
+      },
+      "bottomLine": {
+        "title": "The bottom line",
+        "text": "Generics can save you money <strong>and</strong> be safe. The key is staying consistent: use the same version every time, and keep your transplant team in the loop.<strong> Never switch on your own just to save money.</strong>"
+      },
+      "footer": "Have a question about a switch? Call your transplant team before your next refill."
+    }
+  },
   "faq": {
     "cob": {
       "results": {
