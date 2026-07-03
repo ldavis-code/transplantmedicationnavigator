@@ -25,6 +25,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
+import LanguageToggle from '../components/LanguageToggle.jsx';
 
 export default function Appeals() {
   const { t } = useTranslation();
@@ -313,6 +314,10 @@ Contact: [Your Phone Number]
         <p className="text-lg text-slate-700 leading-relaxed">
           <Trans i18nKey="appeals.header.intro" />
         </p>
+
+        <div className="mt-6 flex justify-start">
+          <LanguageToggle />
+        </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-4 mt-6">

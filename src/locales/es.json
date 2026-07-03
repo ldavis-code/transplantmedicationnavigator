@@ -1588,5 +1588,251 @@
       "errorInvalid": "Por favor, escriba un correo electrónico válido"
     },
     "loading": "Cargando..."
+  },
+  "appeals": {
+    "meta": {
+      "title": "¿Le negaron? Ayuda con apelaciones para pacientes de trasplante | TransplantMedicationNavigator",
+      "description": "Aprenda cómo apelar las negaciones del seguro para medicamentos de trasplante. Incluye excepciones a la terapia escalonada, guía sobre genéricos y de marca, y modelos de cartas de necesidad médica."
+    },
+    "header": {
+      "back": "Volver a Educación y Recursos",
+      "title": "¿Le negaron? No se rinda.",
+      "tagline": "¡Usted puede defenderse y GANAR!",
+      "intro": "El seguro le dice \"no\" a casi todo el mundo en algún momento. ¿La buena noticia? <strong>Muchas personas ganan cuando apelan.</strong> Esta guía interactiva le muestra cómo hacerlo, paso a paso.",
+      "stats": {
+        "winRate": "50%+",
+        "winRateLabel": "Apelaciones ganadas",
+        "days": "30-60",
+        "daysLabel": "Días para apelar",
+        "free": "Gratis",
+        "freeLabel": "Presentar una apelación"
+      },
+      "guideTitle": "Guía de apelaciones gratis",
+      "guideSubtitle": "Guía lista para imprimir con listas de verificación y modelos de cartas",
+      "guideDownload": "Descargar la guía gratis"
+    },
+    "nav": {
+      "ariaLabel": "Secciones de la página",
+      "prompt": "Haga clic en cualquier sección para explorarla:",
+      "whyDenied": "¿Por qué negaron?",
+      "stepTherapy": "Terapia escalonada",
+      "generics": "Genérico vs. de marca",
+      "howToAppeal": "Cómo apelar"
+    },
+    "whyDenied": {
+      "title": "Por qué el seguro dice que no",
+      "intro": "Su carta de negación le dice por qué dijeron que no. Estas son las razones más comunes:",
+      "reasons": {
+        "priorAuth": {
+          "title": "Necesita autorización previa",
+          "description": "Su médico necesita pedir permiso primero antes de que el seguro lo cubra."
+        },
+        "notOnList": {
+          "title": "No está en la lista",
+          "description": "Su medicamento no está en su lista de aprobados (llamada formulario)."
+        },
+        "stepTherapy": {
+          "title": "Pruebe otra cosa primero",
+          "description": "Quieren que primero pruebe un medicamento más barato (terapia escalonada)."
+        },
+        "quantityLimits": {
+          "title": "Límites de cantidad",
+          "description": "Dicen que usted está recibiendo demasiado de este medicamento."
+        },
+        "generic": {
+          "title": "Use el genérico",
+          "description": "Quieren que use una versión genérica más barata."
+        }
+      },
+      "remember": "Recuerde: una negación NO es la respuesta final. Es solo el primer \"no\", ¡y usted puede pelearla!"
+    },
+    "stepTherapy": {
+      "title": "Terapia escalonada: \"Pruebe esto primero\"",
+      "intro": "La <strong>terapia escalonada</strong> significa que su seguro quiere que pruebe un medicamento más barato antes de pagar por el que su médico eligió. Algunas personas lo llaman \"fallar primero\".",
+      "risky": {
+        "title": "Por qué esto puede ser riesgoso",
+        "items": [
+          "Los medicamentos antirrechazo necesitan niveles exactos en la sangre. Los cambios pequeños importan mucho.",
+          "Probar el medicamento equivocado podría dañar su trasplante.",
+          "Su equipo de trasplante eligió su medicamento por buenas razones.",
+          "Cambiar significa más pruebas de sangre y visitas al médico."
+        ]
+      },
+      "canDo": {
+        "title": "Lo que usted puede hacer",
+        "items": [
+          "Puede pedirles que no le apliquen la terapia escalonada.",
+          "Los medicamentos de trasplante muchas veces se aprueban cuando su médico explica por qué.",
+          "Una carta de su médico de trasplante ayuda mucho.",
+          "Muchos estados tienen leyes que protegen a los pacientes."
+        ]
+      },
+      "proTip": "Consejo: pregúntele a su médico por la \"excepción a la terapia escalonada\", ¡su médico puede pedirla en su nombre!"
+    },
+    "generics": {
+      "title": "Medicamentos genéricos vs. de marca",
+      "basics": {
+        "title": "Lo básico",
+        "items": [
+          "Los medicamentos genéricos tienen el mismo ingrediente principal que los de marca.",
+          "La FDA dice que funcionan de la misma manera.",
+          "Para la mayoría de los medicamentos, los genéricos están bien."
+        ]
+      },
+      "different": {
+        "title": "Por qué los medicamentos de trasplante son diferentes",
+        "intro": "Los medicamentos antirrechazo son especiales. Hasta los cambios más pequeños pueden causar problemas:",
+        "tooLittle": "<strong>Muy poco:</strong> Su cuerpo podría rechazar el trasplante",
+        "tooMuch": "<strong>Demasiado:</strong> Efectos secundarios y toxicidad"
+      },
+      "brandNeed": {
+        "title": "Cuándo podría necesitar el de marca",
+        "items": [
+          "Sus niveles del medicamento han estado estables con esta marca",
+          "Tuvo problemas cuando cambió antes",
+          "Su centro de trasplante exige el de marca",
+          "A su cuerpo le cuesta absorber el medicamento"
+        ]
+      }
+    },
+    "howToAppeal": {
+      "title": "Cómo apelar: paso a paso"
+    },
+    "tracker": {
+      "progressLabel": "Su progreso",
+      "progress": "{{completed}} de {{total}} pasos",
+      "instruction": "¡Haga clic en cada paso cuando lo haya completado para seguir su progreso!",
+      "tipLabel": "Consejo:",
+      "steps": [
+        {
+          "title": "Pídalo por escrito",
+          "description": "Pida una carta que diga exactamente por qué dijeron que no. La necesita para saber qué decir en su apelación.",
+          "tips": "Llame al número de su tarjeta del seguro y pida una 'carta de negación por escrito' o una 'explicación de beneficios'."
+        },
+        {
+          "title": "Esté pendiente del tiempo",
+          "description": "Por lo general tiene de 30 a 60 días para apelar. Marque la fecha en su calendario. No la deje pasar.",
+          "tips": "¡Ponga un recordatorio en su teléfono 2 semanas antes de la fecha límite!"
+        },
+        {
+          "title": "Reúna sus papeles",
+          "description": "Pida a su equipo de trasplante: una carta de su médico, sus registros del trasplante, resultados recientes de laboratorio y notas sobre por qué otros medicamentos no funcionarán.",
+          "tips": "¡Use el creador de cartas de abajo para ayudar a su médico a escribir una carta de apoyo!"
+        },
+        {
+          "title": "Envíe su apelación",
+          "description": "Envíe todo junto. Guarde copias de todo lo que envíe.",
+          "tips": "Envíelo por fax o por correo certificado para tener prueba de que lo recibieron."
+        },
+        {
+          "title": "Pida una revisión rápida si la necesita",
+          "description": "Si su medicina se le va a acabar pronto, pida una revisión acelerada (rápida). Para los medicamentos de trasplante, esto casi siempre cuenta como urgente.",
+          "tips": "Diga: 'Necesito una apelación acelerada porque quedarme sin mi medicamento de trasplante pone en riesgo mi vida.'"
+        },
+        {
+          "title": "Sepa qué viene después",
+          "description": "Si vuelven a decir que no, puede pedir una revisión externa hecha por alguien fuera de la compañía. La oficina de seguros de su estado también puede ayudar.",
+          "tips": "No se rinda después de la primera negación de la apelación, ¡las revisiones externas muchas veces cambian las decisiones!"
+        }
+      ],
+      "congratsTitle": "¡Felicidades! ¡Completó todos los pasos!",
+      "congratsText": "Va por muy buen camino para ganar su apelación. ¡Manténgase fuerte!"
+    },
+    "letter": {
+      "title": "Escriba una carta para su médico",
+      "subtitle": "Pídale a su médico que le ayude con su apelación",
+      "why": "<strong>¿Por qué escribirle a su médico?</strong> Su médico tiene el conocimiento médico para explicar por qué usted necesita su medicamento específico. Una carta de necesidad médica de su médico muchas veces es la clave para ganar una apelación.",
+      "note": "<strong>Nota:</strong> Su médico ya tiene acceso a un modelo detallado de carta de necesidad médica. Esta carta es para que <em>usted</em> le pida su ayuda y le dé la información que necesita.",
+      "yourName": "Su nombre",
+      "yourNamePlaceholder": "Su nombre completo",
+      "doctorName": "Nombre del médico",
+      "doctorNamePlaceholder": "p. ej., Smith",
+      "medicationName": "Nombre del medicamento",
+      "medicationNamePlaceholder": "p. ej., Tacrolimus, Prograf",
+      "transplantType": "Tipo de trasplante",
+      "transplantTypePlaceholder": "p. ej., Riñón, Hígado, Corazón",
+      "transplantDate": "Fecha del trasplante ",
+      "transplantDatePlaceholder": "p. ej., enero de 2023",
+      "denialReason": "Motivo de la negación ",
+      "denialReasonPlaceholder": "p. ej., No está en el formulario, Exigen terapia escalonada",
+      "additionalInfo": "Información adicional ",
+      "additionalInfoPlaceholder": "Cualquier otro detalle que pueda ayudar a su médico (p. ej., reacciones previas a medicamentos, por qué necesita este medicamento específico, etc.)",
+      "optional": "(opcional)",
+      "ifKnown": "(si lo sabe)",
+      "generate": "Generar mi carta",
+      "previewTitle": "Su carta para el Dr. ",
+      "doctorFallback": "[Nombre del médico]",
+      "copied": "¡Copiado!",
+      "copyText": "Copiar texto",
+      "nextStep": "<strong>Siguiente paso:</strong> Imprima esta carta o envíela por correo electrónico a su médico junto con una copia de su carta de negación."
+    },
+    "resources": {
+      "title": "Recursos gratis para descargar",
+      "subtitle": "Imprima estas guías para ayudarle con su apelación",
+      "appealGuide": {
+        "title": "Guía completa de apelaciones",
+        "description": "Instrucciones paso a paso, listas de verificación, modelos de cartas y consejos para ganar su apelación. Escrita en lenguaje sencillo.",
+        "items": [
+          "Listas de verificación para imprimir",
+          "Modelo de carta de apelación",
+          "Guiones para llamar al seguro por teléfono"
+        ],
+        "download": "Descargar la guía de apelaciones"
+      },
+      "doctorTemplate": {
+        "title": "Modelo de carta para el médico",
+        "description": "Compártalo con su médico de trasplante. Un modelo de carta de necesidad médica listo para usar que puede personalizar para su apelación.",
+        "items": [
+          "Formato médico profesional",
+          "Referencias a guías clínicas",
+          "Secciones para llenar los espacios"
+        ],
+        "download": "Descargar el modelo gratis"
+      }
+    },
+    "spGuide": {
+      "title": "Guía de farmacias especializadas",
+      "subtitle": "Conozca sus derechos y opciones cuando su seguro le obliga a usar cierta farmacia.",
+      "builder": {
+        "title": "Creador de cartas de apelación para farmacia especializada",
+        "intro": "Llene sus datos abajo para crear una carta que puede copiar y enviar a su compañía de seguros.",
+        "yourName": "Su nombre",
+        "yourNamePlaceholder": "Su nombre",
+        "medicationName": "Nombre del medicamento",
+        "medicationNamePlaceholder": "Nombre del medicamento",
+        "reason": "Motivo de la apelación",
+        "reasonFinancial": "Dificultad económica",
+        "reasonAccess": "Problemas de acceso (horarios/entrega)",
+        "reasonClinical": "Estabilidad clínica (ya está estable)",
+        "generate": "Generar carta",
+        "generateAria": "Generar carta de apelación para farmacia especializada",
+        "preview": "Vista previa:",
+        "copyAria": "Copiar el texto de la carta al portapapeles"
+      },
+      "howTo": {
+        "title": "Cómo apelar: una guía paso a paso",
+        "medicare": {
+          "title": "Apelaciones de Medicare",
+          "note": "Importante: actúe a tiempo.",
+          "step1": "<strong>Decisión de cobertura:</strong> Pida a su plan que pague por la farmacia que usted elija.",
+          "step2": "<strong>Nivel 1 (segunda revisión):</strong> Presente su apelación dentro de 65 días si dicen que no.",
+          "step3": "<strong>Nivel 2 (revisión externa):</strong> Un grupo externo revisa su caso si le niegan otra vez.",
+          "link": "Guía oficial de Medicare",
+          "linkAria": "Visitar la Guía oficial de Medicare (se abre en una pestaña nueva)"
+        },
+        "medicaid": {
+          "title": "Apelaciones de Medicaid",
+          "text": "Cada estado maneja sus propias apelaciones. Llame a la oficina de Medicaid de su estado."
+        },
+        "private": {
+          "title": "Seguro privado",
+          "text": "Puede pedirle a su compañía que lo revise otra vez. Si siguen diciendo que no, puede pedir una revisión externa."
+        }
+      }
+    },
+    "footer": {
+      "title": "Recuerde: usted no está solo",
+      "text": "Miles de pacientes de trasplante apelan sus negaciones con éxito cada año. Su salud importa, y usted tiene todo el derecho de luchar por los medicamentos que necesita. ¡Manténgase fuerte y no se rinda!"
+    }
   }
 }
