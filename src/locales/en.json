@@ -1173,5 +1173,175 @@
       "takeQuiz": "Take My Path Quiz",
       "fullSearch": "Full Medication Search"
     }
+  },
+  "layout": {
+    "banner": {
+      "text": "Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them."
+    },
+    "skipLink": "Skip to main content",
+    "nav": {
+      "brandAriaLabel": "Transplant Medication Navigator™ home",
+      "brandLine1": "Transplant Medication",
+      "brandLine2": " Navigator",
+      "brandTm": "™",
+      "mainAriaLabel": "Main navigation",
+      "mobileAriaLabel": "Mobile navigation",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "simpleView": "Simple View",
+      "links": {
+        "home": { "label": "Home", "ariaLabel": "Go to home page" },
+        "wizard": { "label": "My Path Quiz", "ariaLabel": "Start medication path wizard" },
+        "education": { "label": "Education & Resources", "ariaLabel": "Browse education and resources" },
+        "applicationHelp": { "label": "Grants & Foundations", "ariaLabel": "View grants and foundations guide" },
+        "savingsTracker": { "label": "Savings Calculator", "ariaLabel": "Calculate your medication savings" },
+        "hospitals": { "label": "Hospitals", "ariaLabel": "Information for hospital administrators and transplant coordinators" },
+        "pricing": { "label": "Pricing", "ariaLabel": "View pricing information" },
+        "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
+        "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
+      }
+    },
+    "footer": {
+      "disclaimer": "<strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.",
+      "nlm": "We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.",
+      "lastUpdated": "Information last updated: {{date}}",
+      "copyright": "© 2026 Transplant Medication Navigator™. All Rights Reserved.",
+      "createdBy": "Created by Lorrinda Gray-Davis. est August 2025",
+      "nondiscrimination": {
+        "label": "Non-Discrimination Notice:",
+        "text": " In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability.",
+        "link": "Section 504 Notice & Grievance Procedure"
+      },
+      "links": {
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "accessibility": "Accessibility & Section 504",
+        "feedback": "Feedback",
+        "hospitals": "Hospitals",
+        "admin": "Admin"
+      }
+    }
+  },
+  "home": {
+    "updateBanner": {
+      "ariaLabel": "Our resources are up to date, now including the new TotalAssist program",
+      "verified": "Verified & up to date",
+      "totalAssist": "Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).",
+      "seeWhatsNew": "See what's new"
+    },
+    "hero": {
+      "titlePre": "Compare estimated medication prices and find verified assistance programs ",
+      "titleHighlight": "in one place.",
+      "tagline": "From Prescription to Possession",
+      "subtitle": "One patient went from $624/month to $10 with a copay card. Find out what you could save.",
+      "quizAriaLabel": "Start My Path Quiz",
+      "quizButton": "Start My Path Quiz",
+      "deniedAriaLabel": "Get help with insurance denials",
+      "deniedTitle": "Got Denied?",
+      "deniedSubtitle": "Step therapy, prior auth, and appeal help",
+      "grantsAriaLabel": "Find grants and foundations",
+      "grantsButton": "Find Grants & Foundations"
+    },
+    "stats": {
+      "medications": "Medications",
+      "assistancePrograms": "Assistance Programs",
+      "copayCards": "Copay Cards"
+    },
+    "mychart": {
+      "ariaLabel": "Connect your MyChart to import your medication list",
+      "new": "New",
+      "title": "Your real medication list, in one tap",
+      "text": "Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.",
+      "connect": "Connect MyChart",
+      "footnote": "Listed in the Epic Connection Hub • Works with 400+ Epic health systems • Your data stays on your device"
+    },
+    "features": {
+      "ariaLabel": "Key features",
+      "learn": {
+        "title": "Learn the Process",
+        "text": "Learn how to fill out Patient Assistance Program (PAP) applications yourself, for free.",
+        "linkAriaLabel": "View application guide",
+        "link": "View Guide"
+      },
+      "coverage": {
+        "title": "Coverage Education",
+        "text": "Learn about Insurance, Medicare (including Part B-ID for kidney patients), Medicaid, and IHS benefits.",
+        "linkAriaLabel": "Learn about coverage options",
+        "link": "Learn About Coverage"
+      },
+      "resources": {
+        "title": "Education & Resources",
+        "text": "Direct, safe links to manufacturer programs, foundations, and government sites. No scams.",
+        "linkAriaLabel": "Browse available resources",
+        "link": "Browse Resources"
+      }
+    },
+    "story": {
+      "badge": "Real Patient Story",
+      "quotePre": "\"My prescription was ",
+      "price1": "$624",
+      "quoteMid1": ". With insurance it dropped to ",
+      "price2": "$195",
+      "quoteMid2": ". But nobody told me about copay cards. I found one myself and now I pay just ",
+      "price3": "$10",
+      "quotePost": ".\"",
+      "savedLabel": "Saved Per Year",
+      "why": "This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned."
+    },
+    "hospitals": {
+      "eyebrow": "For hospitals & transplant centers",
+      "title": "Give every patient a medication-education platform, under your brand",
+      "text": "Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.",
+      "feature1": "White-label admin dashboard",
+      "feature2": "Epic MyChart integration",
+      "feature3": "Outcomes & savings reporting",
+      "demo": "Book a demo",
+      "pilot": "See the pilot program"
+    },
+    "mission": {
+      "badge": "Built by a patient, for patients.",
+      "missionTitle": "Our Mission",
+      "missionText": "We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.",
+      "visionTitle": "Our Vision",
+      "visionText": "Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.",
+      "whyTitle": "Why We Built This",
+      "why1Title": "Easy to Understand",
+      "why1Text": "We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.",
+      "why2Title": "A Safe Place",
+      "why2Text": "We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.",
+      "why3Title": "Save Money",
+      "why3Text": "We show you prices and free medicine programs all in one place. You can pick what works best for you."
+    },
+    "quizCta": {
+      "ariaLabel": "Start your personalized medication path",
+      "button": "Start My Medication Path Quiz",
+      "text": "Take our free quiz to see how we can help, Patient Founded. Patient First."
+    },
+    "founder": {
+      "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
+      "title": "Created by Someone Who's Been There",
+      "name": "Lorrinda Gray-Davis",
+      "role": "Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee",
+      "bio": "Lorrinda built this tool from lived experience: seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.",
+      "stat1Label": "Years post-transplant",
+      "stat2Label": "Transplants facilitated",
+      "stat3Label": "Patients supported",
+      "link": "Read Lorrinda's full story & research"
+    },
+    "hotline": {
+      "title": "Need to Talk to Someone?",
+      "intro": "Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.",
+      "lifeline": "National Suicide & Crisis Lifeline",
+      "availability": "24/7 • Confidential",
+      "encouragement": "Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.",
+      "callTitle": "Call or Text",
+      "callText": "Dial or text <strong>988</strong> from any phone",
+      "chatTitle": "Online Chat"
+    },
+    "privacy": {
+      "title": "We Keep Your Info Safe",
+      "text": "We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options."
+    },
+    "tagline": "Built for patients by a patient"
   }
 }

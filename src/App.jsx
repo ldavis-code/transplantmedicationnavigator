@@ -520,17 +520,18 @@ const Layout = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const { isSimpleView, toggleSimpleView } = useSimpleView();
+    const { t } = useTranslation();
 
     const navLinks = [
-        { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
-        { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
-        { path: '/education', label: 'Education & Resources', ariaLabel: 'Browse education and resources' },
-        { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
-        { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
-        { path: '/for-hospitals', label: 'Hospitals', ariaLabel: 'Information for hospital administrators and transplant coordinators' },
-        { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
-        { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
-        { path: '/feedback', label: 'Feedback', ariaLabel: 'Share your feedback' },
+        { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
+        { path: '/wizard', label: t('layout.nav.links.wizard.label'), ariaLabel: t('layout.nav.links.wizard.ariaLabel') },
+        { path: '/education', label: t('layout.nav.links.education.label'), ariaLabel: t('layout.nav.links.education.ariaLabel') },
+        { path: '/application-help', label: t('layout.nav.links.applicationHelp.label'), ariaLabel: t('layout.nav.links.applicationHelp.ariaLabel') },
+        { path: '/savings-tracker', label: t('layout.nav.links.savingsTracker.label'), ariaLabel: t('layout.nav.links.savingsTracker.ariaLabel') },
+        { path: '/for-hospitals', label: t('layout.nav.links.hospitals.label'), ariaLabel: t('layout.nav.links.hospitals.ariaLabel') },
+        { path: '/pricing', label: t('layout.nav.links.pricing.label'), ariaLabel: t('layout.nav.links.pricing.ariaLabel') },
+        { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
+        { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
     ];
 
     return (
@@ -539,7 +540,7 @@ const Layout = ({ children }) => {
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
                     <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.
+                    {t('layout.banner.text')}
                 </span>
             </div>
 
@@ -548,21 +549,21 @@ const Layout = ({ children }) => {
                 href="#main-content"
                 className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg"
             >
-                Skip to main content
+                {t('layout.skipLink')}
             </a>
 
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home">
+                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label={t('layout.nav.brandAriaLabel')}>
                         <img src="/photos/logo.png" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
                         <span className="font-bold text-lg md:text-xl leading-tight">
-                            Transplant Medication<br className="md:hidden"/> Navigator<sup className="text-xs">™</sup>
+                            {t('layout.nav.brandLine1')}<br className="md:hidden"/>{t('layout.nav.brandLine2')}<sup className="text-xs">{t('layout.nav.brandTm')}</sup>
                         </span>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-4" aria-label="Main navigation">
+                    <nav className="hidden md:flex items-center gap-4" aria-label={t('layout.nav.mainAriaLabel')}>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
@@ -587,7 +588,7 @@ const Layout = ({ children }) => {
                             }`}
                         >
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
-                            Simple View
+                            {t('layout.nav.simpleView')}
                         </button>
                     </nav>
 
@@ -595,7 +596,7 @@ const Layout = ({ children }) => {
                     <button
                         className="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                        aria-label={isMobileMenuOpen ? t('layout.nav.closeMenu') : t('layout.nav.openMenu')}
                         aria-expanded={isMobileMenuOpen}
                     >
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -604,7 +605,7 @@ const Layout = ({ children }) => {
 
                 {/* Mobile Nav */}
                 {isMobileMenuOpen && (
-                    <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label="Mobile navigation">
+                    <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label={t('layout.nav.mobileAriaLabel')}>
                         <div className="flex flex-col p-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link
@@ -631,7 +632,7 @@ const Layout = ({ children }) => {
                                 }`}
                             >
                                 {isSimpleView ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
-                                Simple View
+                                {t('layout.nav.simpleView')}
                             </button>
                         </div>
                     </nav>
@@ -647,41 +648,41 @@ const Layout = ({ children }) => {
             <footer className="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
                 <div className="container mx-auto px-4 text-center">
                     <p className="mb-4">
-                        <strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                        <Trans i18nKey="layout.footer.disclaimer" />
                     </p>
                     <p className="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">
-                        We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.
+                        {t('layout.footer.nlm')}
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
-                        Information last updated: {LAST_UPDATED}
+                        {t('layout.footer.lastUpdated', { date: LAST_UPDATED })}
                     </p>
-                    <p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
-                    <p className="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
+                    <p>{t('layout.footer.copyright')}</p>
+                    <p className="mt-4 text-slate-300 text-sm">{t('layout.footer.createdBy')}</p>
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
                     </p>
                     {/* Non-Discrimination Notice - Section 504 Compliance */}
                     <div className="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
                         <p className="text-slate-300">
-                            <strong className="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability.{' '}
+                            <strong className="text-slate-200">{t('layout.footer.nondiscrimination.label')}</strong>{t('layout.footer.nondiscrimination.text')}{' '}
                             <Link to="/accessibility#section-504" className="text-emerald-400 hover:text-emerald-300 underline transition">
-                                Section 504 Notice & Grievance Procedure
+                                {t('layout.footer.nondiscrimination.link')}
                             </Link>
                         </p>
                     </div>
                     <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-                        <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">Terms of Service</Link>
+                        <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.terms')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
+                        <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.privacy')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility & Section 504</Link>
+                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.accessibility')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
+                        <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.feedback')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">Hospitals</Link>
+                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">Admin</Link>
+                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.admin')}</Link>
                     </div>
                 </div>
             </footer>
@@ -704,6 +705,7 @@ const STAT_ASSISTANCE_PROGRAMS = countGroup(PROGRAMS_DATA.papPrograms) + countGr
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
+    const { t } = useTranslation();
 
     return (
         <article className="space-y-8">
@@ -711,60 +713,60 @@ const Home = () => {
             <Link
                 to="/education"
                 className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 px-4 py-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:border-emerald-300 hover:shadow-md transition-all text-center"
-                aria-label="Our resources are up to date, now including the new TotalAssist program"
+                aria-label={t('home.updateBanner.ariaLabel')}
             >
                 <span className="inline-flex items-center gap-2 font-bold text-emerald-800">
                     <CheckCircle size={18} className="flex-shrink-0" aria-hidden="true" />
-                    Verified &amp; up to date
+                    {t('home.updateBanner.verified')}
                 </span>
                 <span className="hidden sm:inline text-emerald-300" aria-hidden="true">•</span>
                 <span className="text-sm text-slate-700">
-                    Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).
+                    <Trans i18nKey="home.updateBanner.totalAssist" />
                 </span>
                 <span className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700">
-                    See what's new <ArrowRight size={14} aria-hidden="true" />
+                    {t('home.updateBanner.seeWhatsNew')} <ArrowRight size={14} aria-hidden="true" />
                 </span>
             </Link>
 
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-                    Compare estimated medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
+                    {t('home.hero.titlePre')}<span className="text-emerald-600">{t('home.hero.titleHighlight')}</span>
                 </h1>
                 <p className="text-lg md:text-xl font-medium italic text-slate-500 mb-4 tracking-wide">
-                    From Prescription to Possession
+                    {t('home.hero.tagline')}
                 </p>
                 <p className="text-lg md:text-xl font-semibold text-slate-900 mb-8 max-w-2xl mx-auto">
-                    One patient went from $624/month to $10 with a copay card. Find out what you could save.
+                    {t('home.hero.subtitle')}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
                         to="/wizard"
                         className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-slate-300 transition flex items-center justify-center gap-2"
-                        aria-label="Start My Path Quiz"
+                        aria-label={t('home.hero.quizAriaLabel')}
                     >
                         <Search size={20} aria-hidden="true" />
-                        Start My Path Quiz
+                        {t('home.hero.quizButton')}
                     </Link>
                     <Link
                         to="/education/appeals"
                         className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center gap-3"
-                        aria-label="Get help with insurance denials"
+                        aria-label={t('home.hero.deniedAriaLabel')}
                     >
                         <ShieldAlert size={20} aria-hidden="true" />
                         <div className="text-left">
-                            <span className="block">Got Denied?</span>
-                            <span className="block text-sm font-normal opacity-90">Step therapy, prior auth, and appeal help</span>
+                            <span className="block">{t('home.hero.deniedTitle')}</span>
+                            <span className="block text-sm font-normal opacity-90">{t('home.hero.deniedSubtitle')}</span>
                         </div>
                     </Link>
                     <Link
                         to="/application-help"
                         className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
-                        aria-label="Find grants and foundations"
+                        aria-label={t('home.hero.grantsAriaLabel')}
                     >
                         <HeartHandshake size={20} aria-hidden="true" />
-                        Find Grants & Foundations
+                        {t('home.hero.grantsButton')}
                     </Link>
                 </div>
 
@@ -776,7 +778,7 @@ const Home = () => {
                             <Pill size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_MEDICATIONS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Medications</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.medications')}</div>
                     </div>
                     <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 md:p-6 text-center border border-amber-200 shadow-sm hover:shadow-md transition-shadow">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
@@ -784,7 +786,7 @@ const Home = () => {
                             <HeartHandshake size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-amber-700">{STAT_ASSISTANCE_PROGRAMS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Assistance Programs</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.assistancePrograms')}</div>
                     </div>
                     <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 md:p-6 text-center border border-emerald-200 shadow-sm hover:shadow-md transition-shadow">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
@@ -792,7 +794,7 @@ const Home = () => {
                             <CreditCard size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_COPAY_CARDS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.copayCards')}</div>
                     </div>
                 </div>
             </section>
@@ -802,7 +804,7 @@ const Home = () => {
                 <Link
                     to="/wizard"
                     className="group block rounded-2xl border-2 border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50 p-6 md:p-8 shadow-md hover:shadow-lg hover:border-emerald-400 transition-all"
-                    aria-label="Connect your MyChart to import your medication list"
+                    aria-label={t('home.mychart.ariaLabel')}
                 >
                     <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
                         <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-sm" aria-hidden="true">
@@ -810,37 +812,37 @@ const Home = () => {
                         </div>
                         <div className="flex-grow">
                             <span className="inline-flex items-center gap-1 text-xs font-extrabold tracking-wide text-emerald-700 uppercase mb-1">
-                                <Sparkles size={13} aria-hidden="true" /> New
+                                <Sparkles size={13} aria-hidden="true" /> {t('home.mychart.new')}
                             </span>
                             <h2 id="mychart-heading" className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">
-                                Your real medication list, in one tap
+                                {t('home.mychart.title')}
                             </h2>
                             <p className="text-slate-600 mt-1 md:text-lg">
-                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.
+                                <Trans i18nKey="home.mychart.text" />
                             </p>
                         </div>
                         <span className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white font-bold rounded-xl transition whitespace-nowrap">
-                            <Download size={18} aria-hidden="true" /> Connect MyChart
+                            <Download size={18} aria-hidden="true" /> {t('home.mychart.connect')}
                         </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-4 text-center sm:text-left">
-                        Listed in the Epic Connection Hub • Works with 400+ Epic health systems • Your data stays on your device
+                        {t('home.mychart.footnote')}
                     </p>
                 </Link>
             </section>
 
             {/* Features Grid */}
-            <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
+            <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label={t('home.features.ariaLabel')}>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-100 transition">
                     <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <BookOpen size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Learn the Process</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.learn.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Learn how to fill out Patient Assistance Program (PAP) applications yourself, for free.
+                        {t('home.features.learn.text')}
                     </p>
-                    <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="View application guide">
-                        View Guide <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.learn.linkAriaLabel')}>
+                        {t('home.features.learn.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
 
@@ -848,12 +850,12 @@ const Home = () => {
                     <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <ShieldCheck size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Coverage Education</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.coverage.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Learn about Insurance, Medicare (including Part B-ID for kidney patients), Medicaid, and IHS benefits.
+                        {t('home.features.coverage.text')}
                     </p>
-                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="Learn about coverage options">
-                        Learn About Coverage <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.coverage.linkAriaLabel')}>
+                        {t('home.features.coverage.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
 
@@ -861,12 +863,12 @@ const Home = () => {
                     <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <Search size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Education & Resources</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.resources.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Direct, safe links to manufacturer programs, foundations, and government sites. No scams.
+                        {t('home.features.resources.text')}
                     </p>
-                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="Browse available resources">
-                        Browse Resources <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.resources.linkAriaLabel')}>
+                        {t('home.features.resources.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
             </section>
@@ -877,23 +879,22 @@ const Home = () => {
                     <div className="text-center mb-6">
                         <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
                             <DollarSign size={16} aria-hidden="true" />
-                            Real Patient Story
+                            {t('home.story.badge')}
                         </span>
                     </div>
 
                     <blockquote className="text-center">
                         <p className="text-xl md:text-2xl text-slate-800 leading-relaxed mb-6">
-                            "My prescription was <span className="line-through text-slate-500">$624</span>. With insurance it dropped to <span className="line-through text-slate-500">$195</span>.
-                            But nobody told me about copay cards. I found one myself and now I pay just <strong className="text-emerald-700">$10</strong>."
+                            {t('home.story.quotePre')}<span className="line-through text-slate-500">{t('home.story.price1')}</span>{t('home.story.quoteMid1')}<span className="line-through text-slate-500">{t('home.story.price2')}</span>{t('home.story.quoteMid2')}<strong className="text-emerald-700">{t('home.story.price3')}</strong>{t('home.story.quotePost')}
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6">
                             <div className="bg-white rounded-xl px-6 py-4 shadow-sm border border-emerald-100">
                                 <div className="text-3xl font-extrabold text-emerald-600">$2,220</div>
-                                <div className="text-sm text-slate-600 font-medium">Saved Per Year</div>
+                                <div className="text-sm text-slate-600 font-medium">{t('home.story.savedLabel')}</div>
                             </div>
                             <div className="text-slate-600 text-sm max-w-xs">
-                                This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned.
+                                {t('home.story.why')}
                             </div>
                         </div>
                     </blockquote>
@@ -906,18 +907,18 @@ const Home = () => {
                     <div className="flex flex-col md:flex-row md:items-center gap-6">
                         <div className="flex-grow">
                             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide text-emerald-300 uppercase mb-2">
-                                <Building2 size={14} aria-hidden="true" /> For hospitals &amp; transplant centers
+                                <Building2 size={14} aria-hidden="true" /> {t('home.hospitals.eyebrow')}
                             </span>
                             <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                                Give every patient a medication-education platform, under your brand
+                                {t('home.hospitals.title')}
                             </h2>
                             <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
-                                Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.
+                                {t('home.hospitals.text')}
                             </p>
                             <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-200">
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> White-label admin dashboard</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Epic MyChart integration</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Outcomes &amp; savings reporting</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature1')}</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature2')}</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature3')}</li>
                             </ul>
                         </div>
                         <div className="flex flex-col gap-3 flex-shrink-0 w-full md:w-auto">
@@ -925,13 +926,13 @@ const Home = () => {
                                 to="/for-hospitals"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold rounded-xl transition whitespace-nowrap"
                             >
-                                Book a demo <ArrowRight size={18} aria-hidden="true" />
+                                {t('home.hospitals.demo')} <ArrowRight size={18} aria-hidden="true" />
                             </Link>
                             <Link
                                 to="/pilot"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border-2 border-slate-600 hover:border-slate-400 text-white font-bold rounded-xl transition whitespace-nowrap"
                             >
-                                See the pilot program
+                                {t('home.hospitals.pilot')}
                             </Link>
                         </div>
                     </div>
@@ -946,7 +947,7 @@ const Home = () => {
                     <div className="pt-8 pb-2 text-center">
                         <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
                             <UserCheck size={16} aria-hidden="true" />
-                            Built by a patient, for patients.
+                            {t('home.mission.badge')}
                         </span>
                     </div>
 
@@ -954,41 +955,41 @@ const Home = () => {
                         <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Anchor size={24}/></div>
-                                <h2 id="mission-heading" className="text-2xl font-bold text-slate-900 tracking-tight">Our Mission</h2>
+                                <h2 id="mission-heading" className="text-2xl font-bold text-slate-900 tracking-tight">{t('home.mission.missionTitle')}</h2>
                             </div>
                             <p className="text-lg text-slate-700 leading-relaxed">
-                                We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.
+                                {t('home.mission.missionText')}
                             </p>
                         </div>
                         <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Heart size={24}/></div>
-                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Our Vision</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{t('home.mission.visionTitle')}</h2>
                             </div>
                             <p className="text-lg text-slate-700 leading-relaxed">
-                                Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.
+                                {t('home.mission.visionText')}
                             </p>
                         </div>
                     </div>
 
                     {/* Core Values / "The Why" */}
                     <div className="border-t border-emerald-200 bg-white/50 p-8 md:p-10">
-                        <h3 className="text-center font-bold text-emerald-800 uppercase tracking-wider text-sm mb-8">Why We Built This</h3>
+                        <h3 className="text-center font-bold text-emerald-800 uppercase tracking-wider text-sm mb-8">{t('home.mission.whyTitle')}</h3>
                         <div className="grid md:grid-cols-3 gap-8 text-center">
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><BookOpen size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">Easy to Understand</h4>
-                                <p className="text-slate-600 text-sm">We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why1Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why1Text')}</p>
                             </div>
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><ShieldCheck size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">A Safe Place</h4>
-                                <p className="text-slate-600 text-sm">We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why2Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why2Text')}</p>
                             </div>
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><DollarSign size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">Save Money</h4>
-                                <p className="text-slate-600 text-sm">We show you prices and free medicine programs all in one place. You can pick what works best for you.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why3Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why3Text')}</p>
                             </div>
                         </div>
                     </div>
@@ -1000,13 +1001,13 @@ const Home = () => {
                 <Link
                     to="/wizard"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
-                    aria-label="Start your personalized medication path"
+                    aria-label={t('home.quizCta.ariaLabel')}
                 >
                     <Map size={20} aria-hidden="true" />
-                    Start My Medication Path Quiz
+                    {t('home.quizCta.button')}
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help, Patient Founded. Patient First.
+                    {t('home.quizCta.text')}
                 </p>
             </section>
 
@@ -1015,25 +1016,25 @@ const Home = () => {
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                     <img
                         src="/photos/lorrinda-gray-davis.jpg"
-                        alt="Lorrinda Gray-Davis, founder of Transplant Medication Navigator"
+                        alt={t('home.founder.photoAlt')}
                         className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-emerald-200 shadow-lg flex-shrink-0"
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <div className="flex-grow text-center md:text-left">
                         <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
                             <Heart size={20} className="text-emerald-600" aria-hidden="true" />
-                            <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">Created by Someone Who's Been There</h2>
+                            <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">{t('home.founder.title')}</h2>
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900">Lorrinda Gray-Davis</h3>
-                        <p className="text-emerald-700 font-medium text-sm mb-3">Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee</p>
-                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience: seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
+                        <h3 className="text-lg font-bold text-slate-900">{t('home.founder.name')}</h3>
+                        <p className="text-emerald-700 font-medium text-sm mb-3">{t('home.founder.role')}</p>
+                        <p className="text-slate-700 leading-relaxed mb-4">{t('home.founder.bio')}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">Years post-transplant</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">Transplants facilitated</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">500+</span><span className="text-xs text-slate-600">Patients supported</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">500+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
                         </div>
                         <Link to="/about" className="inline-flex items-center gap-2 text-emerald-700 hover:text-emerald-800 font-semibold underline">
-                            Read Lorrinda's full story &amp; research <ArrowRight size={16} aria-hidden="true" />
+                            {t('home.founder.link')} <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                     </div>
                 </div>
@@ -1045,28 +1046,28 @@ const Home = () => {
                     <Phone size={32} />
                 </div>
                 <h3 id="mental-health-hotline" className="text-2xl font-bold text-slate-900 mb-3">
-                    Need to Talk to Someone?
+                    {t('home.hotline.title')}
                 </h3>
                 <p className="text-slate-600 mb-4">
-                    Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.
+                    {t('home.hotline.intro')}
                 </p>
                 <div className="mb-4">
                     <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
                         988
                     </a>
-                    <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
-                    <p className="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
+                    <p className="text-lg font-bold text-slate-700">{t('home.hotline.lifeline')}</p>
+                    <p className="text-sm text-slate-600 mt-1">{t('home.hotline.availability')}</p>
                 </div>
                 <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                    Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.
+                    {t('home.hotline.encouragement')}
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
                     <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">Call or Text</p>
-                        <p className="text-slate-600">Dial or text <strong>988</strong> from any phone</p>
+                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.callTitle')}</p>
+                        <p className="text-slate-600"><Trans i18nKey="home.hotline.callText" /></p>
                     </div>
                     <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">Online Chat</p>
+                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.chatTitle')}</p>
                         <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-rose-600 font-medium hover:underline flex items-center gap-1">
                             988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
                         </a>
@@ -1077,16 +1078,15 @@ const Home = () => {
             {/* Privacy Note */}
             <section className="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
                 <div className="flex justify-center mb-2 text-slate-400" aria-hidden="true"><Lock size={20}/></div>
-                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">We Keep Your Info Safe</h3>
+                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">{t('home.privacy.title')}</h3>
                 <p className="text-slate-600 text-sm">
-                    We do not save your info. We do not ask for your social security number.
-                    We do not sell your info. This tool is only here to teach you about your options.
+                    {t('home.privacy.text')}
                 </p>
             </section>
 
             {/* Built by Patient Tagline */}
             <p className="text-center text-slate-500 text-sm font-medium">
-                Built for patients by a patient
+                {t('home.tagline')}
             </p>
         </article>
     );
