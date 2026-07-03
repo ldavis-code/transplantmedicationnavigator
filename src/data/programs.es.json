@@ -1,0 +1,363 @@
+{
+  "copayPrograms": {
+    "astellas-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "novartis-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "zortress-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "genentech-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "bms-copay": {
+      "maxBenefit": "Pague tan solo $0 durante el primer año",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "nulojix-copay": {
+      "maxBenefit": "Pague tan solo $10 por cada infusión",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "pfizer-copay": {
+      "maxBenefit": "Varía según el medicamento",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "sanofi-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "gilead-copay": {
+      "maxBenefit": "Varía según el medicamento",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "merck-copay": {
+      "maxBenefit": "Varía según el medicamento",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "jardiance-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "farxiga-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "entresto-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "xarelto-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "eliquis-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "dupixent-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "simulect-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "thymoglobulin-copay": {
+      "maxBenefit": "Pague tan solo $0 de copago",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "januvia-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "ozempic-copay": {
+      "maxBenefit": "Pague tan solo $25 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "trulicity-copay": {
+      "maxBenefit": "Pague tan solo $25 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "opsumit-copay": {
+      "maxBenefit": "Pague tan solo $5 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "adempas-copay": {
+      "maxBenefit": "Pague tan solo $5 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "uptravi-copay": {
+      "maxBenefit": "Pague tan solo $5 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "tyvaso-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "spiriva-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "breo-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "nucala-copay": {
+      "maxBenefit": "Pague tan solo $0 por dosis",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "fasenra-copay": {
+      "maxBenefit": "Pague tan solo $0 por dosis",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "tezspire-copay": {
+      "maxBenefit": "Pague tan solo $0 por dosis",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "xolair-copay": {
+      "maxBenefit": "Pague tan solo $5 por dosis",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "anoro-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "dulera-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "envarsus-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "mavyret-copay": {
+      "maxBenefit": "Pague tan solo $5 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "creon-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "auryxia-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "rezdiffra-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "symbicort-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "advair-copay": {
+      "maxBenefit": "Pague tan solo $10 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "lantus-copay": {
+      "maxBenefit": "Pague tan solo $0 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "humalog-copay": {
+      "maxBenefit": "Pague tan solo $35 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "novolog-copay": {
+      "maxBenefit": "Pague tan solo $25 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "lyrica-copay": {
+      "maxBenefit": "Pague tan solo $25 al mes",
+      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+    },
+    "goodrx-search": {
+      "maxBenefit": "Tarjeta de descuento gratis",
+      "notes": "Busque y compare precios de medicamentos recetados."
+    },
+    "singlecare-search": {
+      "maxBenefit": "Tarjeta de descuento gratis",
+      "notes": "Tarjeta gratis que se acepta en más de 35,000 farmacias."
+    },
+    "costplus-search": {
+      "maxBenefit": "Precios de costo más un cargo fijo",
+      "notes": "Farmacia en línea que cobra el costo del medicamento más un cargo fijo."
+    },
+    "prevymis-copay": {},
+    "livtencity-copay": {},
+    "cresemba-copay": {},
+    "vemlidy-copay": {},
+    "epclusa-copay": {},
+    "xifaxan-copay": {}
+  },
+  "papPrograms": {
+    "astellas-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Para pacientes sin seguro o con Medicare que cumplen los requisitos de ingresos."
+    },
+    "novartis-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Zortress, Myfortic, Neoral, Simulect, Entresto y otros medicamentos de Novartis."
+    },
+    "genentech-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre CellCept, Valcyte, Cytovene, Rituxan y otros medicamentos de Genentech."
+    },
+    "bms-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Nulojix, Eliquis y otros medicamentos de BMS."
+    },
+    "pfizer-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Rapamune, ATGAM, Solu-Medrol, Diflucan, Vfend, Revatio y muchos otros medicamentos de Pfizer."
+    },
+    "sanofi-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Thymoglobulin, Renvela, Campath y otros medicamentos de Sanofi."
+    },
+    "gilead-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Vemlidy, Epclusa, Harvoni y otros medicamentos de Gilead para la hepatitis."
+    },
+    "merck-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Prevymis, Noxafil, Januvia, Janumet y otros medicamentos de Merck."
+    },
+    "abbvie-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Mavyret, Creon, Humira y otros medicamentos de AbbVie."
+    },
+    "lilly-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Humalog, Basaglar, Mounjaro y otras insulinas y medicamentos de Lilly."
+    },
+    "boehringer-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Jardiance, Tradjenta, Spiriva y otros medicamentos de Boehringer Ingelheim."
+    },
+    "astrazeneca-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Farxiga, Symbicort, Crestor y otros medicamentos de AstraZeneca."
+    },
+    "janssen-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Xarelto, Invokana y otros medicamentos de Janssen."
+    },
+    "novo-nordisk-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Ozempic, Victoza, NovoLog, Levemir y otras insulinas y medicamentos de Novo Nordisk."
+    },
+    "takeda-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Gammagard, Adynovate, Entyvio y otros medicamentos de Takeda."
+    },
+    "gsk-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Breo Ellipta, Anoro Ellipta, Trelegy, Nucala y otros medicamentos de GSK."
+    },
+    "alexion-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Soliris y Ultomiris para enfermedades causadas por el sistema del complemento (una parte de las defensas del cuerpo)."
+    },
+    "madrigal-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Rezdiffra para NASH (una enfermedad del hígado)."
+    },
+    "united-therapeutics-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Remodulin, Tyvaso y Orenitram para la hipertensión arterial pulmonar (presión alta en los pulmones)."
+    },
+    "amgen-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Aranesp, Epogen, Sensipar, Parsabiv y otros medicamentos de Amgen."
+    },
+    "akebia-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Auryxia para la anemia por falta de hierro y el exceso de fósforo en la sangre."
+    },
+    "bausch-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Xifaxan y otros medicamentos de Bausch Health."
+    },
+    "organon-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Dulera, Nasonex y otros medicamentos de Organon."
+    },
+    "sunovion-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Xopenex, Alvesco y otros medicamentos de Sunovion para la respiración."
+    },
+    "teva-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre QVAR, ProAir y otros medicamentos de Teva."
+    },
+    "grifols-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre HepaGam B, Gamunex y otros medicamentos biológicos de Grifols."
+    },
+    "vifor-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Mircera, Ferinject y otros medicamentos de CSL Vifor para el hierro y la anemia."
+    },
+    "american-regent-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Venofer e Injectafer para la anemia por falta de hierro."
+    },
+    "bayer-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Adempas para la hipertensión pulmonar (presión alta en los pulmones)."
+    },
+    "regeneron-pap": {
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Cubre Dupixent y otros medicamentos de Regeneron."
+    },
+    "drugs-com-search": {
+      "maxBenefit": "Información sobre medicamentos y búsqueda de Programas de Asistencia al Paciente (PAP)",
+      "notes": "Busque información sobre medicamentos y Programas de Asistencia al Paciente (PAP)."
+    },
+    "trumprx-gov": {
+      "maxBenefit": "Precios en efectivo negociados por el gobierno",
+      "notes": "Precios en efectivo con descuento del gobierno en algunos medicamentos de marca."
+    },
+    "abbvie-creon-pap": {},
+    "boehringer-ingelheim-pap": {},
+    "bayer-adempas-pap": {},
+    "american-regent-venofer-pap": {},
+    "amag-feraheme-pap": {},
+    "dsi-pap": {},
+    "akebia-auryxia-pap": {},
+    "takeda-gammagard-pap": {},
+    "sanofi-dupixent-pap": {}
+  },
+  "foundationPrograms": {
+    "healthwell": {
+      "maxBenefit": "Varía según el fondo",
+      "notes": "Los fondos abren y cierran según el dinero disponible. Revise el sitio web con frecuencia."
+    },
+    "pan-foundation": {
+      "maxBenefit": "Varía según el fondo",
+      "notes": "Los fondos abren y cierran según el dinero disponible. Inscríbase para recibir avisos."
+    },
+    "patient-advocate-foundation": {
+      "maxBenefit": "Varía según el fondo",
+      "notes": "PAF se unió con la Fundación PAN y lanzó TotalAssist el 1 de julio de 2026. Co-Pay Relief ahora es parte de TotalAssist, el programa de asistencia caritativa al paciente más grande del país, con casi 150 fondos para enfermedades específicas y equidad en salud, sin listas de espera y con decisiones al instante en la mayoría de los casos. Solicite la ayuda en portal.totalassist.org o llame al 866-512-3861."
+    },
+    "american-kidney-fund": {
+      "maxBenefit": "Varía",
+      "notes": "Solo para pacientes con enfermedad de los riñones. Incluye el programa HIPP, que ayuda a pagar las primas del seguro."
+    },
+    "nord": {
+      "maxBenefit": "Varía según el programa",
+      "notes": "Para pacientes con enfermedades raras."
+    },
+    "accessia-health": {
+      "maxBenefit": "Varía según el fondo",
+      "notes": "Tiene varios fondos para enfermedades específicas."
+    }
+  }
+}
