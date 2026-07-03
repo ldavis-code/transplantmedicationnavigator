@@ -291,6 +291,33 @@ export default function Insights() {
           </div>
         </Section>
 
+        {/* What MyChart imports pull down */}
+        <Section title="MyChart Import Detail" icon={Smartphone}>
+          {(stats?.epicImports ?? 0) > 0 ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div><div className="text-2xl font-bold text-blue-700">{stats?.epicMedsPulled ?? 0}</div><div className="text-xs text-gray-500">Medications pulled down</div></div>
+                <div><div className="text-2xl font-bold text-emerald-700">{stats?.epicMedsMatched ?? 0}</div><div className="text-xs text-gray-500">Matched to catalog</div></div>
+                <div><div className="text-2xl font-bold text-amber-700">{stats?.epicMedsUnmatched ?? 0}</div><div className="text-xs text-gray-500">Not in catalog</div></div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">
+                    {(stats?.epicMedsPulled ?? 0) > 0 ? `${Math.round(((stats?.epicMedsMatched ?? 0) / stats.epicMedsPulled) * 100)}%` : 'N/A'}
+                  </div>
+                  <div className="text-xs text-gray-500">Match rate</div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400">
+                Unmatched medications feed the "Most-Requested Missing Medications" list above. Avg {((stats?.epicMedsPulled ?? 0) / (stats?.epicImports || 1)).toFixed(1)} medications per import.
+              </p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">No MyChart imports recorded yet.</p>
+          )}
+          <div className="mt-4 rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-500">
+            <span className="font-semibold text-gray-600">What the Epic connection shares vs. what we keep:</span> patients approve three scopes (Demographics, Medication Ingredients, Medications). Demographics are used once to validate the connection and are never stored. Medication ingredient codes are used only to match drugs to our catalog. What we keep is aggregate counts (above) plus the names of unmatched drugs, never linked to a patient.
+          </div>
+        </Section>
+
         {/* Coverage mix & cost burden: the Health Equity story for IOTA */}
         <Section title="Coverage Mix & Cost Burden (Health Equity)" icon={HeartHandshake}>
           {coverage?.available && (coverage.coverageTotal > 0 || coverage.burdenTotal > 0) ? (

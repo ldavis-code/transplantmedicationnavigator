@@ -13,12 +13,24 @@
  * known-live-but-bot-blocked hosts as "reachable, manual-verify" rather than
  * "dead". Only true 404s / DNS failures / connection errors are reported broken.
  *
+ * The checker validates TWO sources:
+ *   1. The repo data files (medications.json, programs.json, resources.json)
+ *   2. The LIVE production medications API (Neon database): because the app
+ *      serves URLs from the database, not the bundled JSON. A July 2026 audit
+ *      found 14 medications whose links were fixed in JSON but still broken in
+ *      production because the DB was never synced. Checking only the files
+ *      hides exactly the links patients actually click.
+ * Any live URL that differs from the JSON for the same medication is reported
+ * as DRIFT (even if reachable) so the DB and repo stay in sync.
+ *
  * Usage:
  *   npm run check:links              # report broken links, exit 1 if any
  *   node scripts/check-links.js --stamp   # if fully clean, bump the "verified"
  *                                         # date in constants.js + programs.json
+ *   node scripts/check-links.js --skip-live  # files only (offline/dev)
  *
- * Exit codes: 0 = no broken links, 1 = broken links found (CI-friendly).
+ * Exit codes: 0 = no broken links, 1 = broken links or live drift found
+ * (CI-friendly). An unreachable live API is a warning, not a failure.
  */
 
 import { readFileSync, writeFileSync } from 'fs';
@@ -30,8 +42,16 @@ const __dirname = dirname(__filename);
 const ROOT = join(__dirname, '..');
 
 const STAMP = process.argv.includes('--stamp');
+const SKIP_LIVE = process.argv.includes('--skip-live');
 const TIMEOUT_MS = 25000;
 const CONCURRENCY = 8;
+
+// The production medications API (Neon-backed): the URLs patients really get.
+const LIVE_MEDICATIONS_API =
+    'https://transplantmedicationnavigator.com/.netlify/functions/medications';
+// URL fields on a medication record, in both API (camelCase) shape and
+// the bundled-JSON shape used for drift comparison.
+const MED_URL_FIELDS = ['papUrl', 'copayUrl', 'supportUrl', 'medicarePartDUrl'];
 
 // Data files to scan for URLs.
 const DATA_FILES = [
@@ -41,7 +61,7 @@ const DATA_FILES = [
 ];
 
 // Hosts known to be live but that block bots with 403/406. A 403/406 from one
-// of these is NOT a broken link — real patients in a browser reach them fine.
+// of these is NOT a broken link: real patients in a browser reach them fine.
 // Keep this list tight: only add a host after confirming it loads in a browser.
 const WAF_ALLOWLIST = new Set([
     'www.goodrx.com', 'goodrx.com',
@@ -105,6 +125,64 @@ function collectUrls() {
         }
     }
     return map;
+}
+
+/**
+ * Fetch the live production medications API and return:
+ *  - urls: Map(url -> Set('live DB: Brand (field)')) to merge into the check pool
+ *  - drift: rows where the live URL differs from medications.json for the same
+ *    medication id (the DB missed a sync: flag it even if the URL still works)
+ * Returns null if the API is unreachable (warn, don't fail: offline dev/CI).
+ */
+async function collectLiveUrls() {
+    let live;
+    try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+        const res = await fetch(LIVE_MEDICATIONS_API, {
+            headers: BROWSER_HEADERS, signal: controller.signal,
+        });
+        clearTimeout(timer);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        live = (await res.json()).medications;
+        if (!Array.isArray(live)) throw new Error('unexpected response shape');
+    } catch (err) {
+        console.log(`⚠ Live medications API unreachable (${err.message}); ` +
+            'checking data files only.\n');
+        return null;
+    }
+
+    let bundled = [];
+    try {
+        bundled = JSON.parse(readFileSync(join(ROOT, 'src/data/medications.json'), 'utf8'));
+    } catch { /* drift comparison becomes a no-op */ }
+    const bundledById = new Map(bundled.map(m => [m.id, m]));
+    // Some DB rows carry a generated UUID instead of the slug id (e.g. rows
+    // added via admin), so fall back to brand-name matching for those.
+    const bundledByBrand = new Map(
+        bundled.map(m => [(m.brandName || '').toLowerCase(), m]));
+
+    const urls = new Map();
+    const drift = [];
+    for (const med of live) {
+        const ref = bundledById.get(med.id)
+            || bundledByBrand.get((med.brandName || '').toLowerCase());
+        for (const field of MED_URL_FIELDS) {
+            const url = med[field];
+            if (!url || typeof url !== 'string' || !/^https?:\/\//.test(url)) continue;
+            if (TEMPLATE_RE.test(url)) continue;
+            if (!urls.has(url)) urls.set(url, new Set());
+            urls.get(url).add(`live DB: ${med.brandName || med.id} (${field})`);
+            const refUrl = ref?.[field];
+            if (ref && refUrl && refUrl !== url) {
+                drift.push({ id: med.id, brand: med.brandName || med.id, field,
+                             live: url, json: refUrl });
+            }
+        }
+    }
+    console.log(`Live medications API: ${live.length} medications, ` +
+        `${urls.size} unique URLs, ${drift.length} drift(s) vs medications.json\n`);
+    return { urls, drift };
 }
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -182,6 +260,20 @@ function stampVerifiedDate() {
 
 async function main() {
     const map = collectUrls();
+
+    // Merge in the URLs production actually serves (Neon DB via the API).
+    let drift = [];
+    if (!SKIP_LIVE) {
+        const liveResult = await collectLiveUrls();
+        if (liveResult) {
+            drift = liveResult.drift;
+            for (const [url, sources] of liveResult.urls) {
+                if (!map.has(url)) map.set(url, new Set());
+                for (const s of sources) map.get(url).add(s);
+            }
+        }
+    }
+
     const urls = [...map.keys()];
     console.log(`Checking ${urls.length} unique assistance-program links...\n`);
 
@@ -197,21 +289,35 @@ async function main() {
         console.log('');
     }
 
-    if (broken.length === 0) {
-        console.log(`✅ All ${urls.length} links reachable. No broken assistance-program links.`);
+    if (drift.length) {
+        console.log(`⚠ ${drift.length} live-DB URL(s) differ from medications.json: the`);
+        console.log('  database missed a sync. Write a db/migrations/ update (key it by');
+        console.log('  medication id) and run it in the Neon SQL Editor:\n');
+        for (const d of drift) {
+            console.log(`   ${d.brand} (${d.id}) ${d.field}`);
+            console.log(`      live: ${d.live}`);
+            console.log(`      json: ${d.json}`);
+        }
+        console.log('');
+    }
+
+    if (broken.length === 0 && drift.length === 0) {
+        console.log(`✅ All ${urls.length} links reachable and live DB in sync. No broken assistance-program links.`);
         if (STAMP) stampVerifiedDate();
         process.exit(0);
     }
 
-    console.log(`❌ ${broken.length} BROKEN link(s) — a patient would hit a dead page:\n`);
-    for (const r of broken.sort((a, b) => (b.status || 0) - (a.status || 0))) {
-        const label = r.status ? `HTTP ${r.status}` : `ERR ${r.error}`;
-        const where = [...map.get(r.url)].join(', ');
-        console.log(`   [${label}] ${r.url}`);
-        console.log(`             found in: ${where}`);
+    if (broken.length) {
+        console.log(`❌ ${broken.length} BROKEN link(s): a patient would hit a dead page:\n`);
+        for (const r of broken.sort((a, b) => (b.status || 0) - (a.status || 0))) {
+            const label = r.status ? `HTTP ${r.status}` : `ERR ${r.error}`;
+            const where = [...map.get(r.url)].join(', ');
+            console.log(`   [${label}] ${r.url}`);
+            console.log(`             found in: ${where}`);
+        }
+        console.log('\nFix these in the data files, then re-run. WAF false-positives can');
+        console.log('be silenced by adding the host to WAF_ALLOWLIST in this script.');
     }
-    console.log('\nFix these in the data files, then re-run. WAF false-positives can');
-    console.log('be silenced by adding the host to WAF_ALLOWLIST in this script.');
     process.exit(1);
 }
 

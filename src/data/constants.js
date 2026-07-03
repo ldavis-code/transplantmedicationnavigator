@@ -4,7 +4,7 @@ export const LAST_UPDATED = "July 1, 2026";
 
 // Date the full set of assistance-program links was last checked for accuracy.
 // Maintained by scripts/check-links.js, it rewrites these lines after a clean run.
-export const LINKS_LAST_VERIFIED = "2026-07-02";
+export const LINKS_LAST_VERIFIED = "2026-07-03";
 export const LINKS_LAST_VERIFIED_DISPLAY = "July 2026";
 
 // User roles
