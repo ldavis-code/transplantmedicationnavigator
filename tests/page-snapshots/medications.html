@@ -1,0 +1,205 @@
+<div role="status" aria-live="assertive" aria-atomic="true" class="sr-only">Search Transplant Medications &amp; Prices | Transplant Medication Navigator™</div>
+<div class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-describedby="disclaimer-description">
+<div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200">
+<div class="flex justify-center mb-6">
+<div class="bg-amber-100 p-4 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+</div>
+</div>
+<h2 id="disclaimer-title" class="text-2xl font-bold text-slate-900 text-center mb-4">Important Notice</h2>
+<p id="disclaimer-description" class="text-slate-700 text-center mb-6 leading-relaxed">This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+<div class="flex items-center justify-center gap-2 text-red-800 font-bold">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+</path>
+</svg>
+<span>In an emergency, call 911</span>
+</div>
+</div>
+<button class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]">I Agree</button>
+</div>
+</div>
+<div class="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
+<div class="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+<span class="inline-flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-100" aria-hidden="true">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+<path d="M12 8v4">
+</path>
+<path d="M12 16h.01">
+</path>
+</svg>Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.</span>
+</div>
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg">Skip to main content</a>
+<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
+<div class="container mx-auto px-4 h-16 flex items-center justify-between">
+<a class="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home" href="/">
+<img src="/photos/logo.png" alt="" width="32" height="32" aria-hidden="true" class="flex-shrink-0">
+<span class="font-bold text-lg md:text-xl leading-tight">Transplant Medication<br class="md:hidden"> Navigator<sup class="text-xs">™</sup>
+</span>
+</a>
+<nav class="hidden md:flex items-center gap-4" aria-label="Main navigation">
+<a aria-label="Go to home page" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/">Home</a>
+<a aria-label="Start medication path wizard" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/wizard">My Path Quiz</a>
+<a aria-label="Browse education and resources" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/education">Education &amp; Resources</a>
+<a aria-label="View grants and foundations guide" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/application-help">Grants &amp; Foundations</a>
+<a aria-label="Calculate your medication savings" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/savings-tracker">Savings Calculator</a>
+<a aria-label="Information for hospital administrators and transplant coordinators" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/for-hospitals">Hospitals</a>
+<a aria-label="View pricing information" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/pricing">Pricing</a>
+<a aria-label="View frequently asked questions" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/faq">FAQ</a>
+<a aria-label="Share your feedback" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/feedback">Feedback</a>
+<button aria-pressed="false" class="ml-2 px-3 py-2 rounded-lg text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true">
+<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z">
+</path>
+<circle cx="12" cy="12" r="3">
+</circle>
+</svg>Simple View</button>
+</nav>
+<button class="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Open menu" aria-expanded="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+<line x1="4" x2="20" y1="12" y2="12">
+</line>
+<line x1="4" x2="20" y1="6" y2="6">
+</line>
+<line x1="4" x2="20" y1="18" y2="18">
+</line>
+</svg>
+</button>
+</div>
+</header>
+<main id="main-content" class="flex-grow container mx-auto px-4 py-6 md:py-10">
+<article class="max-w-5xl mx-auto space-y-8">
+<section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Search Medications</h1>
+<p class="text-slate-600">Search for your medications to build a shareable price list.</p>
+</div>
+</div>
+<div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 no-print" role="alert">
+<div class="flex items-start gap-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600 flex-shrink-0 mt-0.5" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+<div>
+<p class="font-bold text-red-800 mb-1">Important Safety Note for Transplant Patients</p>
+<p class="text-red-700 text-sm">Never switch from brand name to generic (or between different generic manufacturers) without your transplant team's approval. In transplant medicine, slight variations in bioavailability can cause organ rejection. <strong>"Cheaper" isn't always "safe"</strong> if the manufacturer changes.</p>
+<a class="inline-flex items-center gap-1 text-red-800 font-semibold text-sm underline mt-1" href="/education?topic=GENERICS">Learn about generics vs. brand-name <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="relative z-20 no-print">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="flex-grow relative">
+<label for="med-search" class="sr-only">Search for medications</label>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true">
+<circle cx="11" cy="11" r="8">
+</circle>
+<path d="m21 21-4.3-4.3">
+</path>
+</svg>
+<input id="med-search" type="text" placeholder="Enter drug name (e.g. Prograf, Ozempic)..." class="w-full pl-12 pr-12 py-4 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none text-lg transition shadow-sm" aria-describedby="search-instructions" aria-expanded="false" aria-controls="search-results-listbox" value="">
+<span id="search-instructions" class="sr-only">Type medication name and press enter or click search button</span>
+</div>
+<button disabled="" class="bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-400 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 justify-center shrink-0 disabled:cursor-not-allowed min-h-[56px]" aria-label="Search for medications">
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true">
+<circle cx="11" cy="11" r="8">
+</circle>
+<path d="m21 21-4.3-4.3">
+</path>
+</svg> Search</button>
+</div>
+</div>
+</section>
+<div class="space-y-6 pb-12">
+<div class="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
+<div class="text-slate-400 mb-4" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
+<line x1="8" x2="21" y1="6" y2="6">
+</line>
+<line x1="8" x2="21" y1="12" y2="12">
+</line>
+<line x1="8" x2="21" y1="18" y2="18">
+</line>
+<line x1="3" x2="3.01" y1="6" y2="6">
+</line>
+<line x1="3" x2="3.01" y1="12" y2="12">
+</line>
+<line x1="3" x2="3.01" y1="18" y2="18">
+</line>
+</svg>
+</div>
+<h2 class="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
+<p class="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
+</div>
+</div>
+</article>
+</main>
+<footer class="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
+<div class="container mx-auto px-4 text-center">
+<p class="mb-4">
+<strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<p class="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.</p>
+<p class="mb-2 text-emerald-400 font-medium">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg>Information last updated: July 1, 2026</p>
+<p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
+<p class="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
+<p class="mt-2 text-slate-400 text-sm">
+<a href="mailto:info@transplantmedicationnavigator.com" class="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
+</p>
+<div class="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
+<p class="text-slate-300">
+<strong class="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability. <a class="text-emerald-400 hover:text-emerald-300 underline transition" href="/accessibility#section-504">Section 504 Notice &amp; Grievance Procedure</a>
+</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/terms-and-conditions">Terms of Service</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/privacy">Privacy Policy</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/accessibility">Accessibility &amp; Section 504</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/feedback">Feedback</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/for-hospitals">Hospitals</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/admin/login">Admin</a>
+</div>
+</div>
+</footer>
+<div class="fixed bottom-6 right-6 z-50 no-print">
+<button class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105" aria-label="Open medication assistance">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle">
+<path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z">
+</path>
+</svg>
+<span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">Need help with medication costs?</span>
+</button>
+</div>
+</div>

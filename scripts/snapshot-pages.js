@@ -52,9 +52,13 @@ const PAGES = [
 
 function startPreviewServer() {
     return new Promise((resolve, reject) => {
+        // detached => own process group, so we can kill npx AND the vite
+        // grandchild it spawns (otherwise the grandchild outlives us and the
+        // script never exits).
         const child = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
             cwd: projectRoot,
             stdio: ['ignore', 'pipe', 'pipe'],
+            detached: true,
         });
         let settled = false;
         const onFail = (err) => { if (!settled) { settled = true; reject(err); } };
@@ -181,7 +185,7 @@ async function main() {
         }
     } finally {
         await browser.close();
-        server.kill();
+        try { process.kill(-server.pid, 'SIGTERM'); } catch { server.kill(); }
     }
 
     if (failures > 0) {
@@ -189,6 +193,7 @@ async function main() {
         process.exit(1);
     }
     console.log(UPDATE ? '\nAll baselines updated.' : '\nAll pages byte-identical to baseline.');
+    process.exit(0);
 }
 
 main().catch((err) => {
