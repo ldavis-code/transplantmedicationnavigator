@@ -8,7 +8,7 @@
       },
       {
         "q": "¿Es gratis usar este sitio?",
-        "a": "¡Sí! Nuestro cuestionario My Path es completamente gratis para los pacientes. Úselo todas las veces que lo necesite. Nuestras guías y enlaces a programas de asistencia siempre son gratis. Nunca pague para solicitar ayuda. Si un sitio le pide dinero, es una estafa. Ofrecemos planes empresariales para hospitales y organizaciones de salud."
+        "a": "¡Sí! Nuestro cuestionario Mi Camino es completamente gratis para los pacientes. Úselo todas las veces que lo necesite. Nuestras guías y enlaces a programas de asistencia siempre son gratis. Nunca pague para solicitar ayuda. Si un sitio le pide dinero, es una estafa. Ofrecemos planes empresariales para hospitales y organizaciones de salud."
       },
       {
         "q": "¿Quién debería usar este sitio?",
@@ -261,7 +261,7 @@
     "questions": [
       {
         "q": "¿Qué pasa si gano demasiado dinero para los programas de asistencia?",
-        "a": "¡No se rinda! Estas son las razones:\n\n1. Cada programa tiene reglas diferentes. Algunos le permiten ganar bastante dinero y aun así recibir ayuda.\n\n2. Algunos programas miran sus gastos, no solo sus ingresos. Si tiene costos médicos altos, todavía podría calificar.\n\n3. Suscríbase y tome el cuestionario My Path. Le mostrará programas que se ajustan a su situación.\n\n¡Muchas personas se sorprenden de que califican!"
+        "a": "¡No se rinda! Estas son las razones:\n\n1. Cada programa tiene reglas diferentes. Algunos le permiten ganar bastante dinero y aun así recibir ayuda.\n\n2. Algunos programas miran sus gastos, no solo sus ingresos. Si tiene costos médicos altos, todavía podría calificar.\n\n3. Suscríbase y tome el cuestionario Mi Camino. Le mostrará programas que se ajustan a su situación.\n\n¡Muchas personas se sorprenden de que califican!"
       },
       {
         "q": "¿Son seguros los medicamentos antirrechazo genéricos?",
@@ -334,12 +334,12 @@
     "category": "Cómo usar este sitio",
     "questions": [
       {
-        "q": "¿Cómo funciona el cuestionario \"My Path\"?",
+        "q": "¿Cómo funciona el cuestionario \"Mi Camino\"?",
         "a": "El cuestionario está disponible para suscriptores. Le hace preguntas sobre usted:\n• Su rol (paciente, cuidador, etc.)\n• El estado de su trasplante\n• Su tipo de órgano\n• Su seguro\n• Sus medicinas\n\nSegún sus respuestas, le mostramos programas que le ayudan a pagar su medicina."
       },
       {
         "q": "¿Puedo buscar una medicina específica?",
-        "a": "¡Sí! Use la página \"Search Meds\". Verá precios, programas de las compañías farmacéuticas y recursos de fundaciones para cada medicamento."
+        "a": "¡Sí! Use la página \"Search Meds\" (Buscar medicamentos). Verá precios, programas de las compañías farmacéuticas y recursos de fundaciones para cada medicamento."
       },
       {
         "q": "¿Qué significan las etiquetas de costo en las tarjetas de medicinas?",
@@ -372,7 +372,7 @@
     "questions": [
       {
         "q": "Me siento abrumado. ¿Por dónde empiezo?",
-        "a": "Empiece por revisar nuestra información gratis sobre medicamentos y programas de asistencia. Para una guía personalizada, suscríbase y tome el cuestionario \"My Path\": le guiará paso a paso. Si necesita más ayuda, contacte al trabajador social de su centro de trasplante."
+        "a": "Empiece por revisar nuestra información gratis sobre medicamentos y programas de asistencia. Para una guía personalizada, suscríbase y tome el cuestionario \"Mi Camino\": le guiará paso a paso. Si necesita más ayuda, contacte al trabajador social de su centro de trasplante."
       },
       {
         "q": "¿Pueden ayudarme a llenar las solicitudes?",
@@ -421,7 +421,7 @@
       },
       {
         "q": "¿Qué debe incluir la carta de apelación de mi doctor?",
-        "a": "Una carta sólida de necesidad médica debe incluir:\n\n• **Su diagnóstico:** El trasplante específico y la fecha\n• **Medicamento actual:** Qué está tomando y por qué\n• **Por qué este medicamento específico:** Razones médicas de esta elección\n• **Por qué las alternativas no funcionarían:** Efectos secundarios, problemas de absorción, fracasos anteriores\n• **Riesgo de cambiar:** Riesgo de rechazo, riesgo de hospitalización\n• **Guías clínicas:** Referencias a KDIGO, ISHLT u otras guías de trasplante\n\nTenemos una plantilla de carta en nuestra página de Apelaciones que su doctor puede usar. Visite nuestra sección de Educación y haga clic en \"Got Denied?\" para encontrarla."
+        "a": "Una carta sólida de necesidad médica debe incluir:\n\n• **Su diagnóstico:** El trasplante específico y la fecha\n• **Medicamento actual:** Qué está tomando y por qué\n• **Por qué este medicamento específico:** Razones médicas de esta elección\n• **Por qué las alternativas no funcionarían:** Efectos secundarios, problemas de absorción, fracasos anteriores\n• **Riesgo de cambiar:** Riesgo de rechazo, riesgo de hospitalización\n• **Guías clínicas:** Referencias a KDIGO, ISHLT u otras guías de trasplante\n\nTenemos una plantilla de carta en nuestra página de Apelaciones que su doctor puede usar. Visite nuestra sección de Educación y haga clic en \"¿Le negaron la cobertura?\" para encontrarla."
       },
       {
         "q": "¿Qué pasa si niegan mi primera apelación?",

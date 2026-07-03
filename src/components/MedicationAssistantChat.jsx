@@ -5,6 +5,9 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+// Active site language — sent with chat requests so answers match the
+// language the patient is reading the site in.
+import i18n from '../i18n.js';
 import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
@@ -473,6 +476,7 @@ const MedicationAssistantChat = () => {
           action: 'generateResults',
           conversationId,
           answers: finalAnswers,
+          language: i18n.language,
         }),
       });
 
@@ -545,6 +549,7 @@ const MedicationAssistantChat = () => {
           conversationId,
           message: inputValue,
           answers,
+          language: i18n.language,
         }),
       });
 

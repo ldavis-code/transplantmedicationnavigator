@@ -176,6 +176,17 @@ function generatePageHTML(page, mainScriptPath) {
   const canonical = `${BASE_URL}${page.route}`;
   const pageTitle = page.title.split(' | ')[0];
 
+  // Routes with a full Spanish translation (reached via ?lang=es) get
+  // hreflang alternates so search engines index both language versions.
+  const SPANISH_ROUTES = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
+  const hreflangTags = SPANISH_ROUTES.has(page.route)
+    ? `
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="en" href="${canonical}" />
+    <link rel="alternate" hreflang="es" href="${canonical}?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="${canonical}" />`
+    : '';
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,7 +198,7 @@ function generatePageHTML(page, mainScriptPath) {
     <meta name="title" content="${page.title}" />
     <meta name="description" content="${page.description}" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="${canonical}" />
+    <link rel="canonical" href="${canonical}" />${hreflangTags}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

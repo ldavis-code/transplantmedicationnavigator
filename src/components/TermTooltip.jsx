@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HelpCircle } from 'lucide-react';
-import GLOSSARY from '../data/glossary.json';
+import GLOSSARY_EN from '../data/glossary.json';
+import GLOSSARY_ES from '../data/glossary.es.json';
 
 /**
  * TermTooltip Component
@@ -18,9 +20,13 @@ const TermTooltip = ({
   showIcon = true,
   className = ''
 }) => {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const tooltipRef = useRef(null);
   const triggerRef = useRef(null);
+
+  // Glossary definitions per language; the term prop (and key) stays English
+  const GLOSSARY = i18n.resolvedLanguage === 'es' ? GLOSSARY_ES : GLOSSARY_EN;
 
   // Normalize the term key to match glossary format
   const termKey = term.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '');

@@ -34,6 +34,11 @@ const CONTENT_FILES = [
     { path: 'src/data/glossary.json', name: 'Glossary', extractor: extractGlossary },
     { path: 'src/data/knowledge-base.json', name: 'Knowledge Base', extractor: extractKnowledgeBase },
     { path: 'src/data/faqs.json', name: 'FAQs', extractor: extractFaqs },
+    // Spanish content is scored with Fernández-Huerta (the Spanish adaptation
+    // of Flesch); scores are mapped to US-grade equivalents so the same
+    // thresholds apply. English syllable counting is meaningless for Spanish.
+    { path: 'src/data/glossary.es.json', name: 'Glossary (Spanish)', extractor: extractGlossary, lang: 'es' },
+    { path: 'src/data/faqs.es.json', name: 'FAQs (Spanish)', extractor: extractFaqs, lang: 'es' },
 ];
 
 /**
@@ -155,6 +160,86 @@ function calculateFleschKincaid(text) {
 }
 
 /**
+ * Count syllables in a Spanish word.
+ * Spanish orthography is regular: syllables = vowel groups, where a group
+ * splits between two adjacent strong vowels (a, e, o) and accented weak
+ * vowels (í, ú) break diphthongs (hiatus).
+ */
+function countSyllablesEs(word) {
+    word = word.toLowerCase();
+    const strong = 'aeoáéóíú'; // í/ú accented = hiatus, treated as strong
+    const vowels = 'aeiouáéíóúü';
+    let count = 0;
+    let i = 0;
+    while (i < word.length) {
+        if (!vowels.includes(word[i])) { i++; continue; }
+        count++;
+        // walk the vowel group, splitting between adjacent strong vowels
+        while (i + 1 < word.length && vowels.includes(word[i + 1])) {
+            if (strong.includes(word[i]) && strong.includes(word[i + 1])) count++;
+            i++;
+        }
+        i++;
+    }
+    return Math.max(1, count);
+}
+
+/**
+ * Map a Fernández-Huerta readability score (0-100, higher = easier) to an
+ * approximate US grade level, so Spanish content shares the English
+ * thresholds. Bands follow the INFLESZ scale (Barrio-Cantalejo), the
+ * validated readability scale for Spanish-language patient materials —
+ * Spanish is naturally more polysyllabic than English, so raw Flesch
+ * bands would overestimate difficulty.
+ */
+function fernandezHuertaToGrade(score) {
+    if (score >= 80) return 5;    // muy fácil
+    if (score >= 65) return 7;    // normal — meets the health-literacy target
+    if (score >= 55) return 9.5;  // algo difícil — acceptable with warning
+    if (score >= 40) return 11.5; // difícil — needs simplification
+    return 14;                    // muy difícil
+}
+
+/**
+ * Calculate readability for Spanish text via Fernández-Huerta:
+ * L = 206.84 - 0.60 * (syllables per 100 words) - 1.02 * (words per sentence)
+ * Returns the same shape as calculateFleschKincaid (gradeLevel is the
+ * mapped US-grade equivalent; fhScore carries the raw score).
+ */
+function calculateFernandezHuerta(text) {
+    // reuse getWords' markdown stripping, but keep accented letters and ñ
+    let cleaned = text.replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/\*([^*]+)\*/g, '$1')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/#{1,6}\s+/g, '')
+        .replace(/•/g, '')
+        .replace(/\n/g, ' ');
+    const words = cleaned.match(/[a-zA-Záéíóúüñ]+/gi) || [];
+    const wordCount = words.length;
+
+    if (wordCount === 0) {
+        return { gradeLevel: 0, wordCount: 0, sentenceCount: 0, syllableCount: 0 };
+    }
+
+    const sentenceCount = countSentences(text);
+    const syllableCount = words.reduce((sum, word) => sum + countSyllablesEs(word), 0);
+
+    const syllablesPer100Words = (syllableCount / wordCount) * 100;
+    const wordsPerSentence = wordCount / sentenceCount;
+    const fhScore = 206.84 - 0.60 * syllablesPer100Words - 1.02 * wordsPerSentence;
+
+    return {
+        gradeLevel: fernandezHuertaToGrade(fhScore),
+        fhScore: Math.round(fhScore * 10) / 10,
+        wordCount,
+        sentenceCount,
+        syllableCount,
+        wordsPerSentence: Math.round(wordsPerSentence * 10) / 10,
+        syllablesPerWord: Math.round((syllableCount / wordCount) * 100) / 100
+    };
+}
+
+/**
  * Extract text content from glossary.json
  */
 function extractGlossary(data) {
@@ -206,8 +291,9 @@ function extractFaqs(data) {
 /**
  * Analyze a single content file
  */
-function analyzeFile(filePath, name, extractor) {
+function analyzeFile(filePath, name, extractor, lang = 'en') {
     const fullPath = join(__dirname, '..', filePath);
+    const calculate = lang === 'es' ? calculateFernandezHuerta : calculateFleschKincaid;
 
     try {
         const content = readFileSync(fullPath, 'utf-8');
@@ -230,7 +316,7 @@ function analyzeFile(filePath, name, extractor) {
         let totalGradeLevel = 0;
 
         for (const entry of entries) {
-            const analysis = calculateFleschKincaid(entry.text);
+            const analysis = calculate(entry.text);
 
             const status = analysis.gradeLevel <= TARGET_GRADE_LEVEL ? 'pass' :
                           analysis.gradeLevel <= WARNING_GRADE_LEVEL ? 'warning' : 'fail';
@@ -358,7 +444,7 @@ function main() {
     console.log('Checking content readability...\n');
 
     const results = CONTENT_FILES.map(file =>
-        analyzeFile(file.path, file.name, file.extractor)
+        analyzeFile(file.path, file.name, file.extractor, file.lang)
     );
 
     const shouldFail = printResults(results);
