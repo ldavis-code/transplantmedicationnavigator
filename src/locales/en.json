@@ -1,4 +1,10 @@
 {
+  "disclaimer": {
+    "title": "Important Notice",
+    "text": "This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.",
+    "emergency": "In an emergency, call 911",
+    "agree": "I Agree"
+  },
   "faq": {
     "cob": {
       "results": {

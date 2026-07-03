@@ -1,4 +1,10 @@
 {
+  "disclaimer": {
+    "title": "Aviso importante",
+    "text": "Esta herramienta ofrece información educativa para ayudarle a encontrar opciones de asistencia con sus medicamentos. No sustituye el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su condición médica o su tratamiento.",
+    "emergency": "En una emergencia, llame al 911",
+    "agree": "Estoy de acuerdo"
+  },
   "faq": {
     "cob": {
       "results": {

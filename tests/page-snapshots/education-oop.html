@@ -1,0 +1,628 @@
+<div role="status" aria-live="assertive" aria-atomic="true" class="sr-only">Education &amp; Resources for Transplant Patients | Transplant Medication Navigator™</div>
+<div class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-describedby="disclaimer-description">
+<div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200">
+<div class="flex justify-center mb-6">
+<div class="bg-amber-100 p-4 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+</div>
+</div>
+<h2 id="disclaimer-title" class="text-2xl font-bold text-slate-900 text-center mb-4">Important Notice</h2>
+<p id="disclaimer-description" class="text-slate-700 text-center mb-6 leading-relaxed">This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+<div class="flex items-center justify-center gap-2 text-red-800 font-bold">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+</path>
+</svg>
+<span>In an emergency, call 911</span>
+</div>
+</div>
+<button class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]">I Agree</button>
+</div>
+</div>
+<div class="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
+<div class="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+<span class="inline-flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-100" aria-hidden="true">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+<path d="M12 8v4">
+</path>
+<path d="M12 16h.01">
+</path>
+</svg>Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.</span>
+</div>
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg">Skip to main content</a>
+<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
+<div class="container mx-auto px-4 h-16 flex items-center justify-between">
+<a class="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home" href="/">
+<img src="/photos/logo.png" alt="" width="32" height="32" aria-hidden="true" class="flex-shrink-0">
+<span class="font-bold text-lg md:text-xl leading-tight">Transplant Medication<br class="md:hidden"> Navigator<sup class="text-xs">™</sup>
+</span>
+</a>
+<nav class="hidden md:flex items-center gap-4" aria-label="Main navigation">
+<a aria-label="Go to home page" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/">Home</a>
+<a aria-label="Start medication path wizard" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/wizard">My Path Quiz</a>
+<a aria-label="Browse education and resources" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600" href="/education">Education &amp; Resources</a>
+<a aria-label="View grants and foundations guide" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/application-help">Grants &amp; Foundations</a>
+<a aria-label="Calculate your medication savings" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/savings-tracker">Savings Calculator</a>
+<a aria-label="Information for hospital administrators and transplant coordinators" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/for-hospitals">Hospitals</a>
+<a aria-label="View pricing information" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/pricing">Pricing</a>
+<a aria-label="View frequently asked questions" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/faq">FAQ</a>
+<a aria-label="Share your feedback" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/feedback">Feedback</a>
+<button aria-pressed="false" class="ml-2 px-3 py-2 rounded-lg text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true">
+<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z">
+</path>
+<circle cx="12" cy="12" r="3">
+</circle>
+</svg>Simple View</button>
+</nav>
+<button class="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Open menu" aria-expanded="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+<line x1="4" x2="20" y1="12" y2="12">
+</line>
+<line x1="4" x2="20" y1="6" y2="6">
+</line>
+<line x1="4" x2="20" y1="18" y2="18">
+</line>
+</svg>
+</button>
+</div>
+</header>
+<main id="main-content" class="flex-grow container mx-auto px-4 py-6 md:py-10">
+<article class="max-w-6xl mx-auto space-y-8 pb-12">
+<header class="text-center py-8">
+<h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Education &amp; Resources</h1>
+<p class="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
+</header>
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+<div class="flex items-start gap-4">
+<div class="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="M12 16v-4">
+</path>
+<path d="M12 8h.01">
+</path>
+</svg>
+</div>
+<div>
+<span class="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">New · Now Live</span>
+<h2 class="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program</h2>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.</p>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.</p>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">Apply online or call <a href="tel:+18665123861" class="font-semibold text-blue-700 hover:text-blue-900">866-512-3861</a> (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).</p>
+<a href="https://totalassist.org/" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors">Learn more about TotalAssist <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<a class="block p-6 rounded-xl bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 hover:border-rose-300 hover:shadow-md transition-all" href="/education/appeals">
+<div class="flex items-start gap-4">
+<div class="bg-red-100 text-red-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+<path d="M12 8v4">
+</path>
+<path d="M12 16h.01">
+</path>
+</svg>
+</div>
+<div class="flex-1">
+<h2 class="text-xl font-bold text-red-600 mb-2">Got Denied?</h2>
+<p class="text-slate-700 mb-3">Insurance said no? Don't worry, you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.</p>
+<span class="inline-flex items-center gap-1 text-red-600 font-semibold">View Appeal Guide <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</span>
+</div>
+</div>
+</a>
+<nav class="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
+<div class="flex flex-wrap">
+<button role="tab" aria-selected="false" aria-controls="EMERGENCY-panel" aria-label="Out of Meds?" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg>
+<span class="hidden sm:inline">Out of Meds?</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="GENERICS-panel" aria-label="Generics vs. Brand" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pill" aria-hidden="true">
+<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z">
+</path>
+<path d="m8.5 8.5 7 7">
+</path>
+</svg>
+<span class="hidden sm:inline">Generics vs. Brand</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DEDUCTIBLE_TRAP-panel" aria-label="Deductible Trap" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+<span class="hidden sm:inline">Deductible Trap</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DIVERSION-panel" aria-label="Diversion Programs" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-octagon" aria-hidden="true">
+<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+</polygon>
+<line x1="12" x2="12" y1="8" y2="12">
+</line>
+<line x1="12" x2="12.01" y1="16" y2="16">
+</line>
+</svg>
+<span class="hidden sm:inline">Diversion Programs</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DIRECTORY-panel" aria-label="Directory" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true">
+<circle cx="11" cy="11" r="8">
+</circle>
+<path d="m21 21-4.3-4.3">
+</path>
+</svg>
+<span class="hidden sm:inline">Directory</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="INSURANCE-panel" aria-label="Insurance(s)" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield" aria-hidden="true">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+</svg>
+<span class="hidden sm:inline">Insurance(s)</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="MENTAL-panel" aria-label="Mental Health" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart" aria-hidden="true">
+<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+</path>
+</svg>
+<span class="hidden sm:inline">Mental Health</span>
+</button>
+<button role="tab" aria-selected="true" aria-controls="OOP-panel" aria-label="Out-of-Pocket Max" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-emerald-600 text-emerald-800 bg-emerald-50">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign" aria-hidden="true">
+<line x1="12" x2="12" y1="2" y2="22">
+</line>
+<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6">
+</path>
+</svg>
+<span class="hidden sm:inline">Out-of-Pocket Max</span>
+</button>
+</div>
+</nav>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id="OOP-panel" aria-labelledby="OOP-tab">
+<div class="max-w-4xl mx-auto space-y-8">
+<div class="prose prose-slate max-w-none">
+<h2 class="text-2xl font-bold text-slate-900">Mixing Programs</h2>
+<p class="text-lg text-slate-700">Most transplant patients use a mix of help programs to pay for their medicines. It's like a puzzle.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<section class="bg-purple-50 p-6 rounded-xl border border-purple-100">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Effective January 2026</span>
+<h3 class="font-bold text-purple-900">Medicare Drug Price Negotiation</h3>
+</div>
+<p class="text-sm text-purple-900 mb-4 font-medium">For the first time ever, Medicare talked drug makers into lower prices.</p>
+<p class="text-slate-700 text-sm mb-4 leading-relaxed">The first new prices start January 1, 2026, with big savings. Examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% less), and <strong>Januvia</strong> drops from $527 to $113/month (79% less). This will save Medicare patients $1.5 billion in 2026 alone.</p>
+<p class="text-slate-700 text-sm mb-4">The first 10 drugs include medicines for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clots (Eliquis, Xarelto), immune diseases (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
+<p class="text-slate-700 text-sm italic">About 8.8 million Medicare Part D patients used these medicines in 2023. A second round of 15 drugs was selected for 2027 prices.</p>
+<div class="mt-4 p-3 bg-purple-100 rounded-lg border border-purple-200">
+<p class="text-purple-900 text-sm font-bold mb-1">Third Round Announced January 27, 2026</p>
+<p class="text-slate-700 text-sm mb-2">CMS selected 15 new drugs for negotiation, including the <strong>first-ever Part B drugs</strong>. New prices take effect January 1, 2028.</p>
+<p class="text-slate-700 text-xs">
+<strong>Transplant-relevant picks:</strong> Orencia (abatacept, related to Belatacept), Trulicity (dulaglutide, for post-transplant diabetes), Xolair (omalizumab, lung transplant), Anoro Ellipta (lung transplant). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.</p>
+</div>
+</section>
+<section class="bg-teal-50 p-6 rounded-xl border border-teal-100">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded">New in Mid-2026</span>
+<h3 class="font-bold text-teal-900">Medicare GLP-1 Coverage for Weight Loss</h3>
+</div>
+<p class="text-sm text-teal-900 mb-4 font-medium">A big change: Medicare will now cover weight loss drugs.</p>
+<p class="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss, ending a rule that kept these drugs out of Part D.</p>
+<p class="text-slate-700 text-sm mb-4">
+<strong>Covered drugs:</strong> Wegovy and Zepbound will be covered for patients with weight-related health issues. Your copay should be about <strong>$50/month</strong> after you meet your deductible.</p>
+<p class="text-slate-700 text-sm italic">Eli Lilly and Novo Nordisk agreed to give these drugs at lower prices for Medicare patients.</p>
+</section>
+<section class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+<div class="flex items-center gap-2 mb-3">
+<h3 class="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
+</div>
+<p class="text-sm text-indigo-900 mb-4 font-medium">A big change from new laws</p>
+<p class="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once.</p>
+<p class="text-slate-700 text-sm mb-4">This program makes your costs more steady and easier to manage.</p>
+<p class="text-slate-700 text-sm font-medium">Ask your Part D plan about this payment plan during open enrollment.</p>
+</section>
+</div>
+<div class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 mb-4">Part D vs Medicare Advantage: Picking Your Plan</h2>
+<p class="text-slate-600 mb-6">Knowing the differences can save you a lot of money on transplant medicines.</p>
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+<section class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+<h3 class="font-bold text-blue-900 text-xl mb-3">Medicare Part D (Traditional)</h3>
+<p class="text-sm text-slate-600 mb-4">A drug plan that works with Original Medicare. It's a separate plan just for medicines.</p>
+<ul class="space-y-2 text-slate-700 text-sm">
+<li class="flex items-start gap-2">
+<span class="text-blue-600 font-bold">✓</span>
+<span>Works with any Medicare-accepting provider</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-blue-600 font-bold">✓</span>
+<span>Separate deductible and premium</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-blue-600 font-bold">✓</span>
+<span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span>
+</li>
+</ul>
+</section>
+<section class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
+<h3 class="font-bold text-green-900 text-xl mb-3">Medicare Advantage (MA-PD)</h3>
+<p class="text-sm text-slate-600 mb-4">An all-in-one plan that covers both doctor visits AND medicines.</p>
+<ul class="space-y-2 text-slate-700 text-sm">
+<li class="flex items-start gap-2">
+<span class="text-green-600 font-bold">✓</span>
+<span>Often lower or $0 premiums</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-green-600 font-bold">✓</span>
+<span>Provider networks may be limited</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-green-600 font-bold">✓</span>
+<span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span>
+</li>
+</ul>
+</section>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 mb-8">
+<h3 class="text-xl font-bold text-slate-900 mb-4">How to Compare Plans for Your Medicines</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<div class="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
+<div class="flex-1">
+<h4 class="font-bold text-slate-800 mb-1">Check Drug Lists</h4>
+<p class="text-slate-600 text-sm mb-2">Use the Medicare Plan Finder tool at medicare.gov to see which plans cover your drugs and how much they cost.</p>
+<a href="https://www.medicare.gov/plan-compare/" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Visit Medicare Plan Finder (opens in new tab)">Medicare Plan Finder <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
+<div class="flex-1">
+<h4 class="font-bold text-slate-800 mb-1">Compare Total Costs</h4>
+<p class="text-slate-600 text-sm">Look at monthly fees, deductibles, copays, and which pharmacies you can use. Remember the $2,100 yearly limit (2026) when you add up costs.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
+<div class="flex-1">
+<h4 class="font-bold text-slate-800 mb-1">Look Into Extra Help</h4>
+<p class="text-slate-600 text-sm mb-2">If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.</p>
+<a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
+<div class="flex-1">
+<h4 class="font-bold text-slate-800 mb-1">Get Free Help</h4>
+<p class="text-slate-600 text-sm mb-2">Call your State Health Insurance Assistance Program (SHIP) for free help picking a plan.</p>
+<a href="https://www.shiphelp.org/" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Find Your Local SHIP (opens in new tab)">Find Your Local SHIP <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+<h3 class="text-xl font-bold text-slate-900 mb-4">Medicare Parts for Transplant Drugs</h3>
+<p class="text-slate-600 mb-4">Knowing which part of Medicare pays for your transplant medicines is key.</p>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="bg-white p-4 rounded-lg border border-slate-200">
+<h4 class="font-bold text-blue-700 text-lg mb-2">Part A (Hospital)</h4>
+<p class="text-xs text-slate-600 mb-3">Pays for drugs given while you're in the hospital.</p>
+<ul class="text-sm text-slate-700 list-disc pl-4">
+<li>Induction agents (Thymoglobulin, Simulect)</li>
+</ul>
+</div>
+<div class="bg-white p-4 rounded-lg border border-slate-200">
+<h4 class="font-bold text-blue-700 text-lg mb-2">Part B (Medical)</h4>
+<p class="text-xs text-slate-600 mb-3">Pays for some drugs you get at clinics. Also covers anti-rejection drugs if you don't have Part D.</p>
+<ul class="text-sm text-slate-700 list-disc pl-4">
+<li>IV infusions (Belatacept/Nulojix)</li>
+</ul>
+</div>
+<div class="bg-white p-4 rounded-lg border border-slate-200">
+<h4 class="font-bold text-blue-700 text-lg mb-2">Part D (Prescription)</h4>
+<p class="text-xs text-slate-600 mb-3">Pays for most of the pills you take at home each day.</p>
+<ul class="text-sm text-slate-700 list-disc pl-4">
+<li>Tacrolimus, Mycophenolate, etc.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-200 pt-8">
+<h3 class="text-xl font-bold text-slate-900 mb-6">Strategies by Insurance Type</h3>
+<div class="grid gap-6 md:grid-cols-2">
+<section class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+<h4 class="font-bold text-slate-900 text-lg mb-3">Commercial Insurance?</h4>
+<ol class="space-y-2 text-slate-700 list-decimal pl-5">
+<li>Use <strong>Manufacturer PAPs</strong> for copay cards.</li>
+<li>Use <strong>Foundations</strong> for deductibles.</li>
+</ol>
+</section>
+<section class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+<h4 class="font-bold text-slate-900 text-lg mb-3">Medicare?</h4>
+<ol class="space-y-2 text-slate-700 list-decimal pl-5">
+<li>Use <strong>Foundations</strong> for copays.</li>
+<li>Check <strong>Cash Prices</strong> for generics to compare savings.</li>
+</ol>
+</section>
+</div>
+</div>
+<aside class="bg-emerald-50 p-6 rounded-xl border border-emerald-100" role="note">
+<h3 class="font-bold text-emerald-900 mb-2">Key Insight</h3>
+<p class="text-emerald-800">Many patients mix programs, for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.</p>
+</aside>
+<div class="border-t border-slate-200 pt-8">
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
+<h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600" aria-hidden="true">
+<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z">
+</path>
+<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z">
+</path>
+</svg>Insurance Words Made Simple</h2>
+<p class="text-slate-600 mb-6">Knowing what these words mean helps you handle costs and find help.</p>
+<div class="space-y-6">
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Premium</h3>
+<p class="text-slate-700 text-sm">The amount you pay each month to have insurance. Think of it like a gym membership - you pay every month whether you use it or not.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-deductible" aria-expanded="false">Deductible</button>
+</span>
+</h3>
+<p class="text-slate-700 text-sm">The amount you must pay yourself before your insurance starts helping. If your deductible is $500, you pay the first $500 of medicine costs. After that, insurance helps pay.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-copay" aria-expanded="false">Copay</button>
+</span> (or Co-payment)</h3>
+<p class="text-slate-700 text-sm">A fixed amount you pay each time you get medicine. Example: You might pay $10 for each prescription, and insurance pays the rest.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-coinsurance" aria-expanded="false">Coinsurance</button>
+</span>
+</h3>
+<p class="text-slate-700 text-sm">The percentage you pay after meeting your deductible. If you have 20% coinsurance, you pay $20 for every $100 of medicine cost. Insurance pays the other $80.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Yearly Spending Limit (<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-out-of-pocket-maximum" aria-expanded="false">Out-of-Pocket Maximum</button>
+</span>)</h3>
+<p class="text-slate-700 text-sm">The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Covered Medicines List (<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-formulary" aria-expanded="false">Formulary</button>
+</span>)</h3>
+<p class="text-slate-700 text-sm">The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Tier</h3>
+<p class="text-slate-700 text-sm mb-3">How insurance groups medicines by cost. Lower tiers (1-2) cost less. Higher tiers (3-4-5) cost more.</p>
+<ul class="text-slate-600 text-sm space-y-1 ml-4 list-disc">
+<li>
+<strong>Tier 1:</strong> Usually generic drugs (lowest cost)</li>
+<li>
+<strong>Tier 2:</strong> Preferred brand drugs</li>
+<li>
+<strong>Tier 3-5:</strong> Non-preferred or specialty drugs (highest cost)</li>
+</ul>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-prior-authorization" aria-expanded="false">Prior Authorization</button>
+</span>
+</h3>
+<p class="text-slate-700 text-sm">When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.</p>
+<div class="mt-3 p-2 bg-amber-50 rounded border border-amber-200">
+<p class="text-amber-900 text-xs font-bold">New in 2026: CMS WISeR Pilot</p>
+<p class="text-slate-700 text-xs">The WISeR (Wasteful and Inappropriate Service Reduction) model requires prior authorization for 17 outpatient Medicare Part B services in 6 states: Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington. While it does not directly affect transplant medications, it may add steps for some procedures. <a href="/appeals" class="text-blue-600 hover:underline">Learn more on our Appeals page</a>.</p>
+</div>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-generic" aria-expanded="false">Generic</button>
+</span> Medicine</h3>
+<p class="text-slate-700 text-sm">A medicine that works the same as a brand name but costs less. Like store-brand cereal versus name-brand - same thing, different package.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Brand Name Medicine</h3>
+<p class="text-slate-700 text-sm">The original version of a medicine made by the company that invented it. Usually costs more than generic.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">
+<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-specialty-pharmacy" aria-expanded="false">Specialty</button>
+</span> Medication</h3>
+<p class="text-slate-700 text-sm">Expensive medicines that need special handling or monitoring. Most transplant medicines are specialty medications. They often cost $600+ per month.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Medicare Part D</h3>
+<p class="text-slate-700 text-sm">The part of Medicare that helps pay for prescription medicines. You must sign up for this separately.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Yearly Out-of-Pocket Cap</h3>
+<p class="text-slate-700 text-sm">A yearly limit on what you pay out of pocket for Medicare Part D drugs. In 2026 the cap is $2,100. Once you reach it, you pay $0 for covered drugs for the rest of the year.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Catastrophic Coverage</h3>
+<p class="text-slate-700 text-sm">After you spend a lot on medicines in one year, Medicare pays almost everything. You only pay a small amount (about $4-$12) per prescription.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">In-Network Pharmacy</h3>
+<p class="text-slate-700 text-sm">A pharmacy that works with your insurance. You pay less here. Think of it as a preferred partner.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Out-of-Network Pharmacy</h3>
+<p class="text-slate-700 text-sm">A pharmacy that doesn't have a deal with your insurance. You might pay more or get no coverage here.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">PBM (Pharmacy Benefit Manager)</h3>
+<p class="text-slate-700 text-sm">The company that manages prescription drug coverage for your insurance. They decide which medicines are covered and how much they cost.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Patient Assistance Program (<span class="relative inline ">
+<button type="button" class="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help" aria-describedby="tooltip-pap" aria-expanded="false">PAP</button>
+</span>)</h3>
+<p class="text-slate-700 text-sm">Free or low-cost medicine programs run by drug companies. If you can't afford your medicine, these programs might help.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Copay Card or Coupon</h3>
+<p class="text-slate-700 text-sm">Help from drug companies to lower what you pay for brand name medicines. <strong>Important:</strong> These often don't work with Medicare.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Manufacturer Assistance</h3>
+<p class="text-slate-700 text-sm">Help directly from the company that makes your medicine. This can be free medicine, copay help, or discounts.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Mail Order Pharmacy</h3>
+<p class="text-slate-700 text-sm">A pharmacy that ships medicine to your home. Usually gives you 90 days of medicine at once. Often costs less than getting 30 days at a local pharmacy.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Step Therapy</h3>
+<p class="text-slate-700 text-sm">When insurance requires you to try a cheaper medicine first before they'll pay for a more expensive one. Like having to try the basic version before getting the premium version.</p>
+</div>
+<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+<h3 class="font-bold text-lg text-blue-800 mb-2">Exclusion</h3>
+<p class="text-slate-700 text-sm">A medicine that insurance will not cover at all. You must pay the full price yourself or find other help.</p>
+</div>
+</div>
+<div class="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+<h3 class="font-bold text-yellow-900 text-lg mb-3">Why This Matters for Transplant Patients</h3>
+<p class="text-yellow-900 mb-4">Your anti-rejection medicines are specialty medications. They are expensive. Understanding these words helps you:</p>
+<ul class="text-yellow-900 space-y-2 ml-6 list-disc">
+<li>Know what you'll pay</li>
+<li>Find help when costs are too high</li>
+<li>Talk to your transplant team about options</li>
+<li>Apply for assistance programs</li>
+</ul>
+</div>
+<div class="mt-6 bg-emerald-50 border border-emerald-200 rounded-lg p-6">
+<h3 class="font-bold text-emerald-900 text-lg mb-3">Questions to Ask</h3>
+<ul class="text-emerald-900 space-y-2 ml-6 list-disc">
+<li>What tier are my transplant medicines?</li>
+<li>How much is my deductible?</li>
+<li>When do I reach my yearly spending limit?</li>
+<li>Are my medicines on the covered medicines list?</li>
+<li>Can I use mail order to save money?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+<footer class="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
+<div class="container mx-auto px-4 text-center">
+<p class="mb-4">
+<strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<p class="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.</p>
+<p class="mb-2 text-emerald-400 font-medium">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg>Information last updated: July 1, 2026</p>
+<p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
+<p class="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
+<p class="mt-2 text-slate-400 text-sm">
+<a href="mailto:info@transplantmedicationnavigator.com" class="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
+</p>
+<div class="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
+<p class="text-slate-300">
+<strong class="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability. <a class="text-emerald-400 hover:text-emerald-300 underline transition" href="/accessibility#section-504">Section 504 Notice &amp; Grievance Procedure</a>
+</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/terms-and-conditions">Terms of Service</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/privacy">Privacy Policy</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/accessibility">Accessibility &amp; Section 504</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/feedback">Feedback</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/for-hospitals">Hospitals</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/admin/login">Admin</a>
+</div>
+</div>
+</footer>
+<div class="fixed bottom-6 right-6 z-50 no-print">
+<button class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105" aria-label="Open medication assistance">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle">
+<path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z">
+</path>
+</svg>
+<span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">Need help with medication costs?</span>
+</button>
+</div>
+</div>

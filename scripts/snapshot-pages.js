@@ -45,6 +45,15 @@ const PAGES = [
     { name: 'medications', route: '/medications' },
     { name: 'medication-detail-tacrolimus', route: '/medications/tacrolimus' },
     { name: 'education', route: '/education' },
+    // Every education tab is deep-linkable, which makes the tab-gated
+    // content snapshot-verifiable (default tab is DEDUCTIBLE_TRAP, above).
+    { name: 'education-emergency', route: '/education?topic=EMERGENCY' },
+    { name: 'education-generics', route: '/education?topic=GENERICS' },
+    { name: 'education-diversion', route: '/education?topic=DIVERSION' },
+    { name: 'education-directory', route: '/education?topic=DIRECTORY' },
+    { name: 'education-insurance', route: '/education?topic=INSURANCE' },
+    { name: 'education-mental', route: '/education?topic=MENTAL' },
+    { name: 'education-oop', route: '/education?topic=OOP' },
     { name: 'appeals', route: '/education/appeals' },
     { name: 'application-help', route: '/application-help' },
     { name: 'faq', route: '/faq' },

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Phone } from 'lucide-react';
 
 const STORAGE_KEY = 'disclaimer_accepted';
@@ -16,6 +17,7 @@ const STORAGE_KEY = 'disclaimer_accepted';
  * - Escape key does NOT close (intentional - must explicitly accept)
  */
 const DisclaimerModal = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
   const acceptButtonRef = useRef(null);
@@ -124,7 +126,7 @@ const DisclaimerModal = () => {
           id="disclaimer-title"
           className="text-2xl font-bold text-slate-900 text-center mb-4"
         >
-          Important Notice
+          {t('disclaimer.title')}
         </h2>
 
         {/* Disclaimer Text */}
@@ -132,14 +134,14 @@ const DisclaimerModal = () => {
           id="disclaimer-description"
           className="text-slate-700 text-center mb-6 leading-relaxed"
         >
-          This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+          {t('disclaimer.text')}
         </p>
 
         {/* Emergency Notice */}
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
           <div className="flex items-center justify-center gap-2 text-red-800 font-bold">
             <Phone size={20} aria-hidden="true" />
-            <span>In an emergency, call 911</span>
+            <span>{t('disclaimer.emergency')}</span>
           </div>
         </div>
 
@@ -149,7 +151,7 @@ const DisclaimerModal = () => {
           onClick={handleAccept}
           className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]"
         >
-          I Agree
+          {t('disclaimer.agree')}
         </button>
       </div>
     </div>
