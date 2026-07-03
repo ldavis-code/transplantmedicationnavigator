@@ -5,6 +5,805 @@
     "emergency": "En una emergencia, llame al 911",
     "agree": "Estoy de acuerdo"
   },
+  "education": {
+    "header": {
+      "title": "Educación y recursos",
+      "subtitle": "Aprenda sobre los programas que ayudan a pagar sus medicinas. Descubra cuáles funcionan mejor para usted."
+    },
+    "totalAssist": {
+      "badge": "Nuevo · Ya disponible",
+      "title": "Llegó TotalAssist, el programa caritativo de asistencia al paciente más grande del país",
+      "p1": "La Patient Advocate Foundation y la PAN Foundation se unieron para lanzar <strong>TotalAssist</strong>, el programa caritativo de asistencia al paciente más grande del país. En un total combinado de 50 años, las dos organizaciones han ayudado a 3.8 millones de pacientes y han otorgado más de $7 mil millones en asistencia financiera.",
+      "p2": "Desde el <strong>1 de julio de 2026</strong>, TotalAssist reúne toda la asistencia financiera en un solo lugar, con casi 150 fondos para enfermedades específicas y equidad en salud, sin listas de espera y, en la mayoría de los casos, con decisiones de elegibilidad al instante. Las ayudas económicas pueden cubrir copagos de medicamentos, coseguro, deducibles, primas del seguro, cargos por consultas médicas y costos relacionados con el tratamiento. En general, califican los pacientes con ingresos de hasta el 500% del Nivel Federal de Pobreza, y una revisión de los últimos seis meses puede reembolsar gastos recientes.",
+      "applyPre": "Solicite en línea o llame al ",
+      "phone": "866-512-3861",
+      "applyPost": " (lun–vie, 8:30am–5:30pm hora del Este; marque 2 para español).",
+      "learnMore": "Conozca más sobre TotalAssist"
+    },
+    "gotDenied": {
+      "title": "¿Le negaron la cobertura?",
+      "text": "¿El seguro dijo que no? No se preocupe, usted puede defenderse. Aprenda por qué ocurren las negaciones y cómo presentar una apelación. Tenemos modelos de cartas para ayudar a su médico a escribir en su nombre.",
+      "cta": "Ver la guía de apelaciones"
+    },
+    "tabs": {
+      "ariaLabel": "Temas de educación",
+      "emergency": "¿Sin medicinas?",
+      "generics": "Genéricos vs. marca",
+      "deductibleTrap": "Trampa del deducible",
+      "diversion": "Programas de desvío",
+      "directory": "Directorio",
+      "insurance": "Seguro(s)",
+      "mental": "Salud mental",
+      "oop": "Máximo de bolsillo"
+    },
+    "emergency": {
+      "title": "¿Se le acabó el medicamento o está por acabarse?",
+      "intro": "El medicamento antirrechazo no es algo que pueda saltarse sin peligro. Si por el costo o un problema con el resurtido le queda poco, actúe hoy mismo. Aquí le decimos cómo conseguir un suministro puente mientras resuelve el costo.",
+      "call911": "Si esto es una emergencia médica, llame al 911.",
+      "call911Text": "Las señales de rechazo, fiebre, dolor sobre el trasplante, menos orina, aumento de peso repentino o sentirse muy mal necesitan a su equipo de trasplante de inmediato. No espere. <strong>Nunca cambie ni deje sus dosis por su cuenta.</strong>",
+      "step1Title": "Llame primero a su equipo de trasplante, hoy mismo",
+      "step1Text": "Este es el paso más importante. Su centro de trasplante maneja esto todo el tiempo. Pida hablar con el <strong>farmacéutico de trasplante</strong> o el <strong>trabajador social</strong>. Muchas veces pueden enviar una receta de emergencia, darle muestras o iniciar una solicitud de asistencia rápida el mismo día. Dígales con claridad: \"Estoy a punto de quedarme sin medicamento y no puedo pagar el resurtido.\"",
+      "step2Title": "Pida a su farmacia un suministro de emergencia",
+      "step2Pre": "Muchos estados permiten que el farmacéutico le dé unos días de un medicamento que usted toma con regularidad en una emergencia, para que no pierda dosis. Pregunte: ",
+      "step2Quote": "\"¿Puede hacer un surtido de emergencia mientras resuelvo el costo o el resurtido?\"",
+      "step2Post": " Lleve su frasco de pastillas o el nombre y la dosis del medicamento.",
+      "step3Title": "Pregunte al fabricante del medicamento por un suministro puente",
+      "step3Text": "Algunos fabricantes dan un suministro gratis de corto plazo, llamado \"puente\" o \"inicio rápido\", mientras revisan su solicitud del Programa de Asistencia al Paciente, para que usted esté cubierto durante la espera. Su equipo de trasplante puede pedirlo, o llame a la línea de apoyo al paciente del fabricante.",
+      "step3Link": "Busque su medicamento y su fabricante →",
+      "step4Title": "Consulte a las fundaciones por ayuda urgente",
+      "step4Text": "Algunas fundaciones de copago revisan los casos urgentes más rápido. Vale la pena llamar cuando está en apuros. Vea los grupos de confianza en nuestro directorio.",
+      "step4Link": "Abrir el directorio de recursos →",
+      "readyTitle": "Tenga esto a la mano cuando llame",
+      "readySubtitle": "Hace que cada llamada sea más rápida:",
+      "readyItems": [
+        "Los nombres y las dosis de sus medicinas",
+        "El nombre y el teléfono de su farmacia",
+        "Su tarjeta del seguro (si tiene una)",
+        "El número de teléfono de su centro de trasplante"
+      ],
+      "dontStopTitle": "No deje de tomar su medicamento sin más.",
+      "dontStopText": "Perder dosis del medicamento antirrechazo puede poner en riesgo su trasplante. Si de verdad no puede conseguir el suministro completo, pregunte a su equipo de trasplante si es posible un plan seguro de corto plazo, pero deje que ellos tomen esa decisión, no usted.",
+      "dontStopCta": "Reciba ayuda para solicitar asistencia a largo plazo"
+    },
+    "oop": {
+      "title": "Combinar programas",
+      "intro": "La mayoría de los pacientes de trasplante usan una mezcla de programas de ayuda para pagar sus medicinas. Es como un rompecabezas.",
+      "negotiation": {
+        "badge": "En vigor desde enero de 2026",
+        "title": "Negociación de precios de medicamentos de Medicare",
+        "lead": "Por primera vez en la historia, Medicare negoció precios más bajos con los fabricantes de medicamentos.",
+        "p1": "Los primeros precios nuevos comienzan el 1 de enero de 2026, con grandes ahorros. Ejemplos: <strong>Eliquis</strong> baja de $521 a $231 al mes (56% menos) y <strong>Januvia</strong> baja de $527 a $113 al mes (79% menos). Esto les ahorrará $1.5 mil millones a los pacientes de Medicare solo en 2026.",
+        "p2": "Los primeros 10 medicamentos incluyen medicinas para la insuficiencia cardíaca (Entresto), la diabetes (Jardiance, Farxiga, Januvia), los coágulos de sangre (Eliquis, Xarelto), las enfermedades inmunitarias (Stelara, Enbrel), los cánceres de la sangre (Imbruvica) y la insulina (NovoLog/Fiasp).",
+        "p3": "Cerca de 8.8 millones de pacientes de Medicare Part D usaron estas medicinas en 2023. Ya se eligió una segunda ronda de 15 medicamentos para los precios de 2027.",
+        "round3Title": "Tercera ronda anunciada el 27 de enero de 2026",
+        "round3P1": "CMS eligió 15 medicamentos nuevos para negociar, incluidos los <strong>primeros medicamentos de la Part B</strong>. Los precios nuevos entran en vigor el 1 de enero de 2028.",
+        "round3P2": "<strong>Selecciones importantes para trasplante:</strong> Orencia (abatacept, relacionado con Belatacept), Trulicity (dulaglutide, para la diabetes después del trasplante), Xolair (omalizumab, trasplante de pulmón), Anoro Ellipta (trasplante de pulmón). También incluye Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio y Xeljanz."
+      },
+      "glp1": {
+        "badge": "Nuevo a mediados de 2026",
+        "title": "Cobertura de Medicare de los GLP-1 para bajar de peso",
+        "lead": "Un gran cambio: Medicare ahora cubrirá medicamentos para bajar de peso.",
+        "p1": "A partir de mediados de 2026, Medicare cubrirá ciertos medicamentos GLP-1 para bajar de peso, poniendo fin a una regla que dejaba estos medicamentos fuera de la Part D.",
+        "p2": "<strong>Medicamentos cubiertos:</strong> Wegovy y Zepbound estarán cubiertos para pacientes con problemas de salud relacionados con el peso. Su copago debería ser de unos <strong>$50 al mes</strong> después de alcanzar su deducible.",
+        "p3": "Eli Lilly y Novo Nordisk acordaron dar estos medicamentos a precios más bajos para los pacientes de Medicare."
+      },
+      "m3p": {
+        "title": "Plan de Pago de Medicamentos Recetados de Medicare",
+        "lead": "Un gran cambio gracias a leyes nuevas",
+        "p1": "Desde 2025, los pacientes de Medicare Part D pueden repartir el costo de sus medicamentos a lo largo del año, en vez de pagar cantidades grandes de una sola vez.",
+        "p2": "Este programa hace que sus costos sean más estables y fáciles de manejar.",
+        "p3": "Pregunte a su plan de la Part D sobre este plan de pago durante la inscripción abierta."
+      },
+      "pick": {
+        "title": "Part D vs Medicare Advantage: cómo elegir su plan",
+        "intro": "Conocer las diferencias puede ahorrarle mucho dinero en medicinas de trasplante.",
+        "partDTitle": "Medicare Part D (tradicional)",
+        "partDDesc": "Un plan de medicamentos que funciona con Medicare Original. Es un plan aparte, solo para medicinas.",
+        "partDItems": [
+          "Funciona con cualquier proveedor que acepte Medicare",
+          "Deducible y prima aparte",
+          "Límite de gastos de bolsillo de $2,100 (2026, subió de $2,000 en 2025)"
+        ],
+        "maTitle": "Medicare Advantage (MA-PD)",
+        "maDesc": "Un plan todo en uno que cubre las visitas al médico Y las medicinas.",
+        "maItems": [
+          "Primas a menudo más bajas o de $0",
+          "Las redes de proveedores pueden ser limitadas",
+          "Límite de gastos de bolsillo de $2,100 (2026, subió de $2,000 en 2025)"
+        ]
+      },
+      "compare": {
+        "title": "Cómo comparar planes según sus medicinas",
+        "step1Title": "Revise las listas de medicamentos",
+        "step1Text": "Use la herramienta Medicare Plan Finder en medicare.gov para ver qué planes cubren sus medicamentos y cuánto cuestan.",
+        "step1Link": "Medicare Plan Finder",
+        "step1LinkAria": "Visitar Medicare Plan Finder (se abre en una pestaña nueva)",
+        "step2Title": "Compare los costos totales",
+        "step2Text": "Mire las cuotas mensuales, los deducibles, los copagos y qué farmacias puede usar. Recuerde el límite anual de $2,100 (2026) al sumar los costos.",
+        "step3Title": "Averigüe sobre la Ayuda Adicional (Extra Help)",
+        "step3Text": "Si tiene ingresos bajos, el programa Extra Help puede reducir los costos de los planes de la Part D y MA-PD. Puede eliminar sus cuotas mensuales y su deducible ($615 en 2026) y limitar los copagos tanto de medicamentos genéricos como de marca.",
+        "step3Link": "Solicitar Extra Help",
+        "step3LinkAria": "Solicitar Extra Help (se abre en una pestaña nueva)",
+        "step4Title": "Obtenga ayuda gratis",
+        "step4Text": "Llame a su Programa Estatal de Asistencia con el Seguro Médico (SHIP) para recibir ayuda gratis al elegir un plan.",
+        "step4Link": "Encuentre su SHIP local",
+        "step4LinkAria": "Encuentre su SHIP local (se abre en una pestaña nueva)"
+      },
+      "parts": {
+        "title": "Las partes de Medicare para los medicamentos de trasplante",
+        "intro": "Saber qué parte de Medicare paga sus medicinas de trasplante es clave.",
+        "partATitle": "Part A (hospital)",
+        "partADesc": "Paga los medicamentos que le dan mientras usted está en el hospital.",
+        "partAItem": "Agentes de inducción (Thymoglobulin, Simulect)",
+        "partBTitle": "Part B (médica)",
+        "partBDesc": "Paga algunos medicamentos que usted recibe en clínicas. También cubre los medicamentos antirrechazo si usted no tiene Part D.",
+        "partBItem": "Infusiones IV (Belatacept/Nulojix)",
+        "partDTitle": "Part D (recetas)",
+        "partDDesc": "Paga la mayoría de las pastillas que usted toma en casa cada día.",
+        "partDItem": "Tacrolimus, Mycophenolate, etc."
+      },
+      "strategies": {
+        "title": "Estrategias según el tipo de seguro",
+        "commercialTitle": "¿Seguro comercial?",
+        "commercialItem1": "Use los <strong>PAP de los fabricantes</strong> para las tarjetas de copago.",
+        "commercialItem2": "Use las <strong>fundaciones</strong> para los deducibles.",
+        "medicareTitle": "¿Medicare?",
+        "medicareItem1": "Use las <strong>fundaciones</strong> para los copagos.",
+        "medicareItem2": "Revise los <strong>precios en efectivo</strong> de los genéricos para comparar los ahorros."
+      },
+      "keyInsightTitle": "Dato clave",
+      "keyInsightText": "Muchos pacientes combinan programas; por ejemplo, un paciente de Medicare puede recibir ayudas económicas de fundaciones para sus copagos. Revise también los precios en efectivo de los medicamentos genéricos.",
+      "glossary": {
+        "title": "Palabras del seguro explicadas de forma simple",
+        "intro": "Saber qué significan estas palabras le ayuda a manejar los costos y a encontrar ayuda.",
+        "premiumTerm": "Prima",
+        "premiumDef": "La cantidad que usted paga cada mes por tener seguro. Piense en ella como una membresía de gimnasio: paga todos los meses, la use o no.",
+        "deductibleTerm": "Deducible",
+        "deductibleDef": "La cantidad que usted debe pagar por su cuenta antes de que su seguro empiece a ayudar. Si su deducible es de $500, usted paga los primeros $500 en medicinas. Después de eso, el seguro ayuda a pagar.",
+        "copayTerm": "Copago",
+        "copaySuffix": " (o co-pago)",
+        "copayDef": "Una cantidad fija que usted paga cada vez que recibe una medicina. Ejemplo: puede pagar $10 por cada receta, y el seguro paga el resto.",
+        "coinsuranceTerm": "Coseguro",
+        "coinsuranceDef": "El porcentaje que usted paga después de alcanzar su deducible. Si su coseguro es del 20%, usted paga $20 por cada $100 del costo de la medicina. El seguro paga los otros $80.",
+        "oopMaxPre": "Límite de gasto anual (",
+        "oopMaxTerm": "Máximo de gastos de bolsillo",
+        "oopMaxPost": ")",
+        "oopMaxDef": "Lo máximo que usted pagará en un año. Cuando llega a esa cantidad, el seguro paga el 100% de las medicinas cubiertas. Es su red de seguridad.",
+        "formularyPre": "Lista de medicinas cubiertas (",
+        "formularyTerm": "Formulario",
+        "formularyPost": ")",
+        "formularyDef": "La lista de medicinas que su seguro va a cubrir. Piense en ella como el menú de la aseguradora. Si su medicina no está en la lista, puede pagar más o necesitar una aprobación especial.",
+        "tierTerm": "Nivel (tier)",
+        "tierDef": "La forma en que el seguro agrupa las medicinas por costo. Los niveles bajos (1-2) cuestan menos. Los niveles altos (3-4-5) cuestan más.",
+        "tier1": "<strong>Nivel 1:</strong> Normalmente medicamentos genéricos (el costo más bajo)",
+        "tier2": "<strong>Nivel 2:</strong> Medicamentos de marca preferidos",
+        "tier3": "<strong>Niveles 3-5:</strong> Medicamentos no preferidos o especializados (el costo más alto)",
+        "paTerm": "Autorización previa",
+        "paDef": "Cuando usted necesita la aprobación de la aseguradora antes de que pague una medicina. Su médico debe explicar por qué usted necesita esa medicina en específico.",
+        "paWiserTitle": "Nuevo en 2026: el piloto WISeR de CMS",
+        "paWiserPre": "El modelo WISeR (Wasteful and Inappropriate Service Reduction, o reducción de servicios innecesarios e inapropiados) exige autorización previa para 17 servicios ambulatorios de Medicare Part B en 6 estados: Arizona, Nueva Jersey, Ohio, Oklahoma, Texas y Washington. Aunque no afecta directamente los medicamentos de trasplante, puede agregar pasos para algunos procedimientos. ",
+        "paWiserLink": "Conozca más en nuestra página de apelaciones",
+        "paWiserPost": ".",
+        "genericTerm": "Medicina genérica",
+        "genericSuffix": "",
+        "genericDef": "Una medicina que funciona igual que la de marca pero cuesta menos. Como el cereal de la marca de la tienda frente al de marca famosa: es lo mismo, en otro empaque.",
+        "brandTerm": "Medicina de marca",
+        "brandDef": "La versión original de una medicina, hecha por la compañía que la inventó. Normalmente cuesta más que la genérica.",
+        "specialtyTerm": "Medicamento especializado",
+        "specialtySuffix": "",
+        "specialtyDef": "Medicinas caras que necesitan un manejo o control especial. La mayoría de las medicinas de trasplante son medicamentos especializados. Suelen costar $600 o más al mes.",
+        "partDTerm": "Medicare Part D",
+        "partDDef": "La parte de Medicare que ayuda a pagar las medicinas recetadas. Debe inscribirse en ella por separado.",
+        "oopCapTerm": "Tope anual de gastos de bolsillo",
+        "oopCapDef": "Un límite anual de lo que usted paga de su bolsillo por los medicamentos de Medicare Part D. En 2026 el tope es de $2,100. Cuando lo alcanza, paga $0 por los medicamentos cubiertos el resto del año.",
+        "catastrophicTerm": "Cobertura catastrófica",
+        "catastrophicDef": "Después de gastar mucho en medicinas en un año, Medicare paga casi todo. Usted solo paga una cantidad pequeña (de unos $4 a $12) por receta.",
+        "inNetworkTerm": "Farmacia dentro de la red",
+        "inNetworkDef": "Una farmacia que trabaja con su seguro. Aquí usted paga menos. Piense en ella como un socio preferido.",
+        "outNetworkTerm": "Farmacia fuera de la red",
+        "outNetworkDef": "Una farmacia que no tiene acuerdo con su seguro. Aquí puede pagar más o no tener cobertura.",
+        "pbmTerm": "PBM (administrador de beneficios de farmacia)",
+        "pbmDef": "La compañía que administra la cobertura de medicamentos recetados de su seguro. Ellos deciden qué medicinas se cubren y cuánto cuestan.",
+        "papPre": "Programa de Asistencia al Paciente (",
+        "papTerm": "PAP",
+        "papPost": ")",
+        "papDef": "Programas de medicinas gratis o a bajo costo que manejan las compañías farmacéuticas. Si no puede pagar su medicina, estos programas podrían ayudarle.",
+        "copayCardTerm": "Tarjeta o cupón de copago",
+        "copayCardDef": "Ayuda de las compañías farmacéuticas para bajar lo que usted paga por las medicinas de marca. <strong>Importante:</strong> Muchas veces no funcionan con Medicare.",
+        "mfrTerm": "Asistencia del fabricante",
+        "mfrDef": "Ayuda directa de la compañía que hace su medicina. Puede ser medicina gratis, ayuda con el copago o descuentos.",
+        "mailTerm": "Farmacia de pedido por correo",
+        "mailDef": "Una farmacia que envía la medicina a su casa. Normalmente le da 90 días de medicina de una vez. Suele costar menos que comprar 30 días en una farmacia local.",
+        "stepTerm": "Terapia escalonada",
+        "stepDef": "Cuando el seguro le exige probar primero una medicina más barata antes de pagar una más cara. Como tener que probar la versión básica antes de recibir la versión premium.",
+        "exclusionTerm": "Exclusión",
+        "exclusionDef": "Una medicina que el seguro no va a cubrir para nada. Usted debe pagar el precio completo o buscar otra ayuda.",
+        "whyTitle": "Por qué esto importa para los pacientes de trasplante",
+        "whyIntro": "Sus medicinas antirrechazo son medicamentos especializados. Son caras. Entender estas palabras le ayuda a:",
+        "whyItems": [
+          "Saber cuánto va a pagar",
+          "Encontrar ayuda cuando los costos son muy altos",
+          "Hablar con su equipo de trasplante sobre sus opciones",
+          "Solicitar programas de asistencia"
+        ],
+        "askTitle": "Preguntas para hacer",
+        "askItems": [
+          "¿En qué nivel están mis medicinas de trasplante?",
+          "¿De cuánto es mi deducible?",
+          "¿Cuándo alcanzo mi límite de gasto anual?",
+          "¿Están mis medicinas en la lista de medicinas cubiertas?",
+          "¿Puedo usar el pedido por correo para ahorrar dinero?"
+        ]
+      }
+    },
+    "directory": {
+      "title": "Directorio de recursos de confianza",
+      "visitAria": "Visitar {{name}} (se abre en una pestaña nueva)",
+      "emptyTitle": "No hay recursos disponibles",
+      "emptyText": "Estamos trabajando para agregar recursos de confianza. Vuelva pronto para ver enlaces y organizaciones útiles."
+    },
+    "insurance": {
+      "wiser": {
+        "title": "Nuevo en 2026: el piloto de autorización previa WISeR de CMS",
+        "intro": "A partir de enero de 2026, CMS lanzó el modelo <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong>. Este agrega autorización previa para 17 servicios ambulatorios de Medicare Part B en 6 estados.",
+        "statesTitle": "Estados afectados",
+        "stateAz": "Arizona",
+        "stateNj": "Nueva Jersey",
+        "stateOh": "Ohio",
+        "stateOk": "Oklahoma",
+        "stateTx": "Texas",
+        "stateWa": "Washington",
+        "knowTitle": "Lo que los pacientes de trasplante deben saber",
+        "know1": "WISeR cubre procedimientos ambulatorios (estimuladores de nervios, procedimientos de columna, cuidado de heridas), <strong>no</strong> los medicamentos de trasplante",
+        "know2": "Sus medicamentos inmunosupresores NO se ven afectados",
+        "know3": "Si necesita alguno de los 17 procedimientos de la lista (por ejemplo, cuidado de heridas con sustitutos de piel), su proveedor debe obtener una autorización previa",
+        "know4": "Las decisiones de cobertura se toman en un plazo de 72 horas (48 horas en casos urgentes)",
+        "footer": "El modelo WISeR va de enero de 2026 a diciembre de 2031. Aplica solo a Medicare Original (pago por servicio), no a los planes Medicare Advantage. Si vive en uno de estos estados y necesita un procedimiento cubierto, hable con su proveedor sobre el proceso de autorización previa."
+      },
+      "note": "Cada tipo de seguro tiene sus propios beneficios, costos y mejores formas de ahorrar.",
+      "infographicAlt": "Tabla comparativa de la ayuda con medicamentos de trasplante según el tipo de seguro: comercial, Medicare, Medicaid y sin seguro",
+      "infographicDesc": "Esta infografía compara la ayuda disponible con los medicamentos de trasplante en cuatro tipos de seguro. Seguro comercial: seguro a través de su trabajo o que usted compra por su cuenta. Puede calificar para tarjetas de copago del fabricante, programas de asistencia al paciente y fundaciones de copago. Usted paga primas mensuales, copagos y deducibles, y luego el seguro cubre el resto. Los problemas comunes incluyen deducibles altos, requisitos de autorización previa y acumuladores de copago. Siguiente paso: busque sus medicamentos para encontrar tarjetas de copago y programas de asistencia. Medicare: seguro del gobierno para personas de 65 años o más o con discapacidades. Puede calificar para programas de asistencia al paciente, la Ayuda Adicional (Extra Help) o el Subsidio por Bajos Ingresos, y fundaciones de copago. La Part D cubre la mayoría de los medicamentos de trasplante con primas mensuales y copagos. Los problemas comunes incluyen los costos de la Part D y que no se pueden usar tarjetas de copago del fabricante. Siguiente paso: revise si califica para Extra Help y busque programas de asistencia al paciente. Medicaid: seguro del gobierno para personas con ingresos bajos. Puede calificar para programas de asistencia al paciente y programas específicos de su estado. Cubre la mayoría de los medicamentos de trasplante con copagos muy bajos o sin copagos. Los problemas comunes incluyen redes de farmacias limitadas, restricciones del formulario y la pérdida de la cobertura si cambian sus ingresos. Siguiente paso: busque sus medicamentos y consulte con la oficina de Medicaid de su estado. Sin seguro o pago por cuenta propia: sin cobertura de seguro en este momento. Puede calificar para programas de asistencia al paciente del fabricante con medicamentos gratis, programas estatales y tarjetas de descuento. Usted paga el precio completo de venta al público sin ayuda. Los problemas comunes incluyen costos muy altos, la falta de precios negociados y la dificultad para pagar medicamentos especializados. Siguiente paso: solicite programas de asistencia al paciente de inmediato, ya que la mayoría ofrece medicamentos gratis a los pacientes que califican. La infografía termina con un mensaje de ánimo: usted no está solo y hay ayuda disponible sin importar el tipo de seguro que tenga.",
+      "medicareGuide": {
+        "title": "Guía de Medicare",
+        "partsTitle": "Las partes de Medicare para los medicamentos de trasplante",
+        "partATitle": "Part A (hospital)",
+        "partAItems": ["Agentes de inducción", "(Thymoglobulin, Simulect)"],
+        "partBTitle": "Part B (médica)",
+        "partBItems": [
+          "Infusiones IV (Belatacept)",
+          "Medicamentos antirrechazo (si es elegible para la Part B-ID)",
+          "2026: prima de $202.90/mes, deducible de $283",
+          "Prima de la Part B-ID: $121.60/mes (pacientes de riñón)"
+        ],
+        "partCTitle": "Part C (Medicare Advantage)",
+        "partCItems": ["Combina A, B y normalmente D", "Puede tener beneficios adicionales", "Debe usar ciertos médicos"],
+        "partDTitle": "Part D (recetas)",
+        "partDItems": ["Tacrolimus", "Mycophenolate", "Valcyte, etc."],
+        "chooseTitle": "Part D vs Medicare Advantage: cómo elegir su plan",
+        "tradTitle": "Part D (tradicional)",
+        "tradItems": [
+          "Funciona con cualquier proveedor que acepte Medicare",
+          "Deducible y prima aparte",
+          "Límite de gastos de bolsillo de $2,100 (2026)"
+        ],
+        "maTitle": "Medicare Advantage (MA-PD)",
+        "maItems": [
+          "Primas a menudo más bajas o de $0",
+          "Las redes de proveedores pueden ser limitadas",
+          "Límite de gastos de bolsillo de $2,100 (2026)"
+        ]
+      },
+      "commercial": {
+        "title": "Seguro comercial",
+        "intro": "Su pagador principal durante los primeros 30 meses después del trasplante.",
+        "keyPointsTitle": "Puntos clave",
+        "keyPoints": [
+          "Puede usar la mayoría de los PAP de los fabricantes",
+          "Las tarjetas de copago suelen funcionar",
+          "Las fundaciones ayudan con los copagos altos",
+          "Puede que tenga que usar una farmacia en específico"
+        ],
+        "strategyTitle": "Mejor estrategia",
+        "strategy": "Empiece con los PAP de los fabricantes y luego use las fundaciones para los copagos o deducibles que queden."
+      },
+      "va": {
+        "title": "Atención médica del VA",
+        "intro": "Para veteranos que califican.",
+        "strategyTitle": "Mejor estrategia",
+        "strategy": "Grupos de Prioridad 1–6: $0 por las medicinas. Use primero la farmacia del VA. Trabaje con su equipo de trasplante del VA.",
+        "link": "Información de recetas del VA",
+        "linkAria": "Visitar la información de recetas del VA (se abre en una pestaña nueva)"
+      },
+      "tricare": {
+        "title": "TRICARE",
+        "intro": "Para miembros del ejército y sus familias.",
+        "strategyTitle": "Mejor estrategia",
+        "strategy": "Use la farmacia militar (copago de $0). Use el pedido por correo de TRICARE para las medicinas continuas. Consulte la herramienta de búsqueda de la lista de medicamentos.",
+        "link": "Búsqueda de la lista de medicamentos de TRICARE",
+        "linkAria": "Visitar la búsqueda del formulario de TRICARE (se abre en una pestaña nueva)"
+      },
+      "noInsurance": {
+        "title": "Sin seguro",
+        "intro": "Para pacientes sin seguro.",
+        "strategyTitle": "Mejor estrategia",
+        "items": [
+          "Empiece con los PAP de los fabricantes",
+          "Revise los precios de Cost Plus Drugs",
+          "Use herramientas de descuento (GoodRx, SingleCare, etc.)",
+          "Averigüe sobre Medicaid o los planes del Mercado de Seguros"
+        ],
+        "link": "Buscar opciones de seguro",
+        "linkAria": "Explorar opciones de seguro en Healthcare.gov (se abre en una pestaña nueva)"
+      },
+      "medicaid": {
+        "title": "Medicaid (según el estado)",
+        "intro": "Un programa para personas con ingresos bajos. Lo que cubre depende de su estado.",
+        "selectLabel": "Elija su estado:",
+        "selectPlaceholder": "-- Elija un estado --",
+        "go": "Ir al sitio oficial",
+        "goAria": "Visitar el sitio web de Medicaid de su estado (se abre en una pestaña nueva)",
+        "leaving": "Está saliendo de esta aplicación para visitar un sitio web del gobierno."
+      },
+      "ihs": {
+        "title": "Indian Health Service / Programas tribales",
+        "intro": "Para pacientes indígenas americanos y nativos de Alaska que califican.",
+        "findTitle": "Encuentre un centro",
+        "findText": "Use el buscador oficial del IHS para encontrar clínicas y farmacias cerca de usted.",
+        "findCta": "Abrir el buscador del IHS",
+        "findAria": "Encontrar un centro del IHS (se abre en una pestaña nueva)",
+        "strategyTitle": "Mejor estrategia",
+        "strategy": "Use su programa local del IHS o el Urban Indian Program, normalmente con costo de $0."
+      }
+    },
+    "deductibleTrap": {
+      "title": "La trampa del deducible",
+      "subtitle": "Por qué las tarjetas de descuento para recetas pueden costarles más a los pacientes de trasplante",
+      "warning": {
+        "title": "⚠️ Advertencia importante para pacientes de trasplante",
+        "lead": "Usar tarjetas de descuento como GoodRx o SingleCare puede costarle MILES de dólares extra cada año.",
+        "boxTitle": "Cuídese de \"la trampa del deducible\". Esto es lo que pasa:",
+        "boxP1Pre": "Si usa una tarjeta de descuento, ",
+        "boxP1Highlight": "el dinero que paga NO cuenta para su deducible",
+        "boxP1Post": ".",
+        "boxP2": "Después igual tiene que pagar su deducible completo. Esto puede costarle más dinero a lo largo del año.",
+        "boxP3": "Qué hacer: pregunte a su aseguradora cuándo conviene empezar a usar tarjetas de descuento."
+      },
+      "example": {
+        "title": "Ejemplo de la vida real",
+        "rightBadge": "✅ La forma correcta",
+        "rightTitle": "Usando el seguro",
+        "rightM13Label": "Meses 1-3:",
+        "rightM13": "Paga $2,100 de su bolsillo (alcanza su límite anual)",
+        "rightM412Label": "Meses 4-12:",
+        "rightM412": "El seguro paga el 100% = $0 de su bolsillo",
+        "rightTotal": "Costo total del año: $2,100",
+        "trapBadge": "❌ La trampa de la tarjeta de descuento",
+        "trapTitle": "Usando GoodRx/SingleCare",
+        "trapM112Label": "Meses 1-12:",
+        "trapM112": "Paga el precio con descuento (~$200/mes), pero NADA cuenta para su límite anual",
+        "trapResultLabel": "Resultado:",
+        "trapResult": "NUNCA alcanza su límite anual, así que paga todo el año",
+        "trapTotal": "Costo total del año: $2,400",
+        "takeaway": "Un ahorro pequeño hoy = miles de dólares en costos extra durante el año."
+      },
+      "whenToUse": {
+        "title": "¿Cuándo deben usar tarjetas de descuento los pacientes de trasplante?",
+        "s1Title": "Situación 1: medicamento NO cubierto por el seguro",
+        "s1Text": "Para una medicina que NO está en la lista de su seguro y que no tiene una opción genérica más barata.",
+        "s2Title": "Situación 2: medicamentos de bajo costo y por una sola vez",
+        "s2Text": "Para medicinas de corto plazo que no tienen que ver con su trasplante (como un tratamiento de antibióticos), cuando el precio con descuento es menor que su copago.",
+        "s3Title": "Situación 3: deducible extremadamente alto",
+        "s3Text": "Si tiene un deducible muy alto Y el precio en efectivo es mucho más bajo; pero aun así, piense bien en el costo de no alcanzar su límite anual.",
+        "neverTitle": "🛑 NUNCA use tarjetas de descuento para:",
+        "neverP1": "Sus medicinas antirrechazo de todos los días, como Tacrolimus, Mycophenolate o Cyclosporine.",
+        "neverP2": "Estas son las medicinas que le ayudan a alcanzar su límite anual rápido."
+      },
+      "alternatives": {
+        "title": "Mejores alternativas",
+        "papsTitle": "Programas de Asistencia al Paciente (PAP)",
+        "papsText": "Medicinas gratis o a bajo costo directamente de los fabricantes.",
+        "foundationsTitle": "Fundaciones de copago",
+        "foundationsText": "Grupos que ayudan a pagar sus copagos y deducibles.",
+        "copayTitle": "Tarjetas de copago de los fabricantes",
+        "copayText": "Ayuda de los fabricantes para las medicinas de marca (no para pacientes de Medicare).",
+        "counts": "✅ Cuenta para su límite anual"
+      },
+      "takeaways": {
+        "title": "Puntos clave",
+        "t1Bold": "Su meta cada año es llegar a su límite de gasto anual (lo máximo que paga cada año).",
+        "t1Rest": "Cuando lo alcanza, el seguro paga el 100% por el resto del año.",
+        "t2Bold": "Las tarjetas de descuento hacen que sus pagos no cuenten para esta meta.",
+        "t2Rest": "Pueden ahorrarle unos dólares por medicina, pero costarle miles durante el año.",
+        "t3Bold": "Use siempre primero los PAP y las fundaciones de copago.",
+        "t3Rest": "Estos programas le ayudan a pagar las medicinas Y a alcanzar su límite anual más rápido.",
+        "t4Bold": "Hable con su equipo de trasplante.",
+        "t4Rest": "Ellos pueden conectarle con personas que conocen estos programas y pueden guiarle por el sistema."
+      },
+      "questionsTitle": "¿Preguntas?",
+      "questionsText": "¿No está seguro de si una tarjeta de descuento le conviene? Pregunte al asesor de finanzas o al trabajador social de su centro de trasplante. Ellos pueden revisar su plan de seguro y ayudarle a elegir."
+    },
+    "diversion": {
+      "title": "Cuando el seguro lo manda a otra parte",
+      "subtitle": "Algunos planes tratan de no pagar sus medicamentos. Aprenda a detectarlo y qué hacer.",
+      "warning": {
+        "title": "Advertencia: su plan podría mandarlo a otra parte",
+        "lead": "Algunos planes no quieren pagar medicamentos costosos. Pueden obligarle a pedir primero medicamentos gratis a los fabricantes.",
+        "boxTitle": "¿Qué significa esto?",
+        "boxP1Pre": "Su plan puede decirle: ",
+        "boxP1Highlight": "\"No pagaremos su medicamento hasta que usted primero le pida medicina gratis a un fabricante.\"",
+        "boxP2": "Esto le ahorra dinero a su plan. Pero puede dejarle sin medicina mientras espera. Y puede que no le den los medicamentos gratis."
+      },
+      "types": {
+        "title": "Tres formas en que los planes hacen esto",
+        "intro": "Estos trucos tienen nombres elegantes. Pero todos hacen lo mismo: hacer que otro pague sus medicamentos.",
+        "whyHurts": "Por qué le perjudica:",
+        "acc": {
+          "title": "Acumulador de copago",
+          "pre": "Los fabricantes le dan ayuda con el copago. Su plan toma esa ayuda. Pero ",
+          "highlight": "no cuenta para lo que usted debe pagar en el año",
+          "post": ".",
+          "why": [
+            "Su tarjeta de copago se acaba más rápido",
+            "Cuando se acaba, usted debe el precio completo",
+            "Usted sigue pagando todo el año"
+          ]
+        },
+        "max": {
+          "title": "Maximizador de copago",
+          "pre": "Su plan reparte su tarjeta de copago a lo largo del año. Pero ",
+          "highlight": "el plan se queda con los ahorros, no usted",
+          "post": ".",
+          "why": [
+            "La ayuda del fabricante va a su plan, no a usted",
+            "Usted sigue pagando más de lo que debería",
+            "Cuando la ayuda se acaba, usted debe mucho"
+          ]
+        },
+        "afp": {
+          "title": "Financiamiento alternativo (AFP)",
+          "pre": "El plan de su trabajo le dice: ",
+          "highlight": "\"No cubriremos este medicamento. Pídalo gratis al fabricante.\"",
+          "why": [
+            "Usted espera semanas o meses por sus medicamentos",
+            "Puede que no le den los medicamentos gratis",
+            "Si no recibe los medicamentos gratis, paga el precio completo",
+            "Su plan ahorra dinero. Usted corre el riesgo."
+          ]
+        }
+      },
+      "identify": {
+        "title": "Cómo saber si esto le está pasando a usted",
+        "signsTitle": "Señales de alerta:",
+        "signs": [
+          "Los papeles de su plan dicen \"copay accumulator\" (acumulador de copago)",
+          "El dinero de la tarjeta de copago no aparece en el registro de su plan",
+          "Le dicen que llame primero a otra compañía",
+          "Su medicamento quedó \"fuera del plan\" (no está cubierto)",
+          "Le exigen pedir medicamentos gratis antes de que su plan ayude"
+        ],
+        "askTitle": "Haga estas preguntas a su plan:",
+        "questions": [
+          "\"¿Usan un acumulador de copago?\"",
+          "\"¿Mi tarjeta de copago contará para lo que debo pagar?\"",
+          "\"¿Mi medicamento está totalmente cubierto?\"",
+          "\"¿Tengo que pedir medicamentos gratis primero?\""
+        ]
+      },
+      "protect": {
+        "title": "Cómo protegerse",
+        "s1Title": "Lea los papeles de su plan",
+        "s1Text": "Busque palabras como \"accumulator\" (acumulador), \"maximizer\" (maximizador) o \"alternative funding\" (financiamiento alternativo). Son pistas.",
+        "s2Title": "Lleve la cuenta de lo que paga",
+        "s2Text": "Guarde sus recibos. Revise si el dinero de su tarjeta de copago aparece en el registro de su plan. Si no aparece, puede que tenga un plan con acumulador.",
+        "s3Title": "Apele si le dicen que no",
+        "s3Text": "Si su plan no quiere cubrir su medicamento, usted puede defenderse. Pida a su equipo de trasplante que escriba una carta que diga que usted necesita este medicamento.",
+        "s4Title": "Llame a su estado para pedir ayuda",
+        "s4Text": "Muchos estados tienen leyes para protegerle. Llame a la oficina de seguros de su estado. Pueden decirle cuáles son sus derechos y ayudarle a presentar una queja.",
+        "s5Title": "Hable con su empleador (si su seguro es del trabajo)",
+        "s5Text": "Su empleador elige el plan. Cuéntele a Recursos Humanos cómo esto le perjudica. Pídales que elijan un plan mejor."
+      },
+      "stateLaws": {
+        "title": "Estados que le protegen",
+        "intro": "Algunos estados hicieron leyes para detener estos trucos. En estos estados, el dinero de la tarjeta de copago debe contar para lo que usted debe pagar.",
+        "listTitle": "Estados con leyes que ayudan (hasta 2026):",
+        "list": "Arizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Luisiana, Maine, Maryland, Minnesota, Misuri, Nueva Jersey, Nueva York, Carolina del Norte, Ohio, Oklahoma, Oregón, Puerto Rico, Tennessee, Texas, Virginia, Washington, Virginia Occidental y más.",
+        "note": "Llame a la oficina de seguros de su estado para conocer las leyes nuevas. Cada año más estados agregan protecciones."
+      },
+      "whyMatters": {
+        "title": "Por qué los pacientes de trasplante deben saber esto",
+        "t1Bold": "Usted no puede saltarse sus medicamentos.",
+        "t1Rest": "Perder dosis puede dañar su trasplante. Esperar semanas por medicamentos gratis es arriesgado.",
+        "t2Bold": "Los medicamentos gratis no son cosa segura.",
+        "t2Rest": "Los fabricantes tienen reglas. Puede que usted no califique. El dinero puede acabarse.",
+        "t3Bold": "Usted paga por su plan.",
+        "t3Rest": "Usted paga cada mes. Pero algunos planes hacen que los fabricantes paguen sus medicamentos en su lugar.",
+        "t4Bold": "Las cuentas grandes pueden llegar rápido.",
+        "t4Rest": "Cuando su tarjeta de copago se acaba, puede deber mucho dinero de una sola vez."
+      },
+      "help": {
+        "title": "¿Necesita ayuda?",
+        "text": "¿Cree que esto le está pasando? Hable con el asesor de finanzas o el trabajador social de su centro de trasplante. Ellos saben cómo ayudar.",
+        "pafPre": "También puede llamar a la ",
+        "pafLink": "Patient Advocate Foundation",
+        "pafPost": " para recibir ayuda gratis."
+      }
+    },
+    "mental": {
+      "title": "Recursos de salud mental",
+      "subtitle": "Su salud mental importa. Reciba apoyo gratis y privado cuando lo necesite.",
+      "crisis": {
+        "title": "¿Necesita hablar con alguien ahora mismo?",
+        "name": "Línea Nacional de Prevención del Suicidio y Crisis",
+        "availability": "24/7 • Gratis • Privado",
+        "callTitle": "Llame o envíe un texto",
+        "callText": "Marque o envíe un texto al <strong>988</strong> desde cualquier teléfono",
+        "chatTitle": "Chat en línea"
+      },
+      "samhsa": {
+        "aria": "Visitar SAMHSA (se abre en una pestaña nueva)",
+        "title": "SAMHSA",
+        "badge": "Recurso del gobierno",
+        "desc": "<strong>Servicios de Abuso de Sustancias y Salud Mental</strong>: encuentre centros de tratamiento, grupos de apoyo y ayuda de salud mental cerca de usted.",
+        "availability": "Ayuda para encontrar tratamiento a cualquier hora (24/7)"
+      },
+      "helplineLabel": "Línea de ayuda:",
+      "transplant": {
+        "title": "El trasplante y la salud mental",
+        "intro": "Es normal sentirse preocupado, triste o estresado durante el proceso del trasplante. Usted no está solo.",
+        "items": [
+          "Pregunte a su equipo de trasplante sobre servicios de consejería",
+          "Muchos centros de trasplante tienen trabajadores sociales y expertos en salud mental",
+          "Medicare y la mayoría de los planes de seguro cubren los servicios de salud mental"
+        ]
+      },
+      "nami": {
+        "aria": "Visitar los grupos de apoyo de NAMI (se abre en una pestaña nueva)",
+        "title": "Grupos de apoyo de NAMI",
+        "desc": "NAMI ofrece grupos de apoyo gratis para personas con problemas de salud mental y sus familias."
+      },
+      "findTreatment": {
+        "aria": "Visitar FindTreatment.gov (se abre en una pestaña nueva)",
+        "desc": "Un sitio del gobierno que le ayuda a aprender sobre la salud mental, encontrar tratamiento y encontrar servicios cerca de usted."
+      },
+      "caregivers": {
+        "title": "Apoyo para cuidadores y compañeros de cuidado",
+        "intro": "Usted es esencial en el proceso del trasplante. Su bienestar también importa. Cuidar a un ser querido puede sentirse gratificante, pero también exige mucho física y emocionalmente. Cuídese para poder seguir dando el mejor apoyo.",
+        "tipsTitle": "Consejos de autocuidado para cuidadores",
+        "tips": [
+          "Ponga límites y pida ayuda cuando la necesite",
+          "Tome descansos y mantenga sus propias citas médicas",
+          "Conéctese con otros cuidadores que entienden su experiencia",
+          "Considere la consejería o los grupos de apoyo para cuidadores"
+        ],
+        "nacAria": "Visitar la National Alliance for Caregiving (se abre en una pestaña nueva)",
+        "nacTitle": "National Alliance for Caregiving",
+        "nacDesc": "Una coalición nacional sin fines de lucro dedicada a impulsar el cuidado familiar por medio de la investigación, la innovación y la defensa de derechos. Encuentre recursos, estudios y apoyo para su labor como cuidador.",
+        "nacBadge": "Recurso para cuidadores"
+      },
+      "remember": {
+        "title": "Recuerde",
+        "text": "Buscar ayuda para la salud mental es una señal de fortaleza, no de debilidad. El proceso del trasplante exige mucho física y emocionalmente. Cuidar su salud mental es tan importante como tomar sus medicamentos. Si lo está pasando mal, busque apoyo; hay personas que quieren ayudarle."
+      }
+    },
+    "simulator": {
+      "title": "Simulador de cambio de seguro",
+      "subtitle": "Vea cómo cambian sus opciones de medicamentos al cambiar de seguro",
+      "currentLabel": "Seguro actual",
+      "futureLabel": "Seguro futuro",
+      "selectCurrent": "-- Elija el actual --",
+      "selectFuture": "-- Elija el futuro --",
+      "cta": "Ver qué cambia",
+      "recommendedAction": "📋 Acción recomendada",
+      "comingSoon": "Pronto tendremos información detallada de la transición para esta combinación. Contacte a su coordinador de trasplante para recibir orientación.",
+      "selectDifferent": "Elija tipos de seguro diferentes para ver los cambios de la transición.",
+      "insuranceTypes": {
+        "commercial": "Seguro comercial/del empleador",
+        "medicare": "Medicare (Part D)",
+        "medicaid": "Medicaid",
+        "marketplace": "Mercado de Seguros (ACA)",
+        "uninsured": "Sin seguro"
+      },
+      "transitions": {
+        "commercial_medicare": {
+          "title": "Comercial → Medicare",
+          "timing": "Común a los 65 años o después de 24 meses con SSDI",
+          "changes": [
+            { "title": "Tarjetas de copago", "desc": "La mayoría de las tarjetas de copago del fabricante NO se permiten con Medicare. Este es un cambio grande." },
+            { "title": "Acceso a los PAP", "desc": "Ahora podría calificar para los Programas de Asistencia al Paciente si sus ingresos son lo bastante bajos (muchos tienen límites más altos para pacientes de Medicare)." },
+            { "title": "Ayuda de fundaciones", "desc": "Fundaciones como PAN, PANF y HealthWell SÍ pueden ayudar a los pacientes de Medicare con los copagos." },
+            { "title": "Opción Part B-ID", "desc": "Los pacientes de trasplante de riñón pueden calificar para la cobertura de inmunosupresores de la Part B (Part B-ID). Prima: $121.60/mes en 2026 (subió de $110.40 en 2025), más 20% de coseguro después del deducible de $283." },
+            { "title": "Límite de 2026", "desc": "Límite anual de gastos de bolsillo en medicamentos de la Part D: $2,100 en 2026 (subió de $2,000 en 2025)." }
+          ],
+          "action": "Solicite los PAP de los fabricantes 3 meses antes de la fecha en que empieza su Medicare. Regístrese temprano con las fundaciones, porque los fondos se acaban."
+        },
+        "commercial_medicaid": {
+          "title": "Comercial → Medicaid",
+          "timing": "Por un cambio de ingresos o por discapacidad",
+          "changes": [
+            { "title": "Tarjetas de copago", "desc": "Las tarjetas de copago normalmente no se pueden usar con Medicaid." },
+            { "title": "Costo bajo o de $0", "desc": "Medicaid normalmente tiene copagos de $0 a $3 por las recetas." },
+            { "title": "Acceso a los PAP", "desc": "Algunos PAP siguen disponibles como asistencia secundaria." },
+            { "title": "Medicinas cubiertas", "desc": "Puede que necesite cambiar a los medicamentos preferidos de Medicaid o conseguir una autorización previa." }
+          ],
+          "action": "Trabaje con su coordinador de trasplante para asegurarse de que sus medicamentos estén en la lista de medicinas cubiertas de Medicaid antes de cambiar."
+        },
+        "medicaid_medicare": {
+          "title": "Medicaid → Medicare (doble elegibilidad)",
+          "timing": "A los 65 años o al calificar para Medicare",
+          "changes": [
+            { "title": "Doble elegibilidad", "desc": "Puede calificar como \"doble elegible\" y conservar algunos beneficios de Medicaid junto con Medicare." },
+            { "title": "Extra Help/LIS", "desc": "Es probable que califique para el Subsidio por Bajos Ingresos (Extra Help), que cubre la mayoría de los costos de la Part D." },
+            { "title": "Pagador principal", "desc": "Medicare pasa a ser el principal y Medicaid el secundario para los servicios cubiertos." },
+            { "title": "Programas MSP", "desc": "Los Programas de Ahorro de Medicare pueden pagar su prima de la Part B ($202.90/mes en 2026)." }
+          ],
+          "action": "Contacte a su Programa Estatal de Asistencia con el Seguro Médico (SHIP) para recibir consejería gratis sobre los beneficios de doble elegibilidad."
+        },
+        "commercial_marketplace": {
+          "title": "Comercial → Mercado de Seguros (ACA)",
+          "timing": "Por pérdida del trabajo, trabajo por cuenta propia o jubilación antes de los 65",
+          "changes": [
+            { "title": "Tarjetas de copago OK", "desc": "Las tarjetas de copago del fabricante SÍ se pueden usar con los planes del Mercado de Seguros." },
+            { "title": "Subsidios disponibles", "desc": "Los créditos fiscales para las primas, según sus ingresos, pueden reducir mucho los costos." },
+            { "title": "Cambios de red", "desc": "Antes de inscribirse, revise que su centro de trasplante y su farmacia estén dentro de la red." },
+            { "title": "Planes CSR", "desc": "Si sus ingresos son <250% del FPL, los planes Silver ofrecen deducibles y copagos reducidos." }
+          ],
+          "action": "Use healthcare.gov para comparar planes. Filtre por sus medicamentos y sus médicos para encontrar la mejor opción."
+        },
+        "uninsured_medicare": {
+          "title": "Sin seguro → Medicare",
+          "timing": "Al cumplir 65 años o al calificar por discapacidad",
+          "changes": [
+            { "title": "Cobertura de medicamentos", "desc": "La Part D da cobertura de recetas con un límite de gastos de bolsillo de $2,100 (2026)." },
+            { "title": "PAP + fundaciones", "desc": "Acceso completo a los Programas de Asistencia al Paciente y a la ayuda con copagos de las fundaciones." },
+            { "title": "Tarjetas de descuento", "desc": "GoodRx/SingleCare normalmente no se pueden usar una vez que tiene cobertura de la Part D." },
+            { "title": "Part B-ID", "desc": "Pacientes de riñón: la Part B-ID cubre los inmunosupresores incluso sin Part A/B. Prima: $121.60/mes (2026)." }
+          ],
+          "action": "Inscríbase durante su Período Inicial de Inscripción. Solicite Extra Help (LIS) si sus ingresos son limitados."
+        },
+        "uninsured_medicaid": {
+          "title": "Sin seguro → Medicaid",
+          "timing": "Si sus ingresos califican (varía según el estado)",
+          "changes": [
+            { "title": "Cobertura", "desc": "Cobertura completa que incluye las recetas, muchas veces con copagos de $0 a $3." },
+            { "title": "Retroactiva", "desc": "La cobertura puede aplicarse hasta 3 meses antes de la fecha de su solicitud." },
+            { "title": "Medicinas cubiertas", "desc": "Debe usar la lista de medicinas cubiertas de Medicaid; puede necesitar aprobación previa para algunos medicamentos de trasplante." }
+          ],
+          "action": "Solicite en la oficina de Medicaid de su estado o en healthcare.gov. Lleve prueba de ingresos y sus papeles del trasplante."
+        },
+        "uninsured_marketplace": {
+          "title": "Sin seguro → Mercado de Seguros (ACA)",
+          "timing": "Durante la inscripción abierta o por un evento de vida que califique",
+          "changes": [
+            { "title": "Subsidios", "desc": "Ayuda para pagar el seguro según sus ingresos; puede conseguir planes con prima de $0." },
+            { "title": "Tarjetas de copago", "desc": "Puede usar la ayuda de las compañías farmacéuticas para lo que debe pagar en los planes del Mercado de Seguros." },
+            { "title": "Condiciones preexistentes OK", "desc": "No le pueden negar el seguro ni cobrarle más por su historial de trasplante." },
+            { "title": "Elección del plan", "desc": "Los planes Silver son la mejor opción si sus ingresos están entre el 100% y el 250% del FPL, por las reducciones de costos compartidos." }
+          ],
+          "action": "Solicite en healthcare.gov durante la Inscripción Abierta (del 1 de noviembre al 15 de enero) o después de un evento que califique."
+        }
+      }
+    },
+    "coverage101": {
+      "logoAlt": "Transplant Medication Navigator",
+      "eyebrow": "Cobertura 101",
+      "title": "Cómo se pagan los medicamentos de trasplante.",
+      "sub": "Las cuatro formas más comunes en que los pacientes tienen cobertura: qué saber, qué vigilar y qué hacer después.",
+      "whoQualifies": "Quién califica",
+      "howItWorks": "Cómo funciona",
+      "watchFor": "Tenga cuidado con",
+      "nextSteps": "Próximos pasos",
+      "footnote": "Información educativa solamente. Las reglas de elegibilidad y los detalles de cobertura cambian; verifique con su aseguradora, la oficina de Medicaid de su estado y su equipo de trasplante.",
+      "commercial": {
+        "eyebrow": "Comercial",
+        "name": "Seguro de su trabajo o que usted compró por su cuenta.",
+        "tag": "A través de un empleador, el Mercado de Seguros o el plan de su cónyuge, padre o madre.",
+        "who": [
+          "Empleados de compañías que ofrecen beneficios",
+          "Planes comprados por cuenta propia en Healthcare.gov",
+          "Dependientes en el plan de un familiar"
+        ],
+        "how": "Usted paga una prima mensual. El seguro empieza a pagar más cuando usted alcanza su <strong>deducible</strong>. En la farmacia aplican copagos y coseguro hasta que llega a su <strong>máximo de gastos de bolsillo</strong>.",
+        "warn": "Gastos de bolsillo altos antes de alcanzar su deducible. Redes limitadas. Demoras por autorización previa.",
+        "steps": [
+          "Revise el formulario de su plan para los medicamentos de trasplante.",
+          "Conozca su deducible y su máximo de gastos de bolsillo.",
+          "Confirme que su centro de trasplante esté dentro de la red."
+        ]
+      },
+      "medicare": {
+        "eyebrow": "Medicare",
+        "name": "Seguro federal para mayores de 65 años y ciertas discapacidades.",
+        "tag": "Incluye la enfermedad renal en etapa terminal y la discapacidad de largo plazo que califica.",
+        "who": [
+          "Adultos de 65 años o más",
+          "Personas con discapacidades que califican (24+ meses con SSDI)",
+          "Cualquier persona con enfermedad renal en etapa terminal"
+        ],
+        "how": "La <strong>Part A</strong> cubre las estadías en el hospital. La <strong>Part B</strong> cubre la atención ambulatoria, y sus medicamentos antirrechazo del trasplante cuando Medicare ayudó a pagar el trasplante. La <strong>Part D</strong> cubre la mayoría de los demás medicamentos recetados. Muchos se inscriben en <strong>Medicare Advantage</strong> para tener una cobertura combinada.",
+        "warn": "Las primas de la Part B y la Part D suman. <strong>Las tarjetas de copago no están permitidas</strong> con Medicare.",
+        "steps": [
+          "Inscríbase en Medicare Part A, B y D (o Advantage).",
+          "Solicite Extra Help si sus ingresos son limitados.",
+          "Revise el formulario de medicamentos de su Part D cada otoño.",
+          "¿Trasplante de riñón? Pregunte al Seguro Social sobre la Part B-ID antes de que termine su Medicare."
+        ]
+      },
+      "medicaid": {
+        "eyebrow": "Medicaid",
+        "name": "Cobertura estatal y federal para personas con ingresos limitados.",
+        "tag": "La elegibilidad, los beneficios y las reglas varían según el estado.",
+        "who": [
+          "Hogares por debajo del límite de ingresos de su estado",
+          "Niños, pacientes embarazadas y personas con discapacidades",
+          "Algunas personas con cuidado a largo plazo o exenciones (waivers)"
+        ],
+        "how": "El estado paga la mayoría de los servicios cubiertos con un costo de bolsillo bajo o de cero. Cada estado maneja su propio programa; sus beneficios, las reglas de recetas y la lista de proveedores dependen de dónde vive.",
+        "warn": "Aplican límites de ingresos y de bienes. Si los supera, puede perder la cobertura. Las redes de proveedores pueden ser limitadas. <strong>Las tarjetas de copago no están permitidas</strong>.",
+        "steps": [
+          "Contacte a la oficina de Medicaid de su estado para solicitar.",
+          "Reúna documentos de ingresos, residencia y de su hogar.",
+          "Vuelva a verificar su elegibilidad en la fecha de renovación."
+        ]
+      },
+      "selfpay": {
+        "eyebrow": "Sin seguro / Pago propio",
+        "name": "Pagar usted mismo el costo completo, sin seguro.",
+        "tag": "Entre trabajos, antes de Medicare o sin cobertura por otra razón.",
+        "who": [
+          "Programas de caridad / asistencia financiera de los hospitales",
+          "Programas de Asistencia al Paciente (PAP) de los fabricantes",
+          "Tarjetas de descuento y programas de ahorro de farmacias"
+        ],
+        "how": "Usted recibe la cuenta completa de venta al público. Los precios en efectivo de los medicamentos de trasplante pueden ser de cientos a miles de dólares al mes. Los hospitales y las farmacias muchas veces negocian u ofrecen planes de pago si usted lo pide.",
+        "warn": "Gastos de bolsillo catastróficos. Riesgo de deudas médicas. Dosis saltadas si el costo parece imposible.",
+        "steps": [
+          "Solicite primero los Programas de Asistencia al Paciente de los fabricantes.",
+          "Negocie precios en efectivo y pregunte por planes de pago.",
+          "Vuelva a revisar su elegibilidad para Medicaid y los planes del Mercado de Seguros."
+        ]
+      }
+    },
+    "generics": {
+      "eyebrow": "Seguridad con los medicamentos",
+      "title": "Medicinas genéricas vs. de marca",
+      "intro": "Los genéricos pueden ahorrarle mucho dinero, y para la mayoría de las medicinas son una opción inteligente y segura. Para los pacientes de trasplante, solo hay una regla importante que los mantiene seguros. Esto es lo que debe saber.",
+      "real": {
+        "title": "Los genéricos son medicina de verdad",
+        "li1": "• Un genérico tiene el <strong>mismo ingrediente activo</strong> que el de marca.",
+        "li2": "• La FDA lo aprueba y le exige funcionar de la misma forma.",
+        "li3": "• Normalmente cuesta mucho menos.",
+        "li4": "• Para la mayoría de las medicinas, elegir el genérico es una forma segura de ahorrar dinero."
+      },
+      "extraCare": {
+        "title": "Los medicamentos de trasplante necesitan cuidado extra",
+        "p1": "Los medicamentos antirrechazo como <strong>tacrolimus (Prograf)</strong>, <strong>cyclosporine</strong>,<strong> sirolimus (Rapamune)</strong> y <strong>everolimus</strong> son medicamentos de \"índice terapéutico estrecho\". Eso significa que hasta un cambio pequeño en cuánto llega a su sangre importa:",
+        "li1": "• <strong>Muy poco</strong> → su cuerpo podría rechazar el órgano.",
+        "li2": "• <strong>Demasiado</strong> → más efectos secundarios y toxicidad.",
+        "p2": "Los productos de distintos fabricantes pueden absorberse de forma un poco diferente. Así que el riesgo real no es el genérico en sí. El riesgo es <strong>el cambio</strong> (de marca a genérico, o de un fabricante genérico a otro)."
+      },
+      "safeWay": {
+        "title": "La forma segura de ahorrar con un genérico",
+        "li1": "Elija una versión y quédese con ella. Un genérico está bien. Solo mantenga el <strong>mismo fabricante</strong> cada vez que resurta su receta.",
+        "li2": "Pida a su farmacia que siempre le dé el mismo fabricante y que le llame <strong>antes</strong> de cualquier cambio.",
+        "li3": "Pida a su médico que escriba el fabricante en su receta (o <strong>\"No sustituir\"</strong> si su equipo quiere la de marca).",
+        "li4": "Después de <strong>cualquier</strong> cambio, pida un análisis de sangre dentro de una semana.",
+        "li5": "Siempre avise a su equipo de trasplante <strong>antes</strong> de cambiar cualquier cosa."
+      },
+      "brand": {
+        "title": "Cuándo pedir la de marca",
+        "intro": "Puede convenirle pedir la de marca si:",
+        "li1": "• Sus niveles del medicamento han estado estables con ella.",
+        "li2": "• Tuvo problemas después de un cambio anterior.",
+        "li3": "• Su centro de trasplante la exige.",
+        "appealLink": "Si el seguro dice que no, aprenda a apelar"
+      },
+      "bottomLine": {
+        "title": "En resumen",
+        "text": "Los genéricos pueden ahorrarle dinero <strong>y</strong> ser seguros. La clave es la constancia: use la misma versión cada vez y mantenga informado a su equipo de trasplante.<strong> Nunca cambie por su cuenta solo para ahorrar dinero.</strong>"
+      },
+      "footer": "¿Tiene una pregunta sobre un cambio? Llame a su equipo de trasplante antes de su próximo resurtido."
+    }
+  },
   "faq": {
     "cob": {
       "results": {
