@@ -240,7 +240,18 @@
       "title": "Trusted Resource Directory",
       "visitAria": "Visit {{name}} (opens in new tab)",
       "emptyTitle": "No resources available",
-      "emptyText": "We're working on adding trusted resources. Check back soon for helpful links and organizations."
+      "emptyText": "We're working on adding trusted resources. Check back soon for helpful links and organizations.",
+      "categories": {
+        "Foundation": "Foundation",
+        "Low-Cost Pharmacy": "Low-Cost Pharmacy",
+        "Support Group": "Support Group",
+        "Medication Database": "Medication Database",
+        "Discount Program": "Discount Program",
+        "Government": "Government",
+        "Caregiver Support": "Caregiver Support",
+        "Foundation Directory": "Foundation Directory",
+        "Search Engine": "Search Engine"
+      }
     },
     "insurance": {
       "wiser": {

@@ -240,7 +240,18 @@
       "title": "Directorio de recursos de confianza",
       "visitAria": "Visitar {{name}} (se abre en una pestaña nueva)",
       "emptyTitle": "No hay recursos disponibles",
-      "emptyText": "Estamos trabajando para agregar recursos de confianza. Vuelva pronto para ver enlaces y organizaciones útiles."
+      "emptyText": "Estamos trabajando para agregar recursos de confianza. Vuelva pronto para ver enlaces y organizaciones útiles.",
+      "categories": {
+        "Foundation": "Fundación",
+        "Low-Cost Pharmacy": "Farmacia de bajo costo",
+        "Support Group": "Grupo de apoyo",
+        "Medication Database": "Base de datos de medicamentos",
+        "Discount Program": "Programa de descuentos",
+        "Government": "Gobierno",
+        "Caregiver Support": "Apoyo para cuidadores",
+        "Foundation Directory": "Directorio de fundaciones",
+        "Search Engine": "Buscador"
+      }
     },
     "insurance": {
       "wiser": {

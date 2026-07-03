@@ -126,6 +126,7 @@ import {
 import MEDICATIONS_DATA from './data/medications.json';
 import PROGRAMS_DATA from './data/programs.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
+import DIRECTORY_RESOURCES_ES from './data/resources.es.json';
 import STATES_DATA from './data/states.json';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
 import QUICK_ACTIONS_DATA from './data/quick-actions.json';
@@ -135,6 +136,7 @@ import SINGLECARE_EXCLUSIONS_DATA from './data/singlecare-exclusions.json';
 import TRUMPRX_PRICES_DATA from './data/trumprx-prices.json';
 import CATEGORY_ORDER_DATA from './data/category-order.json';
 import APPLICATION_CHECKLIST_DATA from './data/application-checklist.json';
+import APPLICATION_CHECKLIST_ES from './data/application-checklist.es.json';
 import FAQS_DATA from './data/faqs.json';
 import PRICE_ESTIMATES_DATA from './data/price-estimates.json';
 import { useMetaTags } from './hooks/useMetaTags.js';
@@ -4824,8 +4826,10 @@ const InsuranceChangeSimulator = () => {
 
 // Education Page
 const Education = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     useMetaTags(seoMetadata.education);
+    // Resource descriptions live in the data layer with one file per language
+    const directoryResources = i18n.resolvedLanguage === 'es' ? DIRECTORY_RESOURCES_ES : DIRECTORY_RESOURCES;
 
     const [activeTab, setActiveTab] = useState(() => {
         // Allow deep-linking to a specific tab, e.g. /education?topic=EMERGENCY
@@ -5338,15 +5342,15 @@ const Education = () => {
                 {activeTab === 'DIRECTORY' && (
                     <section aria-labelledby="directory-heading">
                         <h2 id="directory-heading" className="text-2xl font-bold text-slate-900 mb-6">{t('education.directory.title')}</h2>
-                        {DIRECTORY_RESOURCES && DIRECTORY_RESOURCES.length > 0 ? (
+                        {directoryResources && directoryResources.length > 0 ? (
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {DIRECTORY_RESOURCES.map((res) => (
+                                {directoryResources.map((res) => (
                                     <a key={res.name} href={res.url} target="_blank" rel="noreferrer" onClick={() => trackServerEvent('resource_view', { resource: res.name, category: res.category })} className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition h-full" aria-label={t('education.directory.visitAria', { name: res.name })}>
                                         <div className="flex justify-between items-start mb-2">
                                             <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700 pr-2">{res.name}</h3>
                                             <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0 mt-1" aria-hidden="true" />
                                         </div>
-                                        <span className={`text-xs px-2 py-1 rounded-full font-bold mb-3 inline-block ${res.category === 'Foundation' ? 'bg-rose-50 text-rose-700' : res.category === 'Government' ? 'bg-purple-50 text-purple-700' : res.category === 'Support Group' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'}`}>{res.category}</span>
+                                        <span className={`text-xs px-2 py-1 rounded-full font-bold mb-3 inline-block ${res.category === 'Foundation' ? 'bg-rose-50 text-rose-700' : res.category === 'Government' ? 'bg-purple-50 text-purple-700' : res.category === 'Support Group' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'}`}>{t(`education.directory.categories.${res.category}`, { defaultValue: res.category })}</span>
                                         <p className="text-slate-600 text-sm leading-relaxed">{res.description}</p>
                                     </a>
                                 ))}
@@ -6048,7 +6052,7 @@ const Education = () => {
 // ApplicationHelp Page
 const ApplicationHelp = () => {
     useMetaTags(seoMetadata.applicationHelp);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
@@ -6122,7 +6126,8 @@ const ApplicationHelp = () => {
         } catch (e) { /* ignore */ }
         return 'START';
     });
-    const checklistItems = APPLICATION_CHECKLIST_DATA;
+    // Checklist items live in the data layer with one file per language
+    const checklistItems = i18n.resolvedLanguage === 'es' ? APPLICATION_CHECKLIST_ES : APPLICATION_CHECKLIST_DATA;
     const [checkedItems, setCheckedItems] = useState({});
     const toggleCheck = (index) => setCheckedItems(prev => ({...prev, [index]: !prev[index]}));
     const checkedCount = Object.values(checkedItems).filter(Boolean).length;
