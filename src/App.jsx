@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, lazy, Suspense, useMemo, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate, useSearchParams } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
 import Fuse from 'fuse.js';
 
 // Lazy loaded page components for code splitting
@@ -91,6 +92,8 @@ import RouteAnnouncer from './components/RouteAnnouncer.jsx';
 import EpicConnectButton from './components/EpicConnectButton.jsx';
 import Coverage101 from './components/Coverage101.jsx';
 import GenericsVsBrand from './components/GenericsVsBrand.jsx';
+// Language switcher shown on pages that have a Spanish translation
+import LanguageToggle from './components/LanguageToggle.jsx';
 // Medications Context Provider - fetches from database with JSON fallback
 import { MedicationsProvider, useMedicationsList } from './context/MedicationsContext.jsx';
 // Reporting Admin Auth Provider
@@ -517,17 +520,18 @@ const Layout = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const { isSimpleView, toggleSimpleView } = useSimpleView();
+    const { t } = useTranslation();
 
     const navLinks = [
-        { path: '/', label: 'Home', ariaLabel: 'Go to home page' },
-        { path: '/wizard', label: 'My Path Quiz', ariaLabel: 'Start medication path wizard' },
-        { path: '/education', label: 'Education & Resources', ariaLabel: 'Browse education and resources' },
-        { path: '/application-help', label: 'Grants & Foundations', ariaLabel: 'View grants and foundations guide' },
-        { path: '/savings-tracker', label: 'Savings Calculator', ariaLabel: 'Calculate your medication savings' },
-        { path: '/for-hospitals', label: 'Hospitals', ariaLabel: 'Information for hospital administrators and transplant coordinators' },
-        { path: '/pricing', label: 'Pricing', ariaLabel: 'View pricing information' },
-        { path: '/faq', label: 'FAQ', ariaLabel: 'View frequently asked questions' },
-        { path: '/feedback', label: 'Feedback', ariaLabel: 'Share your feedback' },
+        { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
+        { path: '/wizard', label: t('layout.nav.links.wizard.label'), ariaLabel: t('layout.nav.links.wizard.ariaLabel') },
+        { path: '/education', label: t('layout.nav.links.education.label'), ariaLabel: t('layout.nav.links.education.ariaLabel') },
+        { path: '/application-help', label: t('layout.nav.links.applicationHelp.label'), ariaLabel: t('layout.nav.links.applicationHelp.ariaLabel') },
+        { path: '/savings-tracker', label: t('layout.nav.links.savingsTracker.label'), ariaLabel: t('layout.nav.links.savingsTracker.ariaLabel') },
+        { path: '/for-hospitals', label: t('layout.nav.links.hospitals.label'), ariaLabel: t('layout.nav.links.hospitals.ariaLabel') },
+        { path: '/pricing', label: t('layout.nav.links.pricing.label'), ariaLabel: t('layout.nav.links.pricing.ariaLabel') },
+        { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
+        { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
     ];
 
     return (
@@ -536,7 +540,7 @@ const Layout = ({ children }) => {
             <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
                 <span className="inline-flex items-center justify-center gap-2">
                     <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.
+                    {t('layout.banner.text')}
                 </span>
             </div>
 
@@ -545,21 +549,21 @@ const Layout = ({ children }) => {
                 href="#main-content"
                 className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg"
             >
-                Skip to main content
+                {t('layout.skipLink')}
             </a>
 
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home">
+                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label={t('layout.nav.brandAriaLabel')}>
                         <img src="/photos/logo.png" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
                         <span className="font-bold text-lg md:text-xl leading-tight">
-                            Transplant Medication<br className="md:hidden"/> Navigator<sup className="text-xs">™</sup>
+                            {t('layout.nav.brandLine1')}<br className="md:hidden"/>{t('layout.nav.brandLine2')}<sup className="text-xs">{t('layout.nav.brandTm')}</sup>
                         </span>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-4" aria-label="Main navigation">
+                    <nav className="hidden md:flex items-center gap-4" aria-label={t('layout.nav.mainAriaLabel')}>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
@@ -584,7 +588,7 @@ const Layout = ({ children }) => {
                             }`}
                         >
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
-                            Simple View
+                            {t('layout.nav.simpleView')}
                         </button>
                     </nav>
 
@@ -592,7 +596,7 @@ const Layout = ({ children }) => {
                     <button
                         className="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                        aria-label={isMobileMenuOpen ? t('layout.nav.closeMenu') : t('layout.nav.openMenu')}
                         aria-expanded={isMobileMenuOpen}
                     >
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -601,7 +605,7 @@ const Layout = ({ children }) => {
 
                 {/* Mobile Nav */}
                 {isMobileMenuOpen && (
-                    <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label="Mobile navigation">
+                    <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label={t('layout.nav.mobileAriaLabel')}>
                         <div className="flex flex-col p-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link
@@ -628,7 +632,7 @@ const Layout = ({ children }) => {
                                 }`}
                             >
                                 {isSimpleView ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
-                                Simple View
+                                {t('layout.nav.simpleView')}
                             </button>
                         </div>
                     </nav>
@@ -644,41 +648,41 @@ const Layout = ({ children }) => {
             <footer className="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
                 <div className="container mx-auto px-4 text-center">
                     <p className="mb-4">
-                        <strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                        <Trans i18nKey="layout.footer.disclaimer" />
                     </p>
                     <p className="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">
-                        We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.
+                        {t('layout.footer.nlm')}
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
-                        Information last updated: {LAST_UPDATED}
+                        {t('layout.footer.lastUpdated', { date: LAST_UPDATED })}
                     </p>
-                    <p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
-                    <p className="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
+                    <p>{t('layout.footer.copyright')}</p>
+                    <p className="mt-4 text-slate-300 text-sm">{t('layout.footer.createdBy')}</p>
                     <p className="mt-2 text-slate-400 text-sm">
                         <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
                     </p>
                     {/* Non-Discrimination Notice - Section 504 Compliance */}
                     <div className="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
                         <p className="text-slate-300">
-                            <strong className="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability.{' '}
+                            <strong className="text-slate-200">{t('layout.footer.nondiscrimination.label')}</strong>{t('layout.footer.nondiscrimination.text')}{' '}
                             <Link to="/accessibility#section-504" className="text-emerald-400 hover:text-emerald-300 underline transition">
-                                Section 504 Notice & Grievance Procedure
+                                {t('layout.footer.nondiscrimination.link')}
                             </Link>
                         </p>
                     </div>
                     <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-                        <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">Terms of Service</Link>
+                        <Link to="/terms-and-conditions" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.terms')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">Privacy Policy</Link>
+                        <Link to="/privacy" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.privacy')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">Accessibility & Section 504</Link>
+                        <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.accessibility')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">Feedback</Link>
+                        <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.feedback')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">Hospitals</Link>
+                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">Admin</Link>
+                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.admin')}</Link>
                     </div>
                 </div>
             </footer>
@@ -701,6 +705,7 @@ const STAT_ASSISTANCE_PROGRAMS = countGroup(PROGRAMS_DATA.papPrograms) + countGr
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
+    const { t } = useTranslation();
 
     return (
         <article className="space-y-8">
@@ -708,61 +713,65 @@ const Home = () => {
             <Link
                 to="/education"
                 className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 px-4 py-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:border-emerald-300 hover:shadow-md transition-all text-center"
-                aria-label="Our resources are up to date, now including the new TotalAssist program"
+                aria-label={t('home.updateBanner.ariaLabel')}
             >
                 <span className="inline-flex items-center gap-2 font-bold text-emerald-800">
                     <CheckCircle size={18} className="flex-shrink-0" aria-hidden="true" />
-                    Verified &amp; up to date
+                    {t('home.updateBanner.verified')}
                 </span>
                 <span className="hidden sm:inline text-emerald-300" aria-hidden="true">•</span>
                 <span className="text-sm text-slate-700">
-                    Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).
+                    <Trans i18nKey="home.updateBanner.totalAssist" />
                 </span>
                 <span className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700">
-                    See what's new <ArrowRight size={14} aria-hidden="true" />
+                    {t('home.updateBanner.seeWhatsNew')} <ArrowRight size={14} aria-hidden="true" />
                 </span>
             </Link>
 
             {/* Hero Section */}
             <section className="text-center max-w-4xl mx-auto py-8 md:py-12">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-                    Compare estimated medication prices and find verified assistance programs <span className="text-emerald-600">in one place.</span>
+                    {t('home.hero.titlePre')}<span className="text-emerald-600">{t('home.hero.titleHighlight')}</span>
                 </h1>
                 <p className="text-lg md:text-xl font-medium italic text-slate-500 mb-4 tracking-wide">
-                    From Prescription to Possession
+                    {t('home.hero.tagline')}
                 </p>
                 <p className="text-lg md:text-xl font-semibold text-slate-900 mb-8 max-w-2xl mx-auto">
-                    One patient went from $624/month to $10 with a copay card. Find out what you could save.
+                    {t('home.hero.subtitle')}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
                         to="/wizard"
                         className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-slate-300 transition flex items-center justify-center gap-2"
-                        aria-label="Start My Path Quiz"
+                        aria-label={t('home.hero.quizAriaLabel')}
                     >
                         <Search size={20} aria-hidden="true" />
-                        Start My Path Quiz
+                        {t('home.hero.quizButton')}
                     </Link>
                     <Link
                         to="/education/appeals"
                         className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center gap-3"
-                        aria-label="Get help with insurance denials"
+                        aria-label={t('home.hero.deniedAriaLabel')}
                     >
                         <ShieldAlert size={20} aria-hidden="true" />
                         <div className="text-left">
-                            <span className="block">Got Denied?</span>
-                            <span className="block text-sm font-normal opacity-90">Step therapy, prior auth, and appeal help</span>
+                            <span className="block">{t('home.hero.deniedTitle')}</span>
+                            <span className="block text-sm font-normal opacity-90">{t('home.hero.deniedSubtitle')}</span>
                         </div>
                     </Link>
                     <Link
                         to="/application-help"
                         className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-blue-700 border-2 border-blue-200 font-bold rounded-xl hover:border-blue-300 transition flex items-center justify-center gap-2"
-                        aria-label="Find grants and foundations"
+                        aria-label={t('home.hero.grantsAriaLabel')}
                     >
                         <HeartHandshake size={20} aria-hidden="true" />
-                        Find Grants & Foundations
+                        {t('home.hero.grantsButton')}
                     </Link>
+                </div>
+
+                <div className="mt-6 flex justify-center">
+                    <LanguageToggle />
                 </div>
 
                 {/* Stats Banner */}
@@ -773,7 +782,7 @@ const Home = () => {
                             <Pill size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_MEDICATIONS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Medications</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.medications')}</div>
                     </div>
                     <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 md:p-6 text-center border border-amber-200 shadow-sm hover:shadow-md transition-shadow">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
@@ -781,7 +790,7 @@ const Home = () => {
                             <HeartHandshake size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-amber-700">{STAT_ASSISTANCE_PROGRAMS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Assistance Programs</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.assistancePrograms')}</div>
                     </div>
                     <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 md:p-6 text-center border border-emerald-200 shadow-sm hover:shadow-md transition-shadow">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3" aria-hidden="true">
@@ -789,7 +798,7 @@ const Home = () => {
                             <CreditCard size={24} className="hidden md:block" />
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-emerald-700">{STAT_COPAY_CARDS}</div>
-                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">Copay Cards</div>
+                        <div className="text-xs md:text-sm text-slate-600 font-medium mt-1">{t('home.stats.copayCards')}</div>
                     </div>
                 </div>
             </section>
@@ -799,7 +808,7 @@ const Home = () => {
                 <Link
                     to="/wizard"
                     className="group block rounded-2xl border-2 border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50 p-6 md:p-8 shadow-md hover:shadow-lg hover:border-emerald-400 transition-all"
-                    aria-label="Connect your MyChart to import your medication list"
+                    aria-label={t('home.mychart.ariaLabel')}
                 >
                     <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
                         <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-sm" aria-hidden="true">
@@ -807,37 +816,37 @@ const Home = () => {
                         </div>
                         <div className="flex-grow">
                             <span className="inline-flex items-center gap-1 text-xs font-extrabold tracking-wide text-emerald-700 uppercase mb-1">
-                                <Sparkles size={13} aria-hidden="true" /> New
+                                <Sparkles size={13} aria-hidden="true" /> {t('home.mychart.new')}
                             </span>
                             <h2 id="mychart-heading" className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">
-                                Your real medication list, in one tap
+                                {t('home.mychart.title')}
                             </h2>
                             <p className="text-slate-600 mt-1 md:text-lg">
-                                Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.
+                                <Trans i18nKey="home.mychart.text" />
                             </p>
                         </div>
                         <span className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 group-hover:bg-emerald-700 text-white font-bold rounded-xl transition whitespace-nowrap">
-                            <Download size={18} aria-hidden="true" /> Connect MyChart
+                            <Download size={18} aria-hidden="true" /> {t('home.mychart.connect')}
                         </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-4 text-center sm:text-left">
-                        Listed in the Epic Connection Hub • Works with 400+ Epic health systems • Your data stays on your device
+                        {t('home.mychart.footnote')}
                     </p>
                 </Link>
             </section>
 
             {/* Features Grid */}
-            <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label="Key features">
+            <section className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" aria-label={t('home.features.ariaLabel')}>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-100 transition">
                     <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <BookOpen size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Learn the Process</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.learn.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Learn how to fill out Patient Assistance Program (PAP) applications yourself, for free.
+                        {t('home.features.learn.text')}
                     </p>
-                    <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="View application guide">
-                        View Guide <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.learn.linkAriaLabel')}>
+                        {t('home.features.learn.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
 
@@ -845,12 +854,12 @@ const Home = () => {
                     <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <ShieldCheck size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Coverage Education</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.coverage.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Learn about Insurance, Medicare (including Part B-ID for kidney patients), Medicaid, and IHS benefits.
+                        {t('home.features.coverage.text')}
                     </p>
-                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="Learn about coverage options">
-                        Learn About Coverage <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.coverage.linkAriaLabel')}>
+                        {t('home.features.coverage.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
 
@@ -858,12 +867,12 @@ const Home = () => {
                     <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
                         <Search size={24} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Education & Resources</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">{t('home.features.resources.title')}</h2>
                     <p className="text-slate-600 mb-4">
-                        Direct, safe links to manufacturer programs, foundations, and government sites. No scams.
+                        {t('home.features.resources.text')}
                     </p>
-                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label="Browse available resources">
-                        Browse Resources <ArrowRight size={16} aria-hidden="true" />
+                    <Link to="/education" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.features.resources.linkAriaLabel')}>
+                        {t('home.features.resources.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
                 </div>
             </section>
@@ -874,23 +883,22 @@ const Home = () => {
                     <div className="text-center mb-6">
                         <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
                             <DollarSign size={16} aria-hidden="true" />
-                            Real Patient Story
+                            {t('home.story.badge')}
                         </span>
                     </div>
 
                     <blockquote className="text-center">
                         <p className="text-xl md:text-2xl text-slate-800 leading-relaxed mb-6">
-                            "My prescription was <span className="line-through text-slate-500">$624</span>. With insurance it dropped to <span className="line-through text-slate-500">$195</span>.
-                            But nobody told me about copay cards. I found one myself and now I pay just <strong className="text-emerald-700">$10</strong>."
+                            {t('home.story.quotePre')}<span className="line-through text-slate-500">{t('home.story.price1')}</span>{t('home.story.quoteMid1')}<span className="line-through text-slate-500">{t('home.story.price2')}</span>{t('home.story.quoteMid2')}<strong className="text-emerald-700">{t('home.story.price3')}</strong>{t('home.story.quotePost')}
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6">
                             <div className="bg-white rounded-xl px-6 py-4 shadow-sm border border-emerald-100">
                                 <div className="text-3xl font-extrabold text-emerald-600">$2,220</div>
-                                <div className="text-sm text-slate-600 font-medium">Saved Per Year</div>
+                                <div className="text-sm text-slate-600 font-medium">{t('home.story.savedLabel')}</div>
                             </div>
                             <div className="text-slate-600 text-sm max-w-xs">
-                                This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned.
+                                {t('home.story.why')}
                             </div>
                         </div>
                     </blockquote>
@@ -903,18 +911,18 @@ const Home = () => {
                     <div className="flex flex-col md:flex-row md:items-center gap-6">
                         <div className="flex-grow">
                             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide text-emerald-300 uppercase mb-2">
-                                <Building2 size={14} aria-hidden="true" /> For hospitals &amp; transplant centers
+                                <Building2 size={14} aria-hidden="true" /> {t('home.hospitals.eyebrow')}
                             </span>
                             <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                                Give every patient a medication-education platform, under your brand
+                                {t('home.hospitals.title')}
                             </h2>
                             <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
-                                Offer Transplant Medication Navigator as branded patient education. Epic MyChart–integrated, HIPAA-by-design, and built to reduce cost-related non-adherence and preventable readmissions.
+                                {t('home.hospitals.text')}
                             </p>
                             <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-200">
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> White-label admin dashboard</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Epic MyChart integration</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> Outcomes &amp; savings reporting</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature1')}</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature2')}</li>
+                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature3')}</li>
                             </ul>
                         </div>
                         <div className="flex flex-col gap-3 flex-shrink-0 w-full md:w-auto">
@@ -922,13 +930,13 @@ const Home = () => {
                                 to="/for-hospitals"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold rounded-xl transition whitespace-nowrap"
                             >
-                                Book a demo <ArrowRight size={18} aria-hidden="true" />
+                                {t('home.hospitals.demo')} <ArrowRight size={18} aria-hidden="true" />
                             </Link>
                             <Link
                                 to="/pilot"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border-2 border-slate-600 hover:border-slate-400 text-white font-bold rounded-xl transition whitespace-nowrap"
                             >
-                                See the pilot program
+                                {t('home.hospitals.pilot')}
                             </Link>
                         </div>
                     </div>
@@ -943,7 +951,7 @@ const Home = () => {
                     <div className="pt-8 pb-2 text-center">
                         <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold">
                             <UserCheck size={16} aria-hidden="true" />
-                            Built by a patient, for patients.
+                            {t('home.mission.badge')}
                         </span>
                     </div>
 
@@ -951,41 +959,41 @@ const Home = () => {
                         <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Anchor size={24}/></div>
-                                <h2 id="mission-heading" className="text-2xl font-bold text-slate-900 tracking-tight">Our Mission</h2>
+                                <h2 id="mission-heading" className="text-2xl font-bold text-slate-900 tracking-tight">{t('home.mission.missionTitle')}</h2>
                             </div>
                             <p className="text-lg text-slate-700 leading-relaxed">
-                                We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.
+                                {t('home.mission.missionText')}
                             </p>
                         </div>
                         <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><Heart size={24}/></div>
-                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Our Vision</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{t('home.mission.visionTitle')}</h2>
                             </div>
                             <p className="text-lg text-slate-700 leading-relaxed">
-                                Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.
+                                {t('home.mission.visionText')}
                             </p>
                         </div>
                     </div>
 
                     {/* Core Values / "The Why" */}
                     <div className="border-t border-emerald-200 bg-white/50 p-8 md:p-10">
-                        <h3 className="text-center font-bold text-emerald-800 uppercase tracking-wider text-sm mb-8">Why We Built This</h3>
+                        <h3 className="text-center font-bold text-emerald-800 uppercase tracking-wider text-sm mb-8">{t('home.mission.whyTitle')}</h3>
                         <div className="grid md:grid-cols-3 gap-8 text-center">
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><BookOpen size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">Easy to Understand</h4>
-                                <p className="text-slate-600 text-sm">We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why1Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why1Text')}</p>
                             </div>
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><ShieldCheck size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">A Safe Place</h4>
-                                <p className="text-slate-600 text-sm">We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why2Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why2Text')}</p>
                             </div>
                             <div>
                                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true"><DollarSign size={22}/></div>
-                                <h4 className="font-bold text-slate-900 text-lg mb-2">Save Money</h4>
-                                <p className="text-slate-600 text-sm">We show you prices and free medicine programs all in one place. You can pick what works best for you.</p>
+                                <h4 className="font-bold text-slate-900 text-lg mb-2">{t('home.mission.why3Title')}</h4>
+                                <p className="text-slate-600 text-sm">{t('home.mission.why3Text')}</p>
                             </div>
                         </div>
                     </div>
@@ -997,13 +1005,13 @@ const Home = () => {
                 <Link
                     to="/wizard"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
-                    aria-label="Start your personalized medication path"
+                    aria-label={t('home.quizCta.ariaLabel')}
                 >
                     <Map size={20} aria-hidden="true" />
-                    Start My Medication Path Quiz
+                    {t('home.quizCta.button')}
                 </Link>
                 <p className="text-base md:text-lg text-slate-900 font-medium text-center mt-6 max-w-2xl mx-auto">
-                    Take our free quiz to see how we can help, Patient Founded. Patient First.
+                    {t('home.quizCta.text')}
                 </p>
             </section>
 
@@ -1012,25 +1020,25 @@ const Home = () => {
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                     <img
                         src="/photos/lorrinda-gray-davis.jpg"
-                        alt="Lorrinda Gray-Davis, founder of Transplant Medication Navigator"
+                        alt={t('home.founder.photoAlt')}
                         className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-emerald-200 shadow-lg flex-shrink-0"
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <div className="flex-grow text-center md:text-left">
                         <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
                             <Heart size={20} className="text-emerald-600" aria-hidden="true" />
-                            <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">Created by Someone Who's Been There</h2>
+                            <h2 id="founder-heading" className="text-xl md:text-2xl font-bold text-slate-900">{t('home.founder.title')}</h2>
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900">Lorrinda Gray-Davis</h3>
-                        <p className="text-emerald-700 font-medium text-sm mb-3">Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee</p>
-                        <p className="text-slate-700 leading-relaxed mb-4">Lorrinda built this tool from lived experience: seven years post-transplant turning her journey into national patient advocacy, published research, and programs that have supported nearly 500 patients.</p>
+                        <h3 className="text-lg font-bold text-slate-900">{t('home.founder.name')}</h3>
+                        <p className="text-emerald-700 font-medium text-sm mb-3">{t('home.founder.role')}</p>
+                        <p className="text-slate-700 leading-relaxed mb-4">{t('home.founder.bio')}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">Years post-transplant</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">Transplants facilitated</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">500+</span><span className="text-xs text-slate-600">Patients supported</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">500+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
                         </div>
                         <Link to="/about" className="inline-flex items-center gap-2 text-emerald-700 hover:text-emerald-800 font-semibold underline">
-                            Read Lorrinda's full story &amp; research <ArrowRight size={16} aria-hidden="true" />
+                            {t('home.founder.link')} <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                     </div>
                 </div>
@@ -1042,28 +1050,28 @@ const Home = () => {
                     <Phone size={32} />
                 </div>
                 <h3 id="mental-health-hotline" className="text-2xl font-bold text-slate-900 mb-3">
-                    Need to Talk to Someone?
+                    {t('home.hotline.title')}
                 </h3>
                 <p className="text-slate-600 mb-4">
-                    Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.
+                    {t('home.hotline.intro')}
                 </p>
                 <div className="mb-4">
                     <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
                         988
                     </a>
-                    <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
-                    <p className="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
+                    <p className="text-lg font-bold text-slate-700">{t('home.hotline.lifeline')}</p>
+                    <p className="text-sm text-slate-600 mt-1">{t('home.hotline.availability')}</p>
                 </div>
                 <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                    Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.
+                    {t('home.hotline.encouragement')}
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
                     <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">Call or Text</p>
-                        <p className="text-slate-600">Dial or text <strong>988</strong> from any phone</p>
+                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.callTitle')}</p>
+                        <p className="text-slate-600"><Trans i18nKey="home.hotline.callText" /></p>
                     </div>
                     <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">Online Chat</p>
+                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.chatTitle')}</p>
                         <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-rose-600 font-medium hover:underline flex items-center gap-1">
                             988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
                         </a>
@@ -1074,16 +1082,15 @@ const Home = () => {
             {/* Privacy Note */}
             <section className="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
                 <div className="flex justify-center mb-2 text-slate-400" aria-hidden="true"><Lock size={20}/></div>
-                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">We Keep Your Info Safe</h3>
+                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">{t('home.privacy.title')}</h3>
                 <p className="text-slate-600 text-sm">
-                    We do not save your info. We do not ask for your social security number.
-                    We do not sell your info. This tool is only here to teach you about your options.
+                    {t('home.privacy.text')}
                 </p>
             </section>
 
             {/* Built by Patient Tagline */}
             <p className="text-center text-slate-500 text-sm font-medium">
-                Built for patients by a patient
+                {t('home.tagline')}
             </p>
         </article>
     );
@@ -1216,6 +1223,7 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
+    const { t } = useTranslation();
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1232,20 +1240,20 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
                     <Pill size={18} className="text-emerald-600" />
-                    <h3 className="font-bold text-slate-800">Common Medications by Organ Type</h3>
+                    <h3 className="font-bold text-slate-800">{t('wizard.meds.guide.title')}</h3>
                 </div>
                 <p className="text-sm text-slate-600 mb-2">
                     {answers.organs && answers.organs.length > 0 ? (
-                        <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
+                        <>{t('wizard.meds.guide.basedOnPre')}<strong className="text-emerald-700">{(() => { const names = answers.organs.map(o => t(`wizard.organs.${o}`)); return names.length > 1 ? names.slice(0, -1).join(', ') + t('wizard.meds.guide.and') + names.slice(-1) : names[0]; })()}</strong>{t('wizard.meds.guide.basedOnPost')}</>
                     ) : (
-                        <>Select your medications from the options below.</>
+                        <>{t('wizard.meds.guide.selectBelow')}</>
                     )}
                 </p>
                 <p className="text-sm font-semibold text-slate-700 mb-2">
-                    First select your core immunosuppressants, then add any other transplant-related medications you take.
+                    {t('wizard.meds.guide.selectCore')}
                 </p>
                 <p className="text-sm text-slate-600 mb-4">
-                    Click an organ type to see typical medications, then tap <span className="font-semibold text-emerald-700">Add</span> next to each one you take. You can also use the search bar below to find any medication.
+                    {t('wizard.meds.guide.clickPre')}<span className="font-semibold text-emerald-700">{t('wizard.meds.guide.addWord')}</span>{t('wizard.meds.guide.clickPost')}
                 </p>
 
                 {/* Organ Type Tabs */}
@@ -1267,7 +1275,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                 }`}
                             >
                                 <IconComponent size={16} />
-                                {organ}
+                                {t(`wizard.organs.${organ}`)}
                                 {isSelected && !isExpanded && <CheckCircle size={14} className="text-emerald-600" />}
                                 <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                             </button>
@@ -1294,10 +1302,10 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-slate-300">
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Class</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Notes</th>
-                                        <th className="text-right py-2 px-3 font-bold text-slate-700">Add</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thMedication')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thClass')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thNotes')}</th>
+                                        <th className="text-right py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thAdd')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
@@ -1319,13 +1327,13 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                                                 ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                                                                 : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                                                         }`}
-                                                        aria-label={isAdded ? `Remove ${med.brand} from your list` : `Add ${med.brand} to your list`}
+                                                        aria-label={isAdded ? t('wizard.meds.guide.removeFromListAria', { name: med.brand }) : t('wizard.meds.guide.addToListAria', { name: med.brand })}
                                                         aria-pressed={isAdded}
                                                     >
                                                         {isAdded ? (
-                                                            <><CheckCircle size={12} aria-hidden="true" /> Added</>
+                                                            <><CheckCircle size={12} aria-hidden="true" /> {t('wizard.meds.added')}</>
                                                         ) : (
-                                                            <><PlusCircle size={12} aria-hidden="true" /> Add</>
+                                                            <><PlusCircle size={12} aria-hidden="true" /> {t('wizard.meds.add')}</>
                                                         )}
                                                     </button>
                                                 </td>
@@ -1344,6 +1352,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
+    const { t } = useTranslation();
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1359,10 +1368,10 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
                     <Pill size={18} className="text-blue-600" />
-                    <h3 className="font-bold text-slate-800">Common Medications Pre-Transplant by Organ Type</h3>
+                    <h3 className="font-bold text-slate-800">{t('wizard.meds.preGuide.title')}</h3>
                 </div>
                 <p className="text-sm text-slate-600 mb-4">
-                    Click on an organ type to see typical pre-transplant medications for managing your condition while awaiting transplant.
+                    {t('wizard.meds.preGuide.intro')}
                 </p>
 
                 {/* Organ Type Tabs */}
@@ -1384,7 +1393,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                 }`}
                             >
                                 <IconComponent size={16} />
-                                {organ}
+                                {t(`wizard.organs.${organ}`)}
                                 {isSelected && !isExpanded && <CheckCircle size={14} className="text-blue-600" />}
                                 <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                             </button>
@@ -1411,9 +1420,9 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-slate-300">
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication Class</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Examples</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Purpose</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thClass')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thExamples')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thPurpose')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
@@ -1432,7 +1441,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                                                     key={ex.id}
                                                                     onClick={() => onMedicationClick && onMedicationClick(ex.id)}
                                                                     className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border transition-colors ${selected ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-white border-slate-300 text-slate-700 hover:border-blue-400 hover:text-blue-700'}`}
-                                                                    aria-label={selected ? `${ex.label} added to your list` : `Add ${ex.label} to your list`}
+                                                                    aria-label={selected ? t('wizard.meds.preGuide.addedAria', { name: ex.label }) : t('wizard.meds.guide.addToListAria', { name: ex.label })}
                                                                 >
                                                                     {selected ? <Check size={12} aria-hidden="true" /> : <PlusCircle size={12} aria-hidden="true" />}
                                                                     {ex.label}
@@ -1512,6 +1521,7 @@ function useLocalSubscriptionStatus(feature = null) {
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
+    const { t } = useTranslation();
     const MEDICATIONS = useMedicationsList();
     const { setAnswer: setContextAnswer, setSelectedMedications } = useChatQuiz();
 
@@ -1702,11 +1712,11 @@ const Wizard = () => {
         // Basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!userEmail.trim()) {
-            setEmailError('Please enter your email address');
+            setEmailError(t('wizard.email.errorRequired'));
             return;
         }
         if (!emailRegex.test(userEmail.trim())) {
-            setEmailError('Please enter a valid email address');
+            setEmailError(t('wizard.email.errorInvalid'));
             return;
         }
 
@@ -1766,8 +1776,22 @@ const Wizard = () => {
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Medications', 'Coverage', 'Costs'];
+    const stepLabels = t('wizard.progress.labels', { returnObjects: true });
     const totalVisibleSteps = 5; // 5 sections shown in progress
+
+    // Display labels for stored answer values. The values themselves (from
+    // constants.js) are persisted in answers/sessionStorage and compared in
+    // logic, so only the rendered label goes through i18n.
+    const roleLabels = {
+        [Role.PATIENT]: t('wizard.aboutYou.rolePatient'),
+        [Role.CAREPARTNER]: t('wizard.aboutYou.roleCarepartner'),
+        [Role.SOCIAL_WORKER]: t('wizard.aboutYou.roleSocialWorker'),
+    };
+    const statusLabels = {
+        [TransplantStatus.PRE_EVAL]: t('wizard.aboutYou.statusPreEval'),
+        [TransplantStatus.POST_ACUTE]: t('wizard.aboutYou.statusPostAcute'),
+        [TransplantStatus.POST_STABLE]: t('wizard.aboutYou.statusPostStable'),
+    };
 
     // Color themes for each step (matching the icon colors)
     const stepColors = {
@@ -1812,7 +1836,7 @@ const Wizard = () => {
                     })}
                 </div>
                 {/* Progress bar - consistent emerald color for accessibility */}
-                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
+                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={t('wizard.progress.ariaLabel')}>
                     <div
                         className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
@@ -1828,25 +1852,28 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
 
+                <div className="mb-4 flex justify-end">
+                    <LanguageToggle />
+                </div>
                 {renderProgress()}
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-emerald-100 p-2 rounded-lg">
                         <Users size={24} className="text-emerald-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">About You</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.aboutYou.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-4">Let's start with some basics to personalize your experience.</p>
+                <p className="text-slate-600 mb-4">{t('wizard.aboutYou.intro')}</p>
                 <p className="text-sm text-slate-500 mb-4 bg-slate-50 border border-slate-200 rounded-lg p-3">
-                    <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                    <Trans i18nKey="wizard.aboutYou.note" />
                 </p>
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1a</span>
-                        <h2 className="text-lg font-bold text-slate-800">Who am I helping today?</h2>
+                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.aboutYou.roleBadge')}</span>
+                        <h2 className="text-lg font-bold text-slate-800">{t('wizard.aboutYou.roleQuestion')}</h2>
                     </div>
-                    <div className="space-y-3" role="radiogroup" aria-label="Select your role">
+                    <div className="space-y-3" role="radiogroup" aria-label={t('wizard.aboutYou.roleAria')}>
                         {Object.values(Role).map((r) => (
                             <button
                                 key={r}
@@ -1859,7 +1886,7 @@ const Wizard = () => {
                                 role="radio"
                                 aria-checked={answers.role === r}
                             >
-                                <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{r}</span>
+                                <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{roleLabels[r]}</span>
                                 {answers.role === r && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                             </button>
                         ))}
@@ -1870,10 +1897,10 @@ const Wizard = () => {
                 {answers.role && (
                     <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1b</span>
-                            <h2 className="text-lg font-bold text-slate-800">Where are you in the transplant process?</h2>
+                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.aboutYou.statusBadge')}</span>
+                            <h2 className="text-lg font-bold text-slate-800">{t('wizard.aboutYou.statusQuestion')}</h2>
                         </div>
-                        <div className="space-y-3" role="radiogroup" aria-label="Select your transplant status">
+                        <div className="space-y-3" role="radiogroup" aria-label={t('wizard.aboutYou.statusAria')}>
                             {Object.values(TransplantStatus).map((s) => (
                                 <button
                                     key={s}
@@ -1886,7 +1913,7 @@ const Wizard = () => {
                                     role="radio"
                                     aria-checked={answers.status === s}
                                 >
-                                    <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{s}</span>
+                                    <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{statusLabels[s]}</span>
                                     {answers.status === s && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                                 </button>
                             ))}
@@ -1899,9 +1926,9 @@ const Wizard = () => {
                     disabled={!answers.role || !answers.status}
                     onClick={handleNextFromAboutYou}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -1913,15 +1940,15 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-rose-100 p-2 rounded-lg">
                         <Heart size={24} className="text-rose-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Transplant</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.transplant.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-6">Select your organ type(s) - choose all that apply.</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label="Select organ types">
+                <p className="text-slate-600 mb-6">{t('wizard.transplant.intro')}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label={t('wizard.transplant.groupAria')}>
                     {Object.values(OrganType).map((o) => (
                         <button
                             key={o}
@@ -1934,7 +1961,7 @@ const Wizard = () => {
                             role="checkbox"
                             aria-checked={answers.organs.includes(o)}
                         >
-                            <span className={`font-bold text-lg ${answers.organs.includes(o) ? 'text-rose-800' : 'text-slate-800'}`}>{o}</span>
+                            <span className={`font-bold text-lg ${answers.organs.includes(o) ? 'text-rose-800' : 'text-slate-800'}`}>{t(`wizard.organs.${o}`)}</span>
                             {answers.organs.includes(o) && <CheckCircle size={24} className="text-rose-600" aria-hidden="true" />}
                         </button>
                     ))}
@@ -1943,9 +1970,9 @@ const Wizard = () => {
                     disabled={answers.organs.length === 0}
                     onClick={handleNextFromTransplant}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -1956,65 +1983,73 @@ const Wizard = () => {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
-                label: 'Commercial Insurance',
-                description: 'From my job, my spouse\'s job, or I bought it myself',
-                helpText: 'Can use manufacturer copay cards + PAPs'
+                label: t('wizard.coverage.commercialLabel'),
+                description: t('wizard.coverage.commercialDescription'),
+                helpText: t('wizard.coverage.commercialHelp')
             },
             {
                 value: InsuranceType.MEDICARE,
-                label: 'Medicare',
-                description: 'The program for people 65+ or with disabilities',
-                helpText: 'Part B-ID important for kidney patients; can use PAPs but NOT copay cards'
+                label: t('wizard.coverage.medicareLabel'),
+                description: t('wizard.coverage.medicareDescription'),
+                helpText: t('wizard.coverage.medicareHelp')
             },
             {
                 value: InsuranceType.MEDICAID,
-                label: 'Medicaid',
-                description: 'State program for people with lower income',
-                helpText: 'May have full coverage; check state formulary'
+                label: t('wizard.coverage.medicaidLabel'),
+                description: t('wizard.coverage.medicaidDescription'),
+                helpText: t('wizard.coverage.medicaidHelp')
             },
             {
                 value: InsuranceType.TRICARE_VA,
-                label: 'TRICARE or VA (Veterans)',
-                description: 'Military or Veterans benefits',
-                helpText: 'Gov\'t insurance can use assistance programs'
+                label: t('wizard.coverage.tricareLabel'),
+                description: t('wizard.coverage.tricareDescription'),
+                helpText: t('wizard.coverage.tricareHelp')
             },
             {
                 value: InsuranceType.IHS,
-                label: 'Indian Health Service',
-                description: 'Tribal health programs',
-                helpText: 'Can use assistance programs'
+                label: t('wizard.coverage.ihsLabel'),
+                description: t('wizard.coverage.ihsDescription'),
+                helpText: t('wizard.coverage.ihsHelp')
             },
             {
                 value: InsuranceType.UNINSURED,
-                label: 'I don\'t have insurance',
-                description: 'No current insurance coverage',
-                helpText: 'Manufacturer PAPs are your primary option'
+                label: t('wizard.coverage.uninsuredLabel'),
+                description: t('wizard.coverage.uninsuredDescription'),
+                helpText: t('wizard.coverage.uninsuredHelp')
             }
         ];
+
+        // Rendered labels for the specialty-pharmacy options; the raw
+        // 'Yes'/'No'/'Not Sure' values drive the selection logic below.
+        const pharmacyOptionLabels = {
+            'Yes': t('wizard.coverage.yes'),
+            'No': t('wizard.coverage.no'),
+            'Not Sure': t('wizard.coverage.notSure'),
+        };
 
         return (
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-blue-100 p-2 rounded-lg">
                         <Shield size={24} className="text-blue-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Coverage</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.coverage.title')}</h1>
                 </div>
                 <div className="flex items-center gap-2 mb-6 text-slate-700">
                     <Lightbulb className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
-                    <p className="text-sm"><strong>Having insurance doesn't mean you can't get additional help!</strong></p>
+                    <p className="text-sm"><strong>{t('wizard.coverage.tip')}</strong></p>
                 </div>
 
                 {/* Question 3a: Insurance Type */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3a</span>
-                        <h2 className="text-lg font-bold text-slate-800">What's your insurance type?</h2>
+                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.coverage.insuranceBadge')}</span>
+                        <h2 className="text-lg font-bold text-slate-800">{t('wizard.coverage.insuranceQuestion')}</h2>
                     </div>
-                    <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
+                    <div className="space-y-3" role="radiogroup" aria-label={t('wizard.coverage.insuranceAria')}>
                         {insuranceOptions.map((option) => (
                             <button
                                 key={option.value}
@@ -2049,11 +2084,11 @@ const Wizard = () => {
                 {isCommercialInsurance && answers.insurance && (
                     <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
-                            <h2 className="text-lg font-bold text-slate-800">Does your plan require a specific specialty pharmacy?</h2>
+                            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.coverage.pharmacyBadge')}</span>
+                            <h2 className="text-lg font-bold text-slate-800">{t('wizard.coverage.pharmacyQuestion')}</h2>
                         </div>
-                        <p className="text-slate-600 text-sm mb-4">Some commercial plans require you to use a specific pharmacy for transplant medications.</p>
-                        <div className="space-y-3" role="radiogroup" aria-label="Specialty pharmacy requirement">
+                        <p className="text-slate-600 text-sm mb-4">{t('wizard.coverage.pharmacyIntro')}</p>
+                        <div className="space-y-3" role="radiogroup" aria-label={t('wizard.coverage.pharmacyAria')}>
                             {['Yes', 'No', 'Not Sure'].map(opt => {
                                 const isSelected = (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                     (opt === 'No' && answers.specialtyPharmacyAware === false) ||
@@ -2073,7 +2108,7 @@ const Wizard = () => {
                                             (opt === 'No' && answers.specialtyPharmacyAware === false)
                                         }
                                     >
-                                        <span className={`font-bold text-lg ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{opt}</span>
+                                        <span className={`font-bold text-lg ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{pharmacyOptionLabels[opt]}</span>
                                         {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                           (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
                                             <CheckCircle className="text-blue-600" size={24} aria-hidden="true" />
@@ -2090,9 +2125,9 @@ const Wizard = () => {
                     disabled={!answers.insurance}
                     onClick={handleNextFromCoverage}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -2106,16 +2141,16 @@ const Wizard = () => {
             <div className="max-w-3xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="bg-purple-100 p-2 rounded-lg">
                             <Pill size={24} className="text-purple-600" />
                         </div>
-                        <h1 className="text-2xl font-bold">Your Medications</h1>
+                        <h1 className="text-2xl font-bold">{t('wizard.meds.title')}</h1>
                     </div>
                     <p className="text-slate-600">
-                        Connect to your health system.
+                        {t('wizard.meds.intro')}
                     </p>
                 </div>
 
@@ -2139,7 +2174,7 @@ const Wizard = () => {
                     <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                             <CheckCircle size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Selected Medications ({(answers.medications || []).length})</h3>
+                            <h3 className="font-bold text-slate-800">{t('wizard.meds.selectedHeading', { count: (answers.medications || []).length })}</h3>
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {(answers.medications || []).map(id => {
@@ -2151,7 +2186,7 @@ const Wizard = () => {
                                         <button
                                             onClick={() => handleMultiSelect('medications', id)}
                                             className="text-slate-400 hover:text-red-500 transition"
-                                            aria-label={`Remove ${med?.brandName || id}`}
+                                            aria-label={t('wizard.meds.removeAria', { name: med?.brandName || id })}
                                         >
                                             <X size={14} />
                                         </button>
@@ -2163,12 +2198,12 @@ const Wizard = () => {
                 )}
 
                 {/* Divider: manual options for patients who can't or don't want to connect */}
-                <div className="relative mb-6" role="separator" aria-label="Or add medications yourself">
+                <div className="relative mb-6" role="separator" aria-label={t('wizard.meds.separatorAria')}>
                     <div className="absolute inset-0 flex items-center" aria-hidden="true">
                         <div className="w-full border-t border-slate-200"></div>
                     </div>
                     <div className="relative flex justify-center">
-                        <span className="bg-white px-3 text-sm font-semibold text-slate-500">Or add your medications below</span>
+                        <span className="bg-white px-3 text-sm font-semibold text-slate-500">{t('wizard.meds.separatorLabel')}</span>
                     </div>
                 </div>
 
@@ -2176,15 +2211,15 @@ const Wizard = () => {
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                         <Search size={18} className="text-emerald-600" />
-                        <h3 className="font-bold text-slate-800">Type in medication and hit the <span className="text-emerald-600">+</span> button to add to your list</h3>
+                        <h3 className="font-bold text-slate-800">{t('wizard.meds.searchHeadingPre')}<span className="text-emerald-600">+</span>{t('wizard.meds.searchHeadingPost')}</h3>
                     </div>
                     <div className="relative">
-                        <label htmlFor="wizard-med-search" className="sr-only">Search for medications</label>
+                        <label htmlFor="wizard-med-search" className="sr-only">{t('wizard.meds.searchLabel')}</label>
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
                         <input
                             id="wizard-med-search"
                             type="text"
-                            placeholder="Type medication name (e.g. Prograf, tacrolimus)..."
+                            placeholder={t('wizard.meds.searchPlaceholder')}
                             className="w-full pl-10 pr-10 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition"
                             value={medSearchTerm}
                             onChange={(e) => setMedSearchTerm(e.target.value)}
@@ -2194,10 +2229,10 @@ const Wizard = () => {
                         />
                         {isMedSearching ? (
                             <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                <Loader2 size={18} className="text-emerald-600 animate-spin" aria-label="Searching" />
+                                <Loader2 size={18} className="text-emerald-600 animate-spin" aria-label={t('wizard.meds.searchingAria')} />
                             </div>
                         ) : medSearchTerm && (
-                            <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                            <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
                                 <X size={18} />
                             </button>
                         )}
@@ -2220,9 +2255,9 @@ const Wizard = () => {
                                                     <span className="text-sm text-slate-600 ml-2">({med.genericName})</span>
                                                 </div>
                                                 {isAlreadySelected ? (
-                                                    <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> Added</span>
+                                                    <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> {t('wizard.meds.added')}</span>
                                                 ) : (
-                                                    <span className="text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1"><PlusCircle size={12} /> Add</span>
+                                                    <span className="text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1"><PlusCircle size={12} /> {t('wizard.meds.add')}</span>
                                                 )}
                                             </button>
                                         );
@@ -2230,7 +2265,7 @@ const Wizard = () => {
                                 </div>
                             ) : (
                                 <div className="p-4 text-center text-slate-500 text-sm">
-                                    No medications found. Try a different spelling or browse the list below.
+                                    {t('wizard.meds.noResults')}
                                 </div>
                             )}
                         </div>
@@ -2249,9 +2284,9 @@ const Wizard = () => {
                     <div className="flex items-start gap-3">
                         <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-amber-800">
-                            <p className="font-bold mb-2">Important Medical Information</p>
+                            <p className="font-bold mb-2">{t('wizard.meds.medicalInfoTitle')}</p>
                             <p>
-                                Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
+                                {t('wizard.meds.medicalInfoText')}
                             </p>
                         </div>
                     </div>
@@ -2260,9 +2295,9 @@ const Wizard = () => {
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    My medications look right, continue →
+                    {t('wizard.meds.continueButton')}
                 </button>
             </div>
         );
@@ -2274,25 +2309,25 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-amber-100 p-2 rounded-lg">
                         <DollarSign size={24} className="text-amber-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Costs</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.costs.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
+                <p className="text-slate-600 mb-6">{t('wizard.costs.intro')}</p>
 
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
-                    This helps us prioritize the best assistance programs for you. Your answer is anonymous and never linked to you.
+                    {t('wizard.costs.note')}
                 </div>
 
-                <div className="space-y-4" role="radiogroup" aria-label="Select your financial status">
+                <div className="space-y-4" role="radiogroup" aria-label={t('wizard.costs.groupAria')}>
                     {[
-                        { val: FinancialStatus.MANAGEABLE, label: 'Manageable', desc: 'I can afford my medications but would like to save money', color: 'emerald' },
-                        { val: FinancialStatus.CHALLENGING, label: 'Challenging', desc: 'Medication costs are a significant burden', color: 'amber' },
-                        { val: FinancialStatus.UNAFFORDABLE, label: 'Unaffordable', desc: 'I struggle to pay for my medications', color: 'orange' },
-                        { val: FinancialStatus.CRISIS, label: 'I can\'t afford my medications', desc: 'I cannot afford my medications without help', color: 'rose' },
+                        { val: FinancialStatus.MANAGEABLE, label: t('wizard.costs.manageableLabel'), desc: t('wizard.costs.manageableDesc'), color: 'emerald' },
+                        { val: FinancialStatus.CHALLENGING, label: t('wizard.costs.challengingLabel'), desc: t('wizard.costs.challengingDesc'), color: 'amber' },
+                        { val: FinancialStatus.UNAFFORDABLE, label: t('wizard.costs.unaffordableLabel'), desc: t('wizard.costs.unaffordableDesc'), color: 'orange' },
+                        { val: FinancialStatus.CRISIS, label: t('wizard.costs.crisisLabel'), desc: t('wizard.costs.crisisDesc'), color: 'rose' },
                     ].map(opt => {
                         const isSelected = answers.financialStatus === opt.val;
                         const colorStyles = {
@@ -2364,9 +2399,9 @@ const Wizard = () => {
                 <button
                     onClick={() => setStep(5)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
-                    aria-label="Go back to previous step"
+                    aria-label={t('wizard.results.backAria')}
                 >
-                    <ChevronLeft size={16} aria-hidden="true" /> Back
+                    <ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}
                 </button>
 
                 {/* Header */}
@@ -2376,17 +2411,17 @@ const Wizard = () => {
                     : 'bg-emerald-900'
                 }`}>
                     <div>
-                        <h1 className="text-3xl font-bold mb-2">Your Medication Strategy</h1>
+                        <h1 className="text-3xl font-bold mb-2">{t('wizard.results.title')}</h1>
                         <p className="opacity-90">
-                            Based on your inputs, here is how to navigate your costs.
+                            {t('wizard.results.subtitle')}
                         </p>
                     </div>
                     <button 
                         onClick={() => window.print()}
                         className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 border border-white/20 transition no-print"
-                        aria-label="Print your medication plan"
+                        aria-label={t('wizard.results.printAria')}
                     >
-                        <Printer size={16} aria-hidden="true" /> Print Plan
+                        <Printer size={16} aria-hidden="true" /> {t('wizard.results.printButton')}
                     </button>
                 </div>
 
@@ -2394,14 +2429,13 @@ const Wizard = () => {
                 {isKidney && isMedicare && (
                     <aside className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-600" role="alert" aria-labelledby="medicare-alert">
                         <h2 id="medicare-alert" className="text-xl font-bold text-indigo-900 flex items-center gap-2">
-                            <AlertCircle aria-hidden="true" /> Important: Medicare Part B-ID
+                            <AlertCircle aria-hidden="true" /> {t('wizard.results.medicareAlert.title')}
                         </h2>
                         <p className="mt-2 text-slate-700">
-                            Since you are a kidney transplant recipient on Medicare, you may qualify for <strong>Medicare Part B-ID</strong>.
-                            This extends coverage for immunosuppressive drugs for life. The 2026 premium is <strong>$121.60/month</strong> (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.
+                            <Trans i18nKey="wizard.results.medicareAlert.text" />
                         </p>
                         <a href="https://www.medicare.gov" target="_blank" rel="noreferrer" className="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition no-print">
-                            Check Eligibility on Medicare.gov
+                            {t('wizard.results.medicareAlert.cta')}
                         </a>
                     </aside>
                 )}
@@ -2411,7 +2445,7 @@ const Wizard = () => {
                     {/* Column 1 (Left): Med List & Tools */}
                     <div className="space-y-6">
                         <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
-                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">Your Medication List</h2>
+                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.medListTitle')}</h2>
                             {(answers.medications || []).length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {(answers.medications || []).map(id => {
@@ -2422,7 +2456,7 @@ const Wizard = () => {
                                                 <button
                                                     onClick={() => handleMultiSelect('medications', id)}
                                                     className="text-slate-400 hover:text-red-500 ml-1"
-                                                    aria-label={`Remove ${med?.brandName}`}
+                                                    aria-label={t('wizard.meds.removeAria', { name: med?.brandName })}
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -2435,12 +2469,12 @@ const Wizard = () => {
                             {/* Add More Medications */}
                             <div className="mb-4 no-print">
                                 <div className="relative">
-                                    <label htmlFor="results-med-search" className="sr-only">Add more medications</label>
+                                    <label htmlFor="results-med-search" className="sr-only">{t('wizard.results.addMoreLabel')}</label>
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
                                     <input
                                         id="results-med-search"
                                         type="text"
-                                        placeholder="Add more medications..."
+                                        placeholder={t('wizard.results.addMorePlaceholder')}
                                         className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition text-sm"
                                         value={medSearchTerm}
                                         onChange={(e) => setMedSearchTerm(e.target.value)}
@@ -2449,7 +2483,7 @@ const Wizard = () => {
                                         }}
                                     />
                                     {medSearchTerm && (
-                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
                                             <X size={16} />
                                         </button>
                                     )}
@@ -2482,7 +2516,7 @@ const Wizard = () => {
                                             </div>
                                         ) : (
                                             <div className="p-2 text-center text-slate-500 text-xs">
-                                                No medications found
+                                                {t('wizard.results.noResults')}
                                             </div>
                                         )}
                                     </div>
@@ -2494,36 +2528,36 @@ const Wizard = () => {
                                     <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
                                         className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
-                                        aria-label="View price estimates for your selected medications"
+                                        aria-label={t('wizard.results.viewPricesAria')}
                                     >
                                         <DollarSign size={22} aria-hidden="true" />
-                                        View Price Estimates for These Meds
+                                        {t('wizard.results.viewPricesButton')}
                                     </Link>
                                 )}
                             </div>
                         </section>
 
                         <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
-                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">Helpful Tools</h2>
-                            <p className="text-sm text-slate-600 mb-4">Once you have identified the program you need (PAP or Foundation), use our guide to help you apply.</p>
-                            
-                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label="View application education guide">
+                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.toolsTitle')}</h2>
+                            <p className="text-sm text-slate-600 mb-4">{t('wizard.results.toolsIntro')}</p>
+
+                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label={t('wizard.results.appEducationAria')}>
                                 <div className="flex items-center gap-3">
                                     <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
                                     <div>
-                                        <span className="font-bold text-slate-800 block text-sm">Application Education</span>
-                                        <span className="text-xs text-slate-600">Scripts, checklists, and templates</span>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.appEducationTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.appEducationDesc')}</span>
                                     </div>
                                 </div>
                                 <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
                             </Link>
 
-                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label="View insurance and resources">
+                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label={t('wizard.results.insuranceAria')}>
                                 <div className="flex items-center gap-3">
                                     <div className="bg-amber-100 text-amber-600 p-2 rounded" aria-hidden="true"><Shield size={18} /></div>
                                     <div>
-                                        <span className="font-bold text-slate-800 block text-sm">Insurance & Resources</span>
-                                        <span className="text-xs text-slate-600">Medicaid directory, Medicare guides</span>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.insuranceTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.insuranceDesc')}</span>
                                     </div>
                                 </div>
                                 <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
@@ -2536,37 +2570,37 @@ const Wizard = () => {
                         {financial === FinancialStatus.MANAGEABLE && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="savings-heading">
                                 <h2 id="savings-heading" className="text-lg font-bold text-emerald-800 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <DollarSign size={20} aria-hidden="true" /> Maximize Your Savings
+                                    <DollarSign size={20} aria-hidden="true" /> {t('wizard.results.manageable.title')}
                                 </h2>
                                 <ul className="space-y-4 text-slate-700">
                                     {isCommercial && (
                                         <li className="flex gap-3 items-start">
-                                            <div className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Priority recommendation">Priority</div>
+                                            <div className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.priorityAria')}>{t('wizard.results.manageable.priorityBadge')}</div>
                                             <div>
-                                                <strong>Use Manufacturer <TermTooltip term="copay">Copay</TermTooltip> Cards.</strong>
-                                                <p className="text-sm text-slate-600 mt-1">Even if you can afford the copay, these cards can lower it to as little as $0. Look up each of your brand name meds.</p>
+                                                <strong>{t('wizard.results.manageable.copayPre')}<TermTooltip term="copay">{t('wizard.results.manageable.copayTerm')}</TermTooltip>{t('wizard.results.manageable.copayPost')}</strong>
+                                                <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.copayText')}</p>
                                             </div>
                                         </li>
                                     )}
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Comparison tip">Compare</div>
+                                        <div className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.compareAria')}>{t('wizard.results.manageable.compareBadge')}</div>
                                         <div>
-                                            <strong>Check Cash Prices.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Compare your insurance copay against cash prices at Mark Cuban Cost Plus Drugs or using GoodRx.</p>
+                                            <strong>{t('wizard.results.manageable.cashTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.cashText')}</p>
                                         </div>
                                     </li>
                                     {isCommercial && (
                                         <li className="flex gap-3 items-start">
-                                            <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Verification step">Verify</div>
+                                            <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.verifyAria')}>{t('wizard.results.manageable.verifyBadge')}</div>
                                             <div>
-                                                <strong><TermTooltip term="specialty-pharmacy">Specialty Pharmacy</TermTooltip>.</strong>
-                                                <p className="text-sm text-slate-600 mt-1">Ensure you are using the mandated pharmacy to avoid surprise full-price bills.</p>
+                                                <strong><TermTooltip term="specialty-pharmacy">{t('wizard.results.manageable.spTerm')}</TermTooltip>{t('wizard.results.manageable.spPost')}</strong>
+                                                <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.spText')}</p>
                                             </div>
                                         </li>
                                     )}
                                 </ul>
                                 <div className="mt-6 pt-4 border-t border-slate-100">
-                                    <p className="text-sm text-slate-600 italic">Tip: You may still qualify for <TermTooltip term="pap">PAPs</TermTooltip> based on income, even if costs feel manageable right now.</p>
+                                    <p className="text-sm text-slate-600 italic">{t('wizard.results.manageable.tipPre')}<TermTooltip term="pap">{t('wizard.results.manageable.tipTerm')}</TermTooltip>{t('wizard.results.manageable.tipPost')}</p>
                                 </div>
                             </section>
                         )}
@@ -2574,28 +2608,28 @@ const Wizard = () => {
                         {financial === FinancialStatus.CHALLENGING && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="burden-heading">
                                 <h2 id="burden-heading" className="text-lg font-bold text-amber-700 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <Shield size={20} aria-hidden="true" /> Reduce Your Burden
+                                    <Shield size={20} aria-hidden="true" /> {t('wizard.results.challenging.title')}
                                 </h2>
                                 <ul className="space-y-4 text-slate-700">
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step one">Step 1</div>
+                                        <div className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step1Aria')}>{t('wizard.results.challenging.step1Badge')}</div>
                                         <div>
-                                            <strong>Check Manufacturer PAPs.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Go to the manufacturer website for your brand name meds. If eligible, you could get the med for free.</p>
+                                            <strong>{t('wizard.results.challenging.papTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.papText')}</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step two">Step 2</div>
+                                        <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step2Aria')}>{t('wizard.results.challenging.step2Badge')}</div>
                                         <div>
-                                            <strong>Apply to <TermTooltip term="foundation-grant">Foundations</TermTooltip>.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Organizations like HealthWell or PAN Foundation help pay for copays. Apply to them for your specific disease fund.</p>
+                                            <strong>{t('wizard.results.challenging.foundationsPre')}<TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.foundationsText')}</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step three">Step 3</div>
+                                        <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step3Aria')}>{t('wizard.results.challenging.step3Badge')}</div>
                                         <div>
-                                            <strong>Compare vs. Cash.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Sometimes the cash price (e.g. Cost Plus Drugs) is cheaper than your insurance copay.</p>
+                                            <strong>{t('wizard.results.challenging.cashTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.cashText')}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -2605,47 +2639,47 @@ const Wizard = () => {
                         {(financial === FinancialStatus.UNAFFORDABLE || financial === FinancialStatus.CRISIS) && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-rose-500" role="alert" aria-labelledby="assistance-heading">
                                 <h2 id="assistance-heading" className="text-lg font-bold text-rose-800 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <AlertTriangle size={20} aria-hidden="true" /> Immediate Assistance Path
+                                    <AlertTriangle size={20} aria-hidden="true" /> {t('wizard.results.crisis.title')}
                                 </h2>
                                 <Link to="/education?topic=EMERGENCY" className="flex items-center gap-3 bg-rose-600 text-white p-3 rounded-lg font-semibold hover:bg-rose-700 transition mb-4">
                                     <Clock size={20} aria-hidden="true" />
-                                    <span>Out of medication, or down to your last few days? See emergency steps →</span>
+                                    <span>{t('wizard.results.crisis.emergencyLink')}</span>
                                 </Link>
                                 {financial === FinancialStatus.CRISIS && (
                                     <p className="text-sm text-slate-600 mb-4 bg-slate-50 p-3 rounded">
-                                        You are not alone. Help is available. Please follow these steps in order.
+                                        {t('wizard.results.crisis.notAlone')}
                                     </p>
                                 )}
                                 <ol className="space-y-4 text-slate-700 list-decimal pl-6">
                                     <li>
-                                        <strong>Manufacturer PAPs (Free Drug).</strong>
+                                        <strong>{t('wizard.results.crisis.papTitle')}</strong>
                                         <p className="text-sm text-slate-600 mt-1">
-                                            Most manufacturers have a "Patient Assistance Program". This is your best route for free medication. 
+                                            {t('wizard.results.crisis.papText')}
                                             <br/>
-                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">Search your med here</Link> to find the manufacturer link.
+                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">{t('wizard.results.crisis.papLinkText')}</Link>{t('wizard.results.crisis.papLinkPost')}
                                         </p>
                                     </li>
                                     <li>
-                                        <strong>Check Medicaid Eligibility.</strong>
-                                        <p className="text-sm text-slate-600 mt-1">If you have low income, check if you qualify for state Medicaid or "Extra Help" (if on Medicare).</p>
+                                        <strong>{t('wizard.results.crisis.medicaidTitle')}</strong>
+                                        <p className="text-sm text-slate-600 mt-1">{t('wizard.results.crisis.medicaidText')}</p>
                                     </li>
                                     {answers.insurance === InsuranceType.IHS && (
                                         <li>
-                                            <strong>Contact IHS / Tribal Health.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">You likely have coverage for these medications at $0 cost at IHS facilities.</p>
+                                            <strong>{t('wizard.results.crisis.ihsTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.crisis.ihsText')}</p>
                                         </li>
                                     )}
                                 </ol>
                                 <div className="mt-5 pt-4 border-t border-slate-200">
-                                    <h3 className="font-bold text-slate-800 text-sm mb-2">If you don&rsquo;t qualify &mdash; or a fund is closed</h3>
-                                    <p className="text-sm text-slate-600 mb-2">A &ldquo;no&rdquo; from one program is not the end. Try these next:</p>
+                                    <h3 className="font-bold text-slate-800 text-sm mb-2">{t('wizard.results.crisis.notQualifyTitle')}</h3>
+                                    <p className="text-sm text-slate-600 mb-2">{t('wizard.results.crisis.notQualifyIntro')}</p>
                                     <ul className="space-y-2 text-sm text-slate-700 list-disc pl-6">
-                                        <li><strong>Apply to several programs at once.</strong> Income limits and open funds change often, so don&rsquo;t stop at one.</li>
-                                        <li><strong>Ask your transplant center about charity care.</strong> Many centers have their own financial-assistance or hospital discount programs &mdash; your social worker can start one.</li>
-                                        <li><strong>Ask the pharmacy about cash and sliding-scale prices.</strong> Cost Plus Drugs and pharmacy discount programs are sometimes cheaper than a copay.</li>
-                                        <li><strong>Appeal a denial.</strong> Many denials are overturned. <Link to="/education" className="text-rose-700 font-semibold underline">See how to appeal</Link>.</li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryPrograms" /></li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryCharity" /></li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryCash" /></li>
+                                        <li><strong>{t('wizard.results.crisis.appealTitle')}</strong>{t('wizard.results.crisis.appealMid')}<Link to="/education" className="text-rose-700 font-semibold underline">{t('wizard.results.crisis.appealLink')}</Link>{t('wizard.results.crisis.appealPost')}</li>
                                     </ul>
-                                    <Link to="/application-help" className="inline-block mt-3 text-rose-700 font-semibold underline text-sm">Get step-by-step help applying &rarr;</Link>
+                                    <Link to="/application-help" className="inline-block mt-3 text-rose-700 font-semibold underline text-sm">{t('wizard.results.crisis.getHelpLink')}</Link>
                                 </div>
                             </section>
                         )}
@@ -2653,12 +2687,12 @@ const Wizard = () => {
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
-                    <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
+                    <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label={t('wizard.results.restartAria')}>{t('wizard.results.restart')}</button>
                 </div>
             </article>
         );
     }
-    return <div>Loading...</div>;
+    return <div>{t('wizard.loading')}</div>;
 };
 
 // --- PRICE REPORTING HELPERS ---
@@ -4615,96 +4649,65 @@ const ExternalMedCard = ({ name, onRemove }) => {
 
 // Insurance Change Simulation Component
 const InsuranceChangeSimulator = () => {
+    const { t } = useTranslation();
     const [currentInsurance, setCurrentInsurance] = useState('');
     const [futureInsurance, setFutureInsurance] = useState('');
     const [showResults, setShowResults] = useState(false);
 
     const insuranceTypes = [
-        { id: 'commercial', label: 'Commercial/Employer Insurance' },
-        { id: 'medicare', label: 'Medicare (Part D)' },
-        { id: 'medicaid', label: 'Medicaid' },
-        { id: 'marketplace', label: 'ACA Marketplace' },
-        { id: 'uninsured', label: 'Uninsured' },
+        { id: 'commercial', label: t('education.simulator.insuranceTypes.commercial') },
+        { id: 'medicare', label: t('education.simulator.insuranceTypes.medicare') },
+        { id: 'medicaid', label: t('education.simulator.insuranceTypes.medicaid') },
+        { id: 'marketplace', label: t('education.simulator.insuranceTypes.marketplace') },
+        { id: 'uninsured', label: t('education.simulator.insuranceTypes.uninsured') },
     ];
 
-    const transitionData = {
-        'commercial_medicare': {
-            title: 'Commercial → Medicare',
-            timing: 'Common at 65 or after 24 months on SSDI',
-            changes: [
-                { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Most manufacturer copay cards are NOT allowed with Medicare. This is a major change.' },
-                { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients).' },
-                { type: 'change', icon: '🔄', title: 'Foundation Help', desc: 'Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID Option', desc: 'Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID). Premium: $121.60/month in 2026 (up from $110.40 in 2025), plus 20% coinsurance after $283 deductible.' },
-                { type: 'info', icon: '📅', title: '2026 Cap', desc: 'Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025).' },
-            ],
-            action: 'Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out.',
-        },
-        'commercial_medicaid': {
-            title: 'Commercial → Medicaid',
-            timing: 'Due to income change or disability',
-            changes: [
-                { type: 'loss', icon: '🚫', title: 'Copay Cards', desc: 'Copay cards typically cannot be used with Medicaid.' },
-                { type: 'gain', icon: '✅', title: 'Low/No Cost', desc: 'Medicaid typically has $0-$3 copays for prescriptions.' },
-                { type: 'gain', icon: '✅', title: 'PAP Access', desc: 'Some PAPs still available as secondary assistance.' },
-                { type: 'change', icon: '🔄', title: 'Covered Medicines', desc: 'May need to switch to Medicaid-preferred medications or get prior authorization.' },
-            ],
-            action: 'Work with your transplant coordinator to ensure your medications are on the Medicaid covered medicines list before switching.',
-        },
-        'medicaid_medicare': {
-            title: 'Medicaid → Medicare (Dual Eligible)',
-            timing: 'At age 65 or qualifying for Medicare',
-            changes: [
-                { type: 'gain', icon: '✅', title: 'Dual Eligible Status', desc: 'You may qualify as "dual eligible" and keep some Medicaid benefits alongside Medicare.' },
-                { type: 'info', icon: '💡', title: 'Extra Help/LIS', desc: 'Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs.' },
-                { type: 'change', icon: '🔄', title: 'Primary Payer', desc: 'Medicare becomes primary, Medicaid secondary for covered services.' },
-                { type: 'gain', icon: '✅', title: 'MSP Programs', desc: 'Medicare Savings Programs can pay your Part B premium ($202.90/month in 2026).' },
-            ],
-            action: 'Contact your State Health Insurance Assistance Program (SHIP) for free counseling on dual eligible benefits.',
-        },
-        'commercial_marketplace': {
-            title: 'Commercial → ACA Marketplace',
-            timing: 'Job loss, self-employment, or retirement before 65',
-            changes: [
-                { type: 'gain', icon: '✅', title: 'Copay Cards OK', desc: 'Manufacturer copay cards CAN be used with Marketplace plans.' },
-                { type: 'gain', icon: '✅', title: 'Subsidies Available', desc: 'Premium tax credits based on income can significantly reduce costs.' },
-                { type: 'change', icon: '🔄', title: 'Network Changes', desc: 'Check if your transplant center and pharmacy are in-network before enrolling.' },
-                { type: 'info', icon: '💡', title: 'CSR Plans', desc: 'If income <250% FPL, Silver plans offer reduced deductibles and copays.' },
-            ],
-            action: 'Use healthcare.gov to compare plans. Filter by your medications and doctors to find the best fit.',
-        },
-        'uninsured_medicare': {
-            title: 'Uninsured → Medicare',
-            timing: 'Turning 65 or qualifying through disability',
-            changes: [
-                { type: 'gain', icon: '✅', title: 'Drug Coverage', desc: 'Part D provides prescription coverage with $2,100 out-of-pocket cap (2026).' },
-                { type: 'gain', icon: '✅', title: 'PAPs + Foundations', desc: 'Full access to Patient Assistance Programs and foundation copay help.' },
-                { type: 'loss', icon: '🚫', title: 'Discount Cards', desc: 'GoodRx/SingleCare typically not usable once you have Part D coverage.' },
-                { type: 'info', icon: '💡', title: 'Part B-ID', desc: 'Kidney patients: Part B-ID covers immunosuppressants even without Part A/B. Premium: $121.60/month (2026).' },
-            ],
-            action: 'Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited.',
-        },
-        'uninsured_medicaid': {
-            title: 'Uninsured → Medicaid',
-            timing: 'Income qualifies (varies by state)',
-            changes: [
-                { type: 'gain', icon: '✅', title: 'Coverage', desc: 'Comprehensive coverage including prescriptions, often $0-$3 copays.' },
-                { type: 'gain', icon: '✅', title: 'Retroactive', desc: 'Coverage goes back up to 3 months before you apply.' },
-                { type: 'change', icon: '🔄', title: 'Covered Medicines', desc: 'Must use Medicaid covered medicines list - may need prior approval for some transplant drugs.' },
-            ],
-            action: 'Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant papers.',
-        },
-        'uninsured_marketplace': {
-            title: 'Uninsured → ACA Marketplace',
-            timing: 'Open enrollment or qualifying life event',
-            changes: [
-                { type: 'gain', icon: '✅', title: 'Subsidies', desc: 'Help paying for insurance based on income - may get $0 premium plans.' },
-                { type: 'gain', icon: '✅', title: 'Copay Cards', desc: 'Can use drug company help with what you owe on Marketplace plans.' },
-                { type: 'gain', icon: '✅', title: 'Pre-existing OK', desc: 'Cannot be denied or charged more for transplant history.' },
-                { type: 'info', icon: '💡', title: 'Plan Selection', desc: 'Silver plans best value if income 100-250% FPL due to cost-sharing reductions.' },
-            ],
-            action: 'Apply at healthcare.gov during Open Enrollment (Nov 1 - Jan 15) or after a qualifying event.',
-        },
+    // Non-translatable flags per transition change; the matching strings
+    // (title, timing, changes[].title/desc, action) live in locales/*.json
+    // under education.simulator.transitions.<key>.
+    const transitionFlags = {
+        'commercial_medicare': [
+            { type: 'loss', icon: '🚫' },
+            { type: 'gain', icon: '✅' },
+            { type: 'change', icon: '🔄' },
+            { type: 'info', icon: '💡' },
+            { type: 'info', icon: '📅' },
+        ],
+        'commercial_medicaid': [
+            { type: 'loss', icon: '🚫' },
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'change', icon: '🔄' },
+        ],
+        'medicaid_medicare': [
+            { type: 'gain', icon: '✅' },
+            { type: 'info', icon: '💡' },
+            { type: 'change', icon: '🔄' },
+            { type: 'gain', icon: '✅' },
+        ],
+        'commercial_marketplace': [
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'change', icon: '🔄' },
+            { type: 'info', icon: '💡' },
+        ],
+        'uninsured_medicare': [
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'loss', icon: '🚫' },
+            { type: 'info', icon: '💡' },
+        ],
+        'uninsured_medicaid': [
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'change', icon: '🔄' },
+        ],
+        'uninsured_marketplace': [
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'gain', icon: '✅' },
+            { type: 'info', icon: '💡' },
+        ],
     };
 
     const getTransitionKey = () => {
@@ -4712,7 +4715,14 @@ const InsuranceChangeSimulator = () => {
         return `${currentInsurance}_${futureInsurance}`;
     };
 
-    const transition = transitionData[getTransitionKey()];
+    const transitionKey = getTransitionKey();
+    const flags = transitionFlags[transitionKey];
+    const transition = flags
+        ? (() => {
+            const data = t(`education.simulator.transitions.${transitionKey}`, { returnObjects: true });
+            return { ...data, changes: data.changes.map((change, i) => ({ ...change, ...flags[i] })) };
+        })()
+        : undefined;
 
     const handleSimulate = () => {
         if (currentInsurance && futureInsurance && currentInsurance !== futureInsurance) {
@@ -4727,33 +4737,33 @@ const InsuranceChangeSimulator = () => {
                     <ArrowRight size={24} />
                 </div>
                 <div>
-                    <h2 id="insurance-simulator" className="text-xl md:text-2xl font-bold text-indigo-900">Insurance Change Simulator</h2>
-                    <p className="text-sm text-indigo-700">See how your medication options change when switching insurance</p>
+                    <h2 id="insurance-simulator" className="text-xl md:text-2xl font-bold text-indigo-900">{t('education.simulator.title')}</h2>
+                    <p className="text-sm text-indigo-700">{t('education.simulator.subtitle')}</p>
                 </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label htmlFor="current-insurance" className="block text-sm font-bold text-slate-700 mb-2">Current Insurance</label>
+                    <label htmlFor="current-insurance" className="block text-sm font-bold text-slate-700 mb-2">{t('education.simulator.currentLabel')}</label>
                     <select
                         id="current-insurance"
                         value={currentInsurance}
                         onChange={(e) => { setCurrentInsurance(e.target.value); setShowResults(false); }}
                         className="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     >
-                        <option value="">-- Select current --</option>
+                        <option value="">{t('education.simulator.selectCurrent')}</option>
                         {insuranceTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="future-insurance" className="block text-sm font-bold text-slate-700 mb-2">Future Insurance</label>
+                    <label htmlFor="future-insurance" className="block text-sm font-bold text-slate-700 mb-2">{t('education.simulator.futureLabel')}</label>
                     <select
                         id="future-insurance"
                         value={futureInsurance}
                         onChange={(e) => { setFutureInsurance(e.target.value); setShowResults(false); }}
                         className="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     >
-                        <option value="">-- Select future --</option>
+                        <option value="">{t('education.simulator.selectFuture')}</option>
                         {insuranceTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
                     </select>
                 </div>
@@ -4765,7 +4775,7 @@ const InsuranceChangeSimulator = () => {
                 className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg transition flex items-center justify-center gap-2"
             >
                 <ArrowRight size={20} />
-                See What Changes
+                {t('education.simulator.cta')}
             </button>
 
             {showResults && transition && (
@@ -4792,7 +4802,7 @@ const InsuranceChangeSimulator = () => {
                         </div>
 
                         <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
-                            <h4 className="font-bold text-emerald-800 mb-1">📋 Recommended Action</h4>
+                            <h4 className="font-bold text-emerald-800 mb-1">{t('education.simulator.recommendedAction')}</h4>
                             <p className="text-sm text-emerald-900">{transition.action}</p>
                         </div>
                     </div>
@@ -4801,12 +4811,12 @@ const InsuranceChangeSimulator = () => {
 
             {showResults && !transition && currentInsurance !== futureInsurance && (
                 <div className="mt-6 p-4 bg-slate-100 rounded-lg text-center">
-                    <p className="text-slate-600">Detailed transition info for this combination coming soon. Contact your transplant coordinator for guidance.</p>
+                    <p className="text-slate-600">{t('education.simulator.comingSoon')}</p>
                 </div>
             )}
 
             {currentInsurance && futureInsurance && currentInsurance === futureInsurance && (
-                <p className="mt-4 text-sm text-indigo-600">Please select different insurance types to see the transition changes.</p>
+                <p className="mt-4 text-sm text-indigo-600">{t('education.simulator.selectDifferent')}</p>
             )}
         </section>
     );
@@ -4814,6 +4824,7 @@ const InsuranceChangeSimulator = () => {
 
 // Education Page
 const Education = () => {
+    const { t } = useTranslation();
     useMetaTags(seoMetadata.education);
 
     const [activeTab, setActiveTab] = useState(() => {
@@ -4834,6 +4845,7 @@ const Education = () => {
     const [generatedLetter, setGeneratedLetter] = useState("");
     const [copied, setCopied] = useState(false);
 
+    // Letter body intentionally not localized — appeal letters go to US insurers in English.
     const generateAppealLetter = () => {
         const date = new Date().toLocaleDateString();
         const text = `Date: ${date}\n\nTo Whom It May Concern:\n\nI am writing to appeal the coverage denial or specialty pharmacy requirement for my medication, ${appealDrug}. \n\nPatient Name: ${appealName}\nMedication: ${appealDrug}\n\nReason for Appeal: ${appealReason}\n\nThis medication is medically necessary for my transplant care. The current requirement creates a significant barrier to my adherence and health outcomes because ${
@@ -4874,8 +4886,11 @@ const Education = () => {
     return (
         <article className="max-w-6xl mx-auto space-y-8 pb-12">
             <header className="text-center py-8">
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Education & Resources</h1>
-                <p className="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{t('education.header.title')}</h1>
+                <p className="text-xl text-slate-700 max-w-3xl mx-auto">{t('education.header.subtitle')}</p>
+                <div className="mt-6 flex justify-center">
+                    <LanguageToggle />
+                </div>
             </header>
 
             {/* TotalAssist Launch Announcement */}
@@ -4885,19 +4900,19 @@ const Education = () => {
                         <Info size={24} />
                     </div>
                     <div>
-                        <span className="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">New · Now Live</span>
-                        <h2 className="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program</h2>
+                        <span className="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">{t('education.totalAssist.badge')}</span>
+                        <h2 className="text-lg font-bold text-slate-900 mb-2">{t('education.totalAssist.title')}</h2>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.
+                            <Trans i18nKey="education.totalAssist.p1" />
                         </p>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.
+                            <Trans i18nKey="education.totalAssist.p2" />
                         </p>
                         <p className="text-slate-700 text-sm leading-relaxed mb-3">
-                            Apply online or call <a href="tel:+18665123861" className="font-semibold text-blue-700 hover:text-blue-900">866-512-3861</a> (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).
+                            {t('education.totalAssist.applyPre')}<a href="tel:+18665123861" className="font-semibold text-blue-700 hover:text-blue-900">{t('education.totalAssist.phone')}</a>{t('education.totalAssist.applyPost')}
                         </p>
                         <a href="https://totalassist.org/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors">
-                            Learn more about TotalAssist <ExternalLink size={14} aria-hidden="true" />
+                            {t('education.totalAssist.learnMore')} <ExternalLink size={14} aria-hidden="true" />
                         </a>
                     </div>
                 </div>
@@ -4913,27 +4928,27 @@ const Education = () => {
                         <ShieldAlert size={28} />
                     </div>
                     <div className="flex-1">
-                        <h2 className="text-xl font-bold text-red-600 mb-2">Got Denied?</h2>
+                        <h2 className="text-xl font-bold text-red-600 mb-2">{t('education.gotDenied.title')}</h2>
                         <p className="text-slate-700 mb-3">
-                            Insurance said no? Don't worry, you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.
+                            {t('education.gotDenied.text')}
                         </p>
                         <span className="inline-flex items-center gap-1 text-red-600 font-semibold">
-                            View Appeal Guide <ArrowRight size={16} aria-hidden="true" />
+                            {t('education.gotDenied.cta')} <ArrowRight size={16} aria-hidden="true" />
                         </span>
                     </div>
                 </div>
             </Link>
 
-            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label={t('education.tabs.ariaLabel')}>
                 <div className="flex flex-wrap">
-                    <TabButton id="EMERGENCY" label="Out of Meds?" icon={Clock} />
-                    <TabButton id="GENERICS" label="Generics vs. Brand" icon={Pill} />
-                    <TabButton id="DEDUCTIBLE_TRAP" label="Deductible Trap" icon={AlertTriangle} />
-                    <TabButton id="DIVERSION" label="Diversion Programs" icon={AlertOctagon} />
-                    <TabButton id="DIRECTORY" label="Directory" icon={Search} />
-                    <TabButton id="INSURANCE" label="Insurance(s)" icon={Shield} />
-                    <TabButton id="MENTAL" label="Mental Health" icon={Heart} />
-                    <TabButton id="OOP" label="Out-of-Pocket Max" icon={DollarSign} />
+                    <TabButton id="EMERGENCY" label={t('education.tabs.emergency')} icon={Clock} />
+                    <TabButton id="GENERICS" label={t('education.tabs.generics')} icon={Pill} />
+                    <TabButton id="DEDUCTIBLE_TRAP" label={t('education.tabs.deductibleTrap')} icon={AlertTriangle} />
+                    <TabButton id="DIVERSION" label={t('education.tabs.diversion')} icon={AlertOctagon} />
+                    <TabButton id="DIRECTORY" label={t('education.tabs.directory')} icon={Search} />
+                    <TabButton id="INSURANCE" label={t('education.tabs.insurance')} icon={Shield} />
+                    <TabButton id="MENTAL" label={t('education.tabs.mental')} icon={Heart} />
+                    <TabButton id="OOP" label={t('education.tabs.oop')} icon={DollarSign} />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
@@ -4945,196 +4960,195 @@ const Education = () => {
                 {activeTab === 'EMERGENCY' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
-                            <h2 className="text-2xl font-bold text-slate-900">Out of medication, or about to be?</h2>
-                            <p className="text-lg text-slate-700">Anti-rejection medicine is not something you can safely skip. If cost or a refill problem means you are running low, act today. Here is how to get a bridge supply while you sort out the cost.</p>
+                            <h2 className="text-2xl font-bold text-slate-900">{t('education.emergency.title')}</h2>
+                            <p className="text-lg text-slate-700">{t('education.emergency.intro')}</p>
                         </div>
 
                         <div className="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-lg" role="alert">
-                            <p className="text-rose-900 font-bold flex items-center gap-2 mb-1"><AlertTriangle size={18} aria-hidden="true" /> If this is a medical emergency, call 911.</p>
-                            <p className="text-rose-800 text-sm">Signs of rejection, fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell, need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong></p>
+                            <p className="text-rose-900 font-bold flex items-center gap-2 mb-1"><AlertTriangle size={18} aria-hidden="true" /> {t('education.emergency.call911')}</p>
+                            <p className="text-rose-800 text-sm"><Trans i18nKey="education.emergency.call911Text" /></p>
                         </div>
 
                         <div className="space-y-4">
                             <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-100 flex items-start gap-4">
                                 <div className="bg-emerald-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
                                 <div>
-                                    <h3 className="font-bold text-emerald-900 mb-1 flex items-center gap-2"><Phone size={16} aria-hidden="true" /> Call your transplant team first, today</h3>
-                                    <p className="text-slate-700 text-sm">This is the most important step. Your transplant center handles this all the time. Ask for the <strong>transplant pharmacist</strong> or <strong>social worker</strong>. They can often send an emergency prescription, give you samples, or start a fast assistance request the same day. Tell them plainly: "I am about to run out and I cannot afford the refill."</p>
+                                    <h3 className="font-bold text-emerald-900 mb-1 flex items-center gap-2"><Phone size={16} aria-hidden="true" /> {t('education.emergency.step1Title')}</h3>
+                                    <p className="text-slate-700 text-sm"><Trans i18nKey="education.emergency.step1Text" /></p>
                                 </div>
                             </div>
 
                             <div className="bg-blue-50 p-5 rounded-xl border border-blue-100 flex items-start gap-4">
                                 <div className="bg-blue-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
                                 <div>
-                                    <h3 className="font-bold text-blue-900 mb-1 flex items-center gap-2"><Pill size={16} aria-hidden="true" /> Ask your pharmacy for an emergency supply</h3>
-                                    <p className="text-slate-700 text-sm">Many states let a pharmacist give a few days of a regular medicine in an emergency so you do not miss doses. Ask: <em>"Can you do an emergency fill while I sort out the cost or the refill?"</em> Bring your pill bottle or the medicine name and dose.</p>
+                                    <h3 className="font-bold text-blue-900 mb-1 flex items-center gap-2"><Pill size={16} aria-hidden="true" /> {t('education.emergency.step2Title')}</h3>
+                                    <p className="text-slate-700 text-sm">{t('education.emergency.step2Pre')}<em>{t('education.emergency.step2Quote')}</em>{t('education.emergency.step2Post')}</p>
                                 </div>
                             </div>
 
                             <div className="bg-purple-50 p-5 rounded-xl border border-purple-100 flex items-start gap-4">
                                 <div className="bg-purple-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
                                 <div>
-                                    <h3 className="font-bold text-purple-900 mb-1 flex items-center gap-2"><Clock size={16} aria-hidden="true" /> Ask the drug maker about a bridge supply</h3>
-                                    <p className="text-slate-700 text-sm">Some manufacturers give a free short-term "bridge" or "quick start" supply while your Patient Assistance Program application is reviewed, so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.</p>
-                                    <Link to="/medications" className="text-purple-700 font-semibold text-sm underline mt-1 inline-block">Find your medication and its manufacturer →</Link>
+                                    <h3 className="font-bold text-purple-900 mb-1 flex items-center gap-2"><Clock size={16} aria-hidden="true" /> {t('education.emergency.step3Title')}</h3>
+                                    <p className="text-slate-700 text-sm">{t('education.emergency.step3Text')}</p>
+                                    <Link to="/medications" className="text-purple-700 font-semibold text-sm underline mt-1 inline-block">{t('education.emergency.step3Link')}</Link>
                                 </div>
                             </div>
 
                             <div className="bg-amber-50 p-5 rounded-xl border border-amber-100 flex items-start gap-4">
                                 <div className="bg-amber-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
                                 <div>
-                                    <h3 className="font-bold text-amber-900 mb-1 flex items-center gap-2"><Heart size={16} aria-hidden="true" /> Check foundations for urgent help</h3>
-                                    <p className="text-slate-700 text-sm">Some copay foundations review urgent cases faster. It is worth a call when you are in a pinch. See the trusted groups in our directory.</p>
-                                    <Link to="/education?topic=DIRECTORY" className="text-amber-800 font-semibold text-sm underline mt-1 inline-block">Open the resource directory →</Link>
+                                    <h3 className="font-bold text-amber-900 mb-1 flex items-center gap-2"><Heart size={16} aria-hidden="true" /> {t('education.emergency.step4Title')}</h3>
+                                    <p className="text-slate-700 text-sm">{t('education.emergency.step4Text')}</p>
+                                    <Link to="/education?topic=DIRECTORY" className="text-amber-800 font-semibold text-sm underline mt-1 inline-block">{t('education.emergency.step4Link')}</Link>
                                 </div>
                             </div>
                         </div>
 
                         <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                            <h3 className="text-lg font-bold text-slate-900 mb-3">Have this ready when you call</h3>
-                            <p className="text-slate-600 text-sm mb-3">It makes every call faster:</p>
+                            <h3 className="text-lg font-bold text-slate-900 mb-3">{t('education.emergency.readyTitle')}</h3>
+                            <p className="text-slate-600 text-sm mb-3">{t('education.emergency.readySubtitle')}</p>
                             <ul className="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
-                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your medicine names and doses</span></li>
-                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your pharmacy's name and phone</span></li>
-                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your insurance card (if you have one)</span></li>
-                                <li className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>Your transplant center's phone number</span></li>
+                                {t('education.emergency.readyItems', { returnObjects: true }).map((item, i) => (
+                                    <li key={i} className="flex items-start gap-2"><span className="text-emerald-600 font-bold">✓</span><span>{item}</span></li>
+                                ))}
                             </ul>
                         </div>
 
                         <div className="bg-rose-50 border border-rose-200 p-5 rounded-xl text-center">
-                            <p className="text-rose-900 font-semibold mb-1">Do not just stop taking your medicine.</p>
-                            <p className="text-rose-800 text-sm">Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible, but let them make that call, not you.</p>
-                            <Link to="/application-help" className="inline-block mt-3 bg-rose-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-rose-700 transition text-sm">Get help applying for longer-term assistance</Link>
+                            <p className="text-rose-900 font-semibold mb-1">{t('education.emergency.dontStopTitle')}</p>
+                            <p className="text-rose-800 text-sm">{t('education.emergency.dontStopText')}</p>
+                            <Link to="/application-help" className="inline-block mt-3 bg-rose-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-rose-700 transition text-sm">{t('education.emergency.dontStopCta')}</Link>
                         </div>
                     </div>
                 )}
                 {activeTab === 'OOP' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="prose prose-slate max-w-none">
-                            <h2 className="text-2xl font-bold text-slate-900">Mixing Programs</h2>
-                            <p className="text-lg text-slate-700">Most transplant patients use a mix of help programs to pay for their medicines. It's like a puzzle.</p>
+                            <h2 className="text-2xl font-bold text-slate-900">{t('education.oop.title')}</h2>
+                            <p className="text-lg text-slate-700">{t('education.oop.intro')}</p>
                         </div>
                         <div className="grid md:grid-cols-2 gap-6">
                              <section className="bg-purple-50 p-6 rounded-xl border border-purple-100">
                                  <div className="flex items-center gap-2 mb-3">
-                                    <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">Effective January 2026</span>
-                                    <h3 className="font-bold text-purple-900">Medicare Drug Price Negotiation</h3>
+                                    <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">{t('education.oop.negotiation.badge')}</span>
+                                    <h3 className="font-bold text-purple-900">{t('education.oop.negotiation.title')}</h3>
                                  </div>
-                                 <p className="text-sm text-purple-900 mb-4 font-medium">For the first time ever, Medicare talked drug makers into lower prices.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">The first new prices start January 1, 2026, with big savings. Examples: <strong>Eliquis</strong> drops from $521 to $231/month (56% less), and <strong>Januvia</strong> drops from $527 to $113/month (79% less). This will save Medicare patients $1.5 billion in 2026 alone.</p>
-                                 <p className="text-slate-700 text-sm mb-4">The first 10 drugs include medicines for heart failure (Entresto), diabetes (Jardiance, Farxiga, Januvia), blood clots (Eliquis, Xarelto), immune diseases (Stelara, Enbrel), blood cancers (Imbruvica), and insulin (NovoLog/Fiasp).</p>
-                                 <p className="text-slate-700 text-sm italic">About 8.8 million Medicare Part D patients used these medicines in 2023. A second round of 15 drugs was selected for 2027 prices.</p>
+                                 <p className="text-sm text-purple-900 mb-4 font-medium">{t('education.oop.negotiation.lead')}</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed"><Trans i18nKey="education.oop.negotiation.p1" /></p>
+                                 <p className="text-slate-700 text-sm mb-4">{t('education.oop.negotiation.p2')}</p>
+                                 <p className="text-slate-700 text-sm italic">{t('education.oop.negotiation.p3')}</p>
                                  <div className="mt-4 p-3 bg-purple-100 rounded-lg border border-purple-200">
-                                     <p className="text-purple-900 text-sm font-bold mb-1">Third Round Announced January 27, 2026</p>
-                                     <p className="text-slate-700 text-sm mb-2">CMS selected 15 new drugs for negotiation, including the <strong>first-ever Part B drugs</strong>. New prices take effect January 1, 2028.</p>
-                                     <p className="text-slate-700 text-xs"><strong>Transplant-relevant picks:</strong> Orencia (abatacept, related to Belatacept), Trulicity (dulaglutide, for post-transplant diabetes), Xolair (omalizumab, lung transplant), Anoro Ellipta (lung transplant). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.</p>
+                                     <p className="text-purple-900 text-sm font-bold mb-1">{t('education.oop.negotiation.round3Title')}</p>
+                                     <p className="text-slate-700 text-sm mb-2"><Trans i18nKey="education.oop.negotiation.round3P1" /></p>
+                                     <p className="text-slate-700 text-xs"><Trans i18nKey="education.oop.negotiation.round3P2" /></p>
                                  </div>
                              </section>
                              <section className="bg-teal-50 p-6 rounded-xl border border-teal-100">
                                  <div className="flex items-center gap-2 mb-3">
-                                    <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded">New in Mid-2026</span>
-                                    <h3 className="font-bold text-teal-900">Medicare GLP-1 Coverage for Weight Loss</h3>
+                                    <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded">{t('education.oop.glp1.badge')}</span>
+                                    <h3 className="font-bold text-teal-900">{t('education.oop.glp1.title')}</h3>
                                  </div>
-                                 <p className="text-sm text-teal-900 mb-4 font-medium">A big change: Medicare will now cover weight loss drugs.</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Starting mid-2026, Medicare will cover certain GLP-1 drugs for weight loss, ending a rule that kept these drugs out of Part D.</p>
-                                 <p className="text-slate-700 text-sm mb-4"><strong>Covered drugs:</strong> Wegovy and Zepbound will be covered for patients with weight-related health issues. Your copay should be about <strong>$50/month</strong> after you meet your deductible.</p>
-                                 <p className="text-slate-700 text-sm italic">Eli Lilly and Novo Nordisk agreed to give these drugs at lower prices for Medicare patients.</p>
+                                 <p className="text-sm text-teal-900 mb-4 font-medium">{t('education.oop.glp1.lead')}</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">{t('education.oop.glp1.p1')}</p>
+                                 <p className="text-slate-700 text-sm mb-4"><Trans i18nKey="education.oop.glp1.p2" /></p>
+                                 <p className="text-slate-700 text-sm italic">{t('education.oop.glp1.p3')}</p>
                              </section>
                              <section className="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
                                  <div className="flex items-center gap-2 mb-3">
-                                    <h3 className="font-bold text-indigo-900">Medicare Prescription Payment Plan</h3>
+                                    <h3 className="font-bold text-indigo-900">{t('education.oop.m3p.title')}</h3>
                                  </div>
-                                 <p className="text-sm text-indigo-900 mb-4 font-medium">A big change from new laws</p>
-                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">Since 2025, Medicare Part D patients can spread out their drug costs over the year instead of paying large amounts all at once.</p>
-                                 <p className="text-slate-700 text-sm mb-4">This program makes your costs more steady and easier to manage.</p>
-                                 <p className="text-slate-700 text-sm font-medium">Ask your Part D plan about this payment plan during open enrollment.</p>
+                                 <p className="text-sm text-indigo-900 mb-4 font-medium">{t('education.oop.m3p.lead')}</p>
+                                 <p className="text-slate-700 text-sm mb-4 leading-relaxed">{t('education.oop.m3p.p1')}</p>
+                                 <p className="text-slate-700 text-sm mb-4">{t('education.oop.m3p.p2')}</p>
+                                 <p className="text-slate-700 text-sm font-medium">{t('education.oop.m3p.p3')}</p>
                              </section>
                         </div>
 
                         <div className="border-t border-slate-200 pt-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Part D vs Medicare Advantage: Picking Your Plan</h2>
-                            <p className="text-slate-600 mb-6">Knowing the differences can save you a lot of money on transplant medicines.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('education.oop.pick.title')}</h2>
+                            <p className="text-slate-600 mb-6">{t('education.oop.pick.intro')}</p>
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
                                 <section className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
-                                    <h3 className="font-bold text-blue-900 text-xl mb-3">Medicare Part D (Traditional)</h3>
-                                    <p className="text-sm text-slate-600 mb-4">A drug plan that works with Original Medicare. It's a separate plan just for medicines.</p>
+                                    <h3 className="font-bold text-blue-900 text-xl mb-3">{t('education.oop.pick.partDTitle')}</h3>
+                                    <p className="text-sm text-slate-600 mb-4">{t('education.oop.pick.partDDesc')}</p>
                                     <ul className="space-y-2 text-slate-700 text-sm">
-                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Works with any Medicare-accepting provider</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>Separate deductible and premium</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span></li>
+                                        {t('education.oop.pick.partDItems', { returnObjects: true }).map((item, i) => (
+                                            <li key={i} className="flex items-start gap-2"><span className="text-blue-600 font-bold">✓</span><span>{item}</span></li>
+                                        ))}
                                     </ul>
                                 </section>
                                 <section className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
-                                    <h3 className="font-bold text-green-900 text-xl mb-3">Medicare Advantage (MA-PD)</h3>
-                                    <p className="text-sm text-slate-600 mb-4">An all-in-one plan that covers both doctor visits AND medicines.</p>
+                                    <h3 className="font-bold text-green-900 text-xl mb-3">{t('education.oop.pick.maTitle')}</h3>
+                                    <p className="text-sm text-slate-600 mb-4">{t('education.oop.pick.maDesc')}</p>
                                     <ul className="space-y-2 text-slate-700 text-sm">
-                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Often lower or $0 premiums</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>Provider networks may be limited</span></li>
-                                        <li className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>$2,100 out-of-pocket cap (2026, up from $2,000 in 2025)</span></li>
+                                        {t('education.oop.pick.maItems', { returnObjects: true }).map((item, i) => (
+                                            <li key={i} className="flex items-start gap-2"><span className="text-green-600 font-bold">✓</span><span>{item}</span></li>
+                                        ))}
                                     </ul>
                                 </section>
                             </div>
 
                             <div className="bg-white p-6 rounded-xl border border-slate-200 mb-8">
-                                <h3 className="text-xl font-bold text-slate-900 mb-4">How to Compare Plans for Your Medicines</h3>
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">{t('education.oop.compare.title')}</h3>
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Check Drug Lists</h4>
-                                            <p className="text-slate-600 text-sm mb-2">Use the Medicare Plan Finder tool at medicare.gov to see which plans cover your drugs and how much they cost.</p>
-                                            <a href="https://www.medicare.gov/plan-compare/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Visit Medicare Plan Finder (opens in new tab)">Medicare Plan Finder <ExternalLink size={12} aria-hidden="true" /></a>
+                                            <h4 className="font-bold text-slate-800 mb-1">{t('education.oop.compare.step1Title')}</h4>
+                                            <p className="text-slate-600 text-sm mb-2">{t('education.oop.compare.step1Text')}</p>
+                                            <a href="https://www.medicare.gov/plan-compare/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label={t('education.oop.compare.step1LinkAria')}>{t('education.oop.compare.step1Link')} <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Compare Total Costs</h4>
-                                            <p className="text-slate-600 text-sm">Look at monthly fees, deductibles, copays, and which pharmacies you can use. Remember the $2,100 yearly limit (2026) when you add up costs.</p>
+                                            <h4 className="font-bold text-slate-800 mb-1">{t('education.oop.compare.step2Title')}</h4>
+                                            <p className="text-slate-600 text-sm">{t('education.oop.compare.step2Text')}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Look Into Extra Help</h4>
-                                            <p className="text-slate-600 text-sm mb-2">If you have low income, the Extra Help program can cut costs for Part D and MA-PD plans. It can remove your monthly fees and deductible ($615 in 2026) and cap copays for both generic and brand-name drugs.</p>
-                                            <a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Apply for Extra Help (opens in new tab)">Apply for Extra Help <ExternalLink size={12} aria-hidden="true" /></a>
+                                            <h4 className="font-bold text-slate-800 mb-1">{t('education.oop.compare.step3Title')}</h4>
+                                            <p className="text-slate-600 text-sm mb-2">{t('education.oop.compare.step3Text')}</p>
+                                            <a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label={t('education.oop.compare.step3LinkAria')}>{t('education.oop.compare.step3Link')} <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <div className="bg-blue-100 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 mb-1">Get Free Help</h4>
-                                            <p className="text-slate-600 text-sm mb-2">Call your State Health Insurance Assistance Program (SHIP) for free help picking a plan.</p>
-                                            <a href="https://www.shiphelp.org/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label="Find Your Local SHIP (opens in new tab)">Find Your Local SHIP <ExternalLink size={12} aria-hidden="true" /></a>
+                                            <h4 className="font-bold text-slate-800 mb-1">{t('education.oop.compare.step4Title')}</h4>
+                                            <p className="text-slate-600 text-sm mb-2">{t('education.oop.compare.step4Text')}</p>
+                                            <a href="https://www.shiphelp.org/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" aria-label={t('education.oop.compare.step4LinkAria')}>{t('education.oop.compare.step4Link')} <ExternalLink size={12} aria-hidden="true" /></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                                <h3 className="text-xl font-bold text-slate-900 mb-4">Medicare Parts for Transplant Drugs</h3>
-                                <p className="text-slate-600 mb-4">Knowing which part of Medicare pays for your transplant medicines is key.</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">{t('education.oop.parts.title')}</h3>
+                                <p className="text-slate-600 mb-4">{t('education.oop.parts.intro')}</p>
                                 <div className="grid md:grid-cols-3 gap-4">
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
-                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part A (Hospital)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Pays for drugs given while you're in the hospital.</p>
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">{t('education.oop.parts.partATitle')}</h4>
+                                        <p className="text-xs text-slate-600 mb-3">{t('education.oop.parts.partADesc')}</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
-                                            <li>Induction agents (Thymoglobulin, Simulect)</li>
+                                            <li>{t('education.oop.parts.partAItem')}</li>
                                         </ul>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
-                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part B (Medical)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Pays for some drugs you get at clinics. Also covers anti-rejection drugs if you don't have Part D.</p>
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">{t('education.oop.parts.partBTitle')}</h4>
+                                        <p className="text-xs text-slate-600 mb-3">{t('education.oop.parts.partBDesc')}</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
-                                            <li>IV infusions (Belatacept/Nulojix)</li>
+                                            <li>{t('education.oop.parts.partBItem')}</li>
                                         </ul>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-slate-200">
-                                        <h4 className="font-bold text-blue-700 text-lg mb-2">Part D (Prescription)</h4>
-                                        <p className="text-xs text-slate-600 mb-3">Pays for most of the pills you take at home each day.</p>
+                                        <h4 className="font-bold text-blue-700 text-lg mb-2">{t('education.oop.parts.partDTitle')}</h4>
+                                        <p className="text-xs text-slate-600 mb-3">{t('education.oop.parts.partDDesc')}</p>
                                         <ul className="text-sm text-slate-700 list-disc pl-4">
-                                            <li>Tacrolimus, Mycophenolate, etc.</li>
+                                            <li>{t('education.oop.parts.partDItem')}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -5142,182 +5156,179 @@ const Education = () => {
                         </div>
 
                         <div className="border-t border-slate-200 pt-8">
-                            <h3 className="text-xl font-bold text-slate-900 mb-6">Strategies by Insurance Type</h3>
+                            <h3 className="text-xl font-bold text-slate-900 mb-6">{t('education.oop.strategies.title')}</h3>
                             <div className="grid gap-6 md:grid-cols-2">
                                 <section className="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                                    <h4 className="font-bold text-slate-900 text-lg mb-3">Commercial Insurance?</h4>
+                                    <h4 className="font-bold text-slate-900 text-lg mb-3">{t('education.oop.strategies.commercialTitle')}</h4>
                                     <ol className="space-y-2 text-slate-700 list-decimal pl-5">
-                                        <li>Use <strong>Manufacturer PAPs</strong> for copay cards.</li>
-                                        <li>Use <strong>Foundations</strong> for deductibles.</li>
+                                        <li><Trans i18nKey="education.oop.strategies.commercialItem1" /></li>
+                                        <li><Trans i18nKey="education.oop.strategies.commercialItem2" /></li>
                                     </ol>
                                 </section>
                                 <section className="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                                    <h4 className="font-bold text-slate-900 text-lg mb-3">Medicare?</h4>
+                                    <h4 className="font-bold text-slate-900 text-lg mb-3">{t('education.oop.strategies.medicareTitle')}</h4>
                                     <ol className="space-y-2 text-slate-700 list-decimal pl-5">
-                                        <li>Use <strong>Foundations</strong> for copays.</li>
-                                        <li>Check <strong>Cash Prices</strong> for generics to compare savings.</li>
+                                        <li><Trans i18nKey="education.oop.strategies.medicareItem1" /></li>
+                                        <li><Trans i18nKey="education.oop.strategies.medicareItem2" /></li>
                                     </ol>
                                 </section>
                             </div>
                         </div>
                         <aside className="bg-emerald-50 p-6 rounded-xl border border-emerald-100" role="note">
-                            <h3 className="font-bold text-emerald-900 mb-2">Key Insight</h3>
-                            <p className="text-emerald-800">Many patients mix programs, for example, a Medicare patient might get foundation grants to help with copays. Also check cash prices for generic drugs.</p>
+                            <h3 className="font-bold text-emerald-900 mb-2">{t('education.oop.keyInsightTitle')}</h3>
+                            <p className="text-emerald-800">{t('education.oop.keyInsightText')}</p>
                         </aside>
 
                         <div className="border-t border-slate-200 pt-8">
                             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
                                 <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                                     <BookOpen size={24} className="text-blue-600" aria-hidden="true" />
-                                    Insurance Words Made Simple
+                                    {t('education.oop.glossary.title')}
                                 </h2>
-                                <p className="text-slate-600 mb-6">Knowing what these words mean helps you handle costs and find help.</p>
+                                <p className="text-slate-600 mb-6">{t('education.oop.glossary.intro')}</p>
 
                                 <div className="space-y-6">
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Premium</h3>
-                                        <p className="text-slate-700 text-sm">The amount you pay each month to have insurance. Think of it like a gym membership - you pay every month whether you use it or not.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.premiumTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.premiumDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="deductible" showIcon={false}>Deductible</TermTooltip></h3>
-                                        <p className="text-slate-700 text-sm">The amount you must pay yourself before your insurance starts helping. If your deductible is $500, you pay the first $500 of medicine costs. After that, insurance helps pay.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="deductible" showIcon={false}>{t('education.oop.glossary.deductibleTerm')}</TermTooltip></h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.deductibleDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="copay" showIcon={false}>Copay</TermTooltip> (or Co-payment)</h3>
-                                        <p className="text-slate-700 text-sm">A fixed amount you pay each time you get medicine. Example: You might pay $10 for each prescription, and insurance pays the rest.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="copay" showIcon={false}>{t('education.oop.glossary.copayTerm')}</TermTooltip>{t('education.oop.glossary.copaySuffix')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.copayDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="coinsurance" showIcon={false}>Coinsurance</TermTooltip></h3>
-                                        <p className="text-slate-700 text-sm">The percentage you pay after meeting your deductible. If you have 20% coinsurance, you pay $20 for every $100 of medicine cost. Insurance pays the other $80.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="coinsurance" showIcon={false}>{t('education.oop.glossary.coinsuranceTerm')}</TermTooltip></h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.coinsuranceDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Spending Limit (<TermTooltip term="out-of-pocket-maximum" showIcon={false}>Out-of-Pocket Maximum</TermTooltip>)</h3>
-                                        <p className="text-slate-700 text-sm">The most money you will pay in one year. Once you reach this amount, insurance pays 100% of covered medicines. This is your safety net.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.oopMaxPre')}<TermTooltip term="out-of-pocket-maximum" showIcon={false}>{t('education.oop.glossary.oopMaxTerm')}</TermTooltip>{t('education.oop.glossary.oopMaxPost')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.oopMaxDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Covered Medicines List (<TermTooltip term="formulary" showIcon={false}>Formulary</TermTooltip>)</h3>
-                                        <p className="text-slate-700 text-sm">The list of medicines your insurance will cover. Think of it as the insurance company's menu. If your medicine isn't on the list, you might pay more or need special approval.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.formularyPre')}<TermTooltip term="formulary" showIcon={false}>{t('education.oop.glossary.formularyTerm')}</TermTooltip>{t('education.oop.glossary.formularyPost')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.formularyDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Tier</h3>
-                                        <p className="text-slate-700 text-sm mb-3">How insurance groups medicines by cost. Lower tiers (1-2) cost less. Higher tiers (3-4-5) cost more.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.tierTerm')}</h3>
+                                        <p className="text-slate-700 text-sm mb-3">{t('education.oop.glossary.tierDef')}</p>
                                         <ul className="text-slate-600 text-sm space-y-1 ml-4 list-disc">
-                                            <li><strong>Tier 1:</strong> Usually generic drugs (lowest cost)</li>
-                                            <li><strong>Tier 2:</strong> Preferred brand drugs</li>
-                                            <li><strong>Tier 3-5:</strong> Non-preferred or specialty drugs (highest cost)</li>
+                                            <li><Trans i18nKey="education.oop.glossary.tier1" /></li>
+                                            <li><Trans i18nKey="education.oop.glossary.tier2" /></li>
+                                            <li><Trans i18nKey="education.oop.glossary.tier3" /></li>
                                         </ul>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="prior-authorization" showIcon={false}>Prior Authorization</TermTooltip></h3>
-                                        <p className="text-slate-700 text-sm">When you need insurance company approval before they will pay for a medicine. Your doctor must explain why you need that specific medicine.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="prior-authorization" showIcon={false}>{t('education.oop.glossary.paTerm')}</TermTooltip></h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.paDef')}</p>
                                         <div className="mt-3 p-2 bg-amber-50 rounded border border-amber-200">
-                                            <p className="text-amber-900 text-xs font-bold">New in 2026: CMS WISeR Pilot</p>
-                                            <p className="text-slate-700 text-xs">The WISeR (Wasteful and Inappropriate Service Reduction) model requires prior authorization for 17 outpatient Medicare Part B services in 6 states: Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington. While it does not directly affect transplant medications, it may add steps for some procedures. <a href="/appeals" className="text-blue-600 hover:underline">Learn more on our Appeals page</a>.</p>
+                                            <p className="text-amber-900 text-xs font-bold">{t('education.oop.glossary.paWiserTitle')}</p>
+                                            <p className="text-slate-700 text-xs">{t('education.oop.glossary.paWiserPre')}<a href="/appeals" className="text-blue-600 hover:underline">{t('education.oop.glossary.paWiserLink')}</a>{t('education.oop.glossary.paWiserPost')}</p>
                                         </div>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Medicine</h3>
-                                        <p className="text-slate-700 text-sm">A medicine that works the same as a brand name but costs less. Like store-brand cereal versus name-brand - same thing, different package.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="generic" showIcon={false}>{t('education.oop.glossary.genericTerm')}</TermTooltip>{t('education.oop.glossary.genericSuffix')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.genericDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Brand Name Medicine</h3>
-                                        <p className="text-slate-700 text-sm">The original version of a medicine made by the company that invented it. Usually costs more than generic.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.brandTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.brandDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="specialty-pharmacy" showIcon={false}>Specialty</TermTooltip> Medication</h3>
-                                        <p className="text-slate-700 text-sm">Expensive medicines that need special handling or monitoring. Most transplant medicines are specialty medications. They often cost $600+ per month.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2"><TermTooltip term="specialty-pharmacy" showIcon={false}>{t('education.oop.glossary.specialtyTerm')}</TermTooltip>{t('education.oop.glossary.specialtySuffix')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.specialtyDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Medicare Part D</h3>
-                                        <p className="text-slate-700 text-sm">The part of Medicare that helps pay for prescription medicines. You must sign up for this separately.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.partDTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.partDDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Yearly Out-of-Pocket Cap</h3>
-                                        <p className="text-slate-700 text-sm">A yearly limit on what you pay out of pocket for Medicare Part D drugs. In 2026 the cap is $2,100. Once you reach it, you pay $0 for covered drugs for the rest of the year.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.oopCapTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.oopCapDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Catastrophic Coverage</h3>
-                                        <p className="text-slate-700 text-sm">After you spend a lot on medicines in one year, Medicare pays almost everything. You only pay a small amount (about $4-$12) per prescription.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.catastrophicTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.catastrophicDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">In-Network Pharmacy</h3>
-                                        <p className="text-slate-700 text-sm">A pharmacy that works with your insurance. You pay less here. Think of it as a preferred partner.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.inNetworkTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.inNetworkDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Out-of-Network Pharmacy</h3>
-                                        <p className="text-slate-700 text-sm">A pharmacy that doesn't have a deal with your insurance. You might pay more or get no coverage here.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.outNetworkTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.outNetworkDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">PBM (Pharmacy Benefit Manager)</h3>
-                                        <p className="text-slate-700 text-sm">The company that manages prescription drug coverage for your insurance. They decide which medicines are covered and how much they cost.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.pbmTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.pbmDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Patient Assistance Program (<TermTooltip term="pap" showIcon={false}>PAP</TermTooltip>)</h3>
-                                        <p className="text-slate-700 text-sm">Free or low-cost medicine programs run by drug companies. If you can't afford your medicine, these programs might help.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.papPre')}<TermTooltip term="pap" showIcon={false}>{t('education.oop.glossary.papTerm')}</TermTooltip>{t('education.oop.glossary.papPost')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.papDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Copay Card or Coupon</h3>
-                                        <p className="text-slate-700 text-sm">Help from drug companies to lower what you pay for brand name medicines. <strong>Important:</strong> These often don't work with Medicare.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.copayCardTerm')}</h3>
+                                        <p className="text-slate-700 text-sm"><Trans i18nKey="education.oop.glossary.copayCardDef" /></p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Manufacturer Assistance</h3>
-                                        <p className="text-slate-700 text-sm">Help directly from the company that makes your medicine. This can be free medicine, copay help, or discounts.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.mfrTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.mfrDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Mail Order Pharmacy</h3>
-                                        <p className="text-slate-700 text-sm">A pharmacy that ships medicine to your home. Usually gives you 90 days of medicine at once. Often costs less than getting 30 days at a local pharmacy.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.mailTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.mailDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Step Therapy</h3>
-                                        <p className="text-slate-700 text-sm">When insurance requires you to try a cheaper medicine first before they'll pay for a more expensive one. Like having to try the basic version before getting the premium version.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.stepTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.stepDef')}</p>
                                     </div>
 
                                     <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-                                        <h3 className="font-bold text-lg text-blue-800 mb-2">Exclusion</h3>
-                                        <p className="text-slate-700 text-sm">A medicine that insurance will not cover at all. You must pay the full price yourself or find other help.</p>
+                                        <h3 className="font-bold text-lg text-blue-800 mb-2">{t('education.oop.glossary.exclusionTerm')}</h3>
+                                        <p className="text-slate-700 text-sm">{t('education.oop.glossary.exclusionDef')}</p>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                                    <h3 className="font-bold text-yellow-900 text-lg mb-3">Why This Matters for Transplant Patients</h3>
-                                    <p className="text-yellow-900 mb-4">Your anti-rejection medicines are specialty medications. They are expensive. Understanding these words helps you:</p>
+                                    <h3 className="font-bold text-yellow-900 text-lg mb-3">{t('education.oop.glossary.whyTitle')}</h3>
+                                    <p className="text-yellow-900 mb-4">{t('education.oop.glossary.whyIntro')}</p>
                                     <ul className="text-yellow-900 space-y-2 ml-6 list-disc">
-                                        <li>Know what you'll pay</li>
-                                        <li>Find help when costs are too high</li>
-                                        <li>Talk to your transplant team about options</li>
-                                        <li>Apply for assistance programs</li>
+                                        {t('education.oop.glossary.whyItems', { returnObjects: true }).map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
                                     </ul>
                                 </div>
 
                                 <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-lg p-6">
-                                    <h3 className="font-bold text-emerald-900 text-lg mb-3">Questions to Ask</h3>
+                                    <h3 className="font-bold text-emerald-900 text-lg mb-3">{t('education.oop.glossary.askTitle')}</h3>
                                     <ul className="text-emerald-900 space-y-2 ml-6 list-disc">
-                                        <li>What tier are my transplant medicines?</li>
-                                        <li>How much is my deductible?</li>
-                                        <li>When do I reach my yearly spending limit?</li>
-                                        <li>Are my medicines on the covered medicines list?</li>
-                                        <li>Can I use mail order to save money?</li>
+                                        {t('education.oop.glossary.askItems', { returnObjects: true }).map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
@@ -5326,11 +5337,11 @@ const Education = () => {
                 )}
                 {activeTab === 'DIRECTORY' && (
                     <section aria-labelledby="directory-heading">
-                        <h2 id="directory-heading" className="text-2xl font-bold text-slate-900 mb-6">Trusted Resource Directory</h2>
+                        <h2 id="directory-heading" className="text-2xl font-bold text-slate-900 mb-6">{t('education.directory.title')}</h2>
                         {DIRECTORY_RESOURCES && DIRECTORY_RESOURCES.length > 0 ? (
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {DIRECTORY_RESOURCES.map((res) => (
-                                    <a key={res.name} href={res.url} target="_blank" rel="noreferrer" onClick={() => trackServerEvent('resource_view', { resource: res.name, category: res.category })} className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition h-full" aria-label={`Visit ${res.name} (opens in new tab)`}>
+                                    <a key={res.name} href={res.url} target="_blank" rel="noreferrer" onClick={() => trackServerEvent('resource_view', { resource: res.name, category: res.category })} className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition h-full" aria-label={t('education.directory.visitAria', { name: res.name })}>
                                         <div className="flex justify-between items-start mb-2">
                                             <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700 pr-2">{res.name}</h3>
                                             <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0 mt-1" aria-hidden="true" />
@@ -5343,8 +5354,8 @@ const Education = () => {
                         ) : (
                             <div className="text-center py-16 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
                                 <Globe size={48} className="mx-auto text-slate-300 mb-4" aria-hidden="true" />
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">No resources available</h3>
-                                <p className="text-slate-600 max-w-md mx-auto">We're working on adding trusted resources. Check back soon for helpful links and organizations.</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">{t('education.directory.emptyTitle')}</h3>
+                                <p className="text-slate-600 max-w-md mx-auto">{t('education.directory.emptyText')}</p>
                             </div>
                         )}
                     </section>
@@ -5358,162 +5369,157 @@ const Education = () => {
                         <section className="bg-amber-50 rounded-xl p-6 border-2 border-amber-200">
                             <div className="flex items-center gap-3 mb-4">
                                 <AlertTriangle size={28} className="text-amber-600" aria-hidden="true" />
-                                <h2 className="text-xl font-bold text-slate-900">New in 2026: CMS WISeR Prior Authorization Pilot</h2>
+                                <h2 className="text-xl font-bold text-slate-900">{t('education.insurance.wiser.title')}</h2>
                             </div>
                             <p className="text-slate-700 mb-4">
-                                Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.
+                                <Trans i18nKey="education.insurance.wiser.intro" />
                             </p>
                             <div className="grid md:grid-cols-2 gap-4 mb-4">
                                 <div className="bg-white p-4 rounded-lg border border-amber-200">
-                                    <h3 className="font-bold text-amber-900 mb-2">Affected States</h3>
+                                    <h3 className="font-bold text-amber-900 mb-2">{t('education.insurance.wiser.statesTitle')}</h3>
                                     <ul className="text-sm text-slate-700 space-y-1">
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Arizona</li>
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> New Jersey</li>
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Ohio</li>
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> <strong>Oklahoma</strong></li>
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Texas</li>
-                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> Washington</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> {t('education.insurance.wiser.stateAz')}</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> {t('education.insurance.wiser.stateNj')}</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> {t('education.insurance.wiser.stateOh')}</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> <strong>{t('education.insurance.wiser.stateOk')}</strong></li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> {t('education.insurance.wiser.stateTx')}</li>
+                                        <li className="flex items-center gap-2"><Check size={14} className="text-amber-500" aria-hidden="true" /> {t('education.insurance.wiser.stateWa')}</li>
                                     </ul>
                                 </div>
                                 <div className="bg-white p-4 rounded-lg border border-amber-200">
-                                    <h3 className="font-bold text-amber-900 mb-2">What Transplant Patients Should Know</h3>
+                                    <h3 className="font-bold text-amber-900 mb-2">{t('education.insurance.wiser.knowTitle')}</h3>
                                     <ul className="text-sm text-slate-700 space-y-1 list-disc pl-4">
-                                        <li>WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications</li>
-                                        <li>Your immunosuppressant drugs are NOT affected</li>
-                                        <li>If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization</li>
-                                        <li>Coverage decisions are made within 72 hours (48 hours for urgent cases)</li>
+                                        <li><Trans i18nKey="education.insurance.wiser.know1" /></li>
+                                        <li>{t('education.insurance.wiser.know2')}</li>
+                                        <li>{t('education.insurance.wiser.know3')}</li>
+                                        <li>{t('education.insurance.wiser.know4')}</li>
                                     </ul>
                                 </div>
                             </div>
                             <p className="text-slate-600 text-sm">
-                                The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process.
+                                {t('education.insurance.wiser.footer')}
                             </p>
                         </section>
 
                         <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center mb-8" role="note">
-                            <p className="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
+                            <p className="text-blue-900 font-medium">{t('education.insurance.note')}</p>
                         </div>
 
                         {/* Healthcare Insurance Infographic */}
                         <div className="flex justify-center mb-8">
                             <img
                                 src="/photos/tmn_infographic.jpg"
-                                alt="Comparison chart of transplant medication help by insurance type: Commercial, Medicare, Medicaid, and Uninsured"
+                                alt={t('education.insurance.infographicAlt')}
                                 aria-describedby="insurance-infographic-desc"
                                 className="max-w-full h-auto rounded-lg shadow-md"
                             />
                         </div>
                         <div id="insurance-infographic-desc" className="sr-only">
-                            This infographic compares what transplant medication help is available across four insurance types.
-                            Commercial Insurance: Insurance through your job or that you buy on your own. You may qualify for manufacturer copay cards, patient assistance programs, and copay foundations. You pay monthly premiums, copays, and deductibles, then insurance covers the rest. Common problems include high deductibles, prior authorization requirements, and copay accumulators. Next step: search your medications to find copay cards and assistance programs.
-                            Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include Part D costs and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs.
-                            Medicaid: Government insurance for people with low income. You may qualify for patient assistance programs and state-specific programs. Covers most transplant drugs with very low or no copays. Common problems include limited pharmacy networks, formulary restrictions, and coverage ending if income changes. Next step: search your medications and check with your state Medicaid office.
-                            Uninsured or Self-Pay: No current insurance coverage. You may qualify for manufacturer patient assistance programs for free medications, state programs, and discount cards. You pay the full retail price without help. Common problems include very high costs, no negotiated rates, and difficulty affording specialty medications. Next step: apply for patient assistance programs immediately as most offer free medications for qualifying patients.
-                            The infographic concludes with an encouraging message: You are not alone and there is help available no matter what type of insurance you have.
+                            {t('education.insurance.infographicDesc')}
                         </div>
 
                         {/* Insurance Change Simulation */}
                         <InsuranceChangeSimulator />
 
                         <section aria-labelledby="medicare-guide">
-                            <h2 id="medicare-guide" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicare Guide</h2>
+                            <h2 id="medicare-guide" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">{t('education.insurance.medicareGuide.title')}</h2>
                             <div className="mb-8">
-                                <h3 className="font-bold text-lg text-slate-800 mb-4">Medicare Parts for Transplant Drugs</h3>
+                                <h3 className="font-bold text-lg text-slate-800 mb-4">{t('education.insurance.medicareGuide.partsTitle')}</h3>
                                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
-                                        <strong className="text-blue-700 text-lg block mb-1">Part A (Hospital)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Induction agents</li><li>(Thymoglobulin, Simulect)</li></ul>
+                                        <strong className="text-blue-700 text-lg block mb-1">{t('education.insurance.medicareGuide.partATitle')}</strong>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4">{t('education.insurance.medicareGuide.partAItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
-                                        <strong className="text-blue-700 text-lg block mb-1">Part B (Medical)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>IV infusions (Belatacept)</li><li>Anti-rejection drugs (if Part B-ID eligible)</li><li>2026: $202.90/month premium, $283 deductible</li><li>Part B-ID premium: $121.60/month (kidney patients)</li></ul>
+                                        <strong className="text-blue-700 text-lg block mb-1">{t('education.insurance.medicareGuide.partBTitle')}</strong>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4">{t('education.insurance.medicareGuide.partBItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                     </div>
                                     <div className="border border-purple-200 p-4 rounded-lg bg-purple-50">
-                                        <strong className="text-purple-700 text-lg block mb-1">Part C (Medicare Advantage)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Combines A, B, and usually D</li><li>May have extra benefits</li><li>You must use certain doctors</li></ul>
+                                        <strong className="text-purple-700 text-lg block mb-1">{t('education.insurance.medicareGuide.partCTitle')}</strong>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4">{t('education.insurance.medicareGuide.partCItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                     </div>
                                     <div className="border border-slate-200 p-4 rounded-lg bg-slate-50">
-                                        <strong className="text-blue-700 text-lg block mb-1">Part D (Prescription)</strong>
-                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4"><li>Tacrolimus</li><li>Mycophenolate</li><li>Valcyte, etc.</li></ul>
+                                        <strong className="text-blue-700 text-lg block mb-1">{t('education.insurance.medicareGuide.partDTitle')}</strong>
+                                        <ul className="text-sm font-medium text-slate-800 list-disc pl-4">{t('education.insurance.medicareGuide.partDItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                     </div>
                                 </div>
                             </div>
                             <div className="mb-8">
-                                <h3 className="font-bold text-lg text-slate-800 mb-4">Part D vs Medicare Advantage: Choosing Your Plan</h3>
+                                <h3 className="font-bold text-lg text-slate-800 mb-4">{t('education.insurance.medicareGuide.chooseTitle')}</h3>
                                 <div className="overflow-hidden border border-slate-200 rounded-xl">
                                     <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
                                         <div className="p-6">
-                                            <h4 className="font-bold text-indigo-700 text-lg mb-2">Part D (Traditional)</h4>
-                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Works with any Medicare-accepting provider</li><li>Separate deductible and premium</li><li>$2,100 out-of-pocket cap (2026)</li></ul>
+                                            <h4 className="font-bold text-indigo-700 text-lg mb-2">{t('education.insurance.medicareGuide.tradTitle')}</h4>
+                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5">{t('education.insurance.medicareGuide.tradItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                         </div>
                                         <div className="p-6">
-                                            <h4 className="font-bold text-indigo-700 text-lg mb-2">Medicare Advantage (MA-PD)</h4>
-                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5"><li>Often lower or $0 premiums</li><li>Provider networks may be limited</li><li>$2,100 out-of-pocket cap (2026)</li></ul>
+                                            <h4 className="font-bold text-indigo-700 text-lg mb-2">{t('education.insurance.medicareGuide.maTitle')}</h4>
+                                            <ul className="space-y-2 text-sm text-slate-800 list-disc pl-5">{t('education.insurance.medicareGuide.maItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
                         <section aria-labelledby="commercial-insurance">
-                            <h2 id="commercial-insurance" className="text-xl font-bold text-blue-900 bg-blue-50 p-4 rounded-t-xl border-b border-blue-100">Commercial Insurance</h2>
+                            <h2 id="commercial-insurance" className="text-xl font-bold text-blue-900 bg-blue-50 p-4 rounded-t-xl border-b border-blue-100">{t('education.insurance.commercial.title')}</h2>
                             <div className="bg-white border border-slate-200 rounded-b-xl p-6 space-y-4">
-                                <p className="text-slate-700">Your main payer for the first 30 months after transplant.</p>
+                                <p className="text-slate-700">{t('education.insurance.commercial.intro')}</p>
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div>
-                                        <h3 className="font-bold text-slate-900 mb-2">Key Points</h3>
-                                        <ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Can use most drug maker PAPs</li><li>Copay cards often work</li><li>Foundations help with high copays</li><li>May need to use a certain pharmacy</li></ul>
+                                        <h3 className="font-bold text-slate-900 mb-2">{t('education.insurance.commercial.keyPointsTitle')}</h3>
+                                        <ul className="list-disc pl-5 text-slate-600 text-sm space-y-1">{t('education.insurance.commercial.keyPoints', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul>
                                     </div>
-                                    <div><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><p className="text-sm text-slate-700">Start with drug maker PAPs, then use foundations for any copays or deductibles left over.</p></div>
+                                    <div><h3 className="font-bold text-emerald-700 mb-2">{t('education.insurance.commercial.strategyTitle')}</h3><p className="text-sm text-slate-700">{t('education.insurance.commercial.strategy')}</p></div>
                                 </div>
                             </div>
                         </section>
                         <div className="grid md:grid-cols-2 gap-6">
                             <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="va-health">
-                                <h2 id="va-health" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">VA Health Care</h2>
-                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">For veterans who qualify.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Priority Groups 1–6: $0 for medicines. Use the VA pharmacy first. Work with your VA transplant team.</div><a href="https://www.va.gov/health-care/eligibility/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit VA Prescription Information (opens in new tab)">VA Prescription Information <ExternalLink size={12} aria-hidden="true" /></a></div>
+                                <h2 id="va-health" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">{t('education.insurance.va.title')}</h2>
+                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">{t('education.insurance.va.intro')}</p><div className="text-sm"><strong className="block text-emerald-700">{t('education.insurance.va.strategyTitle')}</strong>{t('education.insurance.va.strategy')}</div><a href="https://www.va.gov/health-care/eligibility/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label={t('education.insurance.va.linkAria')}>{t('education.insurance.va.link')} <ExternalLink size={12} aria-hidden="true" /></a></div>
                             </section>
                             <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="tricare">
-                                <h2 id="tricare" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">TRICARE</h2>
-                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">For military members and families.</p><div className="text-sm"><strong className="block text-emerald-700">Best Strategy</strong>Use the military pharmacy ($0 copay). Use TRICARE mail order for ongoing medicines. Check the drug list search tool.</div><a href="https://www.tricare.mil/CoveredServices/Pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit TRICARE Formulary Search (opens in new tab)">TRICARE Drug List Search <ExternalLink size={12} aria-hidden="true" /></a></div>
+                                <h2 id="tricare" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">{t('education.insurance.tricare.title')}</h2>
+                                <div className="p-4 space-y-3"><p className="text-sm text-slate-600">{t('education.insurance.tricare.intro')}</p><div className="text-sm"><strong className="block text-emerald-700">{t('education.insurance.tricare.strategyTitle')}</strong>{t('education.insurance.tricare.strategy')}</div><a href="https://www.tricare.mil/CoveredServices/Pharmacy" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label={t('education.insurance.tricare.linkAria')}>{t('education.insurance.tricare.link')} <ExternalLink size={12} aria-hidden="true" /></a></div>
                             </section>
                         </div>
                         <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="no-insurance">
-                            <h2 id="no-insurance" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">No Insurance</h2>
-                            <div className="p-6 bg-white"><p className="text-slate-700 mb-4">For patients without insurance.</p><h3 className="font-bold text-emerald-700 mb-2">Best Strategy</h3><ul className="list-disc pl-5 text-slate-600 text-sm space-y-1"><li>Start with drug maker PAPs</li><li>Check Cost Plus Drugs prices</li><li>Use discount tools (GoodRx, SingleCare, etc.)</li><li>Look into Medicaid or Marketplace plans</li></ul><a href="https://www.healthcare.gov/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-4" aria-label="Explore Insurance Options on Healthcare.gov (opens in new tab)">Find Insurance Options <ExternalLink size={12} aria-hidden="true" /></a></div>
+                            <h2 id="no-insurance" className="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">{t('education.insurance.noInsurance.title')}</h2>
+                            <div className="p-6 bg-white"><p className="text-slate-700 mb-4">{t('education.insurance.noInsurance.intro')}</p><h3 className="font-bold text-emerald-700 mb-2">{t('education.insurance.noInsurance.strategyTitle')}</h3><ul className="list-disc pl-5 text-slate-600 text-sm space-y-1">{t('education.insurance.noInsurance.items', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul><a href="https://www.healthcare.gov/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-4" aria-label={t('education.insurance.noInsurance.linkAria')}>{t('education.insurance.noInsurance.link')} <ExternalLink size={12} aria-hidden="true" /></a></div>
                         </section>
 
                         <section aria-labelledby="medicaid-section">
-                            <h2 id="medicaid-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicaid (State-Based)</h2>
-                            <p className="text-slate-600 mb-6">A program for people with low income. What it covers depends on your state.</p>
+                            <h2 id="medicaid-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">{t('education.insurance.medicaid.title')}</h2>
+                            <p className="text-slate-600 mb-6">{t('education.insurance.medicaid.intro')}</p>
                             <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
-                                <label htmlFor="state-select" className="block font-bold text-slate-700 mb-2">Select your State:</label>
+                                <label htmlFor="state-select" className="block font-bold text-slate-700 mb-2">{t('education.insurance.medicaid.selectLabel')}</label>
                                 <div className="relative">
                                     <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={20} aria-hidden="true" />
                                     <select id="state-select" className="w-full appearance-none p-4 pr-10 rounded-lg border border-slate-300 text-lg bg-white focus:ring-2 focus:ring-emerald-500 outline-none" onChange={(e) => setSelectedState(e.target.value)} value={selectedState}>
-                                        <option value="">-- Choose a State --</option>
+                                        <option value="">{t('education.insurance.medicaid.selectPlaceholder')}</option>
                                         {STATES.map(s => <option key={s.name} value={s.url}>{s.name}</option>)}
                                     </select>
                                 </div>
                                 {selectedState && (
                                     <div className="mt-6 text-center">
-                                        <a href={selectedState} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition" aria-label="Visit your state's Medicaid website (opens in new tab)">Go to Official Site <ExternalLink size={18} aria-hidden="true" /></a>
-                                        <p className="text-xs text-slate-600 mt-3">You are leaving this app to visit a government website.</p>
+                                        <a href={selectedState} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition" aria-label={t('education.insurance.medicaid.goAria')}>{t('education.insurance.medicaid.go')} <ExternalLink size={18} aria-hidden="true" /></a>
+                                        <p className="text-xs text-slate-600 mt-3">{t('education.insurance.medicaid.leaving')}</p>
                                     </div>
                                 )}
                             </div>
                         </section>
 
                         <section aria-labelledby="ihs-section">
-                            <h2 id="ihs-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Indian Health Service / Tribal Programs</h2>
-                            <p className="text-slate-600 mb-6">For American Indian and Alaska Native patients who qualify.</p>
+                            <h2 id="ihs-section" className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">{t('education.insurance.ihs.title')}</h2>
+                            <p className="text-slate-600 mb-6">{t('education.insurance.ihs.intro')}</p>
                             <div className="grid md:grid-cols-2 gap-6">
-                                <a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noreferrer" className="bg-white p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-200 transition text-center group" aria-label="Find an IHS facility (opens in new tab)">
+                                <a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noreferrer" className="bg-white p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-200 transition text-center group" aria-label={t('education.insurance.ihs.findAria')}>
                                     <div className="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-700" aria-hidden="true"><LandPlot size={32} /></div>
-                                    <h3 className="font-bold text-lg text-slate-900 mb-2">Find a Facility</h3>
-                                    <p className="text-sm text-slate-600 mb-6">Use the official IHS locator to find clinics and pharmacies near you.</p>
-                                    <span className="inline-block w-full bg-emerald-700 group-hover:bg-emerald-800 text-white font-bold py-2 rounded-lg">Open IHS Locator</span>
+                                    <h3 className="font-bold text-lg text-slate-900 mb-2">{t('education.insurance.ihs.findTitle')}</h3>
+                                    <p className="text-sm text-slate-600 mb-6">{t('education.insurance.ihs.findText')}</p>
+                                    <span className="inline-block w-full bg-emerald-700 group-hover:bg-emerald-800 text-white font-bold py-2 rounded-lg">{t('education.insurance.ihs.findCta')}</span>
                                 </a>
-                                <section className="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy"><h3 id="ihs-strategy" className="font-bold text-slate-900 mb-4">Best Strategy</h3><p className="text-slate-600 text-sm">Use your local IHS or Urban Indian Program, usually $0 cost.</p></section>
+                                <section className="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy"><h3 id="ihs-strategy" className="font-bold text-slate-900 mb-4">{t('education.insurance.ihs.strategyTitle')}</h3><p className="text-slate-600 text-sm">{t('education.insurance.ihs.strategy')}</p></section>
                             </div>
                         </section>
                     </div>
@@ -5521,8 +5527,8 @@ const Education = () => {
                 {activeTab === 'DEDUCTIBLE_TRAP' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The Deductible Trap</h1>
-                            <p className="text-xl text-slate-600">Why Prescription Discount Cards Can Cost Transplant Patients More</p>
+                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('education.deductibleTrap.title')}</h1>
+                            <p className="text-xl text-slate-600">{t('education.deductibleTrap.subtitle')}</p>
                         </div>
 
                         <div className="bg-gradient-to-br from-red-50 to-orange-50 border-4 border-red-300 rounded-2xl p-8 shadow-lg">
@@ -5531,140 +5537,140 @@ const Education = () => {
                                     <AlertTriangle size={32} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-red-900 mb-2">⚠️ Important Warning for Transplant Patients</h2>
-                                    <p className="text-lg font-bold text-red-800">Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars each year.</p>
+                                    <h2 className="text-2xl font-bold text-red-900 mb-2">{t('education.deductibleTrap.warning.title')}</h2>
+                                    <p className="text-lg font-bold text-red-800">{t('education.deductibleTrap.warning.lead')}</p>
                                 </div>
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
-                                <h3 className="font-bold text-red-900 text-xl mb-3">Watch out for the "deductible trap." Here's what happens:</h3>
-                                <p className="text-red-900 text-lg leading-relaxed mb-4">If you use a discount card, <span className="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your deductible</span>.</p>
-                                <p className="text-slate-800 leading-relaxed mb-3">You still have to pay your full deductible later. This can cost you more money over the year.</p>
-                                <p className="text-slate-700 font-medium">What to do: Ask your insurance company when to start using discount cards.</p>
+                                <h3 className="font-bold text-red-900 text-xl mb-3">{t('education.deductibleTrap.warning.boxTitle')}</h3>
+                                <p className="text-red-900 text-lg leading-relaxed mb-4">{t('education.deductibleTrap.warning.boxP1Pre')}<span className="font-bold bg-yellow-200 px-2 py-1 rounded">{t('education.deductibleTrap.warning.boxP1Highlight')}</span>{t('education.deductibleTrap.warning.boxP1Post')}</p>
+                                <p className="text-slate-800 leading-relaxed mb-3">{t('education.deductibleTrap.warning.boxP2')}</p>
+                                <p className="text-slate-700 font-medium">{t('education.deductibleTrap.warning.boxP3')}</p>
                             </div>
                         </div>
 
                         <section className="bg-slate-50 p-8 rounded-xl border border-slate-200" aria-labelledby="real-example">
                             <h2 id="real-example" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <DollarSign className="text-emerald-600" size={28} aria-hidden="true" />
-                                Real-World Example
+                                {t('education.deductibleTrap.example.title')}
                             </h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-white p-6 rounded-xl border-2 border-emerald-200">
-                                    <div className="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full inline-block mb-3">✅ The Right Way</div>
-                                    <h3 className="font-bold text-lg text-slate-900 mb-4">Using Insurance</h3>
+                                    <div className="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full inline-block mb-3">{t('education.deductibleTrap.example.rightBadge')}</div>
+                                    <h3 className="font-bold text-lg text-slate-900 mb-4">{t('education.deductibleTrap.example.rightTitle')}</h3>
                                     <ul className="space-y-3 text-slate-700">
                                         <li className="flex items-start gap-2">
-                                            <span className="font-bold text-slate-900">Month 1-3:</span>
-                                            <span>Pay $2,100 out-of-pocket (reaching your yearly limit)</span>
+                                            <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.rightM13Label')}</span>
+                                            <span>{t('education.deductibleTrap.example.rightM13')}</span>
                                         </li>
                                         <li className="flex items-start gap-2">
-                                            <span className="font-bold text-slate-900">Month 4-12:</span>
-                                            <span>Insurance pays 100% = $0 out-of-pocket</span>
+                                            <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.rightM412Label')}</span>
+                                            <span>{t('education.deductibleTrap.example.rightM412')}</span>
                                         </li>
                                         <li className="pt-3 border-t-2 border-emerald-200">
-                                            <span className="font-bold text-emerald-700 text-xl">Total Annual Cost: $2,100</span>
+                                            <span className="font-bold text-emerald-700 text-xl">{t('education.deductibleTrap.example.rightTotal')}</span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl border-2 border-red-200">
-                                    <div className="bg-red-100 text-red-800 font-bold px-3 py-1 rounded-full inline-block mb-3">❌ The Discount Card Trap</div>
-                                    <h3 className="font-bold text-lg text-slate-900 mb-4">Using GoodRx/SingleCare</h3>
+                                    <div className="bg-red-100 text-red-800 font-bold px-3 py-1 rounded-full inline-block mb-3">{t('education.deductibleTrap.example.trapBadge')}</div>
+                                    <h3 className="font-bold text-lg text-slate-900 mb-4">{t('education.deductibleTrap.example.trapTitle')}</h3>
                                     <ul className="space-y-3 text-slate-700">
                                         <li className="flex items-start gap-2">
-                                            <span className="font-bold text-slate-900">Month 1-12:</span>
-                                            <span>Pay discounted price (~$200/month) but NONE counts toward yearly limit</span>
+                                            <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.trapM112Label')}</span>
+                                            <span>{t('education.deductibleTrap.example.trapM112')}</span>
                                         </li>
                                         <li className="flex items-start gap-2">
-                                            <span className="font-bold text-slate-900">Result:</span>
-                                            <span>You NEVER reach your yearly limit, so you pay all year long</span>
+                                            <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.trapResultLabel')}</span>
+                                            <span>{t('education.deductibleTrap.example.trapResult')}</span>
                                         </li>
                                         <li className="pt-3 border-t-2 border-red-200">
-                                            <span className="font-bold text-red-700 text-xl">Total Annual Cost: $2,400</span>
+                                            <span className="font-bold text-red-700 text-xl">{t('education.deductibleTrap.example.trapTotal')}</span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
-                                <p className="text-yellow-900 font-bold text-lg">Small savings today = thousands of dollars in extra costs over the year.</p>
+                                <p className="text-yellow-900 font-bold text-lg">{t('education.deductibleTrap.example.takeaway')}</p>
                             </div>
                         </section>
 
                         <section className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200" aria-labelledby="when-to-use">
-                            <h2 id="when-to-use" className="text-2xl font-bold text-slate-900 mb-6">When Should Transplant Patients Use Discount Cards?</h2>
+                            <h2 id="when-to-use" className="text-2xl font-bold text-slate-900 mb-6">{t('education.deductibleTrap.whenToUse.title')}</h2>
                             <div className="space-y-4">
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <CheckCircle size={20} aria-hidden="true" />
-                                        Scenario 1: Drug NOT Covered by Insurance
+                                        {t('education.deductibleTrap.whenToUse.s1Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">For a medicine NOT on your insurance's list and no cheaper generic option is available.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.deductibleTrap.whenToUse.s1Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <CheckCircle size={20} aria-hidden="true" />
-                                        Scenario 2: One-Time, Low-Cost Medications
+                                        {t('education.deductibleTrap.whenToUse.s2Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">For short-term medicines not related to your transplant (like a round of antibiotics) where the discount price is less than your copay.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.deductibleTrap.whenToUse.s2Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <CheckCircle size={20} aria-hidden="true" />
-                                        Scenario 3: Extremely High Deductible
+                                        {t('education.deductibleTrap.whenToUse.s3Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If you have a very high deductible AND the cash price is much lower, but even then, think hard about the cost of not reaching your yearly limit.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.deductibleTrap.whenToUse.s3Text')}</p>
                                 </div>
                             </div>
                             <div className="mt-6 bg-red-100 border-2 border-red-300 rounded-lg p-6">
                                 <h3 className="font-bold text-red-900 text-lg mb-3 flex items-center gap-2">
-                                    🛑 NEVER Use Discount Cards For:
+                                    {t('education.deductibleTrap.whenToUse.neverTitle')}
                                 </h3>
-                                <p className="text-red-900 font-bold text-lg">Your daily anti-rejection medicines like Tacrolimus, Mycophenolate, or Cyclosporine.</p>
-                                <p className="text-red-800 mt-2">These are the medicines that will help you reach your yearly limit fast.</p>
+                                <p className="text-red-900 font-bold text-lg">{t('education.deductibleTrap.whenToUse.neverP1')}</p>
+                                <p className="text-red-800 mt-2">{t('education.deductibleTrap.whenToUse.neverP2')}</p>
                             </div>
                         </section>
 
                         <section className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="better-alternatives">
                             <h2 id="better-alternatives" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <HeartHandshake className="text-emerald-600" size={28} aria-hidden="true" />
-                                Better Alternatives
+                                {t('education.deductibleTrap.alternatives.title')}
                             </h2>
                             <div className="grid md:grid-cols-3 gap-6">
                                 <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-200">
-                                    <h3 className="font-bold text-emerald-900 text-lg mb-3">Patient Assistance Programs (PAPs)</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Free or low-cost medicines straight from drug makers.</p>
-                                    <p className="text-emerald-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
+                                    <h3 className="font-bold text-emerald-900 text-lg mb-3">{t('education.deductibleTrap.alternatives.papsTitle')}</h3>
+                                    <p className="text-slate-700 text-sm mb-4">{t('education.deductibleTrap.alternatives.papsText')}</p>
+                                    <p className="text-emerald-800 font-bold text-sm">{t('education.deductibleTrap.alternatives.counts')}</p>
                                 </div>
                                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
-                                    <h3 className="font-bold text-blue-900 text-lg mb-3">Co-pay Foundations</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Groups that help pay for your copays and deductibles.</p>
-                                    <p className="text-blue-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
+                                    <h3 className="font-bold text-blue-900 text-lg mb-3">{t('education.deductibleTrap.alternatives.foundationsTitle')}</h3>
+                                    <p className="text-slate-700 text-sm mb-4">{t('education.deductibleTrap.alternatives.foundationsText')}</p>
+                                    <p className="text-blue-800 font-bold text-sm">{t('education.deductibleTrap.alternatives.counts')}</p>
                                 </div>
                                 <div className="bg-purple-50 p-6 rounded-xl border border-purple-200">
-                                    <h3 className="font-bold text-purple-900 text-lg mb-3">Drug Maker Copay Cards</h3>
-                                    <p className="text-slate-700 text-sm mb-4">Help from drug makers for brand-name medicines (not for Medicare patients).</p>
-                                    <p className="text-purple-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
+                                    <h3 className="font-bold text-purple-900 text-lg mb-3">{t('education.deductibleTrap.alternatives.copayTitle')}</h3>
+                                    <p className="text-slate-700 text-sm mb-4">{t('education.deductibleTrap.alternatives.copayText')}</p>
+                                    <p className="text-purple-800 font-bold text-sm">{t('education.deductibleTrap.alternatives.counts')}</p>
                                 </div>
                             </div>
                         </section>
 
                         <section className="bg-gradient-to-r from-amber-50 to-yellow-50 p-8 rounded-xl border-2 border-amber-300" aria-labelledby="key-takeaways">
-                            <h2 id="key-takeaways" className="text-2xl font-bold text-slate-900 mb-6">Key Takeaways</h2>
+                            <h2 id="key-takeaways" className="text-2xl font-bold text-slate-900 mb-6">{t('education.deductibleTrap.takeaways.title')}</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Your goal every year is to hit your yearly spending limit (the most you pay each year).</span> Once you reach it, insurance pays 100% for the rest of the year.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t1Bold')}</span> {t('education.deductibleTrap.takeaways.t1Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Discount cards stop your payments from counting toward this goal.</span> They may save you a few dollars per medicine, but cost you thousands over the year.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t2Bold')}</span> {t('education.deductibleTrap.takeaways.t2Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Always use PAPs and co-pay foundations first.</span> These programs help you pay for medicines AND help you reach your yearly limit faster.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t3Bold')}</span> {t('education.deductibleTrap.takeaways.t3Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Talk to your transplant team.</span> They can connect you with people who know these programs and can help you through the system.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t4Bold')}</span> {t('education.deductibleTrap.takeaways.t4Rest')}</p>
                                 </li>
                             </ul>
                         </section>
@@ -5672,10 +5678,10 @@ const Education = () => {
                         <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note">
                             <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2 text-lg">
                                 <Info size={24} aria-hidden="true" />
-                                Questions?
+                                {t('education.deductibleTrap.questionsTitle')}
                             </h3>
                             <p className="text-emerald-900 leading-relaxed">
-                                Not sure if a discount card is right for you? Ask your transplant center's money helper or social worker. They can look at your insurance plan and help you choose.
+                                {t('education.deductibleTrap.questionsText')}
                             </p>
                         </aside>
                     </div>
@@ -5683,8 +5689,8 @@ const Education = () => {
                 {activeTab === 'DIVERSION' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">When Insurance Sends You Elsewhere</h1>
-                            <p className="text-xl text-slate-600">Some plans try to avoid paying for your drugs. Learn how to spot this and what to do.</p>
+                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('education.diversion.title')}</h1>
+                            <p className="text-xl text-slate-600">{t('education.diversion.subtitle')}</p>
                         </div>
 
                         <div className="bg-gradient-to-br from-red-50 to-orange-50 border-4 border-red-300 rounded-2xl p-8 shadow-lg">
@@ -5693,37 +5699,37 @@ const Education = () => {
                                     <AlertOctagon size={32} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-red-900 mb-2">Warning: Your Plan May Send You Away</h2>
-                                    <p className="text-lg font-bold text-red-800">Some plans don't want to pay for costly drugs. They may make you get free drugs from drug makers first.</p>
+                                    <h2 className="text-2xl font-bold text-red-900 mb-2">{t('education.diversion.warning.title')}</h2>
+                                    <p className="text-lg font-bold text-red-800">{t('education.diversion.warning.lead')}</p>
                                 </div>
                             </div>
                             <div className="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
-                                <h3 className="font-bold text-red-900 text-xl mb-3">What Does This Mean?</h3>
-                                <p className="text-slate-800 leading-relaxed mb-3">Your plan may say: <span className="font-bold bg-yellow-200 px-2 py-1 rounded">"We won't pay for your drug until you ask a drug maker for free medicine first."</span></p>
-                                <p className="text-slate-700 leading-relaxed">This saves money for your plan. But it can leave you without medicine while you wait. And you might not get the free drugs.</p>
+                                <h3 className="font-bold text-red-900 text-xl mb-3">{t('education.diversion.warning.boxTitle')}</h3>
+                                <p className="text-slate-800 leading-relaxed mb-3">{t('education.diversion.warning.boxP1Pre')}<span className="font-bold bg-yellow-200 px-2 py-1 rounded">{t('education.diversion.warning.boxP1Highlight')}</span></p>
+                                <p className="text-slate-700 leading-relaxed">{t('education.diversion.warning.boxP2')}</p>
                             </div>
                         </div>
 
                         <section className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="types-heading">
                             <h2 id="types-heading" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <List className="text-indigo-600" size={28} aria-hidden="true" />
-                                Three Ways Plans Do This
+                                {t('education.diversion.types.title')}
                             </h2>
-                            <p className="text-slate-600 mb-8">These tricks have fancy names. But they all do the same thing: make someone else pay for your drugs.</p>
+                            <p className="text-slate-600 mb-8">{t('education.diversion.types.intro')}</p>
 
                             <div className="space-y-6">
                                 <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border-2 border-purple-200">
                                     <div className="flex items-start gap-4">
                                         <div className="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">1</div>
                                         <div>
-                                            <h3 className="font-bold text-purple-900 text-xl mb-2">Copay Accumulator</h3>
-                                            <p className="text-slate-700 mb-4">Drug makers give you copay help. Your plan takes that help. But <span className="font-bold text-red-700">it does not count toward what you owe for the year</span>.</p>
+                                            <h3 className="font-bold text-purple-900 text-xl mb-2">{t('education.diversion.types.acc.title')}</h3>
+                                            <p className="text-slate-700 mb-4">{t('education.diversion.types.acc.pre')}<span className="font-bold text-red-700">{t('education.diversion.types.acc.highlight')}</span>{t('education.diversion.types.acc.post')}</p>
                                             <div className="bg-white p-4 rounded-lg border border-purple-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">{t('education.diversion.types.whyHurts')}</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your copay card runs out faster</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>When it runs out, you owe the full price</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You keep paying all year long</span></li>
+                                                    {t('education.diversion.types.acc.why', { returnObjects: true }).map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-2"><span className="text-red-500">•</span><span>{item}</span></li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -5734,14 +5740,14 @@ const Education = () => {
                                     <div className="flex items-start gap-4">
                                         <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">2</div>
                                         <div>
-                                            <h3 className="font-bold text-orange-900 text-xl mb-2">Copay Maximizer</h3>
-                                            <p className="text-slate-700 mb-4">Your plan spreads your copay card over the year. But <span className="font-bold text-red-700">the plan keeps the savings, not you</span>.</p>
+                                            <h3 className="font-bold text-orange-900 text-xl mb-2">{t('education.diversion.types.max.title')}</h3>
+                                            <p className="text-slate-700 mb-4">{t('education.diversion.types.max.pre')}<span className="font-bold text-red-700">{t('education.diversion.types.max.highlight')}</span>{t('education.diversion.types.max.post')}</p>
                                             <div className="bg-white p-4 rounded-lg border border-orange-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">{t('education.diversion.types.whyHurts')}</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>The drug maker's help goes to your plan, not you</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You still pay more than you should</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>When the help runs out, you owe a lot</span></li>
+                                                    {t('education.diversion.types.max.why', { returnObjects: true }).map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-2"><span className="text-red-500">•</span><span>{item}</span></li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -5752,15 +5758,14 @@ const Education = () => {
                                     <div className="flex items-start gap-4">
                                         <div className="bg-rose-600 text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 font-bold text-lg">3</div>
                                         <div>
-                                            <h3 className="font-bold text-rose-900 text-xl mb-2">Alternative Funding (AFP)</h3>
-                                            <p className="text-slate-700 mb-4">Your work plan says: <span className="font-bold text-red-700">"We won't cover this drug. Go get it free from the drug maker."</span></p>
+                                            <h3 className="font-bold text-rose-900 text-xl mb-2">{t('education.diversion.types.afp.title')}</h3>
+                                            <p className="text-slate-700 mb-4">{t('education.diversion.types.afp.pre')}<span className="font-bold text-red-700">{t('education.diversion.types.afp.highlight')}</span></p>
                                             <div className="bg-white p-4 rounded-lg border border-rose-200">
-                                                <h4 className="font-bold text-slate-900 mb-2">Why This Hurts:</h4>
+                                                <h4 className="font-bold text-slate-900 mb-2">{t('education.diversion.types.whyHurts')}</h4>
                                                 <ul className="text-slate-700 text-sm space-y-2">
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You wait weeks or months for your drugs</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>You might not get the free drugs</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>If you don't get free drugs, you pay full price</span></li>
-                                                    <li className="flex items-start gap-2"><span className="text-red-500">•</span><span>Your plan saves money. You take the risk.</span></li>
+                                                    {t('education.diversion.types.afp.why', { returnObjects: true }).map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-2"><span className="text-red-500">•</span><span>{item}</span></li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -5772,53 +5777,29 @@ const Education = () => {
                         <section className="bg-slate-50 p-8 rounded-xl border border-slate-200" aria-labelledby="identify-heading">
                             <h2 id="identify-heading" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <Search className="text-emerald-600" size={28} aria-hidden="true" />
-                                How to Tell If This Is Happening to You
+                                {t('education.diversion.identify.title')}
                             </h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-white p-6 rounded-xl border border-slate-200">
-                                    <h3 className="font-bold text-slate-900 mb-4">Warning Signs:</h3>
+                                    <h3 className="font-bold text-slate-900 mb-4">{t('education.diversion.identify.signsTitle')}</h3>
                                     <ul className="space-y-3">
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Your plan papers say "copay accumulator"</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Copay card money is not showing on your plan tracker</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>They tell you to call another company first</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Your drug is "carved out" (not covered)</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>You must ask for free drugs before your plan will help</span>
-                                        </li>
+                                        {t('education.diversion.identify.signs', { returnObjects: true }).map((item, i) => (
+                                            <li key={i} className="flex items-start gap-3 text-slate-700">
+                                                <AlertCircle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl border border-slate-200">
-                                    <h3 className="font-bold text-slate-900 mb-4">Ask Your Plan These Questions:</h3>
+                                    <h3 className="font-bold text-slate-900 mb-4">{t('education.diversion.identify.askTitle')}</h3>
                                     <ul className="space-y-3">
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Do you use a copay accumulator?"</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Will my copay card count toward what I owe?"</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Is my drug fully covered?"</span>
-                                        </li>
-                                        <li className="flex items-start gap-3 text-slate-700">
-                                            <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>"Do I have to ask for free drugs first?"</span>
-                                        </li>
+                                        {t('education.diversion.identify.questions', { returnObjects: true }).map((item, i) => (
+                                            <li key={i} className="flex items-start gap-3 text-slate-700">
+                                                <HelpCircle size={20} className="text-blue-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
@@ -5827,43 +5808,43 @@ const Education = () => {
                         <section className="bg-gradient-to-r from-emerald-50 to-teal-50 p-8 rounded-xl border border-emerald-200" aria-labelledby="protect-heading">
                             <h2 id="protect-heading" className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                                 <ShieldCheck className="text-emerald-600" size={28} aria-hidden="true" />
-                                How to Protect Yourself
+                                {t('education.diversion.protect.title')}
                             </h2>
                             <div className="space-y-4">
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">1</div>
-                                        Read Your Plan Papers
+                                        {t('education.diversion.protect.s1Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Look for words like "accumulator," "maximizer," or "alternative funding." These are clues.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.diversion.protect.s1Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">2</div>
-                                        Keep Track of What You Pay
+                                        {t('education.diversion.protect.s2Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Save your receipts. Check if your copay card money shows up on your plan's tracker. If not, you may have an accumulator plan.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.diversion.protect.s2Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">3</div>
-                                        Appeal If They Say No
+                                        {t('education.diversion.protect.s3Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">If your plan won't cover your drug, you can fight back. Ask your transplant team to write a letter saying you need this drug.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.diversion.protect.s3Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">4</div>
-                                        Call Your State for Help
+                                        {t('education.diversion.protect.s4Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Many states have laws to protect you. Call your state insurance office. They can tell you your rights and help you file a complaint.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.diversion.protect.s4Text')}</p>
                                 </div>
                                 <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
                                     <h3 className="font-bold text-emerald-700 mb-2 flex items-center gap-2">
                                         <div className="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm">5</div>
-                                        Talk to Your Boss (If You Get Insurance From Work)
+                                        {t('education.diversion.protect.s5Title')}
                                     </h3>
-                                    <p className="text-slate-700 text-sm">Your boss picks the plan. Tell HR how this hurts you. Ask them to pick a better plan.</p>
+                                    <p className="text-slate-700 text-sm">{t('education.diversion.protect.s5Text')}</p>
                                 </div>
                             </div>
                         </section>
@@ -5871,36 +5852,36 @@ const Education = () => {
                         <section className="bg-blue-50 p-8 rounded-xl border border-blue-200" aria-labelledby="state-laws-heading">
                             <h2 id="state-laws-heading" className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                                 <Scale className="text-blue-600" size={28} aria-hidden="true" />
-                                States That Protect You
+                                {t('education.diversion.stateLaws.title')}
                             </h2>
-                            <p className="text-slate-700 mb-6">Some states made laws to stop these tricks. In these states, copay card money must count toward what you owe.</p>
+                            <p className="text-slate-700 mb-6">{t('education.diversion.stateLaws.intro')}</p>
                             <div className="bg-white p-6 rounded-xl border border-blue-200">
-                                <h3 className="font-bold text-blue-900 mb-3">States With Laws to Help (as of 2026):</h3>
-                                <p className="text-slate-700 text-sm mb-4">Arizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Minnesota, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Puerto Rico, Tennessee, Texas, Virginia, Washington, West Virginia, and more.</p>
+                                <h3 className="font-bold text-blue-900 mb-3">{t('education.diversion.stateLaws.listTitle')}</h3>
+                                <p className="text-slate-700 text-sm mb-4">{t('education.diversion.stateLaws.list')}</p>
                                 <div className="bg-blue-100 p-4 rounded-lg mt-4">
-                                    <p className="text-blue-900 text-sm font-medium">Call your state insurance office to learn about new laws. More states add protections every year.</p>
+                                    <p className="text-blue-900 text-sm font-medium">{t('education.diversion.stateLaws.note')}</p>
                                 </div>
                             </div>
                         </section>
 
                         <section className="bg-gradient-to-r from-amber-50 to-yellow-50 p-8 rounded-xl border-2 border-amber-300" aria-labelledby="why-matters">
-                            <h2 id="why-matters" className="text-2xl font-bold text-slate-900 mb-6">Why Transplant Patients Must Know This</h2>
+                            <h2 id="why-matters" className="text-2xl font-bold text-slate-900 mb-6">{t('education.diversion.whyMatters.title')}</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">You can't skip your drugs.</span> Missing doses can hurt your transplant. Waiting weeks for free drugs is risky.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t1Bold')}</span> {t('education.diversion.whyMatters.t1Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Free drugs are not a sure thing.</span> Drug makers have rules. You might not qualify. The money might run out.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t2Bold')}</span> {t('education.diversion.whyMatters.t2Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">You pay for your plan.</span> You pay every month. But some plans make drug makers pay for your drugs instead.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t3Bold')}</span> {t('education.diversion.whyMatters.t3Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                                    <p className="text-slate-800 pt-1"><span className="font-bold">Big bills can hit fast.</span> When your copay card runs out, you may owe a lot of money all at once.</p>
+                                    <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t4Bold')}</span> {t('education.diversion.whyMatters.t4Rest')}</p>
                                 </li>
                             </ul>
                         </section>
@@ -5908,13 +5889,13 @@ const Education = () => {
                         <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note">
                             <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2 text-lg">
                                 <Info size={24} aria-hidden="true" />
-                                Need Help?
+                                {t('education.diversion.help.title')}
                             </h3>
                             <p className="text-emerald-900 leading-relaxed mb-4">
-                                Think this is happening to you? Talk to your transplant center's money helper or social worker. They know how to help.
+                                {t('education.diversion.help.text')}
                             </p>
                             <p className="text-emerald-800 text-sm">
-                                You can also call the <a href="/out/foundation/paf-general" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">Patient Advocate Foundation</a> for free help.
+                                {t('education.diversion.help.pafPre')}<a href="/out/foundation/paf-general" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">{t('education.diversion.help.pafLink')}</a>{t('education.diversion.help.pafPost')}
                             </p>
                         </aside>
                     </div>
@@ -5922,8 +5903,8 @@ const Education = () => {
                 {activeTab === 'MENTAL' && (
                     <div className="max-w-4xl mx-auto space-y-8">
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Mental Health Resources</h2>
-                            <p className="text-lg text-slate-600">Your mental health matters. Get free, private support when you need it.</p>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('education.mental.title')}</h2>
+                            <p className="text-lg text-slate-600">{t('education.mental.subtitle')}</p>
                         </div>
 
                         <section className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-8 shadow-lg text-center" aria-labelledby="crisis-hotline">
@@ -5931,22 +5912,22 @@ const Education = () => {
                                 <Phone size={40} />
                             </div>
                             <h3 id="crisis-hotline" className="text-3xl font-extrabold text-slate-900 mb-3">
-                                Need to Talk to Someone Right Now?
+                                {t('education.mental.crisis.title')}
                             </h3>
                             <div className="mb-6">
                                 <a href="tel:988" className="inline-block text-6xl md:text-7xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
                                     988
                                 </a>
-                                <p className="text-lg font-bold text-slate-700">National Suicide & Crisis Lifeline</p>
-                                <p className="text-sm text-slate-600 mt-2">24/7 • Free • Private</p>
+                                <p className="text-lg font-bold text-slate-700">{t('education.mental.crisis.name')}</p>
+                                <p className="text-sm text-slate-600 mt-2">{t('education.mental.crisis.availability')}</p>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
                                 <div className="bg-white/80 p-4 rounded-lg">
-                                    <p className="font-bold text-slate-900 mb-1">Call or Text</p>
-                                    <p className="text-sm text-slate-600">Dial or text <strong>988</strong> from any phone</p>
+                                    <p className="font-bold text-slate-900 mb-1">{t('education.mental.crisis.callTitle')}</p>
+                                    <p className="text-sm text-slate-600"><Trans i18nKey="education.mental.crisis.callText" /></p>
                                 </div>
                                 <div className="bg-white/80 p-4 rounded-lg">
-                                    <p className="font-bold text-slate-900 mb-1">Online Chat</p>
+                                    <p className="font-bold text-slate-900 mb-1">{t('education.mental.crisis.chatTitle')}</p>
                                     <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-sm text-rose-600 font-medium hover:underline flex items-center gap-1">
                                         988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
                                     </a>
@@ -5955,68 +5936,62 @@ const Education = () => {
                         </section>
 
                         <div className="grid md:grid-cols-2 gap-6">
-                            <a href="https://www.samhsa.gov/find-support" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition h-full" aria-label="Visit SAMHSA (opens in new tab)">
+                            <a href="https://www.samhsa.gov/find-support" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition h-full" aria-label={t('education.mental.samhsa.aria')}>
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
-                                        <h3 className="font-bold text-xl text-slate-900 group-hover:text-indigo-700 mb-1">SAMHSA</h3>
-                                        <span className="text-xs px-2 py-1 rounded-full font-bold bg-indigo-100 text-indigo-700">Government Resource</span>
+                                        <h3 className="font-bold text-xl text-slate-900 group-hover:text-indigo-700 mb-1">{t('education.mental.samhsa.title')}</h3>
+                                        <span className="text-xs px-2 py-1 rounded-full font-bold bg-indigo-100 text-indigo-700">{t('education.mental.samhsa.badge')}</span>
                                     </div>
                                     <ExternalLink size={18} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-700 text-sm leading-relaxed mb-4">
-                                    <strong>Substance Abuse and Mental Health Services</strong> - Find treatment centers, support groups, and mental health help near you.
+                                    <Trans i18nKey="education.mental.samhsa.desc" />
                                 </p>
                                 <div className="space-y-2 text-sm">
                                     <p className="text-slate-600">
-                                        <strong className="text-slate-900">Helpline:</strong>{' '}
+                                        <strong className="text-slate-900">{t('education.mental.helplineLabel')}</strong>{' '}
                                         <a href="tel:1-800-662-4357" className="text-indigo-600 font-bold hover:underline">1-800-662-HELP (4357)</a>
                                     </p>
-                                    <p className="text-slate-600 text-xs">Help finding treatment any time (24/7)</p>
+                                    <p className="text-slate-600 text-xs">{t('education.mental.samhsa.availability')}</p>
                                 </div>
                             </a>
 
                             <section className="bg-white p-6 rounded-xl border border-slate-200 h-full" aria-labelledby="transplant-mental-health">
-                                <h3 id="transplant-mental-health" className="font-bold text-lg text-slate-900 mb-4">Transplant & Mental Health</h3>
+                                <h3 id="transplant-mental-health" className="font-bold text-lg text-slate-900 mb-4">{t('education.mental.transplant.title')}</h3>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                                    It's normal to feel worried, sad, or stressed during your transplant journey. You're not alone.
+                                    {t('education.mental.transplant.intro')}
                                 </p>
                                 <ul className="space-y-2 text-sm text-slate-700">
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                        <span>Ask your transplant team about counseling services</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                        <span>Many transplant centers have social workers and mental health experts</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                        <span>Medicare and most insurance plans cover mental health services</span>
-                                    </li>
+                                    {t('education.mental.transplant.items', { returnObjects: true }).map((item, i) => (
+                                        <li key={i} className="flex items-start gap-2">
+                                            <CheckCircle size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
                                 </ul>
                             </section>
 
-                            <a href="https://www.nami.org/Support-Education/Support-Groups" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition h-full" aria-label="Visit NAMI Support Groups (opens in new tab)">
+                            <a href="https://www.nami.org/Support-Education/Support-Groups" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition h-full" aria-label={t('education.mental.nami.aria')}>
                                 <div className="flex justify-between items-start mb-3">
-                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-purple-700">NAMI Support Groups</h3>
+                                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-purple-700">{t('education.mental.nami.title')}</h3>
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                                    NAMI offers free support groups for people with mental health issues and their families.
+                                    {t('education.mental.nami.desc')}
                                 </p>
                                 <p className="text-slate-600 text-sm">
-                                    <strong className="text-slate-900">Helpline:</strong>{' '}
+                                    <strong className="text-slate-900">{t('education.mental.helplineLabel')}</strong>{' '}
                                     <a href="tel:1-800-950-6264" className="text-purple-600 font-bold hover:underline">1-800-950-NAMI (6264)</a>
                                 </p>
                             </a>
 
-                            <a href="https://findtreatment.gov/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label="Visit FindTreatment.gov (opens in new tab)">
+                            <a href="https://findtreatment.gov/" target="_blank" rel="noreferrer" className="group block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition h-full" aria-label={t('education.mental.findTreatment.aria')}>
                                 <div className="flex justify-between items-start mb-3">
                                     <h3 className="font-bold text-lg text-slate-900 group-hover:text-emerald-700">FindTreatment.gov</h3>
                                     <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed">
-                                    A government site to help you learn about mental health, find treatment, and find services near you.
+                                    {t('education.mental.findTreatment.desc')}
                                 </p>
                             </a>
                         </div>
@@ -6024,42 +5999,32 @@ const Education = () => {
                         <section className="bg-gradient-to-br from-teal-50 to-cyan-50 border-2 border-teal-200 rounded-2xl p-8" aria-labelledby="caregiver-support">
                             <h3 id="caregiver-support" className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
                                 <Users size={28} className="text-teal-600" aria-hidden="true" />
-                                Support for Caregivers & Care Partners
+                                {t('education.mental.caregivers.title')}
                             </h3>
                             <p className="text-slate-700 mb-6 leading-relaxed">
-                                You are essential to the transplant journey. Your well-being matters too. Caring for a loved one can feel rewarding but also physically and emotionally demanding. Take care of yourself so you can keep providing the best support.
+                                {t('education.mental.caregivers.intro')}
                             </p>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="bg-white/80 p-5 rounded-xl">
-                                    <h4 className="font-bold text-slate-900 mb-3">Caregiver Self-Care Tips</h4>
+                                    <h4 className="font-bold text-slate-900 mb-3">{t('education.mental.caregivers.tipsTitle')}</h4>
                                     <ul className="space-y-2 text-sm text-slate-700">
-                                        <li className="flex items-start gap-2">
-                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Set boundaries and ask for help when you need it</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Take breaks and maintain your own health appointments</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Connect with other caregivers who understand your experience</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Consider counseling or support groups for caregivers</span>
-                                        </li>
+                                        {t('education.mental.caregivers.tips', { returnObjects: true }).map((item, i) => (
+                                            <li key={i} className="flex items-start gap-2">
+                                                <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
-                                <a href="https://www.caregiving.org/" target="_blank" rel="noreferrer" className="group block bg-white/80 p-5 rounded-xl hover:shadow-md transition" aria-label="Visit National Alliance for Caregiving (opens in new tab)">
+                                <a href="https://www.caregiving.org/" target="_blank" rel="noreferrer" className="group block bg-white/80 p-5 rounded-xl hover:shadow-md transition" aria-label={t('education.mental.caregivers.nacAria')}>
                                     <div className="flex justify-between items-start mb-3">
-                                        <h4 className="font-bold text-slate-900 group-hover:text-teal-700">National Alliance for Caregiving</h4>
+                                        <h4 className="font-bold text-slate-900 group-hover:text-teal-700">{t('education.mental.caregivers.nacTitle')}</h4>
                                         <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0" aria-hidden="true" />
                                     </div>
                                     <p className="text-slate-600 text-sm leading-relaxed mb-3">
-                                        A national nonprofit coalition dedicated to advancing family caregiving through research, innovation, and advocacy. Find resources, research, and support for your caregiving journey.
+                                        {t('education.mental.caregivers.nacDesc')}
                                     </p>
-                                    <span className="text-xs px-2 py-1 rounded-full font-bold bg-teal-100 text-teal-700">Caregiver Resource</span>
+                                    <span className="text-xs px-2 py-1 rounded-full font-bold bg-teal-100 text-teal-700">{t('education.mental.caregivers.nacBadge')}</span>
                                 </a>
                             </div>
                         </section>
@@ -6067,10 +6032,10 @@ const Education = () => {
                         <aside className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg" role="note">
                             <h3 className="font-bold text-amber-900 mb-3 flex items-center gap-2">
                                 <Heart size={20} aria-hidden="true" />
-                                Remember
+                                {t('education.mental.remember.title')}
                             </h3>
                             <p className="text-amber-900 text-sm leading-relaxed">
-                                Seeking help for mental health is a sign of strength, not weakness. The transplant journey is physically and emotionally demanding. Taking care of your mental health is just as important as taking your medications. If you're struggling, reach out, there are people who want to help.
+                                {t('education.mental.remember.text')}
                             </p>
                         </aside>
                     </div>
@@ -6083,6 +6048,7 @@ const Education = () => {
 // ApplicationHelp Page
 const ApplicationHelp = () => {
     useMetaTags(seoMetadata.applicationHelp);
+    const { t } = useTranslation();
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
@@ -6146,6 +6112,14 @@ const ApplicationHelp = () => {
         } catch (e) {
             // ignore storage errors (e.g. private mode)
         }
+        // Allow deep-linking to a specific tab, e.g. /application-help?section=CHECKLIST
+        // (same pattern as /education?topic=...).
+        try {
+            const valid = ['START', 'INCOME', 'STEPS', 'CHECKLIST', 'LETTERS', 'MEDS'];
+            const params = new URLSearchParams(window.location.search);
+            const section = (params.get('section') || '').toUpperCase();
+            if (valid.includes(section)) return section;
+        } catch (e) { /* ignore */ }
         return 'START';
     });
     const checklistItems = APPLICATION_CHECKLIST_DATA;
@@ -6270,6 +6244,7 @@ const ApplicationHelp = () => {
     const [generatedLetter, setGeneratedLetter] = useState("");
     const [copied, setCopied] = useState(false);
 
+    // Letter body intentionally not localized — goes to US insurers/providers in English.
     const generateLetter = () => {
         const date = new Date().toLocaleDateString();
         let text = "";
@@ -6382,7 +6357,7 @@ ${patientName || "[Your Name]"}`;
 
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
-            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Application Education</h1><p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed">Master the art of assistance applications with step-by-step guidance and insider tips.</p></header>
+            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{t('applicationHelp.header.title')}</h1><p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed">{t('applicationHelp.header.subtitle')}</p><div className="mt-6 flex justify-center"><LanguageToggle /></div></header>
             <Link to="/wizard" className="block bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-5 mb-6 hover:border-blue-400 transition group">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -6390,35 +6365,35 @@ ${patientName || "[Your Name]"}`;
                             <Sparkles size={24} aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="font-bold text-lg text-blue-900">Not sure which programs to apply to?</p>
-                            <p className="text-base text-blue-700">Take the My Path Quiz first to get personalized recommendations</p>
+                            <p className="font-bold text-lg text-blue-900">{t('applicationHelp.header.quizPromptTitle')}</p>
+                            <p className="text-base text-blue-700">{t('applicationHelp.header.quizPromptText')}</p>
                         </div>
                     </div>
                     <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={24} aria-hidden="true" />
                 </div>
             </Link>
-            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Application help sections">
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label={t('applicationHelp.tabs.ariaLabel')}>
                 <div className="flex flex-wrap">
-                    <TabButton id="START" label="Getting Started" icon={HeartHandshake} iconBg="bg-rose-100" iconColor="text-rose-600" />
-                    <TabButton id="INCOME" label="Income" icon={DollarSign} iconBg="bg-emerald-100" iconColor="text-emerald-600" />
-                    <TabButton id="STEPS" label="Steps" icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
-                    <TabButton id="CHECKLIST" label="Checklist" icon={ClipboardList} iconBg="bg-amber-100" iconColor="text-amber-600" />
-                    <TabButton id="LETTERS" label="Letters" icon={FileText} iconBg="bg-purple-100" iconColor="text-purple-600" />
-                    <TabButton id="MEDS" label="Medications" icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
+                    <TabButton id="START" label={t('applicationHelp.tabs.start')} icon={HeartHandshake} iconBg="bg-rose-100" iconColor="text-rose-600" />
+                    <TabButton id="INCOME" label={t('applicationHelp.tabs.income')} icon={DollarSign} iconBg="bg-emerald-100" iconColor="text-emerald-600" />
+                    <TabButton id="STEPS" label={t('applicationHelp.tabs.steps')} icon={ArrowRight} iconBg="bg-blue-100" iconColor="text-blue-600" />
+                    <TabButton id="CHECKLIST" label={t('applicationHelp.tabs.checklist')} icon={ClipboardList} iconBg="bg-amber-100" iconColor="text-amber-600" />
+                    <TabButton id="LETTERS" label={t('applicationHelp.tabs.letters')} icon={FileText} iconBg="bg-purple-100" iconColor="text-purple-600" />
+                    <TabButton id="MEDS" label={t('applicationHelp.tabs.meds')} icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
-                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-xl mb-3 flex items-center gap-2"><CheckCircle size={24} aria-hidden="true" /> Good News</h2><ul className="list-disc pl-5 text-emerald-900 space-y-2 text-lg leading-relaxed"><li><strong>PAPs and Foundations ask for the same information.</strong></li><li>Gather documents once → apply to multiple programs.</li></ul></aside>
+                        <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-xl mb-3 flex items-center gap-2"><CheckCircle size={24} aria-hidden="true" /> {t('applicationHelp.start.goodNews.title')}</h2><ul className="list-disc pl-5 text-emerald-900 space-y-2 text-lg leading-relaxed"><li><strong>{t('applicationHelp.start.goodNews.item1')}</strong></li><li>{t('applicationHelp.start.goodNews.item2')}</li></ul></aside>
 
                         <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-8" aria-labelledby="pap-definition">
-                            <h3 id="pap-definition" className="text-2xl font-bold text-emerald-900 mb-4">What are Patient Assistance Programs?</h3>
+                            <h3 id="pap-definition" className="text-2xl font-bold text-emerald-900 mb-4">{t('applicationHelp.start.whatArePaps.title')}</h3>
                             <p className="text-lg text-slate-800 leading-relaxed mb-4">
-                                Patient Assistance Programs (PAPs) are programs created by drug companies and medical supply makers to help patients access affordable medications. These programs provide prescription medications at no cost or low cost for individuals who need help affording their medications.
+                                {t('applicationHelp.start.whatArePaps.p1')}
                             </p>
                             <p className="text-lg text-slate-800 leading-relaxed font-medium">
-                                <strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs.
+                                <Trans i18nKey="applicationHelp.start.whatArePaps.p2" />
                             </p>
                         </section>
 
@@ -6427,9 +6402,9 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                                     <Pill size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-blue-900 text-xl mb-3">Patient Assistance Programs</h3>
+                                <h3 className="font-bold text-blue-900 text-xl mb-3">{t('applicationHelp.start.cards.pap.title')}</h3>
                                 <p className="text-slate-800 text-base leading-relaxed">
-                                    Programs for everyone who needs affordable medications. Get prescription medications at no cost or minimal fee, regardless of insurance status.
+                                    {t('applicationHelp.start.cards.pap.text')}
                                 </p>
                             </section>
 
@@ -6437,31 +6412,23 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-purple-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                                     <DollarSign size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-purple-900 text-xl mb-3">Copay Cards</h3>
+                                <h3 className="font-bold text-purple-900 text-xl mb-3">{t('applicationHelp.start.cards.copay.title')}</h3>
                                 <p className="text-slate-800 text-base leading-relaxed mb-3">
-                                    Manufacturer copay cards help reduce your out-of-pocket costs at the pharmacy.
+                                    {t('applicationHelp.start.cards.copay.text')}
                                 </p>
                                 <p className="text-amber-900 text-base font-medium bg-amber-50 border border-amber-200 p-3 rounded-lg">
-                                    <strong>Who can use copay cards:</strong> Only for insurance you get through work or buy on your own. Not for Medicare, Medicaid, or VA benefits. If you have these, look at Patient Assistance Programs instead.
+                                    <Trans i18nKey="applicationHelp.start.cards.copay.eligibility" />
                                 </p>
                                 <div className="flex justify-center mt-4">
                                     <img
                                         src="/photos/copay-card-process.png"
-                                        alt="How to find and apply for copay cards"
+                                        alt={t('applicationHelp.start.cards.copay.imgAlt')}
                                         aria-describedby="copay-card-desc"
                                         className="max-w-full h-auto rounded-lg shadow-md"
                                     />
                                 </div>
                                 <div id="copay-card-desc" className="sr-only">
-                                    This infographic explains how to find and apply for medication copay cards.
-                                    The process has 3 main steps. First, visit the medication manufacturer's website
-                                    or use our Copay Card Finder tool. Second, check eligibility requirements - most
-                                    copay cards are available if you have commercial insurance and your medication
-                                    costs more than $50 per month. Third, complete the online application which takes
-                                    5-10 minutes and requires your prescription information and insurance details.
-                                    Most copay cards are approved instantly and can be used at your pharmacy the same day.
-                                    Copay cards can reduce your out-of-pocket cost from hundreds of dollars to as little
-                                    as $0-$25 per month.
+                                    {t('applicationHelp.start.cards.copay.imgDesc')}
                                 </div>
                             </section>
 
@@ -6469,70 +6436,70 @@ ${patientName || "[Your Name]"}`;
                                 <div className="bg-indigo-600 text-white w-14 h-14 rounded-full flex items-center justify-center mb-4">
                                     <Shield size={28} aria-hidden="true" />
                                 </div>
-                                <h3 className="font-bold text-indigo-900 text-xl mb-3">Help Paying for Insurance</h3>
+                                <h3 className="font-bold text-indigo-900 text-xl mb-3">{t('applicationHelp.start.cards.insurance.title')}</h3>
                                 <p className="text-slate-800 text-base leading-relaxed">
-                                    Ask the foundation to help pay what you owe to your insurance company to keep your medical or prescription coverage.
+                                    {t('applicationHelp.start.cards.insurance.text')}
                                 </p>
                             </section>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-8">
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-emerald-300 transition-colors" aria-labelledby="pap-heading">
-                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-indigo-100 text-indigo-700 rounded-lg" aria-hidden="true"><FileText size={28} /></div><div><h2 id="pap-heading" className="font-bold text-xl text-slate-900">Patient Assistance Program (PAP)</h2><p className="text-base text-slate-700">Direct from Manufacturer</p></div></div>
-                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">Free or low-cost medications provided directly by the drug company.</p>
-                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-700"><li>Commercial insurance</li><li>Uninsured</li><li>Underinsured</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">Approval Time</span><span className="font-medium text-emerald-700">2–4 weeks</span></div></div>
+                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-indigo-100 text-indigo-700 rounded-lg" aria-hidden="true"><FileText size={28} /></div><div><h2 id="pap-heading" className="font-bold text-xl text-slate-900">{t('applicationHelp.start.compare.pap.title')}</h2><p className="text-base text-slate-700">{t('applicationHelp.start.compare.pap.subtitle')}</p></div></div>
+                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">{t('applicationHelp.start.compare.pap.description')}</p>
+                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">{t('applicationHelp.start.compare.bestForLabel')}</span><ul className="list-disc pl-4 text-slate-700">{t('applicationHelp.start.compare.pap.bestFor', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">{t('applicationHelp.start.compare.approvalTimeLabel')}</span><span className="font-medium text-emerald-700">{t('applicationHelp.start.compare.pap.approvalTime')}</span></div></div>
                             </section>
                             <section className="border border-slate-200 rounded-xl p-6 hover:border-sky-300 transition-colors" aria-labelledby="foundation-heading">
-                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-sky-100 text-sky-700 rounded-lg" aria-hidden="true"><HeartHandshake size={28} /></div><div><h2 id="foundation-heading" className="font-bold text-xl text-slate-900">Foundation Grant</h2><p className="text-base text-slate-700">Non-profit Assistance</p></div></div>
-                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">Helps with copays, premiums, deductibles, and out-of-pocket costs.</p>
-                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">Best for:</span><ul className="list-disc pl-4 text-slate-700"><li>Medicare patients</li><li>High copay patients</li><li>Premium burden</li></ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">Approval Time</span><span className="font-medium text-emerald-700">1–3 weeks</span></div></div>
+                                <div className="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3"><div className="p-3 bg-sky-100 text-sky-700 rounded-lg" aria-hidden="true"><HeartHandshake size={28} /></div><div><h2 id="foundation-heading" className="font-bold text-xl text-slate-900">{t('applicationHelp.start.compare.foundation.title')}</h2><p className="text-base text-slate-700">{t('applicationHelp.start.compare.foundation.subtitle')}</p></div></div>
+                                <p className="text-slate-700 mb-4 text-base min-h-[40px]">{t('applicationHelp.start.compare.foundation.description')}</p>
+                                <div className="space-y-3 text-base"><div><span className="font-bold text-slate-800 block">{t('applicationHelp.start.compare.bestForLabel')}</span><ul className="list-disc pl-4 text-slate-700">{t('applicationHelp.start.compare.foundation.bestFor', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul></div><div className="flex justify-between py-2 border-t border-slate-100"><span className="text-slate-700">{t('applicationHelp.start.compare.approvalTimeLabel')}</span><span className="font-medium text-emerald-700">{t('applicationHelp.start.compare.foundation.approvalTime')}</span></div></div>
                             </section>
                         </div>
 
                         <aside className="bg-rose-50 border-l-4 border-rose-500 p-6 rounded-r-lg" role="note">
                             <h3 className="font-bold text-xl text-rose-900 mb-3 flex items-center gap-2">
                                 <AlertCircle size={24} aria-hidden="true" />
-                                Important Safety Notice
+                                {t('applicationHelp.start.safety.title')}
                             </h3>
                             <p className="text-lg text-rose-900 font-bold leading-relaxed">
-                                Remember: Real organizations NEVER ask for payment. If someone asks for payment or credit card details, that's a scam.
+                                {t('applicationHelp.start.safety.text')}
                             </p>
                         </aside>
 
                         <aside className="bg-amber-50 p-6 rounded-xl border border-amber-100" role="note">
-                            <h2 className="font-bold text-xl text-amber-900 mb-4 flex items-center gap-2"><AlertOctagon size={24} aria-hidden="true" /> Important Reminders</h2>
-                            <div className="grid md:grid-cols-2 gap-6 text-amber-800 text-base leading-relaxed"><div><strong className="block text-amber-900 text-lg">Apply Once Only</strong>Multiple submissions to the same foundation slow down approval.</div><div><strong className="block text-amber-900 text-lg">Apply Anytime</strong>There is no "season." Apply when cost becomes a barrier.</div><div><strong className="block text-amber-900 text-lg">People Want to Help</strong>Most PAP and foundation teams are kind and patient.</div><div><strong className="block text-amber-900 text-lg">Fax is Still Used</strong>Faxed forms go directly to a secure, dedicated team.</div></div>
+                            <h2 className="font-bold text-xl text-amber-900 mb-4 flex items-center gap-2"><AlertOctagon size={24} aria-hidden="true" /> {t('applicationHelp.start.reminders.title')}</h2>
+                            <div className="grid md:grid-cols-2 gap-6 text-amber-800 text-base leading-relaxed"><div><strong className="block text-amber-900 text-lg">{t('applicationHelp.start.reminders.applyOnceTitle')}</strong>{t('applicationHelp.start.reminders.applyOnceText')}</div><div><strong className="block text-amber-900 text-lg">{t('applicationHelp.start.reminders.applyAnytimeTitle')}</strong>{t('applicationHelp.start.reminders.applyAnytimeText')}</div><div><strong className="block text-amber-900 text-lg">{t('applicationHelp.start.reminders.peopleHelpTitle')}</strong>{t('applicationHelp.start.reminders.peopleHelpText')}</div><div><strong className="block text-amber-900 text-lg">{t('applicationHelp.start.reminders.faxTitle')}</strong>{t('applicationHelp.start.reminders.faxText')}</div></div>
                         </aside>
                     </div>
                 )}
                 {activeTab === 'INCOME' && (
                     <div className="space-y-10 max-w-4xl mx-auto">
-                        <div><h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Who Can Get Help</h2><p className="text-lg md:text-xl text-slate-700 mb-4 leading-relaxed">Most drug companies publish clear income guidelines. Here's what you need to know:</p><div className="bg-red-50 border-l-4 border-red-500 p-5 rounded-r" role="note"><p className="text-lg text-red-800 font-bold leading-relaxed">Don't Count Yourself Out: Many programs have much higher income limits than you might expect.</p></div></div>
-                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-xl mb-4">How Income Limits Work</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5"><li>Based on Federal Poverty Level (FPL) percentages</li><li>Vary by household size</li><li>Updated annually with FPL changes</li></ul></div><div><h3 className="font-bold text-slate-800 text-xl mb-4">Where to Find Guidelines</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5"><li>Manufacturer's website</li><li>MAT.org search results</li><li>Call the program directly</li></ul></div></div>
-                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-xl text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={24} aria-hidden="true" /> Quick Income Checker</h3><p className="text-base text-slate-700 mb-4 leading-relaxed">Use these resources to check current Federal Poverty Level guidelines:</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit HHS Poverty Guidelines (opens in new tab)">HHS Poverty Guidelines <ExternalLink size={18} aria-hidden="true" /></a><a href="https://phrma.org/resources/patient-assistance" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label="Visit PhRMA Patient Assistance resources (opens in new tab)">PhRMA Patient Assistance <ExternalLink size={18} aria-hidden="true" /></a></div></section>
+                        <div><h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">{t('applicationHelp.income.title')}</h2><p className="text-lg md:text-xl text-slate-700 mb-4 leading-relaxed">{t('applicationHelp.income.intro')}</p><div className="bg-red-50 border-l-4 border-red-500 p-5 rounded-r" role="note"><p className="text-lg text-red-800 font-bold leading-relaxed">{t('applicationHelp.income.dontCountOut')}</p></div></div>
+                        <div className="grid md:grid-cols-2 gap-8"><div><h3 className="font-bold text-slate-800 text-xl mb-4">{t('applicationHelp.income.howLimitsTitle')}</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5">{t('applicationHelp.income.howLimitsItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul></div><div><h3 className="font-bold text-slate-800 text-xl mb-4">{t('applicationHelp.income.whereTitle')}</h3><ul className="space-y-3 text-slate-700 text-base leading-relaxed list-disc pl-5">{t('applicationHelp.income.whereItems', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}</ul></div></div>
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="income-checker"><h3 id="income-checker" className="font-bold text-xl text-slate-900 mb-4 flex items-center gap-2"><DollarSign size={24} aria-hidden="true" /> {t('applicationHelp.income.checkerTitle')}</h3><p className="text-base text-slate-700 mb-4 leading-relaxed">{t('applicationHelp.income.checkerText')}</p><div className="flex flex-wrap gap-4"><a href="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label={t('applicationHelp.income.hhsAriaLabel')}>{t('applicationHelp.income.hhsLink')} <ExternalLink size={18} aria-hidden="true" /></a><a href="https://phrma.org/resources/patient-assistance" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-white border border-slate-300 px-5 py-3 rounded-lg text-base text-slate-700 font-medium hover:border-emerald-500 hover:text-emerald-600 transition" aria-label={t('applicationHelp.income.phrmaAriaLabel')}>{t('applicationHelp.income.phrmaLink')} <ExternalLink size={18} aria-hidden="true" /></a></div></section>
                     </div>
                 )}
                 {activeTab === 'STEPS' && (
                     <div className="max-w-3xl mx-auto">
-                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">Apply These Principles to Both PAPs and Foundations</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">{t('applicationHelp.steps.title')}</h2>
                         <section className="bg-white p-6 md:p-8 rounded-xl border-l-4 border-emerald-500 shadow-sm" aria-labelledby="requirements-heading">
-                            <h3 id="requirements-heading" className="font-bold text-xl text-slate-900 mb-5">Both require:</h3>
-                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-4"><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Your name and contact info</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Doctor / coordinator contact</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Income and household size</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Diagnosis + medication list</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Insurance information</li><li className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>Patient history</li></ul>
+                            <h3 id="requirements-heading" className="font-bold text-xl text-slate-900 mb-5">{t('applicationHelp.steps.bothRequire')}</h3>
+                            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-4">{t('applicationHelp.steps.requirements', { returnObjects: true }).map((item, i) => <li key={i} className="flex items-center gap-3 text-base text-slate-800 leading-relaxed"><div className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0" aria-hidden="true"></div>{item}</li>)}</ul>
                         </section>
                     </div>
                 )}
                 {activeTab === 'CHECKLIST' && (
                     <div className="max-w-4xl mx-auto">
-                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl md:text-3xl font-bold text-slate-900">"Before You Apply" Checklist</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-base text-emerald-600 hover:text-emerald-700 font-bold" aria-label="Print checklist"><Printer size={20} aria-hidden="true" /> Print</button></div>
+                        <div className="flex items-center justify-between mb-6"><h2 className="text-2xl md:text-3xl font-bold text-slate-900">{t('applicationHelp.checklist.title')}</h2><button onClick={() => window.print()} className="flex items-center gap-2 text-base text-emerald-600 hover:text-emerald-700 font-bold" aria-label={t('applicationHelp.checklist.printAriaLabel')}><Printer size={20} aria-hidden="true" /> {t('applicationHelp.checklist.print')}</button></div>
                         <div className="grid lg:grid-cols-5 gap-8">
                             <div className="lg:col-span-3 space-y-6">
-                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-base font-bold text-slate-700">Your Responsibility</span><span className="text-base font-bold text-emerald-600" aria-live="polite">{progress}% Ready</span></div><div className="w-full bg-slate-100 rounded-full h-4" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={`Application preparation progress: ${progress} percent complete`}><div className="bg-emerald-500 h-4 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-700 text-base mt-3 italic">Gather these items before you apply. Click to check them off.</p></section>
-                                <div className="space-y-3" role="list" aria-label="Application checklist items">{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={24} /> : <Square size={24} />}</div><span className={`font-medium text-base leading-relaxed ${isChecked ? 'text-slate-900' : 'text-slate-700'}`}>{item}</span></button> ); })}</div>
-                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center" role="alert" aria-live="polite"><span className="font-bold text-lg">🎉 You have everything you need! Time to apply.</span></div> )}
+                                <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="progress-heading"><div className="flex justify-between items-center mb-2"><span id="progress-heading" className="text-base font-bold text-slate-700">{t('applicationHelp.checklist.yourResponsibility')}</span><span className="text-base font-bold text-emerald-600" aria-live="polite">{t('applicationHelp.checklist.percentReady', { progress })}</span></div><div className="w-full bg-slate-100 rounded-full h-4" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" aria-label={t('applicationHelp.checklist.progressAriaLabel', { progress })}><div className="bg-emerald-500 h-4 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div><p className="text-slate-700 text-base mt-3 italic">{t('applicationHelp.checklist.gatherNote')}</p></section>
+                                <div className="space-y-3" role="list" aria-label={t('applicationHelp.checklist.itemsAriaLabel')}>{checklistItems.map((item, idx) => { const isChecked = !!checkedItems[idx]; return ( <button key={idx} onClick={() => toggleCheck(idx)} role="checkbox" aria-checked={isChecked} className={`w-full flex items-start gap-4 p-4 rounded-lg border transition-all text-left ${isChecked ? 'bg-emerald-50 border-emerald-200 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}><div className={`flex-shrink-0 text-emerald-600 mt-0.5 transition-transform duration-200 ${isChecked ? 'scale-110' : 'scale-100 text-slate-300'}`} aria-hidden="true">{isChecked ? <CheckSquare size={24} /> : <Square size={24} />}</div><span className={`font-medium text-base leading-relaxed ${isChecked ? 'text-slate-900' : 'text-slate-700'}`}>{item}</span></button> ); })}</div>
+                                {progress === 100 && ( <div className="p-4 bg-emerald-100 text-emerald-800 rounded-xl text-center" role="alert" aria-live="polite"><span className="font-bold text-lg">{t('applicationHelp.checklist.complete')}</span></div> )}
                             </div>
                             <aside className="lg:col-span-2 space-y-6">
-                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={24} className="text-indigo-600" aria-hidden="true" /> What the Clinic Handles</h3><p className="text-base text-slate-700 mb-4">You do <strong>NOT</strong> need to provide these. Your provider will fill them in:</p><ul className="space-y-3">{["ICD-10 diagnosis codes", "Provider NPI numbers", "Prescriber signatures", "Medical chart notes", "Treatment start dates"].map((item, i) => ( <li key={i} className="flex items-center gap-2 text-base text-slate-700"><CheckCircle size={18} className="text-indigo-500 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
-                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-lg text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={24} aria-hidden="true" /> Crucial Step</h3><p className="text-base text-amber-900 leading-relaxed">It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program.</p></aside>
+                                <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="clinic-handles"><h3 id="clinic-handles" className="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2"><Stethoscope size={24} className="text-indigo-600" aria-hidden="true" /> {t('applicationHelp.checklist.clinicTitle')}</h3><p className="text-base text-slate-700 mb-4"><Trans i18nKey="applicationHelp.checklist.clinicIntro" /></p><ul className="space-y-3">{t('applicationHelp.checklist.clinicItems', { returnObjects: true }).map((item, i) => ( <li key={i} className="flex items-center gap-2 text-base text-slate-700"><CheckCircle size={18} className="text-indigo-500 flex-shrink-0" aria-hidden="true" />{item}</li> ))}</ul></section>
+                                <aside className="bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-sm" role="note"><h3 className="font-bold text-lg text-amber-800 mb-2 flex items-center gap-2"><AlertTriangle size={24} aria-hidden="true" /> {t('applicationHelp.checklist.crucialTitle')}</h3><p className="text-base text-amber-900 leading-relaxed"><Trans i18nKey="applicationHelp.checklist.crucialText" /></p></aside>
                             </aside>
                         </div>
                     </div>
@@ -6543,39 +6510,39 @@ ${patientName || "[Your Name]"}`;
                         <section className="bg-indigo-50 p-6 md:p-8 rounded-xl border border-indigo-100" aria-labelledby="letter-builder">
                             <div className="flex items-center gap-3 mb-4">
                                 <FileText className="text-indigo-600" size={28} aria-hidden="true" />
-                                <h2 id="letter-builder" className="text-2xl font-bold text-indigo-900">Letter Builder</h2>
+                                <h2 id="letter-builder" className="text-2xl font-bold text-indigo-900">{t('applicationHelp.letters.builder.title')}</h2>
                             </div>
-                            <p className="text-base text-indigo-800 mb-6 leading-relaxed">Select a letter type, fill in your details, and generate a professional letter you can copy and use.</p>
+                            <p className="text-base text-indigo-800 mb-6 leading-relaxed">{t('applicationHelp.letters.builder.intro')}</p>
 
                             <div className="space-y-5">
                                 <div>
-                                    <label htmlFor="letter-type" className="block text-base font-bold text-slate-800 mb-2">Letter Type</label>
+                                    <label htmlFor="letter-type" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.letterTypeLabel')}</label>
                                     <select id="letter-type" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={letterType} onChange={(e) => { setLetterType(e.target.value); setGeneratedLetter(""); }}>
-                                        <option value="appeal">Insurance Appeal Letter</option>
-                                        <option value="pap">PAP Reconsideration Letter</option>
-                                        <option value="doctor">Request Doctor's Support</option>
-                                        <option value="hardship">Financial Hardship Statement</option>
+                                        <option value="appeal">{t('applicationHelp.letters.builder.typeAppeal')}</option>
+                                        <option value="pap">{t('applicationHelp.letters.builder.typePap')}</option>
+                                        <option value="doctor">{t('applicationHelp.letters.builder.typeDoctor')}</option>
+                                        <option value="hardship">{t('applicationHelp.letters.builder.typeHardship')}</option>
                                     </select>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-5">
                                     <div>
-                                        <label htmlFor="patient-name" className="block text-base font-bold text-slate-800 mb-2">Your Name</label>
-                                        <input id="patient-name" type="text" placeholder="Your full name" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
+                                        <label htmlFor="patient-name" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.yourNameLabel')}</label>
+                                        <input id="patient-name" type="text" placeholder={t('applicationHelp.letters.builder.yourNamePlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
                                     </div>
                                     <div>
-                                        <label htmlFor="medication-name" className="block text-base font-bold text-slate-800 mb-2">Medication Name</label>
-                                        <input id="medication-name" type="text" placeholder="e.g., Tacrolimus" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
+                                        <label htmlFor="medication-name" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.medicationLabel')}</label>
+                                        <input id="medication-name" type="text" placeholder={t('applicationHelp.letters.builder.medicationPlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
                                     </div>
                                 </div>
 
                                 {letterType === "appeal" && (
                                     <div>
-                                        <label htmlFor="appeal-reason" className="block text-base font-bold text-slate-800 mb-2">Reason for Appeal</label>
+                                        <label htmlFor="appeal-reason" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.appealReasonLabel')}</label>
                                         <select id="appeal-reason" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={appealReason} onChange={(e) => setAppealReason(e.target.value)}>
-                                            <option value="Financial Hardship">Financial Hardship</option>
-                                            <option value="Access Issues">Access Issues (Timing/Delivery)</option>
-                                            <option value="Clinical Stability">Clinical Stability (Already stable)</option>
+                                            <option value="Financial Hardship">{t('applicationHelp.letters.builder.reasonFinancial')}</option>
+                                            <option value="Access Issues">{t('applicationHelp.letters.builder.reasonAccess')}</option>
+                                            <option value="Clinical Stability">{t('applicationHelp.letters.builder.reasonStability')}</option>
                                         </select>
                                     </div>
                                 )}
@@ -6583,49 +6550,49 @@ ${patientName || "[Your Name]"}`;
                                 {(letterType === "pap" || letterType === "hardship") && (
                                     <div className="grid md:grid-cols-2 gap-5">
                                         <div>
-                                            <label htmlFor="transplant-type" className="block text-base font-bold text-slate-800 mb-2">Transplant Type</label>
-                                            <input id="transplant-type" type="text" placeholder="e.g., Kidney, Liver, Heart" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantType} onChange={(e) => setTransplantType(e.target.value)} />
+                                            <label htmlFor="transplant-type" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.transplantTypeLabel')}</label>
+                                            <input id="transplant-type" type="text" placeholder={t('applicationHelp.letters.builder.transplantTypePlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantType} onChange={(e) => setTransplantType(e.target.value)} />
                                         </div>
                                         <div>
-                                            <label htmlFor="transplant-date" className="block text-base font-bold text-slate-800 mb-2">Transplant Date (optional)</label>
-                                            <input id="transplant-date" type="text" placeholder="e.g., January 2023" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantDate} onChange={(e) => setTransplantDate(e.target.value)} />
+                                            <label htmlFor="transplant-date" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.transplantDateLabel')}</label>
+                                            <input id="transplant-date" type="text" placeholder={t('applicationHelp.letters.builder.transplantDatePlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={transplantDate} onChange={(e) => setTransplantDate(e.target.value)} />
                                         </div>
                                     </div>
                                 )}
 
                                 {letterType === "doctor" && (
                                     <div>
-                                        <label htmlFor="doctor-name" className="block text-base font-bold text-slate-800 mb-2">Doctor's Name</label>
-                                        <input id="doctor-name" type="text" placeholder="e.g., Smith" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
+                                        <label htmlFor="doctor-name" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.doctorNameLabel')}</label>
+                                        <input id="doctor-name" type="text" placeholder={t('applicationHelp.letters.builder.doctorNamePlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
                                     </div>
                                 )}
 
                                 {(letterType === "pap" || letterType === "doctor") && (
                                     <div>
-                                        <label htmlFor="program-name" className="block text-base font-bold text-slate-800 mb-2">Program Name(s)</label>
-                                        <input id="program-name" type="text" placeholder="e.g., Astellas Patient Assistance" className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={programName} onChange={(e) => setProgramName(e.target.value)} />
+                                        <label htmlFor="program-name" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.programNameLabel')}</label>
+                                        <input id="program-name" type="text" placeholder={t('applicationHelp.letters.builder.programNamePlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={programName} onChange={(e) => setProgramName(e.target.value)} />
                                     </div>
                                 )}
 
                                 {(letterType === "pap" || letterType === "hardship") && (
                                     <div>
-                                        <label htmlFor="hardship-details" className="block text-base font-bold text-slate-800 mb-2">Describe Your Situation</label>
-                                        <textarea id="hardship-details" rows={3} placeholder="Briefly describe your financial circumstances..." className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={hardshipDetails} onChange={(e) => setHardshipDetails(e.target.value)} />
+                                        <label htmlFor="hardship-details" className="block text-base font-bold text-slate-800 mb-2">{t('applicationHelp.letters.builder.situationLabel')}</label>
+                                        <textarea id="hardship-details" rows={3} placeholder={t('applicationHelp.letters.builder.situationPlaceholder')} className="w-full p-3 text-base rounded-lg border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={hardshipDetails} onChange={(e) => setHardshipDetails(e.target.value)} />
                                     </div>
                                 )}
 
                                 <button onClick={generateLetter} className="bg-indigo-600 hover:bg-indigo-700 text-white text-base font-bold py-3 px-6 rounded-lg transition flex items-center gap-2">
                                     <FileText size={20} aria-hidden="true" />
-                                    Generate Letter
+                                    {t('applicationHelp.letters.builder.generate')}
                                 </button>
 
                                 {generatedLetter && (
                                     <div className="mt-6 bg-white p-6 rounded-xl border border-indigo-200 relative">
                                         <div className="flex justify-between items-center mb-4">
-                                            <h3 className="text-base font-bold text-slate-700 uppercase">Generated Letter:</h3>
+                                            <h3 className="text-base font-bold text-slate-700 uppercase">{t('applicationHelp.letters.builder.generatedHeading')}</h3>
                                             <button onClick={copyToClipboard} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-base font-bold transition">
                                                 {copied ? <Check size={18} className="text-green-600" aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-                                                {copied ? 'Copied!' : 'Copy Text'}
+                                                {copied ? t('applicationHelp.letters.builder.copied') : t('applicationHelp.letters.builder.copyText')}
                                             </button>
                                         </div>
                                         <pre className="whitespace-pre-wrap font-serif text-base text-slate-800 leading-relaxed border-l-4 border-indigo-200 pl-4">{generatedLetter}</pre>
@@ -6636,25 +6603,25 @@ ${patientName || "[Your Name]"}`;
 
                         {/* Phone Scripts */}
                         <div>
-                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Phone Scripts</h2>
-                            <p className="text-lg text-slate-700 mb-6 leading-relaxed">Use these scripts when calling manufacturers and foundations.</p>
+                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">{t('applicationHelp.letters.scripts.title')}</h2>
+                            <p className="text-lg text-slate-700 mb-6 leading-relaxed">{t('applicationHelp.letters.scripts.intro')}</p>
                             <div className="space-y-4">
                                 <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="manufacturer-script">
                                     <div className="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3 font-bold text-lg text-slate-800">
                                         <Phone size={22} aria-hidden="true" />
-                                        <span id="manufacturer-script">Calling Manufacturers</span>
+                                        <span id="manufacturer-script">{t('applicationHelp.letters.scripts.manufacturerTitle')}</span>
                                     </div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">"I'm a transplant patient. Do you have a Patient Assistance Program for <span className="bg-yellow-100 px-1">[drug name]</span>?"</p>
+                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">{t('applicationHelp.letters.scripts.manufacturerPre')}<span className="bg-yellow-100 px-1">{t('applicationHelp.letters.scripts.manufacturerHighlight')}</span>{t('applicationHelp.letters.scripts.manufacturerPost')}</p>
                                     </div>
                                 </section>
                                 <section className="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="foundation-script">
                                     <div className="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3 font-bold text-lg text-slate-800">
                                         <HeartHandshake size={22} aria-hidden="true" />
-                                        <span id="foundation-script">Calling Foundations</span>
+                                        <span id="foundation-script">{t('applicationHelp.letters.scripts.foundationTitle')}</span>
                                     </div>
                                     <div className="p-6 bg-white">
-                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">"Hi, I am checking to see if the <span className="bg-yellow-100 px-1">[Disease Fund Name]</span> fund is currently open. I have insurance, but I need help with my <span className="bg-yellow-100 px-1">[Copays / Premiums]</span>."</p>
+                                        <p className="font-serif text-xl text-slate-800 leading-relaxed">{t('applicationHelp.letters.scripts.foundationPre')}<span className="bg-yellow-100 px-1">{t('applicationHelp.letters.scripts.foundationHighlight1')}</span>{t('applicationHelp.letters.scripts.foundationMid')}<span className="bg-yellow-100 px-1">{t('applicationHelp.letters.scripts.foundationHighlight2')}</span>{t('applicationHelp.letters.scripts.foundationPost')}</p>
                                     </div>
                                 </section>
                             </div>
@@ -6666,8 +6633,8 @@ ${patientName || "[Your Name]"}`;
                         {/* Header with context */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                             <div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Medications & PAP Programs</h2>
-                                <p className="text-slate-600">View your medications alongside their Patient Assistance Programs. Search for medications to see application links.</p>
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{t('applicationHelp.meds.title')}</h2>
+                                <p className="text-slate-600">{t('applicationHelp.meds.intro')}</p>
                             </div>
                         </div>
 
@@ -6678,16 +6645,16 @@ ${patientName || "[Your Name]"}`;
                                     <div className="flex items-center gap-2">
                                         <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
                                         <p className="text-emerald-800 font-medium">
-                                            We loaded {quizSelectedMeds.length} medication{quizSelectedMeds.length !== 1 ? 's' : ''} from your My Path Quiz. Add more below or view program details.
+                                            {t('applicationHelp.meds.loadedBanner', { count: quizSelectedMeds.length })}
                                         </p>
                                     </div>
                                     <button
                                         type="button"
                                         onClick={() => { setSelectedMedications([]); setMedsTabListIds([]); pruneQuizResumeMeds(null); }}
                                         className="text-emerald-700 hover:text-emerald-900 text-sm font-semibold underline whitespace-nowrap flex-shrink-0 min-h-[44px]"
-                                        aria-label="Clear the medications loaded from your My Path Quiz"
+                                        aria-label={t('applicationHelp.meds.clearListAriaLabel')}
                                     >
-                                        Clear list
+                                        {t('applicationHelp.meds.clearList')}
                                     </button>
                                 </div>
                             </aside>
@@ -6715,18 +6682,18 @@ ${patientName || "[Your Name]"}`;
                         <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
                             <h3 className="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2">
                                 <Search size={20} className="text-teal-600" aria-hidden="true" />
-                                Search for Medications
+                                {t('applicationHelp.meds.searchTitle')}
                             </h3>
-                            <p className="text-slate-600 text-sm mb-4">Search for your transplant medications to see their Patient Assistance Program information.</p>
+                            <p className="text-slate-600 text-sm mb-4">{t('applicationHelp.meds.searchIntro')}</p>
                             <div className="relative">
                                 <div className="flex flex-col md:flex-row gap-3">
                                     <div className="flex-grow relative">
-                                        <label htmlFor="meds-tab-search" className="sr-only">Search for medications</label>
+                                        <label htmlFor="meds-tab-search" className="sr-only">{t('applicationHelp.meds.searchLabel')}</label>
                                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
                                         <input
                                             id="meds-tab-search"
                                             type="text"
-                                            placeholder="Enter drug name (e.g. Prograf, Tacrolimus)..."
+                                            placeholder={t('applicationHelp.meds.searchPlaceholder')}
                                             className="w-full pl-12 pr-12 py-3 rounded-xl border border-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none text-base transition shadow-sm"
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -6738,11 +6705,11 @@ ${patientName || "[Your Name]"}`;
                                         />
                                         {isSearching && (
                                             <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                                                <Loader2 size={20} className="text-teal-600 animate-spin" aria-label="Searching" />
+                                                <Loader2 size={20} className="text-teal-600 animate-spin" aria-label={t('applicationHelp.meds.searchingAriaLabel')} />
                                             </div>
                                         )}
                                         {searchTerm && !isSearching && (
-                                            <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Clear search">
+                                            <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('applicationHelp.meds.clearSearchAriaLabel')}>
                                                 <X size={20} />
                                             </button>
                                         )}
@@ -6763,9 +6730,9 @@ ${patientName || "[Your Name]"}`;
                                                                 <span className="text-sm text-slate-600">{med.genericName}</span>
                                                             </div>
                                                             {isAlreadyIn ? (
-                                                                <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> Added</span>
+                                                                <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> {t('applicationHelp.meds.added')}</span>
                                                             ) : (
-                                                                <span className="text-teal-600 bg-teal-50 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-teal-100 flex items-center gap-1"><PlusCircle size={16} /> Add</span>
+                                                                <span className="text-teal-600 bg-teal-50 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-teal-100 flex items-center gap-1"><PlusCircle size={16} /> {t('applicationHelp.meds.add')}</span>
                                                             )}
                                                         </button>
                                                     );
@@ -6773,8 +6740,8 @@ ${patientName || "[Your Name]"}`;
                                             </div>
                                         ) : (
                                             <div className="p-4 text-center">
-                                                <p className="text-slate-700 font-medium mb-1">No matches found</p>
-                                                <p className="text-slate-500 text-sm">Try a different spelling or check our <Link to="/medications" className="text-teal-600 hover:underline">medication search page</Link>.</p>
+                                                <p className="text-slate-700 font-medium mb-1">{t('applicationHelp.meds.noMatches')}</p>
+                                                <p className="text-slate-500 text-sm">{t('applicationHelp.meds.noMatchesPre')}<Link to="/medications" className="text-teal-600 hover:underline">{t('applicationHelp.meds.noMatchesLink')}</Link>{t('applicationHelp.meds.noMatchesPost')}</p>
                                             </div>
                                         )}
                                     </div>
@@ -6790,10 +6757,10 @@ ${patientName || "[Your Name]"}`;
                                 </div>
                                 <div className="flex-1">
                                     <h3 id="apphelp-insurance-heading" className="font-bold text-lg text-slate-900 mb-2">
-                                        Do you have commercial insurance?
+                                        {t('applicationHelp.meds.insurance.question')}
                                     </h3>
                                     <p className="text-slate-600 mb-4 text-sm">
-                                        Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately, not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
+                                        {t('applicationHelp.meds.insurance.explanation')}
                                     </p>
                                     <div className="flex gap-4">
                                         <button
@@ -6806,7 +6773,7 @@ ${patientName || "[Your Name]"}`;
                                             role="radio"
                                             aria-checked={localCommercialInsurance === 'yes'}
                                         >
-                                            Yes
+                                            {t('applicationHelp.meds.insurance.yes')}
                                         </button>
                                         <button
                                             onClick={() => setLocalCommercialInsurance('no')}
@@ -6818,20 +6785,20 @@ ${patientName || "[Your Name]"}`;
                                             role="radio"
                                             aria-checked={localCommercialInsurance === 'no'}
                                         >
-                                            No
+                                            {t('applicationHelp.meds.insurance.no')}
                                         </button>
                                     </div>
                                     {localCommercialInsurance === 'yes' && (
                                         <div className="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                                             <p className="text-emerald-800 text-sm">
-                                                <strong>Copay cards can help!</strong> With commercial insurance, manufacturer copay cards can lower your cost to $0-$50/month for many transplant medications.
+                                                <Trans i18nKey="applicationHelp.meds.insurance.yesInfo" />
                                             </p>
                                         </div>
                                     )}
                                     {localCommercialInsurance === 'no' && (
                                         <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
                                             <p className="text-purple-800 text-sm">
-                                                <strong>Patient Assistance Programs (PAPs) can help.</strong> Drug manufacturers offer free medication programs for patients who qualify based on income. Foundations may also help with copays.
+                                                <Trans i18nKey="applicationHelp.meds.insurance.noInfo" />
                                             </p>
                                         </div>
                                     )}
@@ -6845,7 +6812,7 @@ ${patientName || "[Your Name]"}`;
                                 <div className="flex items-center justify-between">
                                     <h3 className="font-bold text-xl text-slate-900 flex items-center gap-2">
                                         <Pill size={22} className="text-teal-600" aria-hidden="true" />
-                                        Your Medications ({displayMeds.length})
+                                        {t('applicationHelp.meds.yourMedications', { count: displayMeds.length })}
                                     </h3>
                                 </div>
 
@@ -6854,11 +6821,11 @@ ${patientName || "[Your Name]"}`;
                                     <div className="flex items-start gap-3">
                                         <Info size={20} className="text-teal-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                         <div>
-                                            <p className="text-teal-800 font-medium">Each medication card shows:</p>
+                                            <p className="text-teal-800 font-medium">{t('applicationHelp.meds.cardShows')}</p>
                                             <ul className="text-teal-700 text-sm mt-1 list-disc pl-4">
-                                                <li><strong>Assistance tab:</strong> PAP programs and copay cards with direct application links</li>
-                                                <li><strong>Price tab:</strong> Estimated costs at different pharmacies</li>
-                                                <li><strong>Overview tab:</strong> Basic medication information</li>
+                                                <li><Trans i18nKey="applicationHelp.meds.cardShowsAssistance" /></li>
+                                                <li><Trans i18nKey="applicationHelp.meds.cardShowsPrice" /></li>
+                                                <li><Trans i18nKey="applicationHelp.meds.cardShowsOverview" /></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -6882,14 +6849,14 @@ ${patientName || "[Your Name]"}`;
                                             <FileText size={24} aria-hidden="true" />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-lg text-blue-900 mb-1">Ready to Apply?</h4>
-                                            <p className="text-blue-700 text-sm mb-3">Check out the other tabs on this page for step-by-step application guidance, checklists, and letter templates.</p>
+                                            <h4 className="font-bold text-lg text-blue-900 mb-1">{t('applicationHelp.meds.readyTitle')}</h4>
+                                            <p className="text-blue-700 text-sm mb-3">{t('applicationHelp.meds.readyText')}</p>
                                             <div className="flex flex-wrap gap-2">
                                                 <button onClick={() => setActiveTab('STEPS')} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
-                                                    View Application Steps
+                                                    {t('applicationHelp.meds.viewSteps')}
                                                 </button>
                                                 <button onClick={() => setActiveTab('CHECKLIST')} className="bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm font-bold transition">
-                                                    View Checklist
+                                                    {t('applicationHelp.meds.viewChecklist')}
                                                 </button>
                                             </div>
                                         </div>
@@ -6899,16 +6866,16 @@ ${patientName || "[Your Name]"}`;
                         ) : (
                             <div className="text-center py-12 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                                 <div className="text-slate-400 mb-4" aria-hidden="true"><Pill size={64} className="mx-auto" /></div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">No medications added yet</h3>
-                                <p className="text-slate-600 max-w-md mx-auto mb-6">Use the search box above to find your medications, or take the My Path Quiz to build your list, you can connect to your health system there to import them automatically.</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">{t('applicationHelp.meds.emptyTitle')}</h3>
+                                <p className="text-slate-600 max-w-md mx-auto mb-6">{t('applicationHelp.meds.emptyText')}</p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                     <Link to="/wizard?step=meds" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition">
                                         <Sparkles size={20} aria-hidden="true" />
-                                        Take My Path Quiz
+                                        {t('applicationHelp.meds.takeQuiz')}
                                     </Link>
                                     <Link to="/medications" className="inline-flex items-center gap-2 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-6 py-3 rounded-lg font-bold transition">
                                         <Search size={20} aria-hidden="true" />
-                                        Full Medication Search
+                                        {t('applicationHelp.meds.fullSearch')}
                                     </Link>
                                 </div>
                             </div>

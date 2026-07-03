@@ -1,0 +1,461 @@
+[
+  {
+    "category": "Acerca de este sitio",
+    "questions": [
+      {
+        "q": "¿Qué es Transplant Med Navigator?",
+        "a": "Ayudamos a los pacientes de trasplante a encontrar medicinas gratis o de bajo costo. Le mostramos programas que pueden ayudarle a pagar sus medicamentos."
+      },
+      {
+        "q": "¿Es gratis usar este sitio?",
+        "a": "¡Sí! Nuestro cuestionario My Path es completamente gratis para los pacientes. Úselo todas las veces que lo necesite. Nuestras guías y enlaces a programas de asistencia siempre son gratis. Nunca pague para solicitar ayuda. Si un sitio le pide dinero, es una estafa. Ofrecemos planes empresariales para hospitales y organizaciones de salud."
+      },
+      {
+        "q": "¿Quién debería usar este sitio?",
+        "a": "Este sitio es para:\n• Pacientes de trasplante\n• Familiares y cuidadores\n• Trabajadores sociales\n• Cualquier persona que necesite ayuda para pagar los medicamentos de trasplante"
+      },
+      {
+        "q": "¿Cómo se financia este sitio?",
+        "a": "Nuestras herramientas son gratis para los pacientes. Ofrecemos planes empresariales para hospitales y organizaciones de salud que quieren ayudar a sus pacientes a encontrar programas de asistencia con medicamentos. Esto nos permite mantener gratis nuestras herramientas para pacientes."
+      },
+      {
+        "q": "¿Se mantiene privada mi información?",
+        "a": "Sí. Sus respuestas del cuestionario se quedan en su teléfono o computadora. No las guardamos en nuestros servidores. Cuando cierra su navegador, los datos desaparecen."
+      }
+    ]
+  },
+  {
+    "category": "Programas de Asistencia al Paciente (PAP)",
+    "questions": [
+      {
+        "q": "¿Qué es un Programa de Asistencia al Paciente (PAP)?",
+        "a": "Las compañías farmacéuticas manejan estos programas. Dan medicina gratis a las personas que no pueden pagarla. Cada compañía tiene sus propias reglas."
+      },
+      {
+        "q": "¿Quién puede recibir ayuda de los PAP?",
+        "a": "La mayoría de los programas revisan:\n• Cuánto dinero gana usted\n• Si tiene seguro\n• Si vive en los EE. UU.\n\nAlgunos programas ayudan a personas sin seguro. Otros ayudan a personas cuyo seguro cuesta demasiado."
+      },
+      {
+        "q": "¿Cómo solicito un PAP?",
+        "a": "Cada programa es diferente. Por lo general necesita:\n• Su información básica (nombre, dirección)\n• Prueba de ingresos (formularios de impuestos o talones de pago)\n• Un formulario firmado por su doctor\n\nNuestro sitio le muestra dónde solicitar."
+      },
+      {
+        "q": "¿Cuál es la diferencia entre los PAP y las tarjetas de copago?",
+        "a": "**Las tarjetas de copago** bajan lo que usted paga en la farmacia. Funcionan rápido, pero solo si tiene seguro privado.\n\n**Los PAP** le dan medicina gratis. Tardan más en conseguirse, pero ayudan a más personas."
+      },
+      {
+        "q": "¿Puedo usar un PAP si tengo Medicare?",
+        "a": "La mayoría de los PAP NO ayudan a pacientes con Medicare. Esto se debe a una ley federal.\n\nPero los pacientes con Medicare SÍ pueden recibir ayuda de:\n• Fundaciones de copago (grupos sin fines de lucro)\n• Medicare Extra Help (\"Ayuda Adicional\"), un programa del gobierno\n• Programas estatales de medicamentos"
+      },
+      {
+        "q": "¿Tengo que renovar mi PAP cada año?",
+        "a": "Sí. La mayoría de los programas le piden renovar cada 12 meses.\n\n**Para renovar, va a necesitar:**\n• Prueba de ingresos actualizada\n• Una receta nueva o la firma de su doctor\n• Información de seguro actualizada\n\n**Consejos para seguir inscrito:**\n• Marque su calendario 30-45 días antes de la renovación\n• Guarde copias de sus documentos\n• Pida ayuda a su trabajador social\n\nSi se le pasa la fecha límite, puede quedarse sin medicina mientras espera."
+      }
+    ]
+  },
+  {
+    "category": "Fundaciones de copago",
+    "questions": [
+      {
+        "q": "¿Qué es una fundación de copago?",
+        "a": "Son grupos sin fines de lucro que ayudan a pagar los costos de sus medicamentos. Pueden ayudar con:\n• Lo que usted paga en la farmacia\n• El costo mensual de su seguro\n• Su deducible\n\nA diferencia de los programas de las compañías farmacéuticas, estas SÍ pueden ayudar a pacientes con Medicare."
+      },
+      {
+        "q": "¿Cuál es la diferencia entre una fundación y un PAP?",
+        "a": "**Las fundaciones** son grupos sin fines de lucro. SÍ pueden ayudar a pacientes con Medicare.\n\n**Los PAP** los manejan las compañías farmacéuticas. Muchas veces NO pueden ayudar a pacientes con Medicare, pero pueden darle medicina gratis."
+      },
+      {
+        "q": "¿Cómo sé si una fundación es real?",
+        "a": "Las fundaciones reales NUNCA le cobran por solicitar. Están registradas como organizaciones sin fines de lucro.\n\nSi alguien le pide dinero para recibir ayuda, es una estafa.\n\nEjemplos de grupos reales:\n• HealthWell Foundation\n• PAN Foundation\n• NORD"
+      },
+      {
+        "q": "¿Las fundaciones tienen listas de espera?",
+        "a": "Sí. Muchas fundaciones se quedan sin fondos y cierran para personas nuevas. Vuelven a abrir cuando reciben más dinero.\n\n**Consejos:**\n• Solicite temprano\n• Revise con frecuencia\n• Pruebe con más de una fundación"
+      }
+    ]
+  },
+  {
+    "category": "Tarjetas de copago",
+    "questions": [
+      {
+        "q": "¿Qué es una tarjeta de copago?",
+        "a": "Las tarjetas de copago (también llamadas tarjetas de asistencia de copago o cupones del fabricante) son programas de las compañías farmacéuticas que reducen o eliminan lo que usted paga de su bolsillo por medicamentos de marca.\n\n**Quién puede usarlas:**\n• Solo pacientes con seguro comercial (privado)\n• NO están disponibles para Medicare, Medicaid, Tricare ni beneficios del VA\n\nLas tarjetas de copago son diferentes de las fundaciones de copago. Las tarjetas de copago vienen de las compañías farmacéuticas y solo funcionan con seguro privado. Las fundaciones de copago son organizaciones sin fines de lucro que SÍ pueden ayudar a pacientes con Medicare."
+      },
+      {
+        "q": "¿Cómo funcionan las tarjetas de copago?",
+        "a": "Cuando surte una receta, esto es lo que pasa:\n\n**Paso 1:** Su seguro comercial procesa el reclamo y decide cuánto es su copago o coseguro.\n\n**Paso 2:** La tarjeta de copago cubre entonces parte o todo ese costo restante.\n\n**El resultado:** Lo que usted paga de su bolsillo muchas veces baja a $0-$25 por surtido, sin importar si el medicamento cuesta $500 o $15,000.\n\n**Ejemplo:**\nSu seguro dice que usted debe $200 por su tacrolimus. Usted presenta su tarjeta de copago y esta cubre $195. Usted paga solo $5."
+      },
+      {
+        "q": "¿Quién paga las tarjetas de copago?",
+        "a": "El dinero viene directamente del fabricante del medicamento, no de su seguro.\n\n**¿Por qué lo hacen las compañías farmacéuticas?**\nLas tarjetas de copago son básicamente una herramienta de mercadeo. Los fabricantes las usan para que los pacientes sigan con sus medicamentos de marca en vez de cambiar a genéricos o a la competencia.\n\n**Qué significa esto para usted:**\n• La ayuda es dinero real que reduce sus costos\n• No afecta los beneficios de su seguro\n• Usted no está pidiendo prestado ni sacando un préstamo\n• No hay revisión de crédito ni pagos que devolver"
+      },
+      {
+        "q": "¿Puedo usar tarjetas de copago con Medicare, Medicaid u otro seguro del gobierno?",
+        "a": "**No.** Las tarjetas de copago no se pueden usar con programas de seguro del gobierno:\n• Medicare (incluida la Parte D)\n• Medicaid\n• Tricare\n• Beneficios del VA\n• Otros programas federales o estatales\n\n**¿Por qué no?**\nLas leyes federales contra sobornos prohíben que los fabricantes de medicamentos den este tipo de asistencia a los beneficiarios de seguros del gobierno.\n\n**Qué SÍ pueden usar los pacientes con seguro del gobierno:**\n• Fundaciones de copago (grupos sin fines de lucro como HealthWell, PAN Foundation)\n• Medicare Extra Help (si sus ingresos califican)\n• Programas estatales de asistencia farmacéutica"
+      },
+      {
+        "q": "¿Las tarjetas de copago tienen límites anuales?",
+        "a": "**Sí.** La mayoría de las tarjetas de copago tienen topes y requisitos:\n\n**Topes anuales:**\n• Comúnmente $10,000-$20,000 por año\n• Algunos programas tienen límites más altos para medicamentos caros\n• Cuando llega al tope, paga el precio completo por el resto del año\n\n**Otros requisitos:**\n• La mayoría le pide volver a inscribirse cada año\n• Algunas vencen después de cierto tiempo\n• Puede que tenga que volver a verificar su seguro\n\n**Consejos:**\n• Marque en su calendario las fechas de renovación\n• Revise su saldo restante durante el año\n• Sepa cuánto pagará si llega al tope"
+      },
+      {
+        "q": "¿Qué es un programa acumulador o maximizador de copagos?",
+        "a": "Esto es cada vez más importante para los pacientes de trasplante que toman inmunosupresores caros.\n\n**Qué es:**\nAlgunos planes de seguro usan programas llamados \"acumulador de copagos\" o \"maximizador de copagos\" que NO cuentan la asistencia de copago del fabricante hacia su deducible ni su máximo de gastos de bolsillo.\n\n**Por qué importa:**\nNormalmente, sus copagos cuentan hacia su deducible. Cuando llega a su máximo de gastos de bolsillo, el seguro paga el 100%. Pero con los programas acumuladores:\n• La tarjeta de copago paga sus costos\n• Pero esos pagos no cuentan hacia su deducible\n• Cuando la tarjeta de copago se agota, todavía le queda todo su deducible por cumplir\n• Podría enfrentar miles de dólares en costos inesperados\n\n**Qué hacer:**\n• Pregunte a su seguro si tienen un programa acumulador o maximizador\n• Lea con cuidado los documentos de su plan\n• Haga un presupuesto para los costos después de que se agote el beneficio de su tarjeta de copago\n• Hable con el trabajador social de su equipo de trasplante sobre opciones de respaldo"
+      }
+    ]
+  },
+  {
+    "category": "Cuando el seguro lo manda a otra parte",
+    "questions": [
+      {
+        "q": "¿Qué significa que mi plan me 'desvíe'?",
+        "a": "Algunos planes tratan de no pagar sus medicamentos. Le dicen que primero consiga medicamentos gratis de los fabricantes.\n\n**Por qué lo hacen los planes:** Les ahorra dinero.\n\n**Por qué es malo:** Puede esperar semanas por sus medicamentos. Puede que no consiga los medicamentos gratis. Y entonces se queda sin ayuda.\n\n**Tres formas en que los planes hacen esto:**\n• Acumulador de copagos\n• Maximizador de copagos\n• Financiamiento alternativo (AFP)"
+      },
+      {
+        "q": "¿Qué es el financiamiento alternativo (AFP)?",
+        "a": "Es cuando el plan de su trabajo dice: \"No vamos a cubrir este medicamento. Consígalo gratis del fabricante\".\n\n**Cómo funciona:**\n• Su plan no paga algunos medicamentos\n• Otra compañía lo llama para ayudarle a solicitar medicamentos gratis\n• Si no consigue los medicamentos gratis, entonces su plan quizás pague\n\n**Por qué es riesgoso:**\n• Puede esperar semanas o meses\n• Puede que no consiga los medicamentos gratis\n• Si no consigue medicamentos gratis, paga el precio completo\n• Dejar de tomar sus medicamentos de trasplante es peligroso"
+      },
+      {
+        "q": "¿Cómo sé si mi plan hace esto?",
+        "a": "**Esté atento a estas señales:**\n• Los papeles de su plan dicen \"copay accumulator\" (acumulador de copagos)\n• El dinero de la tarjeta de copago no aparece en su registro de gastos\n• Le dicen que primero llame a otra compañía\n• Su medicamento está \"excluido\" (no cubierto)\n• Debe pedir medicamentos gratis antes de que su plan ayude\n\n**Pregunte a su plan:**\n• \"¿Usan un acumulador de copagos?\"\n• \"¿El dinero de mi tarjeta de copago cuenta hacia lo que debo?\"\n• \"¿Mi medicamento está totalmente cubierto?\""
+      },
+      {
+        "q": "¿Qué estados tienen leyes para detener esto?",
+        "a": "Muchos estados ya tienen leyes para ayudar. En esos estados, el dinero de la tarjeta de copago debe contar hacia lo que usted debe.\n\n**Estados con leyes que ayudan:**\nArizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Tennessee, Texas, Virginia, Washington, West Virginia y más.\n\n**Qué hacer:**\nLlame a su estado. Pregunte qué leyes le protegen. Cada año más estados agregan leyes."
+      },
+      {
+        "q": "¿Qué puedo hacer si esto me pasa a mí?",
+        "a": "**Paso 1:** Lea los papeles de su plan. Busque palabras como \"accumulator\" (acumulador) o \"alternative funding\" (financiamiento alternativo).\n\n**Paso 2:** Lleve la cuenta de lo que paga. Revise si aparece en el registro de su plan.\n\n**Paso 3:** Si le dicen que no, presente una apelación. Pida a su equipo de trasplante que escriba una carta diciendo que usted necesita este medicamento.\n\n**Paso 4:** Llame a la oficina de seguros de su estado. Pueden ayudarle a presentar una queja.\n\n**Paso 5:** Si su seguro es del trabajo, hable con Recursos Humanos. Cuénteles cómo esto le afecta.\n\n**Busque ayuda:** Llame a la Patient Advocate Foundation. Ayudan gratis."
+      },
+      {
+        "q": "¿Por qué es tan malo esto para los pacientes de trasplante?",
+        "a": "Los pacientes de trasplante enfrentan riesgos extra:\n\n**1. No puede saltarse dosis**\nSus medicamentos deben tomarse a tiempo. Esperar por medicamentos gratis es riesgoso.\n\n**2. Los medicamentos gratis no son seguros de conseguir**\nLos fabricantes tienen reglas. Puede que usted no califique. El dinero puede agotarse.\n\n**3. Usted paga por su plan**\nUsted paga cada mes. Pero algunos planes hacen que los fabricantes paguen en su lugar.\n\n**4. Las cuentas grandes pueden llegar rápido**\nCuando su tarjeta de copago se agota, puede deber mucho dinero de golpe."
+      }
+    ]
+  },
+  {
+    "category": "Seguro y cobertura",
+    "questions": [
+      {
+        "q": "¿Qué es una farmacia especializada?",
+        "a": "Una farmacia especializada maneja medicamentos caros como las medicinas de trasplante. Muchas veces envían los medicamentos a su casa.\n\nLa mayoría de los planes de seguro le obligan a usar una farmacia especializada específica. Por lo general, no puede surtir estos medicamentos en su farmacia local."
+      },
+      {
+        "q": "¿Puedo usar tarjetas de copago con Medicare?",
+        "a": "No. La ley federal no lo permite. Pero los pacientes con Medicare SÍ pueden usar fundaciones de copago para ayudar a pagar lo que deben."
+      },
+      {
+        "q": "¿Qué es Medicare Extra Help?",
+        "a": "Medicare Extra Help (\"Ayuda Adicional\") es un programa del gobierno que ayuda a las personas de bajos ingresos a pagar sus medicamentos. Puede bajar o eliminar:\n• Primas mensuales\n• Deducibles\n• Copagos\n\nSi califica o no depende de sus ingresos y sus ahorros."
+      },
+      {
+        "q": "¿Los niveles (tiers) de medicamentos cambian según el plan de seguro?",
+        "a": "Sí. Cada plan decide en qué \"nivel\" (tier) poner cada medicamento. El nivel afecta su costo.\n\n**Ejemplo:**\n• Un medicamento en el Nivel 2 puede costar $25\n• El mismo medicamento en el Nivel 4 puede costar $150 o más\n\nCuando elija un plan, revise en qué nivel están sus medicamentos."
+      },
+      {
+        "q": "Mi farmacia me dio una marca diferente de mi medicina. ¿Es un problema?",
+        "a": "Para los pacientes de trasplante, esto SÍ puede ser un problema.\n\n**Por qué importa:**\nLos medicamentos antirrechazo deben mantenerse en niveles estables en su cuerpo. Cambiar de marca puede cambiar esos niveles.\n\n**Qué hacer:**\n• Avise a su equipo de trasplante de inmediato\n• Pida análisis de sangre dentro de una semana\n• Anote el nombre de la marca nueva\n• Esté atento a cualquier síntoma nuevo\n\n**Para evitarlo:**\n• Pida a su doctor que escriba \"Do Not Substitute\" (No sustituir) en su receta\n• Pida a su farmacia que le avise antes de cualquier cambio\n\n**Importante:** No deje de tomar su medicina por un cambio de marca. Tome la que tiene y llame a su equipo de trasplante."
+      },
+      {
+        "q": "¿Qué son los programas estatales de medicamentos?",
+        "a": "Algunos estados tienen programas que ayudan a sus residentes a pagar los medicamentos.\n\n**Quién puede usarlos:**\n• Muchas veces personas de 65 años o más, o con discapacidad\n• Personas con ingresos limitados\n• Residentes del estado\n\n**Ejemplos:**\n• New York: EPIC\n• Pennsylvania: PACE\n• New Jersey: PAAD\n\n**Cómo encontrar el programa de su estado:**\n• Visite Medicare.gov\n• Llame al 1-800-MEDICARE\n• Pregunte a su trabajador social"
+      },
+      {
+        "q": "¿Qué es Medicare Part B-ID y cuánto cuesta en 2026?",
+        "a": "**Part B-ID** es un beneficio especial de Medicare solo para pacientes de trasplante de riñón. Cubre los medicamentos inmunosupresores (medicinas antirrechazo) de por vida, incluso después de que termine su Medicare completo.\n\n**Costos de 2026:**\n• Prima mensual: **$121.60** (subió de $110.40 en 2025)\n• Deducible anual: **$283**\n• Coseguro: **20%** del costo del medicamento\n\n**Quién califica:**\n• Personas con trasplante de riñón cuyo Medicare completo (Parte A/B) terminó 36 meses después del trasplante\n• Personas que no tienen otro seguro que cubra los inmunosupresores\n\n**Importante:** Part B-ID solo cubre medicamentos inmunosupresores. No cubre otros servicios médicos. Si necesita cobertura completa, revise los Programas de Ahorros de Medicare (MSP) para ayudar a pagar las primas."
+      },
+      {
+        "q": "¿Cuáles son los costos de Medicare Parte B en 2026?",
+        "a": "Estos son los costos estándar de Medicare Parte B para 2026:\n\n**Prima mensual:** $202.90 (subió de $185.00 en 2025)\n**Deducible anual:** $283 (subió de $257 en 2025)\n**Coseguro:** 20% de los costos aprobados por Medicare después del deducible\n\n**Prima de Part B-ID** (pacientes de trasplante de riñón): $121.60 al mes\n\n**Si tiene bajos ingresos:**\nLos Programas de Ahorros de Medicare (QMB, SLMB, QI) pueden ayudar a pagar su prima de la Parte B y también pueden cubrir deducibles y coseguros.\n\n**Ingresos más altos:** Si gana más de $109,000 al año (soltero) o $218,000 (casado), paga más por la Parte B."
+      },
+      {
+        "q": "¿Qué es el programa piloto de autorización previa WISeR de CMS?",
+        "a": "Desde enero de 2026, CMS lanzó el modelo **WISeR** (Wasteful and Inappropriate Service Reduction). Agrega autorización previa para 17 servicios ambulatorios de Medicare Parte B.\n\n**Estados afectados:** Arizona, New Jersey, Ohio, Oklahoma, Texas y Washington.\n\n**Qué deben saber los pacientes de trasplante:**\n• WISeR NO afecta sus medicamentos de trasplante\n• Cubre procedimientos ambulatorios como estimuladores de nervios, procedimientos de columna y cuidado de heridas\n• Si necesita uno de estos procedimientos, su proveedor debe pedir aprobación primero\n• Las decisiones se toman dentro de 72 horas (48 horas para casos urgentes)\n\n**Importante:** Esto solo afecta a Medicare Original (pago por servicio), no a los planes Medicare Advantage. El modelo estará vigente hasta diciembre de 2031."
+      }
+    ]
+  },
+  {
+    "category": "¿Sabía usted? Precios de los medicamentos",
+    "questions": [
+      {
+        "q": "¿Por qué cambian los precios de los medicamentos?",
+        "a": "Los precios de los medicamentos siguen patrones:\n• Los medicamentos de marca suelen subir en enero y julio\n• Los precios de los genéricos cambian cada mes\n\nSaber cuándo cambian los precios puede ayudarle a planear con tiempo."
+      },
+      {
+        "q": "¿Cuándo cambian los precios de los medicamentos de marca?",
+        "a": "Los precios de los medicamentos de marca suelen subir en enero y julio. Su seguro también actualiza su lista de medicamentos el 1 de enero. Es entonces cuando su copago puede cambiar."
+      },
+      {
+        "q": "¿Qué debo hacer antes de enero cada año?",
+        "a": "Revise su seguro durante la inscripción abierta (por lo general en el otoño). Asegúrese de que su plan siga cubriendo sus medicamentos de trasplante de la misma forma en el año nuevo."
+      },
+      {
+        "q": "¿Por qué mi medicina genérica cuesta diferente cada mes?",
+        "a": "Los precios de los medicamentos genéricos cambian con frecuencia. Si paga en efectivo o usa una tarjeta de descuento, su precio puede cambiar mucho de un mes a otro."
+      },
+      {
+        "q": "¿Cómo puedo conseguir mejores precios en medicamentos genéricos?",
+        "a": "**Consejos:**\n• Revise el precio en internet antes de resurtir\n• Si el precio subió, pruebe otra farmacia\n• Pida un suministro de 90 días para fijar el precio por más tiempo"
+      },
+      {
+        "q": "¿Qué medicamentos está negociando Medicare?",
+        "a": "Medicare está negociando precios de medicamentos bajo la ley Inflation Reduction Act. Así van las cosas:\n\n**Primeros 10 medicamentos (precios vigentes desde enero de 2026):**\nEliquis, Jardiance, Xarelto, Januvia, Farxiga, Entresto, Enbrel, Imbruvica, Stelara y NovoLog/Fiasp. Estos ahorran a los pacientes hasta un 79% en algunos medicamentos.\n\n**Segunda ronda (15 medicamentos, precios vigentes en 2027):**\nSe eligió un segundo grupo de 15 medicamentos para negociación, con precios que entran en vigor en 2027.\n\n**Tercera ronda (anunciada el 27 de enero de 2026, precios vigentes en 2028):**\n15 medicamentos nuevos, incluidos por primera vez medicamentos de la Parte B. Entre los relevantes para trasplante están Orencia (relacionado con Belatacept para trasplante de riñón), Trulicity (para diabetes después del trasplante), Xolair y Anoro Ellipta (para pacientes de trasplante de pulmón). También incluye Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio y Xeljanz.\n\n**Por qué importa:** Con precios más bajos, usted llega más rápido a su tope de $2,100 de gastos de bolsillo, o paga menos en total."
+      }
+    ]
+  },
+  {
+    "category": "Tarjetas de descuento para recetas (GoodRx, SingleCare, etc.)",
+    "questions": [
+      {
+        "q": "¿Qué son GoodRx y aplicaciones parecidas?",
+        "a": "Son compañías de tarjetas de descuento. NO son seguro. Cuando usa su cupón, paga un precio en efectivo con descuento en vez de usar su seguro.\n\nEsto puede ahorrarle dinero en un medicamento. Pero para los pacientes de trasplante, puede costarle más con el tiempo."
+      },
+      {
+        "q": "¿Qué es la \"trampa del deducible\" con las tarjetas de descuento?",
+        "a": "Cuando usa una tarjeta de descuento, el dinero que paga NO cuenta hacia su deducible.\n\n**Por qué importa:**\nLos pacientes de trasplante tienen costos altos de medicamentos. Muchos llegan a su máximo de gastos de bolsillo en pocos meses. Después de eso, el seguro paga el 100%.\n\nLas tarjetas de descuento retrasan el momento en que llega a ese máximo. Usted termina pagando de su bolsillo por más tiempo."
+      },
+      {
+        "q": "¿Puedo usar una tarjeta de descuento Y mi seguro al mismo tiempo?",
+        "a": "No. Debe elegir una cosa o la otra. Si usa una tarjeta de descuento, ese pago NO cuenta hacia su deducible."
+      },
+      {
+        "q": "¿Cuándo deberían usar tarjetas de descuento los pacientes de trasplante?",
+        "a": "Solo en casos limitados:\n1. Para un medicamento que su seguro no cubre\n2. Para un medicamento barato de una sola vez (como un antibiótico)\n3. Si no tiene seguro\n\n**Nunca use tarjetas de descuento** para sus medicamentos diarios de trasplante como Tacrolimus o Mycophenolate."
+      },
+      {
+        "q": "¿Qué opciones son mejores que las tarjetas de descuento?",
+        "a": "Para pacientes de trasplante:\n1. **PAP** - Las compañías farmacéuticas dan medicina gratis según los ingresos\n2. **Fundaciones de copago** - Organizaciones sin fines de lucro que ayudan a pagar sus copagos\n3. **Medicare Extra Help** - Para pacientes con Medicare y bajos ingresos\n\nBusque en nuestro sitio o revise NeedyMeds.org para encontrar programas para sus medicamentos."
+      },
+      {
+        "q": "¿Por qué es importante llegar a mi máximo de gastos de bolsillo?",
+        "a": "Cuando llega a su máximo, el seguro paga el 100% por el resto del año. Para los pacientes de trasplante, esto suele pasar en los primeros meses.\n\nDespués de eso, sus medicamentos son prácticamente gratis. Cada dólar que gasta con tarjetas de descuento NO le acerca a ese punto."
+      }
+    ]
+  },
+  {
+    "category": "Alternativas y competidores de GoodRx",
+    "questions": [
+      {
+        "q": "¿Qué aplicaciones compiten con GoodRx?",
+        "a": "Varias aplicaciones gratis funcionan como GoodRx:\n• **SingleCare** - A veces tiene precios más bajos\n• **Optum Perks** - Buenos descuentos\n• **ScriptSave WellRx** - Funciona en muchas farmacias\n• **BuzzRx** - Dona a organizaciones benéficas cuando usted la usa\n\nSiempre compare precios entre aplicaciones."
+      },
+      {
+        "q": "¿Qué son las farmacias 'Cost-Plus' y de pedido por correo?",
+        "a": "Son farmacias reales que le envían los medicamentos:\n• **Mark Cuban Cost Plus Drug Company** - Vende genéricos al costo más una tarifa pequeña\n• **Amazon Pharmacy** - Los miembros de Prime obtienen ahorros en genéricos\n• **Blink Health** - Paga primero en internet y luego recoge"
+      },
+      {
+        "q": "¿Puedo usar Cost Plus Drugs si tengo seguro, o solo si no tengo seguro?",
+        "a": "Cost Plus Drugs (Mark Cuban Cost Plus Drug Company) está disponible para todos, con o sin seguro.\n\n• Aceptan algunos planes de seguro.\n• La mayoría de las veces sus precios son mejores que el precio de su seguro, y para algunos medicamentos el precio en efectivo es más barato que su copago, así que vale la pena comparar.\n• Si no tiene seguro, puede ser una de las formas más baratas de comprar muchas medicinas genéricas.\n\n**Siempre consulte con su equipo de trasplante** antes de cambiar dónde surte sus medicinas antirrechazo. Cost Plus tiene muchos genéricos, pero no todos los medicamentos de trasplante, y pagar en efectivo por lo general no cuenta hacia el máximo de gastos de bolsillo de su seguro."
+      },
+      {
+        "q": "¿Qué programas de membresía de farmacias existen?",
+        "a": "Las tiendas grandes tienen programas que superan a las tarjetas de descuento:\n• **Costco Pharmacy** - Precios en efectivo muy bajos (muchas veces sin necesidad de membresía)\n• **Kroger Rx Savings Club** - Cerca de $36 al año por los descuentos\n• **Walgreens Prescription Savings Club** - Membresía de pago con descuentos"
+      },
+      {
+        "q": "¿Qué opción de descuento debo usar?",
+        "a": "Depende:\n• **Para recoger el mismo día:** Compare GoodRx, SingleCare y Optum Perks\n• **Para los genéricos más baratos por correo:** Revise Cost Plus Drug Company\n• **Para miembros de Amazon Prime:** Revise Amazon Pharmacy\n\n**Recuerde:** Los pacientes de trasplante normalmente deben usar su seguro para llegar más rápido a su máximo de gastos de bolsillo."
+      }
+    ]
+  },
+  {
+    "category": "Preguntas que hacen los pacientes de trasplante",
+    "questions": [
+      {
+        "q": "¿Qué pasa si gano demasiado dinero para los programas de asistencia?",
+        "a": "¡No se rinda! Estas son las razones:\n\n1. Cada programa tiene reglas diferentes. Algunos le permiten ganar bastante dinero y aun así recibir ayuda.\n\n2. Algunos programas miran sus gastos, no solo sus ingresos. Si tiene costos médicos altos, todavía podría calificar.\n\n3. Suscríbase y tome el cuestionario My Path. Le mostrará programas que se ajustan a su situación.\n\n¡Muchas personas se sorprenden de que califican!"
+      },
+      {
+        "q": "¿Son seguros los medicamentos antirrechazo genéricos?",
+        "a": "Los medicamentos genéricos están aprobados por la FDA y funcionan igual que los de marca.\n\n**Por qué algunos centros tienen cuidado:**\nLos medicamentos antirrechazo deben mantenerse en niveles estables en su cuerpo. Cambiar entre diferentes genéricos puede causar variaciones.\n\n**Qué puede hacer:**\n• Pida a su doctor que especifique un solo fabricante de genérico en su receta\n• Pida más análisis de sangre después de cualquier cambio\n• Si su farmacia le cambia el genérico, llame a su equipo de trasplante de inmediato\n\n**Importante:** Hable de esto con su equipo de trasplante. No decida solo por el costo."
+      },
+      {
+        "q": "¿Hay un límite anual en lo que pago por los medicamentos de Medicare?",
+        "a": "Sí. A partir de 2026, hay un **tope anual de $2,100** en lo que usted paga de su bolsillo por los medicamentos recetados de la Parte D.\n\n**Bueno saber:**\n• Cuando llega al tope, paga $0 por los medicamentos cubiertos el resto del año\n• Puede llegar al tope temprano en el año, así que haga un presupuesto para eso\n• Solicite Extra Help si sus ingresos son bajos\n• Solicite a las fundaciones de copago temprano, antes de que se agoten los fondos\n• Revise su plan de Medicare cada otoño durante la Inscripción Abierta"
+      },
+      {
+        "q": "Estoy por cumplir 26 años y voy a perder el seguro de mis padres. ¿Cuáles son mis opciones?",
+        "a": "Empiece a planear de 3 a 6 meses antes de su cumpleaños.\n\n**Sus opciones:**\n• **Seguro del trabajo:** Si su empleador lo ofrece, suele ser la mejor opción\n• **Planes del Mercado de Seguros:** Vaya a HealthCare.gov para ver planes. Puede recibir ayuda para pagarlo.\n• **Medicaid:** Si sus ingresos son bajos, puede calificar\n• **COBRA:** Puede quedarse con el plan de sus padres, pero USTED paga el costo completo\n\n**No deje que su cobertura se interrumpa.** Incluso un corto tiempo sin cobertura puede causar problemas."
+      },
+      {
+        "q": "¿Puedo usar tarjetas de copago si tengo Medicare?",
+        "a": "No. La ley federal no permite las tarjetas de copago de las compañías farmacéuticas para pacientes con Medicare.\n\n**Qué SÍ puede hacer:**\n• Solicitar ayudas económicas de fundaciones (HealthWell, PAN Foundation)\n• Solicitar Medicare Extra Help si sus ingresos son bajos\n• Hablar con su trabajador social sobre otros recursos"
+      },
+      {
+        "q": "Mi farmacia especializada no envía a mi estado. ¿Qué hago?",
+        "a": "Esto pasa por las reglas de licencias de las farmacias.\n\n**Qué intentar:**\n1. Llame a su centro de trasplante. Puede que conozcan otras farmacias.\n2. Pregunte a su seguro qué farmacias pueden hacer envíos a su zona.\n3. Averigüe si su centro de trasplante tiene su propia farmacia.\n4. Contacte a la compañía farmacéutica para pedir ayuda directa.\n\n**No espere** hasta quedarse sin medicina. Estos problemas pueden tardar semanas en resolverse."
+      },
+      {
+        "q": "Mi seguro negó mi medicina. ¿Cómo presento una apelación?",
+        "a": "Las negaciones son comunes. Las apelaciones muchas veces funcionan. No se rinda.\n\n**Paso 1:** Averigüe por qué la negaron. Pídalo por escrito.\n\n**Paso 2:** Trabaje con su equipo de trasplante. Ellos pueden escribir una carta explicando por qué usted necesita esta medicina.\n\n**Paso 3:** Presente la apelación antes de la fecha límite (por lo general 30-60 días).\n\n**Paso 4:** Si pronto se va a quedar sin medicina, pida una revisión urgente.\n\n**Paso 5:** Si la niegan otra vez, puede pedir una revisión por un grupo externo.\n\nSu trabajador social o su farmacéutico pueden ayudarle con esto."
+      },
+      {
+        "q": "Es viernes por la noche y me acabo de quedar sin medicina. ¿Qué hago?",
+        "a": "**Esto es urgente.** Dejar de tomar sus medicamentos antirrechazo puede causar problemas.\n\n**Esta noche:**\n• Llame a la línea de fuera de horario de su centro de trasplante. Tienen ayuda 24/7.\n• Busque farmacias abiertas 24 horas (CVS, Walgreens). Su equipo puede enviar una receta ahí.\n• Como último recurso, una sala de emergencias puede darle un suministro pequeño de emergencia.\n\n**Para evitar esto en el futuro:**\n• Configure resurtidos automáticos\n• Tenga en casa un suministro de emergencia de 3-5 días\n• Ponga recordatorios en su teléfono 7 días antes de que se le acabe\n• Cuando viaje, lleve medicina extra"
+      },
+      {
+        "q": "¿Cómo manejo los efectos secundarios de mis medicamentos?",
+        "a": "Los medicamentos antirrechazo tienen efectos secundarios. Estos son los más comunes y qué hacer:\n\n**Tacrolimus:**\n• Temblor en las manos - Avise a su equipo. Limite la cafeína.\n• Dolores de cabeza - Tome suficiente agua. Pregunte qué medicina para el dolor es segura.\n• Azúcar alta en la sangre - Revise sus niveles con frecuencia.\n\n**Mycophenolate (CellCept):**\n• Malestar de estómago, náuseas, diarrea - Tómelo con comida. Avise a su equipo si se siente mal.\n\n**Prednisone:**\n• Aumento de peso, cambios de humor, problemas para dormir - Suele mejorar cuando baja la dosis.\n\n**Importante:** Nunca deje de tomar ni cambie sus medicamentos por su cuenta. Hable primero con su equipo de trasplante."
+      },
+      {
+        "q": "¿Las necesidades de medicamentos son diferentes para cada tipo de órgano?",
+        "a": "Sí. Los medicamentos principales son parecidos, pero hay diferencias:\n\n**Trasplante de riñón:**\n• Cobertura especial de Medicare (Part B-ID)\n• Puede que se reduzcan los medicamentos con el tiempo\n\n**Trasplante de hígado:**\n• Puede necesitar menos supresión inmunológica con el tiempo\n\n**Trasplante de corazón:**\n• Necesita un tratamiento más intenso con medicamentos\n• Requiere chequeos regulares del corazón\n\n**Trasplante de pulmón:**\n• El riesgo de rechazo más alto\n• Necesita la mayor cantidad de medicamentos\n\nSu equipo de trasplante sabe qué es lo mejor para su tipo de órgano."
+      }
+    ]
+  },
+  {
+    "category": "Medicamentos según el tipo de trasplante",
+    "questions": [
+      {
+        "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de corazón?",
+        "a": "Las personas con trasplante de corazón normalmente reciben una combinación de tres tipos de medicamentos:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine)**\n• Base del tratamiento de mantenimiento\n• Evita que su sistema inmunológico ataque el corazón nuevo\n\n**Antimetabolito (Mycophenolate Mofetil o Azathioprine)**\n• Se usa en combinación con el inhibidor de calcineurina\n• Da supresión inmunológica adicional\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo\n• Ayuda a controlar la inflamación"
+      },
+      {
+        "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de riñón?",
+        "a": "La inmunosupresión en el trasplante de riñón es parecida a la del corazón, con enfoque en equilibrar la eficacia y reducir los efectos secundarios:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine)**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil o Mycophenolic Acid)**\n• Se usa comúnmente en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Muchos centros buscan tratamientos sin esteroides para reducir los efectos secundarios a largo plazo\n\n**Belatacept (Nulojix)**\n• Una alternativa biológica a los inhibidores de calcineurina para ciertos pacientes"
+      },
+      {
+        "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de hígado?",
+        "a": "Los pacientes de trasplante de hígado suelen necesitar niveles más bajos de inmunosupresión que otros pacientes, por las propiedades inmunológicas únicas del hígado:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI más usado en el trasplante de hígado\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Muchas veces se usa en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Normalmente se reduce y se suspende en los primeros meses después del trasplante"
+      },
+      {
+        "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de pulmón?",
+        "a": "Las personas con trasplante de pulmón tienen un riesgo alto de rechazo, y sus tratamientos inmunosupresores suelen ser más intensivos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI preferido para pacientes de trasplante de pulmón\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Se mantiene en una dosis baja a largo plazo\n\nLos pacientes de trasplante de pulmón normalmente necesitan la inmunosupresión más intensiva por el mayor riesgo de rechazo."
+      },
+      {
+        "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de páncreas?",
+        "a": "La inmunosupresión en el trasplante de páncreas es parecida a la del riñón, ya que los dos muchas veces se hacen juntos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo"
+      },
+      {
+        "q": "Importante: ¿Qué debo saber sobre el manejo de mis medicamentos de trasplante?",
+        "a": "Los tratamientos con medicamentos después del trasplante son complejos y requieren un manejo cuidadoso por un equipo de trasplante especializado.\n\n**Puntos clave para recordar:**\n• Tomar estos medicamentos de por vida es esencial para el éxito a largo plazo de su trasplante y su salud\n• Nunca cambie su tratamiento sin consultar primero con su equipo de trasplante\n• Esto incluye suspender medicamentos, ajustar dosis o agregar medicamentos nuevos\n• Incluso los medicamentos sin receta y los suplementos pueden interactuar con sus medicamentos de trasplante\n\n**Siempre consulte a su equipo de trasplante antes de:**\n• Hacer cualquier cambio en su horario de medicamentos\n• Empezar cualquier medicamento nuevo\n• Tomar medicamentos sin receta\n• Usar suplementos de hierbas o vitaminas\n\nSu equipo de trasplante es su mejor recurso para preguntas sobre medicamentos."
+      }
+    ]
+  },
+  {
+    "category": "Cómo usar este sitio",
+    "questions": [
+      {
+        "q": "¿Cómo funciona el cuestionario \"My Path\"?",
+        "a": "El cuestionario está disponible para suscriptores. Le hace preguntas sobre usted:\n• Su rol (paciente, cuidador, etc.)\n• El estado de su trasplante\n• Su tipo de órgano\n• Su seguro\n• Sus medicinas\n\nSegún sus respuestas, le mostramos programas que le ayudan a pagar su medicina."
+      },
+      {
+        "q": "¿Puedo buscar una medicina específica?",
+        "a": "¡Sí! Use la página \"Search Meds\". Verá precios, programas de las compañías farmacéuticas y recursos de fundaciones para cada medicamento."
+      },
+      {
+        "q": "¿Qué significan las etiquetas de costo en las tarjetas de medicinas?",
+        "a": "Cuando busca una medicina, ve etiquetas de colores:\n\n• **Etiqueta de costo:** Costo bajo (verde), medio (amarillo) o alto (rojo)\n• **Etiqueta de nivel (tier):** Niveles más bajos (azul) = copagos más bajos. Niveles más altos (naranja/morado) = copagos más altos\n• **Genérico disponible (marca verde):** Existe una versión genérica más barata\n\nSu costo real depende de SU plan de seguro."
+      },
+      {
+        "q": "¿Qué tan exactos son los precios estimados?",
+        "a": "Nuestros precios son estimados basados en costos típicos. Su costo real depende de:\n• Su plan de seguro específico\n• Si ya cumplió su deducible\n• Su farmacia\n\nUse nuestros estimados para planear. Llame a su farmacia para saber los precios exactos."
+      },
+      {
+        "q": "¿Cómo uso la pestaña de Asistencia en la página de una medicina?",
+        "a": "La pestaña de Asistencia muestra:\n• Enlaces a programas de las compañías farmacéuticas para conseguir medicina gratis\n• Enlaces a fundaciones de copago que ayudan a pagar\n\nLo conectamos directamente con los recursos correctos para cada medicina."
+      },
+      {
+        "q": "¿Cuál es la diferencia entre las pestañas PRICE, ASSISTANCE y OVERVIEW?",
+        "a": "• **PRICE (Precio):** Muestra estimados de costo en diferentes farmacias\n• **ASSISTANCE (Asistencia):** Muestra programas que pueden ayudarle a pagar (¡lo más importante!)\n• **OVERVIEW (Información general):** Muestra información general sobre la medicina"
+      },
+      {
+        "q": "¿Qué pasa si mi medicina no está en la lista?",
+        "a": "Nos enfocamos en las medicinas de trasplante más comunes, pero nuestra lista está creciendo. También puede revisar GoodRx, RxAssist o NeedyMeds para otras medicinas."
+      },
+      {
+        "q": "¿Puedo imprimir mis resultados?",
+        "a": "¡Sí! Exportar o imprimir sus listas de medicamentos está disponible para todos los usuarios. Puede usar el botón de Exportar en la página My Medications para descargar su lista, o usar la función de imprimir de su navegador en cualquier página para compartirla con su equipo de salud."
+      }
+    ]
+  },
+  {
+    "category": "Cómo obtener ayuda",
+    "questions": [
+      {
+        "q": "Me siento abrumado. ¿Por dónde empiezo?",
+        "a": "Empiece por revisar nuestra información gratis sobre medicamentos y programas de asistencia. Para una guía personalizada, suscríbase y tome el cuestionario \"My Path\": le guiará paso a paso. Si necesita más ayuda, contacte al trabajador social de su centro de trasplante."
+      },
+      {
+        "q": "¿Pueden ayudarme a llenar las solicitudes?",
+        "a": "No podemos llenar los formularios por usted. Pero nuestro sitio explica cada paso. El trabajador social de su centro de trasplante puede ayudarle a llenar los formularios."
+      },
+      {
+        "q": "¿Qué pasa si me niegan la ayuda?",
+        "a": "¡No se rinda!\n• Muchos programas le permiten presentar una apelación\n• Pruebe otras fundaciones: cada una tiene reglas diferentes\n• Pida ayuda a su trabajador social"
+      },
+      {
+        "q": "Solicité y me dijeron que no califico. ¿Debo rendirme?",
+        "a": "¡No! Siga intentando.\n\nMuchas veces hay más de una forma de conseguir ayuda. Si un programa le dice que no, pruebe un tipo diferente de programa. Pregunte por:\n• PAP basados en ingresos\n• Ayudas económicas de fundaciones\n• Programas estatales\n• Atención caritativa del hospital"
+      },
+      {
+        "q": "¿A quién puedo contactar para más ayuda?",
+        "a": "Contacte al trabajador social de su centro de trasplante. Ellos conocen bien estos programas.\n\nTambién puede comunicarse con:\n• National Kidney Foundation\n• American Liver Foundation\n• Otros grupos específicos por órgano"
+      }
+    ]
+  },
+  {
+    "category": "¿Le negaron la ayuda? Cómo pelear las negaciones del seguro",
+    "questions": [
+      {
+        "q": "¿Por qué mi seguro negó mi medicamento de trasplante?",
+        "a": "Su carta de negación le dice por qué dijeron que no. Estas son las razones más comunes:\n\n• **Se necesita autorización previa:** Su doctor debe pedir permiso primero\n• **No está en la lista:** Su medicamento no está en su lista aprobada (formulario)\n• **Terapia escalonada:** Quieren que pruebe primero un medicamento más barato\n• **Límites de cantidad:** Dicen que usted está recibiendo demasiado de este medicamento\n• **Use el genérico:** Quieren que use una versión más barata\n\nLa carta debe decir qué hacer después. Si no lo dice, llame a su seguro y pregunte."
+      },
+      {
+        "q": "¿Qué es la terapia escalonada y por qué es mala para los pacientes de trasplante?",
+        "a": "**La terapia escalonada** significa que su seguro quiere que pruebe un medicamento más barato antes de pagar el que su doctor eligió. Algunos la llaman \"fracasar primero\" (fail first).\n\n**Por qué puede ser mala para los pacientes de trasplante:**\n• Los medicamentos antirrechazo deben mantenerse en el nivel correcto en su sangre. Los cambios pequeños importan mucho.\n• Probar el medicamento equivocado podría dañar su trasplante.\n• Su equipo de trasplante eligió su medicamento por buenas razones.\n• Cambiar de medicamento significa más análisis de sangre y visitas al doctor.\n\n**Buenas noticias:** Puede pedir que le salten la terapia escalonada. Los medicamentos de trasplante muchas veces se aprueban cuando su doctor dice que usted los necesita."
+      },
+      {
+        "q": "¿Puedo pedir a mi seguro que me salte la terapia escalonada?",
+        "a": "¡Sí! Puede pedir una excepción a la terapia escalonada.\n\n**Qué ayuda:**\n• Una carta de su doctor de trasplante que explique por qué necesita este medicamento específico\n• Sus registros de trasplante y resultados de laboratorio\n• Notas sobre por qué otros medicamentos no le funcionarían\n\n**También sepa:**\n• Muchos estados tienen leyes que protegen a los pacientes de la terapia escalonada\n• Los medicamentos de trasplante muchas veces reciben excepciones por necesidad médica\n• Su centro de trasplante puede ayudarle a pelear esto"
+      },
+      {
+        "q": "¿Por qué mi seguro quiere que use un genérico en vez del de marca?",
+        "a": "Los medicamentos genéricos cuestan menos, así que el seguro los prefiere. Para la mayoría de los medicamentos, los genéricos están bien: la FDA dice que funcionan de la misma manera.\n\n**Pero los medicamentos de trasplante son diferentes:**\n• Los medicamentos antirrechazo son medicamentos de \"índice terapéutico estrecho\"\n• Incluso cambios muy pequeños en cuánto entra a su sangre pueden causar problemas\n• Muy poco medicamento = su cuerpo podría rechazar el trasplante\n• Demasiado medicamento = efectos secundarios y toxicidad\n• Cambiar de marca puede cambiar cómo su cuerpo absorbe el medicamento\n\nMuchos centros de trasplante no permiten cambios para tacrolimus y otros medicamentos críticos."
+      },
+      {
+        "q": "¿Cuándo debo pelear por el de marca en vez del genérico?",
+        "a": "Considere pelear por el de marca cuando:\n\n• Sus niveles del medicamento han estado estables con esta marca\n• Tuvo problemas cuando cambió antes\n• Su centro de trasplante exige el de marca\n• Su cuerpo tiene problemas para absorber el medicamento\n• Está tomando tacrolimus u otro medicamento de índice terapéutico estrecho\n\n**Qué hacer:**\n• Pida a su doctor de trasplante que escriba una carta explicando por qué necesita el de marca\n• Incluya su historial de laboratorio que muestre niveles estables\n• Anote cualquier problema que haya tenido con versiones genéricas"
+      },
+      {
+        "q": "¿Cómo presento una apelación por una negación del seguro?",
+        "a": "**Paso 1: Pídalo por escrito**\nPida una carta que diga exactamente por qué dijeron que no. La necesita para saber qué decir en su apelación.\n\n**Paso 2: Cuide los plazos**\nPor lo general tiene de 30 a 60 días para apelar. Marque la fecha en su calendario.\n\n**Paso 3: Junte sus documentos**\n• Una carta de su doctor que diga por qué necesita este medicamento\n• Sus registros de trasplante\n• Resultados recientes de laboratorio\n• Cualquier registro de rechazos o problemas anteriores\n\n**Paso 4: Envíe su apelación**\nEnvíe todo junto. Guarde copias de todo.\n\n**Paso 5: Pida una revisión rápida**\nSi pronto se va a quedar sin medicina, pida una revisión acelerada (rápida)."
+      },
+      {
+        "q": "¿Qué debe incluir la carta de apelación de mi doctor?",
+        "a": "Una carta sólida de necesidad médica debe incluir:\n\n• **Su diagnóstico:** El trasplante específico y la fecha\n• **Medicamento actual:** Qué está tomando y por qué\n• **Por qué este medicamento específico:** Razones médicas de esta elección\n• **Por qué las alternativas no funcionarían:** Efectos secundarios, problemas de absorción, fracasos anteriores\n• **Riesgo de cambiar:** Riesgo de rechazo, riesgo de hospitalización\n• **Guías clínicas:** Referencias a KDIGO, ISHLT u otras guías de trasplante\n\nTenemos una plantilla de carta en nuestra página de Apelaciones que su doctor puede usar. Visite nuestra sección de Educación y haga clic en \"Got Denied?\" para encontrarla."
+      },
+      {
+        "q": "¿Qué pasa si niegan mi primera apelación?",
+        "a": "¡No se rinda! Tiene más opciones:\n\n**Apelación de Nivel 2:** Puede apelar a un nivel más alto dentro de su compañía de seguros.\n\n**Revisión externa:** Puede pedir que alguien de fuera de la compañía revise su caso. Muchas veces es un panel de doctores que no trabajan para su seguro.\n\n**Ayuda del estado:** El comisionado de seguros de su estado puede ayudar. Tienen personal que atiende quejas.\n\n**Guarde registros:** Conserve copias de todas las cartas, faxes y notas de las llamadas telefónicas.\n\nMuchas personas ganan en su segundo o tercer intento. La clave es no rendirse."
+      },
+      {
+        "q": "¿Puedo recibir mi medicina mientras espero mi apelación?",
+        "a": "¡A veces sí! Esto es lo que puede pedir:\n\n**Revisión acelerada:** Si se le está acabando la medicina, dígales que es urgente. Los medicamentos de trasplante normalmente cuentan como urgentes porque dejarlos de tomar es peligroso.\n\n**Continuación de cobertura:** Si ya estaba tomando el medicamento y ahora se lo niegan, puede que pueda seguir recibiéndolo mientras apela.\n\n**Suministro puente:** Algunas farmacias o compañías farmacéuticas pueden darle un suministro corto mientras espera.\n\n**Suministro de emergencia:** Si es una emergencia, llame a su centro de trasplante. Pueden tener muestras u otras opciones."
+      },
+      {
+        "q": "¿Quién puede ayudarme con mi apelación?",
+        "a": "No tiene que hacerlo solo:\n\n• **Trabajador social de trasplante:** Conocen estos sistemas y pueden ayudar con el papeleo\n• **Su coordinador de trasplante:** Puede darle los registros médicos rápido\n• **El consultorio de su doctor:** Presentan apelaciones con frecuencia y saben qué funciona\n• **Defensores del paciente:** Su hospital puede tener personal que ayuda con el seguro\n• **Oficina estatal de seguros:** Pueden explicarle sus derechos y presentar quejas\n\nPida ayuda temprano. No espere hasta que se le acabe la medicina."
+      }
+    ]
+  },
+  {
+    "category": "Situaciones especiales",
+    "questions": [
+      {
+        "q": "¿Cómo viajo con mis medicamentos de trasplante?",
+        "a": "**Antes de viajar:**\n• Consiga medicina extra (por lo menos 7 días más)\n• Consiga una carta de su doctor con la lista de sus medicamentos\n• Revise si algún medicamento debe mantenerse frío\n\n**Al empacar:**\n• SIEMPRE lleve los medicamentos en su bolsa de mano\n• Manténgalos en sus frascos originales\n• Lleve más de lo que necesita\n\n**En el aeropuerto:**\n• Los medicamentos no tienen que seguir las reglas de líquidos\n• Puede mostrar la carta de su doctor si se la piden\n\n**Zonas horarias:**\n• Para viajes cortos, siga tomando los medicamentos según la hora de su casa\n• Para viajes más largos, cambie sus horarios poco a poco, 1-2 horas por día"
+      },
+      {
+        "q": "Soy padre o madre de un niño con trasplante. ¿Qué debo saber?",
+        "a": "**Consejos sobre medicinas:**\n• Las dosis cambian a medida que los niños crecen\n• Hay presentaciones líquidas para niños que no pueden tragar pastillas\n• Haga que tomar la medicina sea parte de la rutina diaria\n\n**Consejos para la escuela:**\n• Trabaje con la enfermera escolar en un plan de medicinas\n• Entregue instrucciones por escrito\n• Asegúrese de que la escuela pueda guardar la medicina de forma adecuada\n\n**Para ayudar a los adolescentes:**\n• Empiece a enseñarles a manejar su propia medicina alrededor de los 10-12 años\n• Use pastilleros y aplicaciones del teléfono\n• Inclúyalos en las visitas al doctor\n\n**Seguro:**\n• Los niños pueden calificar para programas estatales con límites de ingresos más altos\n• Planee con tiempo para cuando cumplan 26 años y pierdan su seguro"
+      },
+      {
+        "q": "Vivo fuera de los Estados Unidos. ¿Este sitio me puede ayudar?",
+        "a": "Nuestro sitio está hecho para el sistema de salud de los EE. UU.\n\n**Lo que sirve en cualquier lugar:**\n• Información general sobre medicinas\n• Consejos para no dejar de tomar su medicina\n• Planes de emergencia\n\n**Lo que es solo para los EE. UU.:**\n• Los PAP de las compañías farmacéuticas\n• Información de Medicare/Medicaid\n• Fundaciones de copago\n• Tarjetas de descuento\n\n**Para pacientes internacionales:**\n• Contacte a su centro de trasplante para recursos locales\n• Conéctese con grupos de trasplante en su país"
+      },
+      {
+        "q": "Soy un adulto joven y vivo solo por primera vez. ¿Algún consejo?",
+        "a": "**Consejos sobre medicinas:**\n• Cree un sistema YA (pastillero, alarmas del teléfono o aplicaciones)\n• Nunca dependa solo de la memoria\n• Encuentre una farmacia cerca de su nuevo hogar\n• Guarde el número de su centro de trasplante en su teléfono\n\n**Seguro:**\n• Si va a cumplir 26 años, empiece a planear a los 25\n• Conozca su cobertura: deducibles, copagos y qué farmacia usar\n\n**Consejos para la universidad:**\n• Cuéntele a por lo menos un amigo de confianza sobre su trasplante\n• Sepa dónde están los servicios de salud para estudiantes\n• Planee cómo guardar la medicina en un dormitorio\n\n**Consejos de dinero:**\n• Infórmese sobre los programas de ayuda financiera\n• Guarde registros de todos los costos médicos\n• Pregunte por ayuda basada en ingresos si el dinero está apretado"
+      }
+    ]
+  }
+]

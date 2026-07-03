@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Coverage101 = () => {
+    const { t } = useTranslation();
     const rootRef = useRef(null);
 
     useEffect(() => {
@@ -90,14 +92,14 @@ const Coverage101 = () => {
             aria-labelledby="tmn-c101-title"
         >
             <header className="tmn-c101-header">
-                <img src="/photos/logo.png" alt="Transplant Medication Navigator" />
+                <img src="/photos/logo.png" alt={t('education.coverage101.logoAlt')} />
                 <div className="tmn-c101-header-text">
-                    <span className="tmn-c101-eyebrow">Coverage 101</span>
+                    <span className="tmn-c101-eyebrow">{t('education.coverage101.eyebrow')}</span>
                     <h2 className="tmn-c101-title" id="tmn-c101-title">
-                        How you pay for transplant medications.
+                        {t('education.coverage101.title')}
                     </h2>
                     <p className="tmn-c101-sub">
-                        The four most common ways patients are covered, what to know, what to watch for, what to do next.
+                        {t('education.coverage101.sub')}
                     </p>
                 </div>
             </header>
@@ -122,38 +124,36 @@ const Coverage101 = () => {
                             </span>
                         </div>
                         <div>
-                            <span className="tmn-c101-eyebrow-card">Commercial</span>
-                            <h3 className="tmn-c101-cardname">Insurance from your job or that you bought yourself.</h3>
-                            <p className="tmn-c101-cardtag">Through an employer, the Marketplace, or a spouse/parent's plan.</p>
+                            <span className="tmn-c101-eyebrow-card">{t('education.coverage101.commercial.eyebrow')}</span>
+                            <h3 className="tmn-c101-cardname">{t('education.coverage101.commercial.name')}</h3>
+                            <p className="tmn-c101-cardtag">{t('education.coverage101.commercial.tag')}</p>
                         </div>
                     </button>
 
                     <div className="tmn-c101-cardbody" id="tmn-c101-body-commercial">
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">Who qualifies</h4>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.whoQualifies')}</h4>
                             <ul className="tmn-c101-list">
-                                <li>Employees of companies that offer benefits</li>
-                                <li>Self-purchased plans through Healthcare.gov</li>
-                                <li>Dependents on a family member's plan</li>
+                                {t('education.coverage101.commercial.who', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}
                             </ul>
                         </div>
 
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p>You pay a monthly premium. Insurance starts paying more after you hit your <strong>deductible</strong>. Copays and coinsurance apply at the pharmacy until you reach your <strong>out-of-pocket max</strong>.</p>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.howItWorks')}</h4>
+                            <p><Trans i18nKey="education.coverage101.commercial.how" /></p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
-                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>High out-of-pocket before you hit your deductible. Narrow networks. Prior-authorization delays.</p>
+                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> {t('education.coverage101.watchFor')}</p>
+                            <p>{t('education.coverage101.commercial.warn')}</p>
                         </div>
 
                         <div className="tmn-c101-next">
-                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> Next steps</p>
+                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> {t('education.coverage101.nextSteps')}</p>
                             <ol>
-                                <li data-analytics="next-step" data-coverage-name="Commercial" data-step="1">Check your plan's formulary for transplant medications.</li>
-                                <li data-analytics="next-step" data-coverage-name="Commercial" data-step="2">Know your deductible and out-of-pocket max.</li>
-                                <li data-analytics="next-step" data-coverage-name="Commercial" data-step="3">Confirm your transplant center is in-network.</li>
+                                {t('education.coverage101.commercial.steps', { returnObjects: true }).map((step, i) => (
+                                    <li key={i} data-analytics="next-step" data-coverage-name="Commercial" data-step={String(i + 1)}>{step}</li>
+                                ))}
                             </ol>
                         </div>
                     </div>
@@ -178,39 +178,36 @@ const Coverage101 = () => {
                             </span>
                         </div>
                         <div>
-                            <span className="tmn-c101-eyebrow-card">Medicare</span>
-                            <h3 className="tmn-c101-cardname">Federal insurance for 65+ and certain disabilities.</h3>
-                            <p className="tmn-c101-cardtag">Includes End-Stage Renal Disease and qualifying long-term disability.</p>
+                            <span className="tmn-c101-eyebrow-card">{t('education.coverage101.medicare.eyebrow')}</span>
+                            <h3 className="tmn-c101-cardname">{t('education.coverage101.medicare.name')}</h3>
+                            <p className="tmn-c101-cardtag">{t('education.coverage101.medicare.tag')}</p>
                         </div>
                     </button>
 
                     <div className="tmn-c101-cardbody" id="tmn-c101-body-medicare">
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">Who qualifies</h4>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.whoQualifies')}</h4>
                             <ul className="tmn-c101-list">
-                                <li>Adults 65+</li>
-                                <li>People with qualifying disabilities (24+ months on SSDI)</li>
-                                <li>Anyone with End-Stage Renal Disease</li>
+                                {t('education.coverage101.medicare.who', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}
                             </ul>
                         </div>
 
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p><strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care, and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.howItWorks')}</h4>
+                            <p><Trans i18nKey="education.coverage101.medicare.how" /></p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
-                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.</p>
+                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> {t('education.coverage101.watchFor')}</p>
+                            <p><Trans i18nKey="education.coverage101.medicare.warn" /></p>
                         </div>
 
                         <div className="tmn-c101-next">
-                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> Next steps</p>
+                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> {t('education.coverage101.nextSteps')}</p>
                             <ol>
-                                <li data-analytics="next-step" data-coverage-name="Medicare" data-step="1">Enroll in Medicare Part A, B, and D (or Advantage).</li>
-                                <li data-analytics="next-step" data-coverage-name="Medicare" data-step="2">Apply for Extra Help if your income is limited.</li>
-                                <li data-analytics="next-step" data-coverage-name="Medicare" data-step="3">Review your Part D drug formulary every fall.</li>
-                                <li data-analytics="next-step" data-coverage-name="Medicare" data-step="4">Kidney transplant? Ask Social Security about Part B-ID before your Medicare ends.</li>
+                                {t('education.coverage101.medicare.steps', { returnObjects: true }).map((step, i) => (
+                                    <li key={i} data-analytics="next-step" data-coverage-name="Medicare" data-step={String(i + 1)}>{step}</li>
+                                ))}
                             </ol>
                         </div>
                     </div>
@@ -235,38 +232,36 @@ const Coverage101 = () => {
                             </span>
                         </div>
                         <div>
-                            <span className="tmn-c101-eyebrow-card">Medicaid</span>
-                            <h3 className="tmn-c101-cardname">State-and-federal coverage for limited income.</h3>
-                            <p className="tmn-c101-cardtag">Eligibility, benefits, and rules vary by state.</p>
+                            <span className="tmn-c101-eyebrow-card">{t('education.coverage101.medicaid.eyebrow')}</span>
+                            <h3 className="tmn-c101-cardname">{t('education.coverage101.medicaid.name')}</h3>
+                            <p className="tmn-c101-cardtag">{t('education.coverage101.medicaid.tag')}</p>
                         </div>
                     </button>
 
                     <div className="tmn-c101-cardbody" id="tmn-c101-body-medicaid">
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">Who qualifies</h4>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.whoQualifies')}</h4>
                             <ul className="tmn-c101-list">
-                                <li>Households below your state's income limit</li>
-                                <li>Children, pregnant patients, and people with disabilities</li>
-                                <li>Some long-term care and waiver recipients</li>
+                                {t('education.coverage101.medicaid.who', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}
                             </ul>
                         </div>
 
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p>The state pays for most covered services with low or zero out-of-pocket cost. Each state runs its own program, your benefits, prescription rules, and provider list depend on where you live.</p>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.howItWorks')}</h4>
+                            <p>{t('education.coverage101.medicaid.how')}</p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
-                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>Income and asset limits apply. Exceed them and you can lose coverage. Provider networks may be limited. <strong>Copay cards are not allowed</strong>.</p>
+                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> {t('education.coverage101.watchFor')}</p>
+                            <p><Trans i18nKey="education.coverage101.medicaid.warn" /></p>
                         </div>
 
                         <div className="tmn-c101-next">
-                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> Next steps</p>
+                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> {t('education.coverage101.nextSteps')}</p>
                             <ol>
-                                <li data-analytics="next-step" data-coverage-name="Medicaid" data-step="1">Contact your state Medicaid office to apply.</li>
-                                <li data-analytics="next-step" data-coverage-name="Medicaid" data-step="2">Gather income, residency, and household documents.</li>
-                                <li data-analytics="next-step" data-coverage-name="Medicaid" data-step="3">Re-verify eligibility on the renewal date.</li>
+                                {t('education.coverage101.medicaid.steps', { returnObjects: true }).map((step, i) => (
+                                    <li key={i} data-analytics="next-step" data-coverage-name="Medicaid" data-step={String(i + 1)}>{step}</li>
+                                ))}
                             </ol>
                         </div>
                     </div>
@@ -291,38 +286,36 @@ const Coverage101 = () => {
                             </span>
                         </div>
                         <div>
-                            <span className="tmn-c101-eyebrow-card">Uninsured / Self-Pay</span>
-                            <h3 className="tmn-c101-cardname">Paying full cost yourself, with no insurance.</h3>
-                            <p className="tmn-c101-cardtag">Between jobs, pre-Medicare, or otherwise without coverage.</p>
+                            <span className="tmn-c101-eyebrow-card">{t('education.coverage101.selfpay.eyebrow')}</span>
+                            <h3 className="tmn-c101-cardname">{t('education.coverage101.selfpay.name')}</h3>
+                            <p className="tmn-c101-cardtag">{t('education.coverage101.selfpay.tag')}</p>
                         </div>
                     </button>
 
                     <div className="tmn-c101-cardbody" id="tmn-c101-body-selfpay">
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">Who qualifies</h4>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.whoQualifies')}</h4>
                             <ul className="tmn-c101-list">
-                                <li>Hospital charity / financial-assistance programs</li>
-                                <li>Manufacturer Patient Assistance Programs (PAPs)</li>
-                                <li>Discount cards and pharmacy savings programs</li>
+                                {t('education.coverage101.selfpay.who', { returnObjects: true }).map((item, i) => <li key={i}>{item}</li>)}
                             </ul>
                         </div>
 
                         <div className="tmn-c101-block">
-                            <h4 className="tmn-c101-block-h">How it works</h4>
-                            <p>You receive the full retail bill. Cash prices for transplant medications can run hundreds to thousands per month. Hospitals and pharmacies often negotiate or offer payment plans on request.</p>
+                            <h4 className="tmn-c101-block-h">{t('education.coverage101.howItWorks')}</h4>
+                            <p>{t('education.coverage101.selfpay.how')}</p>
                         </div>
 
                         <div className="tmn-c101-warn" role="note">
-                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> Watch for</p>
-                            <p>Catastrophic out-of-pocket costs. Risk of medical debt. Skipped doses if cost feels impossible.</p>
+                            <p className="tmn-c101-warn-h"><span aria-hidden="true">⚠</span> {t('education.coverage101.watchFor')}</p>
+                            <p>{t('education.coverage101.selfpay.warn')}</p>
                         </div>
 
                         <div className="tmn-c101-next">
-                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> Next steps</p>
+                            <p className="tmn-c101-next-h"><span aria-hidden="true">→</span> {t('education.coverage101.nextSteps')}</p>
                             <ol>
-                                <li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="1">Apply for manufacturer Patient Assistance Programs first.</li>
-                                <li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="2">Negotiate cash prices and ask about payment plans.</li>
-                                <li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="3">Re-check Medicaid and Marketplace plan eligibility.</li>
+                                {t('education.coverage101.selfpay.steps', { returnObjects: true }).map((step, i) => (
+                                    <li key={i} data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step={String(i + 1)}>{step}</li>
+                                ))}
                             </ol>
                         </div>
                     </div>
@@ -330,7 +323,7 @@ const Coverage101 = () => {
             </div>
 
             <p className="tmn-c101-footnote">
-                Educational information only. Eligibility rules and coverage details change, verify with your insurer, state Medicaid office, and transplant team.
+                {t('education.coverage101.footnote')}
             </p>
         </section>
     );

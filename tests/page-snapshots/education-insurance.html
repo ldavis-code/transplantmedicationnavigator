@@ -1,0 +1,870 @@
+<div role="status" aria-live="assertive" aria-atomic="true" class="sr-only">Education &amp; Resources for Transplant Patients | Transplant Medication Navigator™</div>
+<div class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-describedby="disclaimer-description">
+<div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200">
+<div class="flex justify-center mb-6">
+<div class="bg-amber-100 p-4 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+</div>
+</div>
+<h2 id="disclaimer-title" class="text-2xl font-bold text-slate-900 text-center mb-4">Important Notice</h2>
+<p id="disclaimer-description" class="text-slate-700 text-center mb-6 leading-relaxed">This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+<div class="flex items-center justify-center gap-2 text-red-800 font-bold">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+</path>
+</svg>
+<span>In an emergency, call 911</span>
+</div>
+</div>
+<button class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]">I Agree</button>
+</div>
+</div>
+<div class="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
+<div class="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+<span class="inline-flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-100" aria-hidden="true">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+<path d="M12 8v4">
+</path>
+<path d="M12 16h.01">
+</path>
+</svg>Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them.</span>
+</div>
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg">Skip to main content</a>
+<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
+<div class="container mx-auto px-4 h-16 flex items-center justify-between">
+<a class="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label="Transplant Medication Navigator™ home" href="/">
+<img src="/photos/logo.png" alt="" width="32" height="32" aria-hidden="true" class="flex-shrink-0">
+<span class="font-bold text-lg md:text-xl leading-tight">Transplant Medication<br class="md:hidden"> Navigator<sup class="text-xs">™</sup>
+</span>
+</a>
+<nav class="hidden md:flex items-center gap-4" aria-label="Main navigation">
+<a aria-label="Go to home page" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/">Home</a>
+<a aria-label="Start medication path wizard" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/wizard">My Path Quiz</a>
+<a aria-label="Browse education and resources" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600" href="/education">Education &amp; Resources</a>
+<a aria-label="View grants and foundations guide" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/application-help">Grants &amp; Foundations</a>
+<a aria-label="Calculate your medication savings" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/savings-tracker">Savings Calculator</a>
+<a aria-label="Information for hospital administrators and transplant coordinators" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/for-hospitals">Hospitals</a>
+<a aria-label="View pricing information" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/pricing">Pricing</a>
+<a aria-label="View frequently asked questions" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/faq">FAQ</a>
+<a aria-label="Share your feedback" class="text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/feedback">Feedback</a>
+<button aria-pressed="false" class="ml-2 px-3 py-2 rounded-lg text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true">
+<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z">
+</path>
+<circle cx="12" cy="12" r="3">
+</circle>
+</svg>Simple View</button>
+</nav>
+<button class="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Open menu" aria-expanded="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+<line x1="4" x2="20" y1="12" y2="12">
+</line>
+<line x1="4" x2="20" y1="6" y2="6">
+</line>
+<line x1="4" x2="20" y1="18" y2="18">
+</line>
+</svg>
+</button>
+</div>
+</header>
+<main id="main-content" class="flex-grow container mx-auto px-4 py-6 md:py-10">
+<article class="max-w-6xl mx-auto space-y-8 pb-12">
+<header class="text-center py-8">
+<h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Education &amp; Resources</h1>
+<p class="text-xl text-slate-700 max-w-3xl mx-auto">Learn about programs that help pay for your medicines. Find out which ones work best for you.</p>
+<div class="mt-6 flex justify-center">
+<button lang="es" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-emerald-50 text-emerald-700 font-semibold rounded-lg border border-emerald-300 shadow-sm transition min-h-[44px]">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20">
+</path>
+<path d="M2 12h20">
+</path>
+</svg>Ver esta página en español</button>
+</div>
+</header>
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+<div class="flex items-start gap-4">
+<div class="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="M12 16v-4">
+</path>
+<path d="M12 8h.01">
+</path>
+</svg>
+</div>
+<div>
+<span class="inline-block bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full mb-2">New · Now Live</span>
+<h2 class="text-lg font-bold text-slate-900 mb-2">TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program</h2>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.</p>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.</p>
+<p class="text-slate-700 text-sm leading-relaxed mb-3">Apply online or call <a href="tel:+18665123861" class="font-semibold text-blue-700 hover:text-blue-900">866-512-3861</a> (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).</p>
+<a href="https://totalassist.org/" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors">Learn more about TotalAssist <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<a class="block p-6 rounded-xl bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 hover:border-rose-300 hover:shadow-md transition-all" href="/education/appeals">
+<div class="flex items-start gap-4">
+<div class="bg-red-100 text-red-600 p-3 rounded-xl flex-shrink-0" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+<path d="M12 8v4">
+</path>
+<path d="M12 16h.01">
+</path>
+</svg>
+</div>
+<div class="flex-1">
+<h2 class="text-xl font-bold text-red-600 mb-2">Got Denied?</h2>
+<p class="text-slate-700 mb-3">Insurance said no? Don't worry, you can fight back. Learn why denials happen and how to appeal. We have letter templates to help your doctor write on your behalf.</p>
+<span class="inline-flex items-center gap-1 text-red-600 font-semibold">View Appeal Guide <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</span>
+</div>
+</div>
+</a>
+<nav class="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
+<div class="flex flex-wrap">
+<button role="tab" aria-selected="false" aria-controls="EMERGENCY-panel" aria-label="Out of Meds?" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg>
+<span class="hidden sm:inline">Out of Meds?</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="GENERICS-panel" aria-label="Generics vs. Brand" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pill" aria-hidden="true">
+<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z">
+</path>
+<path d="m8.5 8.5 7 7">
+</path>
+</svg>
+<span class="hidden sm:inline">Generics vs. Brand</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DEDUCTIBLE_TRAP-panel" aria-label="Deductible Trap" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+<span class="hidden sm:inline">Deductible Trap</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DIVERSION-panel" aria-label="Diversion Programs" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-octagon" aria-hidden="true">
+<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+</polygon>
+<line x1="12" x2="12" y1="8" y2="12">
+</line>
+<line x1="12" x2="12.01" y1="16" y2="16">
+</line>
+</svg>
+<span class="hidden sm:inline">Diversion Programs</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="DIRECTORY-panel" aria-label="Directory" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true">
+<circle cx="11" cy="11" r="8">
+</circle>
+<path d="m21 21-4.3-4.3">
+</path>
+</svg>
+<span class="hidden sm:inline">Directory</span>
+</button>
+<button role="tab" aria-selected="true" aria-controls="INSURANCE-panel" aria-label="Insurance(s)" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-emerald-600 text-emerald-800 bg-emerald-50">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield" aria-hidden="true">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+</path>
+</svg>
+<span class="hidden sm:inline">Insurance(s)</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="MENTAL-panel" aria-label="Mental Health" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart" aria-hidden="true">
+<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+</path>
+</svg>
+<span class="hidden sm:inline">Mental Health</span>
+</button>
+<button role="tab" aria-selected="false" aria-controls="OOP-panel" aria-label="Out-of-Pocket Max" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign" aria-hidden="true">
+<line x1="12" x2="12" y1="2" y2="22">
+</line>
+<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6">
+</path>
+</svg>
+<span class="hidden sm:inline">Out-of-Pocket Max</span>
+</button>
+</div>
+</nav>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id="INSURANCE-panel" aria-labelledby="INSURANCE-tab">
+<div class="max-w-4xl mx-auto space-y-12">
+<section class="tmn-coverage101" aria-labelledby="tmn-c101-title">
+<header class="tmn-c101-header">
+<img src="/photos/logo.png" alt="Transplant Medication Navigator">
+<div class="tmn-c101-header-text">
+<span class="tmn-c101-eyebrow">Coverage 101</span>
+<h2 class="tmn-c101-title" id="tmn-c101-title">How you pay for transplant medications.</h2>
+<p class="tmn-c101-sub">The four most common ways patients are covered, what to know, what to watch for, what to do next.</p>
+</div>
+</header>
+<div class="tmn-c101-grid" role="list">
+<article class="tmn-c101-card" data-coverage="commercial" data-open="true" role="listitem">
+<button type="button" class="tmn-c101-cardhead" aria-expanded="true" aria-controls="tmn-c101-body-commercial" data-analytics="card-toggle" data-coverage-name="Commercial">
+<div class="tmn-c101-cardhead-row">
+<span class="tmn-c101-icon" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z">
+</path>
+</svg>
+</span>
+<span class="tmn-c101-chevron" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="6 9 12 15 18 9">
+</polyline>
+</svg>
+</span>
+</div>
+<div>
+<span class="tmn-c101-eyebrow-card">Commercial</span>
+<h3 class="tmn-c101-cardname">Insurance from your job or that you bought yourself.</h3>
+<p class="tmn-c101-cardtag">Through an employer, the Marketplace, or a spouse/parent's plan.</p>
+</div>
+</button>
+<div class="tmn-c101-cardbody" id="tmn-c101-body-commercial">
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">Who qualifies</h4>
+<ul class="tmn-c101-list">
+<li>Employees of companies that offer benefits</li>
+<li>Self-purchased plans through Healthcare.gov</li>
+<li>Dependents on a family member's plan</li>
+</ul>
+</div>
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">How it works</h4>
+<p>You pay a monthly premium. Insurance starts paying more after you hit your <strong>deductible</strong>. Copays and coinsurance apply at the pharmacy until you reach your <strong>out-of-pocket max</strong>.</p>
+</div>
+<div class="tmn-c101-warn" role="note">
+<p class="tmn-c101-warn-h">
+<span aria-hidden="true">⚠</span> Watch for</p>
+<p>High out-of-pocket before you hit your deductible. Narrow networks. Prior-authorization delays.</p>
+</div>
+<div class="tmn-c101-next">
+<p class="tmn-c101-next-h">
+<span aria-hidden="true">→</span> Next steps</p>
+<ol>
+<li data-analytics="next-step" data-coverage-name="Commercial" data-step="1">Check your plan's formulary for transplant medications.</li>
+<li data-analytics="next-step" data-coverage-name="Commercial" data-step="2">Know your deductible and out-of-pocket max.</li>
+<li data-analytics="next-step" data-coverage-name="Commercial" data-step="3">Confirm your transplant center is in-network.</li>
+</ol>
+</div>
+</div>
+</article>
+<article class="tmn-c101-card" data-coverage="medicare" data-open="false" role="listitem">
+<button type="button" class="tmn-c101-cardhead" aria-expanded="false" aria-controls="tmn-c101-body-medicare" data-analytics="card-toggle" data-coverage-name="Medicare">
+<div class="tmn-c101-cardhead-row">
+<span class="tmn-c101-icon" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="5" r="2.5">
+</circle>
+<path d="M12 7.5v6">
+</path>
+<path d="M9 14l3-2 3 2">
+</path>
+<path d="M10 21l-1-7">
+</path>
+<path d="M14 21l1-7">
+</path>
+<path d="M18 14v7">
+</path>
+</svg>
+</span>
+<span class="tmn-c101-chevron" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="6 9 12 15 18 9">
+</polyline>
+</svg>
+</span>
+</div>
+<div>
+<span class="tmn-c101-eyebrow-card">Medicare</span>
+<h3 class="tmn-c101-cardname">Federal insurance for 65+ and certain disabilities.</h3>
+<p class="tmn-c101-cardtag">Includes End-Stage Renal Disease and qualifying long-term disability.</p>
+</div>
+</button>
+<div class="tmn-c101-cardbody" id="tmn-c101-body-medicare">
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">Who qualifies</h4>
+<ul class="tmn-c101-list">
+<li>Adults 65+</li>
+<li>People with qualifying disabilities (24+ months on SSDI)</li>
+<li>Anyone with End-Stage Renal Disease</li>
+</ul>
+</div>
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">How it works</h4>
+<p>
+<strong>Part A</strong> covers hospital stays. <strong>Part B</strong> covers outpatient care, and your transplant anti-rejection drugs when Medicare helped pay for the transplant. <strong>Part D</strong> covers most other prescription drugs. Many enroll in <strong>Medicare Advantage</strong> for bundled coverage.</p>
+</div>
+<div class="tmn-c101-warn" role="note">
+<p class="tmn-c101-warn-h">
+<span aria-hidden="true">⚠</span> Watch for</p>
+<p>Premiums for Part B and Part D add up. <strong>Copay cards are not allowed</strong> with Medicare.</p>
+</div>
+<div class="tmn-c101-next">
+<p class="tmn-c101-next-h">
+<span aria-hidden="true">→</span> Next steps</p>
+<ol>
+<li data-analytics="next-step" data-coverage-name="Medicare" data-step="1">Enroll in Medicare Part A, B, and D (or Advantage).</li>
+<li data-analytics="next-step" data-coverage-name="Medicare" data-step="2">Apply for Extra Help if your income is limited.</li>
+<li data-analytics="next-step" data-coverage-name="Medicare" data-step="3">Review your Part D drug formulary every fall.</li>
+<li data-analytics="next-step" data-coverage-name="Medicare" data-step="4">Kidney transplant? Ask Social Security about Part B-ID before your Medicare ends.</li>
+</ol>
+</div>
+</div>
+</article>
+<article class="tmn-c101-card" data-coverage="medicaid" data-open="false" role="listitem">
+<button type="button" class="tmn-c101-cardhead" aria-expanded="false" aria-controls="tmn-c101-body-medicaid" data-analytics="card-toggle" data-coverage-name="Medicaid">
+<div class="tmn-c101-cardhead-row">
+<span class="tmn-c101-icon" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="9" cy="6" r="2.5">
+</circle>
+<circle cx="17" cy="7" r="2">
+</circle>
+<path d="M3 21v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3">
+</path>
+<path d="M15 21v-2a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v2">
+</path>
+</svg>
+</span>
+<span class="tmn-c101-chevron" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="6 9 12 15 18 9">
+</polyline>
+</svg>
+</span>
+</div>
+<div>
+<span class="tmn-c101-eyebrow-card">Medicaid</span>
+<h3 class="tmn-c101-cardname">State-and-federal coverage for limited income.</h3>
+<p class="tmn-c101-cardtag">Eligibility, benefits, and rules vary by state.</p>
+</div>
+</button>
+<div class="tmn-c101-cardbody" id="tmn-c101-body-medicaid">
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">Who qualifies</h4>
+<ul class="tmn-c101-list">
+<li>Households below your state's income limit</li>
+<li>Children, pregnant patients, and people with disabilities</li>
+<li>Some long-term care and waiver recipients</li>
+</ul>
+</div>
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">How it works</h4>
+<p>The state pays for most covered services with low or zero out-of-pocket cost. Each state runs its own program, your benefits, prescription rules, and provider list depend on where you live.</p>
+</div>
+<div class="tmn-c101-warn" role="note">
+<p class="tmn-c101-warn-h">
+<span aria-hidden="true">⚠</span> Watch for</p>
+<p>Income and asset limits apply. Exceed them and you can lose coverage. Provider networks may be limited. <strong>Copay cards are not allowed</strong>.</p>
+</div>
+<div class="tmn-c101-next">
+<p class="tmn-c101-next-h">
+<span aria-hidden="true">→</span> Next steps</p>
+<ol>
+<li data-analytics="next-step" data-coverage-name="Medicaid" data-step="1">Contact your state Medicaid office to apply.</li>
+<li data-analytics="next-step" data-coverage-name="Medicaid" data-step="2">Gather income, residency, and household documents.</li>
+<li data-analytics="next-step" data-coverage-name="Medicaid" data-step="3">Re-verify eligibility on the renewal date.</li>
+</ol>
+</div>
+</div>
+</article>
+<article class="tmn-c101-card" data-coverage="selfpay" data-open="false" role="listitem">
+<button type="button" class="tmn-c101-cardhead" aria-expanded="false" aria-controls="tmn-c101-body-selfpay" data-analytics="card-toggle" data-coverage-name="Uninsured / Self-Pay">
+<div class="tmn-c101-cardhead-row">
+<span class="tmn-c101-icon" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="8" r="4">
+</circle>
+<path d="M12 6v4M10.5 8h3">
+</path>
+<path d="M3 20a9 9 0 0 1 18 0">
+</path>
+</svg>
+</span>
+<span class="tmn-c101-chevron" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="6 9 12 15 18 9">
+</polyline>
+</svg>
+</span>
+</div>
+<div>
+<span class="tmn-c101-eyebrow-card">Uninsured / Self-Pay</span>
+<h3 class="tmn-c101-cardname">Paying full cost yourself, with no insurance.</h3>
+<p class="tmn-c101-cardtag">Between jobs, pre-Medicare, or otherwise without coverage.</p>
+</div>
+</button>
+<div class="tmn-c101-cardbody" id="tmn-c101-body-selfpay">
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">Who qualifies</h4>
+<ul class="tmn-c101-list">
+<li>Hospital charity / financial-assistance programs</li>
+<li>Manufacturer Patient Assistance Programs (PAPs)</li>
+<li>Discount cards and pharmacy savings programs</li>
+</ul>
+</div>
+<div class="tmn-c101-block">
+<h4 class="tmn-c101-block-h">How it works</h4>
+<p>You receive the full retail bill. Cash prices for transplant medications can run hundreds to thousands per month. Hospitals and pharmacies often negotiate or offer payment plans on request.</p>
+</div>
+<div class="tmn-c101-warn" role="note">
+<p class="tmn-c101-warn-h">
+<span aria-hidden="true">⚠</span> Watch for</p>
+<p>Catastrophic out-of-pocket costs. Risk of medical debt. Skipped doses if cost feels impossible.</p>
+</div>
+<div class="tmn-c101-next">
+<p class="tmn-c101-next-h">
+<span aria-hidden="true">→</span> Next steps</p>
+<ol>
+<li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="1">Apply for manufacturer Patient Assistance Programs first.</li>
+<li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="2">Negotiate cash prices and ask about payment plans.</li>
+<li data-analytics="next-step" data-coverage-name="Uninsured / Self-Pay" data-step="3">Re-check Medicaid and Marketplace plan eligibility.</li>
+</ol>
+</div>
+</div>
+</article>
+</div>
+<p class="tmn-c101-footnote">Educational information only. Eligibility rules and coverage details change, verify with your insurer, state Medicaid office, and transplant team.</p>
+</section>
+<section class="bg-amber-50 rounded-xl p-6 border-2 border-amber-200">
+<div class="flex items-center gap-3 mb-4">
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600" aria-hidden="true">
+<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
+</path>
+<path d="M12 9v4">
+</path>
+<path d="M12 17h.01">
+</path>
+</svg>
+<h2 class="text-xl font-bold text-slate-900">New in 2026: CMS WISeR Prior Authorization Pilot</h2>
+</div>
+<p class="text-slate-700 mb-4">Starting January 2026, CMS launched the <strong>WISeR (Wasteful and Inappropriate Service Reduction)</strong> model. This adds prior authorization for 17 outpatient Medicare Part B services in 6 states.</p>
+<div class="grid md:grid-cols-2 gap-4 mb-4">
+<div class="bg-white p-4 rounded-lg border border-amber-200">
+<h3 class="font-bold text-amber-900 mb-2">Affected States</h3>
+<ul class="text-sm text-slate-700 space-y-1">
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> Arizona</li>
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> New Jersey</li>
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> Ohio</li>
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> <strong>Oklahoma</strong>
+</li>
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> Texas</li>
+<li class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500" aria-hidden="true">
+<path d="M20 6 9 17l-5-5">
+</path>
+</svg> Washington</li>
+</ul>
+</div>
+<div class="bg-white p-4 rounded-lg border border-amber-200">
+<h3 class="font-bold text-amber-900 mb-2">What Transplant Patients Should Know</h3>
+<ul class="text-sm text-slate-700 space-y-1 list-disc pl-4">
+<li>WISeR covers outpatient procedures (nerve stimulators, spinal procedures, wound care), <strong>not</strong> transplant medications</li>
+<li>Your immunosuppressant drugs are NOT affected</li>
+<li>If you need any of the 17 listed procedures (e.g., wound care with skin substitutes), your provider must get prior authorization</li>
+<li>Coverage decisions are made within 72 hours (48 hours for urgent cases)</li>
+</ul>
+</div>
+</div>
+<p class="text-slate-600 text-sm">The WISeR model runs from January 2026 through December 2031. It applies only to Original Medicare (fee-for-service), not Medicare Advantage plans. If you are in one of these states and need a covered procedure, talk to your provider about the prior authorization process.</p>
+</section>
+<div class="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center mb-8" role="note">
+<p class="text-blue-900 font-medium">Each type of insurance has its own benefits, costs, and best ways to save.</p>
+</div>
+<div class="flex justify-center mb-8">
+<img src="/photos/tmn_infographic.jpg" alt="Comparison chart of transplant medication help by insurance type: Commercial, Medicare, Medicaid, and Uninsured" aria-describedby="insurance-infographic-desc" class="max-w-full h-auto rounded-lg shadow-md">
+</div>
+<div id="insurance-infographic-desc" class="sr-only">This infographic compares what transplant medication help is available across four insurance types. Commercial Insurance: Insurance through your job or that you buy on your own. You may qualify for manufacturer copay cards, patient assistance programs, and copay foundations. You pay monthly premiums, copays, and deductibles, then insurance covers the rest. Common problems include high deductibles, prior authorization requirements, and copay accumulators. Next step: search your medications to find copay cards and assistance programs. Medicare: Government insurance for people 65 and older or with disabilities. You may qualify for patient assistance programs, Extra Help or Low Income Subsidy, and copay foundations. Part D covers most transplant drugs with monthly premiums and copays. Common problems include Part D costs and you cannot use manufacturer copay cards. Next step: check if you qualify for Extra Help and search for patient assistance programs. Medicaid: Government insurance for people with low income. You may qualify for patient assistance programs and state-specific programs. Covers most transplant drugs with very low or no copays. Common problems include limited pharmacy networks, formulary restrictions, and coverage ending if income changes. Next step: search your medications and check with your state Medicaid office. Uninsured or Self-Pay: No current insurance coverage. You may qualify for manufacturer patient assistance programs for free medications, state programs, and discount cards. You pay the full retail price without help. Common problems include very high costs, no negotiated rates, and difficulty affording specialty medications. Next step: apply for patient assistance programs immediately as most offer free medications for qualifying patients. The infographic concludes with an encouraging message: You are not alone and there is help available no matter what type of insurance you have.</div>
+<section class="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-2xl p-6 md:p-8" aria-labelledby="insurance-simulator">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-indigo-600 text-white p-2 rounded-lg">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</div>
+<div>
+<h2 id="insurance-simulator" class="text-xl md:text-2xl font-bold text-indigo-900">Insurance Change Simulator</h2>
+<p class="text-sm text-indigo-700">See how your medication options change when switching insurance</p>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-4 mb-6">
+<div>
+<label for="current-insurance" class="block text-sm font-bold text-slate-700 mb-2">Current Insurance</label>
+<select id="current-insurance" class="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+<option value="">-- Select current --</option>
+<option value="commercial">Commercial/Employer Insurance</option>
+<option value="medicare">Medicare (Part D)</option>
+<option value="medicaid">Medicaid</option>
+<option value="marketplace">ACA Marketplace</option>
+<option value="uninsured">Uninsured</option>
+</select>
+</div>
+<div>
+<label for="future-insurance" class="block text-sm font-bold text-slate-700 mb-2">Future Insurance</label>
+<select id="future-insurance" class="w-full p-3 rounded-lg border border-indigo-200 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+<option value="">-- Select future --</option>
+<option value="commercial">Commercial/Employer Insurance</option>
+<option value="medicare">Medicare (Part D)</option>
+<option value="medicaid">Medicaid</option>
+<option value="marketplace">ACA Marketplace</option>
+<option value="uninsured">Uninsured</option>
+</select>
+</div>
+</div>
+<button disabled="" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg transition flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>See What Changes</button>
+</section>
+<section aria-labelledby="medicare-guide">
+<h2 id="medicare-guide" class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicare Guide</h2>
+<div class="mb-8">
+<h3 class="font-bold text-lg text-slate-800 mb-4">Medicare Parts for Transplant Drugs</h3>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="border border-slate-200 p-4 rounded-lg bg-slate-50">
+<strong class="text-blue-700 text-lg block mb-1">Part A (Hospital)</strong>
+<ul class="text-sm font-medium text-slate-800 list-disc pl-4">
+<li>Induction agents</li>
+<li>(Thymoglobulin, Simulect)</li>
+</ul>
+</div>
+<div class="border border-slate-200 p-4 rounded-lg bg-slate-50">
+<strong class="text-blue-700 text-lg block mb-1">Part B (Medical)</strong>
+<ul class="text-sm font-medium text-slate-800 list-disc pl-4">
+<li>IV infusions (Belatacept)</li>
+<li>Anti-rejection drugs (if Part B-ID eligible)</li>
+<li>2026: $202.90/month premium, $283 deductible</li>
+<li>Part B-ID premium: $121.60/month (kidney patients)</li>
+</ul>
+</div>
+<div class="border border-purple-200 p-4 rounded-lg bg-purple-50">
+<strong class="text-purple-700 text-lg block mb-1">Part C (Medicare Advantage)</strong>
+<ul class="text-sm font-medium text-slate-800 list-disc pl-4">
+<li>Combines A, B, and usually D</li>
+<li>May have extra benefits</li>
+<li>You must use certain doctors</li>
+</ul>
+</div>
+<div class="border border-slate-200 p-4 rounded-lg bg-slate-50">
+<strong class="text-blue-700 text-lg block mb-1">Part D (Prescription)</strong>
+<ul class="text-sm font-medium text-slate-800 list-disc pl-4">
+<li>Tacrolimus</li>
+<li>Mycophenolate</li>
+<li>Valcyte, etc.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mb-8">
+<h3 class="font-bold text-lg text-slate-800 mb-4">Part D vs Medicare Advantage: Choosing Your Plan</h3>
+<div class="overflow-hidden border border-slate-200 rounded-xl">
+<div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+<div class="p-6">
+<h4 class="font-bold text-indigo-700 text-lg mb-2">Part D (Traditional)</h4>
+<ul class="space-y-2 text-sm text-slate-800 list-disc pl-5">
+<li>Works with any Medicare-accepting provider</li>
+<li>Separate deductible and premium</li>
+<li>$2,100 out-of-pocket cap (2026)</li>
+</ul>
+</div>
+<div class="p-6">
+<h4 class="font-bold text-indigo-700 text-lg mb-2">Medicare Advantage (MA-PD)</h4>
+<ul class="space-y-2 text-sm text-slate-800 list-disc pl-5">
+<li>Often lower or $0 premiums</li>
+<li>Provider networks may be limited</li>
+<li>$2,100 out-of-pocket cap (2026)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="commercial-insurance">
+<h2 id="commercial-insurance" class="text-xl font-bold text-blue-900 bg-blue-50 p-4 rounded-t-xl border-b border-blue-100">Commercial Insurance</h2>
+<div class="bg-white border border-slate-200 rounded-b-xl p-6 space-y-4">
+<p class="text-slate-700">Your main payer for the first 30 months after transplant.</p>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="font-bold text-slate-900 mb-2">Key Points</h3>
+<ul class="list-disc pl-5 text-slate-600 text-sm space-y-1">
+<li>Can use most drug maker PAPs</li>
+<li>Copay cards often work</li>
+<li>Foundations help with high copays</li>
+<li>May need to use a certain pharmacy</li>
+</ul>
+</div>
+<div>
+<h3 class="font-bold text-emerald-700 mb-2">Best Strategy</h3>
+<p class="text-sm text-slate-700">Start with drug maker PAPs, then use foundations for any copays or deductibles left over.</p>
+</div>
+</div>
+</div>
+</section>
+<div class="grid md:grid-cols-2 gap-6">
+<section class="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="va-health">
+<h2 id="va-health" class="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">VA Health Care</h2>
+<div class="p-4 space-y-3">
+<p class="text-sm text-slate-600">For veterans who qualify.</p>
+<div class="text-sm">
+<strong class="block text-emerald-700">Best Strategy</strong>Priority Groups 1–6: $0 for medicines. Use the VA pharmacy first. Work with your VA transplant team.</div>
+<a href="https://www.va.gov/health-care/eligibility/" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit VA Prescription Information (opens in new tab)">VA Prescription Information <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</section>
+<section class="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="tricare">
+<h2 id="tricare" class="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">TRICARE</h2>
+<div class="p-4 space-y-3">
+<p class="text-sm text-slate-600">For military members and families.</p>
+<div class="text-sm">
+<strong class="block text-emerald-700">Best Strategy</strong>Use the military pharmacy ($0 copay). Use TRICARE mail order for ongoing medicines. Check the drug list search tool.</div>
+<a href="https://www.tricare.mil/CoveredServices/Pharmacy" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-2" aria-label="Visit TRICARE Formulary Search (opens in new tab)">TRICARE Drug List Search <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</section>
+</div>
+<section class="border border-slate-200 rounded-xl overflow-hidden" aria-labelledby="no-insurance">
+<h2 id="no-insurance" class="font-bold bg-slate-50 p-3 border-b border-slate-200 text-slate-800">No Insurance</h2>
+<div class="p-6 bg-white">
+<p class="text-slate-700 mb-4">For patients without insurance.</p>
+<h3 class="font-bold text-emerald-700 mb-2">Best Strategy</h3>
+<ul class="list-disc pl-5 text-slate-600 text-sm space-y-1">
+<li>Start with drug maker PAPs</li>
+<li>Check Cost Plus Drugs prices</li>
+<li>Use discount tools (GoodRx, SingleCare, etc.)</li>
+<li>Look into Medicaid or Marketplace plans</li>
+</ul>
+<a href="https://www.healthcare.gov/" target="_blank" rel="noreferrer" class="text-blue-600 hover:underline text-sm flex items-center gap-1 mt-4" aria-label="Explore Insurance Options on Healthcare.gov (opens in new tab)">Find Insurance Options <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+</path>
+<polyline points="15 3 21 3 21 9">
+</polyline>
+<line x1="10" x2="21" y1="14" y2="3">
+</line>
+</svg>
+</a>
+</div>
+</section>
+<section aria-labelledby="medicaid-section">
+<h2 id="medicaid-section" class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Medicaid (State-Based)</h2>
+<p class="text-slate-600 mb-6">A program for people with low income. What it covers depends on your state.</p>
+<div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+<label for="state-select" class="block font-bold text-slate-700 mb-2">Select your State:</label>
+<div class="relative">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" aria-hidden="true">
+<path d="m6 9 6 6 6-6">
+</path>
+</svg>
+<select id="state-select" class="w-full appearance-none p-4 pr-10 rounded-lg border border-slate-300 text-lg bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
+<option value="">-- Choose a State --</option>
+<option value="https://medicaid.alabama.gov/">Alabama</option>
+<option value="https://health.alaska.gov/dpa/Pages/medicaid/default.aspx">Alaska</option>
+<option value="https://www.azahcccs.gov/">Arizona</option>
+<option value="https://humanservices.arkansas.gov/divisions-shared-services/medical-services/">Arkansas</option>
+<option value="https://www.medi-cal.ca.gov/">California</option>
+<option value="https://hcpf.colorado.gov/">Colorado</option>
+<option value="https://portal.ct.gov/dss/find-benefits-and-support/healthcare-coverage">Connecticut</option>
+<option value="https://dhss.delaware.gov/dhss/dmma/">Delaware</option>
+<option value="https://www.myflfamilies.com/medicaid">Florida</option>
+<option value="https://medicaid.georgia.gov/">Georgia</option>
+<option value="https://medquest.hawaii.gov/">Hawaii</option>
+<option value="https://healthandwelfare.idaho.gov/services-programs/medicaid-health">Idaho</option>
+<option value="https://hfs.illinois.gov/">Illinois</option>
+<option value="https://www.in.gov/medicaid/">Indiana</option>
+<option value="https://dhs.iowa.gov/ime/members">Iowa</option>
+<option value="https://www.kancare.ks.gov/">Kansas</option>
+<option value="https://chfs.ky.gov/agencies/dms/Pages/default.aspx">Kentucky</option>
+<option value="https://ldh.la.gov/microsite/1">Louisiana</option>
+<option value="https://www.maine.gov/dhhs/ofi/programs-services/health-care-assistance">Maine</option>
+<option value="https://health.maryland.gov/mmcp/Pages/home.aspx">Maryland</option>
+<option value="https://www.mass.gov/topics/masshealth">Massachusetts</option>
+<option value="https://www.michigan.gov/mdhhs/assistance-programs/medicaid">Michigan</option>
+<option value="https://mn.gov/dhs/people-we-serve/adults/health-care/">Minnesota</option>
+<option value="https://medicaid.ms.gov/">Mississippi</option>
+<option value="https://mydss.mo.gov/healthcare">Missouri</option>
+<option value="https://dphhs.mt.gov/montanahealthcareprograms/index">Montana</option>
+<option value="https://dhhs.ne.gov/Pages/Medicaid-and-Long-Term-Care.aspx">Nebraska</option>
+<option value="https://dhcfp.nv.gov/">Nevada</option>
+<option value="https://www.dhhs.nh.gov/programs-services/medicaid">New Hampshire</option>
+<option value="https://www.nj.gov/humanservices/dmahs/home/">New Jersey</option>
+<option value="https://yes.nm.gov/">New Mexico</option>
+<option value="https://www.health.ny.gov/health_care/medicaid/">New York</option>
+<option value="https://medicaid.ncdhhs.gov/">North Carolina</option>
+<option value="https://www.hhs.nd.gov/healthcare/medicaid">North Dakota</option>
+<option value="https://benefits.ohio.gov/">Ohio</option>
+<option value="https://oklahoma.gov/ohca.html">Oklahoma</option>
+<option value="https://www.oregon.gov/oha/hsd/ohp/pages/index.aspx">Oregon</option>
+<option value="https://www.dhs.pa.gov/Services/Assistance/Pages/Medical-Assistance.aspx">Pennsylvania</option>
+<option value="https://eohhs.ri.gov/">Rhode Island</option>
+<option value="https://www.scdhhs.gov/">South Carolina</option>
+<option value="https://dss.sd.gov/medicaid/">South Dakota</option>
+<option value="https://www.tn.gov/tenncare.html">Tennessee</option>
+<option value="https://www.hhs.texas.gov/services/health/medicaid-chip">Texas</option>
+<option value="https://medicaid.utah.gov/">Utah</option>
+<option value="https://dvha.vermont.gov/">Vermont</option>
+<option value="https://www.dmas.virginia.gov/">Virginia</option>
+<option value="https://www.hca.wa.gov/free-or-low-cost-health-care">Washington</option>
+<option value="https://bms.wv.gov/">West Virginia</option>
+<option value="https://www.dhs.wisconsin.gov/medicaid/index.htm">Wisconsin</option>
+<option value="https://health.wyo.gov/healthcarefin/medicaid/">Wyoming</option>
+</select>
+</div>
+</div>
+</section>
+<section aria-labelledby="ihs-section">
+<h2 id="ihs-section" class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Indian Health Service / Tribal Programs</h2>
+<p class="text-slate-600 mb-6">For American Indian and Alaska Native patients who qualify.</p>
+<div class="grid md:grid-cols-2 gap-6">
+<a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noreferrer" class="bg-white p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-200 transition text-center group" aria-label="Find an IHS facility (opens in new tab)">
+<div class="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-700" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-land-plot">
+<path d="m12 8 6-3-6-3v10">
+</path>
+<path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12">
+</path>
+<path d="m6.49 12.85 11.02 6.3">
+</path>
+<path d="M17.51 12.85 6.5 19.15">
+</path>
+</svg>
+</div>
+<h3 class="font-bold text-lg text-slate-900 mb-2">Find a Facility</h3>
+<p class="text-sm text-slate-600 mb-6">Use the official IHS locator to find clinics and pharmacies near you.</p>
+<span class="inline-block w-full bg-emerald-700 group-hover:bg-emerald-800 text-white font-bold py-2 rounded-lg">Open IHS Locator</span>
+</a>
+<section class="bg-white p-6 rounded-xl border border-slate-200" aria-labelledby="ihs-strategy">
+<h3 id="ihs-strategy" class="font-bold text-slate-900 mb-4">Best Strategy</h3>
+<p class="text-slate-600 text-sm">Use your local IHS or Urban Indian Program, usually $0 cost.</p>
+</section>
+</div>
+</section>
+</div>
+</div>
+</article>
+</main>
+<footer class="bg-slate-900 text-slate-200 py-8 text-base no-print" role="contentinfo">
+<div class="container mx-auto px-4 text-center">
+<p class="mb-4">
+<strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
+<p class="mb-4 text-slate-300 text-sm max-w-3xl mx-auto">We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.</p>
+<p class="mb-2 text-emerald-400 font-medium">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg>Information last updated: July 1, 2026</p>
+<p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
+<p class="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis. est August 2025</p>
+<p class="mt-2 text-slate-400 text-sm">
+<a href="mailto:info@transplantmedicationnavigator.com" class="text-emerald-400 hover:text-emerald-300 underline">info@transplantmedicationnavigator.com</a>
+</p>
+<div class="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">
+<p class="text-slate-300">
+<strong class="text-slate-200">Non-Discrimination Notice:</strong> In accordance with Section 504 of the Rehabilitation Act of 1973, TransplantNav LLC does not discriminate on the basis of disability. <a class="text-emerald-400 hover:text-emerald-300 underline transition" href="/accessibility#section-504">Section 504 Notice &amp; Grievance Procedure</a>
+</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/terms-and-conditions">Terms of Service</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/privacy">Privacy Policy</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/accessibility">Accessibility &amp; Section 504</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/feedback">Feedback</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/for-hospitals">Hospitals</a>
+<span class="text-slate-600" aria-hidden="true">|</span>
+<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/admin/login">Admin</a>
+</div>
+</div>
+</footer>
+<div class="fixed bottom-6 right-6 z-50 no-print">
+<button class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105" aria-label="Open medication assistance">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle">
+<path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z">
+</path>
+</svg>
+<span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">Need help with medication costs?</span>
+</button>
+</div>
+</div>
