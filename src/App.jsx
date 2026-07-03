@@ -770,6 +770,10 @@ const Home = () => {
                     </Link>
                 </div>
 
+                <div className="mt-6 flex justify-center">
+                    <LanguageToggle />
+                </div>
+
                 {/* Stats Banner */}
                 <div className="grid grid-cols-3 gap-3 md:gap-6 mt-10 max-w-3xl mx-auto">
                     <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 md:p-6 text-center border border-emerald-200 shadow-sm hover:shadow-md transition-shadow">

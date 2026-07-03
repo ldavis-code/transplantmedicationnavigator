@@ -1173,5 +1173,175 @@
       "takeQuiz": "Hacer el cuestionario Mi Camino",
       "fullSearch": "Búsqueda completa de medicamentos"
     }
+  },
+  "layout": {
+    "banner": {
+      "text": "Los Programas de Asistencia al Paciente dan medicamentos GRATIS; nunca pague por solicitar. Nosotros le ayudamos a encontrarlos."
+    },
+    "skipLink": "Saltar al contenido principal",
+    "nav": {
+      "brandAriaLabel": "Inicio de Transplant Medication Navigator™",
+      "brandLine1": "Transplant Medication",
+      "brandLine2": " Navigator",
+      "brandTm": "™",
+      "mainAriaLabel": "Navegación principal",
+      "mobileAriaLabel": "Navegación móvil",
+      "openMenu": "Abrir menú",
+      "closeMenu": "Cerrar menú",
+      "simpleView": "Vista Simple",
+      "links": {
+        "home": { "label": "Inicio", "ariaLabel": "Ir a la página de inicio" },
+        "wizard": { "label": "Cuestionario Mi Camino", "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos" },
+        "education": { "label": "Educación y Recursos", "ariaLabel": "Explorar educación y recursos" },
+        "applicationHelp": { "label": "Ayudas y Fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
+        "savingsTracker": { "label": "Calculadora de Ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
+        "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
+        "pricing": { "label": "Precios", "ariaLabel": "Ver información de precios" },
+        "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
+        "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
+      }
+    },
+    "footer": {
+      "disclaimer": "<strong>Aviso:</strong> Esta herramienta ofrece información educativa para ayudarle a encontrar opciones de asistencia con sus medicamentos. No sustituye el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su condición médica o su tratamiento.",
+      "nlm": "Usamos información de la U.S. National Library of Medicine (NLM). La NLM no respalda ni recomienda esta herramienta.",
+      "lastUpdated": "Información actualizada por última vez: {{date}}",
+      "copyright": "© 2026 Transplant Medication Navigator™. Todos los derechos reservados.",
+      "createdBy": "Creado por Lorrinda Gray-Davis. Fundado en agosto de 2025",
+      "nondiscrimination": {
+        "label": "Aviso de No Discriminación:",
+        "text": " Conforme a la Sección 504 de la Ley de Rehabilitación de 1973 (Rehabilitation Act of 1973), TransplantNav LLC no discrimina por motivos de discapacidad.",
+        "link": "Aviso de la Sección 504 y Procedimiento de Quejas"
+      },
+      "links": {
+        "terms": "Términos de Servicio",
+        "privacy": "Política de Privacidad",
+        "accessibility": "Accesibilidad y Sección 504",
+        "feedback": "Comentarios",
+        "hospitals": "Hospitales",
+        "admin": "Admin"
+      }
+    }
+  },
+  "home": {
+    "updateBanner": {
+      "ariaLabel": "Nuestros recursos están al día, ahora incluyen el nuevo programa TotalAssist",
+      "verified": "Verificado y al día",
+      "totalAssist": "Ahora incluye <strong>TotalAssist</strong>, el programa caritativo de asistencia al paciente más grande del país (lanzado el 1 de julio de 2026).",
+      "seeWhatsNew": "Vea lo nuevo"
+    },
+    "hero": {
+      "titlePre": "Compare precios estimados de medicamentos y encuentre programas de asistencia verificados ",
+      "titleHighlight": "en un solo lugar.",
+      "tagline": "De la receta a sus manos",
+      "subtitle": "Un paciente pasó de $624 al mes a $10 con una tarjeta de copago. Descubra cuánto podría ahorrar usted.",
+      "quizAriaLabel": "Comenzar el cuestionario Mi Camino",
+      "quizButton": "Comenzar el cuestionario Mi Camino",
+      "deniedAriaLabel": "Obtenga ayuda con las negaciones del seguro",
+      "deniedTitle": "¿Se lo negaron?",
+      "deniedSubtitle": "Ayuda con terapia escalonada, autorización previa y apelaciones",
+      "grantsAriaLabel": "Encontrar ayudas económicas y fundaciones",
+      "grantsButton": "Encontrar Ayudas y Fundaciones"
+    },
+    "stats": {
+      "medications": "Medicamentos",
+      "assistancePrograms": "Programas de Asistencia",
+      "copayCards": "Tarjetas de Copago"
+    },
+    "mychart": {
+      "ariaLabel": "Conecte su MyChart para importar su lista de medicamentos",
+      "new": "Nuevo",
+      "title": "Su lista real de medicamentos, con un solo toque",
+      "text": "Traiga sus medicamentos directamente desde el <strong>MyChart</strong> de Epic de su hospital y vea al instante cada tarjeta de copago y programa de asistencia que le corresponde. Sin escribir, sin errores.",
+      "connect": "Conectar MyChart",
+      "footnote": "Aparece en el Epic Connection Hub • Funciona con más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
+    },
+    "features": {
+      "ariaLabel": "Funciones principales",
+      "learn": {
+        "title": "Aprenda el Proceso",
+        "text": "Aprenda a llenar por su cuenta las solicitudes del Programa de Asistencia al Paciente (PAP), gratis.",
+        "linkAriaLabel": "Ver la guía de solicitud",
+        "link": "Ver la Guía"
+      },
+      "coverage": {
+        "title": "Educación sobre Cobertura",
+        "text": "Aprenda sobre el seguro, Medicare (incluida la Part B-ID para pacientes de riñón), Medicaid y los beneficios de IHS.",
+        "linkAriaLabel": "Aprenda sobre las opciones de cobertura",
+        "link": "Aprenda sobre la Cobertura"
+      },
+      "resources": {
+        "title": "Educación y Recursos",
+        "text": "Enlaces directos y seguros a programas de fabricantes, fundaciones y sitios del gobierno. Sin estafas.",
+        "linkAriaLabel": "Explorar los recursos disponibles",
+        "link": "Explorar Recursos"
+      }
+    },
+    "story": {
+      "badge": "Historia Real de un Paciente",
+      "quotePre": "\"Mi receta costaba ",
+      "price1": "$624",
+      "quoteMid1": ". Con el seguro bajó a ",
+      "price2": "$195",
+      "quoteMid2": ". Pero nadie me habló de las tarjetas de copago. Encontré una por mi cuenta y ahora pago solo ",
+      "price3": "$10",
+      "quotePost": ".\"",
+      "savedLabel": "Ahorrado al Año",
+      "why": "Por eso creamos esta herramienta: para que ningún paciente pierda los ahorros que su farmacia nunca le mencionó."
+    },
+    "hospitals": {
+      "eyebrow": "Para hospitales y centros de trasplante",
+      "title": "Dé a cada paciente una plataforma de educación sobre medicamentos, con su propia marca",
+      "text": "Ofrezca Transplant Medication Navigator como educación para pacientes con su marca. Integrado con Epic MyChart, con privacidad HIPAA desde el diseño, y creado para reducir la falta de adherencia por costos y los reingresos evitables.",
+      "feature1": "Panel de administración de marca blanca",
+      "feature2": "Integración con Epic MyChart",
+      "feature3": "Informes de resultados y ahorros",
+      "demo": "Reserve una demostración",
+      "pilot": "Vea el programa piloto"
+    },
+    "mission": {
+      "badge": "Creado por un paciente, para pacientes.",
+      "missionTitle": "Nuestra Misión",
+      "missionText": "Ayudamos a los pacientes de trasplante a conseguir la medicina que necesitan. Le mostramos cómo encontrar ayuda para pagar su medicina. Le damos información clara y honesta.",
+      "visionTitle": "Nuestra Visión",
+      "visionText": "Cada paciente de trasplante merece una oportunidad justa. Usted no debería perder su salud porque la medicina cuesta demasiado.",
+      "whyTitle": "Por Qué Creamos Esto",
+      "why1Title": "Fácil de Entender",
+      "why1Text": "Convertimos los formularios difíciles en pasos sencillos, para que no necesite un título universitario para conseguir ayuda con su medicina.",
+      "why2Title": "Un Lugar Seguro",
+      "why2Text": "Estamos de su lado. No vendemos su información. No trabajamos para ninguna farmacia. Le ayudamos a protegerse de las personas que quieren engañarlo.",
+      "why3Title": "Ahorre Dinero",
+      "why3Text": "Le mostramos precios y programas de medicina gratis, todo en un solo lugar. Usted puede elegir lo que mejor le funcione."
+    },
+    "quizCta": {
+      "ariaLabel": "Comience su camino personalizado de medicamentos",
+      "button": "Comenzar el cuestionario Mi Camino de Medicamentos",
+      "text": "Haga nuestro cuestionario gratis para ver cómo podemos ayudarle. Fundado por un paciente. El paciente primero."
+    },
+    "founder": {
+      "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
+      "title": "Creado por Alguien Que Ya Pasó por Esto",
+      "name": "Lorrinda Gray-Davis",
+      "role": "Receptora de un trasplante de hígado · Presidenta de TRIO · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
+      "bio": "Lorrinda creó esta herramienta desde su propia experiencia: siete años después de su trasplante, convirtió su camino en defensa nacional del paciente, investigación publicada y programas que han apoyado a casi 500 pacientes.",
+      "stat1Label": "Años después del trasplante",
+      "stat2Label": "Trasplantes facilitados",
+      "stat3Label": "Pacientes apoyados",
+      "link": "Lea la historia completa y la investigación de Lorrinda"
+    },
+    "hotline": {
+      "title": "¿Necesita Hablar con Alguien?",
+      "intro": "Ser paciente de trasplante puede ser duro para sus emociones. Puede recibir ayuda gratis y privada a cualquier hora, de día o de noche.",
+      "lifeline": "Línea Nacional de Prevención del Suicidio y Crisis",
+      "availability": "24/7 • Confidencial",
+      "encouragement": "Pedir ayuda es señal de fortaleza, no de debilidad. La vida después de un trasplante es dura para su cuerpo y sus emociones. Cuidar cómo se siente es tan importante como tomar su medicina. ¿Está pasando por un momento difícil? Por favor, busque ayuda. Queremos ayudarle.",
+      "callTitle": "Llame o Envíe un Texto",
+      "callText": "Marque o envíe un texto al <strong>988</strong> desde cualquier teléfono",
+      "chatTitle": "Chat en Línea"
+    },
+    "privacy": {
+      "title": "Protegemos Su Información",
+      "text": "No guardamos su información. No le pedimos su número de seguro social. No vendemos su información. Esta herramienta solo existe para enseñarle sobre sus opciones."
+    },
+    "tagline": "Creado para pacientes por un paciente"
   }
 }
