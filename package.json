@@ -12,6 +12,8 @@
     "sync:endpoints": "node sync_endpoints_to_neon.js",
     "generate-icons": "node scripts/generate-icons.js",
     "check:readability": "node scripts/check-readability.js",
+    "snapshot:update": "node scripts/snapshot-pages.js --update",
+    "snapshot:verify": "node scripts/snapshot-pages.js",
     "check:readability:strict": "node scripts/check-readability.js --strict",
     "check:links": "node scripts/check-links.js"
   },
@@ -31,6 +33,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "dotenv": "^17.2.3",
+    "playwright-core": "^1.61.1",
     "postcss": "^8.4.32",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.3.6",
