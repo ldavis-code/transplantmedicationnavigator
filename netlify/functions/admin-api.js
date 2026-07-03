@@ -204,6 +204,18 @@ async function getStats(db) {
         FROM events
     `;
 
+    // What MyChart imports actually pulled down (aggregate counts stored in
+    // the epic_import event meta: total meds on the chart, how many matched
+    // our catalog, how many did not). No drug names or PHI in this event.
+    const epicMeta = await db`
+        SELECT
+            COALESCE(SUM(CASE WHEN meta_json->>'totalFhirMeds' ~ '^[0-9]+$' THEN (meta_json->>'totalFhirMeds')::int ELSE 0 END), 0) as meds_pulled,
+            COALESCE(SUM(CASE WHEN meta_json->>'matched' ~ '^[0-9]+$' THEN (meta_json->>'matched')::int ELSE 0 END), 0) as meds_matched,
+            COALESCE(SUM(CASE WHEN meta_json->>'unmatched' ~ '^[0-9]+$' THEN (meta_json->>'unmatched')::int ELSE 0 END), 0) as meds_unmatched
+        FROM events
+        WHERE event_name = 'epic_import'
+    `;
+
     return {
         totalEvents: parseInt(totalEvents[0]?.count || 0),
         eventsThisWeek: parseInt(eventsThisWeek[0]?.count || 0),
@@ -216,6 +228,9 @@ async function getStats(db) {
         quizCompletes: parseInt(clickStats[0]?.quiz_completes || 0),
         epicImports: parseInt(clickStats[0]?.epic_imports || 0),
         epicImportsThisMonth: parseInt(clickStats[0]?.epic_imports_month || 0),
+        epicMedsPulled: parseInt(epicMeta[0]?.meds_pulled || 0),
+        epicMedsMatched: parseInt(epicMeta[0]?.meds_matched || 0),
+        epicMedsUnmatched: parseInt(epicMeta[0]?.meds_unmatched || 0),
         helpfulVotesYes: parseInt(clickStats[0]?.helpful_yes || 0),
         helpfulVotesNo: parseInt(clickStats[0]?.helpful_no || 0),
         resourceViews: parseInt(clickStats[0]?.resource_views || 0),
