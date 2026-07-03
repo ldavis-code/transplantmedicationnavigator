@@ -56,6 +56,12 @@ const PAGES = [
     { name: 'education-oop', route: '/education?topic=OOP' },
     { name: 'appeals', route: '/education/appeals' },
     { name: 'application-help', route: '/application-help' },
+    // Deep-linkable tabs (default tab is START, above)
+    { name: 'application-help-income', route: '/application-help?section=INCOME' },
+    { name: 'application-help-steps', route: '/application-help?section=STEPS' },
+    { name: 'application-help-checklist', route: '/application-help?section=CHECKLIST' },
+    { name: 'application-help-letters', route: '/application-help?section=LETTERS' },
+    { name: 'application-help-meds', route: '/application-help?section=MEDS' },
     { name: 'faq', route: '/faq' },
 ];
 

@@ -6080,6 +6080,14 @@ const ApplicationHelp = () => {
         } catch (e) {
             // ignore storage errors (e.g. private mode)
         }
+        // Allow deep-linking to a specific tab, e.g. /application-help?section=CHECKLIST
+        // (same pattern as /education?topic=...).
+        try {
+            const valid = ['START', 'INCOME', 'STEPS', 'CHECKLIST', 'LETTERS', 'MEDS'];
+            const params = new URLSearchParams(window.location.search);
+            const section = (params.get('section') || '').toUpperCase();
+            if (valid.includes(section)) return section;
+        } catch (e) { /* ignore */ }
         return 'START';
     });
     const checklistItems = APPLICATION_CHECKLIST_DATA;
