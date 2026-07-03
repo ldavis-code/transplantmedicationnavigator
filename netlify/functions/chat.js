@@ -116,6 +116,20 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 - Keep responses concise but complete
 - Do NOT use numbered lists - programs are displayed separately in the UI`;
 
+// Language directive appended to the system prompt. The site UI is bilingual
+// (?lang=es toggle); the client passes its active language so chat answers
+// match the language the patient is reading the site in.
+const withLanguage = (prompt, language) => {
+  if (language === 'es') {
+    return `${prompt}
+
+**Language:** Respond in Spanish (US Latino Spanish, "usted" form, plain 5th-7th grade language, same terminology as the site: copago, deducible, Programa de Asistencia al Paciente (PAP), fundación). Keep program names, drug names, phone numbers, and URLs unchanged. If the user writes in English, respond in English instead.`;
+  }
+  return `${prompt}
+
+**Language:** Respond in the language the user writes in (for example, respond in Spanish if they write in Spanish).`;
+};
+
 // Generate a unique conversation ID
 const generateConversationId = () => {
   return `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -407,7 +421,7 @@ const formatProgramsForContext = (programs, insuranceType, costPlusAvailable = f
 
 // Generate response using Claude
 // Now accepts costPlusAvailable parameter
-const generateClaudeResponse = async (userContext, programs, costPlusAvailable = false, previousMessages = []) => {
+const generateClaudeResponse = async (userContext, programs, costPlusAvailable = false, previousMessages = [], language = 'en') => {
   try {
     const programContext = formatProgramsForContext(programs, userContext.insurance_type, costPlusAvailable);
     const programCount = programs ? programs.length : 0;
@@ -437,7 +451,7 @@ Be specific and actionable. Reference the exact program names and URLs from the 
     const response = await getAnthropic().messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 1500,
-      system: SYSTEM_PROMPT,
+      system: withLanguage(SYSTEM_PROMPT, language),
       messages: [
         ...previousMessages,
         { role: 'user', content: userMessage },
@@ -675,7 +689,7 @@ const handleAction = async (action, body) => {
       // Generate personalized response with Claude
       let message;
       try {
-        message = await generateClaudeResponse(userContext, allPrograms, anyCostPlusAvailable);
+        message = await generateClaudeResponse(userContext, allPrograms, anyCostPlusAvailable, [], body.language);
       } catch (error) {
         // Fallback message if Claude fails
         message = generateFallbackMessage(allPrograms, insurance_type, cost_burden, anyCostPlusAvailable);
@@ -691,14 +705,14 @@ const handleAction = async (action, body) => {
     }
 
     case 'freeText': {
-      const { message: userMessage, answers } = body;
+      const { message: userMessage, answers, language } = body;
 
       // For free text, use Claude to respond
       try {
         const response = await getAnthropic().messages.create({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 800,
-          system: SYSTEM_PROMPT,
+          system: withLanguage(SYSTEM_PROMPT, language),
           messages: [
             {
               role: 'user',

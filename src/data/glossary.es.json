@@ -1,0 +1,44 @@
+{
+  "terms": {
+    "deductible": {
+      "term": "deducible",
+      "definition": "La cantidad que usted paga antes de que el seguro empiece a ayudar"
+    },
+    "copay": {
+      "term": "copago",
+      "definition": "La cantidad que usted paga cada vez que recibe su medicina"
+    },
+    "coinsurance": {
+      "term": "coseguro",
+      "definition": "El porcentaje que usted paga después de cumplir con su deducible"
+    },
+    "out-of-pocket-maximum": {
+      "term": "máximo de gastos de bolsillo",
+      "definition": "Lo máximo que usted paga en un año"
+    },
+    "formulary": {
+      "term": "formulario",
+      "definition": "La lista de medicinas que cubre su seguro"
+    },
+    "generic": {
+      "term": "genérico",
+      "definition": "Una medicina de menor costo con el mismo ingrediente activo que la de marca. Para medicamentos de trasplante, use siempre el mismo fabricante y pregunte a su equipo antes de cambiar."
+    },
+    "prior-authorization": {
+      "term": "autorización previa",
+      "definition": "Cuando el seguro exige que su doctor pida permiso antes de cubrir una medicina"
+    },
+    "specialty-pharmacy": {
+      "term": "farmacia especializada",
+      "definition": "Una farmacia de envío por correo para medicinas costosas o especiales"
+    },
+    "pap": {
+      "term": "PAP",
+      "definition": "Programa de Asistencia al Paciente: medicina gratis o de bajo costo de las compañías farmacéuticas"
+    },
+    "foundation-grant": {
+      "term": "ayuda económica de fundación",
+      "definition": "Dinero de una organización benéfica para ayudar a pagar la medicina"
+    }
+  }
+}
