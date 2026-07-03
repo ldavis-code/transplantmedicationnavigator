@@ -1,0 +1,104 @@
+[
+  {
+    "name": "American Kidney Fund (AKF)",
+    "url": "https://www.kidneyfund.org/",
+    "description": "Da dinero para ayudar a los pacientes de diálisis y de trasplante a pagar su tratamiento si califican.",
+    "category": "Foundation"
+  },
+  {
+    "name": "American Transplant Foundation",
+    "url": "https://www.americantransplantfoundation.org/",
+    "description": "Da ayudas económicas para que los pacientes paguen sus medicinas. También conecta a pacientes de trasplante con mentores que han pasado por lo mismo.",
+    "category": "Foundation"
+  },
+  {
+    "name": "Cost Plus Drugs",
+    "url": "https://costplusdrugs.com/",
+    "description": "Una farmacia en línea de bajo costo con precios claros y bajos. Sirve para comparar los precios en efectivo con lo que paga con su seguro.",
+    "category": "Low-Cost Pharmacy"
+  },
+  {
+    "name": "Donate Life America",
+    "url": "https://donatelife.net/",
+    "description": "Conecta a los pacientes de trasplante con recursos locales, eventos y grupos de apoyo en todo Estados Unidos.",
+    "category": "Support Group"
+  },
+  {
+    "name": "Drugs.com",
+    "url": "https://www.drugs.com/",
+    "description": "Busque medicinas, averigüe quién las fabrica y conéctese con sus programas de ayuda.",
+    "category": "Medication Database"
+  },
+  {
+    "name": "GoodRx",
+    "url": "https://www.goodrx.com/",
+    "description": "Cupones de descuento gratis para medicamentos. Compare precios en diferentes farmacias y obtenga cupones al instante.",
+    "category": "Discount Program"
+  },
+  {
+    "name": "HealthWell Foundation",
+    "url": "https://www.healthwellfoundation.org/",
+    "description": "Ayuda a pacientes que no tienen suficiente cobertura de seguro. Paga copagos, costos de viaje y primas de seguro.",
+    "category": "Foundation"
+  },
+  {
+    "name": "Heartfelt Help Foundation",
+    "url": "https://www.heartfelthelpfoundation.com/",
+    "description": "Ayuda a pacientes de trasplante de corazón en el norte de California que necesitan ayuda económica. Paga vivienda cerca del hospital y otros costos que el seguro no cubre.",
+    "category": "Foundation"
+  },
+  {
+    "name": "Medicare.gov",
+    "url": "https://www.medicare.gov",
+    "description": "El sitio oficial del gobierno de EE. UU. para Medicare. Compare planes de medicamentos y vea si califica para recibir ayuda.",
+    "category": "Government"
+  },
+  {
+    "name": "National Alliance for Caregiving",
+    "url": "https://www.caregiving.org/",
+    "description": "Un grupo que ayuda a los cuidadores familiares. Ofrece consejos, información y apoyo para quienes cuidan a sus seres queridos.",
+    "category": "Caregiver Support"
+  },
+  {
+    "name": "NORD RareCare",
+    "url": "https://rarediseases.org/",
+    "description": "Ayuda a pagar medicamentos que salvan vidas, primas de seguro y copagos. También ayuda con pruebas para enfermedades raras.",
+    "category": "Foundation"
+  },
+  {
+    "name": "TotalAssist by Patient Advocate Foundation (formerly PAF + PAN Foundation)",
+    "url": "https://totalassist.org/",
+    "description": "Lanzado el 1 de julio de 2026 tras la fusión de PAF y PAN Foundation, TotalAssist es el programa benéfico de asistencia al paciente más grande del país. Casi 150 fondos por enfermedad y de equidad en salud ayudan a pagar copagos, coseguros, deducibles, primas de seguro y costos de tratamiento, sin listas de espera, con decisiones de elegibilidad al instante en la mayoría de los casos y con reembolso de gastos de los últimos seis meses. Solicite en portal.totalassist.org o llame al 866-512-3861.",
+    "category": "Foundation"
+  },
+  {
+    "name": "PAN Foundation FundFinder",
+    "url": "https://fundfinder.panfoundation.org/",
+    "description": "Una lista de más de 150 grupos de pacientes que ofrecen líneas de ayuda, apoyo y educación para enfermedades específicas.",
+    "category": "Foundation Directory"
+  },
+  {
+    "name": "Accessia Health (formerly Patient Services Inc)",
+    "url": "https://www.accessiahealth.org/",
+    "description": "Ayuda a pagar medicamentos y costos de seguro. También le ayuda a entender su seguro y ofrece asesoría legal.",
+    "category": "Foundation"
+  },
+  {
+    "name": "PhRMA's Medicine Assistance Tool (MAT)",
+    "url": "https://phrma.org/resources/patient-assistance",
+    "description": "Los recursos de asistencia al paciente de PhRMA. No es un programa en sí, pero le ayuda a encontrar programas de asistencia al paciente de las compañías farmacéuticas.",
+    "category": "Search Engine"
+  },
+  {
+    "name": "Rx Outreach",
+    "url": "https://rxoutreach.org/",
+    "description": "Una farmacia sin fines de lucro que vende medicinas a precios bajos. Ha ahorrado mucho dinero a los pacientes.",
+    "category": "Low-Cost Pharmacy"
+  },
+  {
+    "name": "TRIO (Transplant Recipients International Organization)",
+    "url": "https://www.trioweb.org/",
+    "description": "El grupo más grande para pacientes de trasplante, donantes y sus familias. Ofrece capítulos locales, mentoría y recursos educativos.",
+    "category": "Support Group"
+  }
+]

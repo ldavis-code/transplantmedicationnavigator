@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   ShieldAlert,
   Download,
@@ -24,11 +25,13 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
+import LanguageToggle from '../components/LanguageToggle.jsx';
 
 export default function Appeals() {
+  const { t } = useTranslation();
   useMetaTags({
-    title: 'Got Denied? Appeal Help for Transplant Patients | TransplantMedicationNavigator',
-    description: 'Learn how to appeal insurance denials for transplant medications. Includes step therapy exceptions, generic vs brand guidance, and medical necessity letter templates.',
+    title: t('appeals.meta.title'),
+    description: t('appeals.meta.description'),
     keywords: 'insurance appeal, step therapy, prior authorization, transplant medication denial, medical necessity letter'
   });
 
@@ -86,6 +89,7 @@ export default function Appeals() {
       day: 'numeric'
     });
 
+    // Letter body intentionally not localized — goes to US insurers/providers in English.
     const letter = `Date: ${date}
 
 Dear Dr. ${doctorName || "[Doctor's Name]"},
@@ -128,6 +132,7 @@ Contact: [Your Phone Number]
 
   const generateSpAppealLetter = () => {
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    // Letter body intentionally not localized — goes to US insurers/providers in English.
     const text = `Date: ${date}\n\nTo Whom It May Concern:\n\nI am writing to appeal the coverage denial or specialty pharmacy requirement for my medication, ${spAppealDrug}. \n\nPatient Name: ${spAppealName}\nMedication: ${spAppealDrug}\n\nReason for Appeal: ${spAppealReason}\n\nThis medication is medically necessary for my transplant care. The current requirement creates a significant barrier to my adherence and health outcomes because ${
       spAppealReason === 'Financial Hardship'
         ? 'the cost at the required specialty pharmacy creates an undue financial burden.'
@@ -256,7 +261,7 @@ Contact: [Your Phone Number]
             <div className={`mt-3 p-3 rounded-lg ${isCompleted ? 'bg-emerald-100' : 'bg-amber-50'}`}>
               <div className="flex items-center gap-2 mb-1">
                 <Lightbulb size={16} className={isCompleted ? 'text-emerald-600' : 'text-amber-600'} aria-hidden="true" />
-                <span className={`font-semibold text-sm ${isCompleted ? 'text-emerald-700' : 'text-amber-700'}`}>Tip:</span>
+                <span className={`font-semibold text-sm ${isCompleted ? 'text-emerald-700' : 'text-amber-700'}`}>{t('appeals.tracker.tipLabel')}</span>
               </div>
               <p className={`text-sm ${isCompleted ? 'text-emerald-700' : 'text-amber-700'}`}>{tips}</p>
             </div>
@@ -292,7 +297,7 @@ Contact: [Your Phone Number]
       {/* Back link */}
       <Link to="/education" className="inline-flex items-center gap-2 text-slate-600 hover:text-emerald-600 mb-6 transition-colors">
         <ArrowLeft size={16} aria-hidden="true" />
-        Back to Education & Resources
+        {t('appeals.header.back')}
       </Link>
 
       {/* Page Header - Color coded hero */}
@@ -302,27 +307,31 @@ Contact: [Your Phone Number]
             <ShieldAlert size={32} />
           </div>
           <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">Got Denied? Don't Give Up.</h1>
-            <p className="text-emerald-700 font-semibold text-lg mt-1">You can fight back, and WIN!</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">{t('appeals.header.title')}</h1>
+            <p className="text-emerald-700 font-semibold text-lg mt-1">{t('appeals.header.tagline')}</p>
           </div>
         </div>
         <p className="text-lg text-slate-700 leading-relaxed">
-          Insurance says "no" to almost everyone at some point. The good news? <strong>Many people win when they appeal.</strong> This interactive guide shows you how, step by step.
+          <Trans i18nKey="appeals.header.intro" />
         </p>
+
+        <div className="mt-6 flex justify-start">
+          <LanguageToggle />
+        </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-4 mt-6">
           <div className="bg-white rounded-lg p-4 text-center border border-emerald-200">
-            <div className="text-2xl font-bold text-emerald-600">50%+</div>
-            <div className="text-sm text-slate-600">Appeals are won</div>
+            <div className="text-2xl font-bold text-emerald-600">{t('appeals.header.stats.winRate')}</div>
+            <div className="text-sm text-slate-600">{t('appeals.header.stats.winRateLabel')}</div>
           </div>
           <div className="bg-white rounded-lg p-4 text-center border border-emerald-200">
-            <div className="text-2xl font-bold text-emerald-600">30-60</div>
-            <div className="text-sm text-slate-600">Days to appeal</div>
+            <div className="text-2xl font-bold text-emerald-600">{t('appeals.header.stats.days')}</div>
+            <div className="text-sm text-slate-600">{t('appeals.header.stats.daysLabel')}</div>
           </div>
           <div className="bg-white rounded-lg p-4 text-center border border-emerald-200">
-            <div className="text-2xl font-bold text-emerald-600">Free</div>
-            <div className="text-sm text-slate-600">To file an appeal</div>
+            <div className="text-2xl font-bold text-emerald-600">{t('appeals.header.stats.free')}</div>
+            <div className="text-sm text-slate-600">{t('appeals.header.stats.freeLabel')}</div>
           </div>
         </div>
 
@@ -334,8 +343,8 @@ Contact: [Your Phone Number]
                 <FileText size={24} className="text-emerald-600" aria-hidden="true" />
               </div>
               <div>
-                <p className="font-bold text-slate-800">Free Appeal Guide</p>
-                <p className="text-sm text-slate-600">Print-ready guide with checklists & sample letters</p>
+                <p className="font-bold text-slate-800">{t('appeals.header.guideTitle')}</p>
+                <p className="text-sm text-slate-600">{t('appeals.header.guideSubtitle')}</p>
               </div>
             </div>
             <a
@@ -345,17 +354,17 @@ Contact: [Your Phone Number]
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg whitespace-nowrap"
             >
               <Download size={18} aria-hidden="true" />
-              Download Free Guide
+              {t('appeals.header.guideDownload')}
             </a>
           </div>
         </div>
       </header>
 
       {/* Interactive Navigation */}
-      <nav className="bg-white rounded-xl p-5 mb-8 border-2 border-slate-200 shadow-sm" aria-label="Page sections">
+      <nav className="bg-white rounded-xl p-5 mb-8 border-2 border-slate-200 shadow-sm" aria-label={t('appeals.nav.ariaLabel')}>
         <p className="font-bold text-slate-800 mb-3 flex items-center gap-2">
           <ClipboardList size={20} className="text-slate-600" aria-hidden="true" />
-          Click any section to explore:
+          {t('appeals.nav.prompt')}
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <button
@@ -363,28 +372,28 @@ Contact: [Your Phone Number]
             className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border-2 border-red-200 text-red-800 font-semibold hover:bg-red-100 transition text-sm"
           >
             <XCircle size={18} aria-hidden="true" />
-            Why Denied?
+            {t('appeals.nav.whyDenied')}
           </button>
           <button
             onClick={() => { setExpandedSections(prev => ({...prev, stepTherapy: true})); document.getElementById('step-therapy')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="flex items-center gap-2 p-3 rounded-lg bg-amber-50 border-2 border-amber-200 text-amber-800 font-semibold hover:bg-amber-100 transition text-sm"
           >
             <AlertTriangle size={18} aria-hidden="true" />
-            Step Therapy
+            {t('appeals.nav.stepTherapy')}
           </button>
           <button
             onClick={() => { setExpandedSections(prev => ({...prev, generics: true})); document.getElementById('generics')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="flex items-center gap-2 p-3 rounded-lg bg-blue-50 border-2 border-blue-200 text-blue-800 font-semibold hover:bg-blue-100 transition text-sm"
           >
             <Pill size={18} aria-hidden="true" />
-            Generic vs Brand
+            {t('appeals.nav.generics')}
           </button>
           <button
             onClick={() => { setExpandedSections(prev => ({...prev, howToAppeal: true})); document.getElementById('how-to-appeal')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="flex items-center gap-2 p-3 rounded-lg bg-emerald-50 border-2 border-emerald-200 text-emerald-800 font-semibold hover:bg-emerald-100 transition text-sm"
           >
             <CheckCircle size={18} aria-hidden="true" />
-            How to Appeal
+            {t('appeals.nav.howToAppeal')}
           </button>
         </div>
       </nav>
@@ -392,51 +401,51 @@ Contact: [Your Phone Number]
       {/* Why Medications Get Denied - RED */}
       <SectionHeader
         id="why-denied"
-        title="Why Insurance Says No"
+        title={t('appeals.whyDenied.title')}
         icon={XCircle}
         color="red"
         isExpanded={expandedSections.whyDenied}
         onToggle={() => toggleSection('whyDenied')}
       >
         <p className="text-slate-700 mb-5 text-lg">
-          Your denial letter tells you why they said no. Here are the most common reasons:
+          {t('appeals.whyDenied.intro')}
         </p>
         <div className="grid md:grid-cols-2 gap-4">
           <DenialReasonCard
             icon={Clock}
-            title="Prior Auth Needed"
-            description="Your doctor needs to ask permission first before the insurance will cover it."
+            title={t('appeals.whyDenied.reasons.priorAuth.title')}
+            description={t('appeals.whyDenied.reasons.priorAuth.description')}
             color="red"
           />
           <DenialReasonCard
             icon={ClipboardList}
-            title="Not on the List"
-            description="Your drug isn't on their approved list (called a formulary)."
+            title={t('appeals.whyDenied.reasons.notOnList.title')}
+            description={t('appeals.whyDenied.reasons.notOnList.description')}
             color="orange"
           />
           <DenialReasonCard
             icon={AlertTriangle}
-            title="Try Something Else First"
-            description="They want you to try a cheaper drug first (step therapy)."
+            title={t('appeals.whyDenied.reasons.stepTherapy.title')}
+            description={t('appeals.whyDenied.reasons.stepTherapy.description')}
             color="yellow"
           />
           <DenialReasonCard
             icon={Pill}
-            title="Quantity Limits"
-            description="They say you're getting too much of this drug."
+            title={t('appeals.whyDenied.reasons.quantityLimits.title')}
+            description={t('appeals.whyDenied.reasons.quantityLimits.description')}
             color="purple"
           />
           <DenialReasonCard
             icon={Pill}
-            title="Use the Generic"
-            description="They want you to use a cheaper generic version."
+            title={t('appeals.whyDenied.reasons.generic.title')}
+            description={t('appeals.whyDenied.reasons.generic.description')}
             color="blue"
           />
         </div>
         <div className="mt-5 p-4 bg-white rounded-lg border-2 border-red-200">
           <p className="text-red-800 font-semibold flex items-center gap-2">
             <Lightbulb size={18} className="text-red-600" aria-hidden="true" />
-            Remember: A denial is NOT the final answer. It's just the first "no", and you can fight it!
+            {t('appeals.whyDenied.remember')}
           </p>
         </div>
       </SectionHeader>
@@ -444,14 +453,14 @@ Contact: [Your Phone Number]
       {/* Step Therapy Section - AMBER */}
       <SectionHeader
         id="step-therapy"
-        title='Step Therapy: "Try This First"'
+        title={t('appeals.stepTherapy.title')}
         icon={AlertTriangle}
         color="amber"
         isExpanded={expandedSections.stepTherapy}
         onToggle={() => toggleSection('stepTherapy')}
       >
         <p className="text-slate-700 mb-5 text-lg">
-          <strong>Step therapy</strong> means your insurance wants you to try a cheaper drug before they'll pay for the one your doctor picked. Some people call this "fail first."
+          <Trans i18nKey="appeals.stepTherapy.intro" />
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -459,15 +468,10 @@ Contact: [Your Phone Number]
           <div className="bg-white rounded-lg p-5 border-2 border-red-200">
             <h3 className="text-lg font-bold text-red-800 mb-3 flex items-center gap-2">
               <XCircle size={20} className="text-red-600" aria-hidden="true" />
-              Why This Can Be Risky
+              {t('appeals.stepTherapy.risky.title')}
             </h3>
             <ul className="space-y-2">
-              {[
-                "Anti-rejection drugs need exact blood levels. Small changes matter a lot.",
-                "Trying the wrong drug could hurt your transplant.",
-                "Your transplant team picked your drug for good reasons.",
-                "Switching means more blood tests and doctor visits."
-              ].map((item, i) => (
+              {t('appeals.stepTherapy.risky.items', { returnObjects: true }).map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-slate-700">
                   <span className="text-red-500 mt-1">•</span>
                   {item}
@@ -480,15 +484,10 @@ Contact: [Your Phone Number]
           <div className="bg-white rounded-lg p-5 border-2 border-emerald-200">
             <h3 className="text-lg font-bold text-emerald-800 mb-3 flex items-center gap-2">
               <CheckCircle size={20} className="text-emerald-600" aria-hidden="true" />
-              What You Can Do
+              {t('appeals.stepTherapy.canDo.title')}
             </h3>
             <ul className="space-y-2">
-              {[
-                "You can ask them to skip step therapy.",
-                "Transplant drugs often get approved when your doctor explains why.",
-                "A letter from your transplant doctor helps a lot.",
-                "Many states have laws that protect patients."
-              ].map((item, i) => (
+              {t('appeals.stepTherapy.canDo.items', { returnObjects: true }).map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-slate-700">
                   <span className="text-emerald-500 mt-1">✓</span>
                   {item}
@@ -501,7 +500,7 @@ Contact: [Your Phone Number]
         <div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-300">
           <p className="text-amber-900 font-semibold flex items-center gap-2">
             <Lightbulb size={18} className="text-amber-700" aria-hidden="true" />
-            Pro Tip: Ask your doctor about "step therapy exception", they can request this on your behalf!
+            {t('appeals.stepTherapy.proTip')}
           </p>
         </div>
       </SectionHeader>
@@ -509,7 +508,7 @@ Contact: [Your Phone Number]
       {/* Generics vs Brand Section - BLUE */}
       <SectionHeader
         id="generics"
-        title="Generic vs. Brand Name Drugs"
+        title={t('appeals.generics.title')}
         icon={Pill}
         color="blue"
         isExpanded={expandedSections.generics}
@@ -518,37 +517,31 @@ Contact: [Your Phone Number]
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* The Basics */}
           <div className="bg-white rounded-lg p-5 border-2 border-blue-200">
-            <h3 className="text-lg font-bold text-blue-800 mb-3">The Basics</h3>
+            <h3 className="text-lg font-bold text-blue-800 mb-3">{t('appeals.generics.basics.title')}</h3>
             <ul className="space-y-2 text-slate-700">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-500 mt-1">•</span>
-                Generic drugs have the same main ingredient as brand-name drugs.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-500 mt-1">•</span>
-                The FDA says they work the same way.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-500 mt-1">•</span>
-                For most drugs, generics are fine.
-              </li>
+              {t('appeals.generics.basics.items', { returnObjects: true }).map((item, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-1">•</span>
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Why Transplant is Different */}
           <div className="bg-white rounded-lg p-5 border-2 border-purple-200">
-            <h3 className="text-lg font-bold text-purple-800 mb-3">Why Transplant Drugs Are Different</h3>
+            <h3 className="text-lg font-bold text-purple-800 mb-3">{t('appeals.generics.different.title')}</h3>
             <p className="text-slate-700 mb-3">
-              Anti-rejection drugs are special. Even tiny changes can cause problems:
+              {t('appeals.generics.different.intro')}
             </p>
             <ul className="space-y-2 text-slate-700">
               <li className="flex items-center gap-2">
                 <span className="text-red-500">↓</span>
-                <strong>Too little:</strong> Your body might reject the transplant
+                <Trans i18nKey="appeals.generics.different.tooLittle" />
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-red-500">↑</span>
-                <strong>Too much:</strong> Side effects and toxicity
+                <Trans i18nKey="appeals.generics.different.tooMuch" />
               </li>
             </ul>
           </div>
@@ -556,14 +549,9 @@ Contact: [Your Phone Number]
 
         {/* When You Might Need Brand Name */}
         <div className="bg-blue-100 rounded-lg p-5 border-2 border-blue-300">
-          <h3 className="text-lg font-bold text-blue-900 mb-3">When You Might Need Brand Name</h3>
+          <h3 className="text-lg font-bold text-blue-900 mb-3">{t('appeals.generics.brandNeed.title')}</h3>
           <div className="grid md:grid-cols-2 gap-3">
-            {[
-              "Your drug levels have been steady on this brand",
-              "You had problems when you switched before",
-              "Your transplant center requires brand-name",
-              "Your body has trouble absorbing the drug"
-            ].map((item, i) => (
+            {t('appeals.generics.brandNeed.items', { returnObjects: true }).map((item, i) => (
               <div key={i} className="bg-white p-3 rounded-lg flex items-center gap-2">
                 <CheckCircle size={18} className="text-blue-600 flex-shrink-0" aria-hidden="true" />
                 <span className="text-slate-700">{item}</span>
@@ -576,7 +564,7 @@ Contact: [Your Phone Number]
       {/* How to Appeal Section - EMERALD */}
       <SectionHeader
         id="how-to-appeal"
-        title="How to Appeal: Step by Step"
+        title={t('appeals.howToAppeal.title')}
         icon={CheckCircle}
         color="emerald"
         isExpanded={expandedSections.howToAppeal}
@@ -585,8 +573,8 @@ Contact: [Your Phone Number]
         {/* Progress tracker */}
         <div className="mb-6 bg-white rounded-lg p-4 border-2 border-emerald-200">
           <div className="flex justify-between items-center mb-2">
-            <span className="font-bold text-slate-700">Your Progress</span>
-            <span className="text-emerald-600 font-bold">{completedCount} of {totalSteps} steps</span>
+            <span className="font-bold text-slate-700">{t('appeals.tracker.progressLabel')}</span>
+            <span className="text-emerald-600 font-bold">{t('appeals.tracker.progress', { completed: completedCount, total: totalSteps })}</span>
           </div>
           <div className="w-full bg-slate-100 rounded-full h-4">
             <div
@@ -595,66 +583,29 @@ Contact: [Your Phone Number]
             ></div>
           </div>
           <p className="text-sm text-slate-600 mt-2 italic">
-            Click each step when you've completed it to track your progress!
+            {t('appeals.tracker.instruction')}
           </p>
         </div>
 
         <div className="space-y-4">
-          <AppealStep
-            number={1}
-            title="Get It in Writing"
-            description="Ask for a letter that says exactly why they said no. You need this to know what to say in your appeal."
-            tips="Call the number on your insurance card and ask for a 'written denial letter' or 'explanation of benefits.'"
-            isCompleted={completedSteps[1]}
-            onToggle={() => toggleStep(1)}
-          />
-          <AppealStep
-            number={2}
-            title="Watch the Clock"
-            description="You usually have 30 to 60 days to appeal. Mark the date on your calendar. Don't miss it."
-            tips="Set a phone reminder 2 weeks before your deadline!"
-            isCompleted={completedSteps[2]}
-            onToggle={() => toggleStep(2)}
-          />
-          <AppealStep
-            number={3}
-            title="Get Your Papers Together"
-            description="Ask your transplant team for: a letter from your doctor, your transplant records, recent lab results, and notes about why other drugs won't work."
-            tips="Use the letter builder below to help your doctor write a support letter!"
-            isCompleted={completedSteps[3]}
-            onToggle={() => toggleStep(3)}
-          />
-          <AppealStep
-            number={4}
-            title="Send Your Appeal"
-            description="Send everything together. Keep copies of everything you send."
-            tips="Send by fax or certified mail so you have proof it was received."
-            isCompleted={completedSteps[4]}
-            onToggle={() => toggleStep(4)}
-          />
-          <AppealStep
-            number={5}
-            title="Ask for a Fast Review If You Need It"
-            description="If you're going to run out of your medicine soon, ask for an expedited (fast) review. For transplant drugs, this almost always counts as urgent."
-            tips="Say 'I need an expedited appeal because running out of my transplant medication is life-threatening.'"
-            isCompleted={completedSteps[5]}
-            onToggle={() => toggleStep(5)}
-          />
-          <AppealStep
-            number={6}
-            title="Know What Comes Next"
-            description="If they say no again, you can ask for an external review by someone outside the company. Your state insurance office can also help."
-            tips="Don't give up after the first appeal denial, external reviews often overturn decisions!"
-            isCompleted={completedSteps[6]}
-            onToggle={() => toggleStep(6)}
-          />
+          {t('appeals.tracker.steps', { returnObjects: true }).map((step, i) => (
+            <AppealStep
+              key={i + 1}
+              number={i + 1}
+              title={step.title}
+              description={step.description}
+              tips={step.tips}
+              isCompleted={completedSteps[i + 1]}
+              onToggle={() => toggleStep(i + 1)}
+            />
+          ))}
         </div>
 
         {completedCount === totalSteps && (
           <div className="mt-6 p-5 bg-emerald-100 rounded-lg border-2 border-emerald-300 text-center">
             <CheckCircle size={40} className="text-emerald-600 mx-auto mb-2" aria-hidden="true" />
-            <p className="text-emerald-800 font-bold text-xl">Congratulations! You've completed all the steps!</p>
-            <p className="text-emerald-700 mt-2">You're well on your way to winning your appeal. Stay strong!</p>
+            <p className="text-emerald-800 font-bold text-xl">{t('appeals.tracker.congratsTitle')}</p>
+            <p className="text-emerald-700 mt-2">{t('appeals.tracker.congratsText')}</p>
           </div>
         )}
       </SectionHeader>
@@ -667,8 +618,8 @@ Contact: [Your Phone Number]
               <MessageSquare size={24} aria-hidden="true" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-purple-900">Write a Letter to Your Doctor</h2>
-              <p className="text-purple-700">Ask your doctor to help with your appeal</p>
+              <h2 className="text-xl font-bold text-purple-900">{t('appeals.letter.title')}</h2>
+              <p className="text-purple-700">{t('appeals.letter.subtitle')}</p>
             </div>
           </div>
         </div>
@@ -679,10 +630,10 @@ Contact: [Your Phone Number]
               <Heart size={24} className="text-purple-600 flex-shrink-0 mt-1" aria-hidden="true" />
               <div>
                 <p className="text-slate-700 mb-2">
-                  <strong>Why write to your doctor?</strong> Your doctor has the medical knowledge to explain why you need your specific medication. A letter of medical necessity from your doctor is often the key to winning an appeal.
+                  <Trans i18nKey="appeals.letter.why" />
                 </p>
                 <p className="text-slate-600 text-sm">
-                  <strong>Note:</strong> Your doctor already has access to a detailed medical necessity letter template. This letter is for <em>you</em> to request their help and provide them with the information they need.
+                  <Trans i18nKey="appeals.letter.note" components={{ em: <em /> }} />
                 </p>
               </div>
             </div>
@@ -692,12 +643,12 @@ Contact: [Your Phone Number]
             <div className="grid md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="patient-name" className="block text-base font-bold text-slate-800 mb-2">
-                  Your Name
+                  {t('appeals.letter.yourName')}
                 </label>
                 <input
                   id="patient-name"
                   type="text"
-                  placeholder="Your full name"
+                  placeholder={t('appeals.letter.yourNamePlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={patientName}
                   onChange={(e) => setPatientName(e.target.value)}
@@ -705,12 +656,12 @@ Contact: [Your Phone Number]
               </div>
               <div>
                 <label htmlFor="doctor-name" className="block text-base font-bold text-slate-800 mb-2">
-                  Doctor's Name
+                  {t('appeals.letter.doctorName')}
                 </label>
                 <input
                   id="doctor-name"
                   type="text"
-                  placeholder="e.g., Smith"
+                  placeholder={t('appeals.letter.doctorNamePlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={doctorName}
                   onChange={(e) => setDoctorName(e.target.value)}
@@ -721,12 +672,12 @@ Contact: [Your Phone Number]
             <div className="grid md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="medication-name" className="block text-base font-bold text-slate-800 mb-2">
-                  Medication Name
+                  {t('appeals.letter.medicationName')}
                 </label>
                 <input
                   id="medication-name"
                   type="text"
-                  placeholder="e.g., Tacrolimus, Prograf"
+                  placeholder={t('appeals.letter.medicationNamePlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={medicationName}
                   onChange={(e) => setMedicationName(e.target.value)}
@@ -734,12 +685,12 @@ Contact: [Your Phone Number]
               </div>
               <div>
                 <label htmlFor="transplant-type" className="block text-base font-bold text-slate-800 mb-2">
-                  Transplant Type
+                  {t('appeals.letter.transplantType')}
                 </label>
                 <input
                   id="transplant-type"
                   type="text"
-                  placeholder="e.g., Kidney, Liver, Heart"
+                  placeholder={t('appeals.letter.transplantTypePlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={transplantType}
                   onChange={(e) => setTransplantType(e.target.value)}
@@ -750,12 +701,12 @@ Contact: [Your Phone Number]
             <div className="grid md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="transplant-date" className="block text-base font-bold text-slate-800 mb-2">
-                  Transplant Date <span className="font-normal text-slate-500">(optional)</span>
+                  {t('appeals.letter.transplantDate')}<span className="font-normal text-slate-500">{t('appeals.letter.optional')}</span>
                 </label>
                 <input
                   id="transplant-date"
                   type="text"
-                  placeholder="e.g., January 2023"
+                  placeholder={t('appeals.letter.transplantDatePlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={transplantDate}
                   onChange={(e) => setTransplantDate(e.target.value)}
@@ -763,12 +714,12 @@ Contact: [Your Phone Number]
               </div>
               <div>
                 <label htmlFor="denial-reason" className="block text-base font-bold text-slate-800 mb-2">
-                  Denial Reason <span className="font-normal text-slate-500">(if known)</span>
+                  {t('appeals.letter.denialReason')}<span className="font-normal text-slate-500">{t('appeals.letter.ifKnown')}</span>
                 </label>
                 <input
                   id="denial-reason"
                   type="text"
-                  placeholder="e.g., Not on formulary, Step therapy required"
+                  placeholder={t('appeals.letter.denialReasonPlaceholder')}
                   className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                   value={denialReason}
                   onChange={(e) => setDenialReason(e.target.value)}
@@ -778,12 +729,12 @@ Contact: [Your Phone Number]
 
             <div>
               <label htmlFor="additional-info" className="block text-base font-bold text-slate-800 mb-2">
-                Additional Information <span className="font-normal text-slate-500">(optional)</span>
+                {t('appeals.letter.additionalInfo')}<span className="font-normal text-slate-500">{t('appeals.letter.optional')}</span>
               </label>
               <textarea
                 id="additional-info"
                 rows={3}
-                placeholder="Any other details that might help your doctor (e.g., previous drug reactions, why you need this specific medication, etc.)"
+                placeholder={t('appeals.letter.additionalInfoPlaceholder')}
                 className="w-full p-3 text-base rounded-lg border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
                 value={additionalInfo}
                 onChange={(e) => setAdditionalInfo(e.target.value)}
@@ -795,7 +746,7 @@ Contact: [Your Phone Number]
               className="bg-purple-600 hover:bg-purple-700 text-white text-base font-bold py-3 px-6 rounded-lg transition flex items-center gap-2 shadow-md hover:shadow-lg"
             >
               <FileText size={20} aria-hidden="true" />
-              Generate My Letter
+              {t('appeals.letter.generate')}
             </button>
 
             {generatedLetter && (
@@ -803,14 +754,14 @@ Contact: [Your Phone Number]
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-lg font-bold text-purple-800 flex items-center gap-2">
                     <Send size={20} aria-hidden="true" />
-                    Your Letter to Dr. {doctorName || "[Doctor's Name]"}
+                    {t('appeals.letter.previewTitle')}{doctorName || t('appeals.letter.doctorFallback')}
                   </h3>
                   <button
                     onClick={copyToClipboard}
                     className="flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg text-base font-bold transition"
                   >
                     {copied ? <Check size={18} className="text-green-600" aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-                    {copied ? 'Copied!' : 'Copy Text'}
+                    {copied ? t('appeals.letter.copied') : t('appeals.letter.copyText')}
                   </button>
                 </div>
                 <pre className="whitespace-pre-wrap font-serif text-base text-slate-800 leading-relaxed bg-purple-50 p-5 rounded-lg border-l-4 border-purple-400">
@@ -819,7 +770,7 @@ Contact: [Your Phone Number]
                 <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
                   <p className="text-amber-800 text-sm flex items-center gap-2">
                     <Lightbulb size={16} className="flex-shrink-0" aria-hidden="true" />
-                    <span><strong>Next step:</strong> Print this letter or email it to your doctor along with a copy of your denial letter.</span>
+                    <span><Trans i18nKey="appeals.letter.nextStep" /></span>
                   </p>
                 </div>
               </div>
@@ -836,8 +787,8 @@ Contact: [Your Phone Number]
               <Download size={24} aria-hidden="true" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-emerald-900">Free Downloadable Resources</h2>
-              <p className="text-emerald-700">Print these guides to help with your appeal</p>
+              <h2 className="text-xl font-bold text-emerald-900">{t('appeals.resources.title')}</h2>
+              <p className="text-emerald-700">{t('appeals.resources.subtitle')}</p>
             </div>
           </div>
         </div>
@@ -848,24 +799,18 @@ Contact: [Your Phone Number]
             <div className="bg-white rounded-lg p-5 border-2 border-emerald-200 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
                 <FileText size={24} className="text-emerald-600" aria-hidden="true" />
-                <h3 className="text-lg font-bold text-slate-800">Complete Appeal Guide</h3>
+                <h3 className="text-lg font-bold text-slate-800">{t('appeals.resources.appealGuide.title')}</h3>
               </div>
               <p className="text-slate-600 mb-4 text-sm">
-                Step-by-step instructions, checklists, sample letters, and tips for winning your appeal. Written in plain language.
+                {t('appeals.resources.appealGuide.description')}
               </p>
               <ul className="text-sm text-slate-600 mb-4 space-y-1">
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
-                  Printable checklists
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
-                  Sample appeal letter template
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-emerald-500" aria-hidden="true" />
-                  Phone scripts for calling insurance
-                </li>
+                {t('appeals.resources.appealGuide.items', { returnObjects: true }).map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <Check size={14} className="text-emerald-500" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
               </ul>
               <a
                 href="/appeal-guide.html"
@@ -874,7 +819,7 @@ Contact: [Your Phone Number]
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
               >
                 <Download size={18} aria-hidden="true" />
-                Download Appeal Guide
+                {t('appeals.resources.appealGuide.download')}
               </a>
             </div>
 
@@ -882,24 +827,18 @@ Contact: [Your Phone Number]
             <div className="bg-white rounded-lg p-5 border-2 border-purple-200 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
                 <ClipboardList size={24} className="text-purple-600" aria-hidden="true" />
-                <h3 className="text-lg font-bold text-slate-800">Doctor's Letter Template</h3>
+                <h3 className="text-lg font-bold text-slate-800">{t('appeals.resources.doctorTemplate.title')}</h3>
               </div>
               <p className="text-slate-600 mb-4 text-sm">
-                Share this with your transplant doctor. A ready-to-use medical necessity letter template they can customize for your appeal.
+                {t('appeals.resources.doctorTemplate.description')}
               </p>
               <ul className="text-sm text-slate-600 mb-4 space-y-1">
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-purple-500" aria-hidden="true" />
-                  Professional medical format
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-purple-500" aria-hidden="true" />
-                  Clinical guideline references
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={14} className="text-purple-500" aria-hidden="true" />
-                  Fill-in-the-blank sections
-                </li>
+                {t('appeals.resources.doctorTemplate.items', { returnObjects: true }).map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <Check size={14} className="text-purple-500" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
               </ul>
               <a
                 href="/medical-necessity-letter-template.html"
@@ -908,7 +847,7 @@ Contact: [Your Phone Number]
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
               >
                 <Download size={18} aria-hidden="true" />
-                Download Free Template
+                {t('appeals.resources.doctorTemplate.download')}
               </a>
             </div>
           </div>
@@ -923,50 +862,50 @@ Contact: [Your Phone Number]
               <Stethoscope size={24} aria-hidden="true" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-indigo-900">Specialty Pharmacy Guide</h2>
-              <p className="text-indigo-700">Know your rights and choices when your insurance makes you use a certain pharmacy.</p>
+              <h2 className="text-xl font-bold text-indigo-900">{t('appeals.spGuide.title')}</h2>
+              <p className="text-indigo-700">{t('appeals.spGuide.subtitle')}</p>
             </div>
           </div>
         </div>
 
         <div className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50">
           <section className="bg-white p-6 rounded-xl border border-indigo-100 mb-8" aria-labelledby="sp-appeal-builder">
-            <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="sp-appeal-builder" className="text-xl font-bold text-indigo-900">Specialty Pharmacy Appeal Letter Builder</h3></div>
-            <p className="text-sm text-indigo-800 mb-6">Fill in your details below to make a letter you can copy and send to your insurance company.</p>
+            <div className="flex items-center gap-2 mb-4"><FileText className="text-indigo-600" size={24} aria-hidden="true" /><h3 id="sp-appeal-builder" className="text-xl font-bold text-indigo-900">{t('appeals.spGuide.builder.title')}</h3></div>
+            <p className="text-sm text-indigo-800 mb-6">{t('appeals.spGuide.builder.intro')}</p>
             <div className="grid md:grid-cols-3 gap-4 mb-4">
               <div>
-                <label htmlFor="sp-appeal-name" className="block text-sm font-medium text-indigo-900 mb-1">Your Name</label>
-                <input id="sp-appeal-name" type="text" placeholder="Your Name" autoComplete="name" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealName} onChange={(e) => setSpAppealName(e.target.value)} />
+                <label htmlFor="sp-appeal-name" className="block text-sm font-medium text-indigo-900 mb-1">{t('appeals.spGuide.builder.yourName')}</label>
+                <input id="sp-appeal-name" type="text" placeholder={t('appeals.spGuide.builder.yourNamePlaceholder')} autoComplete="name" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealName} onChange={(e) => setSpAppealName(e.target.value)} />
               </div>
               <div>
-                <label htmlFor="sp-appeal-drug" className="block text-sm font-medium text-indigo-900 mb-1">Medication Name</label>
-                <input id="sp-appeal-drug" type="text" placeholder="Medication Name" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealDrug} onChange={(e) => setSpAppealDrug(e.target.value)} />
+                <label htmlFor="sp-appeal-drug" className="block text-sm font-medium text-indigo-900 mb-1">{t('appeals.spGuide.builder.medicationName')}</label>
+                <input id="sp-appeal-drug" type="text" placeholder={t('appeals.spGuide.builder.medicationNamePlaceholder')} className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400" value={spAppealDrug} onChange={(e) => setSpAppealDrug(e.target.value)} />
               </div>
               <div>
-                <label htmlFor="sp-appeal-reason" className="block text-sm font-medium text-indigo-900 mb-1">Reason for Appeal</label>
+                <label htmlFor="sp-appeal-reason" className="block text-sm font-medium text-indigo-900 mb-1">{t('appeals.spGuide.builder.reason')}</label>
                 <select id="sp-appeal-reason" className="w-full p-3 rounded border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={spAppealReason} onChange={(e) => setSpAppealReason(e.target.value)}>
-                <option value="Financial Hardship">Financial Hardship</option>
-                <option value="Access Issues">Access Issues (Timing/Delivery)</option>
-                <option value="Clinical Stability">Clinical Stability (Already stable)</option>
+                <option value="Financial Hardship">{t('appeals.spGuide.builder.reasonFinancial')}</option>
+                <option value="Access Issues">{t('appeals.spGuide.builder.reasonAccess')}</option>
+                <option value="Clinical Stability">{t('appeals.spGuide.builder.reasonClinical')}</option>
               </select>
               </div>
             </div>
-            <button onClick={generateSpAppealLetter} disabled={!spAppealName || !spAppealDrug} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Generate specialty pharmacy appeal letter">Generate Letter</button>
+            <button onClick={generateSpAppealLetter} disabled={!spAppealName || !spAppealDrug} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed" aria-label={t('appeals.spGuide.builder.generateAria')}>{t('appeals.spGuide.builder.generate')}</button>
             {spGeneratedLetter && (
               <div className="mt-6 bg-white p-4 rounded border border-indigo-200 relative fade-in">
-                <h4 className="text-xs font-bold text-slate-600 uppercase mb-2">Preview:</h4>
+                <h4 className="text-xs font-bold text-slate-600 uppercase mb-2">{t('appeals.spGuide.builder.preview')}</h4>
                 <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-slate-200 pl-4">{spGeneratedLetter}</pre>
-                <button onClick={copySpToClipboard} className="absolute top-4 right-4 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold transition" aria-label="Copy letter text to clipboard">{spCopied ? <Check size={14} className="text-green-600" aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{spCopied ? 'Copied!' : 'Copy Text'}</button>
+                <button onClick={copySpToClipboard} className="absolute top-4 right-4 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold transition" aria-label={t('appeals.spGuide.builder.copyAria')}>{spCopied ? <Check size={14} className="text-green-600" aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{spCopied ? t('appeals.letter.copied') : t('appeals.letter.copyText')}</button>
               </div>
             )}
           </section>
 
           <div className="space-y-8">
-            <h3 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-2">How to Appeal: A Step-by-Step Guide</h3>
+            <h3 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-2">{t('appeals.spGuide.howTo.title')}</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicare-appeals"><h4 id="sp-medicare-appeals" className="font-bold text-slate-800 mb-3">Medicare Appeals</h4><p className="text-xs text-slate-600 mb-3">Important: Act on time.</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.</li><li><strong>Level 1 (Second Look):</strong> File within 65 days if they say no.</li><li><strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.</li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label="Visit Official Medicare Guide (opens in new tab)">Official Medicare Guide</a></section>
-              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicaid-appeals"><h4 id="sp-medicaid-appeals" className="font-bold text-slate-800 mb-3">Medicaid Appeals</h4><p className="text-sm text-slate-700 mb-3">Each state runs its own appeals. Call your state's Medicaid office.</p></section>
-              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-private-insurance"><h4 id="sp-private-insurance" className="font-bold text-slate-800 mb-3">Private Insurance</h4><p className="text-sm text-slate-700 mb-3">You can ask your company to look again. If they still say no, you can ask for an outside review.</p></section>
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicare-appeals"><h4 id="sp-medicare-appeals" className="font-bold text-slate-800 mb-3">{t('appeals.spGuide.howTo.medicare.title')}</h4><p className="text-xs text-slate-600 mb-3">{t('appeals.spGuide.howTo.medicare.note')}</p><ol className="list-decimal pl-4 space-y-2 text-sm text-slate-700"><li><Trans i18nKey="appeals.spGuide.howTo.medicare.step1" /></li><li><Trans i18nKey="appeals.spGuide.howTo.medicare.step2" /></li><li><Trans i18nKey="appeals.spGuide.howTo.medicare.step3" /></li></ol><a href="https://www.medicare.gov/claims-appeals/how-do-i-file-an-appeal" target="_blank" rel="noreferrer" className="block mt-4 text-xs text-blue-600 font-bold uppercase tracking-wide hover:underline" aria-label={t('appeals.spGuide.howTo.medicare.linkAria')}>{t('appeals.spGuide.howTo.medicare.link')}</a></section>
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-medicaid-appeals"><h4 id="sp-medicaid-appeals" className="font-bold text-slate-800 mb-3">{t('appeals.spGuide.howTo.medicaid.title')}</h4><p className="text-sm text-slate-700 mb-3">{t('appeals.spGuide.howTo.medicaid.text')}</p></section>
+              <section className="border border-slate-200 rounded-xl p-5 bg-white" aria-labelledby="sp-private-insurance"><h4 id="sp-private-insurance" className="font-bold text-slate-800 mb-3">{t('appeals.spGuide.howTo.private.title')}</h4><p className="text-sm text-slate-700 mb-3">{t('appeals.spGuide.howTo.private.text')}</p></section>
             </div>
           </div>
         </div>
@@ -975,9 +914,9 @@ Contact: [Your Phone Number]
       {/* Encouragement Footer */}
       <footer className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200 text-center">
         <Heart size={32} className="text-purple-600 mx-auto mb-3" aria-hidden="true" />
-        <h2 className="text-xl font-bold text-slate-900 mb-2">Remember: You Are Not Alone</h2>
+        <h2 className="text-xl font-bold text-slate-900 mb-2">{t('appeals.footer.title')}</h2>
         <p className="text-slate-700 max-w-2xl mx-auto">
-          Thousands of transplant patients successfully appeal their denials every year. Your health matters, and you have every right to fight for the medications you need. Stay strong and don't give up!
+          {t('appeals.footer.text')}
         </p>
       </footer>
     </article>
