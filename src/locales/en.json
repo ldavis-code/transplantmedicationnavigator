@@ -941,5 +941,237 @@
       "stillText": "Your transplant center's social worker or financial coordinator is your best resource for personalized guidance.",
       "startQuiz": "Start My Path Quiz"
     }
+  },
+  "applicationHelp": {
+    "header": {
+      "title": "Application Education",
+      "subtitle": "Master the art of assistance applications with step-by-step guidance and insider tips.",
+      "quizPromptTitle": "Not sure which programs to apply to?",
+      "quizPromptText": "Take the My Path Quiz first to get personalized recommendations"
+    },
+    "tabs": {
+      "ariaLabel": "Application help sections",
+      "start": "Getting Started",
+      "income": "Income",
+      "steps": "Steps",
+      "checklist": "Checklist",
+      "letters": "Letters",
+      "meds": "Medications"
+    },
+    "start": {
+      "goodNews": {
+        "title": "Good News",
+        "item1": "PAPs and Foundations ask for the same information.",
+        "item2": "Gather documents once → apply to multiple programs."
+      },
+      "whatArePaps": {
+        "title": "What are Patient Assistance Programs?",
+        "p1": "Patient Assistance Programs (PAPs) are programs created by drug companies and medical supply makers to help patients access affordable medications. These programs provide prescription medications at no cost or low cost for individuals who need help affording their medications.",
+        "p2": "<strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs."
+      },
+      "cards": {
+        "pap": {
+          "title": "Patient Assistance Programs",
+          "text": "Programs for everyone who needs affordable medications. Get prescription medications at no cost or minimal fee, regardless of insurance status."
+        },
+        "copay": {
+          "title": "Copay Cards",
+          "text": "Manufacturer copay cards help reduce your out-of-pocket costs at the pharmacy.",
+          "eligibility": "<strong>Who can use copay cards:</strong> Only for insurance you get through work or buy on your own. Not for Medicare, Medicaid, or VA benefits. If you have these, look at Patient Assistance Programs instead.",
+          "imgAlt": "How to find and apply for copay cards",
+          "imgDesc": "This infographic explains how to find and apply for medication copay cards. The process has 3 main steps. First, visit the medication manufacturer's website or use our Copay Card Finder tool. Second, check eligibility requirements - most copay cards are available if you have commercial insurance and your medication costs more than $50 per month. Third, complete the online application which takes 5-10 minutes and requires your prescription information and insurance details. Most copay cards are approved instantly and can be used at your pharmacy the same day. Copay cards can reduce your out-of-pocket cost from hundreds of dollars to as little as $0-$25 per month."
+        },
+        "insurance": {
+          "title": "Help Paying for Insurance",
+          "text": "Ask the foundation to help pay what you owe to your insurance company to keep your medical or prescription coverage."
+        }
+      },
+      "compare": {
+        "bestForLabel": "Best for:",
+        "approvalTimeLabel": "Approval Time",
+        "pap": {
+          "title": "Patient Assistance Program (PAP)",
+          "subtitle": "Direct from Manufacturer",
+          "description": "Free or low-cost medications provided directly by the drug company.",
+          "bestFor": [
+            "Commercial insurance",
+            "Uninsured",
+            "Underinsured"
+          ],
+          "approvalTime": "2–4 weeks"
+        },
+        "foundation": {
+          "title": "Foundation Grant",
+          "subtitle": "Non-profit Assistance",
+          "description": "Helps with copays, premiums, deductibles, and out-of-pocket costs.",
+          "bestFor": [
+            "Medicare patients",
+            "High copay patients",
+            "Premium burden"
+          ],
+          "approvalTime": "1–3 weeks"
+        }
+      },
+      "safety": {
+        "title": "Important Safety Notice",
+        "text": "Remember: Real organizations NEVER ask for payment. If someone asks for payment or credit card details, that's a scam."
+      },
+      "reminders": {
+        "title": "Important Reminders",
+        "applyOnceTitle": "Apply Once Only",
+        "applyOnceText": "Multiple submissions to the same foundation slow down approval.",
+        "applyAnytimeTitle": "Apply Anytime",
+        "applyAnytimeText": "There is no \"season.\" Apply when cost becomes a barrier.",
+        "peopleHelpTitle": "People Want to Help",
+        "peopleHelpText": "Most PAP and foundation teams are kind and patient.",
+        "faxTitle": "Fax is Still Used",
+        "faxText": "Faxed forms go directly to a secure, dedicated team."
+      }
+    },
+    "income": {
+      "title": "Who Can Get Help",
+      "intro": "Most drug companies publish clear income guidelines. Here's what you need to know:",
+      "dontCountOut": "Don't Count Yourself Out: Many programs have much higher income limits than you might expect.",
+      "howLimitsTitle": "How Income Limits Work",
+      "howLimitsItems": [
+        "Based on Federal Poverty Level (FPL) percentages",
+        "Vary by household size",
+        "Updated annually with FPL changes"
+      ],
+      "whereTitle": "Where to Find Guidelines",
+      "whereItems": [
+        "Manufacturer's website",
+        "MAT.org search results",
+        "Call the program directly"
+      ],
+      "checkerTitle": "Quick Income Checker",
+      "checkerText": "Use these resources to check current Federal Poverty Level guidelines:",
+      "hhsLink": "HHS Poverty Guidelines",
+      "hhsAriaLabel": "Visit HHS Poverty Guidelines (opens in new tab)",
+      "phrmaLink": "PhRMA Patient Assistance",
+      "phrmaAriaLabel": "Visit PhRMA Patient Assistance resources (opens in new tab)"
+    },
+    "steps": {
+      "title": "Apply These Principles to Both PAPs and Foundations",
+      "bothRequire": "Both require:",
+      "requirements": [
+        "Your name and contact info",
+        "Doctor / coordinator contact",
+        "Income and household size",
+        "Diagnosis + medication list",
+        "Insurance information",
+        "Patient history"
+      ]
+    },
+    "checklist": {
+      "title": "\"Before You Apply\" Checklist",
+      "printAriaLabel": "Print checklist",
+      "print": "Print",
+      "yourResponsibility": "Your Responsibility",
+      "percentReady": "{{progress}}% Ready",
+      "progressAriaLabel": "Application preparation progress: {{progress}} percent complete",
+      "gatherNote": "Gather these items before you apply. Click to check them off.",
+      "itemsAriaLabel": "Application checklist items",
+      "complete": "🎉 You have everything you need! Time to apply.",
+      "clinicTitle": "What the Clinic Handles",
+      "clinicIntro": "You do <strong>NOT</strong> need to provide these. Your provider will fill them in:",
+      "clinicItems": [
+        "ICD-10 diagnosis codes",
+        "Provider NPI numbers",
+        "Prescriber signatures",
+        "Medical chart notes",
+        "Treatment start dates"
+      ],
+      "crucialTitle": "Crucial Step",
+      "crucialText": "It is <strong>important to follow up</strong> to make sure the provider is getting the paperwork sent back to the program."
+    },
+    "letters": {
+      "builder": {
+        "title": "Letter Builder",
+        "intro": "Select a letter type, fill in your details, and generate a professional letter you can copy and use.",
+        "letterTypeLabel": "Letter Type",
+        "typeAppeal": "Insurance Appeal Letter",
+        "typePap": "PAP Reconsideration Letter",
+        "typeDoctor": "Request Doctor's Support",
+        "typeHardship": "Financial Hardship Statement",
+        "yourNameLabel": "Your Name",
+        "yourNamePlaceholder": "Your full name",
+        "medicationLabel": "Medication Name",
+        "medicationPlaceholder": "e.g., Tacrolimus",
+        "appealReasonLabel": "Reason for Appeal",
+        "reasonFinancial": "Financial Hardship",
+        "reasonAccess": "Access Issues (Timing/Delivery)",
+        "reasonStability": "Clinical Stability (Already stable)",
+        "transplantTypeLabel": "Transplant Type",
+        "transplantTypePlaceholder": "e.g., Kidney, Liver, Heart",
+        "transplantDateLabel": "Transplant Date (optional)",
+        "transplantDatePlaceholder": "e.g., January 2023",
+        "doctorNameLabel": "Doctor's Name",
+        "doctorNamePlaceholder": "e.g., Smith",
+        "programNameLabel": "Program Name(s)",
+        "programNamePlaceholder": "e.g., Astellas Patient Assistance",
+        "situationLabel": "Describe Your Situation",
+        "situationPlaceholder": "Briefly describe your financial circumstances...",
+        "generate": "Generate Letter",
+        "generatedHeading": "Generated Letter:",
+        "copied": "Copied!",
+        "copyText": "Copy Text"
+      },
+      "scripts": {
+        "title": "Phone Scripts",
+        "intro": "Use these scripts when calling manufacturers and foundations.",
+        "manufacturerTitle": "Calling Manufacturers",
+        "manufacturerPre": "\"I'm a transplant patient. Do you have a Patient Assistance Program for ",
+        "manufacturerHighlight": "[drug name]",
+        "manufacturerPost": "?\"",
+        "foundationTitle": "Calling Foundations",
+        "foundationPre": "\"Hi, I am checking to see if the ",
+        "foundationHighlight1": "[Disease Fund Name]",
+        "foundationMid": " fund is currently open. I have insurance, but I need help with my ",
+        "foundationHighlight2": "[Copays / Premiums]",
+        "foundationPost": ".\""
+      }
+    },
+    "meds": {
+      "title": "Medications & PAP Programs",
+      "intro": "View your medications alongside their Patient Assistance Programs. Search for medications to see application links.",
+      "loadedBanner_one": "We loaded {{count}} medication from your My Path Quiz. Add more below or view program details.",
+      "loadedBanner_other": "We loaded {{count}} medications from your My Path Quiz. Add more below or view program details.",
+      "clearListAriaLabel": "Clear the medications loaded from your My Path Quiz",
+      "clearList": "Clear list",
+      "searchTitle": "Search for Medications",
+      "searchIntro": "Search for your transplant medications to see their Patient Assistance Program information.",
+      "searchLabel": "Search for medications",
+      "searchPlaceholder": "Enter drug name (e.g. Prograf, Tacrolimus)...",
+      "searchingAriaLabel": "Searching",
+      "clearSearchAriaLabel": "Clear search",
+      "added": "Added",
+      "add": "Add",
+      "noMatches": "No matches found",
+      "noMatchesPre": "Try a different spelling or check our ",
+      "noMatchesLink": "medication search page",
+      "noMatchesPost": ".",
+      "insurance": {
+        "question": "Do you have commercial insurance?",
+        "explanation": "Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately, not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.",
+        "yes": "Yes",
+        "no": "No",
+        "yesInfo": "<strong>Copay cards can help!</strong> With commercial insurance, manufacturer copay cards can lower your cost to $0-$50/month for many transplant medications.",
+        "noInfo": "<strong>Patient Assistance Programs (PAPs) can help.</strong> Drug manufacturers offer free medication programs for patients who qualify based on income. Foundations may also help with copays."
+      },
+      "yourMedications": "Your Medications ({{count}})",
+      "cardShows": "Each medication card shows:",
+      "cardShowsAssistance": "<strong>Assistance tab:</strong> PAP programs and copay cards with direct application links",
+      "cardShowsPrice": "<strong>Price tab:</strong> Estimated costs at different pharmacies",
+      "cardShowsOverview": "<strong>Overview tab:</strong> Basic medication information",
+      "readyTitle": "Ready to Apply?",
+      "readyText": "Check out the other tabs on this page for step-by-step application guidance, checklists, and letter templates.",
+      "viewSteps": "View Application Steps",
+      "viewChecklist": "View Checklist",
+      "emptyTitle": "No medications added yet",
+      "emptyText": "Use the search box above to find your medications, or take the My Path Quiz to build your list, you can connect to your health system there to import them automatically.",
+      "takeQuiz": "Take My Path Quiz",
+      "fullSearch": "Full Medication Search"
+    }
   }
 }
