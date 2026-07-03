@@ -941,5 +941,237 @@
       "stillText": "El trabajador social o el coordinador financiero de su centro de trasplante es su mejor recurso para recibir orientación personalizada.",
       "startQuiz": "Comenzar el cuestionario Mi Camino"
     }
+  },
+  "applicationHelp": {
+    "header": {
+      "title": "Educación sobre solicitudes",
+      "subtitle": "Domine las solicitudes de asistencia con guía paso a paso y consejos útiles.",
+      "quizPromptTitle": "¿No sabe a qué programas solicitar?",
+      "quizPromptText": "Haga primero el cuestionario Mi Camino para recibir recomendaciones personalizadas"
+    },
+    "tabs": {
+      "ariaLabel": "Secciones de ayuda con las solicitudes",
+      "start": "Cómo empezar",
+      "income": "Ingresos",
+      "steps": "Pasos",
+      "checklist": "Lista",
+      "letters": "Cartas",
+      "meds": "Medicamentos"
+    },
+    "start": {
+      "goodNews": {
+        "title": "Buenas noticias",
+        "item1": "Los PAP y las fundaciones piden la misma información.",
+        "item2": "Reúna los documentos una sola vez → solicite a varios programas."
+      },
+      "whatArePaps": {
+        "title": "¿Qué son los Programas de Asistencia al Paciente?",
+        "p1": "Los Programas de Asistencia al Paciente (PAP) son programas creados por las compañías farmacéuticas y los fabricantes de suministros médicos para ayudar a los pacientes a conseguir medicamentos a precios accesibles. Estos programas ofrecen medicamentos recetados gratis o a bajo costo a las personas que necesitan ayuda para pagar sus medicamentos.",
+        "p2": "<strong>Importante:</strong> Los Programas de Asistencia al Paciente son para todas las personas que necesitan medicamentos a precios accesibles, no solo para quienes no tienen seguro. Muchos pacientes con seguro usan estos programas para reducir el costo de sus medicamentos."
+      },
+      "cards": {
+        "pap": {
+          "title": "Programas de Asistencia al Paciente",
+          "text": "Programas para todas las personas que necesitan medicamentos a precios accesibles. Reciba medicamentos recetados gratis o por una cuota mínima, sin importar si tiene seguro o no."
+        },
+        "copay": {
+          "title": "Tarjetas de copago",
+          "text": "Las tarjetas de copago del fabricante ayudan a reducir lo que usted paga de su bolsillo en la farmacia.",
+          "eligibility": "<strong>Quién puede usar las tarjetas de copago:</strong> Solo con seguro que recibe a través de su trabajo o que compra por su cuenta. No sirven con Medicare, Medicaid ni los beneficios del VA. Si tiene alguno de estos, revise los Programas de Asistencia al Paciente.",
+          "imgAlt": "Cómo encontrar y solicitar tarjetas de copago",
+          "imgDesc": "Esta infografía explica cómo encontrar y solicitar tarjetas de copago para medicamentos. El proceso tiene 3 pasos principales. Primero, visite el sitio web del fabricante del medicamento o use nuestra herramienta para buscar tarjetas de copago. Segundo, revise los requisitos: la mayoría de las tarjetas de copago están disponibles si tiene seguro comercial y su medicamento cuesta más de $50 al mes. Tercero, complete la solicitud en línea, que toma de 5 a 10 minutos y requiere la información de su receta y los datos de su seguro. La mayoría de las tarjetas de copago se aprueban al instante y se pueden usar en su farmacia el mismo día. Las tarjetas de copago pueden reducir lo que usted paga de su bolsillo de cientos de dólares a tan solo $0-$25 al mes."
+        },
+        "insurance": {
+          "title": "Ayuda para pagar el seguro",
+          "text": "Pida a la fundación que le ayude a pagar lo que usted debe a su compañía de seguros para mantener su cobertura médica o de medicamentos recetados."
+        }
+      },
+      "compare": {
+        "bestForLabel": "Ideal para:",
+        "approvalTimeLabel": "Tiempo de aprobación",
+        "pap": {
+          "title": "Programa de Asistencia al Paciente (PAP)",
+          "subtitle": "Directo del fabricante",
+          "description": "Medicamentos gratis o a bajo costo entregados directamente por la compañía farmacéutica.",
+          "bestFor": [
+            "Seguro comercial",
+            "Sin seguro",
+            "Con seguro insuficiente"
+          ],
+          "approvalTime": "2–4 semanas"
+        },
+        "foundation": {
+          "title": "Ayuda económica de una fundación",
+          "subtitle": "Asistencia de organizaciones sin fines de lucro",
+          "description": "Ayuda con copagos, primas, deducibles y gastos de bolsillo.",
+          "bestFor": [
+            "Pacientes con Medicare",
+            "Pacientes con copagos altos",
+            "Primas difíciles de pagar"
+          ],
+          "approvalTime": "1–3 semanas"
+        }
+      },
+      "safety": {
+        "title": "Aviso importante de seguridad",
+        "text": "Recuerde: las organizaciones verdaderas NUNCA piden pagos. Si alguien le pide un pago o los datos de su tarjeta de crédito, es una estafa."
+      },
+      "reminders": {
+        "title": "Recordatorios importantes",
+        "applyOnceTitle": "Solicite una sola vez",
+        "applyOnceText": "Enviar varias solicitudes a la misma fundación retrasa la aprobación.",
+        "applyAnytimeTitle": "Solicite en cualquier momento",
+        "applyAnytimeText": "No hay \"temporada\". Solicite cuando el costo se vuelva un obstáculo.",
+        "peopleHelpTitle": "La gente quiere ayudar",
+        "peopleHelpText": "La mayoría de los equipos de los PAP y las fundaciones son amables y pacientes.",
+        "faxTitle": "El fax todavía se usa",
+        "faxText": "Los formularios enviados por fax llegan directamente a un equipo seguro y dedicado."
+      }
+    },
+    "income": {
+      "title": "Quién puede recibir ayuda",
+      "intro": "La mayoría de las compañías farmacéuticas publican guías claras de ingresos. Esto es lo que necesita saber:",
+      "dontCountOut": "No se descarte: muchos programas tienen límites de ingresos mucho más altos de lo que usted imagina.",
+      "howLimitsTitle": "Cómo funcionan los límites de ingresos",
+      "howLimitsItems": [
+        "Se basan en porcentajes del Nivel Federal de Pobreza (FPL)",
+        "Varían según el tamaño del hogar",
+        "Se actualizan cada año con los cambios del FPL"
+      ],
+      "whereTitle": "Dónde encontrar las guías",
+      "whereItems": [
+        "El sitio web del fabricante",
+        "Los resultados de búsqueda de MAT.org",
+        "Llame directamente al programa"
+      ],
+      "checkerTitle": "Verificador rápido de ingresos",
+      "checkerText": "Use estos recursos para consultar las guías actuales del Nivel Federal de Pobreza:",
+      "hhsLink": "Guías de pobreza del HHS",
+      "hhsAriaLabel": "Visitar las Guías de pobreza del HHS (se abre en una pestaña nueva)",
+      "phrmaLink": "Asistencia al paciente de PhRMA",
+      "phrmaAriaLabel": "Visitar los recursos de asistencia al paciente de PhRMA (se abre en una pestaña nueva)"
+    },
+    "steps": {
+      "title": "Aplique estos principios tanto a los PAP como a las fundaciones",
+      "bothRequire": "Ambos piden:",
+      "requirements": [
+        "Su nombre e información de contacto",
+        "Contacto de su médico o coordinador",
+        "Ingresos y tamaño del hogar",
+        "Diagnóstico + lista de medicamentos",
+        "Información del seguro",
+        "Historial del paciente"
+      ]
+    },
+    "checklist": {
+      "title": "Lista \"Antes de solicitar\"",
+      "printAriaLabel": "Imprimir la lista",
+      "print": "Imprimir",
+      "yourResponsibility": "Su responsabilidad",
+      "percentReady": "{{progress}}% listo",
+      "progressAriaLabel": "Progreso de preparación de la solicitud: {{progress}} por ciento completado",
+      "gatherNote": "Reúna estos documentos antes de solicitar. Haga clic para marcarlos como listos.",
+      "itemsAriaLabel": "Elementos de la lista de solicitud",
+      "complete": "🎉 ¡Ya tiene todo lo que necesita! Es hora de solicitar.",
+      "clinicTitle": "De qué se encarga la clínica",
+      "clinicIntro": "Usted <strong>NO</strong> necesita proporcionar esto. Su proveedor lo completará:",
+      "clinicItems": [
+        "Códigos de diagnóstico ICD-10",
+        "Números NPI del proveedor",
+        "Firmas del médico que receta",
+        "Notas del expediente médico",
+        "Fechas de inicio del tratamiento"
+      ],
+      "crucialTitle": "Paso crucial",
+      "crucialText": "Es <strong>importante dar seguimiento</strong> para asegurarse de que el proveedor envíe los documentos de vuelta al programa."
+    },
+    "letters": {
+      "builder": {
+        "title": "Creador de cartas",
+        "intro": "Elija un tipo de carta, escriba sus datos y genere una carta profesional que puede copiar y usar.",
+        "letterTypeLabel": "Tipo de carta",
+        "typeAppeal": "Carta de apelación al seguro",
+        "typePap": "Carta de reconsideración para un PAP",
+        "typeDoctor": "Solicitar el apoyo de su médico",
+        "typeHardship": "Declaración de dificultad económica",
+        "yourNameLabel": "Su nombre",
+        "yourNamePlaceholder": "Su nombre completo",
+        "medicationLabel": "Nombre del medicamento",
+        "medicationPlaceholder": "Por ejemplo: Tacrolimus",
+        "appealReasonLabel": "Motivo de la apelación",
+        "reasonFinancial": "Dificultad económica",
+        "reasonAccess": "Problemas de acceso (tiempos/entrega)",
+        "reasonStability": "Estabilidad clínica (ya está estable)",
+        "transplantTypeLabel": "Tipo de trasplante",
+        "transplantTypePlaceholder": "Por ejemplo: riñón, hígado, corazón",
+        "transplantDateLabel": "Fecha del trasplante (opcional)",
+        "transplantDatePlaceholder": "Por ejemplo: enero de 2023",
+        "doctorNameLabel": "Nombre del médico",
+        "doctorNamePlaceholder": "Por ejemplo: Smith",
+        "programNameLabel": "Nombre(s) del programa",
+        "programNamePlaceholder": "Por ejemplo: Astellas Patient Assistance",
+        "situationLabel": "Describa su situación",
+        "situationPlaceholder": "Describa brevemente su situación económica...",
+        "generate": "Generar carta",
+        "generatedHeading": "Carta generada:",
+        "copied": "¡Copiado!",
+        "copyText": "Copiar texto"
+      },
+      "scripts": {
+        "title": "Guiones telefónicos",
+        "intro": "Use estos guiones cuando llame a los fabricantes y a las fundaciones.",
+        "manufacturerTitle": "Para llamar a los fabricantes",
+        "manufacturerPre": "\"Soy paciente de trasplante. ¿Tienen un Programa de Asistencia al Paciente para ",
+        "manufacturerHighlight": "[nombre del medicamento]",
+        "manufacturerPost": "?\"",
+        "foundationTitle": "Para llamar a las fundaciones",
+        "foundationPre": "\"Hola, llamo para saber si el fondo ",
+        "foundationHighlight1": "[nombre del fondo de la enfermedad]",
+        "foundationMid": " está abierto en este momento. Tengo seguro, pero necesito ayuda con mis ",
+        "foundationHighlight2": "[copagos / primas]",
+        "foundationPost": ".\""
+      }
+    },
+    "meds": {
+      "title": "Medicamentos y programas PAP",
+      "intro": "Vea sus medicamentos junto con sus Programas de Asistencia al Paciente. Busque medicamentos para ver los enlaces de solicitud.",
+      "loadedBanner_one": "Cargamos {{count}} medicamento de su cuestionario Mi Camino. Agregue más abajo o vea los detalles de los programas.",
+      "loadedBanner_other": "Cargamos {{count}} medicamentos de su cuestionario Mi Camino. Agregue más abajo o vea los detalles de los programas.",
+      "clearListAriaLabel": "Borrar los medicamentos cargados de su cuestionario Mi Camino",
+      "clearList": "Borrar la lista",
+      "searchTitle": "Buscar medicamentos",
+      "searchIntro": "Busque sus medicamentos de trasplante para ver la información de sus Programas de Asistencia al Paciente.",
+      "searchLabel": "Buscar medicamentos",
+      "searchPlaceholder": "Escriba el nombre del medicamento (por ejemplo: Prograf, Tacrolimus)...",
+      "searchingAriaLabel": "Buscando",
+      "clearSearchAriaLabel": "Borrar la búsqueda",
+      "added": "Agregado",
+      "add": "Agregar",
+      "noMatches": "No se encontraron resultados",
+      "noMatchesPre": "Pruebe con otra forma de escribirlo o revise nuestra ",
+      "noMatchesLink": "página de búsqueda de medicamentos",
+      "noMatchesPost": ".",
+      "insurance": {
+        "question": "¿Tiene seguro comercial?",
+        "explanation": "El seguro comercial es la cobertura que recibe a través de un empleador, del mercado de ACA o que compra por su cuenta; no es Medicare, Medicaid ni TRICARE. Las tarjetas de copago solo están disponibles con seguro comercial, así que esto nos ayuda a mostrarle los programas de ahorro correctos.",
+        "yes": "Sí",
+        "no": "No",
+        "yesInfo": "<strong>¡Las tarjetas de copago pueden ayudarle!</strong> Con seguro comercial, las tarjetas de copago del fabricante pueden bajar su costo a $0-$50 al mes para muchos medicamentos de trasplante.",
+        "noInfo": "<strong>Los Programas de Asistencia al Paciente (PAP) pueden ayudarle.</strong> Los fabricantes de medicamentos ofrecen programas de medicamentos gratis para los pacientes que califican según sus ingresos. Las fundaciones también pueden ayudar con los copagos."
+      },
+      "yourMedications": "Sus medicamentos ({{count}})",
+      "cardShows": "Cada tarjeta de medicamento muestra:",
+      "cardShowsAssistance": "<strong>Pestaña Asistencia:</strong> programas PAP y tarjetas de copago con enlaces directos para solicitar",
+      "cardShowsPrice": "<strong>Pestaña Precio:</strong> costos estimados en diferentes farmacias",
+      "cardShowsOverview": "<strong>Pestaña Resumen:</strong> información básica del medicamento",
+      "readyTitle": "¿Listo para solicitar?",
+      "readyText": "Revise las otras pestañas de esta página para encontrar guía paso a paso para solicitar, listas de verificación y modelos de cartas.",
+      "viewSteps": "Ver los pasos de la solicitud",
+      "viewChecklist": "Ver la lista",
+      "emptyTitle": "Todavía no ha agregado medicamentos",
+      "emptyText": "Use el cuadro de búsqueda de arriba para encontrar sus medicamentos, o haga el cuestionario Mi Camino para crear su lista; allí puede conectarse a su sistema de salud para importarlos automáticamente.",
+      "takeQuiz": "Hacer el cuestionario Mi Camino",
+      "fullSearch": "Búsqueda completa de medicamentos"
+    }
   }
 }

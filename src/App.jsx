@@ -6326,7 +6326,7 @@ ${patientName || "[Your Name]"}`;
 
     return (
         <article className="max-w-5xl mx-auto space-y-8 pb-12">
-            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{t('applicationHelp.header.title')}</h1><p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed">{t('applicationHelp.header.subtitle')}</p></header>
+            <header className="text-center py-8"><h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{t('applicationHelp.header.title')}</h1><p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed">{t('applicationHelp.header.subtitle')}</p><div className="mt-6 flex justify-center"><LanguageToggle /></div></header>
             <Link to="/wizard" className="block bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-5 mb-6 hover:border-blue-400 transition group">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
