@@ -1223,6 +1223,7 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
+    const { t } = useTranslation();
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1239,20 +1240,20 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
                     <Pill size={18} className="text-emerald-600" />
-                    <h3 className="font-bold text-slate-800">Common Medications by Organ Type</h3>
+                    <h3 className="font-bold text-slate-800">{t('wizard.meds.guide.title')}</h3>
                 </div>
                 <p className="text-sm text-slate-600 mb-2">
                     {answers.organs && answers.organs.length > 0 ? (
-                        <>Based on your <strong className="text-emerald-700">{answers.organs.length > 1 ? answers.organs.slice(0, -1).join(', ') + ' and ' + answers.organs.slice(-1) : answers.organs[0]}</strong> transplant, we've filtered to the most common medications.</>
+                        <>{t('wizard.meds.guide.basedOnPre')}<strong className="text-emerald-700">{(() => { const names = answers.organs.map(o => t(`wizard.organs.${o}`)); return names.length > 1 ? names.slice(0, -1).join(', ') + t('wizard.meds.guide.and') + names.slice(-1) : names[0]; })()}</strong>{t('wizard.meds.guide.basedOnPost')}</>
                     ) : (
-                        <>Select your medications from the options below.</>
+                        <>{t('wizard.meds.guide.selectBelow')}</>
                     )}
                 </p>
                 <p className="text-sm font-semibold text-slate-700 mb-2">
-                    First select your core immunosuppressants, then add any other transplant-related medications you take.
+                    {t('wizard.meds.guide.selectCore')}
                 </p>
                 <p className="text-sm text-slate-600 mb-4">
-                    Click an organ type to see typical medications, then tap <span className="font-semibold text-emerald-700">Add</span> next to each one you take. You can also use the search bar below to find any medication.
+                    {t('wizard.meds.guide.clickPre')}<span className="font-semibold text-emerald-700">{t('wizard.meds.guide.addWord')}</span>{t('wizard.meds.guide.clickPost')}
                 </p>
 
                 {/* Organ Type Tabs */}
@@ -1274,7 +1275,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                 }`}
                             >
                                 <IconComponent size={16} />
-                                {organ}
+                                {t(`wizard.organs.${organ}`)}
                                 {isSelected && !isExpanded && <CheckCircle size={14} className="text-emerald-600" />}
                                 <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                             </button>
@@ -1301,10 +1302,10 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-slate-300">
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Class</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Notes</th>
-                                        <th className="text-right py-2 px-3 font-bold text-slate-700">Add</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thMedication')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thClass')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thNotes')}</th>
+                                        <th className="text-right py-2 px-3 font-bold text-slate-700">{t('wizard.meds.guide.thAdd')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
@@ -1326,13 +1327,13 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                                                 ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                                                                 : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                                                         }`}
-                                                        aria-label={isAdded ? `Remove ${med.brand} from your list` : `Add ${med.brand} to your list`}
+                                                        aria-label={isAdded ? t('wizard.meds.guide.removeFromListAria', { name: med.brand }) : t('wizard.meds.guide.addToListAria', { name: med.brand })}
                                                         aria-pressed={isAdded}
                                                     >
                                                         {isAdded ? (
-                                                            <><CheckCircle size={12} aria-hidden="true" /> Added</>
+                                                            <><CheckCircle size={12} aria-hidden="true" /> {t('wizard.meds.added')}</>
                                                         ) : (
-                                                            <><PlusCircle size={12} aria-hidden="true" /> Add</>
+                                                            <><PlusCircle size={12} aria-hidden="true" /> {t('wizard.meds.add')}</>
                                                         )}
                                                     </button>
                                                 </td>
@@ -1351,6 +1352,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
+    const { t } = useTranslation();
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1366,10 +1368,10 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
                     <Pill size={18} className="text-blue-600" />
-                    <h3 className="font-bold text-slate-800">Common Medications Pre-Transplant by Organ Type</h3>
+                    <h3 className="font-bold text-slate-800">{t('wizard.meds.preGuide.title')}</h3>
                 </div>
                 <p className="text-sm text-slate-600 mb-4">
-                    Click on an organ type to see typical pre-transplant medications for managing your condition while awaiting transplant.
+                    {t('wizard.meds.preGuide.intro')}
                 </p>
 
                 {/* Organ Type Tabs */}
@@ -1391,7 +1393,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                 }`}
                             >
                                 <IconComponent size={16} />
-                                {organ}
+                                {t(`wizard.organs.${organ}`)}
                                 {isSelected && !isExpanded && <CheckCircle size={14} className="text-blue-600" />}
                                 <ChevronDown size={14} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                             </button>
@@ -1418,9 +1420,9 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-slate-300">
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Medication Class</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Examples</th>
-                                        <th className="text-left py-2 px-3 font-bold text-slate-700">Purpose</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thClass')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thExamples')}</th>
+                                        <th className="text-left py-2 px-3 font-bold text-slate-700">{t('wizard.meds.preGuide.thPurpose')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
@@ -1439,7 +1441,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                                                     key={ex.id}
                                                                     onClick={() => onMedicationClick && onMedicationClick(ex.id)}
                                                                     className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border transition-colors ${selected ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-white border-slate-300 text-slate-700 hover:border-blue-400 hover:text-blue-700'}`}
-                                                                    aria-label={selected ? `${ex.label} added to your list` : `Add ${ex.label} to your list`}
+                                                                    aria-label={selected ? t('wizard.meds.preGuide.addedAria', { name: ex.label }) : t('wizard.meds.guide.addToListAria', { name: ex.label })}
                                                                 >
                                                                     {selected ? <Check size={12} aria-hidden="true" /> : <PlusCircle size={12} aria-hidden="true" />}
                                                                     {ex.label}
@@ -1519,6 +1521,7 @@ function useLocalSubscriptionStatus(feature = null) {
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
+    const { t } = useTranslation();
     const MEDICATIONS = useMedicationsList();
     const { setAnswer: setContextAnswer, setSelectedMedications } = useChatQuiz();
 
@@ -1709,11 +1712,11 @@ const Wizard = () => {
         // Basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!userEmail.trim()) {
-            setEmailError('Please enter your email address');
+            setEmailError(t('wizard.email.errorRequired'));
             return;
         }
         if (!emailRegex.test(userEmail.trim())) {
-            setEmailError('Please enter a valid email address');
+            setEmailError(t('wizard.email.errorInvalid'));
             return;
         }
 
@@ -1773,8 +1776,22 @@ const Wizard = () => {
     const isCommercialInsurance = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
 
     // New grouped step labels with color themes
-    const stepLabels = ['About You', 'Transplant', 'Medications', 'Coverage', 'Costs'];
+    const stepLabels = t('wizard.progress.labels', { returnObjects: true });
     const totalVisibleSteps = 5; // 5 sections shown in progress
+
+    // Display labels for stored answer values. The values themselves (from
+    // constants.js) are persisted in answers/sessionStorage and compared in
+    // logic, so only the rendered label goes through i18n.
+    const roleLabels = {
+        [Role.PATIENT]: t('wizard.aboutYou.rolePatient'),
+        [Role.CAREPARTNER]: t('wizard.aboutYou.roleCarepartner'),
+        [Role.SOCIAL_WORKER]: t('wizard.aboutYou.roleSocialWorker'),
+    };
+    const statusLabels = {
+        [TransplantStatus.PRE_EVAL]: t('wizard.aboutYou.statusPreEval'),
+        [TransplantStatus.POST_ACUTE]: t('wizard.aboutYou.statusPostAcute'),
+        [TransplantStatus.POST_STABLE]: t('wizard.aboutYou.statusPostStable'),
+    };
 
     // Color themes for each step (matching the icon colors)
     const stepColors = {
@@ -1819,7 +1836,7 @@ const Wizard = () => {
                     })}
                 </div>
                 {/* Progress bar - consistent emerald color for accessibility */}
-                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress">
+                <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuenow={(displayStep / totalVisibleSteps) * 100} aria-valuemin="0" aria-valuemax="100" aria-label={t('wizard.progress.ariaLabel')}>
                     <div
                         className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
                         style={{ width: `${(displayStep / totalVisibleSteps) * 100}%` }}
@@ -1840,20 +1857,20 @@ const Wizard = () => {
                     <div className="bg-emerald-100 p-2 rounded-lg">
                         <Users size={24} className="text-emerald-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">About You</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.aboutYou.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-4">Let's start with some basics to personalize your experience.</p>
+                <p className="text-slate-600 mb-4">{t('wizard.aboutYou.intro')}</p>
                 <p className="text-sm text-slate-500 mb-4 bg-slate-50 border border-slate-200 rounded-lg p-3">
-                    <strong>Note:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.
+                    <Trans i18nKey="wizard.aboutYou.note" />
                 </p>
 
                 {/* Question 1a: Role */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1a</span>
-                        <h2 className="text-lg font-bold text-slate-800">Who am I helping today?</h2>
+                        <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.aboutYou.roleBadge')}</span>
+                        <h2 className="text-lg font-bold text-slate-800">{t('wizard.aboutYou.roleQuestion')}</h2>
                     </div>
-                    <div className="space-y-3" role="radiogroup" aria-label="Select your role">
+                    <div className="space-y-3" role="radiogroup" aria-label={t('wizard.aboutYou.roleAria')}>
                         {Object.values(Role).map((r) => (
                             <button
                                 key={r}
@@ -1866,7 +1883,7 @@ const Wizard = () => {
                                 role="radio"
                                 aria-checked={answers.role === r}
                             >
-                                <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{r}</span>
+                                <span className={`font-bold text-lg ${answers.role === r ? 'text-emerald-800' : 'text-slate-800'}`}>{roleLabels[r]}</span>
                                 {answers.role === r && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                             </button>
                         ))}
@@ -1877,10 +1894,10 @@ const Wizard = () => {
                 {answers.role && (
                     <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">1b</span>
-                            <h2 className="text-lg font-bold text-slate-800">Where are you in the transplant process?</h2>
+                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.aboutYou.statusBadge')}</span>
+                            <h2 className="text-lg font-bold text-slate-800">{t('wizard.aboutYou.statusQuestion')}</h2>
                         </div>
-                        <div className="space-y-3" role="radiogroup" aria-label="Select your transplant status">
+                        <div className="space-y-3" role="radiogroup" aria-label={t('wizard.aboutYou.statusAria')}>
                             {Object.values(TransplantStatus).map((s) => (
                                 <button
                                     key={s}
@@ -1893,7 +1910,7 @@ const Wizard = () => {
                                     role="radio"
                                     aria-checked={answers.status === s}
                                 >
-                                    <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{s}</span>
+                                    <span className={`font-bold text-lg ${answers.status === s ? 'text-emerald-800' : 'text-slate-800'}`}>{statusLabels[s]}</span>
                                     {answers.status === s && <CheckCircle className="text-emerald-600" size={24} aria-hidden="true" />}
                                 </button>
                             ))}
@@ -1906,9 +1923,9 @@ const Wizard = () => {
                     disabled={!answers.role || !answers.status}
                     onClick={handleNextFromAboutYou}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -1920,15 +1937,15 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-rose-100 p-2 rounded-lg">
                         <Heart size={24} className="text-rose-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Transplant</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.transplant.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-6">Select your organ type(s) - choose all that apply.</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label="Select organ types">
+                <p className="text-slate-600 mb-6">{t('wizard.transplant.intro')}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8" role="group" aria-label={t('wizard.transplant.groupAria')}>
                     {Object.values(OrganType).map((o) => (
                         <button
                             key={o}
@@ -1941,7 +1958,7 @@ const Wizard = () => {
                             role="checkbox"
                             aria-checked={answers.organs.includes(o)}
                         >
-                            <span className={`font-bold text-lg ${answers.organs.includes(o) ? 'text-rose-800' : 'text-slate-800'}`}>{o}</span>
+                            <span className={`font-bold text-lg ${answers.organs.includes(o) ? 'text-rose-800' : 'text-slate-800'}`}>{t(`wizard.organs.${o}`)}</span>
                             {answers.organs.includes(o) && <CheckCircle size={24} className="text-rose-600" aria-hidden="true" />}
                         </button>
                     ))}
@@ -1950,9 +1967,9 @@ const Wizard = () => {
                     disabled={answers.organs.length === 0}
                     onClick={handleNextFromTransplant}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -1963,65 +1980,73 @@ const Wizard = () => {
         const insuranceOptions = [
             {
                 value: InsuranceType.COMMERCIAL,
-                label: 'Commercial Insurance',
-                description: 'From my job, my spouse\'s job, or I bought it myself',
-                helpText: 'Can use manufacturer copay cards + PAPs'
+                label: t('wizard.coverage.commercialLabel'),
+                description: t('wizard.coverage.commercialDescription'),
+                helpText: t('wizard.coverage.commercialHelp')
             },
             {
                 value: InsuranceType.MEDICARE,
-                label: 'Medicare',
-                description: 'The program for people 65+ or with disabilities',
-                helpText: 'Part B-ID important for kidney patients; can use PAPs but NOT copay cards'
+                label: t('wizard.coverage.medicareLabel'),
+                description: t('wizard.coverage.medicareDescription'),
+                helpText: t('wizard.coverage.medicareHelp')
             },
             {
                 value: InsuranceType.MEDICAID,
-                label: 'Medicaid',
-                description: 'State program for people with lower income',
-                helpText: 'May have full coverage; check state formulary'
+                label: t('wizard.coverage.medicaidLabel'),
+                description: t('wizard.coverage.medicaidDescription'),
+                helpText: t('wizard.coverage.medicaidHelp')
             },
             {
                 value: InsuranceType.TRICARE_VA,
-                label: 'TRICARE or VA (Veterans)',
-                description: 'Military or Veterans benefits',
-                helpText: 'Gov\'t insurance can use assistance programs'
+                label: t('wizard.coverage.tricareLabel'),
+                description: t('wizard.coverage.tricareDescription'),
+                helpText: t('wizard.coverage.tricareHelp')
             },
             {
                 value: InsuranceType.IHS,
-                label: 'Indian Health Service',
-                description: 'Tribal health programs',
-                helpText: 'Can use assistance programs'
+                label: t('wizard.coverage.ihsLabel'),
+                description: t('wizard.coverage.ihsDescription'),
+                helpText: t('wizard.coverage.ihsHelp')
             },
             {
                 value: InsuranceType.UNINSURED,
-                label: 'I don\'t have insurance',
-                description: 'No current insurance coverage',
-                helpText: 'Manufacturer PAPs are your primary option'
+                label: t('wizard.coverage.uninsuredLabel'),
+                description: t('wizard.coverage.uninsuredDescription'),
+                helpText: t('wizard.coverage.uninsuredHelp')
             }
         ];
+
+        // Rendered labels for the specialty-pharmacy options; the raw
+        // 'Yes'/'No'/'Not Sure' values drive the selection logic below.
+        const pharmacyOptionLabels = {
+            'Yes': t('wizard.coverage.yes'),
+            'No': t('wizard.coverage.no'),
+            'Not Sure': t('wizard.coverage.notSure'),
+        };
 
         return (
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-blue-100 p-2 rounded-lg">
                         <Shield size={24} className="text-blue-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Coverage</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.coverage.title')}</h1>
                 </div>
                 <div className="flex items-center gap-2 mb-6 text-slate-700">
                     <Lightbulb className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
-                    <p className="text-sm"><strong>Having insurance doesn't mean you can't get additional help!</strong></p>
+                    <p className="text-sm"><strong>{t('wizard.coverage.tip')}</strong></p>
                 </div>
 
                 {/* Question 3a: Insurance Type */}
                 <div className="mb-8">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3a</span>
-                        <h2 className="text-lg font-bold text-slate-800">What's your insurance type?</h2>
+                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.coverage.insuranceBadge')}</span>
+                        <h2 className="text-lg font-bold text-slate-800">{t('wizard.coverage.insuranceQuestion')}</h2>
                     </div>
-                    <div className="space-y-3" role="radiogroup" aria-label="Select your insurance type">
+                    <div className="space-y-3" role="radiogroup" aria-label={t('wizard.coverage.insuranceAria')}>
                         {insuranceOptions.map((option) => (
                             <button
                                 key={option.value}
@@ -2056,11 +2081,11 @@ const Wizard = () => {
                 {isCommercialInsurance && answers.insurance && (
                     <div className="mb-8 ">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">3b</span>
-                            <h2 className="text-lg font-bold text-slate-800">Does your plan require a specific specialty pharmacy?</h2>
+                            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.coverage.pharmacyBadge')}</span>
+                            <h2 className="text-lg font-bold text-slate-800">{t('wizard.coverage.pharmacyQuestion')}</h2>
                         </div>
-                        <p className="text-slate-600 text-sm mb-4">Some commercial plans require you to use a specific pharmacy for transplant medications.</p>
-                        <div className="space-y-3" role="radiogroup" aria-label="Specialty pharmacy requirement">
+                        <p className="text-slate-600 text-sm mb-4">{t('wizard.coverage.pharmacyIntro')}</p>
+                        <div className="space-y-3" role="radiogroup" aria-label={t('wizard.coverage.pharmacyAria')}>
                             {['Yes', 'No', 'Not Sure'].map(opt => {
                                 const isSelected = (opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                     (opt === 'No' && answers.specialtyPharmacyAware === false) ||
@@ -2080,7 +2105,7 @@ const Wizard = () => {
                                             (opt === 'No' && answers.specialtyPharmacyAware === false)
                                         }
                                     >
-                                        <span className={`font-bold text-lg ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{opt}</span>
+                                        <span className={`font-bold text-lg ${isSelected ? 'text-blue-800' : 'text-slate-800'}`}>{pharmacyOptionLabels[opt]}</span>
                                         {((opt === 'Yes' && answers.specialtyPharmacyAware === true) ||
                                           (opt === 'No' && answers.specialtyPharmacyAware === false)) &&
                                             <CheckCircle className="text-blue-600" size={24} aria-hidden="true" />
@@ -2097,9 +2122,9 @@ const Wizard = () => {
                     disabled={!answers.insurance}
                     onClick={handleNextFromCoverage}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    Next Section
+                    {t('wizard.nav.nextSection')}
                 </button>
             </div>
         );
@@ -2113,16 +2138,16 @@ const Wizard = () => {
             <div className="max-w-3xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="bg-purple-100 p-2 rounded-lg">
                             <Pill size={24} className="text-purple-600" />
                         </div>
-                        <h1 className="text-2xl font-bold">Your Medications</h1>
+                        <h1 className="text-2xl font-bold">{t('wizard.meds.title')}</h1>
                     </div>
                     <p className="text-slate-600">
-                        Connect to your health system.
+                        {t('wizard.meds.intro')}
                     </p>
                 </div>
 
@@ -2146,7 +2171,7 @@ const Wizard = () => {
                     <div className="mb-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                             <CheckCircle size={18} className="text-emerald-600" />
-                            <h3 className="font-bold text-slate-800">Your Selected Medications ({(answers.medications || []).length})</h3>
+                            <h3 className="font-bold text-slate-800">{t('wizard.meds.selectedHeading', { count: (answers.medications || []).length })}</h3>
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {(answers.medications || []).map(id => {
@@ -2158,7 +2183,7 @@ const Wizard = () => {
                                         <button
                                             onClick={() => handleMultiSelect('medications', id)}
                                             className="text-slate-400 hover:text-red-500 transition"
-                                            aria-label={`Remove ${med?.brandName || id}`}
+                                            aria-label={t('wizard.meds.removeAria', { name: med?.brandName || id })}
                                         >
                                             <X size={14} />
                                         </button>
@@ -2170,12 +2195,12 @@ const Wizard = () => {
                 )}
 
                 {/* Divider: manual options for patients who can't or don't want to connect */}
-                <div className="relative mb-6" role="separator" aria-label="Or add medications yourself">
+                <div className="relative mb-6" role="separator" aria-label={t('wizard.meds.separatorAria')}>
                     <div className="absolute inset-0 flex items-center" aria-hidden="true">
                         <div className="w-full border-t border-slate-200"></div>
                     </div>
                     <div className="relative flex justify-center">
-                        <span className="bg-white px-3 text-sm font-semibold text-slate-500">Or add your medications below</span>
+                        <span className="bg-white px-3 text-sm font-semibold text-slate-500">{t('wizard.meds.separatorLabel')}</span>
                     </div>
                 </div>
 
@@ -2183,15 +2208,15 @@ const Wizard = () => {
                 <div className="mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                         <Search size={18} className="text-emerald-600" />
-                        <h3 className="font-bold text-slate-800">Type in medication and hit the <span className="text-emerald-600">+</span> button to add to your list</h3>
+                        <h3 className="font-bold text-slate-800">{t('wizard.meds.searchHeadingPre')}<span className="text-emerald-600">+</span>{t('wizard.meds.searchHeadingPost')}</h3>
                     </div>
                     <div className="relative">
-                        <label htmlFor="wizard-med-search" className="sr-only">Search for medications</label>
+                        <label htmlFor="wizard-med-search" className="sr-only">{t('wizard.meds.searchLabel')}</label>
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
                         <input
                             id="wizard-med-search"
                             type="text"
-                            placeholder="Type medication name (e.g. Prograf, tacrolimus)..."
+                            placeholder={t('wizard.meds.searchPlaceholder')}
                             className="w-full pl-10 pr-10 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition"
                             value={medSearchTerm}
                             onChange={(e) => setMedSearchTerm(e.target.value)}
@@ -2201,10 +2226,10 @@ const Wizard = () => {
                         />
                         {isMedSearching ? (
                             <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                <Loader2 size={18} className="text-emerald-600 animate-spin" aria-label="Searching" />
+                                <Loader2 size={18} className="text-emerald-600 animate-spin" aria-label={t('wizard.meds.searchingAria')} />
                             </div>
                         ) : medSearchTerm && (
-                            <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                            <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
                                 <X size={18} />
                             </button>
                         )}
@@ -2227,9 +2252,9 @@ const Wizard = () => {
                                                     <span className="text-sm text-slate-600 ml-2">({med.genericName})</span>
                                                 </div>
                                                 {isAlreadySelected ? (
-                                                    <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> Added</span>
+                                                    <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> {t('wizard.meds.added')}</span>
                                                 ) : (
-                                                    <span className="text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1"><PlusCircle size={12} /> Add</span>
+                                                    <span className="text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1"><PlusCircle size={12} /> {t('wizard.meds.add')}</span>
                                                 )}
                                             </button>
                                         );
@@ -2237,7 +2262,7 @@ const Wizard = () => {
                                 </div>
                             ) : (
                                 <div className="p-4 text-center text-slate-500 text-sm">
-                                    No medications found. Try a different spelling or browse the list below.
+                                    {t('wizard.meds.noResults')}
                                 </div>
                             )}
                         </div>
@@ -2256,9 +2281,9 @@ const Wizard = () => {
                     <div className="flex items-start gap-3">
                         <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-amber-800">
-                            <p className="font-bold mb-2">Important Medical Information</p>
+                            <p className="font-bold mb-2">{t('wizard.meds.medicalInfoTitle')}</p>
                             <p>
-                                Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.
+                                {t('wizard.meds.medicalInfoText')}
                             </p>
                         </div>
                     </div>
@@ -2267,9 +2292,9 @@ const Wizard = () => {
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"
-                    aria-label="Continue to next section"
+                    aria-label={t('wizard.nav.nextAria')}
                 >
-                    My medications look right, continue →
+                    {t('wizard.meds.continueButton')}
                 </button>
             </div>
         );
@@ -2281,25 +2306,25 @@ const Wizard = () => {
             <div className="max-w-2xl mx-auto">
 
                 {renderProgress()}
-                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label="Go back to previous section"><ChevronLeft size={16} aria-hidden="true" /> Back</button>
+                <button onClick={prevStep} className="text-slate-700 mb-4 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px]" aria-label={t('wizard.nav.backAria')}><ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}</button>
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-amber-100 p-2 rounded-lg">
                         <DollarSign size={24} className="text-amber-600" />
                     </div>
-                    <h1 className="text-2xl font-bold">Your Costs</h1>
+                    <h1 className="text-2xl font-bold">{t('wizard.costs.title')}</h1>
                 </div>
-                <p className="text-slate-600 mb-6">How would you describe your current medication costs?</p>
+                <p className="text-slate-600 mb-6">{t('wizard.costs.intro')}</p>
 
                 <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200 text-sm text-slate-600" role="note">
-                    This helps us prioritize the best assistance programs for you. Your answer is anonymous and never linked to you.
+                    {t('wizard.costs.note')}
                 </div>
 
-                <div className="space-y-4" role="radiogroup" aria-label="Select your financial status">
+                <div className="space-y-4" role="radiogroup" aria-label={t('wizard.costs.groupAria')}>
                     {[
-                        { val: FinancialStatus.MANAGEABLE, label: 'Manageable', desc: 'I can afford my medications but would like to save money', color: 'emerald' },
-                        { val: FinancialStatus.CHALLENGING, label: 'Challenging', desc: 'Medication costs are a significant burden', color: 'amber' },
-                        { val: FinancialStatus.UNAFFORDABLE, label: 'Unaffordable', desc: 'I struggle to pay for my medications', color: 'orange' },
-                        { val: FinancialStatus.CRISIS, label: 'I can\'t afford my medications', desc: 'I cannot afford my medications without help', color: 'rose' },
+                        { val: FinancialStatus.MANAGEABLE, label: t('wizard.costs.manageableLabel'), desc: t('wizard.costs.manageableDesc'), color: 'emerald' },
+                        { val: FinancialStatus.CHALLENGING, label: t('wizard.costs.challengingLabel'), desc: t('wizard.costs.challengingDesc'), color: 'amber' },
+                        { val: FinancialStatus.UNAFFORDABLE, label: t('wizard.costs.unaffordableLabel'), desc: t('wizard.costs.unaffordableDesc'), color: 'orange' },
+                        { val: FinancialStatus.CRISIS, label: t('wizard.costs.crisisLabel'), desc: t('wizard.costs.crisisDesc'), color: 'rose' },
                     ].map(opt => {
                         const isSelected = answers.financialStatus === opt.val;
                         const colorStyles = {
@@ -2371,9 +2396,9 @@ const Wizard = () => {
                 <button
                     onClick={() => setStep(5)}
                     className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px] min-w-[44px] no-print"
-                    aria-label="Go back to previous step"
+                    aria-label={t('wizard.results.backAria')}
                 >
-                    <ChevronLeft size={16} aria-hidden="true" /> Back
+                    <ChevronLeft size={16} aria-hidden="true" /> {t('wizard.nav.back')}
                 </button>
 
                 {/* Header */}
@@ -2383,17 +2408,17 @@ const Wizard = () => {
                     : 'bg-emerald-900'
                 }`}>
                     <div>
-                        <h1 className="text-3xl font-bold mb-2">Your Medication Strategy</h1>
+                        <h1 className="text-3xl font-bold mb-2">{t('wizard.results.title')}</h1>
                         <p className="opacity-90">
-                            Based on your inputs, here is how to navigate your costs.
+                            {t('wizard.results.subtitle')}
                         </p>
                     </div>
                     <button 
                         onClick={() => window.print()}
                         className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 border border-white/20 transition no-print"
-                        aria-label="Print your medication plan"
+                        aria-label={t('wizard.results.printAria')}
                     >
-                        <Printer size={16} aria-hidden="true" /> Print Plan
+                        <Printer size={16} aria-hidden="true" /> {t('wizard.results.printButton')}
                     </button>
                 </div>
 
@@ -2401,14 +2426,13 @@ const Wizard = () => {
                 {isKidney && isMedicare && (
                     <aside className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-600" role="alert" aria-labelledby="medicare-alert">
                         <h2 id="medicare-alert" className="text-xl font-bold text-indigo-900 flex items-center gap-2">
-                            <AlertCircle aria-hidden="true" /> Important: Medicare Part B-ID
+                            <AlertCircle aria-hidden="true" /> {t('wizard.results.medicareAlert.title')}
                         </h2>
                         <p className="mt-2 text-slate-700">
-                            Since you are a kidney transplant recipient on Medicare, you may qualify for <strong>Medicare Part B-ID</strong>.
-                            This extends coverage for immunosuppressive drugs for life. The 2026 premium is <strong>$121.60/month</strong> (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.
+                            <Trans i18nKey="wizard.results.medicareAlert.text" />
                         </p>
                         <a href="https://www.medicare.gov" target="_blank" rel="noreferrer" className="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition no-print">
-                            Check Eligibility on Medicare.gov
+                            {t('wizard.results.medicareAlert.cta')}
                         </a>
                     </aside>
                 )}
@@ -2418,7 +2442,7 @@ const Wizard = () => {
                     {/* Column 1 (Left): Med List & Tools */}
                     <div className="space-y-6">
                         <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
-                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">Your Medication List</h2>
+                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.medListTitle')}</h2>
                             {(answers.medications || []).length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {(answers.medications || []).map(id => {
@@ -2429,7 +2453,7 @@ const Wizard = () => {
                                                 <button
                                                     onClick={() => handleMultiSelect('medications', id)}
                                                     className="text-slate-400 hover:text-red-500 ml-1"
-                                                    aria-label={`Remove ${med?.brandName}`}
+                                                    aria-label={t('wizard.meds.removeAria', { name: med?.brandName })}
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -2442,12 +2466,12 @@ const Wizard = () => {
                             {/* Add More Medications */}
                             <div className="mb-4 no-print">
                                 <div className="relative">
-                                    <label htmlFor="results-med-search" className="sr-only">Add more medications</label>
+                                    <label htmlFor="results-med-search" className="sr-only">{t('wizard.results.addMoreLabel')}</label>
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
                                     <input
                                         id="results-med-search"
                                         type="text"
-                                        placeholder="Add more medications..."
+                                        placeholder={t('wizard.results.addMorePlaceholder')}
                                         className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition text-sm"
                                         value={medSearchTerm}
                                         onChange={(e) => setMedSearchTerm(e.target.value)}
@@ -2456,7 +2480,7 @@ const Wizard = () => {
                                         }}
                                     />
                                     {medSearchTerm && (
-                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
                                             <X size={16} />
                                         </button>
                                     )}
@@ -2489,7 +2513,7 @@ const Wizard = () => {
                                             </div>
                                         ) : (
                                             <div className="p-2 text-center text-slate-500 text-xs">
-                                                No medications found
+                                                {t('wizard.results.noResults')}
                                             </div>
                                         )}
                                     </div>
@@ -2501,36 +2525,36 @@ const Wizard = () => {
                                     <Link
                                         to={`/medications?ids=${answers.medications.join(',')}`}
                                         className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
-                                        aria-label="View price estimates for your selected medications"
+                                        aria-label={t('wizard.results.viewPricesAria')}
                                     >
                                         <DollarSign size={22} aria-hidden="true" />
-                                        View Price Estimates for These Meds
+                                        {t('wizard.results.viewPricesButton')}
                                     </Link>
                                 )}
                             </div>
                         </section>
 
                         <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
-                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">Helpful Tools</h2>
-                            <p className="text-sm text-slate-600 mb-4">Once you have identified the program you need (PAP or Foundation), use our guide to help you apply.</p>
-                            
-                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label="View application education guide">
+                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.toolsTitle')}</h2>
+                            <p className="text-sm text-slate-600 mb-4">{t('wizard.results.toolsIntro')}</p>
+
+                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label={t('wizard.results.appEducationAria')}>
                                 <div className="flex items-center gap-3">
                                     <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
                                     <div>
-                                        <span className="font-bold text-slate-800 block text-sm">Application Education</span>
-                                        <span className="text-xs text-slate-600">Scripts, checklists, and templates</span>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.appEducationTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.appEducationDesc')}</span>
                                     </div>
                                 </div>
                                 <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
                             </Link>
 
-                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label="View insurance and resources">
+                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label={t('wizard.results.insuranceAria')}>
                                 <div className="flex items-center gap-3">
                                     <div className="bg-amber-100 text-amber-600 p-2 rounded" aria-hidden="true"><Shield size={18} /></div>
                                     <div>
-                                        <span className="font-bold text-slate-800 block text-sm">Insurance & Resources</span>
-                                        <span className="text-xs text-slate-600">Medicaid directory, Medicare guides</span>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.insuranceTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.insuranceDesc')}</span>
                                     </div>
                                 </div>
                                 <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
@@ -2543,37 +2567,37 @@ const Wizard = () => {
                         {financial === FinancialStatus.MANAGEABLE && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="savings-heading">
                                 <h2 id="savings-heading" className="text-lg font-bold text-emerald-800 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <DollarSign size={20} aria-hidden="true" /> Maximize Your Savings
+                                    <DollarSign size={20} aria-hidden="true" /> {t('wizard.results.manageable.title')}
                                 </h2>
                                 <ul className="space-y-4 text-slate-700">
                                     {isCommercial && (
                                         <li className="flex gap-3 items-start">
-                                            <div className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Priority recommendation">Priority</div>
+                                            <div className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.priorityAria')}>{t('wizard.results.manageable.priorityBadge')}</div>
                                             <div>
-                                                <strong>Use Manufacturer <TermTooltip term="copay">Copay</TermTooltip> Cards.</strong>
-                                                <p className="text-sm text-slate-600 mt-1">Even if you can afford the copay, these cards can lower it to as little as $0. Look up each of your brand name meds.</p>
+                                                <strong>{t('wizard.results.manageable.copayPre')}<TermTooltip term="copay">{t('wizard.results.manageable.copayTerm')}</TermTooltip>{t('wizard.results.manageable.copayPost')}</strong>
+                                                <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.copayText')}</p>
                                             </div>
                                         </li>
                                     )}
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Comparison tip">Compare</div>
+                                        <div className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.compareAria')}>{t('wizard.results.manageable.compareBadge')}</div>
                                         <div>
-                                            <strong>Check Cash Prices.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Compare your insurance copay against cash prices at Mark Cuban Cost Plus Drugs or using GoodRx.</p>
+                                            <strong>{t('wizard.results.manageable.cashTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.cashText')}</p>
                                         </div>
                                     </li>
                                     {isCommercial && (
                                         <li className="flex gap-3 items-start">
-                                            <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Verification step">Verify</div>
+                                            <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.manageable.verifyAria')}>{t('wizard.results.manageable.verifyBadge')}</div>
                                             <div>
-                                                <strong><TermTooltip term="specialty-pharmacy">Specialty Pharmacy</TermTooltip>.</strong>
-                                                <p className="text-sm text-slate-600 mt-1">Ensure you are using the mandated pharmacy to avoid surprise full-price bills.</p>
+                                                <strong><TermTooltip term="specialty-pharmacy">{t('wizard.results.manageable.spTerm')}</TermTooltip>{t('wizard.results.manageable.spPost')}</strong>
+                                                <p className="text-sm text-slate-600 mt-1">{t('wizard.results.manageable.spText')}</p>
                                             </div>
                                         </li>
                                     )}
                                 </ul>
                                 <div className="mt-6 pt-4 border-t border-slate-100">
-                                    <p className="text-sm text-slate-600 italic">Tip: You may still qualify for <TermTooltip term="pap">PAPs</TermTooltip> based on income, even if costs feel manageable right now.</p>
+                                    <p className="text-sm text-slate-600 italic">{t('wizard.results.manageable.tipPre')}<TermTooltip term="pap">{t('wizard.results.manageable.tipTerm')}</TermTooltip>{t('wizard.results.manageable.tipPost')}</p>
                                 </div>
                             </section>
                         )}
@@ -2581,28 +2605,28 @@ const Wizard = () => {
                         {financial === FinancialStatus.CHALLENGING && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="burden-heading">
                                 <h2 id="burden-heading" className="text-lg font-bold text-amber-700 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <Shield size={20} aria-hidden="true" /> Reduce Your Burden
+                                    <Shield size={20} aria-hidden="true" /> {t('wizard.results.challenging.title')}
                                 </h2>
                                 <ul className="space-y-4 text-slate-700">
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step one">Step 1</div>
+                                        <div className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step1Aria')}>{t('wizard.results.challenging.step1Badge')}</div>
                                         <div>
-                                            <strong>Check Manufacturer PAPs.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Go to the manufacturer website for your brand name meds. If eligible, you could get the med for free.</p>
+                                            <strong>{t('wizard.results.challenging.papTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.papText')}</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step two">Step 2</div>
+                                        <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step2Aria')}>{t('wizard.results.challenging.step2Badge')}</div>
                                         <div>
-                                            <strong>Apply to <TermTooltip term="foundation-grant">Foundations</TermTooltip>.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Organizations like HealthWell or PAN Foundation help pay for copays. Apply to them for your specific disease fund.</p>
+                                            <strong>{t('wizard.results.challenging.foundationsPre')}<TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.foundationsText')}</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 items-start">
-                                        <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label="Step three">Step 3</div>
+                                        <div className="bg-slate-100 text-slate-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step3Aria')}>{t('wizard.results.challenging.step3Badge')}</div>
                                         <div>
-                                            <strong>Compare vs. Cash.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">Sometimes the cash price (e.g. Cost Plus Drugs) is cheaper than your insurance copay.</p>
+                                            <strong>{t('wizard.results.challenging.cashTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.cashText')}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -2612,47 +2636,47 @@ const Wizard = () => {
                         {(financial === FinancialStatus.UNAFFORDABLE || financial === FinancialStatus.CRISIS) && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-rose-500" role="alert" aria-labelledby="assistance-heading">
                                 <h2 id="assistance-heading" className="text-lg font-bold text-rose-800 border-b pb-2 mb-4 flex items-center gap-2">
-                                    <AlertTriangle size={20} aria-hidden="true" /> Immediate Assistance Path
+                                    <AlertTriangle size={20} aria-hidden="true" /> {t('wizard.results.crisis.title')}
                                 </h2>
                                 <Link to="/education?topic=EMERGENCY" className="flex items-center gap-3 bg-rose-600 text-white p-3 rounded-lg font-semibold hover:bg-rose-700 transition mb-4">
                                     <Clock size={20} aria-hidden="true" />
-                                    <span>Out of medication, or down to your last few days? See emergency steps →</span>
+                                    <span>{t('wizard.results.crisis.emergencyLink')}</span>
                                 </Link>
                                 {financial === FinancialStatus.CRISIS && (
                                     <p className="text-sm text-slate-600 mb-4 bg-slate-50 p-3 rounded">
-                                        You are not alone. Help is available. Please follow these steps in order.
+                                        {t('wizard.results.crisis.notAlone')}
                                     </p>
                                 )}
                                 <ol className="space-y-4 text-slate-700 list-decimal pl-6">
                                     <li>
-                                        <strong>Manufacturer PAPs (Free Drug).</strong>
+                                        <strong>{t('wizard.results.crisis.papTitle')}</strong>
                                         <p className="text-sm text-slate-600 mt-1">
-                                            Most manufacturers have a "Patient Assistance Program". This is your best route for free medication. 
+                                            {t('wizard.results.crisis.papText')}
                                             <br/>
-                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">Search your med here</Link> to find the manufacturer link.
+                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">{t('wizard.results.crisis.papLinkText')}</Link>{t('wizard.results.crisis.papLinkPost')}
                                         </p>
                                     </li>
                                     <li>
-                                        <strong>Check Medicaid Eligibility.</strong>
-                                        <p className="text-sm text-slate-600 mt-1">If you have low income, check if you qualify for state Medicaid or "Extra Help" (if on Medicare).</p>
+                                        <strong>{t('wizard.results.crisis.medicaidTitle')}</strong>
+                                        <p className="text-sm text-slate-600 mt-1">{t('wizard.results.crisis.medicaidText')}</p>
                                     </li>
                                     {answers.insurance === InsuranceType.IHS && (
                                         <li>
-                                            <strong>Contact IHS / Tribal Health.</strong>
-                                            <p className="text-sm text-slate-600 mt-1">You likely have coverage for these medications at $0 cost at IHS facilities.</p>
+                                            <strong>{t('wizard.results.crisis.ihsTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.crisis.ihsText')}</p>
                                         </li>
                                     )}
                                 </ol>
                                 <div className="mt-5 pt-4 border-t border-slate-200">
-                                    <h3 className="font-bold text-slate-800 text-sm mb-2">If you don&rsquo;t qualify &mdash; or a fund is closed</h3>
-                                    <p className="text-sm text-slate-600 mb-2">A &ldquo;no&rdquo; from one program is not the end. Try these next:</p>
+                                    <h3 className="font-bold text-slate-800 text-sm mb-2">{t('wizard.results.crisis.notQualifyTitle')}</h3>
+                                    <p className="text-sm text-slate-600 mb-2">{t('wizard.results.crisis.notQualifyIntro')}</p>
                                     <ul className="space-y-2 text-sm text-slate-700 list-disc pl-6">
-                                        <li><strong>Apply to several programs at once.</strong> Income limits and open funds change often, so don&rsquo;t stop at one.</li>
-                                        <li><strong>Ask your transplant center about charity care.</strong> Many centers have their own financial-assistance or hospital discount programs &mdash; your social worker can start one.</li>
-                                        <li><strong>Ask the pharmacy about cash and sliding-scale prices.</strong> Cost Plus Drugs and pharmacy discount programs are sometimes cheaper than a copay.</li>
-                                        <li><strong>Appeal a denial.</strong> Many denials are overturned. <Link to="/education" className="text-rose-700 font-semibold underline">See how to appeal</Link>.</li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryPrograms" /></li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryCharity" /></li>
+                                        <li><Trans i18nKey="wizard.results.crisis.tryCash" /></li>
+                                        <li><strong>{t('wizard.results.crisis.appealTitle')}</strong>{t('wizard.results.crisis.appealMid')}<Link to="/education" className="text-rose-700 font-semibold underline">{t('wizard.results.crisis.appealLink')}</Link>{t('wizard.results.crisis.appealPost')}</li>
                                     </ul>
-                                    <Link to="/application-help" className="inline-block mt-3 text-rose-700 font-semibold underline text-sm">Get step-by-step help applying &rarr;</Link>
+                                    <Link to="/application-help" className="inline-block mt-3 text-rose-700 font-semibold underline text-sm">{t('wizard.results.crisis.getHelpLink')}</Link>
                                 </div>
                             </section>
                         )}
@@ -2660,12 +2684,12 @@ const Wizard = () => {
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
-                    <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label="Restart the wizard from beginning">Restart Wizard</button>
+                    <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label={t('wizard.results.restartAria')}>{t('wizard.results.restart')}</button>
                 </div>
             </article>
         );
     }
-    return <div>Loading...</div>;
+    return <div>{t('wizard.loading')}</div>;
 };
 
 // --- PRICE REPORTING HELPERS ---
