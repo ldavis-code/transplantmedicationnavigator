@@ -4,7 +4,9 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Info, ChevronDown, Shield, CheckCircle2, XCircle, HelpCircle, ArrowRight, ArrowLeft, Lightbulb } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
-import FAQS_DATA from '../data/faqs.json';
+import LanguageToggle from '../components/LanguageToggle.jsx';
+import FAQS_EN from '../data/faqs.json';
+import FAQS_ES from '../data/faqs.es.json';
 
 // Non-translatable flags per COB quiz outcome; the matching strings
 // (title, primary, secondary, summary, tips) live in locales/*.json
@@ -348,15 +350,18 @@ const COBQuiz = () => {
 };
 
 const FAQ = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     useMetaTags(seoMetadata.faq);
 
     const [openIndex, setOpenIndex] = useState(null);
 
+    // FAQ content lives in the data layer with one file per language
+    const faqs = i18n.resolvedLanguage === 'es' ? FAQS_ES : FAQS_EN;
+
     // Add FAQPage structured data for AI discoverability
     useEffect(() => {
         // Flatten all FAQs for schema
-        const allFaqs = FAQS_DATA.flatMap(section =>
+        const allFaqs = faqs.flatMap(section =>
             section.questions.map(faq => ({
                 '@type': 'Question',
                 'name': faq.q,
@@ -385,13 +390,11 @@ const FAQ = () => {
                 existingScript.remove();
             }
         };
-    }, []);
+    }, [faqs]);
 
     const toggleQuestion = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-
-    const faqs = FAQS_DATA;
 
     const FAQItem = ({ question, answer, index }) => {
         const isOpen = openIndex === index;
@@ -433,6 +436,9 @@ const FAQ = () => {
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto">
                     {t('faq.page.subtitle')}
                 </p>
+                <div className="mt-6 flex justify-center">
+                    <LanguageToggle />
+                </div>
             </header>
 
             {/* Coordination of Benefits Quiz Section */}

@@ -1,0 +1,140 @@
+{
+  "faq": {
+    "cob": {
+      "results": {
+        "medicare_employer_working": {
+          "title": "El seguro de su trabajo paga primero",
+          "primary": "El seguro de su empleador",
+          "secondary": "Medicare",
+          "summary": "¡Buenas noticias! Como usted o su cónyuge todavía trabaja, el seguro del trabajo paga primero. Esto significa que SÍ puede usar tarjetas de copago para bajar sus costos.",
+          "tips": [
+            "Muestre primero la tarjeta del seguro de su trabajo en la farmacia",
+            "Puede usar tarjetas de copago de los fabricantes de medicamentos",
+            "Guarde su tarjeta de Medicare como respaldo"
+          ]
+        },
+        "medicare_retiree": {
+          "title": "Medicare paga primero",
+          "primary": "Medicare",
+          "secondary": "Su plan de jubilado",
+          "summary": "Como usted se jubiló, ahora Medicare paga primero. No puede usar tarjetas de copago con Medicare. Pero todavía puede recibir ayuda de los Programas de Asistencia al Paciente.",
+          "tips": [
+            "Solicite Programas de Asistencia al Paciente (PAP) para obtener medicamentos gratis",
+            "Averigüe si las fundaciones pueden ayudar con sus costos",
+            "Su plan de jubilado ayuda a pagar lo que Medicare no cubre"
+          ]
+        },
+        "medicare_medicaid": {
+          "title": "Usted tiene muy buena cobertura",
+          "primary": "Medicare + Medicaid",
+          "secondary": "Los dos trabajan juntos",
+          "summary": "Usted tiene cobertura doble. Esto normalmente significa costos muy bajos o ningún costo por sus medicinas. Medicaid ayuda a pagar lo que Medicare no cubre.",
+          "tips": [
+            "Sus copagos deberían ser muy bajos o de $0",
+            "Asegúrese de que las dos tarjetas estén registradas en su farmacia",
+            "Pregunte por \"Ayuda Adicional\" (Extra Help) para bajar los costos aún más"
+          ]
+        },
+        "esrd_employer": {
+          "title": "Reglas especiales para pacientes de riñón",
+          "primary": "El seguro de su empleador (los primeros 30 meses)",
+          "secondary": "Medicare",
+          "summary": "Los pacientes de riñón tienen reglas especiales. Durante los primeros 30 meses, el seguro de su trabajo paga primero. Después de 30 meses, Medicare paga primero y ya no puede usar tarjetas de copago.",
+          "tips": [
+            "Use tarjetas de copago ahora, mientras el seguro de su trabajo paga primero",
+            "Marque en su calendario cuándo se cumplen los 30 meses",
+            "Planee con tiempo: solicite los PAP antes de que Medicare pase a pagar primero"
+          ]
+        },
+        "not_sure": {
+          "title": "Vamos a averiguarlo",
+          "primary": "Necesitamos más información",
+          "secondary": "",
+          "summary": "Las reglas de los seguros pueden ser complicadas. La mejor forma de saberlo con seguridad es llamar a las dos aseguradoras y preguntar: \"¿Cuál plan paga primero?\"",
+          "tips": [
+            "Llame a Medicare: 1-800-MEDICARE",
+            "Llame a su otra compañía de seguros",
+            "Pida ayuda al trabajador social de su equipo de trasplante"
+          ]
+        }
+      },
+      "start": {
+        "title": "¿Tiene usted dos planes de seguro médico?",
+        "subtitle": "Muchos pacientes de trasplante tienen más de un seguro. Este cuestionario le ayuda a saber cuál paga primero.",
+        "whyTitle": "¿Por qué importa esto?",
+        "whyText": "El seguro que paga primero cambia la ayuda que usted puede recibir. Algunos programas de ahorro solo funcionan con ciertos tipos de seguro.",
+        "reasonsTitle": "Razones comunes por las que los pacientes de trasplante tienen dos planes:",
+        "reasons": {
+          "kidney": "<strong>Enfermedad de los riñones</strong>: Puede recibir Medicare aunque tenga menos de 65 años",
+          "disability": "<strong>Discapacidad</strong>: Después de 2 años con beneficios por discapacidad, usted recibe Medicare",
+          "working": "<strong>Sigue trabajando a los 65+</strong>: Tiene Medicare Y seguro del trabajo",
+          "spouse": "<strong>El seguro de su cónyuge</strong>: El trabajo de su cónyuge también le cubre a usted"
+        },
+        "startButton": "Comenzar el cuestionario",
+        "duration": "Toma alrededor de 1 minuto"
+      },
+      "progress": "{{current}} de {{total}}",
+      "questionLabel": "Pregunta {{number}}",
+      "question1": {
+        "title": "¿Tiene usted más de un plan de seguro médico?",
+        "subtitle": "Por ejemplo: Medicare Y un seguro del trabajo",
+        "yes": "Sí, tengo dos o más planes",
+        "no": "No, tengo solo un plan",
+        "startOver": "Empezar de nuevo"
+      },
+      "question2": {
+        "title": "¿Cuál describe mejor su situación?",
+        "subtitle": "Elija la opción que mejor le corresponda",
+        "options": {
+          "medicare_employer_working": {
+            "label": "Tengo Medicare Y seguro del trabajo",
+            "detail": "Yo o mi cónyuge todavía trabaja"
+          },
+          "medicare_retiree": {
+            "label": "Tengo Medicare Y seguro de jubilado",
+            "detail": "Estoy jubilado pero todavía tengo cobertura de mi antiguo trabajo"
+          },
+          "medicare_medicaid": {
+            "label": "Tengo Medicare Y Medicaid",
+            "detail": "Tengo los dos programas del gobierno"
+          },
+          "esrd_employer": {
+            "label": "Tengo Medicare por enfermedad de los riñones Y seguro del trabajo",
+            "detail": "Recibí Medicare por insuficiencia renal (ESRD)"
+          },
+          "not_sure": {
+            "label": "No estoy seguro / Otra situación",
+            "detail": "Mi situación es diferente"
+          }
+        },
+        "goBack": "Regresar"
+      },
+      "result": {
+        "onePlanTitle": "Usted tiene un solo plan de seguro",
+        "onePlanText": "Como tiene solo un plan, no necesita preocuparse por cuál paga primero. Use nuestro cuestionario principal para encontrar programas de ayuda para su situación.",
+        "findHelp": "Buscar programas de ayuda",
+        "takeAgain": "Hacer el cuestionario otra vez",
+        "paysFirst": "PAGA PRIMERO",
+        "paysSecond": "PAGA SEGUNDO",
+        "copayQuestion": "¿Puede usar tarjetas de copago?",
+        "copayCards": "Tarjetas de copago",
+        "copayYes": "¡Sí, puede usarlas!",
+        "copayNo": "No, no cuando Medicare paga primero",
+        "copayDepends": "Depende de su situación",
+        "papTitle": "Programas de medicamentos gratis",
+        "papYes": "Sí, puede solicitar los PAP",
+        "nextTitle": "Qué hacer ahora:"
+      }
+    },
+    "page": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Encuentre respuestas a preguntas comunes sobre los medicamentos de trasplante, los programas de asistencia y el uso de este sitio.",
+      "emptyTitle": "No hay preguntas frecuentes disponibles",
+      "emptyText": "Vuelva más tarde para ver las preguntas frecuentes.",
+      "browseResources": "Ver recursos",
+      "stillTitle": "¿Todavía tiene preguntas?",
+      "stillText": "El trabajador social o el coordinador financiero de su centro de trasplante es su mejor recurso para recibir orientación personalizada.",
+      "startQuiz": "Comenzar el cuestionario Mi Camino"
+    }
+  }
+}
