@@ -1588,5 +1588,251 @@
       "errorInvalid": "Please enter a valid email address"
     },
     "loading": "Loading..."
+  },
+  "appeals": {
+    "meta": {
+      "title": "Got Denied? Appeal Help for Transplant Patients | TransplantMedicationNavigator",
+      "description": "Learn how to appeal insurance denials for transplant medications. Includes step therapy exceptions, generic vs brand guidance, and medical necessity letter templates."
+    },
+    "header": {
+      "back": "Back to Education & Resources",
+      "title": "Got Denied? Don't Give Up.",
+      "tagline": "You can fight back, and WIN!",
+      "intro": "Insurance says \"no\" to almost everyone at some point. The good news? <strong>Many people win when they appeal.</strong> This interactive guide shows you how, step by step.",
+      "stats": {
+        "winRate": "50%+",
+        "winRateLabel": "Appeals are won",
+        "days": "30-60",
+        "daysLabel": "Days to appeal",
+        "free": "Free",
+        "freeLabel": "To file an appeal"
+      },
+      "guideTitle": "Free Appeal Guide",
+      "guideSubtitle": "Print-ready guide with checklists & sample letters",
+      "guideDownload": "Download Free Guide"
+    },
+    "nav": {
+      "ariaLabel": "Page sections",
+      "prompt": "Click any section to explore:",
+      "whyDenied": "Why Denied?",
+      "stepTherapy": "Step Therapy",
+      "generics": "Generic vs Brand",
+      "howToAppeal": "How to Appeal"
+    },
+    "whyDenied": {
+      "title": "Why Insurance Says No",
+      "intro": "Your denial letter tells you why they said no. Here are the most common reasons:",
+      "reasons": {
+        "priorAuth": {
+          "title": "Prior Auth Needed",
+          "description": "Your doctor needs to ask permission first before the insurance will cover it."
+        },
+        "notOnList": {
+          "title": "Not on the List",
+          "description": "Your drug isn't on their approved list (called a formulary)."
+        },
+        "stepTherapy": {
+          "title": "Try Something Else First",
+          "description": "They want you to try a cheaper drug first (step therapy)."
+        },
+        "quantityLimits": {
+          "title": "Quantity Limits",
+          "description": "They say you're getting too much of this drug."
+        },
+        "generic": {
+          "title": "Use the Generic",
+          "description": "They want you to use a cheaper generic version."
+        }
+      },
+      "remember": "Remember: A denial is NOT the final answer. It's just the first \"no\", and you can fight it!"
+    },
+    "stepTherapy": {
+      "title": "Step Therapy: \"Try This First\"",
+      "intro": "<strong>Step therapy</strong> means your insurance wants you to try a cheaper drug before they'll pay for the one your doctor picked. Some people call this \"fail first.\"",
+      "risky": {
+        "title": "Why This Can Be Risky",
+        "items": [
+          "Anti-rejection drugs need exact blood levels. Small changes matter a lot.",
+          "Trying the wrong drug could hurt your transplant.",
+          "Your transplant team picked your drug for good reasons.",
+          "Switching means more blood tests and doctor visits."
+        ]
+      },
+      "canDo": {
+        "title": "What You Can Do",
+        "items": [
+          "You can ask them to skip step therapy.",
+          "Transplant drugs often get approved when your doctor explains why.",
+          "A letter from your transplant doctor helps a lot.",
+          "Many states have laws that protect patients."
+        ]
+      },
+      "proTip": "Pro Tip: Ask your doctor about \"step therapy exception\", they can request this on your behalf!"
+    },
+    "generics": {
+      "title": "Generic vs. Brand Name Drugs",
+      "basics": {
+        "title": "The Basics",
+        "items": [
+          "Generic drugs have the same main ingredient as brand-name drugs.",
+          "The FDA says they work the same way.",
+          "For most drugs, generics are fine."
+        ]
+      },
+      "different": {
+        "title": "Why Transplant Drugs Are Different",
+        "intro": "Anti-rejection drugs are special. Even tiny changes can cause problems:",
+        "tooLittle": "<strong>Too little:</strong> Your body might reject the transplant",
+        "tooMuch": "<strong>Too much:</strong> Side effects and toxicity"
+      },
+      "brandNeed": {
+        "title": "When You Might Need Brand Name",
+        "items": [
+          "Your drug levels have been steady on this brand",
+          "You had problems when you switched before",
+          "Your transplant center requires brand-name",
+          "Your body has trouble absorbing the drug"
+        ]
+      }
+    },
+    "howToAppeal": {
+      "title": "How to Appeal: Step by Step"
+    },
+    "tracker": {
+      "progressLabel": "Your Progress",
+      "progress": "{{completed}} of {{total}} steps",
+      "instruction": "Click each step when you've completed it to track your progress!",
+      "tipLabel": "Tip:",
+      "steps": [
+        {
+          "title": "Get It in Writing",
+          "description": "Ask for a letter that says exactly why they said no. You need this to know what to say in your appeal.",
+          "tips": "Call the number on your insurance card and ask for a 'written denial letter' or 'explanation of benefits.'"
+        },
+        {
+          "title": "Watch the Clock",
+          "description": "You usually have 30 to 60 days to appeal. Mark the date on your calendar. Don't miss it.",
+          "tips": "Set a phone reminder 2 weeks before your deadline!"
+        },
+        {
+          "title": "Get Your Papers Together",
+          "description": "Ask your transplant team for: a letter from your doctor, your transplant records, recent lab results, and notes about why other drugs won't work.",
+          "tips": "Use the letter builder below to help your doctor write a support letter!"
+        },
+        {
+          "title": "Send Your Appeal",
+          "description": "Send everything together. Keep copies of everything you send.",
+          "tips": "Send by fax or certified mail so you have proof it was received."
+        },
+        {
+          "title": "Ask for a Fast Review If You Need It",
+          "description": "If you're going to run out of your medicine soon, ask for an expedited (fast) review. For transplant drugs, this almost always counts as urgent.",
+          "tips": "Say 'I need an expedited appeal because running out of my transplant medication is life-threatening.'"
+        },
+        {
+          "title": "Know What Comes Next",
+          "description": "If they say no again, you can ask for an external review by someone outside the company. Your state insurance office can also help.",
+          "tips": "Don't give up after the first appeal denial, external reviews often overturn decisions!"
+        }
+      ],
+      "congratsTitle": "Congratulations! You've completed all the steps!",
+      "congratsText": "You're well on your way to winning your appeal. Stay strong!"
+    },
+    "letter": {
+      "title": "Write a Letter to Your Doctor",
+      "subtitle": "Ask your doctor to help with your appeal",
+      "why": "<strong>Why write to your doctor?</strong> Your doctor has the medical knowledge to explain why you need your specific medication. A letter of medical necessity from your doctor is often the key to winning an appeal.",
+      "note": "<strong>Note:</strong> Your doctor already has access to a detailed medical necessity letter template. This letter is for <em>you</em> to request their help and provide them with the information they need.",
+      "yourName": "Your Name",
+      "yourNamePlaceholder": "Your full name",
+      "doctorName": "Doctor's Name",
+      "doctorNamePlaceholder": "e.g., Smith",
+      "medicationName": "Medication Name",
+      "medicationNamePlaceholder": "e.g., Tacrolimus, Prograf",
+      "transplantType": "Transplant Type",
+      "transplantTypePlaceholder": "e.g., Kidney, Liver, Heart",
+      "transplantDate": "Transplant Date ",
+      "transplantDatePlaceholder": "e.g., January 2023",
+      "denialReason": "Denial Reason ",
+      "denialReasonPlaceholder": "e.g., Not on formulary, Step therapy required",
+      "additionalInfo": "Additional Information ",
+      "additionalInfoPlaceholder": "Any other details that might help your doctor (e.g., previous drug reactions, why you need this specific medication, etc.)",
+      "optional": "(optional)",
+      "ifKnown": "(if known)",
+      "generate": "Generate My Letter",
+      "previewTitle": "Your Letter to Dr. ",
+      "doctorFallback": "[Doctor's Name]",
+      "copied": "Copied!",
+      "copyText": "Copy Text",
+      "nextStep": "<strong>Next step:</strong> Print this letter or email it to your doctor along with a copy of your denial letter."
+    },
+    "resources": {
+      "title": "Free Downloadable Resources",
+      "subtitle": "Print these guides to help with your appeal",
+      "appealGuide": {
+        "title": "Complete Appeal Guide",
+        "description": "Step-by-step instructions, checklists, sample letters, and tips for winning your appeal. Written in plain language.",
+        "items": [
+          "Printable checklists",
+          "Sample appeal letter template",
+          "Phone scripts for calling insurance"
+        ],
+        "download": "Download Appeal Guide"
+      },
+      "doctorTemplate": {
+        "title": "Doctor's Letter Template",
+        "description": "Share this with your transplant doctor. A ready-to-use medical necessity letter template they can customize for your appeal.",
+        "items": [
+          "Professional medical format",
+          "Clinical guideline references",
+          "Fill-in-the-blank sections"
+        ],
+        "download": "Download Free Template"
+      }
+    },
+    "spGuide": {
+      "title": "Specialty Pharmacy Guide",
+      "subtitle": "Know your rights and choices when your insurance makes you use a certain pharmacy.",
+      "builder": {
+        "title": "Specialty Pharmacy Appeal Letter Builder",
+        "intro": "Fill in your details below to make a letter you can copy and send to your insurance company.",
+        "yourName": "Your Name",
+        "yourNamePlaceholder": "Your Name",
+        "medicationName": "Medication Name",
+        "medicationNamePlaceholder": "Medication Name",
+        "reason": "Reason for Appeal",
+        "reasonFinancial": "Financial Hardship",
+        "reasonAccess": "Access Issues (Timing/Delivery)",
+        "reasonClinical": "Clinical Stability (Already stable)",
+        "generate": "Generate Letter",
+        "generateAria": "Generate specialty pharmacy appeal letter",
+        "preview": "Preview:",
+        "copyAria": "Copy letter text to clipboard"
+      },
+      "howTo": {
+        "title": "How to Appeal: A Step-by-Step Guide",
+        "medicare": {
+          "title": "Medicare Appeals",
+          "note": "Important: Act on time.",
+          "step1": "<strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.",
+          "step2": "<strong>Level 1 (Second Look):</strong> File within 65 days if they say no.",
+          "step3": "<strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.",
+          "link": "Official Medicare Guide",
+          "linkAria": "Visit Official Medicare Guide (opens in new tab)"
+        },
+        "medicaid": {
+          "title": "Medicaid Appeals",
+          "text": "Each state runs its own appeals. Call your state's Medicaid office."
+        },
+        "private": {
+          "title": "Private Insurance",
+          "text": "You can ask your company to look again. If they still say no, you can ask for an outside review."
+        }
+      }
+    },
+    "footer": {
+      "title": "Remember: You Are Not Alone",
+      "text": "Thousands of transplant patients successfully appeal their denials every year. Your health matters, and you have every right to fight for the medications you need. Stay strong and don't give up!"
+    }
   }
 }
