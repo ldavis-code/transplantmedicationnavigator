@@ -1852,6 +1852,9 @@ const Wizard = () => {
         return (
             <div className="max-w-2xl mx-auto">
 
+                <div className="mb-4 flex justify-end">
+                    <LanguageToggle />
+                </div>
                 {renderProgress()}
                 <div className="flex items-center gap-3 mb-2">
                     <div className="bg-emerald-100 p-2 rounded-lg">
