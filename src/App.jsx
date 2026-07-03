@@ -522,7 +522,12 @@ const Layout = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const { isSimpleView, toggleSimpleView } = useSimpleView();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+
+    // B2B pages (hospital sales, plan pricing) are English-only offerings —
+    // they are hidden from the Spanish patient experience.
+    const isSpanish = i18n.resolvedLanguage === 'es';
+    const B2B_PATHS = ['/for-hospitals', '/pricing'];
 
     const navLinks = [
         { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
@@ -534,7 +539,7 @@ const Layout = ({ children }) => {
         { path: '/pricing', label: t('layout.nav.links.pricing.label'), ariaLabel: t('layout.nav.links.pricing.ariaLabel') },
         { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
         { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
-    ];
+    ].filter((link) => !isSpanish || !B2B_PATHS.includes(link.path));
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
@@ -681,8 +686,12 @@ const Layout = ({ children }) => {
                         <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.accessibility')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.feedback')}</Link>
-                        <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
+                        {!isSpanish && (
+                            <>
+                                <span className="text-slate-600" aria-hidden="true">|</span>
+                                <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
+                            </>
+                        )}
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.admin')}</Link>
                     </div>
@@ -707,7 +716,9 @@ const STAT_ASSISTANCE_PROGRAMS = countGroup(PROGRAMS_DATA.papPrograms) + countGr
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    // B2B pitch is an English-only offering — hidden in Spanish mode
+    const isSpanish = i18n.resolvedLanguage === 'es';
 
     return (
         <article className="space-y-8">
@@ -907,7 +918,8 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* For Hospitals & Transplant Centers */}
+            {/* For Hospitals & Transplant Centers (English-only B2B offering) */}
+            {!isSpanish && (
             <section className="max-w-5xl mx-auto" aria-labelledby="for-hospitals-heading">
                 <div className="rounded-2xl bg-slate-900 text-white p-8 md:p-10 shadow-lg">
                     <div className="flex flex-col md:flex-row md:items-center gap-6">
@@ -944,6 +956,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Mission & Vision Section */}
             <section className="max-w-5xl mx-auto" aria-labelledby="mission-heading">
