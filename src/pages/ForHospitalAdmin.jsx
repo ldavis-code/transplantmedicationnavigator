@@ -378,7 +378,7 @@ const ForHospitalAdmin = () => {
                 </div>
                 <div className="max-w-3xl mx-auto space-y-4">
                     <p className="text-slate-700 leading-relaxed">
-                        Before founding Transplant Medication Navigator, Lorrinda Gray-Davis spent 20 years in enterprise operations, directing more than $1 billion to diverse contractors across $8.6B and $4.5B capital programs — work ranked among the top 25 programs in the country, reporting directly to CEOs, and recognized by Congress.
+                        Before founding Transplant Medication Navigator, Lorrinda Gray-Davis spent 20 years in enterprise operations as Executive Director of Diversity for Perini Building Company, directing more than $1 billion to diverse contractors across $8.6B and $4.5B capital programs — work ranked among the top 25 programs in the country, reporting directly to CEOs, and recognized by Congress.
                     </p>
                     <p className="text-slate-700 leading-relaxed">
                         Today she serves as Vice Chair of the OPTN Patient Affairs Committee and on an HRSA Technical Expert Panel — seats at the national tables where transplant policy is made. Her own liver transplant is the origin of this platform, not the credential: she has personally supported more than 586 patients through their transplant journeys, and participants in her recovery program for alcohol-associated liver disease have gone on to receive 183 transplants — peer-support outcomes she co-authored in <em>Hepatology Communications</em>.
