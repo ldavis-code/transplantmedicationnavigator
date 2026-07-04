@@ -114,6 +114,8 @@ export const seoMetadata = {
     ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
     twitterTitle: 'IOTA PY2 Is Live: Protect Graft Survival',
     twitterDescription: 'IOTA downside risk began July 1, 2026. HIPAA-compliant patient medication education for transplant programs, with Epic integration and aggregate reporting.',
+    ogImage: `${BASE_URL}/og-image-hospitals.png`,
+    twitterImage: `${BASE_URL}/og-image-hospitals.png`,
     breadcrumbName: 'Hospitals',
   },
 

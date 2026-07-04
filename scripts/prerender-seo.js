@@ -61,6 +61,7 @@ const pages = [
     description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. HIPAA-compliant patient education with Epic integration.',
     ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
     ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
+    ogImage: '/og-image-hospitals.png',
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">For Hospital Administrators &amp; Transplant Coordinators</h1>
       <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves on the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
       <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
@@ -225,7 +226,7 @@ function generatePageHTML(page, mainScriptPath) {
     <meta property="og:url" content="${canonical}" />
     <meta property="og:title" content="${page.ogTitle || page.title}" />
     <meta property="og:description" content="${page.ogDescription || page.description}" />
-    <meta property="og:image" content="${BASE_URL}/og-image.png" />
+    <meta property="og:image" content="${BASE_URL}${page.ogImage || '/og-image.png'}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="${SITE_NAME}" />
@@ -236,7 +237,7 @@ function generatePageHTML(page, mainScriptPath) {
     <meta name="twitter:url" content="${canonical}" />
     <meta name="twitter:title" content="${page.ogTitle || page.title}" />
     <meta name="twitter:description" content="${page.ogDescription || page.description}" />
-    <meta name="twitter:image" content="${BASE_URL}/twitter-image.png" />
+    <meta name="twitter:image" content="${BASE_URL}${page.ogImage || '/twitter-image.png'}" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
