@@ -74,11 +74,13 @@ const About = () => {
                     <div className="flex flex-wrap gap-2">
                         {[
                             'Vice Chair, OPTN Patient Affairs Committee',
+                            'OPTN Transitional Nominating Committee (2025)',
                             'President, TRIO (1,500+ members)',
                             'Harrison Fellow, Fatty Liver Foundation',
                             'AASLD Patient Advisory Group',
-                            'HRSA Commendation Letter',
-                            'Co-First Author, Hepatology Communications'
+                            'HRSA Letter of Commendation (2025)',
+                            'Co-First Author, Hepatology Communications',
+                            'Featured in Cancer Today magazine (2025)'
                         ].map((credential) => (
                             <span key={credential} className="inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-slate-700 text-xs md:text-sm font-medium px-3 py-1.5 rounded-full">
                                 <CheckCircle size={14} className="text-emerald-500 flex-shrink-0" aria-hidden="true" />
