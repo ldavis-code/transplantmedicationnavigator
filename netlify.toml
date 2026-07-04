@@ -143,6 +143,11 @@
   status = 200
 
 [[redirects]]
+  from = "/for-hospitals"
+  to = "/for-hospitals/index.html"
+  status = 200
+
+[[redirects]]
   from = "/my-medications"
   to = "/my-medications/index.html"
   status = 200

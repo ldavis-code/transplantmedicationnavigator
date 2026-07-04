@@ -16,7 +16,8 @@ const medicationRoutes = MEDICATIONS.map((m) => ({
 }));
 
 // Define all routes with their SEO metadata
-// Note: Excludes redirect routes (/for-*), admin routes (/reporting/*), auth pages, and confirmation pages
+// Note: Excludes redirect routes (/for-transplant-programs, /for-employers, /for-payers),
+// admin routes (/reporting/*), auth pages, and confirmation pages
 const routes = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
     { path: '/wizard', changefreq: 'monthly', priority: 0.9 },
@@ -24,6 +25,7 @@ const routes = [
     { path: '/education', changefreq: 'monthly', priority: 0.8 },
     { path: '/application-help', changefreq: 'monthly', priority: 0.8 },
     { path: '/pricing', changefreq: 'monthly', priority: 0.8 },
+    { path: '/for-hospitals', changefreq: 'monthly', priority: 0.8 },
     { path: '/savings-tracker', changefreq: 'monthly', priority: 0.8 },
     { path: '/subscribe', changefreq: 'monthly', priority: 0.8 },
     { path: '/faq', changefreq: 'monthly', priority: 0.7 },
