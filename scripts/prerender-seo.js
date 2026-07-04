@@ -56,6 +56,24 @@ const pages = [
     ogDescription: 'Complete guide to applying for medication assistance. Get templates, checklists, and step-by-step instructions.',
   },
   {
+    route: '/for-hospitals',
+    title: 'For Hospital Administrators | Transplant Medication Navigator™',
+    description: 'Improve SRTR outcomes, reduce readmissions, and strengthen CMS compliance. HIPAA-compliant medication assistance tool with Epic integration for transplant programs.',
+    ogTitle: 'For Hospital Administrators & Transplant Coordinators',
+    ogDescription: 'Protect graft survival by removing medication cost barriers. HIPAA-compliant, Epic-integrated tool supporting SRTR outcomes and CMS documentation compliance.',
+    bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">For Hospital Administrators &amp; Transplant Coordinators</h1>
+      <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves on the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
+      <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
+        <li>Improve SRTR outcomes: medication non-adherence is the leading modifiable cause of graft loss, associated with ~36% of graft losses (Dew MA et al., Transplantation, 2007).</li>
+        <li>Reduce preventable readmissions driven by cost-related non-adherence &mdash; 40% of recipients report skipping doses due to cost (AST Therapeutic Needs Study, Taber DJ et al., American Journal of Transplantation, 2025).</li>
+        <li>Strengthen CMS Conditions of Participation documentation with a trackable, standardized patient education resource.</li>
+        <li>HIPAA-compliant by design: no PHI collected, stored, or transmitted; no BAA required for educational use.</li>
+        <li>Epic MyChart integration via Epic Connection Hub, discharge workflow support, and a white-label admin dashboard with aggregate, privacy-safe analytics.</li>
+        <li>Typical patient impact: monthly out-of-pocket immunosuppressant costs drop from $624 without assistance to about $10 with copay card enrollment.</li>
+      </ul>
+      <p style="margin-bottom:16px;"><a href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry" style="color:#059669;font-weight:600;text-decoration:underline;">Schedule a demo</a> or <a href="/pilot" style="color:#059669;font-weight:600;text-decoration:underline;">view the 90-day pilot program</a>.</p>`,
+  },
+  {
     route: '/pricing',
     title: 'Pricing | Transplant Medication Navigator™',
     description: 'Free access to education, subscription options for patients, and partnership options for organizations. View our clear pricing.',
