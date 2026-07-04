@@ -125,6 +125,11 @@ import {
 } from './data/constants.js';
 import MEDICATIONS_DATA from './data/medications.json';
 import PROGRAMS_DATA from './data/programs.json';
+// Sparse Spanish overlay for patient-facing program text (maxBenefit/notes)
+import PROGRAMS_ES from './data/programs.es.json';
+// Spanish overlay for the wizard's organ medication guides (titles,
+// descriptions, class display names, per-med notes)
+import ORGAN_MEDS_ES from './data/organ-medications.es.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
 import DIRECTORY_RESOURCES_ES from './data/resources.es.json';
 import STATES_DATA from './data/states.json';
@@ -1238,7 +1243,10 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    // Spanish display text comes from the organ-medications.es.json overlay;
+    // drug names/brands and the data itself stay untouched.
+    const guideEs = i18n.resolvedLanguage === 'es' ? ORGAN_MEDS_ES : null;
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1307,8 +1315,8 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                 return <IconComponent size={24} className="text-emerald-600 flex-shrink-0 mt-1" />;
                             })()}
                             <div>
-                                <h4 className="font-bold text-lg text-slate-900">{ORGAN_MEDICATIONS[expandedOrgan].title}</h4>
-                                <p className="text-sm text-slate-600 mt-1">{ORGAN_MEDICATIONS[expandedOrgan].description}</p>
+                                <h4 className="font-bold text-lg text-slate-900">{guideEs?.organs?.[expandedOrgan]?.title || ORGAN_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{guideEs?.organs?.[expandedOrgan]?.description || ORGAN_MEDICATIONS[expandedOrgan].description}</p>
                             </div>
                         </div>
 
@@ -1332,8 +1340,8 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                                     <span className="font-bold text-slate-900">{med.brand}</span>
                                                     <span className="text-slate-500 ml-1">({med.name})</span>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600">{med.class}</td>
-                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.classes?.[med.class] || med.class}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.organs?.[expandedOrgan]?.notes?.[med.id] || med.notes}</td>
                                                 <td className="py-3 px-3 text-right">
                                                     <button
                                                         onClick={() => onMedicationToggle && onMedicationToggle(med.id)}
@@ -1367,7 +1375,9 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    // Spanish display text from the overlay; pre-transplant notes key by class
+    const guideEs = i18n.resolvedLanguage === 'es' ? ORGAN_MEDS_ES : null;
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1425,8 +1435,8 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                 return <IconComponent size={24} className="text-blue-600 flex-shrink-0 mt-1" />;
                             })()}
                             <div>
-                                <h4 className="font-bold text-lg text-slate-900">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].title}</h4>
-                                <p className="text-sm text-slate-600 mt-1">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].description}</p>
+                                <h4 className="font-bold text-lg text-slate-900">{guideEs?.preTransplant?.[expandedOrgan]?.title || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{guideEs?.preTransplant?.[expandedOrgan]?.description || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].description}</p>
                             </div>
                         </div>
 
@@ -1445,7 +1455,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                         return (
                                             <tr key={med.class} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <span className="font-bold text-slate-900">{med.class}</span>
+                                                    <span className="font-bold text-slate-900">{guideEs?.classes?.[med.class] || med.class}</span>
                                                 </td>
                                                 <td className="py-3 px-3">
                                                     <div className="flex flex-wrap gap-1.5">
@@ -1465,7 +1475,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                                         })}
                                                     </div>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.preTransplant?.[expandedOrgan]?.notes?.[med.class] || med.notes}</td>
                                             </tr>
                                         );
                                     })}
@@ -1478,7 +1488,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                             <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3">
                                 <div className="flex items-start gap-2">
                                     <AlertTriangle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                                    <p className="text-sm text-amber-800">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning}</p>
+                                    <p className="text-sm text-amber-800">{guideEs?.preTransplant?.[expandedOrgan]?.warning || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning}</p>
                                 </div>
                             </div>
                         )}
@@ -2806,6 +2816,7 @@ if (typeof window !== 'undefined') {
 
 // MedicationSearch Page
 const MedicationSearch = () => {
+    const { t } = useTranslation();
     useMetaTags(seoMetadata.medications);
     const MEDICATIONS = useMedicationsList();
     const {
@@ -2946,9 +2957,10 @@ const MedicationSearch = () => {
             <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                     <div>
-                        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Search Medications</h1>
-                        <p className="text-slate-600">Search for your medications to build a shareable price list.</p>
+                        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{t('medications.search.title')}</h1>
+                        <p className="text-slate-600">{t('medications.search.subtitle')}</p>
                     </div>
+                    <LanguageToggle />
                 </div>
 
                 {/* Important Safety Warning */}
@@ -2956,10 +2968,10 @@ const MedicationSearch = () => {
                     <div className="flex items-start gap-3">
                         <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                         <div>
-                            <p className="font-bold text-red-800 mb-1">Important Safety Note for Transplant Patients</p>
-                            <p className="text-red-700 text-sm">Never switch from brand name to generic (or between different generic manufacturers) without your transplant team's approval. In transplant medicine, slight variations in bioavailability can cause organ rejection. <strong>"Cheaper" isn't always "safe"</strong> if the manufacturer changes.</p>
+                            <p className="font-bold text-red-800 mb-1">{t('medications.search.safety.title')}</p>
+                            <p className="text-red-700 text-sm"><Trans i18nKey="medications.search.safety.text" /></p>
                             <Link to="/education?topic=GENERICS" className="inline-flex items-center gap-1 text-red-800 font-semibold text-sm underline mt-1">
-                                Learn about generics vs. brand-name <ArrowRight size={14} aria-hidden="true" />
+                                {t('medications.search.safety.link')}<ArrowRight size={14} aria-hidden="true" />
                             </Link>
                         </div>
                     </div>
@@ -2968,12 +2980,12 @@ const MedicationSearch = () => {
                 <div className="relative z-20 no-print">
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-grow relative">
-                            <label htmlFor="med-search" className="sr-only">Search for medications</label>
+                            <label htmlFor="med-search" className="sr-only">{t('medications.search.inputLabel')}</label>
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
                             <input
                                 id="med-search"
                                 type="text"
-                                placeholder="Enter drug name (e.g. Prograf, Ozempic)..."
+                                placeholder={t('medications.search.placeholder')}
                                 className="w-full pl-12 pr-12 py-4 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none text-lg transition shadow-sm"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -2985,50 +2997,50 @@ const MedicationSearch = () => {
                                 aria-expanded={!!(searchResult && searchTerm && !isSearching)}
                                 aria-controls="search-results-listbox"
                             />
-                            <span id="search-instructions" className="sr-only">Type medication name and press enter or click search button</span>
+                            <span id="search-instructions" className="sr-only">{t('medications.search.instructions')}</span>
                             {isSearching ? (
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2" aria-live="polite" aria-busy="true">
-                                    <Loader2 size={20} className="text-emerald-600 animate-spin" aria-label="Searching" />
+                                    <Loader2 size={20} className="text-emerald-600 animate-spin" aria-label={t('medications.search.searchingAria')} />
                                 </div>
                             ) : searchTerm && (
-                                <button onClick={() => { setSearchTerm(''); setSearchResult(null); setIsSearching(false); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Clear search">
+                                <button onClick={() => { setSearchTerm(''); setSearchResult(null); setIsSearching(false); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.search.clearAria')}>
                                     <X size={20} />
                                 </button>
                             )}
                         </div>
-                        <button onClick={handleSearch} disabled={!searchTerm.trim()} className="bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-400 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 justify-center shrink-0 disabled:cursor-not-allowed min-h-[56px]" aria-label="Search for medications">
-                            <Search size={22} aria-hidden="true" /> Search
+                        <button onClick={handleSearch} disabled={!searchTerm.trim()} className="bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-400 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 justify-center shrink-0 disabled:cursor-not-allowed min-h-[56px]" aria-label={t('medications.search.inputLabel')}>
+                            <Search size={22} aria-hidden="true" /> {t('medications.search.button')}
                         </button>
                     </div>
 
                     {isSearching && !searchResult && searchTerm && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-4 z-50" role="status" aria-label="Loading search results">
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-4 z-50" role="status" aria-label={t('medications.search.loadingResultsAria')}>
                             <div className="flex items-center justify-center gap-3 text-slate-700 py-4">
                                 <Loader2 size={20} className="animate-spin text-emerald-600" />
-                                <span>Searching medications...</span>
+                                <span>{t('medications.search.searchingText')}</span>
                             </div>
                         </div>
                     )}
                     {searchResult && searchTerm && !isSearching && (
-                        <div id="search-results-listbox" className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[60vh] overflow-y-auto z-50" role="listbox" aria-label="Search results">
+                        <div id="search-results-listbox" className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl p-2 max-h-[60vh] overflow-y-auto z-50" role="listbox" aria-label={t('medications.search.resultsAria')}>
                             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mb-2 mx-2">
-                                <p className="text-emerald-800 text-sm font-medium">Help is here, let's find it together. Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.</p>
+                                <p className="text-emerald-800 text-sm font-medium">{t('medications.search.helpBanner')}</p>
                             </div>
-                            <div className="px-4 py-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Search Results</div>
+                            <div className="px-4 py-2 text-sm font-bold text-slate-700 uppercase tracking-wider">{t('medications.search.resultsHeading')}</div>
                             {searchResult.internal.length > 0 ? (
                                 <div className="space-y-1 mb-2">
                                     {searchResult.internal.map(med => {
                                         const isAlreadyIn = myListIds.includes(med.id);
                                         return (
-                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={`Add ${med.brandName} to list`}>
+                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: med.brandName })}>
                                                 <div>
                                                     <span className="font-bold text-slate-900 block">{med.brandName}</span>
                                                     <span className="text-sm text-slate-600">{med.genericName}</span>
                                                 </div>
                                                 {isAlreadyIn ? (
-                                                    <span className="text-emerald-600 text-sm font-bold flex items-center gap-1" aria-label="Already added"><CheckCircle size={16} aria-hidden="true" /> Added</span>
+                                                    <span className="text-emerald-600 text-sm font-bold flex items-center gap-1" aria-label={t('medications.search.alreadyAddedAria')}><CheckCircle size={16} aria-hidden="true" /> {t('medications.search.added')}</span>
                                                 ) : (
-                                                    <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-emerald-100 flex items-center gap-1"><PlusCircle size={16} aria-hidden="true" /> Add</span>
+                                                    <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-emerald-100 flex items-center gap-1"><PlusCircle size={16} aria-hidden="true" /> {t('medications.search.add')}</span>
                                                 )}
                                             </button>
                                         )
@@ -3039,18 +3051,18 @@ const MedicationSearch = () => {
                                     <div className="text-slate-400 mb-2">
                                         <Search size={24} className="mx-auto" aria-hidden="true" />
                                     </div>
-                                    <p className="text-slate-700 font-medium mb-1">No matches in our transplant database</p>
-                                    <p className="text-slate-500 text-sm">Try a different spelling, or use the option below to add it as a custom medication.</p>
+                                    <p className="text-slate-700 font-medium mb-1">{t('medications.search.noMatches')}</p>
+                                    <p className="text-slate-500 text-sm">{t('medications.search.noMatchesHint')}</p>
                                 </div>
                             )}
                             {searchResult.showExternalOption && (
                                 <div className="border-t border-slate-100 pt-2 mt-1">
-                                    <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center group transition" aria-label={`Add custom medication ${searchTerm} to list`}>
+                                    <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center group transition" aria-label={t('medications.search.addCustomAria', { term: searchTerm })}>
                                         <div>
-                                            <span className="font-bold text-indigo-900 block">Add "{searchTerm}" to list</span>
-                                            <span className="text-xs text-indigo-600">Check price on external sites</span>
+                                            <span className="font-bold text-indigo-900 block">{t('medications.search.addCustomLabel', { term: searchTerm })}</span>
+                                            <span className="text-xs text-indigo-600">{t('medications.search.checkExternal')}</span>
                                         </div>
-                                        <span className="text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-indigo-200 flex items-center gap-1"><PlusCircle size={16} aria-hidden="true" /> Add Custom</span>
+                                        <span className="text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full text-sm font-bold group-hover:bg-indigo-200 flex items-center gap-1"><PlusCircle size={16} aria-hidden="true" /> {t('medications.search.addCustom')}</span>
                                     </button>
                                 </div>
                             )}
@@ -3065,12 +3077,12 @@ const MedicationSearch = () => {
                 <section className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Your Medications</h1>
-                            <p className="text-slate-600">Here are the medications you selected.</p>
+                            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{t('medications.verify.title')}</h1>
+                            <p className="text-slate-600">{t('medications.verify.subtitle')}</p>
                         </div>
                         <div className="flex gap-2 no-print">
-                            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-bold hover:bg-slate-200 transition border border-slate-200" aria-label="Print your medication list">
-                                <Printer size={18} aria-hidden="true" /> Print
+                            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-bold hover:bg-slate-200 transition border border-slate-200" aria-label={t('medications.verify.printAria')}>
+                                <Printer size={18} aria-hidden="true" /> {t('medications.verify.print')}
                             </button>
                         </div>
                     </div>
@@ -3088,13 +3100,13 @@ const MedicationSearch = () => {
                             </div>
                             <div>
                                 <h2 className="font-bold text-lg text-blue-800 mb-2">
-                                    Please Verify Your Medications
+                                    {t('medications.verify.alertTitle')}
                                 </h2>
                                 <p className="text-blue-700 mb-3">
-                                    Review the medication list below carefully. If you take other transplant medications not shown, add them using the search box.
+                                    {t('medications.verify.alertText')}
                                 </p>
                                 <p className="text-blue-600 text-sm font-medium">
-                                    Accurate medication information helps us find the best savings options for you.
+                                    {t('medications.verify.alertNote')}
                                 </p>
                             </div>
                         </div>
@@ -3104,12 +3116,12 @@ const MedicationSearch = () => {
                     <div className="relative z-20 no-print mb-6">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-grow relative">
-                                <label htmlFor="med-search-add" className="sr-only">Add more medications</label>
+                                <label htmlFor="med-search-add" className="sr-only">{t('medications.verify.addMoreLabel')}</label>
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
                                 <input
                                     id="med-search-add"
                                     type="text"
-                                    placeholder="Add another medication..."
+                                    placeholder={t('medications.verify.addMorePlaceholder')}
                                     className="w-full pl-12 pr-12 py-3 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none text-base transition shadow-sm"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -3120,7 +3132,7 @@ const MedicationSearch = () => {
                                     aria-expanded={!!(searchResult && searchTerm && !isSearching)}
                                 />
                                 {searchTerm && (
-                                    <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Clear search">
+                                    <button onClick={() => { setSearchTerm(''); setSearchResult(null); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.search.clearAria')}>
                                         <X size={20} />
                                     </button>
                                 )}
@@ -3139,9 +3151,9 @@ const MedicationSearch = () => {
                                                         <span className="text-sm text-slate-600">{med.genericName}</span>
                                                     </div>
                                                     {isAlreadyIn ? (
-                                                        <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> Added</span>
+                                                        <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> {t('medications.search.added')}</span>
                                                     ) : (
-                                                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1"><PlusCircle size={16} /> Add</span>
+                                                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1"><PlusCircle size={16} /> {t('medications.search.add')}</span>
                                                     )}
                                                 </button>
                                             );
@@ -3150,8 +3162,8 @@ const MedicationSearch = () => {
                                 )}
                                 {searchResult.showExternalOption && (
                                     <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center border-t border-slate-100">
-                                        <span className="font-bold text-indigo-900">Add "{searchTerm}" as custom medication</span>
-                                        <span className="text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full text-sm font-bold"><PlusCircle size={16} className="inline" /> Add</span>
+                                        <span className="font-bold text-indigo-900">{t('medications.search.addAsCustom', { term: searchTerm })}</span>
+                                        <span className="text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full text-sm font-bold"><PlusCircle size={16} className="inline" /> {t('medications.search.add')}</span>
                                     </button>
                                 )}
                             </div>
@@ -3166,7 +3178,7 @@ const MedicationSearch = () => {
                                     <span className="font-bold text-slate-900">{med.brandName}</span>
                                     <span className="text-slate-600 ml-2">({med.genericName})</span>
                                 </div>
-                                <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${med.brandName}`}>
+                                <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name: med.brandName })}>
                                     <X size={18} />
                                 </button>
                             </div>
@@ -3174,7 +3186,7 @@ const MedicationSearch = () => {
                         {myCustomMeds.map((name, idx) => (
                             <div key={`${name}-${idx}`} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                 <span className="font-bold text-slate-900">{name}</span>
-                                <button onClick={() => removeCustomFromList(name)} className="text-red-600 hover:text-red-700 p-2" aria-label={`Remove ${name}`}>
+                                <button onClick={() => removeCustomFromList(name)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name })}>
                                     <X size={18} />
                                 </button>
                             </div>
@@ -3190,25 +3202,25 @@ const MedicationSearch = () => {
                                 </div>
                                 <div className="flex-1">
                                     <h2 id="insurance-select-heading" className="font-bold text-lg text-amber-800 mb-2">
-                                        What is your insurance type?
+                                        {t('medications.insurance.heading')}
                                     </h2>
                                     <p className="text-amber-700 mb-4 text-sm">
-                                        We need your insurance type to show the correct savings options. Copay cards are only available for commercial insurance, while other programs vary by coverage.
+                                        {t('medications.insurance.text')}
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                         {[
-                                            { value: 'commercial', label: 'Commercial / Employer', icon: Building },
-                                            { value: 'medicare', label: 'Medicare', icon: ShieldCheck },
-                                            { value: 'medicaid', label: 'Medicaid (State)', icon: HeartHandshake },
-                                            { value: 'tricare_va', label: 'TRICARE / VA', icon: Award },
-                                            { value: 'ihs', label: 'Indian Health Service', icon: Users },
-                                            { value: 'uninsured', label: 'Uninsured / Self-pay', icon: AlertCircle },
+                                            { value: 'commercial', label: t('medications.insurance.options.commercial'), icon: Building },
+                                            { value: 'medicare', label: t('medications.insurance.options.medicare'), icon: ShieldCheck },
+                                            { value: 'medicaid', label: t('medications.insurance.options.medicaid'), icon: HeartHandshake },
+                                            { value: 'tricare_va', label: t('medications.insurance.options.tricare_va'), icon: Award },
+                                            { value: 'ihs', label: t('medications.insurance.options.ihs'), icon: Users },
+                                            { value: 'uninsured', label: t('medications.insurance.options.uninsured'), icon: AlertCircle },
                                         ].map(opt => (
                                             <button
                                                 key={opt.value}
                                                 onClick={() => setContextAnswer('insurance_type', opt.value)}
                                                 className="flex items-center gap-3 p-3 rounded-lg border-2 border-amber-200 bg-white hover:border-emerald-500 hover:bg-emerald-50 transition text-left min-h-[48px]"
-                                                aria-label={`Select ${opt.label} as your insurance type`}
+                                                aria-label={t('medications.insurance.selectAria', { label: opt.label })}
                                             >
                                                 <opt.icon size={20} className="text-slate-600 flex-shrink-0" aria-hidden="true" />
                                                 <span className="font-medium text-slate-800 text-sm">{opt.label}</span>
@@ -3225,8 +3237,8 @@ const MedicationSearch = () => {
                         <div className="flex items-start gap-3">
                             <DollarSign className="text-emerald-600 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
                             <div>
-                                <p className="font-bold text-emerald-800 mb-1">Ready to find savings?</p>
-                                <p className="text-emerald-700 text-sm">Click the <strong>"My Medication Savings"</strong> button below to see where you can save money on each medication. We'll show you copay cards, patient assistance programs, discount pharmacies, and more.</p>
+                                <p className="font-bold text-emerald-800 mb-1">{t('medications.verify.ready.title')}</p>
+                                <p className="text-emerald-700 text-sm"><Trans i18nKey="medications.verify.ready.text" /></p>
                             </div>
                         </div>
                     </div>
@@ -3242,52 +3254,52 @@ const MedicationSearch = () => {
                             <Info size={28} aria-hidden="true" />
                         </div>
                         <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-emerald-800 mb-2">Your Options</h2>
-                            <p className="text-emerald-700 text-lg mb-4">Each card shows one of your medications. Click the tabs to see:</p>
+                            <h2 className="text-2xl font-bold text-emerald-800 mb-2">{t('medications.verify.options.title')}</h2>
+                            <p className="text-emerald-700 text-lg mb-4">{t('medications.verify.options.subtitle')}</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div className="flex items-center gap-3 bg-pink-100 border border-pink-300 rounded-xl p-4">
                                     <Heart className="text-pink-600 flex-shrink-0" size={24} aria-hidden="true" />
                                     <div>
-                                        <p className="font-bold text-pink-800 text-lg">Assistance</p>
-                                        <p className="text-pink-700">Free medicine programs and copay cards</p>
+                                        <p className="font-bold text-pink-800 text-lg">{t('medications.verify.options.assistance')}</p>
+                                        <p className="text-pink-700">{t('medications.verify.options.assistanceDesc')}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 bg-green-100 border border-green-300 rounded-xl p-4">
                                     <DollarSign className="text-green-600 flex-shrink-0" size={24} aria-hidden="true" />
                                     <div>
-                                        <p className="font-bold text-green-800 text-lg">Price</p>
-                                        <p className="text-green-700">Estimates vary by pills prescribed or dosage</p>
+                                        <p className="font-bold text-green-800 text-lg">{t('medications.verify.options.price')}</p>
+                                        <p className="text-green-700">{t('medications.verify.options.priceDesc')}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 bg-blue-100 border border-blue-300 rounded-xl p-4">
                                     <Info className="text-blue-600 flex-shrink-0" size={24} aria-hidden="true" />
                                     <div>
-                                        <p className="font-bold text-blue-800 text-lg">Overview</p>
-                                        <p className="text-blue-700">Basic info about the medication</p>
+                                        <p className="font-bold text-blue-800 text-lg">{t('medications.verify.options.overview')}</p>
+                                        <p className="text-blue-700">{t('medications.verify.options.overviewDesc')}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 bg-slate-100 border border-slate-300 rounded-xl p-4">
                                     <Printer className="text-slate-600 flex-shrink-0" size={24} aria-hidden="true" />
                                     <div>
-                                        <p className="font-bold text-slate-800 text-lg">Print</p>
-                                        <p className="text-slate-700">Print-friendly summary</p>
+                                        <p className="font-bold text-slate-800 text-lg">{t('medications.verify.options.print')}</p>
+                                        <p className="text-slate-700">{t('medications.verify.options.printDesc')}</p>
                                     </div>
                                 </div>
                             </div>
                             {/* Income Eligibility Reference - helps users avoid self-disqualifying from PAPs */}
-                            <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-xl p-4" role="note" aria-label="Income eligibility reference">
+                            <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-xl p-4" role="note" aria-label={t('medications.verify.fpl.aria')}>
                                 <div className="flex items-start gap-3">
                                     <Users size={22} className="text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                     <div className="flex-1 min-w-0">
-                                        <p className="font-bold text-amber-900 mb-2">100% Federal Poverty Level (annual income)</p>
+                                        <p className="font-bold text-amber-900 mb-2">{t('medications.verify.fpl.title')}</p>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-amber-900 mb-3">
-                                            <div><span className="font-semibold">Family of 1:</span> $15,960</div>
-                                            <div><span className="font-semibold">Family of 2:</span> $21,640</div>
-                                            <div><span className="font-semibold">Family of 3:</span> $27,320</div>
-                                            <div><span className="font-semibold">Family of 4:</span> $33,000</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 1 })}</span> $15,960</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 2 })}</span> $21,640</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 3 })}</span> $27,320</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 4 })}</span> $33,000</div>
                                         </div>
                                         <p className="text-sm text-amber-800">
-                                            <span className="font-bold">Don't disqualify yourself</span>, Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts.
+                                            <span className="font-bold">{t('medications.verify.fpl.dontDisqualify')}</span>{t('medications.verify.fpl.papRange')}
                                         </p>
                                     </div>
                                 </div>
@@ -3303,11 +3315,11 @@ const MedicationSearch = () => {
                     <button
                         onClick={() => setShowSavings(false)}
                         className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]"
-                        aria-label="Go back to medication list"
+                        aria-label={t('medications.verify.backAria')}
                     >
-                        <ChevronLeft size={16} aria-hidden="true" /> Back to Medications
+                        <ChevronLeft size={16} aria-hidden="true" /> {t('medications.verify.back')}
                     </button>
-                    <h2 className="text-lg font-bold text-emerald-700">My Medication Savings</h2>
+                    <h2 className="text-lg font-bold text-emerald-700">{t('medications.verify.savingsButton')}</h2>
                 </div>
             )}
 
@@ -3315,8 +3327,8 @@ const MedicationSearch = () => {
                 {!hasItems && (
                     <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
                         <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
-                        <h2 className="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
-                        <p className="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
+                        <h2 className="text-xl font-bold text-slate-900 mb-2">{t('medications.search.emptyTitle')}</h2>
+                        <p className="text-slate-700 max-w-md mx-auto">{t('medications.search.emptyText')}</p>
                     </div>
                 )}
                 {hasItems && showSavings && (
@@ -3354,10 +3366,10 @@ const MedicationSearch = () => {
                         disabled={!insuranceType}
                         className={`px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center gap-2 ${!insuranceType ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700 text-white'}`}
                     >
-                        My Medication Savings
+                        {t('medications.verify.savingsButton')}
                     </button>
                     {!insuranceType && (
-                        <p className="text-amber-700 text-sm font-medium">Please select your insurance type above to continue</p>
+                        <p className="text-amber-700 text-sm font-medium">{t('medications.verify.selectInsuranceFirst')}</p>
                     )}
                 </div>
             )}
@@ -3378,17 +3390,17 @@ const MedicationSearch = () => {
                                 <BookOpen size={24} />
                             </div>
                             <div>
-                                <h2 id="app-guide-heading" className="text-lg font-bold text-slate-900 mb-1">Need Help Applying for Assistance?</h2>
-                                <p className="text-slate-600 text-sm">Learn how to fill out Patient Assistance Program applications step-by-step.</p>
+                                <h2 id="app-guide-heading" className="text-lg font-bold text-slate-900 mb-1">{t('medications.verify.help.title')}</h2>
+                                <p className="text-slate-600 text-sm">{t('medications.verify.help.text')}</p>
                             </div>
                         </div>
                         <Link
                             to="/application-help"
                             className="flex items-center gap-2 px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md whitespace-nowrap"
-                            aria-label="View application guide for step-by-step help"
+                            aria-label={t('medications.verify.help.aria')}
                         >
                             <FileText size={18} aria-hidden="true" />
-                            Grants & Foundations
+                            {t('medications.verify.help.button')}
                         </Link>
                     </div>
                 </section>
@@ -3400,6 +3412,7 @@ const MedicationSearch = () => {
 
 // Price Report Modal Component
 const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, source, onSubmit }) => {
+    const { t } = useTranslation();
     const [price, setPrice] = useState('');
     const [location, setLocation] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -3411,7 +3424,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
         setFormError('');
 
         if (!price || parseFloat(price) <= 0) {
-            setFormError('Please enter a valid price greater than $0');
+            setFormError(t('medications.priceReport.errorInvalid'));
             return;
         }
 
@@ -3426,7 +3439,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
             setFormError('');
             onClose();
         } else {
-            setFormError('Error saving price report. Please try again.');
+            setFormError(t('medications.priceReport.errorSaving'));
         }
         setSubmitting(false);
     };
@@ -3467,11 +3480,11 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                     <div>
                         <h3 id="price-report-title" className="text-lg font-bold text-slate-900 flex items-center gap-2">
                             <Users size={20} className="text-emerald-600" aria-hidden="true" />
-                            Report a Price
+                            {t('medications.priceReport.title')}
                         </h3>
-                        <p className="text-sm text-slate-600 mt-1">{medicationName} via {source}</p>
+                        <p className="text-sm text-slate-600 mt-1">{t('medications.priceReport.via', { name: medicationName, source })}</p>
                     </div>
-                    <button onClick={onClose} className="text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Close dialog">
+                    <button onClick={onClose} className="text-slate-600 hover:text-slate-800 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.priceReport.closeAria')}>
                         <X size={20} aria-hidden="true" />
                     </button>
                 </div>
@@ -3491,7 +3504,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                 <form onSubmit={handleSubmit} className="space-y-4" aria-describedby={formError ? "price-form-error" : undefined}>
                     <div>
                         <label htmlFor="price" className="block text-sm font-medium text-slate-700 mb-1">
-                            Price Paid (USD) <span className="text-red-500">*</span>
+                            {t('medications.priceReport.priceLabel')}<span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
                             <span className="absolute left-3 top-2.5 text-slate-600">$</span>
@@ -3511,7 +3524,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
 
                     <div>
                         <label htmlFor="location" className="block text-sm font-medium text-slate-700 mb-1">
-                            Pharmacy/Location (Optional)
+                            {t('medications.priceReport.locationLabel')}
                         </label>
                         <input
                             id="location"
@@ -3519,13 +3532,13 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                            placeholder="e.g., CVS in Seattle, WA"
+                            placeholder={t('medications.priceReport.locationPlaceholder')}
                         />
                     </div>
 
                     <div>
                         <label htmlFor="date" className="block text-sm font-medium text-slate-700 mb-1">
-                            Date Purchased
+                            {t('medications.priceReport.dateLabel')}
                         </label>
                         <input
                             id="date"
@@ -3540,7 +3553,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
 
                     <div className="bg-blue-50 p-3 rounded-lg text-xs text-blue-800 flex items-start gap-2">
                         <Info size={14} className="mt-0.5 flex-shrink-0" />
-                        <p>Your report helps other transplant patients estimate costs. Data is stored locally on your device only.</p>
+                        <p>{t('medications.priceReport.note')}</p>
                     </div>
 
                     <div className="flex gap-3 pt-2">
@@ -3549,7 +3562,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                             onClick={onClose}
                             className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition"
                         >
-                            Cancel
+                            {t('medications.priceReport.cancel')}
                         </button>
                         <button
                             type="submit"
@@ -3557,7 +3570,7 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
                             className="flex-1 px-4 py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             {submitting && <Loader2 size={16} className="animate-spin" aria-hidden="true" />}
-                            {submitting ? 'Submitting...' : 'Submit Report'}
+                            {submitting ? t('medications.priceReport.submitting') : t('medications.priceReport.submit')}
                         </button>
                     </div>
                 </form>
@@ -3593,7 +3606,12 @@ function medDisplayName(med) {
 }
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
+    const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
+    // In Spanish, program eligibility text comes from the programs.es.json
+    // overlay (keyed by programId); English text from the program record.
+    const esProgramNotes = (group, programId) =>
+        (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
     // If the patient's Epic import shows they take the GENERIC of this med, there
     // is no manufacturer copay card (those are brand-only). Force copay cards off
     // so every showCopayCards-gated section hides, and surface a note pointing to
@@ -3625,8 +3643,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const displayName = leadWithGeneric ? med.genericName : med.brandName;
 
     // Extract program info from new nested structure or legacy flat fields
-    const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: `${med.manufacturer} Copay Card` } : null);
-    const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: `${med.manufacturer} Patient Assistance` } : null);
+    const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer }) } : null);
+    const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: t('medications.card.fallbacks.papName', { manufacturer: med.manufacturer }) } : null);
     const medicarePartD = med.medicarePartD || (med.medicarePartDUrl ? { url: med.medicarePartDUrl, notes: med.medicare2026Note } : null);
 
     // Determine URLs for copay and PAP programs
@@ -3643,7 +3661,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 
     // Use direct URL from JSON data (bypasses database lookup for reliability)
     const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
-    const papLinkText = papUrl ? "Visit Manufacturer Program" : "Search for Program on Drugs.com";
+    const papLinkText = papUrl ? t('medications.card.fallbacks.visitManufacturerProgram') : t('medications.card.fallbacks.searchOnDrugsCom');
 
     // Get community price stats for each source
     const costPlusStats = getCommunityPriceStats(med.id, 'costplus');
@@ -3684,38 +3702,38 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     <div className="flex flex-wrap items-center gap-4 text-sm">
                         {quizAnswers?.insurance_type && (
                             <div className="flex items-center gap-2">
-                                <span className="text-slate-500">Insurance:</span>
+                                <span className="text-slate-500">{t('medications.card.context.insuranceLabel')}</span>
                                 <span className="font-medium text-slate-800">
-                                    {quizAnswers.insurance_type === 'commercial' ? 'Commercial / Employer' :
-                                     quizAnswers.insurance_type === 'medicare' ? 'Medicare' :
-                                     quizAnswers.insurance_type === 'medicaid' ? 'Medicaid' :
-                                     quizAnswers.insurance_type === 'tricare' ? 'TRICARE' :
-                                     quizAnswers.insurance_type === 'ihs' ? 'Indian Health Service' :
-                                     quizAnswers.insurance_type === 'uninsured' ? 'Uninsured' :
+                                    {quizAnswers.insurance_type === 'commercial' ? t('medications.card.context.commercial') :
+                                     quizAnswers.insurance_type === 'medicare' ? t('medications.card.context.medicare') :
+                                     quizAnswers.insurance_type === 'medicaid' ? t('medications.card.context.medicaid') :
+                                     quizAnswers.insurance_type === 'tricare' ? t('medications.card.context.tricare') :
+                                     quizAnswers.insurance_type === 'ihs' ? t('medications.card.context.ihs') :
+                                     quizAnswers.insurance_type === 'uninsured' ? t('medications.card.context.uninsured') :
                                      quizAnswers.insurance_type}
                                 </span>
                             </div>
                         )}
                         {quizAnswers?.organ_type && (
                             <div className="flex items-center gap-2">
-                                <span className="text-slate-500">Transplant:</span>
+                                <span className="text-slate-500">{t('medications.card.context.transplantLabel')}</span>
                                 <span className="font-medium text-slate-800">
                                     {quizAnswers.organ_type.charAt(0).toUpperCase() + quizAnswers.organ_type.slice(1)}
-                                    {quizAnswers?.transplant_stage && ` (${quizAnswers.transplant_stage === 'post_1yr' ? '1+ years' : '<1 year'})`}
+                                    {quizAnswers?.transplant_stage && ` (${quizAnswers.transplant_stage === 'post_1yr' ? t('medications.card.context.stagePost1yr') : t('medications.card.context.stageUnder1yr')})`}
                                 </span>
                             </div>
                         )}
                         {quizAnswers?.cost_burden && (
                             <div className="flex items-center gap-2">
-                                <span className="text-slate-500">Situation:</span>
+                                <span className="text-slate-500">{t('medications.card.context.situationLabel')}</span>
                                 <span className={`font-medium ${
                                     quizAnswers.cost_burden === 'struggling' ? 'text-red-700' :
                                     quizAnswers.cost_burden === 'challenging' ? 'text-amber-700' :
                                     'text-emerald-700'
                                 }`}>
-                                    {quizAnswers.cost_burden === 'struggling' ? 'Struggling' :
-                                     quizAnswers.cost_burden === 'challenging' ? 'Challenging' :
-                                     quizAnswers.cost_burden === 'managing' ? 'Managing' :
+                                    {quizAnswers.cost_burden === 'struggling' ? t('medications.card.context.struggling') :
+                                     quizAnswers.cost_burden === 'challenging' ? t('medications.card.context.challenging') :
+                                     quizAnswers.cost_burden === 'managing' ? t('medications.card.context.managing') :
                                      quizAnswers.cost_burden}
                                 </span>
                             </div>
@@ -3731,7 +3749,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     </div>
                     <div>
                         <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{displayName}</h2>
-                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{med.category}</span></p>
+                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</span></p>
                         {/* Cost Tier Badges */}
                         <div className="flex flex-wrap gap-2 mt-2">
                             {med.cost_tier && (
@@ -3741,7 +3759,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     'bg-red-100 text-red-800'
                                 }`}>
                                     <DollarSign size={12} aria-hidden="true" />
-                                    {med.cost_tier === 'low' ? 'Low Cost' : med.cost_tier === 'medium' ? 'Medium Cost' : 'High Cost'}
+                                    {med.cost_tier === 'low' ? t('medications.card.header.lowCost') : med.cost_tier === 'medium' ? t('medications.card.header.mediumCost') : t('medications.card.header.highCost')}
                                 </span>
                             )}
                             {med.typical_copay_tier && (
@@ -3751,21 +3769,21 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     'bg-orange-100 text-orange-800'
                                 }`}>
                                     <Pill size={12} aria-hidden="true" />
-                                    {med.typical_copay_tier === 'Specialty' ? 'Specialty Tier' : `Tier ${med.typical_copay_tier}`}
+                                    {med.typical_copay_tier === 'Specialty' ? t('medications.card.header.specialtyTier') : t('medications.card.header.tier', { tier: med.typical_copay_tier })}
                                 </span>
                             )}
                             {med.generic_available && (
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                                     <CheckCircle size={12} aria-hidden="true" />
-                                    <TermTooltip term="generic" showIcon={false}>Generic</TermTooltip> Available
+                                    <TermTooltip term="generic" showIcon={false}>{t('medications.card.header.generic')}</TermTooltip>{t('medications.card.header.genericAvailable')}
                                 </span>
                             )}
                         </div>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                    <ReadAloudButton contentRef={contentRef} label="Read Aloud" />
-                    <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={`Remove ${med.brandName} from list`} title="Remove from list"><Trash2 size={20} /></button>
+                    <ReadAloudButton contentRef={contentRef} label={t('medications.card.header.readAloud')} />
+                    <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.card.header.removeAria', { name: med.brandName })} title={t('medications.card.header.removeTitle')}><Trash2 size={20} /></button>
                 </div>
             </header>
 
@@ -3780,18 +3798,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 <DollarSign size={20} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-emerald-800">Your Potential Savings</p>
+                                <p className="text-sm font-medium text-emerald-800">{t('medications.card.savings.title')}</p>
                                 <div className="flex items-center gap-2 mt-0.5">
-                                    <span className="text-slate-500 line-through text-sm">Without Help</span>
-                                    <span className="text-red-600 font-bold line-through">${savingsEstimate.retailPrice.toLocaleString()}/mo</span>
+                                    <span className="text-slate-500 line-through text-sm">{t('medications.card.savings.withoutHelp')}</span>
+                                    <span className="text-red-600 font-bold line-through">${savingsEstimate.retailPrice.toLocaleString()}{t('medications.card.perMo')}</span>
                                     <ArrowRight size={16} className="text-slate-400" aria-hidden="true" />
-                                    <span className="text-emerald-700 text-sm">With Copay Card</span>
-                                    <span className="text-emerald-700 font-bold text-lg">${savingsEstimate.copayPrice}/mo</span>
+                                    <span className="text-emerald-700 text-sm">{t('medications.card.savings.withCopayCard')}</span>
+                                    <span className="text-emerald-700 font-bold text-lg">${savingsEstimate.copayPrice}{t('medications.card.perMo')}</span>
                                 </div>
                             </div>
                         </div>
                         <div className="text-right">
-                            <p className="text-xs text-emerald-700">Annual Savings</p>
+                            <p className="text-xs text-emerald-700">{t('medications.card.savings.annual')}</p>
                             <p className="text-2xl font-bold text-emerald-700">~${savingsEstimate.annualSavings.toLocaleString()}</p>
                         </div>
                     </div>
@@ -3804,13 +3822,13 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm text-slate-500 flex items-center gap-1">
                         <Filter size={14} aria-hidden="true" />
-                        Filter:
+                        {t('medications.card.filters.label')}
                     </span>
                     {[
-                        { id: 'all', label: 'All Options' },
-                        { id: 'eligible', label: '✓ Eligible Only' },
-                        { id: 'free', label: 'Free Options' },
-                        { id: 'under50', label: 'Under $50' },
+                        { id: 'all', label: t('medications.card.filters.all') },
+                        { id: 'eligible', label: t('medications.card.filters.eligible') },
+                        { id: 'free', label: t('medications.card.filters.free') },
+                        { id: 'under50', label: t('medications.card.filters.under50') },
                     ].map(filter => (
                         <button
                             key={filter.id}
@@ -3828,12 +3846,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
             </div>
 
             {/* Per-card tab navigation */}
-            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={`Information tabs for ${med.brandName}`}>
+            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={t('medications.card.tabs.aria', { name: med.brandName })}>
                 {[
-                    { id: 'ASSISTANCE', label: 'Assistance Programs', icon: Heart },
-                    { id: 'PRICE', label: 'Price Estimates', icon: DollarSign },
-                    { id: 'OVERVIEW', label: 'Overview', icon: Info },
-                    { id: 'PRINT', label: 'Print Summary', icon: Printer },
+                    { id: 'ASSISTANCE', label: t('medications.card.tabs.assistance'), icon: Heart },
+                    { id: 'PRICE', label: t('medications.card.tabs.price'), icon: DollarSign },
+                    { id: 'OVERVIEW', label: t('medications.card.tabs.overview'), icon: Info },
+                    { id: 'PRINT', label: t('medications.card.tabs.print'), icon: Printer },
                 ].map(tab => (
                     <button
                         key={tab.id}
@@ -3856,60 +3874,60 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 {activeTab === 'OVERVIEW' && (
                     <div className="space-y-6">
                         <p className="text-slate-700 leading-relaxed">
-                            Manufacturer: <strong>{med.manufacturer}</strong><br/>
-                            Commonly prescribed for: <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong> recipients.
-                            {med.stage && <><br/>Stage: <strong>{med.stage}</strong></>}
+                            {t('medications.card.overview.manufacturerLabel')}<strong>{med.manufacturer}</strong><br/>
+                            {t('medications.card.overview.commonlyPrescribed')}<strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong>{t('medications.card.overview.recipients')}
+                            {med.stage && <><br/>{t('medications.card.overview.stageLabel')}<strong>{med.stage}</strong></>}
                         </p>
                         <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800 flex gap-2 items-start" role="note">
                             <Info size={16} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
-                            <strong>Tip:</strong> Always verify with your doctor if you can switch between Brand and Generic versions.
+                            <Trans i18nKey="medications.card.overview.tip" />
                         </div>
                         <div className="flex gap-4 mt-4 no-print">
-                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={`Read full drug facts for ${med.brandName} on Drugs.com (opens in new tab)`}>Read full drug facts on Drugs.com <ExternalLink size={14} aria-hidden="true" /></a>
+                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={t('medications.card.overview.drugFactsAria', { name: med.brandName })}>{t('medications.card.overview.drugFactsLink')}<ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
 
                         {/* Pharmacies Section */}
                         <section className="mt-6">
                             <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
                                 <Building size={20} className="text-emerald-600" aria-hidden="true" />
-                                Pharmacies (Where to fill your prescription)
+                                {t('medications.card.overview.pharmaciesTitle')}
                             </h3>
                             <div className="overflow-x-auto rounded-lg border border-slate-200">
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-slate-100 text-slate-700 font-bold">
                                         <tr>
-                                            <th scope="col" className="p-3">Pharmacy</th>
-                                            <th scope="col" className="p-3">Description</th>
+                                            <th scope="col" className="p-3">{t('medications.card.overview.thPharmacy')}</th>
+                                            <th scope="col" className="p-3">{t('medications.card.overview.thDescription')}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-200">
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>
-                                            <td className="p-3 text-slate-600">Online pharmacy with cost-plus pricing model; often lowest for generics</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.costPlusDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">TrumpRx.gov</td>
-                                            <td className="p-3 text-slate-600">Government-negotiated cash prices on 43 brand-name drugs; cash-pay only, some exclude Medicare/Medicaid. <a href="/trumprx" className="text-teal-600 hover:underline font-medium">See our transplant guide</a></td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.trumpRxDesc')}<a href="/trumprx" className="text-teal-600 hover:underline font-medium">{t('medications.card.overview.trumpRxGuideLink')}</a></td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Walmart Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Consistently low prices; $4 generic list available</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.walmartDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Costco Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Low markup; no membership required for pharmacy</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.costcoDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">CVS Pharmacy</td>
-                                            <td className="p-3 text-slate-600">Wide availability; accepts most discount cards</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.cvsDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Walgreens</td>
-                                            <td className="p-3 text-slate-600">Large national chain; accepts most discount cards</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.walgreensDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Kroger/Grocery Pharmacies</td>
-                                            <td className="p-3 text-slate-600">Competitive pricing; convenient if you're already shopping</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.krogerDesc')}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -3920,32 +3938,32 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <section className="mt-6">
                             <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
                                 <DollarSign size={20} className="text-emerald-600" aria-hidden="true" />
-                                Discount Tools (Compare prices & get coupons)
+                                {t('medications.card.overview.discountToolsTitle')}
                             </h3>
                             <div className="overflow-x-auto rounded-lg border border-slate-200">
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-slate-100 text-slate-700 font-bold">
                                         <tr>
-                                            <th scope="col" className="p-3">Tool</th>
-                                            <th scope="col" className="p-3">Description</th>
+                                            <th scope="col" className="p-3">{t('medications.card.overview.thTool')}</th>
+                                            <th scope="col" className="p-3">{t('medications.card.overview.thDescription')}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-200">
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">GoodRx</td>
-                                            <td className="p-3 text-slate-600">Coupons and price comparisons at 70,000+ pharmacies nationwide</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.goodRxDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">SingleCare</td>
-                                            <td className="p-3 text-slate-600">Free discount card with prices at 35,000+ pharmacies</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.singleCareDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">RxSaver</td>
-                                            <td className="p-3 text-slate-600">Coupons and price comparisons; no sign-up required</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.rxSaverDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">ScriptSave WellRx</td>
-                                            <td className="p-3 text-slate-600">Free savings card accepted at most U.S. pharmacies</td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.scriptSaveDesc')}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -3960,10 +3978,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
                                 <h3 className="font-bold text-emerald-800 flex items-center gap-2">
                                     <CheckCircle size={16} aria-hidden="true" />
-                                    You take the generic{med.genericName ? ` (${med.genericName})` : ''}
+                                    {t('medications.card.assistance.takesGenericTitle')}{med.genericName ? ` (${med.genericName})` : ''}
                                 </h3>
                                 <p className="text-sm text-slate-700 mt-2">
-                                    Generic medications don't have manufacturer copay cards, those are only for brand-name drugs. The good news: generics are usually much cheaper. Compare the cash prices below, especially <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx, and SingleCare.
+                                    <Trans i18nKey="medications.card.assistance.takesGenericText" />
                                 </p>
                             </section>
                         )}
@@ -3973,7 +3991,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 <div className="bg-emerald-600 px-4 py-1.5">
                                     <span className="text-white text-xs font-bold flex items-center gap-1">
                                         <Star size={12} className="fill-current" aria-hidden="true" />
-                                        RECOMMENDED FOR YOU
+                                        {t('medications.card.assistance.recommended')}
                                     </span>
                                 </div>
                                 <div className="p-5">
@@ -3982,30 +4000,30 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0 mt-1.5"></span>
                                             <div>
                                                 <h3 className="font-bold text-emerald-800 flex items-center gap-2">
-                                                    {copayProgram?.name || `${med.brandName} Co-Pay Card`}
+                                                    {copayProgram?.name || t('medications.card.fallbacks.brandCopayCard', { name: med.brandName })}
                                                 </h3>
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
                                                         <CheckCircle size={12} aria-hidden="true" />
-                                                        You're Eligible
+                                                        {t('medications.card.assistance.eligible')}
                                                     </span>
                                                 </div>
                                                 <p className="text-sm text-slate-600 mt-2">
-                                                    For commercial/employer insurance • Manufacturer program
+                                                    {t('medications.card.assistance.copayFor')}
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="text-right flex-shrink-0">
                                             <div className="text-emerald-700 font-bold text-lg">$0 - $10</div>
-                                            <div className="text-xs text-slate-500">/month</div>
+                                            <div className="text-xs text-slate-500">{t('medications.card.assistance.perMonth')}</div>
                                         </div>
                                     </div>
-                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={`Get Copay Card for ${med.brandName} (opens in new tab)`}>
-                                        Get Card <ArrowRight size={14} aria-hidden="true" />
+                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.getCardAria', { name: med.brandName })}>
+                                        {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
                                     </a>
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        Link verified {copayProgram?.lastVerified ? new Date(copayProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY}
+                                        {t('medications.card.assistance.linkVerified', { date: copayProgram?.lastVerified ? new Date(copayProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY })}
                                     </p>
                                 </div>
                             </section>
@@ -4021,31 +4039,31 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0 mt-1.5"></span>
                                         <div>
                                             <h3 className="font-bold text-amber-800 flex items-center gap-2">
-                                                {papProgram?.name || `${med.manufacturer} Patient Assistance Program`}
+                                                {papProgram?.name || t('medications.card.fallbacks.manufacturerPap', { manufacturer: med.manufacturer })}
                                             </h3>
                                             <div className="flex items-center gap-2 mt-1">
                                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
                                                     <HelpCircle size={12} aria-hidden="true" />
-                                                    Income-Based
+                                                    {t('medications.card.assistance.incomeBased')}
                                                 </span>
                                             </div>
                                             <p className="text-sm text-slate-600 mt-2">
-                                                For Medicare, Medicaid, or no insurance • Income ≤400% FPL
+                                                {t('medications.card.assistance.papFor')}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-right flex-shrink-0">
-                                        <div className="text-amber-700 font-bold text-lg">FREE</div>
-                                        <div className="text-xs text-slate-500">if eligible</div>
+                                        <div className="text-amber-700 font-bold text-lg">{t('medications.card.assistance.free')}</div>
+                                        <div className="text-xs text-slate-500">{t('medications.card.assistance.ifEligible')}</div>
                                     </div>
                                 </div>
-                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={`Apply for Patient Assistance for ${med.brandName} (opens in new tab)`}>
-                                    Apply <ArrowRight size={14} aria-hidden="true" />
+                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.applyAria', { name: med.brandName })}>
+                                    {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
                                 </a>
                                 {papUrl && (
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        Link verified {papProgram?.lastVerified ? new Date(papProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY}
+                                        {t('medications.card.assistance.linkVerified', { date: papProgram?.lastVerified ? new Date(papProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY })}
                                     </p>
                                 )}
                             </section>
@@ -4058,13 +4076,13 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     <span className="w-3 h-3 rounded-full bg-sky-500 flex-shrink-0 mt-1.5"></span>
                                     <div className="flex-grow">
                                         <h3 className="font-bold text-sky-800 flex items-center gap-2">
-                                            <TermTooltip term="foundation-grant" showIcon={false}>Foundations</TermTooltip> & Grants
+                                            <TermTooltip term="foundation-grant" showIcon={false}>{t('medications.card.assistance.foundations')}</TermTooltip>{t('medications.card.assistance.andGrants')}
                                         </h3>
                                         <p className="text-sm text-slate-600 mt-2">
-                                            These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.
+                                            {t('medications.card.assistance.foundationsText')}
                                         </p>
-                                        <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label="Check PAN Foundation FundFinder Tool (opens in new tab)">
-                                            Check FundFinder Tool <ExternalLink size={14} aria-hidden="true" />
+                                        <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label={t('medications.card.assistance.fundFinderAria')}>
+                                            {t('medications.card.assistance.fundFinderLink')}<ExternalLink size={14} aria-hidden="true" />
                                         </a>
                                     </div>
                                 </div>
@@ -4079,14 +4097,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     <div className="flex-grow">
                                         <h3 className="font-bold text-blue-800 flex items-center gap-2">
                                             <Shield size={18} aria-hidden="true" />
-                                            Medicare Part D Information
+                                            {t('medications.card.assistance.partDTitle')}
                                         </h3>
                                         <p className="text-sm text-slate-600 mt-2">
-                                            Learn about Medicare Part D coverage changes and savings options for {med.brandName}.
+                                            {t('medications.card.assistance.partDText', { name: med.brandName })}
                                             {(medicarePartD.notes || med.medicare2026Note) && <span className="block mt-2 text-blue-700 font-medium">{medicarePartD.notes || med.medicare2026Note}</span>}
                                         </p>
-                                        <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 font-medium text-sm" aria-label={`View Medicare Part D information for ${med.brandName} (opens in new tab)`}>
-                                            View Details <ExternalLink size={14} aria-hidden="true" />
+                                        <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 font-medium text-sm" aria-label={t('medications.card.assistance.partDAria', { name: med.brandName })}>
+                                            {t('medications.card.assistance.viewDetails')}<ExternalLink size={14} aria-hidden="true" />
                                         </a>
                                     </div>
                                 </div>
@@ -4100,25 +4118,25 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     <AlertTriangle size={16} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
+                                    <h4 className="font-bold text-red-900 text-sm mb-2">{t('medications.card.warning.title')}</h4>
                                     <p className="text-xs text-red-800 mb-2">
-                                        <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
+                                        <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>.
                                     </p>
                                     <p className="text-xs text-slate-700 mb-3">
-                                        If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.
+                                        {t('medications.card.warning.text2')}
                                     </p>
                                     <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                                         <div className="bg-white/80 p-2 rounded border border-emerald-200">
-                                            <div className="font-bold text-emerald-700">✅ Using Insurance</div>
-                                            <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
+                                            <div className="font-bold text-emerald-700">{t('medications.card.warning.usingInsurance')}</div>
+                                            <div className="text-slate-600">{t('medications.card.warning.usingInsuranceDesc')}</div>
                                         </div>
                                         <div className="bg-white/80 p-2 rounded border border-red-200">
-                                            <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
-                                            <div className="text-slate-600">Pay less each time → but pay all year long</div>
+                                            <div className="font-bold text-red-700">{t('medications.card.warning.discountCards')}</div>
+                                            <div className="text-slate-600">{t('medications.card.warning.discountCardsDesc')}</div>
                                         </div>
                                     </div>
                                     <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
-                                        Learn more <ArrowRight size={12} />
+                                        {t('medications.card.warning.learnMore')}<ArrowRight size={12} />
                                     </Link>
                                 </div>
                             </div>
@@ -4128,11 +4146,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <div className="text-xs text-slate-500 space-y-1 pt-2">
                             <p className="flex items-center gap-1">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                                Copay cards are for commercial/employer insurance only
+                                {t('medications.card.assistance.copayCommercialOnly')}
                             </p>
                             <p className="flex items-center gap-1">
                                 <Info size={12} aria-hidden="true" />
-                                Prices are for a 30 day supply. Your price may be different. Call the pharmacy for exact pricing.
+                                {t('medications.card.assistance.pricesNote')}
                             </p>
                         </div>
 
@@ -4144,18 +4162,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 </div>
                                 <div className="flex-grow">
                                     <h4 className="font-bold text-indigo-900 mb-1 flex items-center gap-2">
-                                        Need Help Filling Out the Forms?
+                                        {t('medications.card.assistance.formsTitle')}
                                     </h4>
                                     <p className="text-sm text-slate-700 mb-3">
-                                        Our guide shows you step-by-step how to fill out the forms. We have checklists and examples to help you.
+                                        {t('medications.card.assistance.formsText')}
                                     </p>
                                     <Link
                                         to="/application-help"
                                         className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition text-sm shadow-md"
-                                        aria-label="View complete application guide"
+                                        aria-label={t('medications.card.assistance.viewGuideAria')}
                                     >
                                         <BookOpen size={16} aria-hidden="true" />
-                                        View Grants & Foundations
+                                        {t('medications.card.assistance.viewGrants')}
                                         <ArrowRight size={16} aria-hidden="true" />
                                     </Link>
                                 </div>
@@ -4167,43 +4185,43 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     <div>
                         {/* Color-Coded Legend */}
                         <div className="mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                            <h4 className="font-bold text-slate-800 mb-3 text-sm">Price Options Guide</h4>
+                            <h4 className="font-bold text-slate-800 mb-3 text-sm">{t('medications.card.price.guideTitle')}</h4>
                             <div className={`grid grid-cols-2 ${showCopayCards ? 'md:grid-cols-4' : 'md:grid-cols-3'} gap-3 text-xs`}>
                                 {showCopayCards && (
                                     <div className="flex items-center gap-2">
                                         <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
                                         <div>
-                                            <div className="font-semibold text-emerald-600">Copay Cards</div>
-                                            <div className="text-slate-500">Best savings: $0-$10/mo</div>
+                                            <div className="font-semibold text-emerald-600">{t('medications.card.price.legendCopay')}</div>
+                                            <div className="text-slate-500">{t('medications.card.price.legendCopayDesc')}</div>
                                         </div>
                                     </div>
                                 )}
                                 <div className="flex items-center gap-2">
                                     <span className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></span>
                                     <div>
-                                        <div className="font-semibold text-orange-600">Patient Assistance</div>
-                                        <div className="text-slate-500">Free if eligible</div>
+                                        <div className="font-semibold text-orange-600">{t('medications.card.price.legendPap')}</div>
+                                        <div className="text-slate-500">{t('medications.card.price.legendPapDesc')}</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0"></span>
                                     <div>
-                                        <div className="font-semibold text-blue-600">Discount Cards</div>
+                                        <div className="font-semibold text-blue-600">{t('medications.card.price.legendDiscount')}</div>
                                         <div className="text-slate-500">GoodRx, SingleCare</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="w-3 h-3 rounded-full bg-slate-400 flex-shrink-0"></span>
                                     <div>
-                                        <div className="font-semibold text-slate-500">Cash Price</div>
-                                        <div className="text-slate-500">Baseline comparison</div>
+                                        <div className="font-semibold text-slate-500">{t('medications.card.price.legendCash')}</div>
+                                        <div className="text-slate-500">{t('medications.card.price.legendCashDesc')}</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="w-3 h-3 rounded-full bg-teal-500 flex-shrink-0"></span>
                                     <div>
                                         <div className="font-semibold text-teal-600">TrumpRx.gov</div>
-                                        <div className="text-slate-500">Gov't discounted cash</div>
+                                        <div className="text-slate-500">{t('medications.card.price.legendTrumpRxDesc')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -4212,18 +4230,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         {/* Price Estimates Notice */}
                         <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-800 flex items-start gap-2">
                             <AlertCircle size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                            <p><strong>These are estimates only.</strong> Your actual price may be different. Always check with the pharmacy for the real price.</p>
+                            <p><Trans i18nKey="medications.card.price.estimatesNotice" /></p>
                         </div>
 
                         {/* Unified Price Estimates Table */}
                         <div className="overflow-x-auto rounded-lg border border-slate-200">
                             <table className="w-full text-sm text-left min-w-[500px]">
-                                <caption className="sr-only">Price estimates for {med.brandName}</caption>
+                                <caption className="sr-only">{t('medications.card.price.caption', { name: med.brandName })}</caption>
                                 <thead className="bg-slate-100 text-slate-700 font-bold">
                                     <tr>
-                                        <th scope="col" className="p-3">Pharmacy / Tool</th>
-                                        <th scope="col" className="p-3">Estimated Price</th>
-                                        <th scope="col" className="p-3 no-print">Action</th>
+                                        <th scope="col" className="p-3">{t('medications.card.price.thPharmacyTool')}</th>
+                                        <th scope="col" className="p-3">{t('medications.card.price.thEstimatedPrice')}</th>
+                                        <th scope="col" className="p-3 no-print">{t('medications.card.price.thAction')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200">
@@ -4233,17 +4251,17 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
-                                                <div className="font-bold text-emerald-600">{copayProgram?.name || `${med.manufacturer} Copay Card`}</div>
+                                                <div className="font-bold text-emerald-600">{copayProgram?.name || t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer })}</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For commercial/employer insurance</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.copayForShort')}</div>
                                         </td>
                                         <td className="p-3">
-                                            <div className="text-emerald-600 font-bold">$0 - $10/month</div>
-                                            <div className="text-xs text-slate-500 mt-0.5">Manufacturer program</div>
+                                            <div className="text-emerald-600 font-bold">{t('medications.card.price.copayRange')}</div>
+                                            <div className="text-xs text-slate-500 mt-0.5">{t('medications.card.price.manufacturerProgram')}</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Copay Card details for ${med.brandName}`}>
-                                                Get Card <ArrowRight size={14} aria-hidden="true" />
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewCopayAria', { name: med.brandName })}>
+                                                {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
                                             </button>
                                         </td>
                                     </tr>
@@ -4255,17 +4273,17 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-orange-500 flex-shrink-0"></span>
-                                                <div className="font-bold text-orange-600">{papProgram?.name || `${med.manufacturer} PAP`}</div>
+                                                <div className="font-bold text-orange-600">{papProgram?.name || t('medications.card.fallbacks.manufacturerPapShort', { manufacturer: med.manufacturer })}</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">For Medicare, Medicaid, or no insurance</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.papForShort')}</div>
                                         </td>
                                         <td className="p-3">
-                                            <div className="text-orange-600 font-bold">FREE</div>
-                                            <div className="text-xs text-slate-500 mt-0.5">You must meet income rules</div>
+                                            <div className="text-orange-600 font-bold">{t('medications.card.assistance.free')}</div>
+                                            <div className="text-xs text-slate-500 mt-0.5">{t('medications.card.price.incomeRules')}</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={`View Patient Assistance details for ${med.brandName}`}>
-                                                Apply <ArrowRight size={14} aria-hidden="true" />
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewPapAria', { name: med.brandName })}>
+                                                {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
                                             </button>
                                         </td>
                                     </tr>
@@ -4279,11 +4297,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-blue-600">GoodRx</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Free coupons at 70,000+ pharmacies</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.goodRxDesc')}</div>
                                             {goodRxStats && (
                                                 <div className="text-xs text-blue-600 flex items-center gap-1 mt-1 ml-4.5">
                                                     <Users size={14} />
-                                                    Community: ${goodRxStats.min}-${goodRxStats.max} ({goodRxStats.count} reports)
+                                                    {t('medications.card.price.community', { min: goodRxStats.min, max: goodRxStats.max, num: goodRxStats.count })}
                                                 </div>
                                             )}
                                         </td>
@@ -4293,16 +4311,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                Est. updated Dec 24, 2025
+                                                {t('medications.card.price.estUpdated')}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={goodRxUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on GoodRx for ${med.genericName} (opens in new tab)`}>
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                <a href={goodRxUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveGoodRxAria', { name: med.genericName })}>
+                                                    {t('medications.card.price.checkLive')}<ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('goodrx', 'GoodRx')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    <TrendingUp size={14} aria-hidden="true" /> {t('medications.card.price.reportPrice')}
                                                 </button>
                                             </div>
                                         </td>
@@ -4317,11 +4335,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-blue-600">SingleCare</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Free card at 35,000+ pharmacies</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.singleCareDesc')}</div>
                                             {singleCareStats && (
                                                 <div className="text-xs text-blue-600 flex items-center gap-1 mt-1 ml-4.5">
                                                     <Users size={14} />
-                                                    Community: ${singleCareStats.min}-${singleCareStats.max} ({singleCareStats.count} reports)
+                                                    {t('medications.card.price.community', { min: singleCareStats.min, max: singleCareStats.max, num: singleCareStats.count })}
                                                 </div>
                                             )}
                                         </td>
@@ -4331,16 +4349,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                Est. updated Dec 24, 2025
+                                                {t('medications.card.price.estUpdated')}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={singleCareUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={`Check live price on SingleCare for ${med.genericName} (opens in new tab)`}>
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                <a href={singleCareUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveSingleCareAria', { name: med.genericName })}>
+                                                    {t('medications.card.price.checkLive')}<ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    <TrendingUp size={14} aria-hidden="true" /> {t('medications.card.price.reportPrice')}
                                                 </button>
                                             </div>
                                         </td>
@@ -4355,11 +4373,11 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 <span className="w-2.5 h-2.5 rounded-full bg-slate-400 flex-shrink-0"></span>
                                                 <div className="font-bold text-slate-500">Cost Plus Drugs</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Online pharmacy with low prices</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.costPlusDesc')}</div>
                                             {costPlusStats && (
                                                 <div className="text-xs text-slate-500 flex items-center gap-1 mt-1 ml-4.5">
                                                     <Users size={14} />
-                                                    Community: ${costPlusStats.min}-${costPlusStats.max} ({costPlusStats.count} reports)
+                                                    {t('medications.card.price.community', { min: costPlusStats.min, max: costPlusStats.max, num: costPlusStats.count })}
                                                 </div>
                                             )}
                                         </td>
@@ -4369,16 +4387,16 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                Est. updated Dec 24, 2025
+                                                {t('medications.card.price.estUpdated')}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={costPlusUrl(med)} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label="Check live price on Cost Plus Drugs (opens in new tab)">
-                                                    Check Live <ExternalLink size={14} aria-hidden="true" />
+                                                <a href={costPlusUrl(med)} target="_blank" rel="noreferrer" className="text-slate-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveCostPlusAria')}>
+                                                    {t('medications.card.price.checkLive')}<ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('costplus', 'Cost Plus Drugs')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
-                                                    <TrendingUp size={14} aria-hidden="true" /> Report Price
+                                                    <TrendingUp size={14} aria-hidden="true" /> {t('medications.card.price.reportPrice')}
                                                 </button>
                                             </div>
                                         </td>
@@ -4393,17 +4411,17 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 <span className="w-2.5 h-2.5 rounded-full bg-teal-500 flex-shrink-0"></span>
                                                 <div className="font-bold text-teal-700">TrumpRx.gov</div>
                                             </div>
-                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">Government discounted cash price</div>
+                                            <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.trumpRxDesc')}</div>
                                             {trumpRxData.medicareRestriction && (
                                                 <div className="text-xs text-red-600 flex items-center gap-1 mt-1 ml-4.5">
                                                     <AlertCircle size={12} />
-                                                    May exclude Medicare/Medicaid
+                                                    {t('medications.card.price.trumpRxExclude')}
                                                 </div>
                                             )}
                                         </td>
                                         <td className="p-3">
                                             <div className="text-teal-700 font-bold">
-                                                ${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}/mo
+                                                ${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}{t('medications.card.perMo')}
                                             </div>
                                             <div className="text-xs text-slate-500 mt-0.5">
                                                 <span className="line-through">${trumpRxData.originalPrice}</span>
@@ -4415,10 +4433,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href="/trumprx" className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label="View TrumpRx guide for transplant patients">
-                                                    Our Guide <ArrowRight size={14} aria-hidden="true" />
+                                                <a href="/trumprx" className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.ourGuideAria')}>
+                                                    {t('medications.card.price.ourGuide')}<ArrowRight size={14} aria-hidden="true" />
                                                 </a>
-                                                <a href="/out/pap/trumprx-gov" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label="Visit TrumpRx.gov (opens in new tab)">
+                                                <a href="/out/pap/trumprx-gov" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label={t('medications.card.price.visitTrumpRxAria')}>
                                                     <ExternalLink size={14} aria-hidden="true" /> TrumpRx.gov
                                                 </a>
                                             </div>
@@ -4433,7 +4451,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         {showCopayCards && hasCopayProgram && (
                             <div className="mt-2 text-xs text-red-600 flex items-center gap-1">
                                 <AlertCircle size={14} />
-                                Copay cards are for commercial/employer insurance only
+                                {t('medications.card.assistance.copayCommercialOnly')}
                             </div>
                         )}
 
@@ -4441,12 +4459,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <div className="mt-3 space-y-2">
                             <div className="text-xs text-slate-600 italic flex items-start gap-2" role="note">
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                <p>These prices are for a 30-day supply. Your price may be different. Call the pharmacy to get your exact price. (Last updated: December 24, 2025)</p>
+                                <p>{t('medications.card.price.footerNote')}</p>
                             </div>
                             {(costPlusStats || goodRxStats || singleCareStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">
                                     <Users size={14} className="flex-shrink-0 mt-0.5" />
-                                    <p><strong>Community prices</strong> are real prices that other people paid in the last 90 days. Help others by telling us what you paid!</p>
+                                    <p><Trans i18nKey="medications.card.price.communityNote" /></p>
                                 </div>
                             )}
 
@@ -4457,35 +4475,35 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <AlertTriangle size={16} />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-red-900 text-sm mb-2">Important: Discount Cards Don't Help Your Insurance</h4>
+                                        <h4 className="font-bold text-red-900 text-sm mb-2">{t('medications.card.warning.title')}</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>Warning:</strong> Discount cards (GoodRx, SingleCare) or cash payments do <span className="font-bold bg-yellow-200 px-1 rounded">NOT count toward your <TermTooltip term="deductible">deductible</TermTooltip></span>.
+                                            <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>.
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
-                                            If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.
+                                            {t('medications.card.warning.text2')}
                                         </p>
                                         {isCostPlusAvailable && (
                                             <div className="bg-amber-100 border border-amber-300 rounded p-2 mb-3 text-xs text-amber-900">
-                                                <strong>About Cost Plus Drugs:</strong> This is a cash pharmacy. What you pay there does not count toward your deductible. But the price might still be lower than your insurance copay. Compare before you decide!
+                                                <Trans i18nKey="medications.card.price.costPlusNote" />
                                             </div>
                                         )}
                                         {isTrumpRxAvailable && (
                                             <div className="bg-teal-100 border border-teal-300 rounded p-2 mb-3 text-xs text-teal-900">
-                                                <strong>About TrumpRx.gov:</strong> This is a cash-pay discount, it does NOT count toward your deductible or out-of-pocket max.{trumpRxData.medicareRestriction ? ' Some TrumpRx coupons may exclude Medicare/Medicaid patients.' : ''} Always compare with your insurance copay first. <a href="/trumprx" className="text-teal-700 font-bold underline">Read our full guide</a>.
+                                                <Trans i18nKey="medications.card.price.trumpRxNotePre" />{trumpRxData.medicareRestriction ? t('medications.card.price.trumpRxNoteMedicare') : ''}{t('medications.card.price.trumpRxNoteCompare')}<a href="/trumprx" className="text-teal-700 font-bold underline">{t('medications.card.price.readFullGuide')}</a>.
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                                             <div className="bg-white/80 p-2 rounded border border-emerald-200">
-                                                <div className="font-bold text-emerald-700">✅ Using Insurance</div>
-                                                <div className="text-slate-600">Pay more early → then $0 the rest of the year</div>
+                                                <div className="font-bold text-emerald-700">{t('medications.card.warning.usingInsurance')}</div>
+                                                <div className="text-slate-600">{t('medications.card.warning.usingInsuranceDesc')}</div>
                                             </div>
                                             <div className="bg-white/80 p-2 rounded border border-red-200">
-                                                <div className="font-bold text-red-700">❌ Discount Cards & Cash</div>
-                                                <div className="text-slate-600">Pay less each time → but pay all year long</div>
+                                                <div className="font-bold text-red-700">{t('medications.card.warning.discountCards')}</div>
+                                                <div className="text-slate-600">{t('medications.card.warning.discountCardsDesc')}</div>
                                             </div>
                                         </div>
                                         <Link to="/education" className="text-red-700 hover:text-red-800 font-bold text-xs inline-flex items-center gap-1">
-                                            Learn more <ArrowRight size={12} />
+                                            {t('medications.card.warning.learnMore')}<ArrowRight size={12} />
                                         </Link>
                                     </div>
                                 </div>
@@ -4497,31 +4515,31 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     <div className="space-y-4 print-friendly">
                         {/* Medication Summary for Print */}
                         <div className="border-b border-slate-200 pb-4">
-                            <h3 className="text-lg font-bold text-slate-900 mb-2">Medication Details</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.detailsTitle')}</h3>
                             <div className="grid grid-cols-2 gap-2 text-sm">
-                                <div><span className="text-slate-600">Brand Name:</span> <strong>{med.brandName}</strong></div>
-                                <div><span className="text-slate-600">Generic Name:</span> <strong>{med.genericName}</strong></div>
-                                <div><span className="text-slate-600">Category:</span> <strong>{med.category}</strong></div>
-                                <div><span className="text-slate-600">Manufacturer:</span> <strong>{med.manufacturer}</strong></div>
-                                <div><span className="text-slate-600">Organs:</span> <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong></div>
-                                <div><span className="text-slate-600">Stage:</span> <strong>{med.stage || 'N/A'}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.brandName')}</span> <strong>{med.brandName}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.genericName')}</span> <strong>{med.genericName}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.category')}</span> <strong>{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.manufacturer')}</span> <strong>{med.manufacturer}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.organs')}</span> <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.stage')}</span> <strong>{med.stage || t('medications.card.print.notAvailable')}</strong></div>
                             </div>
                         </div>
 
                         {/* Price Estimates Summary */}
                         <div className="border-b border-slate-200 pb-4">
-                            <h3 className="text-lg font-bold text-slate-900 mb-2">Price Estimates</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.priceTitle')}</h3>
                             <div className="space-y-1 text-sm">
                                 {showCopayCards && hasCopayProgram && (
                                     <div className="flex justify-between">
-                                        <span>{copayProgram?.name || 'Manufacturer Copay Card'}:</span>
-                                        <strong className="text-emerald-600">$0 - $10/month</strong>
+                                        <span>{copayProgram?.name || t('medications.card.print.copayCardFallback')}:</span>
+                                        <strong className="text-emerald-600">{t('medications.card.price.copayRange')}</strong>
                                     </div>
                                 )}
                                 {hasPapProgram && (
                                     <div className="flex justify-between">
-                                        <span>{papProgram?.name || 'Patient Assistance (PAP)'}:</span>
-                                        <strong className="text-orange-600">FREE (if eligible)</strong>
+                                        <span>{papProgram?.name || t('medications.card.print.papFallback')}:</span>
+                                        <strong className="text-orange-600">{t('medications.card.print.freeIfEligible')}</strong>
                                     </div>
                                 )}
                                 {isGoodRxAvailable && (
@@ -4545,7 +4563,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 {isTrumpRxAvailable && (
                                     <div className="flex justify-between">
                                         <span>TrumpRx.gov:</span>
-                                        <strong className="text-teal-600">${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}/mo</strong>
+                                        <strong className="text-teal-600">${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}{t('medications.card.perMo')}</strong>
                                     </div>
                                 )}
                             </div>
@@ -4553,54 +4571,54 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 
                         {/* Assistance Programs Summary */}
                         <div className="border-b border-slate-200 pb-4">
-                            <h3 className="text-lg font-bold text-slate-900 mb-2">Assistance Programs</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.assistanceTitle')}</h3>
                             <div className="space-y-2 text-sm">
                                 {showCopayCards && hasCopayProgram && (
                                     <div className="p-2 bg-violet-50 rounded">
-                                        <strong className="text-violet-800">{copayProgram?.name || 'Copay Card Available'}</strong>
-                                        <p className="text-slate-600 text-xs">{copayProgram?.eligibility_notes || 'For commercial/employer insurance only.'}</p>
+                                        <strong className="text-violet-800">{copayProgram?.name || t('medications.card.print.copayAvailableFallback')}</strong>
+                                        <p className="text-slate-600 text-xs">{esProgramNotes('copayPrograms', copayProgramId) || copayProgram?.eligibility_notes || t('medications.card.print.copayEligibilityFallback')}</p>
                                     </div>
                                 )}
                                 {hasPapProgram && (
                                     <div className="p-2 bg-emerald-50 rounded">
-                                        <strong className="text-emerald-800">{papProgram?.name || 'Patient Assistance Program (PAP)'}</strong>
-                                        <p className="text-slate-600 text-xs">{papProgram?.eligibility_notes || 'For Medicare, Medicaid, uninsured, or underinsured patients.'}</p>
+                                        <strong className="text-emerald-800">{papProgram?.name || t('medications.card.print.papProgramFallback')}</strong>
+                                        <p className="text-slate-600 text-xs">{esProgramNotes('papPrograms', papProgramId) || papProgram?.eligibility_notes || t('medications.card.print.papEligibilityFallback')}</p>
                                     </div>
                                 )}
                                 <div className="p-2 bg-sky-50 rounded">
-                                    <strong className="text-sky-800">Foundation Grants</strong>
-                                    <p className="text-slate-600 text-xs">Check PAN Foundation, HealthWell, and Patient Advocate Foundation.</p>
+                                    <strong className="text-sky-800">{t('medications.card.print.foundationGrants')}</strong>
+                                    <p className="text-slate-600 text-xs">{t('medications.card.print.foundationCheck')}</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Action Items Checklist */}
                         <div>
-                            <h3 className="text-lg font-bold text-slate-900 mb-2">Action Checklist</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.checklistTitle')}</h3>
                             <ul className="space-y-1 text-sm">
                                 {showCopayCards && hasCopayProgram && (
                                     <li className="flex items-center gap-2">
                                         <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                        Apply for {copayProgram?.name || `${med.manufacturer} Copay Card`}
+                                        {t('medications.card.print.applyFor')}{copayProgram?.name || t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer })}
                                     </li>
                                 )}
                                 {hasPapProgram && (
                                     <li className="flex items-center gap-2">
                                         <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                        Apply for {papProgram?.name || `${med.manufacturer} Patient Assistance Program`}
+                                        {t('medications.card.print.applyFor')}{papProgram?.name || t('medications.card.fallbacks.manufacturerPap', { manufacturer: med.manufacturer })}
                                     </li>
                                 )}
                                 <li className="flex items-center gap-2">
                                     <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                    Check foundation eligibility (PAN, HealthWell, PAF)
+                                    {t('medications.card.print.checkFoundation')}
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                    Compare prices on GoodRx and SingleCare
+                                    {t('medications.card.print.comparePrices')}
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-4 h-4 border border-slate-400 rounded inline-block flex-shrink-0"></span>
-                                    Ask transplant team about generic alternatives
+                                    {t('medications.card.print.askTeam')}
                                 </li>
                             </ul>
                         </div>
@@ -4611,7 +4629,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 onClick={() => window.print()}
                                 className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg flex items-center justify-center gap-2"
                             >
-                                <Printer size={18} /> Print This Summary
+                                <Printer size={18} /> {t('medications.card.print.printButton')}
                             </button>
                         </div>
                     </div>
@@ -4623,38 +4641,39 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 };
 
 const ExternalMedCard = ({ name, onRemove }) => {
+    const { t } = useTranslation();
     const encodedTerm = encodeURIComponent(name);
     return (
         <article className="bg-white rounded-xl shadow-sm border border-indigo-200 overflow-hidden transition hover:shadow-md break-inside-avoid" aria-labelledby={`custom-med-${name}`}>
             <header className="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex justify-between items-center">
                 <div>
                     <h2 id={`custom-med-${name}`} className="text-xl font-bold text-indigo-900 flex items-center gap-2"><Globe size={20} aria-hidden="true" /> {name}</h2>
-                    <p className="text-indigo-700 text-xs font-medium">External / Custom Search</p>
+                    <p className="text-indigo-700 text-xs font-medium">{t('medications.external.label')}</p>
                 </div>
-                <button onClick={onRemove} className="text-indigo-300 hover:text-red-500 transition p-2 no-print" title="Remove from list" aria-label={`Remove ${name} from list`}><Trash2 size={20} /></button>
+                <button onClick={onRemove} className="text-indigo-300 hover:text-red-500 transition p-2 no-print" title={t('medications.card.header.removeTitle')} aria-label={t('medications.card.header.removeAria', { name })}><Trash2 size={20} /></button>
             </header>
             <div className="p-6">
                 <div className="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-400 text-sm text-amber-900 mb-4 flex gap-2 items-start" role="note">
                     <AlertCircle size={16} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
-                    <p><strong>Note:</strong> This drug is not in our education database. Use the links below to find pricing directly.</p>
+                    <p><Trans i18nKey="medications.external.note" /></p>
                 </div>
-                <nav className="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label={`External price check options for ${name}`}>
-                    <a href={`/out/copay/costplus-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={`Check ${name} price on Cost Plus Drugs (opens in new tab)`}>
+                <nav className="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label={t('medications.external.navAria', { name })}>
+                    <a href={`/out/copay/costplus-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkCostPlusAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">Cost Plus</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
-                    <a href={`/out/copay/goodrx-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={`Check ${name} price on GoodRx (opens in new tab)`}>
+                    <a href={`/out/copay/goodrx-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkGoodRxAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">GoodRx</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
-                    <a href={`/out/copay/singlecare-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={`Check ${name} price on SingleCare (opens in new tab)`}>
+                    <a href={`/out/copay/singlecare-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkSingleCareAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">SingleCare</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
                 </nav>
                 <div className="mt-4 pt-4 border-t border-slate-100 text-center no-print">
-                    <a href={`/out/pap/drugs-com-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-blue-600 hover:underline flex items-center justify-center gap-1" aria-label={`Search for ${name} assistance programs on Drugs.com (opens in new tab)`}>
-                        Search "{name}" on Drugs.com for Assistance Programs <ExternalLink size={12} aria-hidden="true" />
+                    <a href={`/out/pap/drugs-com-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-blue-600 hover:underline flex items-center justify-center gap-1" aria-label={t('medications.external.searchDrugsAria', { name })}>
+                        {t('medications.external.searchDrugsLink', { name })}<ExternalLink size={12} aria-hidden="true" />
                     </a>
                 </div>
             </div>

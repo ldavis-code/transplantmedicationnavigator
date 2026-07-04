@@ -1,0 +1,141 @@
+{
+  "classes": {
+    "Calcineurin Inhibitor": "Inhibidor de calcineurina",
+    "Antimetabolite": "Antimetabolito",
+    "Corticosteroid": "Corticosteroide",
+    "Biologic": "Medicamento biológico",
+    "ACE Inhibitors / ARBs": "Inhibidores de la ECA / BRA",
+    "Beta-Blockers": "Betabloqueadores",
+    "Diuretics": "Diuréticos",
+    "Mineralocorticoid Receptor Antagonists": "Antagonistas de los receptores de mineralocorticoides",
+    "Antiarrhythmics": "Antiarrítmicos",
+    "Erythropoiesis-Stimulating Agents (ESAs)": "Agentes estimulantes de la eritropoyesis (ESAs)",
+    "Iron Supplements": "Suplementos de hierro",
+    "Phosphate Binders": "Quelantes de fósforo",
+    "Vitamin D Analogs": "Análogos de la vitamina D",
+    "Antihypertensives": "Antihipertensivos",
+    "Diuretics (Ascites)": "Diuréticos (para la ascitis)",
+    "Ammonia-reducing Agents": "Agentes para reducir el amoníaco",
+    "Non-selective Beta-Blockers": "Betabloqueadores no selectivos",
+    "Antibiotics (SBP Prevention)": "Antibióticos (prevención de SBP)",
+    "Bone Health": "Salud de los huesos",
+    "IPF Antifibrotics": "Antifibróticos para la IPF",
+    "COPD Bronchodilators / Inhaled Steroids": "Broncodilatadores / esteroides inhalados para la COPD",
+    "Pulmonary Hypertension Vasodilators": "Vasodilatadores para la hipertensión pulmonar",
+    "Diuretics (Supportive)": "Diuréticos (de apoyo)",
+    "Insulin": "Insulina",
+    "Statins": "Estatinas"
+  },
+  "organs": {
+    "Heart": {
+      "title": "Trasplante de corazón",
+      "description": "Las personas que reciben un trasplante de corazón por lo general toman una combinación de un inhibidor de calcineurina, un antimetabolito y un corticosteroide.",
+      "notes": {
+        "tacrolimus": "Base del tratamiento de mantenimiento. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
+        "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
+        "cyclosporine": "Alternativa a tacrolimus.",
+        "mycophenolate": "Se usa en combinación con un inhibidor de calcineurina (CNI).",
+        "imuran": "Antimetabolito alternativo.",
+        "prednisone": "Con frecuencia se reduce a una dosis baja o se suspende con el tiempo."
+      }
+    },
+    "Kidney": {
+      "title": "Trasplante de riñón",
+      "description": "La inmunosupresión para el trasplante de riñón es parecida a la del trasplante de corazón, con un enfoque en equilibrar la eficacia y reducir al mínimo los efectos secundarios.",
+      "notes": {
+        "tacrolimus": "Es el tratamiento estándar. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
+        "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
+        "cyclosporine": "Alternativa a tacrolimus.",
+        "mycophenolate": "Se usa comúnmente en combinación con un inhibidor de calcineurina (CNI).",
+        "myfortic": "Alternativa a mycophenolate mofetil.",
+        "prednisone": "Muchos centros buscan regímenes sin esteroides para reducir los efectos secundarios a largo plazo.",
+        "belatacept": "Una alternativa a los inhibidores de calcineurina (CNI) para ciertos pacientes."
+      }
+    },
+    "Liver": {
+      "title": "Trasplante de hígado",
+      "description": "Los pacientes con trasplante de hígado a menudo necesitan niveles más bajos de inmunosupresión que los receptores de otros órganos, debido a las propiedades inmunológicas únicas del hígado.",
+      "notes": {
+        "tacrolimus": "Es el inhibidor de calcineurina (CNI) más usado en el trasplante de hígado. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
+        "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
+        "mycophenolate": "Se usa con frecuencia en combinación con un inhibidor de calcineurina (CNI).",
+        "prednisone": "Por lo general se reduce poco a poco y se suspende durante los primeros meses después del trasplante."
+      }
+    },
+    "Lung": {
+      "title": "Trasplante de pulmón",
+      "description": "Las personas que reciben un trasplante de pulmón tienen un riesgo alto de rechazo, y los regímenes de inmunosupresión suelen ser más intensivos.",
+      "notes": {
+        "tacrolimus": "Es el inhibidor de calcineurina (CNI) preferido para el trasplante de pulmón. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
+        "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
+        "mycophenolate": "Se usa en combinación con tacrolimus.",
+        "prednisone": "Se mantiene en una dosis baja a largo plazo."
+      }
+    },
+    "Pancreas": {
+      "title": "Trasplante de páncreas",
+      "description": "La inmunosupresión para el trasplante de páncreas es parecida a la del trasplante de riñón, ya que los dos a menudo se hacen juntos.",
+      "notes": {
+        "tacrolimus": "Es el tratamiento estándar. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
+        "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
+        "mycophenolate": "Se usa en combinación con tacrolimus.",
+        "prednisone": "Con frecuencia se reduce a una dosis baja o se suspende con el tiempo."
+      }
+    }
+  },
+  "preTransplant": {
+    "Heart": {
+      "title": "Trasplante de corazón",
+      "description": "Para los pacientes que esperan un trasplante de corazón, la meta principal es controlar la insuficiencia cardíaca avanzada y mantener estable la circulación de la sangre (estabilidad hemodinámica). A esto a menudo se le llama \"puente al trasplante\".",
+      "notes": {
+        "ACE Inhibitors / ARBs": "Reducen la poscarga (la resistencia contra la que bombea el corazón) y mejoran la función del corazón.",
+        "Beta-Blockers": "Mejoran la supervivencia y reducen el esfuerzo que hace el corazón.",
+        "Diuretics": "Controlan el exceso de líquido y la congestión.",
+        "Mineralocorticoid Receptor Antagonists": "Bloquean los efectos de la aldosterona, lo que reduce la fibrosis y mejora la supervivencia.",
+        "Antiarrhythmics": "Controlan las arritmias (latidos irregulares del corazón)."
+      }
+    },
+    "Kidney": {
+      "title": "Trasplante de riñón",
+      "description": "Los pacientes con enfermedad renal en etapa terminal (ESRD) que esperan un trasplante de riñón necesitan tratamiento para varias complicaciones causadas por la insuficiencia renal, generalmente por medio de diálisis.",
+      "notes": {
+        "Erythropoiesis-Stimulating Agents (ESAs)": "Estimulan la producción de glóbulos rojos para tratar la anemia.",
+        "Iron Supplements": "Reponen las reservas de hierro necesarias para formar glóbulos rojos.",
+        "Phosphate Binders": "Controlan los niveles altos de fósforo en la sangre.",
+        "Vitamin D Analogs": "Reducen la hormona paratiroidea (PTH) y ayudan a controlar el equilibrio de calcio y fósforo.",
+        "Antihypertensives": "Controlan la presión arterial alta, una complicación común de la enfermedad renal en etapa terminal (ESRD)."
+      }
+    },
+    "Liver": {
+      "title": "Trasplante de hígado",
+      "description": "El manejo previo al trasplante para los candidatos a trasplante de hígado se enfoca en tratar las complicaciones de la cirrosis y la hipertensión portal.",
+      "notes": {
+        "Diuretics (Ascites)": "Eliminan el exceso de líquido del cuerpo.",
+        "Ammonia-reducing Agents": "Reducen la acumulación en la sangre de toxinas que afectan el cerebro.",
+        "Non-selective Beta-Blockers": "Reducen la presión en la vena porta para prevenir el sangrado de las várices.",
+        "Antibiotics (SBP Prevention)": "Previenen la peritonitis bacteriana espontánea en pacientes de alto riesgo.",
+        "Bone Health": "Previenen o tratan la osteoporosis, que es común en la cirrosis."
+      },
+      "warning": "Es muy importante que los pacientes con cirrosis eviten ciertos medicamentos, como los antiinflamatorios no esteroideos (AINE), que pueden aumentar el riesgo de daño a los riñones y de sangrado."
+    },
+    "Lung": {
+      "title": "Trasplante de pulmón",
+      "description": "El manejo de los medicamentos para los candidatos a trasplante de pulmón se adapta a su enfermedad pulmonar de base, como la fibrosis pulmonar idiopática (IPF), la enfermedad pulmonar obstructiva crónica (COPD) o la hipertensión pulmonar.",
+      "notes": {
+        "IPF Antifibrotics": "Retrasan el avance de la cicatrización de los pulmones.",
+        "COPD Bronchodilators / Inhaled Steroids": "Mejoran el paso del aire y reducen la inflamación.",
+        "Pulmonary Hypertension Vasodilators": "Reducen la presión alta de la sangre en los pulmones.",
+        "Diuretics (Supportive)": "Controlan la retención de líquidos."
+      }
+    },
+    "Pancreas": {
+      "title": "Trasplante de páncreas",
+      "description": "Para los pacientes que esperan un trasplante de páncreas, que por lo general tienen diabetes tipo 1, el enfoque es el control intensivo de la glucosa (azúcar en la sangre) y el manejo de las complicaciones relacionadas con la diabetes.",
+      "notes": {
+        "Insulin": "Mantiene los niveles de glucosa (azúcar) en la sangre dentro del rango deseado.",
+        "ACE Inhibitors / ARBs": "Protegen los riñones.",
+        "Statins": "Controlan el colesterol y reducen el riesgo cardiovascular."
+      }
+    }
+  }
+}
