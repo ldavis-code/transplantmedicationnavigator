@@ -133,6 +133,12 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>https://transplantmedicationnavigator.com/medications/gengraf</loc>
+        <lastmod>2026-07-04</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://transplantmedicationnavigator.com/medications/mycophenolate</loc>
         <lastmod>2026-07-04</lastmod>
         <changefreq>monthly</changefreq>

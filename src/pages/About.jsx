@@ -41,10 +41,10 @@ const About = () => {
                             Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)
                         </p>
                         <p className="text-slate-700 leading-relaxed mb-3">
-                            Lorrinda built this tool from lived experience. She has spent seven years post-transplant turning her journey into national patient advocacy, published peer-reviewed research, and built programs that have supported nearly 500 patients.
+                            Lorrinda built this tool from lived experience. She has spent seven years post-transplant turning her journey into national patient advocacy and published peer-reviewed research, and she has personally supported more than 586 patients through their transplant journeys.
                         </p>
                         <p className="text-slate-700 leading-relaxed">
-                            Her daily AA recovery program at 5:30 PM has facilitated 183 successful transplants and helped over 500 patients.
+                            Participants in her daily recovery program for alcohol-associated liver disease have gone on to receive 183 life-saving transplants — outcomes published in peer-reviewed literature.
                         </p>
                     </div>
                 </div>
@@ -57,10 +57,10 @@ const About = () => {
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
                         <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">183</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">Transplants Facilitated</p>
+                        <p className="text-xs md:text-sm text-slate-600 font-medium">Transplants Among Program Participants</p>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">500+</p>
+                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">586+</p>
                         <p className="text-xs md:text-sm text-slate-600 font-medium">Patients Supported</p>
                     </div>
                 </div>

@@ -1189,7 +1189,7 @@
       "programId": "abbvie-pap",
       "name": "AbbVie Patient Assistance Foundation",
       "manufacturer": "AbbVie",
-      "medications": ["mavyret", "creon", "humira"],
+      "medications": ["mavyret", "creon", "humira", "gengraf"],
       "url": "https://www.abbvie.com/patients/patient-assistance.html",
       "lastVerified": "2026-07-03",
       "phone": "1-800-222-6885",
