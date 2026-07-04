@@ -62,8 +62,9 @@ const pages = [
     ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
     ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
     ogImage: '/og-image-hospitals.png',
+    aiSummary: 'B2B page for transplant hospital administrators and coordinators. Transplant Medication Navigator is a HIPAA-compliant patient medication-assistance and education platform that supports IOTA Model quality performance (composite graft survival, 20 of 100 points) by reducing cost-driven immunosuppressant non-adherence. IOTA Performance Year 2 downside risk (up to $2,000 per kidney transplant) began July 1, 2026. Features: Epic MyChart integration via Connection Hub, discharge workflow tools, white-label admin dashboard with aggregate analytics, no PHI collected, 90-day pilot program. Founder is a liver transplant recipient and Vice Chair of the OPTN Patient Affairs Committee, with a 20-year enterprise operations background.',
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">For Hospital Administrators &amp; Transplant Coordinators</h1>
-      <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves on the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
+      <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves as Vice Chair of the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
       <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
         <li>IOTA Performance Year 2 began July 1, 2026: participating kidney transplant hospitals now carry downside risk of up to $2,000 per kidney transplant, and composite graft survival is the model's entire quality domain, worth up to 20 of 100 points (CMS IOTA Model, June 2026 final rule).</li>
         <li>Patient education is the fastest lever a program controls: medication cost education at discharge, a standardized tool for coordinators and social workers, and aggregate engagement reporting for QAPI and IOTA strategy reviews.</li>
@@ -196,6 +197,9 @@ const medicationPages = MEDICATIONS.map((m) => {
 function generatePageHTML(page, mainScriptPath) {
   const canonical = `${BASE_URL}${page.route}`;
   const pageTitle = page.title.split(' | ')[0];
+  const aiSummaryTag = page.aiSummary
+    ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
+    : '';
 
   // Routes with a full Spanish translation (reached via ?lang=es) get
   // hreflang alternates so search engines index both language versions.
@@ -219,7 +223,7 @@ function generatePageHTML(page, mainScriptPath) {
     <meta name="title" content="${page.title}" />
     <meta name="description" content="${page.description}" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="${canonical}" />${hreflangTags}
+    <link rel="canonical" href="${canonical}" />${aiSummaryTag}${hreflangTags}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

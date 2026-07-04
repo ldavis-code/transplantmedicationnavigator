@@ -93,7 +93,7 @@
   },
   {
     "id": "cyclosporine",
-    "brandName": "Neoral / Sandimmune / Gengraf",
+    "brandName": "Neoral / Sandimmune",
     "genericName": "Cyclosporine",
     "rxcui": "3008",
     "category": "Immunosuppressant",
@@ -112,6 +112,28 @@
     "papProgramId": "novartis-pap",
     "copayUrl": "https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance",
     "copayProgramId": "novartis-copay"
+  },
+  {
+    "id": "gengraf",
+    "brandName": "Gengraf",
+    "genericName": "Cyclosporine (modified)",
+    "rxcui": "3008",
+    "category": "Immunosuppressant",
+    "manufacturer": "AbbVie",
+    "stage": "Post-transplant",
+    "commonOrgans": [
+      "Kidney",
+      "Heart",
+      "Liver",
+      "Lung"
+    ],
+    "papUrl": "https://www.abbvie.com/patients/patient-support/patient-assistance.html",
+    "cost_tier": "medium",
+    "generic_available": true,
+    "typical_copay_tier": 2,
+    "papProgramId": "abbvie-pap",
+    "copayUrl": null,
+    "copayProgramId": null
   },
   {
     "id": "mycophenolate",

@@ -41,10 +41,10 @@ const About = () => {
                             Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)
                         </p>
                         <p className="text-slate-700 leading-relaxed mb-3">
-                            Lorrinda built this tool from lived experience. She has spent seven years post-transplant turning her journey into national patient advocacy, published peer-reviewed research, and built programs that have supported nearly 500 patients.
+                            Lorrinda built this tool from lived experience. She has spent seven years post-transplant turning her journey into national patient advocacy and published peer-reviewed research, and she has personally supported more than 586 patients through their transplant journeys.
                         </p>
                         <p className="text-slate-700 leading-relaxed">
-                            Her daily AA recovery program at 5:30 PM has facilitated 183 successful transplants and helped over 500 patients.
+                            Participants in her daily recovery program for alcohol-associated liver disease have gone on to receive 183 life-saving transplants — outcomes published in peer-reviewed literature.
                         </p>
                     </div>
                 </div>
@@ -57,10 +57,10 @@ const About = () => {
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
                         <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">183</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">Transplants Facilitated</p>
+                        <p className="text-xs md:text-sm text-slate-600 font-medium">Transplants Among Program Participants</p>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">500+</p>
+                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">586+</p>
                         <p className="text-xs md:text-sm text-slate-600 font-medium">Patients Supported</p>
                     </div>
                 </div>
@@ -74,11 +74,13 @@ const About = () => {
                     <div className="flex flex-wrap gap-2">
                         {[
                             'Vice Chair, OPTN Patient Affairs Committee',
+                            'OPTN Transitional Nominating Committee (2025)',
                             'President, TRIO (1,500+ members)',
                             'Harrison Fellow, Fatty Liver Foundation',
                             'AASLD Patient Advisory Group',
-                            'HRSA Commendation Letter',
-                            'Co-First Author, Hepatology Communications'
+                            'HRSA Letter of Commendation (2025)',
+                            'Co-First Author, Hepatology Communications',
+                            'Featured in Cancer Today magazine (2025)'
                         ].map((credential) => (
                             <span key={credential} className="inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-slate-700 text-xs md:text-sm font-medium px-3 py-1.5 rounded-full">
                                 <CheckCircle size={14} className="text-emerald-500 flex-shrink-0" aria-hidden="true" />

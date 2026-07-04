@@ -83,7 +83,7 @@ const ForHospitalAdmin = () => {
                     Built at the Intersection of Patient Experience and Health Policy
                 </h1>
                 <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    This platform was developed by a liver transplant recipient who serves on the OPTN Patient Affairs Committee and holds a seat at the national table where transplant policy is made. TransplantMedicationNavigator isn't a software product, it's a policy intervention, built to address a documented, systemic gap in post-transplant care and CMS-recognized medication access barriers.
+                    This platform was developed by a liver transplant recipient who serves as Vice Chair of the OPTN Patient Affairs Committee and holds a seat at the national table where transplant policy is made. TransplantMedicationNavigator isn't a software product, it's a policy intervention, built to address a documented, systemic gap in post-transplant care and CMS-recognized medication access barriers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -370,15 +370,23 @@ const ForHospitalAdmin = () => {
                 </Link>
             </section>
 
-            {/* Built by a Patient Advocate */}
-            <section className="bg-white border-2 border-emerald-200 rounded-2xl p-8 text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
+            {/* Founder Leadership */}
+            <section className="bg-white border-2 border-emerald-200 rounded-2xl p-8 md:p-10">
+                <div className="flex items-center justify-center gap-2 mb-6">
                     <HeartPulse size={24} className="text-emerald-700" aria-hidden="true" />
-                    <h2 className="text-xl font-bold text-emerald-900">Built by a Patient Advocate</h2>
+                    <h2 className="text-xl font-bold text-emerald-900">Leadership Built for Institutional Scale</h2>
                 </div>
-                <p className="text-slate-700 leading-relaxed max-w-3xl mx-auto">
-                    This tool was built by a transplant recipient with a seat at OPTN, not by a software company. When you recommend it to your patients, you are connecting them to a resource developed from lived experience, validated by published research, and grounded in seven years of post-transplant patient advocacy.
-                </p>
+                <div className="max-w-3xl mx-auto space-y-4">
+                    <p className="text-slate-700 leading-relaxed">
+                        Before founding Transplant Medication Navigator, Lorrinda Gray-Davis spent 20 years in enterprise operations as Executive Director of Diversity for Perini Building Company, directing more than $1 billion to diverse contractors across $8.6B and $4.5B capital programs — work ranked among the top 25 programs in the country, reporting directly to CEOs, and recognized by Congress.
+                    </p>
+                    <p className="text-slate-700 leading-relaxed">
+                        Today she serves as Vice Chair of the OPTN Patient Affairs Committee and on an HRSA Technical Expert Panel — seats at the national tables where transplant policy is made. Her own liver transplant is the origin of this platform, not the credential: she has personally supported more than 586 patients through their transplant journeys, and participants in her recovery program for alcohol-associated liver disease have gone on to receive 183 transplants — peer-support outcomes she co-authored in <em>Hepatology Communications</em>.
+                    </p>
+                    <p className="text-slate-700 leading-relaxed font-medium">
+                        When you deploy this platform, you are partnering with a founder who has operated at institutional scale and lived the patient problem it solves.
+                    </p>
+                </div>
             </section>
 
             {/* CTA */}
