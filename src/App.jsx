@@ -1054,8 +1054,8 @@ const Home = () => {
                         <p className="text-slate-700 leading-relaxed mb-4">{t('home.founder.bio')}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">586+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">190+</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">540+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
                         </div>
                         <Link to="/about" className="inline-flex items-center gap-2 text-emerald-700 hover:text-emerald-800 font-semibold underline">
                             {t('home.founder.link')} <ArrowRight size={16} aria-hidden="true" />
