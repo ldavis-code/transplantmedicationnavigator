@@ -125,6 +125,11 @@ import {
 } from './data/constants.js';
 import MEDICATIONS_DATA from './data/medications.json';
 import PROGRAMS_DATA from './data/programs.json';
+// Sparse Spanish overlay for patient-facing program text (maxBenefit/notes)
+import PROGRAMS_ES from './data/programs.es.json';
+// Spanish overlay for the wizard's organ medication guides (titles,
+// descriptions, class display names, per-med notes)
+import ORGAN_MEDS_ES from './data/organ-medications.es.json';
 import DIRECTORY_RESOURCES_DATA from './data/resources.json';
 import DIRECTORY_RESOURCES_ES from './data/resources.es.json';
 import STATES_DATA from './data/states.json';
@@ -1238,7 +1243,10 @@ const organIcons = {
 
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    // Spanish display text comes from the organ-medications.es.json overlay;
+    // drug names/brands and the data itself stay untouched.
+    const guideEs = i18n.resolvedLanguage === 'es' ? ORGAN_MEDS_ES : null;
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1307,8 +1315,8 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                 return <IconComponent size={24} className="text-emerald-600 flex-shrink-0 mt-1" />;
                             })()}
                             <div>
-                                <h4 className="font-bold text-lg text-slate-900">{ORGAN_MEDICATIONS[expandedOrgan].title}</h4>
-                                <p className="text-sm text-slate-600 mt-1">{ORGAN_MEDICATIONS[expandedOrgan].description}</p>
+                                <h4 className="font-bold text-lg text-slate-900">{guideEs?.organs?.[expandedOrgan]?.title || ORGAN_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{guideEs?.organs?.[expandedOrgan]?.description || ORGAN_MEDICATIONS[expandedOrgan].description}</p>
                             </div>
                         </div>
 
@@ -1332,8 +1340,8 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                                     <span className="font-bold text-slate-900">{med.brand}</span>
                                                     <span className="text-slate-500 ml-1">({med.name})</span>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600">{med.class}</td>
-                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.classes?.[med.class] || med.class}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.organs?.[expandedOrgan]?.notes?.[med.id] || med.notes}</td>
                                                 <td className="py-3 px-3 text-right">
                                                     <button
                                                         onClick={() => onMedicationToggle && onMedicationToggle(med.id)}
@@ -1367,7 +1375,9 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
 
 // Pre-Transplant Medication Guide Component
 const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    // Spanish display text from the overlay; pre-transplant notes key by class
+    const guideEs = i18n.resolvedLanguage === 'es' ? ORGAN_MEDS_ES : null;
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
     const defaultExpanded = selectedOrgans.length > 0 ? selectedOrgans[0] : null;
@@ -1425,8 +1435,8 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                 return <IconComponent size={24} className="text-blue-600 flex-shrink-0 mt-1" />;
                             })()}
                             <div>
-                                <h4 className="font-bold text-lg text-slate-900">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].title}</h4>
-                                <p className="text-sm text-slate-600 mt-1">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].description}</p>
+                                <h4 className="font-bold text-lg text-slate-900">{guideEs?.preTransplant?.[expandedOrgan]?.title || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].title}</h4>
+                                <p className="text-sm text-slate-600 mt-1">{guideEs?.preTransplant?.[expandedOrgan]?.description || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].description}</p>
                             </div>
                         </div>
 
@@ -1445,7 +1455,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                         return (
                                             <tr key={med.class} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <span className="font-bold text-slate-900">{med.class}</span>
+                                                    <span className="font-bold text-slate-900">{guideEs?.classes?.[med.class] || med.class}</span>
                                                 </td>
                                                 <td className="py-3 px-3">
                                                     <div className="flex flex-wrap gap-1.5">
@@ -1465,7 +1475,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                                         })}
                                                     </div>
                                                 </td>
-                                                <td className="py-3 px-3 text-slate-600">{med.notes}</td>
+                                                <td className="py-3 px-3 text-slate-600">{guideEs?.preTransplant?.[expandedOrgan]?.notes?.[med.class] || med.notes}</td>
                                             </tr>
                                         );
                                     })}
@@ -1478,7 +1488,7 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                             <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3">
                                 <div className="flex items-start gap-2">
                                     <AlertTriangle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                                    <p className="text-sm text-amber-800">{PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning}</p>
+                                    <p className="text-sm text-amber-800">{guideEs?.preTransplant?.[expandedOrgan]?.warning || PRE_TRANSPLANT_MEDICATIONS[expandedOrgan].warning}</p>
                                 </div>
                             </div>
                         )}
@@ -2950,6 +2960,7 @@ const MedicationSearch = () => {
                         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{t('medications.search.title')}</h1>
                         <p className="text-slate-600">{t('medications.search.subtitle')}</p>
                     </div>
+                    <LanguageToggle />
                 </div>
 
                 {/* Important Safety Warning */}
@@ -3595,8 +3606,12 @@ function medDisplayName(med) {
 }
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
+    // In Spanish, program eligibility text comes from the programs.es.json
+    // overlay (keyed by programId); English text from the program record.
+    const esProgramNotes = (group, programId) =>
+        (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
     // If the patient's Epic import shows they take the GENERIC of this med, there
     // is no manufacturer copay card (those are brand-only). Force copay cards off
     // so every showCopayCards-gated section hides, and surface a note pointing to
@@ -4561,13 +4576,13 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 {showCopayCards && hasCopayProgram && (
                                     <div className="p-2 bg-violet-50 rounded">
                                         <strong className="text-violet-800">{copayProgram?.name || t('medications.card.print.copayAvailableFallback')}</strong>
-                                        <p className="text-slate-600 text-xs">{copayProgram?.eligibility_notes || t('medications.card.print.copayEligibilityFallback')}</p>
+                                        <p className="text-slate-600 text-xs">{esProgramNotes('copayPrograms', copayProgramId) || copayProgram?.eligibility_notes || t('medications.card.print.copayEligibilityFallback')}</p>
                                     </div>
                                 )}
                                 {hasPapProgram && (
                                     <div className="p-2 bg-emerald-50 rounded">
                                         <strong className="text-emerald-800">{papProgram?.name || t('medications.card.print.papProgramFallback')}</strong>
-                                        <p className="text-slate-600 text-xs">{papProgram?.eligibility_notes || t('medications.card.print.papEligibilityFallback')}</p>
+                                        <p className="text-slate-600 text-xs">{esProgramNotes('papPrograms', papProgramId) || papProgram?.eligibility_notes || t('medications.card.print.papEligibilityFallback')}</p>
                                     </div>
                                 )}
                                 <div className="p-2 bg-sky-50 rounded">
