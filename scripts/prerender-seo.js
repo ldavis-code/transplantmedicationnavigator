@@ -57,13 +57,15 @@ const pages = [
   },
   {
     route: '/for-hospitals',
-    title: 'For Hospital Administrators | Transplant Medication Navigator™',
-    description: 'Improve SRTR outcomes, reduce readmissions, and strengthen CMS compliance. HIPAA-compliant medication assistance tool with Epic integration for transplant programs.',
-    ogTitle: 'For Hospital Administrators & Transplant Coordinators',
-    ogDescription: 'Protect graft survival by removing medication cost barriers. HIPAA-compliant, Epic-integrated tool supporting SRTR outcomes and CMS documentation compliance.',
+    title: 'For Hospital Administrators: IOTA & Graft Survival | Transplant Medication Navigator™',
+    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. HIPAA-compliant patient education with Epic integration.',
+    ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
+    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">For Hospital Administrators &amp; Transplant Coordinators</h1>
       <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves on the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
       <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
+        <li>IOTA Performance Year 2 began July 1, 2026: participating kidney transplant hospitals now carry downside risk of up to $2,000 per kidney transplant, and composite graft survival is the model's entire quality domain, worth up to 20 of 100 points (CMS IOTA Model, June 2026 final rule).</li>
+        <li>Patient education is the fastest lever a program controls: medication cost education at discharge, a standardized tool for coordinators and social workers, and aggregate engagement reporting for QAPI and IOTA strategy reviews.</li>
         <li>Improve SRTR outcomes: medication non-adherence is the leading modifiable cause of graft loss, associated with ~36% of graft losses (Dew MA et al., Transplantation, 2007).</li>
         <li>Reduce preventable readmissions driven by cost-related non-adherence &mdash; 40% of recipients report skipping doses due to cost (AST Therapeutic Needs Study, Taber DJ et al., American Journal of Transplantation, 2025).</li>
         <li>Strengthen CMS Conditions of Participation documentation with a trackable, standardized patient education resource.</li>

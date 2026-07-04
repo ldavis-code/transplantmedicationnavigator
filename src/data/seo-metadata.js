@@ -107,13 +107,13 @@ export const seoMetadata = {
   },
 
   forHospitalAdmin: {
-    title: 'For Hospital Administrators | Transplant Medication Navigator\u2122',
-    description: 'Improve SRTR outcomes, reduce readmissions, and strengthen CMS compliance. HIPAA-compliant medication assistance tool with Epic integration for transplant programs.',
+    title: 'For Hospital Administrators: IOTA & Graft Survival | Transplant Medication Navigator\u2122',
+    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. HIPAA-compliant patient education with Epic integration.',
     canonical: `${BASE_URL}/for-hospitals`,
-    ogTitle: 'For Hospital Administrators & Transplant Coordinators',
-    ogDescription: 'Protect graft survival by removing medication cost barriers. HIPAA-compliant, Epic-integrated tool supporting SRTR outcomes and CMS documentation compliance.',
-    twitterTitle: 'For Hospital Administrators',
-    twitterDescription: 'Improve SRTR outcomes and reduce readmissions with a HIPAA-compliant medication assistance tool for transplant programs.',
+    ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
+    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
+    twitterTitle: 'IOTA PY2 Is Live: Protect Graft Survival',
+    twitterDescription: 'IOTA downside risk began July 1, 2026. HIPAA-compliant patient medication education for transplant programs, with Epic integration and aggregate reporting.',
     breadcrumbName: 'Hospitals',
   },
 

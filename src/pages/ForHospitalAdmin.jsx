@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Building2, ShieldCheck, BarChart3, Lock, CheckCircle, ArrowRight, Users, TrendingUp, Mail, Activity, FileCheck, Server, HeartPulse, ClipboardCheck, DollarSign, BookOpen } from 'lucide-react';
+import { Building2, ShieldCheck, BarChart3, Lock, CheckCircle, ArrowRight, Users, TrendingUp, Mail, Activity, FileCheck, Server, HeartPulse, ClipboardCheck, DollarSign, BookOpen, AlertTriangle, GraduationCap } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -102,6 +102,58 @@ const ForHospitalAdmin = () => {
                     </Link>
                 </div>
             </header>
+
+            {/* IOTA PY2 Urgency Banner */}
+            <section className="bg-gradient-to-br from-rose-50 to-red-50 border-2 border-rose-300 rounded-2xl p-8 md:p-10 shadow-md" aria-labelledby="iota-heading">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <AlertTriangle size={24} />
+                    </div>
+                    <h2 id="iota-heading" className="text-xl md:text-2xl font-extrabold text-slate-900">IOTA Performance Year 2 Is Here. Downside Risk Is Now Live.</h2>
+                </div>
+                <p className="text-slate-800 leading-relaxed mb-4">
+                    On July 1, 2026, the CMS Increasing Organ Transplant Access (IOTA) Model entered Performance Year 2, and the upside-only year ended. Participating kidney transplant hospitals that score 40 or below now owe CMS up to $2,000 per kidney transplant, while programs scoring 60 or above can earn up to $15,000 per transplant. The June 2026 final rule also expanded downside payments to include Medicare Advantage beneficiaries, so more of your transplant volume now counts toward that exposure.
+                </p>
+                <p className="text-slate-800 leading-relaxed mb-6">
+                    Composite graft survival is the model's entire quality domain, worth up to 20 of 100 points and scored against peer percentiles. Medication non-adherence is the leading modifiable cause of graft loss, which makes patient education on medication affordability the fastest lever your program controls this performance year.
+                </p>
+                <div className="bg-white rounded-xl border border-rose-200 p-6 mb-6">
+                    <h3 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <GraduationCap size={20} className="text-rose-700" aria-hidden="true" />
+                        How patient education moves your IOTA score, starting this quarter
+                    </h3>
+                    <ul className="space-y-3 text-slate-700">
+                        <li className="flex items-start gap-3">
+                            <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <span><strong>At discharge:</strong> put medication cost education in every discharge packet with a branded URL or QR code, so no patient leaves without a clear path to affording their immunosuppressants.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <span><strong>In clinic:</strong> give coordinators and social workers one standardized tool to connect patients to copay cards, patient assistance programs, and foundation grants before a missed refill becomes a rejection episode.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <span><strong>At the quality table:</strong> bring aggregate engagement reporting to QAPI and IOTA strategy reviews as documented evidence that your program is actively removing the cost barrier to adherence.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <a
+                        href="mailto:info@transplantmedicationnavigator.com?subject=IOTA%20Strategy%20Call"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-rose-700 hover:bg-rose-800 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition"
+                    >
+                        <Mail size={18} aria-hidden="true" />
+                        Book an IOTA Strategy Call
+                    </a>
+                    <p className="text-slate-500 text-xs leading-relaxed">
+                        Sources:{' '}
+                        <a href="https://www.cms.gov/priorities/innovation/innovation-models/iota" target="_blank" rel="noopener noreferrer" className="text-rose-700 hover:text-rose-900 underline">CMS IOTA Model</a>
+                        {' '}and the{' '}
+                        <a href="https://www.cms.gov/priorities/innovation/increasing-organ-transplant-access-performance-year-2-model-update-quick-reference" target="_blank" rel="noopener noreferrer" className="text-rose-700 hover:text-rose-900 underline">IOTA PY2 Model Update Quick Reference</a>
+                        {' '}(June 2026 final rule).
+                    </p>
+                </div>
+            </section>
 
             {/* AST Study Citation Banner */}
             <section className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-8 md:p-10 shadow-md">
