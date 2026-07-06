@@ -13,7 +13,7 @@ const TermsAndConditions = () => {
                     <FileText size={32} className="text-emerald-700" aria-hidden="true" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Terms and Conditions</h1>
-                <p className="text-slate-600">Last Updated: January 1, 2026</p>
+                <p className="text-slate-600">Last Updated: July 6, 2026</p>
             </header>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-8">
@@ -101,7 +101,7 @@ const TermsAndConditions = () => {
                         7. Governing Law
                     </h2>
                     <p className="text-slate-700 leading-relaxed">
-                        These Terms shall be governed and construed in accordance with the laws of the United States, without regard to its conflict of law provisions.
+                        These Terms shall be governed and construed in accordance with the laws of the State of Texas and applicable federal law, without regard to conflict of law provisions.
                     </p>
                     <p className="text-slate-700 leading-relaxed mt-4">
                         Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Website, and supersede and replace any prior agreements we might have between us regarding the Website.
