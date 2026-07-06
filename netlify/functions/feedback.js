@@ -8,6 +8,7 @@
 // kind (email, name, IP) is accepted or stored.
 
 import { neon } from '@neondatabase/serverless';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 let sql = null;
 const getDb = () => {
@@ -79,6 +80,9 @@ export async function handler(event) {
 
     try {
         const db = getDb();
+        if (!(await allowRequest(db, event, 'feedback', 10, 15))) {
+            return rateLimitedResponse(headers);
+        }
         await db`
             INSERT INTO feedback (source, got_medication, program_found, savings_range, without_tool, medication_searched, comment)
             VALUES (${row.source}, ${row.got_medication}, ${row.program_found}, ${row.savings_range}, ${row.without_tool}, ${row.medication_searched}, ${row.comment})

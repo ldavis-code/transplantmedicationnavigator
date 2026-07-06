@@ -90,11 +90,38 @@ regulatory conclusions before relying on them.
 >   combobox), and low-contrast wizard step labels. All pages now pass; the accessibility
 >   statement was updated to mention the automated testing.
 >
+> **Round 4 remediation (July 6, 2026, same branch):**
+>
+> - **Public-endpoint rate limiting.** All unauthenticated write endpoints now have per-IP
+>   fixed-window limits backed by an upsert counter table (migration 041; identifiers are
+>   HMACs, no raw IPs, rows cleared daily): chat 120/15 min overall with a tighter 30/15 min
+>   on the Anthropic-calling actions (protects the API bill), events 240, medication
+>   tracking 120, missing-med reports 15, feedback and price reports 10. Fails open on
+>   database errors so limiting can never take the site down.
+> - **Dormant patient-adherence schema DELETED.** Migration 042 drops compliance_events,
+>   compliance_scores, compliance_interventions, compliance_audit_log, and
+>   org_compliance_settings; the admin-compliance function and the /admin/compliance
+>   adherence dashboard are removed (the GRC compliance-overview is unaffected). Any future
+>   adherence product must be designed fresh with a BAA.
+> - **CSP hardened.** The two inline boot scripts were externalized to /boot.js, so
+>   script-src no longer allows 'unsafe-inline' or 'unsafe-eval'. Verified in a browser with
+>   the production CSP injected: all pages render and the consent-gated GA path works with
+>   zero violations.
+> - **Error-monitoring ready.** @sentry/react is installed and wired to VITE_SENTRY_DSN
+>   (inert until set; sendDefaultPii disabled; CSP pre-allows the ingest domain). To enable:
+>   create a Sentry project, set the env var, redeploy — and add Sentry to the Privacy
+>   Policy's processor list at that time.
+> - **Dependabot enabled** for both package.json files (weekly, grouped minor/patch).
+> - **Section 504 grievance contact** updated to ldavis@transplantnav.com per the owner.
+>
 > **Still outstanding (non-engineering / future):** counsel review of the policy text +
-> entity name + postal address; a formal DSAR request workflow; and the Anthropic BAA /
-> PHI-stripping decision for the chat assistant if pursuing hospital deployments
-> (ROADMAP.md). Consider wiring `check:a11y` into the Netlify build once the team is
-> comfortable with it gating deploys.
+> entity name + postal address; a governing-law state for the Terms of Service (owner to
+> choose); a formal DSAR request workflow; an external uptime monitor (e.g. UptimeRobot,
+> can't be done in-repo); account-security hygiene (2FA on Netlify/Neon/GitHub/registrar,
+> access inventory, bus-factor plan); an incident-response playbook (FTC Health Breach
+> Notification Rule); cyber-liability insurance; and the Anthropic BAA / PHI-stripping
+> decision for the chat assistant if pursuing hospital deployments (ROADMAP.md). Consider
+> wiring `check:a11y` into the Netlify build once comfortable with it gating deploys.
 
 **Bottom line:** the patient-facing architecture is genuinely privacy-conscious (localStorage-first,
 PHI blocklist on the events endpoint), but several real data flows contradict the site's own public

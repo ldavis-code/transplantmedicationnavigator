@@ -70,6 +70,7 @@ exports.handler = async (event) => {
     { name: 'patient_login_tracking', run: () => sql`DELETE FROM patient_login_tracking WHERE logged_in_at < ${cutoffIso}` },
     { name: 'price_reports_ip_scrub', run: () => sql`UPDATE price_reports SET ip_hash = NULL WHERE ip_hash IS NOT NULL` },
     { name: 'login_attempts', run: () => sql`DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '1 day'` },
+    { name: 'rate_counters', run: () => sql`DELETE FROM rate_counters WHERE window_start < NOW() - INTERVAL '1 day'` },
   ];
 
   const results = {};

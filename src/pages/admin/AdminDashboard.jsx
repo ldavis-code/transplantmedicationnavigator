@@ -192,10 +192,10 @@ export default function AdminDashboard() {
       color: 'bg-emerald-100 text-emerald-600',
     },
     {
-      title: 'Compliance',
-      description: 'Medication adherence & risk monitoring',
+      title: 'Compliance Overview',
+      description: 'Controls, vendors, risks & incident log',
       icon: ShieldCheck,
-      href: '/admin/compliance',
+      href: '/admin/compliance-overview',
       color: 'bg-teal-100 text-teal-600',
     },
     {

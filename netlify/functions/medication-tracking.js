@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 // Initialize Neon client lazily
 let sql = null;
@@ -34,6 +35,9 @@ export async function handler(event) {
 
         // POST: Track a medication interaction
         if (event.httpMethod === 'POST') {
+            if (!(await allowRequest(db, event, 'medication-tracking', 120, 15))) {
+                return rateLimitedResponse(headers);
+            }
             const body = JSON.parse(event.body || '{}');
             const { medicationName, interactionType, searchQuery } = body;
 

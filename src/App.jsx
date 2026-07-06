@@ -39,7 +39,6 @@ const LazyMedicationConfig = lazy(() => import('./pages/admin/MedicationConfig.j
 const LazyFeatureSettings = lazy(() => import('./pages/admin/FeatureSettings.jsx'));
 const LazyImpactReport = lazy(() => import('./pages/admin/ImpactReport.jsx'));
 const LazyInsights = lazy(() => import('./pages/admin/Insights.jsx'));
-const LazyComplianceDashboard = lazy(() => import('./pages/admin/ComplianceDashboard.jsx'));
 const LazyComplianceOverview = lazy(() => import('./pages/admin/ComplianceOverview.jsx'));
 const LazyCenterLogins = lazy(() => import('./pages/admin/CenterLogins.jsx'));
 
@@ -7037,7 +7036,6 @@ const AdminRoutes = () => {
                         <Route path="/admin/features" element={<LazyFeatureSettings />} />
                         <Route path="/admin/impact" element={<LazyImpactReport />} />
                         <Route path="/admin/insights" element={<LazyInsights />} />
-                        <Route path="/admin/compliance" element={<LazyComplianceDashboard />} />
                         <Route path="/admin/compliance-overview" element={<LazyComplianceOverview />} />
                         <Route path="/admin/center-logins" element={<LazyCenterLogins />} />
                     </Routes>
