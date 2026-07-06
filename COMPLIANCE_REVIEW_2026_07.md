@@ -25,13 +25,21 @@ regulatory conclusions before relying on them.
 >   CSP tightened (Stripe hosts removed, `frame-src 'none'`); `/subscribe` removed from
 >   sitemap, prerender, and redirects.
 >
+> **Also applied:** the admin compliance dashboard was migrated fully off Supabase.
+> `compliance-state` and `compliance-checks` now verify the same Neon-backed admin token as
+> the rest of `/admin` (fixing a broken auth path — the pages sent the Neon token but the
+> backend expected a Supabase session). The unauthenticated `compliance-checks` endpoint
+> (§1.4) now requires an admin token for HTTP callers while still allowing Netlify scheduled
+> runs, and its BAA check reads the Neon vendor tracker instead of Supabase storage. Dead
+> Supabase code was deleted (`src/lib/supabase.js`, `adminGuard`, the unrouted
+> `admin/compliance.jsx` page, `AutoChecks.jsx`, and the never-wired BAA upload helpers),
+> the `@supabase/supabase-js` dependency was dropped from both package.json files, and
+> Supabase hosts were removed from the CSP. **The site no longer uses Supabase anywhere.**
+>
 > **Still outstanding** (unchanged by this cleanup): GA4 consent (§1.2), Epic token/PHI
 > logging (§1.1, §1.4), admin-seed and fallback-secret issues (§1.4), the full privacy-policy
 > rewrite and state-law rights section (§2.1), the /for-hospitals HIPAA claims (§2.3), and the
-> §3 items. The admin compliance dashboard is now the **only** remaining Supabase dependency
-> (`src/lib/supabase.js`, `adminGuard`, `compliance-db`, `compliance-state`,
-> `compliance-checks`) — if Supabase is fully retired, that area needs migrating to the Neon
-> admin auth or removing.
+> §3 items.
 
 **Bottom line:** the patient-facing architecture is genuinely privacy-conscious (localStorage-first,
 PHI blocklist on the events endpoint), but several real data flows contradict the site's own public
