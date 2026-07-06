@@ -1,22 +1,19 @@
 /**
  * Error Logging Utility
  *
- * Logs errors to console in development and can be connected to Sentry in production.
+ * Logs errors to console in development; reports to Sentry in production
+ * when a DSN is configured.
  *
- * SETUP FOR SENTRY (optional):
- * 1. Install Sentry: npm install @sentry/react
- * 2. Add your Sentry DSN below
- * 3. Uncomment the Sentry initialization code in initErrorLogger()
+ * TO ENABLE SENTRY:
+ * 1. Create a project at sentry.io and copy its DSN
+ * 2. Set VITE_SENTRY_DSN in Netlify environment variables
+ * 3. Redeploy (VITE_ vars are baked in at build time)
+ * The CSP in netlify.toml already allows Sentry's ingest domain.
+ * Privacy note: Sentry receives error stack traces and, by default, client
+ * IPs — if enabled, add Sentry to the processor list in the Privacy Policy.
  */
 
-// ============================================================================
-// SENTRY CONFIGURATION - ADD YOUR DSN HERE TO ENABLE SENTRY
-// ============================================================================
-// Get your DSN from: https://sentry.io -> Project Settings -> Client Keys (DSN)
-// Format: https://xxxxx@xxxxx.ingest.sentry.io/xxxxx
-// ============================================================================
-const SENTRY_DSN = ''; // <-- INSERT YOUR SENTRY DSN HERE (leave empty to disable)
-// ============================================================================
+const SENTRY_DSN = import.meta.env.VITE_SENTRY_DSN || '';
 
 const isDevelopment = import.meta.env.DEV;
 const isProduction = import.meta.env.PROD;
@@ -28,41 +25,28 @@ let sentryInitialized = false;
 /**
  * Initialize error logging
  * Call this once at app startup (e.g., in main.jsx)
- *
- * To enable Sentry:
- * 1. npm install @sentry/react
- * 2. Add your DSN above
- * 3. Uncomment the Sentry code block below
  */
 export const initErrorLogger = async () => {
   if (sentryInitialized) return;
 
   if (SENTRY_DSN && isProduction) {
-    // =========================================================================
-    // UNCOMMENT THIS BLOCK AFTER INSTALLING SENTRY (npm install @sentry/react)
-    // =========================================================================
-    // try {
-    //   const SentryModule = await import('@sentry/react');
-    //   Sentry = SentryModule;
-    //
-    //   Sentry.init({
-    //     dsn: SENTRY_DSN,
-    //     environment: 'production',
-    //     tracesSampleRate: 1.0,
-    //     enabled: true,
-    //   });
-    //
-    //   sentryInitialized = true;
-    //   console.info('Sentry error logging initialized');
-    // } catch (error) {
-    //   console.warn('Failed to initialize Sentry:', error.message);
-    // }
-    // =========================================================================
+    try {
+      // Dynamic import keeps Sentry out of the main bundle when disabled
+      const SentryModule = await import('@sentry/react');
+      Sentry = SentryModule;
 
-    console.info(
-      'Sentry DSN configured but Sentry code is commented out. ' +
-      'To enable: npm install @sentry/react, then uncomment Sentry code in errorLogger.js'
-    );
+      Sentry.init({
+        dsn: SENTRY_DSN,
+        environment: 'production',
+        tracesSampleRate: 0,
+        sendDefaultPii: false,
+      });
+
+      sentryInitialized = true;
+      console.info('Sentry error logging initialized');
+    } catch (error) {
+      console.warn('Failed to initialize Sentry:', error.message);
+    }
   } else if (isDevelopment) {
     console.info('Error logger initialized (console mode)');
   }

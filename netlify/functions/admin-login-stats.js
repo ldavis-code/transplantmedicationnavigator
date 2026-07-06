@@ -4,7 +4,7 @@
  * to fhir_endpoint_directory (see migration 037). Each row in
  * patient_login_tracking is one completed Epic EHR-launch login.
  *
- * Auth: same Bearer JWT scheme as admin-compliance (super_admin / org_admin).
+ * Auth: same Bearer JWT scheme as the other admin endpoints (super_admin / org_admin).
  *
  * GET /.netlify/functions/admin-login-stats?days=30
  *   -> { period, summary, centers, unmatched }
@@ -40,7 +40,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-// Mirror admin-compliance's token check: HMAC-signed payload with a role claim.
+// HMAC-signed payload with a role claim (same scheme as admin-api).
 function checkAuth(event) {
   const authHeader = event.headers.authorization || event.headers.Authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) return null;

@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 // Initialize Neon client lazily
 let sql;
@@ -96,6 +97,10 @@ export async function handler(event) {
     }
 
     try {
+        if (!(await allowRequest(getDb(), event, 'event', 240, 15))) {
+            return rateLimitedResponse(headers);
+        }
+
         // Parse request body
         let body;
         try {

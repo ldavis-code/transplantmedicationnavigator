@@ -19,7 +19,6 @@ const NAV_ITEMS = [
   { label: 'Users', href: '/admin/users', icon: Users },
   { label: 'Medications', href: '/admin/medications', icon: Pill },
   { label: 'Settings', href: '/admin/settings', icon: Building2 },
-  { label: 'Compliance', href: '/admin/compliance', icon: ShieldCheck },
   { label: 'Compliance Overview', href: '/admin/compliance-overview', icon: Shield },
   { label: 'Center Logins', href: '/admin/center-logins', icon: Stethoscope },
   { label: 'Features', href: '/admin/features', icon: Settings },

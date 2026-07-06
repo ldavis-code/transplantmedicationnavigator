@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 // Initialize Neon client lazily
 let sql = null;
@@ -64,6 +65,9 @@ export async function handler(event) {
 
     try {
         const db = getDb();
+        if (!(await allowRequest(db, event, 'track-missing', 15, 15))) {
+            return rateLimitedResponse(headers);
+        }
         for (const [key, display] of seen) {
             await db`
                 INSERT INTO missing_medications (name_normalized, display_name, request_count)

@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 // Initialize Neon client
 const sql = neon(process.env.DATABASE_URL);
@@ -85,6 +86,9 @@ export async function handler(event) {
 
         // POST: Submit a new price report
         if (event.httpMethod === 'POST') {
+            if (!(await allowRequest(sql, event, 'price-reports', 10, 15))) {
+                return rateLimitedResponse(headers);
+            }
             const body = JSON.parse(event.body || '{}');
             const { medicationId, source, price, location, date } = body;
 

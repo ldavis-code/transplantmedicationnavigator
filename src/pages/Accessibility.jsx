@@ -296,10 +296,10 @@ const Accessibility = () => {
                                 <p>
                                     Email:{' '}
                                     <a
-                                        href="mailto:504coordinator@transplantmedicationnavigator.com?subject=Section%20504%20Grievance"
+                                        href="mailto:ldavis@transplantnav.com?subject=Section%20504%20Grievance"
                                         className="text-emerald-600 hover:text-emerald-700 underline"
                                     >
-                                        504coordinator@transplantmedicationnavigator.com
+                                        ldavis@transplantnav.com
                                     </a>
                                 </p>
                             </div>

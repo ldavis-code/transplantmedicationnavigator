@@ -1,5 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import Anthropic from '@anthropic-ai/sdk';
+import { allowRequest, rateLimitedResponse } from '../../lib/rateLimit.js';
 
 // Lazy initialization for Neon client
 let sql = null;
@@ -958,6 +959,18 @@ export async function handler(event) {
         headers,
         body: JSON.stringify({ error: 'Action is required' }),
       };
+    }
+
+    // Rate limits (per IP): every action shares a generous overall budget,
+    // and the actions that call the Anthropic API get a tighter one so a
+    // script can't run up the bill. Real users stay far under both.
+    const db = getDb();
+    if (!(await allowRequest(db, event, 'chat', 120, 15))) {
+      return rateLimitedResponse(headers);
+    }
+    const LLM_ACTIONS = ['generateResults', 'freeText', 'getMedicationSuggestions'];
+    if (LLM_ACTIONS.includes(action) && !(await allowRequest(db, event, 'chat-llm', 30, 15))) {
+      return rateLimitedResponse(headers);
     }
 
     const result = await handleAction(action, body);
