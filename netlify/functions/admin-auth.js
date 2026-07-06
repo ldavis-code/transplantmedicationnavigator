@@ -7,9 +7,62 @@
  */
 
 import crypto from 'crypto';
+import { neon } from '@neondatabase/serverless';
 
 // Secret for signing tokens (use JWT_SECRET or fallback)
 const TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD;
+
+// ---- Brute-force protection (login_attempts table, migration 040) ----
+let _sql;
+function getDb() {
+    if (!process.env.DATABASE_URL) return null;
+    if (!_sql) _sql = neon(process.env.DATABASE_URL);
+    return _sql;
+}
+
+const RATE_LIMIT_MAX = 5;
+
+function rateLimitIdentifier(event) {
+    const ip =
+        event.headers['x-nf-client-connection-ip'] ||
+        (event.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+        'unknown';
+    return crypto
+        .createHmac('sha256', TOKEN_SECRET || 'rate-limit-salt')
+        .update(`${ip}:reporting-portal`)
+        .digest('hex');
+}
+
+async function isRateLimited(db, identifier) {
+    if (!db) return false;
+    try {
+        const rows = await db`
+            SELECT COUNT(*)::int AS count FROM login_attempts
+            WHERE identifier = ${identifier} AND attempted_at > NOW() - INTERVAL '15 minutes'
+        `;
+        return rows[0].count >= RATE_LIMIT_MAX;
+    } catch {
+        return false;
+    }
+}
+
+async function recordFailedAttempt(db, identifier) {
+    if (!db) return;
+    try {
+        await db`INSERT INTO login_attempts (identifier) VALUES (${identifier})`;
+        await db`DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '1 day'`;
+    } catch {
+        // Best-effort only
+    }
+}
+
+// Constant-time string comparison (avoids leaking the password length or a
+// prefix-match timing signal)
+function safeEqual(a, b) {
+    const ha = crypto.createHash('sha256').update(String(a)).digest();
+    const hb = crypto.createHash('sha256').update(String(b)).digest();
+    return crypto.timingSafeEqual(ha, hb);
+}
 
 const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -89,6 +142,16 @@ export async function handler(event) {
                 };
             }
 
+            const db = getDb();
+            const limiterId = rateLimitIdentifier(event);
+            if (await isRateLimited(db, limiterId)) {
+                return {
+                    statusCode: 429,
+                    headers,
+                    body: JSON.stringify({ error: 'Too many failed login attempts. Please try again in 15 minutes.' }),
+                };
+            }
+
             // Check against ADMIN_PASSWORD environment variable
             const adminPassword = process.env.ADMIN_PASSWORD;
 
@@ -101,7 +164,8 @@ export async function handler(event) {
                 };
             }
 
-            if (password !== adminPassword) {
+            if (!safeEqual(password, adminPassword)) {
+                await recordFailedAttempt(db, limiterId);
                 return {
                     statusCode: 401,
                     headers,

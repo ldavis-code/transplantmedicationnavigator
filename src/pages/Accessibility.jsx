@@ -81,7 +81,7 @@ const Accessibility = () => {
                         </p>
                     </div>
                     <p className="text-slate-700 leading-relaxed">
-                        We performed a self-assessment of this website on February 12, 2026 and found that it meets the majority of WCAG 2.1 Level AA success criteria. A summary of our findings is listed below.
+                        We performed a self-assessment of this website on February 12, 2026 and found that it meets the majority of WCAG 2.1 Level AA success criteria. As of July 6, 2026, we also run automated accessibility tests (axe-core, WCAG 2.1 A and AA rules) on our key pages before each release. No serious or critical problems are currently detected. Automated tests cannot catch every barrier. We continue manual reviews and welcome your reports. A summary of our findings is listed below.
                     </p>
                 </section>
 

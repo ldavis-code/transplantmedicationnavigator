@@ -69,12 +69,32 @@ regulatory conclusions before relying on them.
 >   the reversible IP encoding (no IP at all); savings-tracker device IDs are now
 >   crypto-random (old low-entropy IDs were guessable); unused vercel.json deleted.
 >
-> **Still outstanding:** counsel review of the new policy text + entity name + postal
-> address; a data-deletion/DSAR workflow; retention enforcement jobs (the 24-month promise
-> needs a scheduled cleanup); rate limiting on auth and event endpoints; self-hosting Google
-> Fonts (currently loaded from Google's CDN pre-consent); automated accessibility testing to
-> back the WCAG AA statement; and the Anthropic BAA / PHI-stripping decision for the chat
-> assistant if pursuing hospital deployments (ROADMAP.md).
+> **Round 3 remediation (July 6, 2026, same branch):**
+>
+> - **Retention enforcement — RESOLVED.** A scheduled `data-retention` function runs monthly
+>   and deletes rows older than 24 months from events, medication_tracking, feedback, price
+>   reports, survey responses, and patient login tracking. It also nulls any legacy
+>   reversible ip_hash values in price_reports and clears day-old rate-limit rows.
+> - **Login rate limiting — RESOLVED.** Both admin login endpoints now block after 5 failed
+>   attempts per 15 minutes (migration 040; attempts keyed by HMAC of IP + target — no raw
+>   IPs stored, rows self-clean after a day). The reporting-portal password comparison is now
+>   constant-time.
+> - **Google Fonts — SELF-HOSTED.** The two font families are served from /fonts with local
+>   @font-face CSS; visitor IPs no longer reach Google on page load, and the CSP no longer
+>   allows any Google font host.
+> - **Accessibility automation — RESOLVED.** `npm run check:a11y` audits 12 key pages
+>   (axe-core, WCAG 2.1 A/AA) in both first-visit and browsing states and fails on
+>   serious/critical violations. Running it surfaced and fixed real issues: the brand
+>   emerald-600 failed AA contrast on white (remapped in the Tailwind theme so all existing
+>   buttons/links pass), invalid ARIA attributes on the medication search box (now a proper
+>   combobox), and low-contrast wizard step labels. All pages now pass; the accessibility
+>   statement was updated to mention the automated testing.
+>
+> **Still outstanding (non-engineering / future):** counsel review of the policy text +
+> entity name + postal address; a formal DSAR request workflow; and the Anthropic BAA /
+> PHI-stripping decision for the chat assistant if pursuing hospital deployments
+> (ROADMAP.md). Consider wiring `check:a11y` into the Netlify build once the team is
+> comfortable with it gating deploys.
 
 **Bottom line:** the patient-facing architecture is genuinely privacy-conscious (localStorage-first,
 PHI blocklist on the events endpoint), but several real data flows contradict the site's own public

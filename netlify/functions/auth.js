@@ -34,6 +34,45 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+// ---- Brute-force protection (login_attempts table, migration 040) ----
+// Failed logins are counted per HMAC(ip + email); the raw IP is never stored.
+const RATE_LIMIT_MAX = 5;
+
+function rateLimitIdentifier(event, key) {
+  const ip =
+    event.headers['x-nf-client-connection-ip'] ||
+    (event.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    'unknown';
+  return crypto
+    .createHmac('sha256', JWT_SECRET || 'rate-limit-salt')
+    .update(`${ip}:${key}`)
+    .digest('hex');
+}
+
+async function isRateLimited(db, identifier) {
+  try {
+    const rows = await db`
+      SELECT COUNT(*)::int AS count FROM login_attempts
+      WHERE identifier = ${identifier} AND attempted_at > NOW() - INTERVAL '15 minutes'
+    `;
+    return rows[0].count >= RATE_LIMIT_MAX;
+  } catch {
+    // Table may not exist yet - never lock everyone out over infrastructure
+    return false;
+  }
+}
+
+async function recordFailedAttempt(db, identifier) {
+  try {
+    await db`INSERT INTO login_attempts (identifier) VALUES (${identifier})`;
+    await db`DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '1 day'`;
+  } catch {
+    // Best-effort only
+  }
+}
+
+const RATE_LIMITED_BODY = JSON.stringify({ error: 'Too many failed login attempts. Please try again in 15 minutes.' });
+
 // Hash password with salt
 function hashPassword(password, salt = null) {
   const useSalt = salt || crypto.randomBytes(16).toString('hex');
@@ -114,8 +153,13 @@ export async function handler(event) {
         };
       }
 
-      // Find user
       const db = getDb();
+      const limiterId = rateLimitIdentifier(event, email.toLowerCase());
+      if (await isRateLimited(db, limiterId)) {
+        return { statusCode: 429, headers, body: RATE_LIMITED_BODY };
+      }
+
+      // Find user
       const users = await db`
         SELECT id, email, password_hash, name, role, org_id, is_active
         FROM users
@@ -125,6 +169,7 @@ export async function handler(event) {
       const user = users[0];
 
       if (!user || !user.is_active) {
+        await recordFailedAttempt(db, limiterId);
         return {
           statusCode: 401,
           headers,
@@ -134,6 +179,7 @@ export async function handler(event) {
 
       // Check org match if specified
       if (orgId && user.org_id !== orgId) {
+        await recordFailedAttempt(db, limiterId);
         return {
           statusCode: 401,
           headers,
@@ -144,6 +190,7 @@ export async function handler(event) {
       // Verify password (format: hash:salt)
       const [storedHash, salt] = user.password_hash.split(':');
       if (!verifyPassword(password, storedHash, salt)) {
+        await recordFailedAttempt(db, limiterId);
         return {
           statusCode: 401,
           headers,

@@ -14,6 +14,15 @@ export default {
           'muted': '#374151',     // gray-700 - for secondary text (7:1 ratio)
           'secondary': '#475569', // slate-600 - for tertiary text (5.5:1 ratio)
           'light': '#f1f5f9',     // slate-100 - for text on dark backgrounds
+        },
+        // WCAG AA remap: default emerald-600 (#059669) is only 3.77:1 against
+        // white, failing AA for normal text and for white text on emerald
+        // buttons. Shift 600 to the old 700 value (5.48:1) and 700 to the old
+        // 800 (7.09:1) so every existing bg-emerald-600 button, hover state,
+        // and text-emerald-600 link passes without touching class names.
+        'emerald': {
+          600: '#047857',
+          700: '#065f46',
         }
       },
       // Minimum font sizes
