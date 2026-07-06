@@ -1,12 +1,11 @@
 /**
  * FeedbackSurvey Page
- * Collects patient feedback about their experience with the tool
- * Stores responses in Supabase feedback table
+ * Collects anonymous patient feedback about their experience with the tool
+ * Stores responses in the Neon feedback table via /.netlify/functions/feedback
  */
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
 import {
   CheckCircle,
   Heart,
@@ -17,12 +16,6 @@ import {
   ArrowRight,
   Home
 } from 'lucide-react';
-
-// Initialize Supabase client (same as FeedbackWidget)
-const supabase = createClient(
-  'https://lhvemrazkwlmdaljrcln.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxodmVtcmF6a3dsbWRhbGpyY2xuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2MDMyOTIsImV4cCI6MjA4MjE3OTI5Mn0.20dRGKemeN3-5J30cEJhMshkB0nBWSs92GfIylJW7QU'
-);
 
 // Q1 options - Did you find a program that helped?
 const PROGRAM_FOUND_OPTIONS = [
@@ -60,7 +53,6 @@ export default function FeedbackSurvey() {
     savings_range: null,
     without_tool: null,
     comment: '',
-    email: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -103,20 +95,15 @@ export default function FeedbackSurvey() {
       savings_range: responses.savings_range,
       without_tool: responses.without_tool,
       comment: responses.comment.trim() || null,
-      email: responses.email.trim() || null,
       source: 'feedback_page',
-      created_at: new Date().toISOString(),
     };
 
     try {
-      const { error: supabaseError } = await supabase
-        .from('feedback')
-        .insert([feedbackData]);
-
-      if (supabaseError) {
-        console.error('Supabase error:', supabaseError);
-        // Still show success - don't block user experience
-      }
+      await fetch('/.netlify/functions/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData)
+      });
     } catch (err) {
       console.error('Error submitting feedback:', err);
       // Still show success - don't block user experience
@@ -135,13 +122,15 @@ export default function FeedbackSurvey() {
       savings_range: responses.savings_range,
       without_tool: responses.without_tool,
       comment: null,
-      email: null,
       source: 'feedback_page',
-      created_at: new Date().toISOString(),
     };
 
     try {
-      await supabase.from('feedback').insert([feedbackData]);
+      await fetch('/.netlify/functions/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData)
+      });
     } catch (err) {
       console.error('Error submitting feedback:', err);
     }
@@ -326,7 +315,7 @@ export default function FeedbackSurvey() {
                 </h2>
               </div>
               <p className="text-slate-600 mb-6">
-                Your story can help other patients and improve the system. We may use testimonials (with your permission) to advocate for better medication access.
+                Your story can help other patients and improve the system. Feedback is anonymous — please don't include your name or contact information.
               </p>
 
               <div className="space-y-5">
@@ -345,26 +334,6 @@ export default function FeedbackSurvey() {
                     placeholder="Tell us about your experience finding medication assistance..."
                     className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
                   />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-slate-700 mb-2"
-                  >
-                    Email (if you'd like us to follow up)
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={responses.email}
-                    onChange={(e) => updateResponse('email', e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  />
-                  <p className="text-xs text-slate-500 mt-1">
-                    We'll only use this to contact you about your testimonial.
-                  </p>
                 </div>
               </div>
 

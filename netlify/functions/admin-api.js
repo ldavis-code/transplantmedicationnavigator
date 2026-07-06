@@ -14,7 +14,6 @@
 
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
-import { createClient } from '@supabase/supabase-js';
 
 // Initialize Neon client lazily
 let sql;
@@ -23,19 +22,6 @@ const getDb = () => {
         sql = neon(process.env.DATABASE_URL);
     }
     return sql;
-};
-
-// Initialize Supabase client lazily (for subscriber data)
-let supabaseClient;
-const getSupabase = () => {
-    if (!supabaseClient && process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY) {
-        supabaseClient = createClient(
-            process.env.SUPABASE_URL,
-            process.env.SUPABASE_SERVICE_KEY,
-            { auth: { autoRefreshToken: false, persistSession: false } }
-        );
-    }
-    return supabaseClient;
 };
 
 // Token secret for verification — must match auth.js
@@ -561,178 +547,6 @@ async function getPartnerReport(db, partner, params) {
     };
 }
 
-// Get quiz analytics from Supabase quiz_email_leads table
-async function getQuizAnalytics() {
-    const sb = getSupabase();
-    if (!sb) {
-        return { available: false };
-    }
-
-    try {
-        const now = new Date();
-        const startOfWeek = new Date(now);
-        startOfWeek.setDate(now.getDate() - now.getDay());
-        startOfWeek.setHours(0, 0, 0, 0);
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
-        // Total leads
-        const { count: totalLeads } = await sb
-            .from('quiz_email_leads')
-            .select('id', { count: 'exact', head: true });
-
-        // Leads this week
-        const { count: leadsThisWeek } = await sb
-            .from('quiz_email_leads')
-            .select('id', { count: 'exact', head: true })
-            .gte('created_at', startOfWeek.toISOString());
-
-        // Leads this month
-        const { count: leadsThisMonth } = await sb
-            .from('quiz_email_leads')
-            .select('id', { count: 'exact', head: true })
-            .gte('created_at', startOfMonth.toISOString());
-
-        // Converted leads
-        const { count: convertedLeads } = await sb
-            .from('quiz_email_leads')
-            .select('id', { count: 'exact', head: true })
-            .eq('converted_to_user', true);
-
-        // Marketing opt-ins
-        const { count: marketingOptIns } = await sb
-            .from('quiz_email_leads')
-            .select('id', { count: 'exact', head: true })
-            .eq('marketing_opt_in', true);
-
-        // Recent leads (last 20)
-        const { data: recentLeads } = await sb
-            .from('quiz_email_leads')
-            .select('id, email, marketing_opt_in, selected_medications, source, created_at, converted_to_user')
-            .order('created_at', { ascending: false })
-            .limit(20);
-
-        // Count medications across all leads to find top medications
-        const { data: allLeads } = await sb
-            .from('quiz_email_leads')
-            .select('selected_medications');
-
-        const medCounts = {};
-        (allLeads || []).forEach(lead => {
-            const meds = lead.selected_medications || [];
-            meds.forEach(med => {
-                const name = typeof med === 'string' ? med : (med.name || med.id || 'Unknown');
-                medCounts[name] = (medCounts[name] || 0) + 1;
-            });
-        });
-
-        const topMedications = Object.entries(medCounts)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 10)
-            .map(([name, count]) => ({ name, count }));
-
-        return {
-            available: true,
-            totalLeads: totalLeads || 0,
-            leadsThisWeek: leadsThisWeek || 0,
-            leadsThisMonth: leadsThisMonth || 0,
-            convertedLeads: convertedLeads || 0,
-            conversionRate: totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0,
-            marketingOptIns: marketingOptIns || 0,
-            optInRate: totalLeads > 0 ? Math.round((marketingOptIns / totalLeads) * 100) : 0,
-            topMedications,
-            recentLeads: (recentLeads || []).map(l => ({
-                id: l.id,
-                email: l.email,
-                marketingOptIn: l.marketing_opt_in,
-                medications: (l.selected_medications || []).map(m =>
-                    typeof m === 'string' ? m : (m.name || m.id || 'Unknown')
-                ),
-                source: l.source,
-                createdAt: l.created_at,
-                converted: l.converted_to_user,
-            })),
-        };
-    } catch (error) {
-        console.error('Error fetching quiz analytics:', error);
-        return { available: false, error: error.message };
-    }
-}
-
-// Get subscriber stats from Supabase
-async function getSubscriberStats() {
-    const sb = getSupabase();
-    if (!sb) {
-        return { available: false };
-    }
-
-    try {
-        // Total registered users
-        const { count: totalUsers } = await sb
-            .from('user_profiles')
-            .select('id', { count: 'exact', head: true });
-
-        // Active subscribers (have a paid plan)
-        const { count: activeSubscribers } = await sb
-            .from('user_profiles')
-            .select('id', { count: 'exact', head: true })
-            .eq('subscription_status', 'active');
-
-        // Users who registered this month
-        const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-        const { count: newUsersThisMonth } = await sb
-            .from('user_profiles')
-            .select('id', { count: 'exact', head: true })
-            .gte('created_at', startOfMonth);
-
-        // Plan breakdown
-        const { data: planData } = await sb
-            .from('user_profiles')
-            .select('plan, subscription_status');
-
-        const plans = {};
-        (planData || []).forEach(u => {
-            const key = u.plan || 'free';
-            plans[key] = (plans[key] || 0) + 1;
-        });
-
-        // Users with synced data (have quiz data or medications)
-        const { count: usersWithMeds } = await sb
-            .from('user_medications')
-            .select('user_id', { count: 'exact', head: true });
-
-        const { count: usersWithQuizData } = await sb
-            .from('user_quiz_data')
-            .select('user_id', { count: 'exact', head: true });
-
-        // Recent signups (last 10)
-        const { data: recentSignups } = await sb
-            .from('user_profiles')
-            .select('id, email, plan, subscription_status, created_at')
-            .order('created_at', { ascending: false })
-            .limit(10);
-
-        return {
-            available: true,
-            totalUsers: totalUsers || 0,
-            activeSubscribers: activeSubscribers || 0,
-            newUsersThisMonth: newUsersThisMonth || 0,
-            plans,
-            syncedMedications: usersWithMeds || 0,
-            syncedQuizData: usersWithQuizData || 0,
-            recentSignups: (recentSignups || []).map(u => ({
-                id: u.id,
-                email: u.email,
-                plan: u.plan || 'free',
-                status: u.subscription_status || 'none',
-                createdAt: u.created_at,
-            })),
-        };
-    } catch (error) {
-        console.error('Error fetching subscriber stats:', error);
-        return { available: false, error: error.message };
-    }
-}
-
 // Aggregate patient-logged savings (Neon user_savings). This is the operator's
 // headline impact number and was previously only visible to the patient.
 async function getSavingsSummary(db) {
@@ -884,21 +698,18 @@ async function getCoverageMix(db) {
     }
 }
 
-// Patient feedback (Supabase `feedback` table) — written by the FeedbackWidget
-// and the /feedback survey page, but never surfaced in admin until now.
+// Patient feedback (Neon `feedback` table, migration 039) — written by the
+// FeedbackWidget and the /feedback survey page via the feedback function.
 async function getFeedbackSummary() {
-    const sb = getSupabase();
-    if (!sb) {
-        return { available: false };
-    }
     try {
-        const { data: rows, error } = await sb
-            .from('feedback')
-            .select('got_medication, program_found, savings_range, without_tool, comment, medication_searched, source, created_at')
-            .order('created_at', { ascending: false })
-            .limit(500);
-        if (error) throw new Error(error.message);
-        const all = rows || [];
+        const db = getDb();
+        const all = await db`
+            SELECT got_medication, program_found, savings_range, without_tool,
+                   comment, medication_searched, source, created_at
+            FROM feedback
+            ORDER BY created_at DESC
+            LIMIT 500
+        `;
 
         const tally = (key) => {
             const out = {};
@@ -976,26 +787,6 @@ export async function handler(event) {
                 statusCode: 200,
                 headers,
                 body: JSON.stringify(stats),
-            };
-        }
-
-        // GET /admin-api/subscribers
-        if (path === '/subscribers') {
-            const subscriberStats = await getSubscriberStats();
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify(subscriberStats),
-            };
-        }
-
-        // GET /admin-api/quiz-analytics
-        if (path === '/quiz-analytics') {
-            const quizData = await getQuizAnalytics();
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify(quizData),
             };
         }
 

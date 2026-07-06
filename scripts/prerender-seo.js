@@ -92,13 +92,6 @@ const pages = [
     ogDescription: 'See how much you could save on transplant medications with assistance programs.',
   },
   {
-    route: '/subscribe',
-    title: 'Subscribe to Pro | Transplant Medication Navigator™',
-    description: 'Unlock unlimited features with a Pro subscription. Save medications, track savings, and get personalized assistance recommendations.',
-    ogTitle: 'Subscribe to Pro - Unlock All Features',
-    ogDescription: 'Get unlimited access to My Path Quiz, medication tracking, savings calculator, and more.',
-  },
-  {
     route: '/survey',
     title: 'Share Your Journey | Transplant Medication Navigator™',
     description: 'Share your medication experience to help improve access for all patients. Anonymous surveys for transplant recipients and anyone managing chronic conditions.',

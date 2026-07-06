@@ -57,7 +57,7 @@ const FALLBACK_MEDICATIONS = [
     { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
 ];
 
-export default function SavingsCalculator({ medications = [], isPro = false, onUpgrade, onCalculate }) {
+export default function SavingsCalculator({ medications = [] }) {
     const [selectedMeds, setSelectedMeds] = useState([
         { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', quantity: 1 }
     ]);
@@ -88,10 +88,6 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
     allMedications.sort((a, b) => a.name.localeCompare(b.name));
 
     const addMedication = () => {
-        if (!canAddMore) {
-            if (onUpgrade) onUpgrade();
-            return;
-        }
         setSelectedMeds(prev => [...prev, { id: '', name: '', quantity: 1 }]);
         setShowResults(false);
     };
@@ -138,11 +134,6 @@ export default function SavingsCalculator({ medications = [], isPro = false, onU
         });
         setErrors(newErrors);
         if (Object.keys(newErrors).length > 0) {
-            return;
-        }
-
-        // Check if user can calculate (handles paywall logic)
-        if (onCalculate && !onCalculate()) {
             return;
         }
 

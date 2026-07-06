@@ -268,18 +268,6 @@ exports.handler = async function handler(event) {
       // table may not exist
     }
 
-    // Quiz email leads (table may not exist)
-    var leadCount = 0;
-    try {
-      if (!db) db = getDb();
-      var leads = await db`
-        SELECT COUNT(*) as count FROM quiz_email_leads WHERE created_at >= ${cutoff}
-      `;
-      leadCount = parseInt((leads[0] && leads[0].count) || 0);
-    } catch (e) {
-      // table may not exist
-    }
-
     var c = connections[0] || {};
     var funnelCounts = {};
     reach.forEach(function(r) { funnelCounts[r.event_name] = parseInt(r.count); });
@@ -372,7 +360,6 @@ exports.handler = async function handler(event) {
           totalReports: parseInt(priceReportStats.total_reports || 0),
           uniqueMedications: parseInt(priceReportStats.unique_medications || 0),
         },
-        emailLeads: leadCount,
       }),
     };
   } catch (error) {

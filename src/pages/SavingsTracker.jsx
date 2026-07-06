@@ -1,58 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Calculator, TrendingUp, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SavingsCalculator from '../components/SavingsCalculator';
 import LogSavingsForm from '../components/LogSavingsForm';
 import SavingsDashboard from '../components/SavingsDashboard';
-import PaywallModal from '../components/PaywallModal';
 import { syncPendingEntries } from '../lib/savingsApi';
 import { useMedications } from '../context/MedicationsContext';
-import { useChatQuiz } from '../context/ChatQuizContext';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
-
-// Check localStorage for subscription status and promo code access
-function useLocalSubscription(feature = null) {
-    const [isPro, setIsPro] = useState(false);
-    const [hasPromoAccess, setHasPromoAccess] = useState(false);
-
-    const checkAccess = useCallback(() => {
-        let proStatus = false;
-        let promoStatus = false;
-
-        try {
-            const cached = localStorage.getItem('tmn_subscription');
-            if (cached) {
-                const { data } = JSON.parse(cached);
-                proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
-            }
-        } catch (e) {
-            // Ignore errors, default to free
-        }
-
-        // Check promo code access for specific feature
-        if (feature) {
-            try {
-                const promoCodes = localStorage.getItem('tmn_promo_codes');
-                if (promoCodes) {
-                    const redeemed = JSON.parse(promoCodes);
-                    promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
-                }
-            } catch (e) {
-                // Ignore errors
-            }
-        }
-
-        setIsPro(proStatus);
-        setHasPromoAccess(promoStatus);
-    }, [feature]);
-
-    useEffect(() => {
-        checkAccess();
-    }, [checkAccess]);
-
-    return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
-}
 
 export default function SavingsTracker() {
     useMetaTags(seoMetadata.savingsTracker);
@@ -60,20 +15,7 @@ export default function SavingsTracker() {
     const [activeTab, setActiveTab] = useState('calculator');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [syncMessage, setSyncMessage] = useState(null);
-    const [showPaywall, setShowPaywall] = useState(false);
     const { medications } = useMedications();
-    const { isPro, hasAccess, refreshAccess } = useLocalSubscription('calculator');
-    const {
-        incrementCalculatorUses,
-        isCalculatorLimitReached,
-        remainingCalculatorUses
-    } = useChatQuiz();
-
-    // Handler for successful promo code redemption
-    const handlePromoSuccess = () => {
-        refreshAccess();
-        setShowPaywall(false);
-    };
 
     // Try to sync any pending local entries on mount
     useEffect(() => {
@@ -92,45 +34,12 @@ export default function SavingsTracker() {
         trySync();
     }, []);
 
-    // Show paywall immediately for non-Pro users without promo access (calculator is Pro-only feature)
-    useEffect(() => {
-        if (!hasAccess && isCalculatorLimitReached && activeTab === 'calculator') {
-            setShowPaywall(true);
-        }
-    }, [hasAccess, isCalculatorLimitReached, activeTab]);
-
     const handleSavingsLogged = () => {
         setRefreshTrigger(prev => prev + 1);
     };
 
-    const handleUpgrade = () => {
-        window.location.href = '/pricing';
-    };
-
-    // Handler for when user attempts to calculate savings
-    const handleCalculate = () => {
-        // Pro users and promo code users always have access
-        if (hasAccess) {
-            return true;
-        }
-        // Check if free tier limit is reached
-        if (isCalculatorLimitReached) {
-            setShowPaywall(true);
-            return false;
-        }
-        // Increment calculator uses count
-        incrementCalculatorUses();
-        return true;
-    };
-
     return (
         <>
-        <PaywallModal
-            isOpen={showPaywall}
-            onClose={() => setShowPaywall(false)}
-            featureType="calculator"
-            onPromoSuccess={handlePromoSuccess}
-        />
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 mb-6 text-white">
@@ -205,13 +114,7 @@ export default function SavingsTracker() {
             >
             {activeTab === 'calculator' && (
                 <>
-                    <SavingsCalculator
-                        medications={medications || []}
-                        isPro={hasAccess}
-                        onUpgrade={handleUpgrade}
-                        onCalculate={handleCalculate}
-                        remainingCalculations={remainingCalculatorUses}
-                    />
+                    <SavingsCalculator medications={medications || []} />
                 </>
             )}
             </div>

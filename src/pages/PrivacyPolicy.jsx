@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
                         <div className="bg-slate-50 rounded-lg p-4">
                             <h3 className="font-semibold text-slate-900 mb-2">Personal Data</h3>
                             <p className="text-slate-700">
-                                When you subscribe to our service, we collect your email address and payment information. Payment processing is handled securely by Stripe, and we do not store your full credit card details on our servers.
+                                We do not require you to create an account, and we do not collect your name, email address, or payment information. Your quiz answers and medication lists stay on your device.
                             </p>
                         </div>
                         <div className="bg-slate-50 rounded-lg p-4">
@@ -66,8 +66,6 @@ const PrivacyPolicy = () => {
                     </p>
                     <ul className="list-disc list-inside space-y-2 text-slate-700">
                         <li>To provide, operate, and maintain the Website</li>
-                        <li>To process your subscription and payment transactions</li>
-                        <li>To send you service-related communications</li>
                         <li>To improve and personalize your experience</li>
                         <li>To analyze usage trends and optimize our services</li>
                         <li>To comply with legal obligations</li>
@@ -83,7 +81,7 @@ const PrivacyPolicy = () => {
                         We may share your information in the following situations:
                     </p>
                     <ul className="list-disc list-inside space-y-2 text-slate-700">
-                        <li><strong>Service Providers:</strong> We may share your information with third-party vendors who perform services for us, such as payment processing (Stripe) and analytics.</li>
+                        <li><strong>Service Providers:</strong> We may share your information with third-party vendors who perform services for us, such as website hosting, database hosting, and analytics (including Google Analytics).</li>
                         <li><strong>Legal Requirements:</strong> We may disclose your information if required by law or in response to valid requests by public authorities.</li>
                         <li><strong>Business Transfers:</strong> If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</li>
                     </ul>

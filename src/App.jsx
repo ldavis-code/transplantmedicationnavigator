@@ -21,13 +21,9 @@ const LazyMyMedications = lazy(() => import('./pages/MyMedications.jsx'));
 const LazyMedicationDetail = lazy(() => import('./pages/MedicationDetail.jsx'));
 const LazySavingsTracker = lazy(() => import('./pages/SavingsTracker.jsx'));
 const LazyCopayCardReminders = lazy(() => import('./pages/CopayCardReminders.jsx'));
-const LazySubscribe = lazy(() => import('./pages/Subscribe.jsx'));
-const LazySubscribeSuccess = lazy(() => import('./pages/SubscribeSuccess.jsx'));
-const LazySubscribeCancel = lazy(() => import('./pages/SubscribeCancel.jsx'));
 const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx'));
 const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
-const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
@@ -48,10 +44,6 @@ const LazyComplianceOverview = lazy(() => import('./pages/admin/ComplianceOvervi
 const LazyCenterLogins = lazy(() => import('./pages/admin/CenterLogins.jsx'));
 
 // Subscriber auth pages (lazy loaded)
-const LazySubscriberLogin = lazy(() => import('./pages/subscriber/Login.jsx'));
-const LazySubscriberRegister = lazy(() => import('./pages/subscriber/Register.jsx'));
-const LazyForgotPassword = lazy(() => import('./pages/subscriber/ForgotPassword.jsx'));
-const LazyResetPassword = lazy(() => import('./pages/subscriber/ResetPassword.jsx'));
 
 // Reporting admin pages (lazy loaded)
 const LazyReportingLogin = lazy(() => import('./pages/reporting/ReportingLogin.jsx'));
@@ -67,7 +59,6 @@ import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 // First-visit disclaimer modal
 import DisclaimerModal from './components/DisclaimerModal.jsx';
 // Paywall modal for free tier limits
-import PaywallModal from './components/PaywallModal.jsx';
 // AI Medication Assistant Chat Widget
 import MedicationAssistantChat from './components/MedicationAssistantChat.jsx';
 // Term Tooltip for inline definitions
@@ -75,7 +66,6 @@ import TermTooltip, { DefineInline, GlossaryLink } from './components/TermToolti
 // Chat Quiz Context Provider
 import { ChatQuizProvider, useChatQuiz } from './context/ChatQuizContext.jsx';
 // Subscriber Auth Provider
-import { SubscriberAuthProvider } from './context/SubscriberAuthContext.jsx';
 // Demo Mode Provider
 import { DemoModeProvider } from './context/DemoModeContext.jsx';
 // Simple View Provider
@@ -1499,50 +1489,6 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
     );
 };
 
-// Check localStorage for subscription status (used by Wizard)
-// Also checks for promo code access for specific features
-function useLocalSubscriptionStatus(feature = null) {
-    const [isPro, setIsPro] = useState(false);
-    const [hasPromoAccess, setHasPromoAccess] = useState(false);
-
-    const checkAccess = useCallback(() => {
-        let proStatus = false;
-        let promoStatus = false;
-
-        try {
-            const cached = localStorage.getItem('tmn_subscription');
-            if (cached) {
-                const { data } = JSON.parse(cached);
-                proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
-            }
-        } catch (e) {
-            // Ignore errors, default to free
-        }
-
-        // Check promo code access for specific feature
-        if (feature) {
-            try {
-                const promoCodes = localStorage.getItem('tmn_promo_codes');
-                if (promoCodes) {
-                    const redeemed = JSON.parse(promoCodes);
-                    promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
-                }
-            } catch (e) {
-                // Ignore errors
-            }
-        }
-
-        setIsPro(proStatus);
-        setHasPromoAccess(promoStatus);
-    }, [feature]);
-
-    useEffect(() => {
-        checkAccess();
-    }, [checkAccess]);
-
-    return { isPro, hasPromoAccess, hasAccess: isPro || hasPromoAccess, refreshAccess: checkAccess };
-}
-
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
@@ -1634,14 +1580,6 @@ const Wizard = () => {
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
 
-    // Email collection state for Step 6 (Your Plan)
-    const [userEmail, setUserEmail] = useState('');
-    const [marketingOptIn, setMarketingOptIn] = useState(false);
-    const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
-    const [emailError, setEmailError] = useState('');
-    const [emailSentSuccess, setEmailSentSuccess] = useState(null); // null = not attempted, true = sent, false = failed
-    const [emailErrorDetails, setEmailErrorDetails] = useState(null); // Detailed error info for debugging
-
     // Scroll to top when step changes for accessibility
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1730,66 +1668,6 @@ const Wizard = () => {
     const handleNextFromCosts = () => {
         // Go directly to results
         setStep(7);
-    };
-
-    // Email submission handler
-    const handleEmailSubmit = async () => {
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!userEmail.trim()) {
-            setEmailError(t('wizard.email.errorRequired'));
-            return;
-        }
-        if (!emailRegex.test(userEmail.trim())) {
-            setEmailError(t('wizard.email.errorInvalid'));
-            return;
-        }
-
-        setEmailError('');
-        setIsSubmittingEmail(true);
-
-        try {
-            const response = await fetch('/.netlify/functions/quiz-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: userEmail.trim(),
-                    marketingOptIn: marketingOptIn,
-                    quizAnswers: answers,
-                    selectedMedications: answers.medications || [],
-                    source: 'quiz'
-                })
-            });
-
-            // Parse response to check status and get details
-            const result = await response.json();
-
-            if (!response.ok) {
-                // Server returned an error - capture the details
-                setEmailSentSuccess(false);
-                setEmailErrorDetails(result.errorDetails || result.error || 'Server error');
-                setStep(7);
-                return;
-            }
-            setEmailSentSuccess(result.emailSent === true);
-
-            // Capture error details for debugging if email failed
-            if (!result.emailSent && result.errorDetails) {
-                setEmailErrorDetails(result.errorDetails);
-            }
-
-            // Success - proceed to results
-            setStep(7);
-        } catch (error) {
-            console.error('Error submitting email:', error);
-            // Still proceed to results even if email save fails
-            // We don't want to block the user from seeing their results
-            setEmailSentSuccess(false);
-            setEmailErrorDetails(error.message || 'Network error');
-            setStep(7);
-        } finally {
-            setIsSubmittingEmail(false);
-        }
     };
 
     // Track quiz completion when user reaches results
@@ -2821,12 +2699,8 @@ const MedicationSearch = () => {
     const MEDICATIONS = useMedicationsList();
     const {
         answers: quizAnswers,
-        setAnswer: setContextAnswer,
-        incrementQuizCompletions,
-        isQuizLimitReached,
-        remainingQuizzes
+        setAnswer: setContextAnswer
     } = useChatQuiz();
-    const { isPro, hasAccess } = useLocalSubscriptionStatus('quiz');
 
     // Determine if copay cards should be shown based on insurance type from quiz
     // Copay cards are only for commercial/employer insurance
@@ -2845,7 +2719,6 @@ const MedicationSearch = () => {
     const [isSearching, setIsSearching] = useState(false);
     // Skip straight to medication cards when arriving with medication IDs in the URL
     const [showSavings, setShowSavings] = useState(!!searchParams.get('ids'));
-    const [showPaywall, setShowPaywall] = useState(false);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
     const fuse = useMemo(() => new Fuse(MEDICATIONS, {
@@ -2946,11 +2819,6 @@ const MedicationSearch = () => {
 
     return (
         <>
-        <PaywallModal
-            isOpen={showPaywall}
-            onClose={() => setShowPaywall(false)}
-            featureType="quiz"
-        />
         <article className="max-w-5xl mx-auto space-y-8">
             {/* Show full search section only when no items OR when showSavings is false and user wants to add more */}
             {!hasItems && (
@@ -3348,16 +3216,6 @@ const MedicationSearch = () => {
                 <div className="flex flex-col items-center gap-2 no-print">
                     <button
                         onClick={() => {
-                            // Pro users and promo code users always have access
-                            if (!hasAccess) {
-                                // Check if free tier limit is reached
-                                if (isQuizLimitReached) {
-                                    setShowPaywall(true);
-                                    return;
-                                }
-                                // Increment quiz completion count for free users
-                                incrementQuizCompletions();
-                            }
                             setShowSavings(true);
                             setTimeout(() => {
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -7112,18 +6970,10 @@ const MainSiteRoutes = () => (
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
                 <Route path="/pricing" element={<LazyPricing />} />
-                <Route path="/subscribe" element={<LazySubscribe />} />
-                <Route path="/subscribe/success" element={<LazySubscribeSuccess />} />
-                <Route path="/subscribe/cancel" element={<LazySubscribeCancel />} />
                 <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="/terms" element={<Navigate to="/terms-and-conditions" replace />} />
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />
                 <Route path="/accessibility" element={<LazyAccessibility />} />
-                <Route path="/account" element={<LazyAccount />} />
-                <Route path="/login" element={<LazySubscriberLogin />} />
-                <Route path="/login/register" element={<LazySubscriberRegister />} />
-                <Route path="/login/forgot-password" element={<LazyForgotPassword />} />
-                <Route path="/login/reset-password" element={<LazyResetPassword />} />
                 <Route path="/pilot" element={<LazyPilot />} />
                 <Route path="/pilot/:partner" element={<LazyPilot />} />
                 <Route path="/demo" element={<LazyDemo />} />
@@ -7218,19 +7068,17 @@ const App = () => {
     return (
         <SimpleViewProvider>
             <MedicationsProvider>
-                <SubscriberAuthProvider>
-                    <ChatQuizProvider>
-                        <BrowserRouter>
-                            <DemoModeProvider>
-                                <DemoBanner />
-                                <GoogleAnalytics />
-                                <ScrollToTop />
-                                <RouteAnnouncer />
-                                <AppRoutes />
-                            </DemoModeProvider>
-                        </BrowserRouter>
-                    </ChatQuizProvider>
-                </SubscriberAuthProvider>
+                <ChatQuizProvider>
+                    <BrowserRouter>
+                        <DemoModeProvider>
+                            <DemoBanner />
+                            <GoogleAnalytics />
+                            <ScrollToTop />
+                            <RouteAnnouncer />
+                            <AppRoutes />
+                        </DemoModeProvider>
+                    </BrowserRouter>
+                </ChatQuizProvider>
             </MedicationsProvider>
         </SimpleViewProvider>
     );

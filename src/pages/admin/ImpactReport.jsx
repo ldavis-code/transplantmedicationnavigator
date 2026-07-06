@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import {
   ArrowLeft, Download, TrendingUp, Users, Heart, Pill,
-  BarChart3, FileText, DollarSign, Mail, Globe, Eye,
+  BarChart3, FileText, DollarSign, Globe, Eye,
   ExternalLink, ArrowRight,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -397,14 +397,6 @@ export default function ImpactReport() {
             <p className="text-sm text-gray-500 mt-1">
               Across {data?.communityPricing?.uniqueMedications || 0} medications
             </p>
-          </div>
-          <div className="bg-white rounded-lg shadow-sm border p-5">
-            <div className="flex items-center gap-3 mb-2">
-              <Mail className="h-5 w-5 text-blue-500" />
-              <h3 className="font-medium text-gray-900">Email Leads Captured</h3>
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{(data?.emailLeads || 0).toLocaleString()}</p>
-            <p className="text-sm text-gray-500 mt-1">From quiz completions</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border p-5">
             <div className="flex items-center gap-3 mb-2">

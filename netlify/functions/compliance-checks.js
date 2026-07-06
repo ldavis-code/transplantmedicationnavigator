@@ -88,31 +88,69 @@ async function checkEpicFHIR(sql) {
   }
 }
 async function checkBAAdocs(sql) {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl || !supabaseKey) {
-    await saveCheck(sql, "baa_docs", "Supabase BAA Documents", "warn", "SUPABASE_URL or SUPABASE_SERVICE_KEY not configured");
-    return;
-  }
+  // Data-driven: warn on any vendor in the compliance vendor tracker (Neon)
+  // whose BAA is not marked signed. Vendors are managed on
+  // /admin/compliance-overview.
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/baa_documents?select=vendor_name,signed_date`, {
-      headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, "Content-Type": "application/json" }
-    });
-    const docs = await res.json();
-    const required = ["Supabase","Neon PostgreSQL","Netlify","Epic (App Orchard)","Email Provider"];
-    const uploaded = docs.map(d => d.vendor_name);
-    const missing  = required.filter(v => !uploaded.includes(v));
-    await saveCheck(sql, "baa_docs", "Vendor BAA Documents",
-      missing.length === 0 ? "pass" : "warn",
-      missing.length === 0 ? `All ${required.length} required BAA docs uploaded` : `Missing BAA docs for: ${missing.join(", ")}`
+    const vendors = await sql`SELECT name, baa_status FROM compliance_vendors ORDER BY name`;
+    if (!vendors.length) {
+      await saveCheck(sql, "baa_docs", "Vendor BAA Status", "warn", "No vendors in the compliance vendor tracker yet");
+      return;
+    }
+    const unsigned = vendors.filter(v => v.baa_status !== "signed").map(v => v.name);
+    await saveCheck(sql, "baa_docs", "Vendor BAA Status",
+      unsigned.length === 0 ? "pass" : "warn",
+      unsigned.length === 0 ? `All ${vendors.length} tracked vendors have signed BAAs` : `BAA not signed for: ${unsigned.join(", ")}`
     );
   } catch (e) {
-    await saveCheck(sql, "baa_docs", "Vendor BAA Documents", "fail", e.message);
+    await saveCheck(sql, "baa_docs", "Vendor BAA Status", "fail", e.message);
+  }
+}
+
+// Auth: allow Netlify scheduled invocations (body carries next_run) or a
+// valid admin token — never anonymous HTTP callers, so internal posture
+// details are not publicly readable.
+const crypto = require("crypto");
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production";
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || "admin-secret-change-me";
+function verifyToken(token, secret, check) {
+  try {
+    const [data, signature] = token.split(".");
+    const expected = crypto.createHmac("sha256", secret).update(data).digest("hex");
+    if (signature !== expected) return null;
+    const payload = JSON.parse(Buffer.from(data, "base64").toString());
+    if (payload.exp < Date.now()) return null;
+    return check(payload) ? payload : null;
+  } catch {
+    return null;
+  }
+}
+function isAuthorized(event) {
+  const authHeader = event.headers?.["authorization"] || event.headers?.["Authorization"] || "";
+  if (!authHeader.startsWith("Bearer ")) return false;
+  const token = authHeader.substring(7);
+  return !!(
+    verifyToken(token, JWT_SECRET, p => p.role === "super_admin" || p.role === "org_admin") ||
+    verifyToken(token, LEGACY_TOKEN_SECRET, p => p.type === "admin")
+  );
+}
+function isScheduledInvocation(event) {
+  try {
+    return !!JSON.parse(event.body || "{}").next_run;
+  } catch {
+    return false;
   }
 }
 exports.handler = async (event) => {
+  const scheduled = isScheduledInvocation(event);
+  if (!scheduled && !isAuthorized(event)) {
+    return { statusCode: 401, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ error: "Unauthorized" }) };
+  }
   const sql = neon(process.env.DATABASE_URL);
   await Promise.allSettled([checkNetlifyDeploy(sql), checkHTTPS(sql), checkEpicFHIR(sql), checkBAAdocs(sql)]);
+  if (scheduled) {
+    return { statusCode: 200, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checked_at: new Date().toISOString() }) };
+  }
   const results = await sql`
     SELECT DISTINCT ON (check_name) check_type, check_name, status, detail, checked_at
     FROM compliance_auto_checks ORDER BY check_name, checked_at DESC

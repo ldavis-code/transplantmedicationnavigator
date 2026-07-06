@@ -5,7 +5,7 @@
  *  - Patient-logged savings totals (user_savings)
  *  - Most-requested medications NOT in the catalog (missing_medications)
  *  - MyChart / Epic import adoption + engagement events (events)
- *  - Patient feedback outcomes (Supabase feedback table)
+ *  - Patient feedback outcomes (Neon feedback table)
  */
 
 import { useState, useEffect } from 'react';
@@ -409,7 +409,7 @@ export default function Insights() {
           ) : (
             <p className="text-sm text-gray-500">
               {feedback?.available === false && !feedback?.total
-                ? 'Feedback storage is not configured (Supabase), or no feedback has been submitted yet.'
+                ? 'No feedback has been submitted yet.'
                 : 'No patient feedback yet.'}
             </p>
           )}

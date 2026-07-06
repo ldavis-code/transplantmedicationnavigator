@@ -1,13 +1,45 @@
 const { neon } = require("@neondatabase/serverless");
-const { createClient } = require("@supabase/supabase-js");
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
-async function verifyAdmin(event) {
-  const token = (event.headers["authorization"] || "").replace("Bearer ", "");
-  if (!token) return null;
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return null;
-  const isAdmin = user.user_metadata?.role === "admin" || user.app_metadata?.role === "admin";
-  return isAdmin ? user : null;
+const crypto = require("crypto");
+
+// Token secrets — must match auth.js (DB-backed login) and admin-auth.js (legacy)
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production";
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || "admin-secret-change-me";
+
+// Verify token signed by auth.js (DB-backed admin login)
+function verifyAuthToken(token) {
+  try {
+    const [data, signature] = token.split(".");
+    const expected = crypto.createHmac("sha256", JWT_SECRET).update(data).digest("hex");
+    if (signature !== expected) return null;
+    const payload = JSON.parse(Buffer.from(data, "base64").toString());
+    if (payload.exp < Date.now()) return null;
+    if (payload.role !== "super_admin" && payload.role !== "org_admin") return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+// Verify legacy admin-auth token (password-only login)
+function verifyLegacyAdminToken(token) {
+  try {
+    const [data, signature] = token.split(".");
+    const expected = crypto.createHmac("sha256", LEGACY_TOKEN_SECRET).update(data).digest("hex");
+    if (signature !== expected) return null;
+    const payload = JSON.parse(Buffer.from(data, "base64").toString());
+    if (payload.exp < Date.now()) return null;
+    if (payload.type !== "admin") return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+function verifyAdmin(event) {
+  const authHeader = event.headers["authorization"] || event.headers["Authorization"] || "";
+  if (!authHeader.startsWith("Bearer ")) return null;
+  const token = authHeader.substring(7);
+  return verifyAuthToken(token) || verifyLegacyAdminToken(token);
 }
 async function getData(sql, table, params) {
   switch (table) {
@@ -65,7 +97,7 @@ async function postData(sql, body) {
 exports.handler = async (event) => {
   const headers = { "Content-Type": "application/json", "Access-Control-Allow-Origin": process.env.TMN_PROD_URL || "*", "Access-Control-Allow-Headers": "Authorization, Content-Type" };
   if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers, body: "" };
-  const user = await verifyAdmin(event);
+  const user = verifyAdmin(event);
   if (!user) return { statusCode: 401, headers, body: JSON.stringify({ error: "Unauthorized" }) };
   const sql = neon(process.env.DATABASE_URL);
   try {
