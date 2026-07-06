@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { trackServerEvent } from '../lib/trackServerEvent';
+import { getAnalyticsConsent, CONSENT_CHANGE_EVENT } from '../lib/consent';
 
 /**
  * Google Analytics 4 Integration Component
  *
- * This component initializes GA4 and tracks page views on route changes.
- *
- * IMPORTANT: Replace the placeholder measurement ID below with your actual GA4 ID.
+ * GA4 loads ONLY after the visitor accepts analytics in the ConsentBanner.
+ * Until then (and forever if they decline or send a Global Privacy Control
+ * signal) no Google script is loaded and no _ga cookies are set. The
+ * anonymous first-party server events are consent-independent: they carry no
+ * cookies or identifiers.
  */
 
 // ============================================================================
@@ -88,9 +91,23 @@ const trackPageView = (path, title) => {
 const GoogleAnalytics = () => {
   const location = useLocation();
 
-  // Initialize GA4 on component mount
+  // Initialize GA4 only once the visitor has granted analytics consent —
+  // either previously stored, or the moment they accept in the banner.
   useEffect(() => {
-    initializeGA4();
+    if (getAnalyticsConsent() === 'granted') {
+      initializeGA4();
+    }
+    const onConsentChange = (e) => {
+      if (e.detail?.analytics === 'granted') {
+        window[`ga-disable-${GA4_MEASUREMENT_ID}`] = false;
+        initializeGA4();
+      } else if (e.detail?.analytics === 'denied') {
+        // If GA was already running this session, stop it immediately.
+        window[`ga-disable-${GA4_MEASUREMENT_ID}`] = true;
+      }
+    };
+    window.addEventListener(CONSENT_CHANGE_EVENT, onConsentChange);
+    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, onConsentChange);
   }, []);
 
   // Track page views on route changes

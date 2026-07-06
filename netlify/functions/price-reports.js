@@ -107,15 +107,11 @@ export async function handler(event) {
                 };
             }
 
-            // Optional: hash IP for rate limiting (privacy-preserving)
-            const ipHash = event.headers['x-forwarded-for']
-                ? Buffer.from(event.headers['x-forwarded-for'].split(',')[0]).toString('base64').slice(0, 16)
-                : null;
-
-            // Insert the report
+            // We deliberately store no IP or other identifier with price reports.
+            // (The old base64 "hash" was reversible; it has been dropped.)
             await sql`
                 INSERT INTO price_reports (medication_id, source, price, location, report_date, ip_hash)
-                VALUES (${medicationId}, ${source}, ${priceNum}, ${location || null}, ${date || null}, ${ipHash})
+                VALUES (${medicationId}, ${source}, ${priceNum}, ${location || null}, ${date || null}, ${null})
             `;
 
             return {

@@ -18,7 +18,7 @@ import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 import endpoints from '../../src/data/epic-endpoints.json';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 let _sql;
 function getDb() {

@@ -11,7 +11,12 @@ const LOCAL_CACHE_KEY = 'tmn_savings_cache';
 export function getUserId() {
     let userId = localStorage.getItem(STORAGE_KEY);
     if (!userId) {
-        userId = 'user_' + Date.now().toString(36) + Math.random().toString(36).substr(2);
+        // High-entropy ID: it acts as the bearer credential for this device's
+        // savings history, so it must not be guessable (the old
+        // timestamp+Math.random format was).
+        userId = 'user_' + (crypto.randomUUID
+            ? crypto.randomUUID()
+            : Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join(''));
         localStorage.setItem(STORAGE_KEY, userId);
     }
     return userId;

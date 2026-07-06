@@ -108,12 +108,12 @@ export const seoMetadata = {
 
   forHospitalAdmin: {
     title: 'For Hospital Administrators: IOTA & Graft Survival | Transplant Medication Navigator\u2122',
-    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. HIPAA-compliant patient education with Epic integration.',
+    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. Privacy-first patient education with Epic integration — no PHI stored.',
     canonical: `${BASE_URL}/for-hospitals`,
     ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
-    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
+    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. Privacy-first, Epic-integrated, deployable in a 90-day pilot.',
     twitterTitle: 'IOTA PY2 Is Live: Protect Graft Survival',
-    twitterDescription: 'IOTA downside risk began July 1, 2026. HIPAA-compliant patient medication education for transplant programs, with Epic integration and aggregate reporting.',
+    twitterDescription: 'IOTA downside risk began July 1, 2026. Privacy-first patient medication education for transplant programs, with Epic integration and aggregate reporting.',
     ogImage: `${BASE_URL}/og-image-hospitals.png`,
     twitterImage: `${BASE_URL}/og-image-hospitals.png`,
     breadcrumbName: 'Hospitals',

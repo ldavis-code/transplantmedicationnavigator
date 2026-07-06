@@ -36,10 +36,45 @@ regulatory conclusions before relying on them.
 > the `@supabase/supabase-js` dependency was dropped from both package.json files, and
 > Supabase hosts were removed from the CSP. **The site no longer uses Supabase anywhere.**
 >
-> **Still outstanding** (unchanged by this cleanup): GA4 consent (§1.2), Epic token/PHI
-> logging (§1.1, §1.4), admin-seed and fallback-secret issues (§1.4), the full privacy-policy
-> rewrite and state-law rights section (§2.1), the /for-hospitals HIPAA claims (§2.3), and the
-> §3 items.
+> **Round 2 remediation (July 6, 2026, same branch):**
+>
+> - **§1.2 GA4 consent — RESOLVED.** GA now loads only after the visitor accepts a bilingual
+>   consent banner; a Global Privacy Control signal is honored as an automatic decline (no
+>   banner, no GA). A footer "Privacy Choices" link lets visitors change the decision;
+>   declining mid-session sets the `ga-disable` flag immediately. Verified in a headless
+>   browser: zero Google requests before consent or after decline.
+> - **§1.1/§1.4 Epic log leakage — RESOLVED.** The token-exchange no longer logs the token
+>   response body; patient FHIR ids are removed from all Epic function logs (replaced with
+>   presence booleans); token prefixes are no longer logged.
+> - **§1.4 admin-seed — RESOLVED.** The endpoint, its redirect, the Login-page setup button,
+>   and the committed password-hash migration (030) are deleted. NOTE: the hash remains in git
+>   history — rotate that account's password.
+> - **§1.4 fallback secrets — RESOLVED.** All hardcoded fallback signing secrets are removed
+>   from 14 functions; token verification fails closed and login returns a clear error if
+>   `JWT_SECRET` is unset. **Deploy requirement: set `JWT_SECRET` in Netlify env vars before
+>   merging or admin login will stop working.**
+> - **§2.1 Privacy Policy — REWRITTEN.** Now describes the real flows (device-local storage,
+>   anonymous events, feedback/price reports, Epic import, Anthropic chat, consent-gated GA),
+>   names every processor, adds a state-privacy-rights section (CCPA/WA MHMDA), a HIPAA
+>   position statement, and concrete retention periods (24 months for anonymous events).
+>   Still needs: counsel review, confirmation of the "TransplantNav LLC" entity name, and a
+>   postal address.
+> - **§2.3 /for-hospitals claims — CORRECTED.** "HIPAA-Compliant by Design" / "No PHI
+>   collected, stored, or transmitted" / "No BAA required" replaced with accurate
+>   privacy-first wording ("no PHI stored on our servers; patient-directed MyChart import,
+>   never retained"); the WCAG "AAA" over-claim reduced to AA; seo-metadata, prerender, and
+>   OG-image copy updated to match.
+> - **§3 items:** chatbot now shows a visible bilingual AI/not-medical-advice disclaimer;
+>   the disclaimer modal is versioned (text changes re-prompt); price reports no longer store
+>   the reversible IP encoding (no IP at all); savings-tracker device IDs are now
+>   crypto-random (old low-entropy IDs were guessable); unused vercel.json deleted.
+>
+> **Still outstanding:** counsel review of the new policy text + entity name + postal
+> address; a data-deletion/DSAR workflow; retention enforcement jobs (the 24-month promise
+> needs a scheduled cleanup); rate limiting on auth and event endpoints; self-hosting Google
+> Fonts (currently loaded from Google's CDN pre-consent); automated accessibility testing to
+> back the WCAG AA statement; and the Anthropic BAA / PHI-stripping decision for the chat
+> assistant if pursuing hospital deployments (ROADMAP.md).
 
 **Bottom line:** the patient-facing architecture is genuinely privacy-conscious (localStorage-first,
 PHI blocklist on the events endpoint), but several real data flows contradict the site's own public

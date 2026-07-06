@@ -58,20 +58,20 @@ const pages = [
   {
     route: '/for-hospitals',
     title: 'For Hospital Administrators: IOTA & Graft Survival | Transplant Medication Navigator™',
-    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. HIPAA-compliant patient education with Epic integration.',
+    description: 'IOTA downside risk went live July 1, 2026. Graft survival is 20% of your score, and medication non-adherence is its leading modifiable threat. Privacy-first patient education with Epic integration — no PHI stored.',
     ogTitle: 'IOTA Performance Year 2 Is Here: Patient Education Is Your Fastest Lever',
-    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. HIPAA-compliant, Epic-integrated, deployable in a 90-day pilot.',
+    ogDescription: 'CMS IOTA downside risk began July 1, 2026. Protect your composite graft survival score by removing medication cost barriers. Privacy-first, Epic-integrated, deployable in a 90-day pilot.',
     ogImage: '/og-image-hospitals.png',
-    aiSummary: 'B2B page for transplant hospital administrators and coordinators. Transplant Medication Navigator is a HIPAA-compliant patient medication-assistance and education platform that supports IOTA Model quality performance (composite graft survival, 20 of 100 points) by reducing cost-driven immunosuppressant non-adherence. IOTA Performance Year 2 downside risk (up to $2,000 per kidney transplant) began July 1, 2026. Features: Epic MyChart integration via Connection Hub, discharge workflow tools, white-label admin dashboard with aggregate analytics, no PHI collected, 90-day pilot program. Founder is a liver transplant recipient and Vice Chair of the OPTN Patient Affairs Committee, with a 20-year enterprise operations background.',
+    aiSummary: 'B2B page for transplant hospital administrators and coordinators. Transplant Medication Navigator is a privacy-first patient medication-assistance and education platform (no PHI stored on its servers) that supports IOTA Model quality performance (composite graft survival, 20 of 100 points) by reducing cost-driven immunosuppressant non-adherence. IOTA Performance Year 2 downside risk (up to $2,000 per kidney transplant) began July 1, 2026. Features: Epic MyChart integration via Connection Hub, discharge workflow tools, white-label admin dashboard with aggregate analytics, no PHI stored, 90-day pilot program. Founder is a liver transplant recipient and Vice Chair of the OPTN Patient Affairs Committee, with a 20-year enterprise operations background.',
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">For Hospital Administrators &amp; Transplant Coordinators</h1>
-      <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a HIPAA-compliant medication assistance platform for transplant programs, built by a liver transplant recipient who serves as Vice Chair of the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
+      <p style="color:#475569;margin-bottom:16px;">Transplant Medication Navigator is a privacy-first medication assistance platform for transplant programs, built by a liver transplant recipient who serves as Vice Chair of the OPTN Patient Affairs Committee. It connects patients to copay cards, patient assistance programs, and foundation grants before cost becomes a barrier to adherence.</p>
       <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
         <li>IOTA Performance Year 2 began July 1, 2026: participating kidney transplant hospitals now carry downside risk of up to $2,000 per kidney transplant, and composite graft survival is the model's entire quality domain, worth up to 20 of 100 points (CMS IOTA Model, June 2026 final rule).</li>
         <li>Patient education is the fastest lever a program controls: medication cost education at discharge, a standardized tool for coordinators and social workers, and aggregate engagement reporting for QAPI and IOTA strategy reviews.</li>
         <li>Improve SRTR outcomes: medication non-adherence is the leading modifiable cause of graft loss, associated with ~36% of graft losses (Dew MA et al., Transplantation, 2007).</li>
         <li>Reduce preventable readmissions driven by cost-related non-adherence &mdash; 40% of recipients report skipping doses due to cost (AST Therapeutic Needs Study, Taber DJ et al., American Journal of Transplantation, 2025).</li>
         <li>Strengthen CMS Conditions of Participation documentation with a trackable, standardized patient education resource.</li>
-        <li>HIPAA-compliant by design: no PHI collected, stored, or transmitted; no BAA required for educational use.</li>
+        <li>Privacy-first by design: no accounts, no PHI stored on our servers &mdash; health details stay in the patient's browser, and analytics are aggregate-only.</li>
         <li>Epic MyChart integration via Epic Connection Hub, discharge workflow support, and a white-label admin dashboard with aggregate, privacy-safe analytics.</li>
         <li>Typical patient impact: monthly out-of-pocket immunosuppressant costs drop from $624 without assistance to about $10 with copay card enrollment.</li>
       </ul>
@@ -80,9 +80,9 @@ const pages = [
   {
     route: '/pricing',
     title: 'Pricing | Transplant Medication Navigator™',
-    description: 'Free access to education, subscription options for patients, and partnership options for organizations. View our clear pricing.',
+    description: 'Free access to education for patients, and partnership options for organizations. View our clear pricing.',
     ogTitle: 'Clear Pricing',
-    ogDescription: 'Free educational resources for all. Subscription and partnership options for patients and healthcare organizations.',
+    ogDescription: 'Free educational resources for all patients. Partnership options for healthcare organizations.',
   },
   {
     route: '/savings-tracker',

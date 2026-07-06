@@ -2,8 +2,8 @@ const { neon } = require("@neondatabase/serverless");
 const crypto = require("crypto");
 
 // Token secrets — must match auth.js (DB-backed login) and admin-auth.js (legacy)
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production";
-const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || "admin-secret-change-me";
+const JWT_SECRET = process.env.JWT_SECRET;
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD;
 
 // Verify token signed by auth.js (DB-backed admin login)
 function verifyAuthToken(token) {

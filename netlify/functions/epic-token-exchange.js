@@ -168,10 +168,10 @@ export async function handler(event) {
       }
     );
 
-    // Log full response before parsing
+    // Never log the response body on success — it contains the access token,
+    // id_token, and patient FHIR id, and function logs persist in Netlify.
     const responseText = await tokenResponse.text();
     console.log('[epic-token-exchange] Response status:', tokenResponse.status);
-    console.log('[epic-token-exchange] Response body:', responseText);
 
     let tokenData;
     try {
@@ -219,8 +219,8 @@ export async function handler(event) {
       };
     }
 
-    // Log granted scope so it's visible in logs
-    console.log('[epic-token-exchange] TOKEN GRANTED: scope="' + (tokenData.scope || 'NONE') + '" patient=' + tokenData.patient);
+    // Log granted scope only — never the token or the patient FHIR id
+    console.log('[epic-token-exchange] TOKEN GRANTED: scope="' + (tokenData.scope || 'NONE') + '" patient_present=' + Boolean(tokenData.patient));
 
     // Record the completed patient login (analytics only, no PHI). We look up
     // the health system in fhir_endpoint_directory by its iss URL (case- and

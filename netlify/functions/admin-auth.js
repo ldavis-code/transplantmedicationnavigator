@@ -9,7 +9,7 @@
 import crypto from 'crypto';
 
 // Secret for signing tokens (use JWT_SECRET or fallback)
-const TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || 'admin-secret-change-me';
+const TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD;
 
 const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -20,6 +20,9 @@ const headers = {
 
 // Generate a simple signed token
 function generateAdminToken() {
+    if (!TOKEN_SECRET) {
+        throw new Error('JWT_SECRET (or ADMIN_PASSWORD) is not configured. Set it in Netlify environment variables.');
+    }
     const payload = {
         type: 'admin',
         exp: Date.now() + 24 * 60 * 60 * 1000, // 24 hours

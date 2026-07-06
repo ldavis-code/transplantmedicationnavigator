@@ -72,6 +72,8 @@ import { DemoModeProvider } from './context/DemoModeContext.jsx';
 import { SimpleViewProvider, useSimpleView } from './context/SimpleViewContext.jsx';
 // Demo Banner Component
 import DemoBanner from './components/DemoBanner.jsx';
+import ConsentBanner from './components/ConsentBanner.jsx';
+import { openConsentBanner } from './lib/consent.js';
 // Feedback Widget for medication results
 import FeedbackWidget from './components/FeedbackWidget.jsx';
 // Read Aloud Button for accessibility
@@ -681,6 +683,8 @@ const Layout = ({ children }) => {
                         <Link to="/accessibility" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.accessibility')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/feedback" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.feedback')}</Link>
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <button type="button" onClick={openConsentBanner} className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.privacyChoices')}</button>
                         {!isSpanish && (
                             <>
                                 <span className="text-slate-600" aria-hidden="true">|</span>
@@ -7072,6 +7076,7 @@ const App = () => {
                     <BrowserRouter>
                         <DemoModeProvider>
                             <DemoBanner />
+                            <ConsentBanner />
                             <GoogleAnalytics />
                             <ScrollToTop />
                             <RouteAnnouncer />

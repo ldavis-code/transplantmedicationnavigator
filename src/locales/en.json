@@ -1,4 +1,11 @@
 {
+  "consent": {
+    "ariaLabel": "Cookie and analytics consent",
+    "body": "We use optional Google Analytics cookies to understand how the site is used. The site works fully without them, and we never sell your information. Would you like to allow analytics cookies?",
+    "privacyLink": "Privacy Policy",
+    "accept": "Allow analytics",
+    "decline": "No thanks"
+  },
   "disclaimer": {
     "title": "Important Notice",
     "text": "This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.",
@@ -1229,7 +1236,8 @@
         "accessibility": "Accessibility & Section 504",
         "feedback": "Feedback",
         "hospitals": "Hospitals",
-        "admin": "Admin"
+        "admin": "Admin",
+        "privacyChoices": "Privacy Choices"
       }
     }
   },
