@@ -24,8 +24,8 @@ const ForTransplantPrograms = () => {
         },
         {
             icon: Lock,
-            title: 'No PHI Collected',
-            description: 'Patients use the tool without creating accounts or entering protected health information. Zero compliance burden for your program.'
+            title: 'No PHI Stored',
+            description: 'Patients use the tool without creating accounts, and health details they enter stay in their own browser. Nothing identifying is stored on our servers, minimal compliance burden for your program.'
         }
     ];
 

@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Phone } from 'lucide-react';
 
 const STORAGE_KEY = 'disclaimer_accepted';
+// Bump this date whenever the disclaimer text changes materially so prior
+// visitors are asked to acknowledge the updated version.
+const DISCLAIMER_VERSION = '2026-07-06';
 
 /**
  * DisclaimerModal Component
@@ -24,8 +27,10 @@ const DisclaimerModal = () => {
   const previousActiveElement = useRef(null);
 
   useEffect(() => {
-    // Check if user has already accepted the disclaimer
-    const hasAccepted = localStorage.getItem(STORAGE_KEY);
+    // Check if user has already accepted the current version of the disclaimer
+    // (legacy value 'true' counts as accepting the pre-versioning text only)
+    const accepted = localStorage.getItem(STORAGE_KEY);
+    const hasAccepted = accepted === DISCLAIMER_VERSION;
     if (!hasAccepted) {
       // Store the previously focused element
       previousActiveElement.current = document.activeElement;
@@ -90,7 +95,7 @@ const DisclaimerModal = () => {
   }, [handleKeyDown]);
 
   const handleAccept = () => {
-    localStorage.setItem(STORAGE_KEY, 'true');
+    localStorage.setItem(STORAGE_KEY, DISCLAIMER_VERSION);
     setShowModal(false);
     document.body.style.overflow = '';
 

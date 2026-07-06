@@ -18,7 +18,7 @@ for (const section of ['copayPrograms', 'papPrograms']) {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
 const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
 const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
 

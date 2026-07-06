@@ -214,10 +214,11 @@ export async function handler(event) {
       );
     }
 
+    // Log scope only — never the token or the patient FHIR id
     console.log(
-      '[epic-ehr-callback] Token granted: scope="%s" patient=%s',
+      '[epic-ehr-callback] Token granted: scope="%s" patient_present=%s',
       tokenData.scope || 'NONE',
-      tokenData.patient
+      Boolean(tokenData.patient)
     );
 
     // ── Extract organization identity ──

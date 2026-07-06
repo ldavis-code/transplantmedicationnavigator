@@ -13,7 +13,7 @@ import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
 
 // Simple JWT-like token (for demo - use proper JWT in production)
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Lazy-init DB connection (avoid crash at module load if DATABASE_URL is unset)
 let _sql;
@@ -49,6 +49,9 @@ function verifyPassword(password, storedHash, salt) {
 
 // Generate token
 function generateToken(user) {
+  if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not configured. Set it in Netlify environment variables before admin login can work.');
+  }
   const payload = {
     id: user.id,
     email: user.email,

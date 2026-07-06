@@ -1,4 +1,11 @@
 {
+  "consent": {
+    "ariaLabel": "Consentimiento de cookies y análisis",
+    "body": "Usamos cookies opcionales de Google Analytics para entender cómo se usa el sitio. El sitio funciona completamente sin ellas y nunca vendemos su información. ¿Desea permitir las cookies de análisis?",
+    "privacyLink": "Política de privacidad",
+    "accept": "Permitir análisis",
+    "decline": "No, gracias"
+  },
   "disclaimer": {
     "title": "Aviso importante",
     "text": "Esta herramienta ofrece información educativa para ayudarle a encontrar opciones de asistencia con sus medicamentos. No sustituye el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su condición médica o su tratamiento.",
@@ -1229,7 +1236,8 @@
         "accessibility": "Accesibilidad y Sección 504",
         "feedback": "Comentarios",
         "hospitals": "Hospitales",
-        "admin": "Admin"
+        "admin": "Admin",
+        "privacyChoices": "Opciones de privacidad"
       }
     }
   },

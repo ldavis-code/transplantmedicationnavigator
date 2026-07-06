@@ -111,8 +111,8 @@ async function checkBAAdocs(sql) {
 // valid admin token — never anonymous HTTP callers, so internal posture
 // details are not publicly readable.
 const crypto = require("crypto");
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production";
-const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || "admin-secret-change-me";
+const JWT_SECRET = process.env.JWT_SECRET;
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD;
 function verifyToken(token, secret, check) {
   try {
     const [data, signature] = token.split(".");

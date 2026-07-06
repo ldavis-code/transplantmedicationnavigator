@@ -25,9 +25,9 @@ const getDb = () => {
 };
 
 // Token secret for verification — must match auth.js
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
 // Legacy admin-auth token secret (kept for backward compatibility)
-const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD || 'admin-secret-change-me';
+const LEGACY_TOKEN_SECRET = process.env.JWT_SECRET || process.env.ADMIN_PASSWORD;
 
 const headers = {
     'Access-Control-Allow-Origin': '*',

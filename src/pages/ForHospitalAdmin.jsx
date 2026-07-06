@@ -24,8 +24,8 @@ const ForHospitalAdmin = () => {
         },
         {
             icon: Lock,
-            title: 'HIPAA-Compliant by Design',
-            description: 'No PHI is collected, stored, or transmitted. Patients use the tool without accounts or personal information. Zero BAA required for educational use, no compliance burden for your IT or legal teams.'
+            title: 'Privacy-First by Design',
+            description: 'Patients use the tool without accounts or personal information. Health details they enter stay in their own browser, no PHI is stored on our servers, and analytics are anonymous and aggregate-only — minimal compliance burden for your IT and legal teams.'
         }
     ];
 
@@ -308,15 +308,15 @@ const ForHospitalAdmin = () => {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                        <h3 className="font-bold text-emerald-400 mb-2">HIPAA Compliance</h3>
+                        <h3 className="font-bold text-emerald-400 mb-2">Privacy & PHI Posture</h3>
                         <ul className="space-y-2 text-slate-300 text-sm">
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                No PHI collected, stored, or transmitted
+                                No PHI stored on our servers — health details stay in the patient's browser
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                No BAA required for educational use
+                                MyChart imports are patient-directed under the patient's own right of access, encrypted in transit, and never retained
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
@@ -341,7 +341,7 @@ const ForHospitalAdmin = () => {
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                WCAG 2.1 AAA accessibility standards
+                                Designed to WCAG 2.1 AA accessibility standards
                             </li>
                             <li className="flex items-start gap-2">
                                 <CheckCircle size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />

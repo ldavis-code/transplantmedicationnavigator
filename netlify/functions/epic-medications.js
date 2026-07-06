@@ -64,13 +64,12 @@ export async function handler(event) {
       }
     } catch(e) { /* not a JWT or malformed */ }
 
+    // Debug context without identifiers: no patient id, no JWT subject.
     console.error('=== EPIC MEDICATIONS ===',
       'token_len=' + accessToken?.length,
-      'patient=' + patientId,
+      'patient_present=' + Boolean(patientId),
       'scope_from_client="' + grantedScope + '"',
       'jwt_scope="' + (jwtClaims.scope || jwtClaims.scp || 'NONE') + '"',
-      'jwt_aud=' + JSON.stringify(jwtClaims.aud),
-      'jwt_sub=' + jwtClaims.sub,
       'baseUrl=' + baseUrl);
 
     // Validate required fields before making the FHIR call
@@ -103,7 +102,8 @@ export async function handler(event) {
     //  - Confirms the token is valid and has patient-level access
     //  - Warms up Epic's token cache on the resource server (handles propagation delay)
     const patientUrl = `${baseUrl}/Patient/${patientId}`;
-    console.log('Validating token with Patient endpoint:', patientUrl);
+    // Log the base endpoint only — the full URL contains the patient FHIR id
+    console.log('Validating token with Patient endpoint:', `${baseUrl}/Patient/...`);
 
     const patientResponse = await fetch(patientUrl, {
       method: 'GET',
@@ -140,8 +140,8 @@ export async function handler(event) {
     // antifungal, pain courses, etc.) — which pulls over many drugs the patient
     // no longer takes. status=active matches the current medication list.
     let fhirUrl = `${baseUrl}/MedicationRequest?patient=${patientId}&status=active`;
-    console.log('Calling FHIR URL:', fhirUrl);
-    console.log('Token prefix:', accessToken.substring(0, 20) + '...');
+    // Log the endpoint without the patient id and never any part of the token
+    console.log('Calling FHIR endpoint:', `${baseUrl}/MedicationRequest (status=active)`);
 
     let medRequestResponse = await fhirFetchWithRetry(fhirUrl, accessToken, {
       retries: 2,

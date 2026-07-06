@@ -66,7 +66,7 @@ function hospitalBackgroundSvg() {
   <text x="70" y="295" font-family="${FONT}" font-size="24" font-weight="bold" letter-spacing="3" fill="#6ee7b7">FOR HOSPITAL ADMINISTRATORS &amp; TRANSPLANT COORDINATORS</text>
   <text x="70" y="375" font-family="${FONT}" font-size="58" font-weight="bold" fill="#ffffff">IOTA Downside Risk Is Now Live</text>
   <text x="70" y="440" font-family="${FONT}" font-size="29" fill="#d1fae5">Patient education is your fastest lever to protect graft survival.</text>
-  <text x="70" y="530" font-family="${FONT}" font-size="24" fill="#a7f3d0">HIPAA-compliant · Epic MyChart integration · No PHI collected</text>
+  <text x="70" y="530" font-family="${FONT}" font-size="24" fill="#a7f3d0">Privacy-first · Epic MyChart integration · No PHI stored</text>
 </svg>`);
 }
 
