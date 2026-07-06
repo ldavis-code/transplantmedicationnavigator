@@ -16,7 +16,8 @@
     "snapshot:update": "node scripts/snapshot-pages.js --update",
     "snapshot:verify": "node scripts/snapshot-pages.js",
     "check:readability:strict": "node scripts/check-readability.js --strict",
-    "check:links": "node scripts/check-links.js"
+    "check:links": "node scripts/check-links.js",
+    "check:a11y": "node scripts/check-a11y.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
+    "axe-core": "^4.12.1",
     "dotenv": "^17.2.3",
     "playwright-core": "^1.61.1",
     "postcss": "^8.4.32",

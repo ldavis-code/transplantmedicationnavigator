@@ -1736,7 +1736,7 @@ const Wizard = () => {
                                 <span className={`text-xs mt-1 hidden sm:block ${
                                     isCurrent ? `${color.textBold} font-bold` :
                                     isCompleted ? color.text :
-                                    'text-slate-400'
+                                    'text-slate-600'
                                 }`}>{label}</span>
                             </div>
                         );
@@ -2866,6 +2866,8 @@ const MedicationSearch = () => {
                                     if (e.key === 'Escape') { setSearchResult(null); setSearchTerm(''); }
                                 }}
                                 aria-describedby="search-instructions"
+                                role="combobox"
+                                aria-autocomplete="list"
                                 aria-expanded={!!(searchResult && searchTerm && !isSearching)}
                                 aria-controls="search-results-listbox"
                             />
