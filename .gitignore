@@ -37,3 +37,4 @@ index.html.backup
 
 # Local Netlify folder
 .netlify
+dev-dist/

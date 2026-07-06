@@ -18,11 +18,8 @@ import {
 import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
 import { trackMedicationSearch } from '../lib/medicationTrackingApi.js';
-import PaywallModal from './PaywallModal.jsx';
 
 // Demo mode storage keys (must match DemoModeContext)
-const DEMO_MODE_KEY = 'tmn_demo_mode';
-const DEMO_EXPIRY_KEY = 'tmn_demo_expiry';
 
 // Per-drug URLs on these three services often 404 because the slug from the
 // generic name does not match the partner site's URL pattern. Rewrite to the
@@ -45,67 +42,6 @@ const normalizeDiscountUrl = (url) => {
   }
 };
 
-// Check if demo mode is active from localStorage
-const isDemoModeActive = () => {
-  try {
-    const storedDemo = localStorage.getItem(DEMO_MODE_KEY);
-    const storedExpiry = localStorage.getItem(DEMO_EXPIRY_KEY);
-    return storedDemo && storedExpiry && Date.now() < parseInt(storedExpiry, 10);
-  } catch (e) {
-    return false;
-  }
-};
-
-// Check localStorage for subscription status, promo code access, and demo mode
-function useLocalSubscription(feature = null) {
-  const [isPro, setIsPro] = useState(false);
-  const [hasPromoAccess, setHasPromoAccess] = useState(false);
-  const [isDemo, setIsDemo] = useState(false);
-
-  const checkAccess = useCallback(() => {
-    let proStatus = false;
-    let promoStatus = false;
-    let demoStatus = false;
-
-    // Check demo mode first (grants full Pro access)
-    demoStatus = isDemoModeActive();
-
-    try {
-      const cached = localStorage.getItem('tmn_subscription');
-      if (cached) {
-        const { data } = JSON.parse(cached);
-        proStatus = data?.plan === 'pro' && data?.subscription_status === 'active';
-      }
-    } catch (e) {
-      // Ignore errors, default to free
-    }
-
-    // Check promo code access for specific feature
-    if (feature) {
-      try {
-        const promoCodes = localStorage.getItem('tmn_promo_codes');
-        if (promoCodes) {
-          const redeemed = JSON.parse(promoCodes);
-          promoStatus = redeemed.some(r => r.features && r.features.includes(feature));
-        }
-      } catch (e) {
-        // Ignore errors
-      }
-    }
-
-    setIsPro(proStatus);
-    setHasPromoAccess(promoStatus);
-    setIsDemo(demoStatus);
-  }, [feature]);
-
-  useEffect(() => {
-    checkAccess();
-  }, [checkAccess]);
-
-  // Demo mode grants full access
-  return { isPro, hasPromoAccess, isDemo, hasAccess: isPro || hasPromoAccess || isDemo, refreshAccess: checkAccess };
-}
-
 // Mode toggle tabs
 const MODE_TABS = [
   { id: 'chat', label: 'Chat', icon: MessageCircle, description: 'Conversational guidance' },
@@ -113,27 +49,6 @@ const MODE_TABS = [
 ];
 
 const MedicationAssistantChat = () => {
-  // Check subscription status and promo access
-  const { isPro, hasAccess, isDemo, refreshAccess } = useLocalSubscription('quiz');
-
-  // Handler for successful promo code redemption
-  const handlePromoSuccess = () => {
-    refreshAccess();
-    // If we were waiting to continue the quiz after paywall, advance to next question
-    if (pendingQuizContinue) {
-      setPendingQuizContinue(false);
-      setShowPaywall(false);
-      // Continue to the next question
-      if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
-        nextQuizQuestion();
-      } else {
-        // Quiz complete - generate results
-        setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
-        generateResults(answers);
-      }
-    }
-  };
-
   // Context for shared state
   const {
     mode,
@@ -161,15 +76,8 @@ const MedicationAssistantChat = () => {
     resetProgress,
     hasSeenResults,
     // Usage tracking
-    usageTracking,
-    isSearchLimitReached,
-    remainingSearches,
-    maxFreeSearches,
     incrementSearchCount,
     incrementQuizCompletions,
-    remainingQuizzes,
-    maxFreeQuizzes,
-    isQuizLimitReached,
     // Visible questions for conditional question support
     visibleQuestions,
     visibleQuestionCount,
@@ -197,12 +105,6 @@ const MedicationAssistantChat = () => {
 
   // Track if user has started the quiz (dismissed intro)
   const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
-
-  // Paywall modal state
-  const [showPaywall, setShowPaywall] = useState(false);
-
-  // Track if we're waiting to continue quiz after paywall (for mid-quiz paywall)
-  const [pendingQuizContinue, setPendingQuizContinue] = useState(false);
 
   // Refs
   const messagesEndRef = useRef(null);
@@ -355,13 +257,7 @@ const MedicationAssistantChat = () => {
       if (quizProgress.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
         nextQuizQuestion();
       } else {
-        // Quiz complete - show paywall only if user has already used their free quiz
-        if (!hasAccess && isQuizLimitReached) {
-          setPendingQuizContinue(true);
-          setShowPaywall(true);
-          return;
-        }
-        // First quiz is free (or user has Pro/promo access) - generate results
+        // Quiz complete - generate results
         // Quiz completion is counted after results are generated (in generateResults)
         const finalAnswers = { ...answers, [question.id]: option.value };
         setQuizProgress({ isComplete: true, completedAt: new Date().toISOString() });
@@ -373,12 +269,6 @@ const MedicationAssistantChat = () => {
   // Search medications from database
   const searchMedications = async (query) => {
     if (!query || query.length < 2) {
-      setMedicationResults([]);
-      return;
-    }
-
-    // Check if search limit has been reached
-    if (isSearchLimitReached) {
       setMedicationResults([]);
       return;
     }
@@ -719,99 +609,11 @@ const MedicationAssistantChat = () => {
 
   // Render medication search UI
   const renderMedicationSearch = () => {
-    // Show search limit reached UI
-    if (isSearchLimitReached) {
-      return (
-        <div className="p-3 bg-slate-50 rounded-xl space-y-3">
-          {/* Search Limit Reached Banner */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
-            <Lock className="mx-auto text-amber-600 mb-2" size={28} />
-            <h4 className="font-bold text-amber-800 text-sm mb-1">Search Limit Reached</h4>
-            <p className="text-xs text-amber-700 mb-3">
-              You've used all {maxFreeSearches} free medication searches.
-            </p>
-            <a
-              href="/pricing"
-              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition"
-            >
-              Upgrade for Unlimited Searches
-            </a>
-          </div>
-
-          {/* Still allow continuing with selected medications or skipping */}
-          {selectedMedications.length > 0 && (
-            <>
-              <div className="space-y-2">
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Selected Medications:</div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedMedications.map((med) => (
-                    <span
-                      key={med.id}
-                      className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-base font-medium"
-                    >
-                      {med.brand_name}
-                      <button
-                        onClick={() => handleMedicationRemove(med.id)}
-                        className="hover:bg-emerald-200 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
-                        aria-label={`Remove ${med.brand_name}`}
-                      >
-                        <X size={16} aria-hidden="true" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <button
-                onClick={handleMedicationsContinue}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition"
-              >
-                Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
-                <ChevronRight size={18} />
-              </button>
-            </>
-          )}
-
-          <button
-            onClick={() => {
-              if (mode === 'chat') {
-                handleChatOptionSelect({ value: 'general', label: 'General assistance' });
-              } else {
-                setAnswer('medication', 'general');
-                nextQuizQuestion();
-              }
-            }}
-            className="w-full text-left p-3 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition"
-          >
-            <div className="font-medium text-slate-700">Skip this step</div>
-            <div className="text-sm text-slate-500">Show general assistance programs</div>
-          </button>
-        </div>
-      );
-    }
-
     const searchInputId = 'medication-search-input';
     const listboxId = 'medication-search-results';
 
     return (
       <div className="p-4 bg-slate-50 rounded-xl space-y-4">
-        {/* Search Usage Indicator */}
-        {remainingSearches <= maxFreeSearches && remainingSearches > 0 && (
-          <div
-            className={`text-sm px-4 py-2 rounded-lg flex items-center justify-between ${
-              remainingSearches <= 1 ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-slate-200 text-slate-600'
-            }`}
-            role="status"
-            aria-live="polite"
-          >
-            <span>
-              {remainingSearches === 1 ? 'Last free search remaining' : `${remainingSearches} searches remaining`}
-            </span>
-            <a href="/pricing" className="underline hover:no-underline font-medium min-h-[44px] flex items-center">
-              Upgrade
-            </a>
-          </div>
-        )}
-
         {/* Selected Medications */}
         {selectedMedications.length > 0 && (
           <div className="space-y-3">
@@ -987,25 +789,6 @@ const MedicationAssistantChat = () => {
               Answer a few quick questions and we'll show you assistance programs you may qualify for.
             </p>
           </div>
-
-          {/* Pro Feature Banner */}
-          {hasAccess && (
-            <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                  <CheckCircle2 size={20} className="text-emerald-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-emerald-800 text-sm mb-1">
-                    {isDemo ? 'Demo mode' : isPro ? 'Pro subscriber' : 'Promo access'}, unlimited access
-                  </p>
-                  <p className="text-emerald-700 text-xs leading-relaxed">
-                    You have unlimited pathway quizzes, medication searches, and savings tracking.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* What You'll Learn */}
           <div className="bg-white border border-slate-200 rounded-xl p-4">
@@ -1608,15 +1391,6 @@ const MedicationAssistantChat = () => {
 
   return (
     <>
-    <PaywallModal
-      isOpen={showPaywall}
-      onClose={() => {
-        setShowPaywall(false);
-        setPendingQuizContinue(false);
-      }}
-      featureType="quiz"
-      onPromoSuccess={handlePromoSuccess}
-    />
     <div className="fixed bottom-6 right-6 z-50 no-print">
       {/* Chat Toggle Button */}
       {!isOpen && (

@@ -1,20 +1,13 @@
 /**
  * FeedbackWidget Component
- * Collects user feedback after viewing medication information
+ * Collects anonymous user feedback after viewing medication information
  * Three-question flow to understand outcomes and impact
- * Saves to Supabase feedback table
+ * Saves to the Neon feedback table via /.netlify/functions/feedback
  */
 
 import { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Check, X, DollarSign, HelpCircle, CheckCircle } from 'lucide-react';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
-
-// Initialize Supabase client
-const supabase = createClient(
-  'https://lhvemrazkwlmdaljrcln.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxodmVtcmF6a3dsbWRhbGpyY2xuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2MDMyOTIsImV4cCI6MjA4MjE3OTI5Mn0.20dRGKemeN3-5J30cEJhMshkB0nBWSs92GfIylJW7QU'
-);
 
 const FeedbackWidget = ({ medicationName }) => {
   const [step, setStep] = useState('q1'); // 'q1', 'q2', 'q3', 'submitted'
@@ -54,11 +47,15 @@ const FeedbackWidget = ({ medicationName }) => {
       ...responses,
       without_tool: value,
       medication_searched: medicationName || null,
-      created_at: new Date().toISOString()
+      source: 'widget'
     };
 
     try {
-      await supabase.from('feedback').insert([feedbackData]);
+      await fetch('/.netlify/functions/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData)
+      });
     } catch (error) {
       console.error('Error submitting feedback:', error);
       // Still show success - don't block user experience

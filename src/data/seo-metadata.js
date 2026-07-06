@@ -174,17 +174,6 @@ export const seoMetadata = {
     breadcrumbName: 'Privacy Policy',
   },
 
-  account: {
-    title: 'My Account | Transplant Medication Navigator™',
-    description: 'Manage your Transplant Medication Navigator account, view subscription status, and update billing information.',
-    canonical: `${BASE_URL}/account`,
-    ogTitle: 'My Account - Transplant Medication Navigator™',
-    ogDescription: 'Manage your account and subscription for Transplant Medication Navigator.',
-    twitterTitle: 'My Account',
-    twitterDescription: 'Manage your Transplant Medication Navigator account and subscription.',
-    breadcrumbName: 'My Account',
-  },
-
   survey: {
     title: 'Share Your Journey | Transplant Medication Navigator™',
     description: 'Share your medication experience to help improve access for all patients. Anonymous surveys for transplant recipients and anyone managing chronic conditions.',
@@ -250,39 +239,6 @@ export const seoMetadata = {
     twitterTitle: 'Copay Card Reminders',
     twitterDescription: 'Never miss a copay card renewal. Track expiration dates and get reminders.',
     breadcrumbName: 'Copay Reminders',
-  },
-
-  subscribe: {
-    title: 'Subscribe to Pro | Transplant Medication Navigator™',
-    description: 'Unlock unlimited features with a Pro subscription. Save medications, track savings, and get personalized assistance recommendations.',
-    canonical: `${BASE_URL}/subscribe`,
-    ogTitle: 'Subscribe to Pro - Unlock All Features',
-    ogDescription: 'Get unlimited access to My Path Quiz, medication tracking, savings calculator, and more with a Pro subscription.',
-    twitterTitle: 'Subscribe to Pro',
-    twitterDescription: 'Unlock unlimited features with a Transplant Medication Navigator Pro subscription.',
-    breadcrumbName: 'Subscribe',
-  },
-
-  subscribeSuccess: {
-    title: 'Welcome to Pro! | Transplant Medication Navigator™',
-    description: 'Your Pro subscription is now active. Enjoy unlimited access to all Transplant Medication Navigator features.',
-    canonical: `${BASE_URL}/subscribe/success`,
-    ogTitle: 'Welcome to Pro!',
-    ogDescription: 'Your subscription is active. Enjoy unlimited access to all Transplant Medication Navigator features.',
-    twitterTitle: 'Welcome to Pro!',
-    twitterDescription: 'Your Pro subscription is now active. Enjoy all features.',
-    breadcrumbName: 'Subscription Success',
-  },
-
-  subscribeCancel: {
-    title: 'Subscription Cancelled | Transplant Medication Navigator™',
-    description: 'Your subscription checkout was cancelled. You can still use all free features of Transplant Medication Navigator.',
-    canonical: `${BASE_URL}/subscribe/cancel`,
-    ogTitle: 'Subscription Cancelled',
-    ogDescription: 'Checkout cancelled. You can still use all free features including medication search and educational resources.',
-    twitterTitle: 'Subscription Cancelled',
-    twitterDescription: 'Checkout cancelled. Continue using free features anytime.',
-    breadcrumbName: 'Subscription Cancelled',
   },
 
   accessibility: {

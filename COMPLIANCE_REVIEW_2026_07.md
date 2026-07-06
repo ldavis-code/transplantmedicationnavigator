@@ -4,6 +4,35 @@ Scope: full-repo review of legal pages, data flows, tracking/consent, security p
 marketing claims. This is an engineering review, not legal advice — have counsel confirm the
 regulatory conclusions before relying on them.
 
+> **Update (July 6, 2026):** After this review, the owner confirmed the email features
+> (Resend), the Supabase patient/subscriber system, and Stripe subscriptions are no longer in
+> use. The following remediation has now been applied in this branch:
+>
+> - **Removed the entire email layer** — `EmailSignup` component, quiz email-results step,
+>   `quiz-email` and `subscribe-alerts` functions, `alertsApi`, and the `resend` dependency.
+>   This moots the CAN-SPAM findings (§1.3) and the email+medication-list storage flows in §1.1.
+> - **Removed the entire Stripe/subscription layer** — PaywallModal, promo codes, subscriber
+>   auth/accounts, data sync, Subscribe/Account pages, all Stripe functions
+>   (`create-checkout`, `create-portal-session`, `get-subscription`, `stripe-webhook`,
+>   `subscriber-auth`, `subscriber-data`, `redeem-patient-code`), the `stripe` dependency, and
+>   all free-tier gating (quiz, medication search, and savings calculator are now ungated).
+>   This moots §2.2 (commerce terms) and removes the committed patient/promo codes finding.
+> - **Moved feedback to Neon** — the FeedbackWidget and /feedback survey page now POST to a
+>   new server-validated `feedback` function (Neon table, migration 039) instead of writing
+>   directly to Supabase with a hardcoded anon key. The survey's optional email field was
+>   removed, so feedback is now fully anonymous. Admin feedback summary reads from Neon.
+> - **Privacy Policy** updated to remove Stripe/payment language and name analytics providers;
+>   CSP tightened (Stripe hosts removed, `frame-src 'none'`); `/subscribe` removed from
+>   sitemap, prerender, and redirects.
+>
+> **Still outstanding** (unchanged by this cleanup): GA4 consent (§1.2), Epic token/PHI
+> logging (§1.1, §1.4), admin-seed and fallback-secret issues (§1.4), the full privacy-policy
+> rewrite and state-law rights section (§2.1), the /for-hospitals HIPAA claims (§2.3), and the
+> §3 items. The admin compliance dashboard is now the **only** remaining Supabase dependency
+> (`src/lib/supabase.js`, `adminGuard`, `compliance-db`, `compliance-state`,
+> `compliance-checks`) — if Supabase is fully retired, that area needs migrating to the Neon
+> admin auth or removing.
+
 **Bottom line:** the patient-facing architecture is genuinely privacy-conscious (localStorage-first,
 PHI blocklist on the events endpoint), but several real data flows contradict the site's own public
 claims, there is no consent mechanism for tracking, the commercial terms required for a paid
