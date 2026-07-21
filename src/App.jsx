@@ -689,10 +689,10 @@ const Layout = ({ children }) => {
                             <>
                                 <span className="text-slate-600" aria-hidden="true">|</span>
                                 <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
-                                <span className="text-slate-600" aria-hidden="true">|</span>
-                                <Link to="/evidence" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.evidence')}</Link>
                             </>
                         )}
+                        <span className="text-slate-600" aria-hidden="true">|</span>
+                        <Link to="/evidence" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.evidence')}</Link>
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.admin')}</Link>
                     </div>

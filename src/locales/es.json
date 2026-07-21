@@ -1309,7 +1309,7 @@
       "why": "Por eso creamos esta herramienta: para que ningún paciente pierda los ahorros que su farmacia nunca le mencionó.",
       "notAloneTitle": "No está solo — y la investigación lo demuestra.",
       "notAloneText": "Un estudio multicéntrico de 2026 encontró que 1 de cada 4 candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos, incluso antes de entrar en la lista. Estamos aquí para cambiar eso.",
-      "evidenceLink": "Vea la evidencia (en inglés)"
+      "evidenceLink": "Vea la evidencia"
     },
     "hospitals": {
       "eyebrow": "Para hospitales y centros de trasplante",
@@ -1366,6 +1366,85 @@
       "text": "No guardamos su información. No le pedimos su número de seguro social. No vendemos su información. Esta herramienta solo existe para enseñarle sobre sus opciones."
     },
     "tagline": "Creado para pacientes por un paciente"
+  },
+  "evidence": {
+    "hero": {
+      "title": "La Evidencia: Por Qué Importa la Navegación de Medicamentos y Finanzas",
+      "intro": "Nuevas investigaciones revisadas por expertos confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
+    },
+    "burden": {
+      "title": "1 de Cada 4 Candidatos a Trasplante de Hígado Enfrenta una Alta Carga Financiera",
+      "intro": "Un estudio multicéntrico de EE. UU. de 2026, publicado en <em>Hepatology Communications</em> — que abarcó más de una docena de centros de trasplante, incluyendo Massachusetts General Hospital, University of Minnesota, USC, Duke y Montefiore Einstein — encuestó a 453 adultos en evaluación para trasplante de hígado. Los hallazgos fueron contundentes:",
+      "stat1": "reportó una alta carga financiera: costos médicos de bolsillo del 10% o más del ingreso del hogar",
+      "stat2": "seguían con empleo al momento de la evaluación del trasplante",
+      "stat3": "de los pacientes con carga alta retrasaron la atención médica o no la recibieron (vs. 33.5% de los pacientes con carga baja)",
+      "stat4": "no podían pagar necesidades básicas como comida, calefacción o renta (vs. 11.3%)",
+      "stat5": "perdieron ahorros o bienes",
+      "stat6": "enfrentaron deuda médica o bancarrota"
+    },
+    "odds": {
+      "title": "La Carga Financiera Predice Angustia en Todas las Dimensiones",
+      "intro": "La carga financiera no es un tema secundario. Después de ajustar por edad, ingresos, seguro, gravedad de la enfermedad y otros factores, los pacientes con alta carga financiera tuvieron probabilidades mucho mayores de sufrir daño:",
+      "caption": "Probabilidades ajustadas de angustia financiera para candidatos a trasplante de hígado con carga alta vs. baja",
+      "colOutcome": "Resultado",
+      "colOdds": "Probabilidades Ajustadas",
+      "colOddsQualifier": " (carga alta vs. baja)",
+      "row1": "Problemas para pagar cuentas médicas",
+      "row2": "Pérdida de ahorros o bienes",
+      "row3": "Incapacidad de pagar necesidades básicas",
+      "row4": "Cualquier angustia financiera material",
+      "row5": "Cualquier angustia financiera psicológica",
+      "row6": "Cualquier angustia financiera de conducta (retrasar u omitir atención)",
+      "row7": "Deuda médica o bancarrota",
+      "work": "La carga financiera también llegó al trabajo: los pacientes empleados con alta carga financiera faltaron al trabajo el doble que sus pares con carga baja (34.1% vs. 16.9% de ausentismo). Para los candidatos a trasplante, el empleo no es un detalle menor: a menudo es la fuente del seguro y de los ingresos de los que depende la candidatura."
+    },
+    "graft": {
+      "title": "Después del Trasplante, la Carga No Termina — Amenaza el Órgano Trasplantado",
+      "intro": "La encuesta de pacientes más grande jamás encargada por la American Society of Transplantation, publicada en el <em>American Journal of Transplantation</em> en 2025, reunió 10,091 respuestas de receptores de trasplante en 232 centros de trasplante de EE. UU. — abarcando todos los órganos, todas las edades y todos los tipos de seguro, con un promedio de 6.6 años después del trasplante. Sus hallazgos sobre costos deberían alarmar a todo programa de trasplante:",
+      "stat1Value": "~40%",
+      "stat1Label": "de los receptores dejó de surtir o resurtir un medicamento en el último año debido al costo",
+      "stat2Value": "1 de cada 4",
+      "stat2Label": "omitió o redujo dosis de inmunosupresores debido al costo, \"a veces\" o \"con frecuencia\"",
+      "p1": "Para los receptores de trasplante, estos no son descuidos comunes. Las dosis omitidas de inmunosupresores están entre los factores más fuertes que se conocen de rechazo, pérdida del órgano trasplantado y regreso a la lista de espera — resultados que traen un enorme costo humano y económico para pacientes, programas y aseguradoras por igual.",
+      "p2": "Leídos en conjunto, los dos estudios describen un solo camino: la carga financiera que aparece durante la evaluación del trasplante no se resuelve después de la cirugía — se convierte en falta de adherencia por costos que pone en riesgo el órgano trasplantado, años después."
+    },
+    "gap": {
+      "title": "Lo Que Recomiendan los Investigadores — y Dónde Falla el Sistema",
+      "quote": "Los autores del estudio concluyen que <strong>la detección rutinaria de la carga financiera es crítica en los candidatos a trasplante de hígado y debe acompañarse de estrategias específicas para reducir su impacto.</strong>",
+      "text": "Esa segunda mitad es la brecha. La detección le dice a un programa de trasplante <em>cuáles</em> pacientes se están ahogando. No les lanza una cuerda. Un paciente identificado con carga alta todavía enfrenta un laberinto fragmentado de programas de fabricantes, fundaciones, reglas de seguros y papeleo — el mismo laberinto que hizo que el 66% de los pacientes con carga alta retrasaran o dejaran de buscar atención."
+    },
+    "tmn": {
+      "title": "Transplant Medication Navigator Es la Estrategia Específica",
+      "intro": "TMN fue creado para ser la intervención que la investigación pide: el paso entre identificar la carga financiera y resolverla.",
+      "s1Title": "Integrado donde ocurre la atención",
+      "s1Text": "TMN es una aplicación SMART on FHIR listada en el Epic Connection Hub, con más de 500 descargas de organizaciones, para que la navegación viva dentro del propio flujo de trabajo del centro de trasplante.",
+      "s2Title": "Orientación según su seguro",
+      "s2Text": "El programa correcto depende de la cobertura. TMN dirige a los pacientes con seguro comercial hacia tarjetas de copago de los fabricantes, y a los pacientes de Medicare hacia programas de asistencia al paciente (PAP) y fundaciones benéficas — dos caminos distintos que los pacientes confunden con frecuencia, a un costo real.",
+      "s3Title": "Más allá de los medicamentos",
+      "s3Text": "Como la investigación muestra que la carga se extiende a primas, cuentas, viajes y necesidades básicas, TMN también conecta a los pacientes con fundaciones de copago, servicios de manejo de casos y opciones de farmacia de bajo costo como Cost Plus Drugs.",
+      "s4Title": "Creado desde la experiencia vivida",
+      "s4Text": "Creado por una receptora de trasplante de hígado y defensora nacional de pacientes — diseñado según cómo los pacientes realmente encuentran estas barreras, no como el sistema supone que lo hacen."
+    },
+    "whyNow": {
+      "title": "Por Qué Esto Importa a los Programas de Trasplante Ahora",
+      "p1": "La rendición de cuentas basada en valor está llegando al trasplante. El modelo IOTA de CMS ahora vincula el pago de los programas de trasplante de riñón al volumen de trasplantes y a los resultados después del trasplante — y la dirección es clara para todos los órganos. Esta investigación muestra que la carga financiera provoca atención retrasada, ausencias en el trabajo y angustia psicológica: precisamente las fuerzas que erosionan la candidatura, la adherencia y la supervivencia del órgano trasplantado.",
+      "p2": "Los programas que detectan la carga financiera sin una respuesta operativa están documentando el riesgo, no manejándolo.",
+      "scopeLabel": "Una nota sobre el alcance:",
+      "scopeText": " el estudio de carga financiera examinó específicamente a candidatos a trasplante de hígado, por lo que sus cifras exactas no deben asumirse idénticas para otros órganos. La encuesta de la AST, sin embargo, abarcó todos los tipos de órganos sólidos — y su hallazgo de que el costo provoca resurtidos perdidos y dosis omitidas en aproximadamente 4 de cada 10 receptores confirma que el problema abarca todo el trasplante, no un solo órgano.",
+      "ctaPrograms": "Vea la Solución para Programas de Trasplante",
+      "ctaBriefing": "Solicite una Sesión sobre la Evidencia"
+    },
+    "patient": {
+      "title": "¿Usted enfrenta estos costos?",
+      "p1": "No tiene que navegar el laberinto solo. Tome el cuestionario gratuito de 2 minutos para encontrar tarjetas de copago, programas de asistencia al paciente y ayudas de fundaciones para sus medicamentos.",
+      "p2": "Y si perdió su trabajo o su seguro durante la evaluación — como casi 3 de cada 4 candidatos en el estudio — puede calificar para programas que no sabía que existían.",
+      "cta": "Encuentre su camino hacia medicamentos que pueda pagar"
+    },
+    "sources": {
+      "title": "Fuentes",
+      "openAccess": "(acceso abierto)",
+      "disclaimer": "Esta página resume investigaciones independientes revisadas por expertos. Transplant Medication Navigator no participó en los estudios. Este contenido es educativo y no es consejo médico, legal ni financiero."
+    }
   },
   "wizard": {
     "progress": {

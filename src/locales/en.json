@@ -1367,6 +1367,85 @@
     },
     "tagline": "Built for patients by a patient"
   },
+  "evidence": {
+    "hero": {
+      "title": "The Evidence: Why Medication & Financial Navigation Matters",
+      "intro": "New peer-reviewed research confirms what transplant patients have always known — the cost of survival is a clinical problem, not just a personal one. Two national studies now document it across the entire transplant journey: before transplant, financial burden threatens candidacy; after transplant, medication costs threaten the graft itself."
+    },
+    "burden": {
+      "title": "1 in 4 Liver Transplant Candidates Faces High Financial Burden",
+      "intro": "A 2026 multicenter U.S. study published in <em>Hepatology Communications</em> — spanning more than a dozen transplant centers including Massachusetts General Hospital, University of Minnesota, USC, Duke, and Montefiore Einstein — surveyed 453 adults undergoing liver transplant evaluation. The findings were stark:",
+      "stat1": "reported high financial burden — out-of-pocket medical costs of 10% or more of household income",
+      "stat2": "were still employed at the time of transplant evaluation",
+      "stat3": "of high-burden patients delayed or went without medical care (vs. 33.5% of low-burden patients)",
+      "stat4": "could not pay for basic necessities like food, heat, or rent (vs. 11.3%)",
+      "stat5": "lost savings or assets",
+      "stat6": "faced medical debt or bankruptcy"
+    },
+    "odds": {
+      "title": "Financial Burden Predicts Distress Across Every Dimension",
+      "intro": "Financial burden is not a side issue. After adjusting for age, income, insurance, disease severity, and other factors, patients with high financial burden had dramatically higher odds of harm:",
+      "caption": "Adjusted odds of financial distress outcomes for high-burden vs. low-burden liver transplant candidates",
+      "colOutcome": "Outcome",
+      "colOdds": "Adjusted Odds",
+      "colOddsQualifier": " (high vs. low burden)",
+      "row1": "Problems paying medical bills",
+      "row2": "Loss of savings or assets",
+      "row3": "Unable to pay for basic necessities",
+      "row4": "Any material financial distress",
+      "row5": "Any psychological financial distress",
+      "row6": "Any behavioral financial distress (delaying or skipping care)",
+      "row7": "Medical debt or bankruptcy",
+      "work": "Financial burden also reached the workplace: employed patients with high financial burden missed twice as much work as their low-burden peers (34.1% vs. 16.9% absenteeism). For transplant candidates, employment is not incidental — it is often the source of the insurance and income that candidacy depends on."
+    },
+    "graft": {
+      "title": "After Transplant, the Burden Doesn't End — It Threatens the Graft",
+      "intro": "The largest patient survey ever commissioned by the American Society of Transplantation, published in the <em>American Journal of Transplantation</em> in 2025, gathered 10,091 responses from transplant recipients across 232 U.S. transplant centers — spanning every organ, all ages, and every insurance type, at an average of 6.6 years post-transplant. Its cost findings should alarm every transplant program:",
+      "stat1Value": "~40%",
+      "stat1Label": "of recipients missed a medication fill or refill in the past year because of cost",
+      "stat2Value": "1 in 4",
+      "stat2Label": "skipped or reduced immunosuppressant doses due to cost \"sometimes\" or \"often\"",
+      "p1": "For transplant recipients, these are not ordinary adherence lapses. Missed immunosuppressant doses are among the strongest known drivers of rejection, graft loss, and return to the waitlist — outcomes that carry enormous human and financial cost for patients, programs, and payers alike.",
+      "p2": "Read together, the two studies describe a single continuum: financial burden that surfaces during transplant evaluation does not resolve after surgery — it converts into cost-related nonadherence that puts the transplanted organ at risk, years down the road."
+    },
+    "gap": {
+      "title": "What the Researchers Recommend — and Where the System Falls Short",
+      "quote": "The study's authors conclude that <strong>routine screening for financial burden is critical in liver transplant candidates and should be paired with targeted strategies to mitigate its impact.</strong>",
+      "text": "That second half is the gap. Screening tells a transplant program <em>which</em> patients are drowning. It does not throw them a rope. A patient identified as high-burden still faces a fragmented maze of manufacturer programs, foundations, insurance rules, and paperwork — the same maze that caused 66% of high-burden patients to delay or forgo care in the first place."
+    },
+    "tmn": {
+      "title": "Transplant Medication Navigator Is the Targeted Strategy",
+      "intro": "TMN was built to be the intervention that the research calls for — the step between identifying financial burden and resolving it.",
+      "s1Title": "Integrated where care happens",
+      "s1Text": "TMN is a SMART on FHIR application listed on the Epic Connection Hub, with 500+ organizational downloads, so navigation can live inside the transplant center's own workflow.",
+      "s2Title": "Insurance-aware routing",
+      "s2Text": "The right program depends on coverage. TMN routes commercially insured patients toward pharmaceutical copay cards and Medicare patients toward patient assistance programs (PAPs) and charitable foundations — two distinct pathways that patients routinely confuse, at real cost.",
+      "s3Title": "Beyond medications",
+      "s3Text": "Because the research shows the burden extends to premiums, bills, travel, and basic necessities, TMN also connects patients to copay foundations, case-management services, and low-cost pharmacy options such as Cost Plus Drugs.",
+      "s4Title": "Built from lived experience",
+      "s4Text": "Created by a liver transplant recipient and national patient advocate — designed around how patients actually encounter these barriers, not how the system assumes they do."
+    },
+    "whyNow": {
+      "title": "Why This Matters to Transplant Programs Now",
+      "p1": "Value-based accountability is arriving in transplantation. CMS's IOTA model now ties kidney transplant program payment to transplant volume and post-transplant outcomes — and the direction of travel is clear across all organs. This research shows that financial burden drives delayed care, missed work, and psychological distress: precisely the forces that erode candidacy, adherence, and graft survival.",
+      "p2": "Programs that screen for financial burden without an operational answer are documenting risk, not managing it.",
+      "scopeLabel": "A note on scope:",
+      "scopeText": " the financial burden study examined liver transplant candidates specifically, so its exact figures should not be assumed identical for other organs. The AST survey, however, spanned all solid organ types — and its finding that cost drives missed fills and skipped doses in roughly 4 in 10 recipients confirms the problem is transplant-wide, not organ-specific.",
+      "ctaPrograms": "See the Solution for Transplant Programs",
+      "ctaBriefing": "Request an Evidence Briefing"
+    },
+    "patient": {
+      "title": "Facing these costs yourself?",
+      "p1": "You don't have to navigate the maze alone. Take the free 2-minute quiz to find copay cards, patient assistance programs, and foundation grants for your medications.",
+      "p2": "And if you lost your job or insurance during evaluation — like nearly 3 in 4 candidates in the study — you may qualify for programs you didn't know existed.",
+      "cta": "Find your path to affordable medications"
+    },
+    "sources": {
+      "title": "Sources",
+      "openAccess": "(open access)",
+      "disclaimer": "This page summarizes independently conducted, peer-reviewed research. Transplant Medication Navigator was not involved in the studies. This content is educational and is not medical, legal, or financial advice."
+    }
+  },
   "wizard": {
     "progress": {
       "labels": [
