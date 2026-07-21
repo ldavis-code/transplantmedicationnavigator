@@ -33,7 +33,8 @@ const ALLOWED_EVENT_NAMES = [
     'helpful_vote_no',
     'epic_import',
     'coverage_selected',
-    'cost_burden'
+    'cost_burden',
+    'language_toggle'
 ];
 
 // PHI fields that must NEVER be accepted (for security validation)

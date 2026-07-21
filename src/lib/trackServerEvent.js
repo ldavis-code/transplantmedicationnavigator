@@ -15,6 +15,16 @@ function getPartner() {
   }
 }
 
+// Active UI language ('en' | 'es'), kept in sync with i18n via <html lang>.
+// Tagged on every event so the dashboard can segment Spanish-language usage.
+function getLang() {
+  try {
+    return document.documentElement.lang || localStorage.getItem('tmn-lang') || 'en';
+  } catch {
+    return 'en';
+  }
+}
+
 /**
  * Track an event to the backend database.
  * @param {string} eventName - One of the allowed event names (page_view, quiz_start, quiz_complete, med_search, etc.)
@@ -26,8 +36,8 @@ export function trackServerEvent(eventName, meta) {
       event_name: eventName,
       page_source: window.location.pathname,
       partner: getPartner(),
+      meta: { ...meta, lang: getLang() },
     };
-    if (meta) body.meta = meta;
 
     // Fire and forget, don't await, don't block UI
     fetch(ENDPOINT, {

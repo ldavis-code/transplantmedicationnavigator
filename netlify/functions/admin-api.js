@@ -223,6 +223,70 @@ async function getStats(db) {
     };
 }
 
+// Spanish-language usage stats. Every client event is tagged with the active
+// UI language in meta_json->>'lang' (see src/lib/trackServerEvent.js), and the
+// LanguageToggle fires 'language_toggle' events. Search terms are never
+// stored (PHI policy), so "top Spanish searches" is reported as the top
+// medication pages viewed while the UI was in Spanish.
+async function getLanguageStats(db) {
+    const summary = await db`
+        SELECT
+            COUNT(*) FILTER (WHERE event_name = 'language_toggle' AND meta_json->>'to' = 'es') as toggles_to_spanish,
+            COUNT(*) FILTER (WHERE event_name = 'language_toggle') as toggles_total,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' = 'es') as spanish_events,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' IS NOT NULL) as lang_tagged_events,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' = 'es' AND event_name = 'page_view') as spanish_page_views,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' = 'es' AND event_name = 'med_search') as spanish_med_searches,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' = 'es' AND event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as spanish_program_clicks,
+            COUNT(*) FILTER (WHERE meta_json->>'lang' = 'es' AND event_name = 'quiz_complete') as spanish_quiz_completes
+        FROM events
+    `;
+
+    const topSpanishMedPages = await db`
+        SELECT page_source, COUNT(*) as views
+        FROM events
+        WHERE meta_json->>'lang' = 'es'
+          AND event_name = 'page_view'
+          AND page_source LIKE '/medications/%'
+        GROUP BY page_source
+        ORDER BY views DESC
+        LIMIT 10
+    `;
+
+    const topSpanishPrograms = await db`
+        SELECT program_id, program_type, COUNT(*) as clicks
+        FROM events
+        WHERE meta_json->>'lang' = 'es'
+          AND event_name IN ('copay_card_click', 'foundation_click', 'pap_click')
+          AND program_id IS NOT NULL
+        GROUP BY program_id, program_type
+        ORDER BY clicks DESC
+        LIMIT 10
+    `;
+
+    const row = summary[0] || {};
+    return {
+        togglesToSpanish: parseInt(row.toggles_to_spanish || 0),
+        togglesTotal: parseInt(row.toggles_total || 0),
+        spanishEvents: parseInt(row.spanish_events || 0),
+        langTaggedEvents: parseInt(row.lang_tagged_events || 0),
+        spanishPageViews: parseInt(row.spanish_page_views || 0),
+        spanishMedSearches: parseInt(row.spanish_med_searches || 0),
+        spanishProgramClicks: parseInt(row.spanish_program_clicks || 0),
+        spanishQuizCompletes: parseInt(row.spanish_quiz_completes || 0),
+        topSpanishMedPages: topSpanishMedPages.map(r => ({
+            page: r.page_source,
+            medication: r.page_source.replace('/medications/', ''),
+            views: parseInt(r.views),
+        })),
+        topSpanishPrograms: topSpanishPrograms.map(r => ({
+            programId: r.program_id,
+            programType: r.program_type,
+            clicks: parseInt(r.clicks),
+        })),
+    };
+}
+
 // Get events list with pagination
 async function getEvents(db, params) {
     const limit = Math.min(parseInt(params.limit) || 50, 100);
@@ -805,6 +869,12 @@ export async function handler(event) {
         // GET /admin-api/feedback-summary
         if (path === '/feedback-summary') {
             const result = await getFeedbackSummary();
+            return { statusCode: 200, headers, body: JSON.stringify(result) };
+        }
+
+        // GET /admin-api/language (Spanish-language usage)
+        if (path === '/language') {
+            const result = await getLanguageStats(db);
             return { statusCode: 200, headers, body: JSON.stringify(result) };
         }
 

@@ -38,6 +38,8 @@ export default function ReportingDashboard() {
     const [loadingStats, setLoadingStats] = useState(true);
     const [webAnalytics, setWebAnalytics] = useState(null);
     const [loadingWebAnalytics, setLoadingWebAnalytics] = useState(true);
+    const [langStats, setLangStats] = useState(null);
+    const [loadingLangStats, setLoadingLangStats] = useState(true);
     const [error, setError] = useState(null);
 
     // Redirect if not authenticated
@@ -90,6 +92,26 @@ export default function ReportingDashboard() {
 
         if (isAuthenticated) {
             loadWebAnalytics();
+        }
+    }, [isAuthenticated, fetchWithAuth]);
+
+    // Load Spanish-language usage stats
+    useEffect(() => {
+        async function loadLangStats() {
+            try {
+                const response = await fetchWithAuth(`${API_BASE}/language`);
+                if (response.ok) {
+                    setLangStats(await response.json());
+                }
+            } catch (err) {
+                console.error('Error loading language stats:', err);
+            } finally {
+                setLoadingLangStats(false);
+            }
+        }
+
+        if (isAuthenticated) {
+            loadLangStats();
         }
     }, [isAuthenticated, fetchWithAuth]);
 
@@ -357,6 +379,81 @@ export default function ReportingDashboard() {
                             ))}
                         </div>
                     </div>
+                </div>
+
+                {/* Spanish-Language Usage (equity evidence) */}
+                <div className="mb-8">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                        <Globe className="h-5 w-5 text-amber-600" />
+                        Spanish-Language Usage (En Español)
+                    </h2>
+                    <p className="text-sm text-gray-500 mb-4">
+                        How patients use the site in Spanish — equity evidence for partners and grant reporting. Events are tagged with the active language, so counts grow from the date this feature deployed.
+                    </p>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        <div className="bg-white rounded-lg shadow-sm border p-5">
+                            <p className="text-sm text-gray-500">Switches to Spanish</p>
+                            <p className="text-2xl font-bold text-gray-900 mt-1">
+                                {loadingLangStats ? '...' : (langStats?.togglesToSpanish ?? 0).toLocaleString()}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">Language toggle clicks</p>
+                        </div>
+                        <div className="bg-white rounded-lg shadow-sm border p-5">
+                            <p className="text-sm text-gray-500">Spanish Page Views</p>
+                            <p className="text-2xl font-bold text-gray-900 mt-1">
+                                {loadingLangStats ? '...' : (langStats?.spanishPageViews ?? 0).toLocaleString()}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                                {langStats?.langTaggedEvents > 0
+                                    ? `${Math.round((langStats.spanishEvents / langStats.langTaggedEvents) * 100)}% of activity is in Spanish`
+                                    : 'All time'}
+                            </p>
+                        </div>
+                        <div className="bg-white rounded-lg shadow-sm border p-5">
+                            <p className="text-sm text-gray-500">Spanish Med Searches</p>
+                            <p className="text-2xl font-bold text-gray-900 mt-1">
+                                {loadingLangStats ? '...' : (langStats?.spanishMedSearches ?? 0).toLocaleString()}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">Searches while in Spanish</p>
+                        </div>
+                        <div className="bg-white rounded-lg shadow-sm border p-5">
+                            <p className="text-sm text-gray-500">Spanish Program Clicks</p>
+                            <p className="text-2xl font-bold text-gray-900 mt-1">
+                                {loadingLangStats ? '...' : (langStats?.spanishProgramClicks ?? 0).toLocaleString()}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">Copay, PAP & foundation clicks</p>
+                        </div>
+                    </div>
+                    {(langStats?.topSpanishMedPages?.length > 0 || langStats?.topSpanishPrograms?.length > 0) && (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {langStats?.topSpanishMedPages?.length > 0 && (
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <h3 className="font-semibold text-gray-900 mb-3">Top Medications Viewed in Spanish</h3>
+                                    <ul className="space-y-2">
+                                        {langStats.topSpanishMedPages.map((row) => (
+                                            <li key={row.page} className="flex items-center justify-between text-sm">
+                                                <span className="text-gray-700 capitalize">{row.medication.replace(/-/g, ' ')}</span>
+                                                <span className="font-bold text-gray-900">{row.views.toLocaleString()}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {langStats?.topSpanishPrograms?.length > 0 && (
+                                <div className="bg-white rounded-lg shadow-sm border p-6">
+                                    <h3 className="font-semibold text-gray-900 mb-3">Top Programs Clicked in Spanish</h3>
+                                    <ul className="space-y-2">
+                                        {langStats.topSpanishPrograms.map((row) => (
+                                            <li key={`${row.programType}-${row.programId}`} className="flex items-center justify-between text-sm">
+                                                <span className="text-gray-700">{row.programId} <span className="text-gray-500">({row.programType})</span></span>
+                                                <span className="font-bold text-gray-900">{row.clicks.toLocaleString()}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* Navigation Menu */}
