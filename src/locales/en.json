@@ -1236,6 +1236,7 @@
         "accessibility": "Accessibility & Section 504",
         "feedback": "Feedback",
         "hospitals": "Hospitals",
+        "evidence": "The Evidence",
         "admin": "Admin",
         "privacyChoices": "Privacy Choices"
       }
@@ -1305,7 +1306,10 @@
       "price3": "$10",
       "quotePost": ".\"",
       "savedLabel": "Saved Per Year",
-      "why": "This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned."
+      "why": "This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned.",
+      "notAloneTitle": "You're not alone — and the research proves it.",
+      "notAloneText": "A 2026 multicenter study found that 1 in 4 liver transplant candidates spends more than 10% of their income on medical costs — before they even get listed. We're here to change that.",
+      "evidenceLink": "See the evidence"
     },
     "hospitals": {
       "eyebrow": "For hospitals & transplant centers",

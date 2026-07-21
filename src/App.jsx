@@ -14,6 +14,7 @@ const LazyForTransplantPrograms = lazy(() => import('./pages/ForTransplantProgra
 const LazyForEmployers = lazy(() => import('./pages/ForEmployers.jsx'));
 const LazyForPayers = lazy(() => import('./pages/ForPayers.jsx'));
 const LazyForHospitalAdmin = lazy(() => import('./pages/ForHospitalAdmin.jsx'));
+const LazyEvidence = lazy(() => import('./pages/Evidence.jsx'));
 const LazyPricing = lazy(() => import('./pages/Pricing.jsx'));
 const LazyPilot = lazy(() => import('./pages/Pilot.jsx'));
 const LazyDemo = lazy(() => import('./pages/Demo.jsx'));
@@ -688,6 +689,8 @@ const Layout = ({ children }) => {
                             <>
                                 <span className="text-slate-600" aria-hidden="true">|</span>
                                 <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
+                                <span className="text-slate-600" aria-hidden="true">|</span>
+                                <Link to="/evidence" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.evidence')}</Link>
                             </>
                         )}
                         <span className="text-slate-600" aria-hidden="true">|</span>
@@ -913,6 +916,15 @@ const Home = () => {
                             </div>
                         </div>
                     </blockquote>
+
+                    {/* Evidence callout: leads with the problem the research documents */}
+                    <div className="mt-8 pt-6 border-t border-emerald-200 text-center">
+                        <p className="text-slate-800 font-semibold mb-1">{t('home.story.notAloneTitle')}</p>
+                        <p className="text-slate-600 text-sm max-w-2xl mx-auto mb-3">{t('home.story.notAloneText')}</p>
+                        <Link to="/evidence" className="inline-flex items-center gap-1 text-emerald-700 font-semibold hover:underline">
+                            {t('home.story.evidenceLink')} <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </div>
                 </div>
             </section>
 
@@ -6971,6 +6983,8 @@ const MainSiteRoutes = () => (
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
                 <Route path="/feedback" element={<LazyFeedbackSurvey />} />
                 <Route path="/for-hospitals" element={<LazyForHospitalAdmin />} />
+                <Route path="/evidence" element={<LazyEvidence />} />
+                <Route path="/research" element={<Navigate to="/evidence" replace />} />
                 <Route path="/for-transplant-programs" element={<Navigate to="/pricing#transplant-programs" replace />} />
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />

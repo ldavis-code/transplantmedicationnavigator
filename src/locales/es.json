@@ -1236,6 +1236,7 @@
         "accessibility": "Accesibilidad y Sección 504",
         "feedback": "Comentarios",
         "hospitals": "Hospitales",
+        "evidence": "La Evidencia",
         "admin": "Admin",
         "privacyChoices": "Opciones de privacidad"
       }
@@ -1305,7 +1306,10 @@
       "price3": "$10",
       "quotePost": ".\"",
       "savedLabel": "Ahorrado al Año",
-      "why": "Por eso creamos esta herramienta: para que ningún paciente pierda los ahorros que su farmacia nunca le mencionó."
+      "why": "Por eso creamos esta herramienta: para que ningún paciente pierda los ahorros que su farmacia nunca le mencionó.",
+      "notAloneTitle": "No está solo — y la investigación lo demuestra.",
+      "notAloneText": "Un estudio multicéntrico de 2026 encontró que 1 de cada 4 candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos, incluso antes de entrar en la lista. Estamos aquí para cambiar eso.",
+      "evidenceLink": "Vea la evidencia (en inglés)"
     },
     "hospitals": {
       "eyebrow": "Para hospitales y centros de trasplante",

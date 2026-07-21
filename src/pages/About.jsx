@@ -4,7 +4,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Heart, Award, BookOpen, CheckCircle, Star, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Heart, Award, BookOpen, CheckCircle, Star, ExternalLink } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 
@@ -191,6 +191,20 @@ const About = () => {
                             </p>
                         </div>
                     </div>
+                </div>
+
+                {/* Independent research backing the mission */}
+                <div className="mt-6 bg-white/80 border border-emerald-100 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                        <BookOpen size={18} className="text-emerald-600" aria-hidden="true" />
+                        <h2 className="text-base md:text-lg font-bold text-slate-900">Why We Built This: The Independent Evidence</h2>
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed mb-3">
+                        Two national peer-reviewed studies now document what this tool was built to solve: 1 in 4 liver transplant candidates faces high financial burden before listing, and nearly 40% of transplant recipients miss medication fills because of cost.
+                    </p>
+                    <Link to="/evidence" className="inline-flex items-center gap-1 text-emerald-700 font-semibold hover:underline text-sm">
+                        Read the evidence <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
                 </div>
 
                 <div className="mt-6 text-center">

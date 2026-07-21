@@ -155,6 +155,29 @@ const ForHospitalAdmin = () => {
                 </div>
             </section>
 
+            {/* Financial Burden Screening Banner */}
+            <section className="bg-white border-2 border-emerald-200 rounded-2xl p-8 md:p-10 shadow-sm" aria-labelledby="screening-heading">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <ClipboardCheck size={24} />
+                    </div>
+                    <h2 id="screening-heading" className="text-xl md:text-2xl font-extrabold text-slate-900">Your Center Can Now Implement the Routine Screening the Research Calls For</h2>
+                </div>
+                <p className="text-slate-700 leading-relaxed mb-4">
+                    A 2026 multicenter U.S. study in <em>Hepatology Communications</em> (13 centers, 453 patients) found that 23.3% of liver transplant candidates face high financial burden — and concluded that <strong className="text-slate-900">routine screening for financial burden is critical and should be paired with targeted strategies to mitigate its impact.</strong>
+                </p>
+                <p className="text-slate-700 leading-relaxed mb-6">
+                    Screening tells your program which patients are drowning; it doesn't throw them a rope. Transplant Medication Navigator is the operational answer that turns a positive screen into insurance-aware navigation to copay cards, patient assistance programs, and foundation support.
+                </p>
+                <Link
+                    to="/evidence"
+                    className="inline-flex items-center gap-2 text-emerald-700 font-bold hover:underline"
+                >
+                    Read the full evidence summary
+                    <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+            </section>
+
             {/* AST Study Citation Banner */}
             <section className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-8 md:p-10 shadow-md">
                 <div className="flex items-center gap-3 mb-4">
@@ -179,6 +202,13 @@ const ForHospitalAdmin = () => {
                         https://doi.org/10.1016/j.ajt.2025.07.2474
                     </a>
                 </p>
+                <Link
+                    to="/evidence"
+                    className="inline-flex items-center gap-2 text-amber-700 font-bold hover:underline mt-4"
+                >
+                    See what this study means for your program
+                    <ArrowRight size={16} aria-hidden="true" />
+                </Link>
             </section>
 
             {/* Cost Impact Stats */}
