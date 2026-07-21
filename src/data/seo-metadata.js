@@ -119,6 +119,17 @@ export const seoMetadata = {
     breadcrumbName: 'Hospitals',
   },
 
+  evidence: {
+    title: 'The Evidence: Why Medication & Financial Navigation Matters | Transplant Medication Navigator™',
+    description: 'Peer-reviewed research: 23% of liver transplant candidates face high financial burden, and nearly 40% of recipients miss medication fills due to cost. See why financial navigation is the targeted strategy the research calls for.',
+    canonical: `${BASE_URL}/evidence`,
+    ogTitle: 'The Evidence: Cost Is a Clinical Problem in Transplantation',
+    ogDescription: 'Two national peer-reviewed studies document financial burden across the transplant journey — before transplant it threatens candidacy, after transplant it threatens the graft. TMN is the targeted strategy the researchers call for.',
+    twitterTitle: 'The Evidence for Medication & Financial Navigation',
+    twitterDescription: 'Peer-reviewed research: financial burden threatens transplant candidacy and graft survival. See the data behind medication and financial navigation.',
+    breadcrumbName: 'Evidence',
+  },
+
   forPayers: {
     title: 'For Payers | Transplant Medication Navigator™',
     description: 'Help members access manufacturer assistance programs for transplant medications. Reduce plan spend on high-cost drugs with our privacy-safe resource.',

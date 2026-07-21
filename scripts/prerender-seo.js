@@ -78,6 +78,14 @@ const pages = [
       <p style="margin-bottom:16px;"><a href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry" style="color:#059669;font-weight:600;text-decoration:underline;">Schedule a demo</a> or <a href="/pilot" style="color:#059669;font-weight:600;text-decoration:underline;">view the 90-day pilot program</a>.</p>`,
   },
   {
+    route: '/evidence',
+    title: 'The Evidence: Why Medication & Financial Navigation Matters | Transplant Medication Navigator™',
+    description: 'Peer-reviewed research: 23% of liver transplant candidates face high financial burden, and nearly 40% of recipients miss medication fills due to cost. See why financial navigation is the targeted strategy the research calls for.',
+    ogTitle: 'The Evidence: Cost Is a Clinical Problem in Transplantation',
+    ogDescription: 'Two national peer-reviewed studies document financial burden across the transplant journey — before transplant it threatens candidacy, after transplant it threatens the graft.',
+    aiSummary: 'Evidence page summarizing two peer-reviewed studies on financial burden in transplantation. (1) Aby ES et al., Hepatology Communications 2026 (13 U.S. centers, 453 liver transplant candidates): 23.3% reported high financial burden (out-of-pocket costs ≥10% of household income); high-burden patients had 4-6x adjusted odds of material, psychological, and behavioral financial distress; 66.4% delayed or went without care; only 27.6% were still employed. The authors conclude routine financial burden screening is critical and should be paired with targeted mitigation strategies. (2) Taber DJ et al., American Journal of Transplantation 2025 (AST patient survey, 10,091 recipients, 232 centers, all organs): nearly 40% missed a medication fill in the past year due to cost, and more than 1 in 4 skipped or reduced immunosuppressant doses due to cost. Transplant Medication Navigator is presented as the targeted strategy: a SMART on FHIR app on the Epic Connection Hub (500+ organizational downloads) providing insurance-aware routing to copay cards, patient assistance programs, and charitable foundations.',
+  },
+  {
     route: '/pricing',
     title: 'Pricing | Transplant Medication Navigator™',
     description: 'Free access to education for patients, and partnership options for organizations. View our clear pricing.',
