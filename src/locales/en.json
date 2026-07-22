@@ -1443,6 +1443,8 @@
     "sources": {
       "title": "Sources",
       "openAccess": "(open access)",
+        "study1Summary": "",
+        "study2Summary": "",
       "disclaimer": "This page summarizes independently conducted, peer-reviewed research. Transplant Medication Navigator was not involved in the studies. This content is educational and is not medical, legal, or financial advice."
     }
   },
@@ -2035,6 +2037,7 @@
     },
     "card": {
       "perMo": "/mo",
+          "trumpRxGuideHref": "/trumprx",
       "context": {
         "insuranceLabel": "Insurance:",
         "commercial": "Commercial / Employer",

@@ -195,7 +195,7 @@ const medicationPages = MEDICATIONS.map((m) => {
  * Generate HTML content for a page with proper meta tags
  * This version includes the main SPA script so React can take over after initial render
  */
-function generatePageHTML(page, mainScriptPath) {
+function generatePageHTML(page, mainScriptPath, stylesheetTags) {
   const canonical = `${BASE_URL}${page.route}`;
   const pageTitle = page.title.split(' | ')[0];
   const aiSummaryTag = page.aiSummary
@@ -251,6 +251,11 @@ function generatePageHTML(page, mainScriptPath) {
     <!-- PWA -->
     <meta name="theme-color" content="#059669" />
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- App stylesheets - without these, direct visits to prerendered routes
+         render the hydrated app unstyled (the SPA script alone does not load
+         the extracted CSS) -->
+    ${stylesheetTags}
 </head>
 <body class="bg-slate-50">
     <!-- Skip to main content for accessibility -->
@@ -263,7 +268,7 @@ function generatePageHTML(page, mainScriptPath) {
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
-            <p style="color: #64748b; margin-bottom: 16px;">Loading interactive features...</p>
+            <p style="color: #64748b; margin-bottom: 16px;">Loading interactive features... <span lang="es">/ Cargando la página...</span></p>
             <a href="/" style="color: #059669; text-decoration: underline;">Go to Homepage</a>
         </main>
     </div>
@@ -299,6 +304,18 @@ function findMainScript(distDir) {
 }
 
 /**
+ * Collect all stylesheet <link> tags from the built index.html so prerendered
+ * pages load the same CSS as the SPA shell.
+ */
+function findStylesheetTags(distDir) {
+  const indexPath = path.join(distDir, 'index.html');
+  if (!fs.existsSync(indexPath)) return '';
+  const indexHtml = fs.readFileSync(indexPath, 'utf8');
+  const tags = indexHtml.match(/<link[^>]*rel="stylesheet"[^>]*>/g) || [];
+  return tags.join('\n    ');
+}
+
+/**
  * Main function to generate all prerendered pages
  */
 function prerenderPages() {
@@ -312,7 +329,9 @@ function prerenderPages() {
 
   // Find the main script path from the built index.html
   const mainScriptPath = findMainScript(distDir);
+  const stylesheetTags = findStylesheetTags(distDir);
   console.log(`📦 Main script: ${mainScriptPath}`);
+  console.log(`🎨 Stylesheets: ${(stylesheetTags.match(/<link/g) || []).length} tag(s)`);
   console.log('🔄 Prerendering pages for SEO...\n');
 
   let created = 0;
@@ -330,7 +349,7 @@ function prerenderPages() {
       }
 
       // Generate and write HTML with the correct script path
-      const html = generatePageHTML(page, mainScriptPath);
+      const html = generatePageHTML(page, mainScriptPath, stylesheetTags);
       const htmlPath = path.join(pageDir, 'index.html');
       fs.writeFileSync(htmlPath, html, 'utf8');
 

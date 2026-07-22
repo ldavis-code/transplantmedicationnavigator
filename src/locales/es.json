@@ -363,7 +363,7 @@
         "leaving": "Está saliendo de esta aplicación para visitar un sitio web del gobierno."
       },
       "ihs": {
-        "title": "Indian Health Service / Programas tribales",
+        "title": "Indian Health Service (Servicio de Salud Indígena, IHS) / Programas tribales",
         "intro": "Para pacientes indígenas americanos y nativos de Alaska que califican.",
         "findTitle": "Encuentre un centro",
         "findText": "Use el buscador oficial del IHS para encontrar clínicas y farmacias cerca de usted.",
@@ -554,8 +554,8 @@
         "name": "Línea Nacional de Prevención del Suicidio y Crisis",
         "availability": "24/7 • Gratis • Privado",
         "callTitle": "Llame o envíe un mensaje de texto",
-        "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono",
-        "chatTitle": "Chat en línea"
+        "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono (para atención en español, oprima el 2)",
+        "chatTitle": "Chat en línea (también en español)"
       },
       "samhsa": {
         "aria": "Visitar SAMHSA (se abre en una pestaña nueva)",
@@ -1215,7 +1215,7 @@
         "savingsTracker": { "label": "Calculadora de ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
         "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
         "pricing": { "label": "Precios", "ariaLabel": "Ver información de precios" },
-        "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
+        "faq": { "label": "Preguntas frecuentes", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }
     },
@@ -1271,9 +1271,9 @@
       "ariaLabel": "Conecte su MyChart para importar su lista de medicamentos",
       "new": "Nuevo",
       "title": "Su lista real de medicamentos, con un solo toque",
-      "text": "Traiga sus medicamentos directamente desde el <strong>MyChart</strong> de Epic de su hospital y vea al instante cada tarjeta de copago y programa de asistencia que le corresponde. Sin escribir, sin errores.",
+      "text": "Traiga sus medicamentos directamente desde <strong>MyChart</strong> (el portal del paciente de su hospital) de Epic y vea al instante cada tarjeta de copago y programa de asistencia que le corresponde. Sin escribir, sin errores.",
       "connect": "Conectar MyChart",
-      "footnote": "Aparece en el Epic Connection Hub • Funciona con más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
+      "footnote": "Funciona con MyChart (el portal del paciente de su hospital) en más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
     },
     "features": {
       "ariaLabel": "Funciones principales",
@@ -1358,8 +1358,8 @@
       "availability": "24/7 • Confidencial",
       "encouragement": "Pedir ayuda es señal de fortaleza, no de debilidad. La vida después de un trasplante es dura para su cuerpo y sus emociones. Cuidar cómo se siente es tan importante como tomar su medicina. ¿Está pasando por un momento difícil? Por favor, busque ayuda. Queremos ayudarle.",
       "callTitle": "Llame o envíe un mensaje de texto",
-      "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono",
-      "chatTitle": "Chat en línea"
+      "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono (para atención en español, oprima el 2)",
+      "chatTitle": "Chat en línea (también en español)"
     },
     "privacy": {
       "title": "Protegemos su información",
@@ -1443,6 +1443,8 @@
     "sources": {
       "title": "Fuentes",
       "openAccess": "(acceso abierto)",
+        "study1Summary": "En resumen: este estudio siguió a 453 candidatos a trasplante de hígado en 13 centros de EE. UU. Casi 1 de cada 4 gastaba más del 10% de sus ingresos en costos médicos, y esa carga se asoció con mucho más estrés económico y con retrasar o saltarse atención médica. (El artículo completo está disponible solo en inglés.)",
+        "study2Summary": "En resumen: esta encuesta nacional de más de 10,000 receptores de trasplante encontró que casi el 40% dejó de surtir un medicamento en el último año por el costo, y más de 1 de cada 4 tomó menos dosis de sus medicamentos antirrechazo por la misma razón. (El artículo completo está disponible solo en inglés.)",
       "disclaimer": "Esta página resume investigaciones independientes revisadas por expertos. Transplant Medication Navigator no participó en los estudios. Este contenido es educativo y no es consejo médico, legal ni financiero."
     }
   },
@@ -1496,7 +1498,7 @@
     },
     "meds": {
       "title": "Sus medicamentos",
-      "intro": "Conéctese a su sistema de salud para traer su lista de medicamentos.",
+      "intro": "Conéctese a su sistema de salud (MyChart, el portal de su hospital) para traer su lista de medicamentos.",
       "selectedHeading": "Sus Medicamentos Seleccionados ({{count}})",
       "removeAria": "Quitar {{name}}",
       "separatorAria": "O agregue sus medicamentos usted mismo",
@@ -1557,7 +1559,7 @@
       "tricareLabel": "TRICARE o VA (Veteranos)",
       "tricareDescription": "Beneficios militares o para veteranos",
       "tricareHelp": "Con seguro del gobierno puede usar programas de asistencia",
-      "ihsLabel": "Indian Health Service",
+      "ihsLabel": "Indian Health Service (Servicio de Salud Indígena)",
       "ihsDescription": "Programas de salud tribales",
       "ihsHelp": "Puede usar programas de asistencia",
       "uninsuredLabel": "No tengo seguro",
@@ -2014,7 +2016,7 @@
         "medicare": "Medicare",
         "medicaid": "Medicaid (estatal)",
         "tricare_va": "TRICARE / VA",
-        "ihs": "Indian Health Service",
+        "ihs": "Indian Health Service (Servicio de Salud Indígena)",
         "uninsured": "Sin seguro / Pago por cuenta propia"
       }
     },
@@ -2035,13 +2037,14 @@
     },
     "card": {
       "perMo": "/mes",
+          "trumpRxGuideHref": "/trumprx-es",
       "context": {
         "insuranceLabel": "Seguro:",
         "commercial": "Comercial / Del empleador",
         "medicare": "Medicare",
         "medicaid": "Medicaid",
         "tricare": "TRICARE",
-        "ihs": "Indian Health Service",
+        "ihs": "Indian Health Service (Servicio de Salud Indígena)",
         "uninsured": "Sin seguro",
         "transplantLabel": "Trasplante:",
         "stagePost1yr": "1+ años",

@@ -92,6 +92,12 @@
   to = "/trumprx.html"
   status = 200
 
+# TrumpRx resource page, Spanish version
+[[redirects]]
+  from = "/trumprx-es"
+  to = "/trumprx-es.html"
+  status = 200
+
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
 [[redirects]]

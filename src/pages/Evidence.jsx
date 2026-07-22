@@ -267,6 +267,9 @@ const Evidence = () => {
                             doi:10.1097/HC9.0000000000000985
                         </a>{' '}
                         {t('evidence.sources.openAccess')}
+                        {t('evidence.sources.study1Summary') && (
+                            <p className="mt-1 text-slate-500 italic">{t('evidence.sources.study1Summary')}</p>
+                        )}
                     </li>
                     <li>
                         Taber DJ, Gordon EJ, Myaskovsky L, et al. Therapeutic needs in solid organ transplant recipients: The American Society of Transplantation patient survey. <em>American Journal of Transplantation.</em> 2025;25:2565–2577.{' '}
@@ -279,6 +282,9 @@ const Evidence = () => {
                             doi:10.1016/j.ajt.2025.07.2474
                         </a>{' '}
                         (PMID: 40744428)
+                        {t('evidence.sources.study2Summary') && (
+                            <p className="mt-1 text-slate-500 italic">{t('evidence.sources.study2Summary')}</p>
+                        )}
                     </li>
                 </ol>
                 <p className="text-slate-400 text-xs mt-6 italic">
