@@ -43,5 +43,13 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /privacy  /privacy/index.html  200
 /accessibility  /accessibility/index.html  200
 
+# Spanish URL convention: language is selected via ?lang=es, not /es/ paths.
+# Send anyone using the common /es/ convention to the real mechanism —
+# without this, /es/... silently serves the English app shell.
+# (This file is evaluated before netlify.toml, so the rules must live here,
+# ahead of the SPA fallback.)
+/es  /?lang=es  302
+/es/*  /:splat?lang=es  302
+
 # SPA fallback - all other routes go to index.html
 /*  /index.html  200
