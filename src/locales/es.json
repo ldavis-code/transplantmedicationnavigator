@@ -1193,6 +1193,14 @@
     }
   },
   "layout": {
+    "notFound": {
+      "title": "Página no encontrada",
+      "text": "No pudimos encontrar la página que busca. Puede que se haya movido o que ya no exista.",
+      "goHome": "Ir al inicio",
+      "goHomeAria": "Volver a la página de inicio",
+      "startPath": "Comenzar el cuestionario Mi Camino",
+      "startPathAria": "Comenzar el cuestionario de asistencia con medicamentos"
+    },
     "banner": {
       "text": "Los Programas de Asistencia al Paciente dan medicamentos GRATIS a quienes califican; solicitar nunca cuesta nada. Nosotros le ayudamos a encontrarlos."
     },
@@ -2250,6 +2258,12 @@
       "searchDrugsLink": "Buscar \"{{name}}\" en Drugs.com para encontrar programas de asistencia "
     },
     "detail": {
+      "meta": {
+        "title": "Cómo pagar {{name}}: tarjetas de copago y asistencia | Transplant Medication Navigator™",
+        "description": "Encuentre tarjetas de copago, Programas de Asistencia al Paciente y ayudas de fundaciones para {{name}}. Vea cómo bajar el costo de su medicamento de trasplante.",
+        "notFoundTitle": "Medicamento no encontrado | Transplant Medication Navigator™",
+        "notFoundDescription": "No pudimos encontrar esta página de medicamento. Busque en nuestra lista completa de medicamentos de trasplante y programas de asistencia."
+      },
       "priceRangeSingle": "{{price}} al mes",
       "priceRangeBetween": "{{min}} a {{max}} al mes",
       "notFound": {

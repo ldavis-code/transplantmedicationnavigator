@@ -6903,6 +6903,7 @@ const FAQ = () => {
 
 // NotFound Page
 const NotFound = () => {
+    const { t } = useTranslation();
     useMetaTags(seoMetadata.notFound);
 
     return (
@@ -6913,10 +6914,10 @@ const NotFound = () => {
                         <AlertCircle size={48} className="text-slate-400" aria-hidden="true" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-                        Page Not Found
+                        {t('layout.notFound.title')}
                     </h1>
                     <p className="text-lg md:text-xl text-slate-600 mb-8">
-                        We couldn't find the page you're looking for. It may have been moved or doesn't exist.
+                        {t('layout.notFound.text')}
                     </p>
                 </div>
 
@@ -6924,18 +6925,18 @@ const NotFound = () => {
                     <Link
                         to="/"
                         className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2"
-                        aria-label="Return to home page"
+                        aria-label={t('layout.notFound.goHomeAria')}
                     >
                         <HomeIcon size={20} aria-hidden="true" />
-                        Go to Home
+                        {t('layout.notFound.goHome')}
                     </Link>
                     <Link
                         to="/wizard"
                         className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-emerald-200 transition flex items-center justify-center gap-2"
-                        aria-label="Start medication assistance wizard"
+                        aria-label={t('layout.notFound.startPathAria')}
                     >
                         <Map size={20} aria-hidden="true" />
-                        Start Medication Path
+                        {t('layout.notFound.startPath')}
                     </Link>
                 </div>
             </section>
