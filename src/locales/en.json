@@ -2258,6 +2258,12 @@
       "searchDrugsLink": "Search \"{{name}}\" on Drugs.com for Assistance Programs "
     },
     "detail": {
+      "meta": {
+        "title": "How to Afford {{name}}: Copay Cards & Assistance | Transplant Medication Navigator™",
+        "description": "Find copay cards, patient assistance programs, and foundation grants for {{name}}. See ways to lower the cost of your transplant medication.",
+        "notFoundTitle": "Medication Not Found | Transplant Medication Navigator™",
+        "notFoundDescription": "This medication page could not be found. Search our full list of transplant medications and assistance programs."
+      },
       "priceRangeSingle": "{{price}}/month",
       "priceRangeBetween": "{{min}} to {{max}}/month",
       "notFound": {

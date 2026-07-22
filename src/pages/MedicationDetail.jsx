@@ -70,14 +70,16 @@ const MedicationDetail = () => {
         : '';
 
     // Not found — keep it out of the index and point back to search.
+    // Built with t() so document.title (read aloud by the RouteAnnouncer)
+    // follows the active language.
     useMetaTags(med ? {
-        title: `How to Afford ${nameWithGeneric}: Copay Cards & Assistance | Transplant Medication Navigator™`,
-        description: `Find copay cards, patient assistance programs, and foundation grants for ${nameWithGeneric}. See ways to lower the cost of your transplant medication.`,
+        title: t('medications.detail.meta.title', { name: nameWithGeneric }),
+        description: t('medications.detail.meta.description', { name: nameWithGeneric }),
         canonical: `${BASE_URL}/medications/${med.id}`,
         breadcrumbName: med.brandName,
     } : {
-        title: 'Medication Not Found | Transplant Medication Navigator™',
-        description: 'This medication page could not be found. Search our full list of transplant medications and assistance programs.',
+        title: t('medications.detail.meta.notFoundTitle'),
+        description: t('medications.detail.meta.notFoundDescription'),
         canonical: `${BASE_URL}/medications`,
         noindex: true,
     });

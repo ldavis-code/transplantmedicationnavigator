@@ -16,6 +16,11 @@ export const seoMetadata = {
     twitterTitle: 'Free Transplant Medication Help | Medication Navigator',
     twitterDescription: 'Find FREE medications through Patient Assistance Programs. Compare prices, find copay foundations & grants for transplant patients.',
     breadcrumbName: 'Home',
+    es: {
+      title: 'Transplant Medication Navigator™',
+      description: 'Consiga medicamentos de trasplante GRATIS con los Programas de Asistencia al Paciente. Encuentre ayuda para pagar tacrolimus, micofenolato e inmunosupresores. Compare precios y encuentre fundaciones de copago y ayudas para pacientes de trasplante de riñón, hígado y corazón.',
+      breadcrumbName: 'Inicio',
+    },
   },
 
   wizard: {
@@ -27,6 +32,11 @@ export const seoMetadata = {
     twitterTitle: 'My Path Quiz - Free Medication Finder',
     twitterDescription: 'Take our free quiz to discover Patient Assistance Programs for your transplant medications. Personalized recommendations in 2 minutes.',
     breadcrumbName: 'My Path Quiz',
+    es: {
+      title: 'Cuestionario Mi Camino: encuentre ayuda gratis con sus medicamentos | Transplant Medication Navigator™',
+      description: 'Haga nuestro cuestionario gratuito de 2 minutos para encontrar Programas de Asistencia al Paciente para sus medicamentos de trasplante. Reciba recomendaciones personalizadas según su seguro y sus ingresos.',
+      breadcrumbName: 'Cuestionario Mi Camino',
+    },
   },
 
   medications: {
@@ -38,6 +48,11 @@ export const seoMetadata = {
     twitterTitle: 'Search Transplant Medications & Find Free Help',
     twitterDescription: 'Compare estimated prices and find FREE medication assistance for tacrolimus, mycophenolate, prednisone, and other transplant drugs.',
     breadcrumbName: 'Medications',
+    es: {
+      title: 'Busque medicamentos de trasplante y precios | Transplant Medication Navigator™',
+      description: 'Compare precios estimados de medicamentos de trasplante y encuentre programas de asistencia GRATIS. Busque tacrolimus (Prograf), micofenolato (CellCept), prednisona y más. Encuentre tarjetas de copago, PAP y ayudas de fundaciones.',
+      breadcrumbName: 'Medicamentos',
+    },
   },
 
   education: {
@@ -49,6 +64,11 @@ export const seoMetadata = {
     twitterTitle: 'Transplant Medication Education Resources',
     twitterDescription: 'Educational guides on Medicare, insurance, specialty pharmacies and medication coverage for transplant patients.',
     breadcrumbName: 'Education & Resources',
+    es: {
+      title: 'Educación y recursos para pacientes de trasplante | Transplant Medication Navigator™',
+      description: 'Guías educativas sobre la cobertura de medicamentos de trasplante: Medicare Parte D, Medicaid, apelaciones, farmacias de especialidad, la trampa del deducible y las fundaciones de copago.',
+      breadcrumbName: 'Educación y recursos',
+    },
   },
 
   applicationHelp: {
@@ -60,6 +80,11 @@ export const seoMetadata = {
     twitterTitle: 'Patient Assistance Program Grants & Foundations',
     twitterDescription: 'Step-by-step guide to applying for Patient Assistance Programs. Learn what documents you need and how to get approval faster.',
     breadcrumbName: 'Grants & Foundations',
+    es: {
+      title: 'Cómo solicitar asistencia con medicamentos | Transplant Medication Navigator™',
+      description: 'Guía paso a paso para solicitar Programas de Asistencia al Paciente. Sepa qué documentos necesita, cómo completar las solicitudes y cómo conseguir la aprobación más rápido.',
+      breadcrumbName: 'Ayudas y fundaciones',
+    },
   },
 
   faq: {
@@ -71,6 +96,11 @@ export const seoMetadata = {
     twitterTitle: 'Medication Assistance FAQs',
     twitterDescription: 'Answers to common questions about Patient Assistance Programs, copay foundations, and financial help for transplant patients.',
     breadcrumbName: 'FAQ',
+    es: {
+      title: 'Preguntas frecuentes | Transplant Medication Navigator™',
+      description: 'Respuestas a las preguntas más comunes sobre los Programas de Asistencia al Paciente, las fundaciones de copago, los costos de los medicamentos y la ayuda económica para pacientes de trasplante.',
+      breadcrumbName: 'Preguntas frecuentes',
+    },
   },
 
   notFound: {
@@ -82,6 +112,11 @@ export const seoMetadata = {
     twitterTitle: 'Page Not Found',
     twitterDescription: 'This page could not be found. Visit our homepage to find medication assistance programs for transplant patients.',
     breadcrumbName: 'Page Not Found',
+    es: {
+      title: 'Página no encontrada | Transplant Medication Navigator™',
+      description: 'No pudimos encontrar la página que busca. Visite nuestra página de inicio para encontrar programas de asistencia con medicamentos y recursos para pacientes de trasplante.',
+      breadcrumbName: 'Página no encontrada',
+    },
   },
 
   forTransplantPrograms: {
@@ -128,6 +163,11 @@ export const seoMetadata = {
     twitterTitle: 'The Evidence for Medication & Financial Navigation',
     twitterDescription: 'Peer-reviewed research: financial burden threatens transplant candidacy and graft survival. See the data behind medication and financial navigation.',
     breadcrumbName: 'Evidence',
+    es: {
+      title: 'La evidencia: por qué importa la navegación de medicamentos y finanzas | Transplant Medication Navigator™',
+      description: 'Investigación revisada por expertos: el 23% de los candidatos a trasplante de hígado enfrenta una alta carga financiera, y casi el 40% de los receptores deja de surtir medicamentos por el costo.',
+      breadcrumbName: 'La evidencia',
+    },
   },
 
   forPayers: {
@@ -161,6 +201,11 @@ export const seoMetadata = {
     twitterTitle: 'Partner Pilot Program',
     twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
     breadcrumbName: 'Pilot Program',
+    es: {
+      title: 'Programa piloto para socios | Transplant Medication Navigator™',
+      description: 'Bienvenido al programa piloto. Encuentre programas de asistencia, busque medicamentos de trasplante y acceda a recursos financieros verificados.',
+      breadcrumbName: 'Programa piloto',
+    },
   },
 
   termsAndConditions: {
@@ -172,6 +217,11 @@ export const seoMetadata = {
     twitterTitle: 'Terms and Conditions',
     twitterDescription: 'Terms and Conditions for using Transplant Medication Navigator, an educational resource for transplant patients.',
     breadcrumbName: 'Terms and Conditions',
+    es: {
+      title: 'Términos y condiciones | Transplant Medication Navigator™',
+      description: 'Lea los términos y condiciones para usar el sitio de Transplant Medication Navigator. Conozca sus derechos, sus responsabilidades y nuestro aviso sobre consejo médico.',
+      breadcrumbName: 'Términos y condiciones',
+    },
   },
 
   privacyPolicy: {
@@ -183,6 +233,11 @@ export const seoMetadata = {
     twitterTitle: 'Privacy Policy',
     twitterDescription: 'Privacy Policy for Transplant Medication Navigator - how we collect, use, and protect your data.',
     breadcrumbName: 'Privacy Policy',
+    es: {
+      title: 'Política de privacidad | Transplant Medication Navigator™',
+      description: 'Lea nuestra política de privacidad para saber cómo Transplant Medication Navigator recopila, usa y protege su información personal.',
+      breadcrumbName: 'Política de privacidad',
+    },
   },
 
   survey: {
@@ -194,6 +249,11 @@ export const seoMetadata = {
     twitterTitle: 'Share Your Journey',
     twitterDescription: 'Share your medication experience to help improve access for all patients. Anonymous surveys available.',
     breadcrumbName: 'Survey',
+    es: {
+      title: 'Comparta su experiencia | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia con los medicamentos para ayudar a mejorar el acceso para todos los pacientes. Encuestas anónimas para receptores de trasplante y personas con enfermedades crónicas.',
+      breadcrumbName: 'Encuesta',
+    },
   },
 
   surveyTransplant: {
@@ -205,6 +265,11 @@ export const seoMetadata = {
     twitterTitle: 'Transplant Medication Survey',
     twitterDescription: 'Share your transplant medication journey to help improve access for all patients.',
     breadcrumbName: 'Transplant Survey',
+    es: {
+      title: 'Encuesta sobre medicamentos de trasplante | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia con los medicamentos de trasplante. Ayúdenos a entender los retos con los medicamentos antirrechazo, las farmacias, el seguro y los programas de asistencia.',
+      breadcrumbName: 'Encuesta de trasplante',
+    },
   },
 
   surveyGeneral: {
@@ -216,6 +281,11 @@ export const seoMetadata = {
     twitterTitle: 'General Medication Survey',
     twitterDescription: 'Share your experience managing medications for chronic conditions.',
     breadcrumbName: 'General Survey',
+    es: {
+      title: 'Encuesta general sobre medicamentos | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia manejando medicamentos para enfermedades crónicas. Ayúdenos a abogar por mejor acceso y precios más justos.',
+      breadcrumbName: 'Encuesta general',
+    },
   },
 
   myMedications: {
@@ -227,6 +297,11 @@ export const seoMetadata = {
     twitterTitle: 'My Medications',
     twitterDescription: 'Track your transplant medications, renewal dates, and costs privately.',
     breadcrumbName: 'My Medications',
+    es: {
+      title: 'Mis medicamentos | Transplant Medication Navigator™',
+      description: 'Lleve el control de sus medicamentos de trasplante, fechas de renovación y costos. Su lista se guarda de forma privada en su dispositivo.',
+      breadcrumbName: 'Mis medicamentos',
+    },
     noindex: true, // Private user feature - do not index in search engines
   },
 
@@ -239,6 +314,11 @@ export const seoMetadata = {
     twitterTitle: 'Savings Calculator',
     twitterDescription: 'Calculate how much you could save on transplant medications with assistance programs.',
     breadcrumbName: 'Savings Calculator',
+    es: {
+      title: 'Calculadora de ahorros | Transplant Medication Navigator™',
+      description: 'Calcule cuánto podría ahorrar en sus medicamentos de trasplante con los programas de asistencia. Registre sus ahorros reales y vea el total con el tiempo.',
+      breadcrumbName: 'Calculadora de ahorros',
+    },
   },
 
   copayReminders: {
@@ -250,6 +330,11 @@ export const seoMetadata = {
     twitterTitle: 'Copay Card Reminders',
     twitterDescription: 'Never miss a copay card renewal. Track expiration dates and get reminders.',
     breadcrumbName: 'Copay Reminders',
+    es: {
+      title: 'Recordatorios de tarjetas de copago | Transplant Medication Navigator™',
+      description: 'No deje vencer su tarjeta de copago. Controle las fechas de vencimiento de las tarjetas del fabricante y de los programas de asistencia, y reciba recordatorios.',
+      breadcrumbName: 'Recordatorios de copago',
+    },
   },
 
   accessibility: {
@@ -261,6 +346,11 @@ export const seoMetadata = {
     twitterTitle: 'Accessibility & Section 504 Compliance',
     twitterDescription: 'Section 504 compliance, WCAG 2.1 AA conformance, and accessibility features for Transplant Medication Navigator.',
     breadcrumbName: 'Accessibility & Section 504',
+    es: {
+      title: 'Accesibilidad y Sección 504 | Transplant Medication Navigator™',
+      description: 'Cumplimiento de la Sección 504 del HHS, conformidad con WCAG 2.1 nivel AA, aviso de no discriminación y procedimiento de quejas.',
+      breadcrumbName: 'Accesibilidad y Sección 504',
+    },
   },
 };
 

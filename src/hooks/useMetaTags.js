@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 
@@ -17,9 +18,29 @@ const BASE_URL = 'https://transplantmedicationnavigator.com';
  * @param {string} [config.twitterImage] - Twitter card image URL
  * @param {string} [config.breadcrumbName] - Name for breadcrumb (if different from title)
  * @param {boolean} [config.noindex] - If true, add noindex meta tag to prevent search engine indexing
+ * @param {Object} [config.es] - Spanish overrides (title, description, breadcrumbName, ...).
+ *   Applied when the active language is Spanish; og/twitter fields fall back to the
+ *   Spanish title/description so English social tags don't leak through. This keeps
+ *   document.title in the page language, which the RouteAnnouncer reads to screen readers.
  */
 export function useMetaTags(config) {
+  const { i18n } = useTranslation();
+  const isSpanish = (i18n.resolvedLanguage || i18n.language || '').startsWith('es');
+
   useEffect(() => {
+    const active = isSpanish && config.es
+      ? {
+          ...config,
+          ...config.es,
+          // Force og/twitter to the Spanish values (or fall back to the
+          // Spanish title/description below) instead of keeping English ones.
+          ogTitle: config.es.ogTitle,
+          ogDescription: config.es.ogDescription,
+          twitterTitle: config.es.twitterTitle,
+          twitterDescription: config.es.twitterDescription,
+        }
+      : config;
+
     const {
       title,
       description,
@@ -33,7 +54,7 @@ export function useMetaTags(config) {
       twitterImage = '/twitter-image.png',
       breadcrumbName,
       noindex,
-    } = config;
+    } = active;
 
     // Update document title
     if (title) {
@@ -138,5 +159,5 @@ export function useMetaTags(config) {
         breadcrumbScript.remove();
       }
     };
-  }, [config]);
+  }, [config, isSpanish]);
 }
