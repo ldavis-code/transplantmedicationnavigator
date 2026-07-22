@@ -19,8 +19,8 @@
     "Non-selective Beta-Blockers": "Betabloqueadores no selectivos",
     "Antibiotics (SBP Prevention)": "Antibióticos (prevención de SBP)",
     "Bone Health": "Salud de los huesos",
-    "IPF Antifibrotics": "Antifibróticos para la IPF",
-    "COPD Bronchodilators / Inhaled Steroids": "Broncodilatadores / esteroides inhalados para la COPD",
+    "IPF Antifibrotics": "Antifibróticos para la FPI (IPF)",
+    "COPD Bronchodilators / Inhaled Steroids": "Broncodilatadores / esteroides inhalados para la EPOC (COPD)",
     "Pulmonary Hypertension Vasodilators": "Vasodilatadores para la hipertensión pulmonar",
     "Diuretics (Supportive)": "Diuréticos (de apoyo)",
     "Insulin": "Insulina",
@@ -41,7 +41,7 @@
     },
     "Kidney": {
       "title": "Trasplante de riñón",
-      "description": "La inmunosupresión para el trasplante de riñón es parecida a la del trasplante de corazón, con un enfoque en equilibrar la eficacia y reducir al mínimo los efectos secundarios.",
+      "description": "La inmunosupresión para el trasplante de riñón es parecida a la del trasplante de corazón, con la meta de proteger bien el órgano nuevo causando los menores efectos secundarios posibles.",
       "notes": {
         "tacrolimus": "Es el tratamiento estándar. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
@@ -54,7 +54,7 @@
     },
     "Liver": {
       "title": "Trasplante de hígado",
-      "description": "Los pacientes con trasplante de hígado a menudo necesitan niveles más bajos de inmunosupresión que los receptores de otros órganos, debido a las propiedades inmunológicas únicas del hígado.",
+      "description": "Los pacientes con trasplante de hígado a menudo necesitan niveles más bajos de inmunosupresión que los receptores de otros órganos, porque el cuerpo suele aceptar el hígado nuevo con más facilidad que otros órganos.",
       "notes": {
         "tacrolimus": "Es el inhibidor de calcineurina (CNI) más usado en el trasplante de hígado. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
@@ -108,19 +108,19 @@
     },
     "Liver": {
       "title": "Trasplante de hígado",
-      "description": "El manejo previo al trasplante para los candidatos a trasplante de hígado se enfoca en tratar las complicaciones de la cirrosis y la hipertensión portal.",
+      "description": "El manejo previo al trasplante para los candidatos a trasplante de hígado se enfoca en tratar las complicaciones de la cirrosis y la hipertensión portal (presión alta en la vena que lleva la sangre al hígado).",
       "notes": {
         "Diuretics (Ascites)": "Eliminan el exceso de líquido del cuerpo.",
         "Ammonia-reducing Agents": "Reducen la acumulación en la sangre de toxinas que afectan el cerebro.",
         "Non-selective Beta-Blockers": "Reducen la presión en la vena porta para prevenir el sangrado de las várices.",
-        "Antibiotics (SBP Prevention)": "Previenen la peritonitis bacteriana espontánea en pacientes de alto riesgo.",
+        "Antibiotics (SBP Prevention)": "Previenen una infección grave del líquido del abdomen (la peritonitis bacteriana espontánea) en pacientes de alto riesgo.",
         "Bone Health": "Previenen o tratan la osteoporosis, que es común en la cirrosis."
       },
       "warning": "Es muy importante que los pacientes con cirrosis eviten ciertos medicamentos, como los antiinflamatorios no esteroideos (AINE), que pueden aumentar el riesgo de daño a los riñones y de sangrado."
     },
     "Lung": {
       "title": "Trasplante de pulmón",
-      "description": "El manejo de los medicamentos para los candidatos a trasplante de pulmón se adapta a su enfermedad pulmonar de base, como la fibrosis pulmonar idiopática (IPF), la enfermedad pulmonar obstructiva crónica (COPD) o la hipertensión pulmonar.",
+      "description": "El manejo de los medicamentos para los candidatos a trasplante de pulmón se adapta a su enfermedad pulmonar de base, como la fibrosis pulmonar idiopática (FPI), la enfermedad pulmonar obstructiva crónica (EPOC) o la hipertensión pulmonar.",
       "notes": {
         "IPF Antifibrotics": "Retrasan el avance de la cicatrización de los pulmones.",
         "COPD Bronchodilators / Inhaled Steroids": "Mejoran el paso del aire y reducen la inflamación.",

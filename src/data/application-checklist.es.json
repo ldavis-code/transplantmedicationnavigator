@@ -1,10 +1,10 @@
 [
   "Información básica (nombre, fecha de nacimiento, dirección, correo electrónico)",
   "Fotos de su tarjeta de seguro (frente y reverso) o su tarjeta de Medicare",
-  "Comprobante de ingresos (declaración de impuestos, talones de pago o carta del Seguro Social)",
+  "Comprobante de ingresos (declaración de impuestos (la 'planilla'), talones de pago o carta del Seguro Social)",
   "Si no tiene ingresos: una carta corta que explique cómo se mantiene",
   "Identificación (licencia de conducir o identificación del estado)",
   "Información de sus medicamentos (nombre, dosis, nombre de la farmacia)",
   "Formularios de consentimiento firmados (formularios del programa y HIPAA)",
-  "Opcional: carta de negación del seguro o nota de dificultad económica"
+  "Opcional: carta de denegación del seguro o nota de dificultad económica"
 ]

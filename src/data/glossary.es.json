@@ -10,7 +10,7 @@
     },
     "coinsurance": {
       "term": "coseguro",
-      "definition": "El porcentaje que usted paga después de cumplir con su deducible"
+      "definition": "El porcentaje que usted paga después de cumplir con su deducible (también se le llama 'coaseguro')"
     },
     "out-of-pocket-maximum": {
       "term": "máximo de gastos de bolsillo",
@@ -18,7 +18,7 @@
     },
     "formulary": {
       "term": "formulario",
-      "definition": "La lista de medicinas que cubre su seguro"
+      "definition": "La lista de medicinas que cubre su seguro. Aunque se llama 'formulario', no es un papel para llenar: es una lista"
     },
     "generic": {
       "term": "genérico",

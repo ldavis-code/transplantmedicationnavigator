@@ -2,179 +2,179 @@
   "copayPrograms": {
     "astellas-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "novartis-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "zortress-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "genentech-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "bms-copay": {
       "maxBenefit": "Pague tan solo $0 durante el primer año",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "nulojix-copay": {
       "maxBenefit": "Pague tan solo $10 por cada infusión",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "pfizer-copay": {
       "maxBenefit": "Varía según el medicamento",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "sanofi-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "gilead-copay": {
       "maxBenefit": "Varía según el medicamento",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "merck-copay": {
       "maxBenefit": "Varía según el medicamento",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "jardiance-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "farxiga-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "entresto-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "xarelto-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "eliquis-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "dupixent-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "simulect-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "thymoglobulin-copay": {
       "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "januvia-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "ozempic-copay": {
       "maxBenefit": "Pague tan solo $25 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "trulicity-copay": {
       "maxBenefit": "Pague tan solo $25 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "opsumit-copay": {
       "maxBenefit": "Pague tan solo $5 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "adempas-copay": {
       "maxBenefit": "Pague tan solo $5 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "uptravi-copay": {
       "maxBenefit": "Pague tan solo $5 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "tyvaso-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "spiriva-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "breo-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "nucala-copay": {
       "maxBenefit": "Pague tan solo $0 por dosis",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "fasenra-copay": {
       "maxBenefit": "Pague tan solo $0 por dosis",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "tezspire-copay": {
       "maxBenefit": "Pague tan solo $0 por dosis",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "xolair-copay": {
       "maxBenefit": "Pague tan solo $5 por dosis",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "anoro-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "dulera-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "envarsus-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "mavyret-copay": {
       "maxBenefit": "Pague tan solo $5 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "creon-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "auryxia-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "rezdiffra-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "symbicort-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "advair-copay": {
       "maxBenefit": "Pague tan solo $10 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "lantus-copay": {
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "humalog-copay": {
       "maxBenefit": "Pague tan solo $35 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "novolog-copay": {
       "maxBenefit": "Pague tan solo $25 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "lyrica-copay": {
       "maxBenefit": "Pague tan solo $25 al mes",
-      "notes": "Solo para personas con seguro comercial. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "goodrx-search": {
       "maxBenefit": "Tarjeta de descuento gratis",

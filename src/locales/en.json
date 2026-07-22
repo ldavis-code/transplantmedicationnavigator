@@ -152,7 +152,7 @@
       "strategies": {
         "title": "Strategies by Insurance Type",
         "commercialTitle": "Commercial Insurance?",
-        "commercialItem1": "Use <strong>Manufacturer PAPs</strong> for copay cards.",
+        "commercialItem1": "Use <strong>manufacturer copay cards</strong> to lower what you pay at the pharmacy.",
         "commercialItem2": "Use <strong>Foundations</strong> for deductibles.",
         "medicareTitle": "Medicare?",
         "medicareItem1": "Use <strong>Foundations</strong> for copays.",
@@ -204,7 +204,7 @@
         "oopCapTerm": "Yearly Out-of-Pocket Cap",
         "oopCapDef": "A yearly limit on what you pay out of pocket for Medicare Part D drugs. In 2026 the cap is $2,100. Once you reach it, you pay $0 for covered drugs for the rest of the year.",
         "catastrophicTerm": "Catastrophic Coverage",
-        "catastrophicDef": "After you spend a lot on medicines in one year, Medicare pays almost everything. You only pay a small amount (about $4-$12) per prescription.",
+        "catastrophicDef": "After you reach the yearly Part D out-of-pocket cap ($2,100 in 2026), Medicare pays 100% and you pay $0 for covered drugs for the rest of the year.",
         "inNetworkTerm": "In-Network Pharmacy",
         "inNetworkDef": "A pharmacy that works with your insurance. You pay less here. Think of it as a preferred partner.",
         "outNetworkTerm": "Out-of-Network Pharmacy",
@@ -768,9 +768,9 @@
         "name": "Paying full cost yourself, with no insurance.",
         "tag": "Between jobs, pre-Medicare, or otherwise without coverage.",
         "who": [
-          "Hospital charity / financial-assistance programs",
-          "Manufacturer Patient Assistance Programs (PAPs)",
-          "Discount cards and pharmacy savings programs"
+          "People between jobs or who lost coverage",
+          "People waiting for Medicare or Medicaid to start",
+          "Anyone without insurance right now"
         ],
         "how": "You receive the full retail bill. Cash prices for transplant medications can run hundreds to thousands per month. Hospitals and pharmacies often negotiate or offer payment plans on request.",
         "warn": "Catastrophic out-of-pocket costs. Risk of medical debt. Skipped doses if cost feels impossible.",

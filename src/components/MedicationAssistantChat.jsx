@@ -1597,7 +1597,7 @@ const MedicationAssistantChat = () => {
             )}
             <p className="text-[11px] leading-snug text-slate-400 mt-2 text-center">
               {i18n.language?.startsWith('es')
-                ? 'Asistente de IA: información educativa, no consejo médico. Puede cometer errores; confirme los detalles con su equipo de trasplante. No incluya su nombre ni datos de contacto.'
+                ? 'Asistente de IA (inteligencia artificial): información educativa; no es consejo médico y puede cometer errores. Confirme los detalles con su equipo de trasplante. No escriba su nombre ni sus datos de contacto.'
                 : 'AI assistant: educational information only, not medical advice. It can make mistakes — confirm details with your transplant team. Please don’t include your name or contact info.'}
             </p>
           </div>
