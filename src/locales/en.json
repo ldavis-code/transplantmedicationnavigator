@@ -1193,6 +1193,14 @@
     }
   },
   "layout": {
+    "notFound": {
+      "title": "Page Not Found",
+      "text": "We couldn't find the page you're looking for. It may have been moved or doesn't exist.",
+      "goHome": "Go to Home",
+      "goHomeAria": "Return to home page",
+      "startPath": "Start Medication Path",
+      "startPathAria": "Start medication assistance wizard"
+    },
     "banner": {
       "text": "Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them."
     },

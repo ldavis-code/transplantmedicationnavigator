@@ -1193,6 +1193,14 @@
     }
   },
   "layout": {
+    "notFound": {
+      "title": "Página no encontrada",
+      "text": "No pudimos encontrar la página que busca. Puede que se haya movido o que ya no exista.",
+      "goHome": "Ir al inicio",
+      "goHomeAria": "Volver a la página de inicio",
+      "startPath": "Comenzar el cuestionario Mi Camino",
+      "startPathAria": "Comenzar el cuestionario de asistencia con medicamentos"
+    },
     "banner": {
       "text": "Los Programas de Asistencia al Paciente dan medicamentos GRATIS a quienes califican; solicitar nunca cuesta nada. Nosotros le ayudamos a encontrarlos."
     },
