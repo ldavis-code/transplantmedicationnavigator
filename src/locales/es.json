@@ -41,7 +41,7 @@
       "directory": "Directorio",
       "insurance": "Seguros",
       "mental": "Salud mental",
-      "oop": "Máximo de bolsillo"
+      "oop": "Entienda los costos"
     },
     "emergency": {
       "title": "¿Se le acabó el medicamento o está por acabarse?",
@@ -201,7 +201,7 @@
         "specialtyDef": "Medicinas caras que necesitan un manejo o control especial. La mayoría de las medicinas de trasplante son medicamentos especializados. Suelen costar $600 o más al mes.",
         "partDTerm": "Medicare Parte D",
         "partDDef": "La parte de Medicare que ayuda a pagar las medicinas recetadas. Debe inscribirse en ella por separado.",
-        "oopCapTerm": "Tope anual de gastos de bolsillo",
+        "oopCapTerm": "Límite anual de gastos de bolsillo (Parte D)",
         "oopCapDef": "Un límite anual de lo que usted paga de su bolsillo por los medicamentos de Medicare Parte D. En 2026 el tope es de $2,100. Cuando lo alcanza, paga $0 por los medicamentos cubiertos el resto del año.",
         "catastrophicTerm": "Cobertura catastrófica",
         "catastrophicDef": "Después de alcanzar el límite anual de la Parte D ($2,100 en 2026), Medicare paga el 100% y usted paga $0 por los medicamentos cubiertos el resto del año.",
@@ -237,7 +237,7 @@
         "askItems": [
           "¿En qué nivel están mis medicinas de trasplante?",
           "¿De cuánto es mi deducible?",
-          "¿Cuándo alcanzo mi límite de gasto anual?",
+          "¿Cuándo alcanzo mi máximo de gastos de bolsillo (mi límite del año)?",
           "¿Están mis medicinas en la lista de medicinas cubiertas?",
           "¿Puedo usar el pedido por correo para ahorrar dinero?"
         ]
@@ -428,7 +428,7 @@
       },
       "takeaways": {
         "title": "Puntos clave",
-        "t1Bold": "Su meta cada año es llegar a su límite de gasto anual (lo máximo que paga cada año).",
+        "t1Bold": "Su meta cada año es llegar a su máximo de gastos de bolsillo (lo máximo que paga cada año).",
         "t1Rest": "Cuando lo alcanza, el seguro paga el 100% por el resto del año.",
         "t2Bold": "Las tarjetas de descuento hacen que sus pagos no cuenten para esta meta.",
         "t2Rest": "Pueden ahorrarle unos dólares por medicina, pero costarle miles durante el año.",
@@ -1206,13 +1206,13 @@
       "mobileAriaLabel": "Navegación móvil",
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú",
-      "simpleView": "Vista Simple",
+      "simpleView": "Vista simple",
       "links": {
         "home": { "label": "Inicio", "ariaLabel": "Ir a la página de inicio" },
         "wizard": { "label": "Cuestionario Mi Camino", "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos" },
-        "education": { "label": "Educación y Recursos", "ariaLabel": "Explorar educación y recursos" },
-        "applicationHelp": { "label": "Ayudas y Fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
-        "savingsTracker": { "label": "Calculadora de Ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
+        "education": { "label": "Educación y recursos", "ariaLabel": "Explorar educación y recursos" },
+        "applicationHelp": { "label": "Ayudas y fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
+        "savingsTracker": { "label": "Calculadora de ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
         "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
         "pricing": { "label": "Precios", "ariaLabel": "Ver información de precios" },
         "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
@@ -1226,17 +1226,17 @@
       "copyright": "© 2026 Transplant Medication Navigator™. Todos los derechos reservados.",
       "createdBy": "Creado por Lorrinda Gray-Davis. Fundado en agosto de 2025",
       "nondiscrimination": {
-        "label": "Aviso de No Discriminación:",
+        "label": "Aviso de no discriminación:",
         "text": " Conforme a la Sección 504 de la Ley de Rehabilitación de 1973 (Rehabilitation Act of 1973), TransplantNav LLC no discrimina por motivos de discapacidad.",
-        "link": "Aviso de la Sección 504 y Procedimiento de Quejas"
+        "link": "Aviso de la Sección 504 y procedimiento de quejas"
       },
       "links": {
         "terms": "Términos del Servicio",
-        "privacy": "Política de Privacidad",
+        "privacy": "Política de privacidad",
         "accessibility": "Accesibilidad y Sección 504",
         "feedback": "Comentarios",
         "hospitals": "Hospitales",
-        "evidence": "La Evidencia",
+        "evidence": "La evidencia",
         "admin": "Admin",
         "privacyChoices": "Opciones de privacidad"
       }
@@ -1260,12 +1260,12 @@
       "deniedTitle": "¿Se lo negaron?",
       "deniedSubtitle": "Ayuda con terapia escalonada, autorización previa y apelaciones",
       "grantsAriaLabel": "Encontrar ayudas económicas y fundaciones",
-      "grantsButton": "Encontrar Ayudas y Fundaciones"
+      "grantsButton": "Encontrar Ayudas y fundaciones"
     },
     "stats": {
       "medications": "Medicamentos",
-      "assistancePrograms": "Programas de Asistencia",
-      "copayCards": "Tarjetas de Copago"
+      "assistancePrograms": "Programas de asistencia",
+      "copayCards": "Tarjetas de copago"
     },
     "mychart": {
       "ariaLabel": "Conecte su MyChart para importar su lista de medicamentos",
@@ -1278,26 +1278,26 @@
     "features": {
       "ariaLabel": "Funciones principales",
       "learn": {
-        "title": "Aprenda el Proceso",
+        "title": "Aprenda el proceso",
         "text": "Aprenda a llenar por su cuenta las solicitudes del Programa de Asistencia al Paciente (PAP), gratis.",
         "linkAriaLabel": "Ver la guía de solicitud",
-        "link": "Ver la Guía"
+        "link": "Ver la guía"
       },
       "coverage": {
-        "title": "Educación sobre Cobertura",
+        "title": "Educación sobre cobertura",
         "text": "Aprenda sobre el seguro, Medicare (incluida la Part B-ID para pacientes de riñón), Medicaid y los beneficios de IHS.",
         "linkAriaLabel": "Aprenda sobre las opciones de cobertura",
-        "link": "Aprenda sobre la Cobertura"
+        "link": "Aprenda sobre la cobertura"
       },
       "resources": {
-        "title": "Educación y Recursos",
+        "title": "Educación y recursos",
         "text": "Enlaces directos y seguros a programas de fabricantes, fundaciones y sitios del gobierno. Sin estafas.",
         "linkAriaLabel": "Explorar los recursos disponibles",
-        "link": "Explorar Recursos"
+        "link": "Explorar recursos"
       }
     },
     "story": {
-      "badge": "Historia Real de un Paciente",
+      "badge": "Historia real de un paciente",
       "quotePre": "\"Mi receta costaba ",
       "price1": "$624",
       "quoteMid1": ". Con el seguro bajó a ",
@@ -1323,26 +1323,26 @@
     },
     "mission": {
       "badge": "Creado por un paciente, para pacientes.",
-      "missionTitle": "Nuestra Misión",
+      "missionTitle": "Nuestra misión",
       "missionText": "Ayudamos a los pacientes de trasplante a conseguir la medicina que necesitan. Le mostramos cómo encontrar ayuda para pagar su medicina. Le damos información clara y honesta.",
-      "visionTitle": "Nuestra Visión",
+      "visionTitle": "Nuestra visión",
       "visionText": "Cada paciente de trasplante merece una oportunidad justa. Usted no debería perder su salud porque la medicina cuesta demasiado.",
-      "whyTitle": "Por Qué Creamos Esto",
-      "why1Title": "Fácil de Entender",
+      "whyTitle": "Por qué creamos esto",
+      "why1Title": "Fácil de entender",
       "why1Text": "Convertimos los formularios difíciles en pasos sencillos, para que no necesite un título universitario para conseguir ayuda con su medicina.",
-      "why2Title": "Un Lugar Seguro",
+      "why2Title": "Un lugar seguro",
       "why2Text": "Estamos de su lado. No vendemos su información. No trabajamos para ninguna farmacia. Le ayudamos a protegerse de las personas que quieren engañarlo.",
-      "why3Title": "Ahorre Dinero",
+      "why3Title": "Ahorre dinero",
       "why3Text": "Le mostramos precios y programas de medicina gratis, todo en un solo lugar. Usted puede elegir lo que mejor le funcione."
     },
     "quizCta": {
       "ariaLabel": "Comience su camino personalizado de medicamentos",
-      "button": "Comenzar el cuestionario Mi Camino de Medicamentos",
+      "button": "Comenzar el cuestionario Mi Camino de medicamentos",
       "text": "Haga nuestro cuestionario gratis para ver cómo podemos ayudarle. Fundado por un paciente. El paciente primero."
     },
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
-      "title": "Creado por Alguien Que Ya Pasó por Esto",
+      "title": "Creado por alguien que ya pasó por esto",
       "name": "Lorrinda Gray-Davis",
       "role": "Receptora de un trasplante de hígado · Presidenta de TRIO · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
       "bio": "Lorrinda creó esta herramienta desde su propia experiencia. Desde marzo de 2020 dirige un programa diario de apoyo entre pares para pacientes de trasplante y cuidadores: ha apoyado a más de 550 personas, y más de 190 han recibido su trasplante, con resultados publicados en revistas médicas revisadas por pares.",
@@ -1352,28 +1352,28 @@
       "link": "Lea la historia completa y la investigación de Lorrinda"
     },
     "hotline": {
-      "title": "¿Necesita Hablar con Alguien?",
+      "title": "¿Necesita hablar con alguien?",
       "intro": "Ser paciente de trasplante puede ser duro para sus emociones. Puede recibir ayuda gratis y privada a cualquier hora, de día o de noche.",
       "lifeline": "Línea Nacional de Prevención del Suicidio y Crisis",
       "availability": "24/7 • Confidencial",
       "encouragement": "Pedir ayuda es señal de fortaleza, no de debilidad. La vida después de un trasplante es dura para su cuerpo y sus emociones. Cuidar cómo se siente es tan importante como tomar su medicina. ¿Está pasando por un momento difícil? Por favor, busque ayuda. Queremos ayudarle.",
       "callTitle": "Llame o envíe un mensaje de texto",
       "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono",
-      "chatTitle": "Chat en Línea"
+      "chatTitle": "Chat en línea"
     },
     "privacy": {
-      "title": "Protegemos Su Información",
+      "title": "Protegemos su información",
       "text": "No guardamos su información. No le pedimos su número de seguro social. No vendemos su información. Esta herramienta solo existe para enseñarle sobre sus opciones."
     },
     "tagline": "Creado para pacientes por un paciente"
   },
   "evidence": {
     "hero": {
-      "title": "La Evidencia: Por Qué Importa la Navegación de Medicamentos y Finanzas",
+      "title": "La evidencia: por qué importa la navegación de medicamentos y finanzas",
       "intro": "Nuevas investigaciones revisadas por expertos confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
     },
     "burden": {
-      "title": "1 de Cada 4 Candidatos a Trasplante de Hígado Enfrenta una Alta Carga Financiera",
+      "title": "1 de cada 4 candidatos a trasplante de hígado enfrenta una alta carga financiera",
       "intro": "Un estudio multicéntrico de EE. UU. de 2026, publicado en <em>Hepatology Communications</em> — que abarcó más de una docena de centros de trasplante, incluyendo Massachusetts General Hospital, University of Minnesota, USC, Duke y Montefiore Einstein — encuestó a 453 adultos en evaluación para trasplante de hígado. Los hallazgos fueron contundentes:",
       "stat1": "reportó una alta carga financiera: costos médicos de bolsillo del 10% o más del ingreso del hogar",
       "stat2": "seguían con empleo al momento de la evaluación del trasplante",
@@ -1383,11 +1383,11 @@
       "stat6": "enfrentaron deuda médica o bancarrota"
     },
     "odds": {
-      "title": "La Carga Financiera Predice Angustia en Todas las Dimensiones",
+      "title": "La carga financiera predice angustia en todas las dimensiones",
       "intro": "La carga financiera no es un tema secundario. Después de ajustar por edad, ingresos, seguro, gravedad de la enfermedad y otros factores, los pacientes con alta carga financiera tuvieron probabilidades mucho mayores de sufrir daño:",
       "caption": "Probabilidades ajustadas de angustia financiera para candidatos a trasplante de hígado con carga alta vs. baja",
       "colOutcome": "Resultado",
-      "colOdds": "Probabilidades Ajustadas",
+      "colOdds": "Probabilidades ajustadas",
       "colOddsQualifier": " (carga alta vs. baja)",
       "row1": "Problemas para pagar cuentas médicas",
       "row2": "Pérdida de ahorros o bienes",
@@ -1399,7 +1399,7 @@
       "work": "La carga financiera también llegó al trabajo: los pacientes empleados con alta carga financiera faltaron al trabajo el doble que sus pares con carga baja (34.1% vs. 16.9% de ausentismo). Para los candidatos a trasplante, el empleo no es un detalle menor: a menudo es la fuente del seguro y de los ingresos de los que depende la candidatura."
     },
     "graft": {
-      "title": "Después del Trasplante, la Carga No Termina — Amenaza el Órgano Trasplantado",
+      "title": "Después del trasplante, la carga no termina — amenaza el órgano trasplantado",
       "intro": "La encuesta de pacientes más grande jamás encargada por la American Society of Transplantation, publicada en el <em>American Journal of Transplantation</em> en 2025, reunió 10,091 respuestas de receptores de trasplante en 232 centros de trasplante de EE. UU. — abarcando todos los órganos, todas las edades y todos los tipos de seguro, con un promedio de 6.6 años después del trasplante. Sus hallazgos sobre costos deberían alarmar a todo programa de trasplante:",
       "stat1Value": "~40%",
       "stat1Label": "de los receptores dejó de surtir o resurtir un medicamento en el último año debido al costo",
@@ -1409,12 +1409,12 @@
       "p2": "Leídos en conjunto, los dos estudios describen un solo camino: la carga financiera que aparece durante la evaluación del trasplante no se resuelve después de la cirugía — se convierte en falta de adherencia por costos que pone en riesgo el órgano trasplantado, años después."
     },
     "gap": {
-      "title": "Lo Que Recomiendan los Investigadores — y Dónde Falla el Sistema",
+      "title": "Lo que recomiendan los investigadores — y dónde falla el sistema",
       "quote": "Los autores del estudio concluyen que <strong>la detección rutinaria de la carga financiera es crítica en los candidatos a trasplante de hígado y debe acompañarse de estrategias específicas para reducir su impacto.</strong>",
       "text": "Esa segunda mitad es la brecha. La detección le dice a un programa de trasplante <em>cuáles</em> pacientes se están ahogando. No les lanza una cuerda. Un paciente identificado con carga alta todavía enfrenta un laberinto fragmentado de programas de fabricantes, fundaciones, reglas de seguros y papeleo — el mismo laberinto que hizo que el 66% de los pacientes con carga alta retrasaran o dejaran de buscar atención."
     },
     "tmn": {
-      "title": "Transplant Medication Navigator Es la Estrategia Específica",
+      "title": "Transplant Medication Navigator es la estrategia específica",
       "intro": "TMN fue creado para ser la intervención que la investigación pide: el paso entre identificar la carga financiera y resolverla.",
       "s1Title": "Integrado donde ocurre la atención",
       "s1Text": "TMN es una aplicación SMART on FHIR listada en el Epic Connection Hub, con más de 500 descargas de organizaciones, para que la navegación viva dentro del propio flujo de trabajo del centro de trasplante.",
@@ -1426,13 +1426,13 @@
       "s4Text": "Creado por una receptora de trasplante de hígado y defensora nacional de pacientes — diseñado según cómo los pacientes realmente encuentran estas barreras, no como el sistema supone que lo hacen."
     },
     "whyNow": {
-      "title": "Por Qué Esto Importa a los Programas de Trasplante Ahora",
+      "title": "Por qué esto importa a los programas de trasplante ahora",
       "p1": "La rendición de cuentas basada en valor está llegando al trasplante. El modelo IOTA de CMS ahora vincula el pago de los programas de trasplante de riñón al volumen de trasplantes y a los resultados después del trasplante — y la dirección es clara para todos los órganos. Esta investigación muestra que la carga financiera provoca atención retrasada, ausencias en el trabajo y angustia psicológica: precisamente las fuerzas que erosionan la candidatura, la adherencia y la supervivencia del órgano trasplantado.",
       "p2": "Los programas que detectan la carga financiera sin una respuesta operativa están documentando el riesgo, no manejándolo.",
       "scopeLabel": "Una nota sobre el alcance:",
       "scopeText": " el estudio de carga financiera examinó específicamente a candidatos a trasplante de hígado, por lo que sus cifras exactas no deben asumirse idénticas para otros órganos. La encuesta de la AST, sin embargo, abarcó todos los tipos de órganos sólidos — y su hallazgo de que el costo provoca resurtidos perdidos y dosis omitidas en aproximadamente 4 de cada 10 receptores confirma que el problema abarca todo el trasplante, no un solo órgano.",
-      "ctaPrograms": "Vea la Solución para Programas de Trasplante",
-      "ctaBriefing": "Solicite una Sesión sobre la Evidencia"
+      "ctaPrograms": "Vea la solución para programas de trasplante",
+      "ctaBriefing": "Solicite una sesión sobre la evidencia"
     },
     "patient": {
       "title": "¿Usted enfrenta estos costos?",
@@ -1449,7 +1449,7 @@
   "wizard": {
     "progress": {
       "labels": [
-        "Sobre Usted",
+        "Sobre usted",
         "Trasplante",
         "Medicamentos",
         "Cobertura",
@@ -1460,7 +1460,7 @@
     "nav": {
       "back": "Atrás",
       "backAria": "Volver a la sección anterior",
-      "nextSection": "Siguiente Sección",
+      "nextSection": "Siguiente sección",
       "nextAria": "Continuar a la siguiente sección"
     },
     "organs": {
@@ -1473,15 +1473,15 @@
       "Other": "Otro"
     },
     "aboutYou": {
-      "title": "Sobre Usted",
+      "title": "Sobre usted",
       "intro": "Empecemos con algunos datos básicos para personalizar su experiencia.",
       "note": "<strong>Nota:</strong> Esta herramienta ofrece información educativa para ayudarle a conocer sus opciones de asistencia con los medicamentos. No reemplaza el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su afección médica o su tratamiento.",
       "roleBadge": "1a",
       "roleQuestion": "¿A quién estoy ayudando hoy?",
       "roleAria": "Seleccione su rol",
       "rolePatient": "Paciente",
-      "roleCarepartner": "Cuidador / Familiar",
-      "roleSocialWorker": "Trabajador Social / Coordinador",
+      "roleCarepartner": "Cuidador / familiar",
+      "roleSocialWorker": "Trabajador social / coordinador",
       "statusBadge": "1b",
       "statusQuestion": "¿En qué parte del proceso de trasplante se encuentra?",
       "statusAria": "Seleccione su etapa del trasplante",
@@ -1490,12 +1490,12 @@
       "statusPostStable": "Después del trasplante (Más de 1 año)"
     },
     "transplant": {
-      "title": "Su Trasplante",
+      "title": "Su trasplante",
       "intro": "Seleccione su tipo de órgano; puede elegir más de uno.",
       "groupAria": "Seleccione los tipos de órgano"
     },
     "meds": {
-      "title": "Sus Medicamentos",
+      "title": "Sus medicamentos",
       "intro": "Conéctese a su sistema de salud para traer su lista de medicamentos.",
       "selectedHeading": "Sus Medicamentos Seleccionados ({{count}})",
       "removeAria": "Quitar {{name}}",
@@ -1510,11 +1510,11 @@
       "added": "Agregado",
       "add": "Agregar",
       "noResults": "No se encontraron medicamentos. Pruebe otra forma de escribirlo o revise la lista de abajo.",
-      "medicalInfoTitle": "Información Médica Importante",
+      "medicalInfoTitle": "Información médica importante",
       "medicalInfoText": "Tomar sus medicamentos de por vida es esencial para el éxito del trasplante. Consulte siempre a su equipo de trasplante antes de cambiar sus medicamentos o agregar uno nuevo, incluidas las medicinas sin receta y los suplementos.",
       "continueButton": "Mis medicamentos se ven bien, continuar →",
       "guide": {
-        "title": "Medicamentos Comunes por Tipo de Órgano",
+        "title": "Medicamentos comunes por tipo de órgano",
         "basedOnPre": "Según su trasplante de ",
         "and": " y ",
         "basedOnPost": ", hemos filtrado los medicamentos más comunes.",
@@ -1531,16 +1531,16 @@
         "removeFromListAria": "Quitar {{name}} de su lista"
       },
       "preGuide": {
-        "title": "Medicamentos Comunes Antes del Trasplante por Tipo de Órgano",
+        "title": "Medicamentos comunes antes del trasplante por tipo de órgano",
         "intro": "Haga clic en un tipo de órgano para ver los medicamentos típicos que se usan antes del trasplante para manejar su condición mientras espera el trasplante.",
-        "thClass": "Clase de Medicamento",
+        "thClass": "Clase de medicamento",
         "thExamples": "Ejemplos",
         "thPurpose": "Propósito",
         "addedAria": "{{name}} agregado a su lista"
       }
     },
     "coverage": {
-      "title": "Su Cobertura",
+      "title": "Su cobertura",
       "tip": "¡Tener seguro no significa que no pueda recibir ayuda adicional!",
       "insuranceBadge": "3a",
       "insuranceQuestion": "¿Qué tipo de seguro médico (plan médico) tiene?",
@@ -1572,7 +1572,7 @@
       "notSure": "No estoy seguro"
     },
     "costs": {
-      "title": "Sus Costos",
+      "title": "Sus costos",
       "intro": "¿Cómo describiría los costos actuales de sus medicamentos?",
       "note": "Esto nos ayuda a priorizar los mejores programas de asistencia para usted. Su respuesta es anónima y nunca se vincula con usted.",
       "groupAria": "Seleccione su situación económica",
@@ -1587,31 +1587,31 @@
     },
     "results": {
       "backAria": "Volver al paso anterior",
-      "title": "Su Estrategia de Medicamentos",
+      "title": "Su estrategia de medicamentos",
       "subtitle": "Según sus respuestas, así puede manejar sus costos.",
       "printAria": "Imprimir su plan de medicamentos",
-      "printButton": "Imprimir el Plan",
+      "printButton": "Imprimir el plan",
       "medicareAlert": {
         "title": "Importante: Medicare Part B-ID",
         "text": "Como usted recibió un trasplante de riñón y tiene Medicare, puede calificar para <strong>Medicare Part B-ID</strong>. Este beneficio cubre los medicamentos inmunosupresores de por vida. En 2026 cuesta <strong>$121.60 al mes</strong> (la prima). Además, cada año usted paga los primeros $283 (el deducible) y después el 20% del costo de cada medicamento; Medicare paga el resto.",
         "cta": "Revise si Califica en Medicare.gov"
       },
-      "medListTitle": "Su Lista de Medicamentos",
+      "medListTitle": "Su lista de medicamentos",
       "addMoreLabel": "Agregar más medicamentos",
       "addMorePlaceholder": "Agregar más medicamentos...",
       "noResults": "No se encontraron medicamentos",
       "viewPricesAria": "Ver precios estimados de sus medicamentos seleccionados",
-      "viewPricesButton": "Ver Precios Estimados de Estos Medicamentos",
-      "toolsTitle": "Herramientas Útiles",
+      "viewPricesButton": "Ver precios estimados de estos medicamentos",
+      "toolsTitle": "Herramientas útiles",
       "toolsIntro": "Cuando haya identificado el programa que necesita (PAP o fundación), use nuestra guía para ayudarle a presentar la solicitud.",
       "appEducationAria": "Ver la guía de educación sobre solicitudes",
-      "appEducationTitle": "Educación sobre Solicitudes",
+      "appEducationTitle": "Educación sobre solicitudes",
       "appEducationDesc": "Guiones, listas de verificación y modelos",
       "insuranceAria": "Ver seguro y recursos",
-      "insuranceTitle": "Seguro y Recursos",
+      "insuranceTitle": "Seguro y recursos",
       "insuranceDesc": "Directorio de Medicaid, guías de Medicare",
       "manageable": {
-        "title": "Aproveche al Máximo Sus Ahorros",
+        "title": "Aproveche al máximo sus ahorros",
         "priorityBadge": "Prioridad",
         "priorityAria": "Recomendación prioritaria",
         "copayPre": "Use las tarjetas de ",
@@ -1632,7 +1632,7 @@
         "tipPost": " según sus ingresos, incluso si ahora los costos le parecen manejables."
       },
       "challenging": {
-        "title": "Reduzca Su Carga",
+        "title": "Reduzca su carga",
         "step1Badge": "Paso 1",
         "step1Aria": "Paso uno",
         "papTitle": "Revise los PAP de los fabricantes.",
@@ -1649,7 +1649,7 @@
         "cashText": "A veces el precio en efectivo (p. ej., Cost Plus Drugs) es más barato que el copago de su seguro."
       },
       "crisis": {
-        "title": "Camino de Asistencia Inmediata",
+        "title": "Camino de asistencia inmediata",
         "emergencyLink": "¿Se quedó sin medicamento o le quedan solo unos días? Vea los pasos de emergencia →",
         "notAlone": "Usted no está solo. Hay ayuda disponible. Por favor, siga estos pasos en orden.",
         "papTitle": "PAP de los fabricantes (medicamento gratis).",
@@ -1671,7 +1671,7 @@
         "appealPost": ".",
         "getHelpLink": "Obtenga ayuda paso a paso para solicitar →"
       },
-      "restart": "Reiniciar el Cuestionario",
+      "restart": "Reiniciar el cuestionario",
       "restartAria": "Reiniciar el cuestionario desde el principio"
     },
     "email": {
@@ -1686,7 +1686,7 @@
       "description": "Aprenda cómo apelar las denegaciones del seguro para medicamentos de trasplante. Incluye excepciones a la terapia escalonada, guía sobre genéricos y de marca, y modelos de cartas de necesidad médica."
     },
     "header": {
-      "back": "Volver a Educación y Recursos",
+      "back": "Volver a Educación y recursos",
       "title": "¿Le negaron? No se rinda.",
       "tagline": "¡Usted puede defenderse y GANAR!",
       "intro": "El seguro le dice \"no\" a casi todo el mundo en algún momento. ¿La buena noticia? <strong>Muchas personas ganan cuando apelan.</strong> Esta guía interactiva le muestra cómo hacerlo, paso a paso.",
@@ -1841,11 +1841,11 @@
       "medicationName": "Nombre del medicamento",
       "medicationNamePlaceholder": "p. ej., Tacrolimus, Prograf",
       "transplantType": "Tipo de trasplante",
-      "transplantTypePlaceholder": "p. ej., Riñón, Hígado, Corazón",
+      "transplantTypePlaceholder": "p. ej., riñón, hígado, corazón",
       "transplantDate": "Fecha del trasplante ",
       "transplantDatePlaceholder": "p. ej., enero de 2023",
       "denialReason": "Motivo de la denegación ",
-      "denialReasonPlaceholder": "p. ej., No está en el formulario, Exigen terapia escalonada",
+      "denialReasonPlaceholder": "p. ej., no está en el formulario, exigen terapia escalonada",
       "additionalInfo": "Información adicional ",
       "additionalInfoPlaceholder": "Cualquier otro detalle que pueda ayudar a su médico (p. ej., reacciones previas a medicamentos, por qué necesita este medicamento específico, etc.)",
       "optional": "(opcional)",
