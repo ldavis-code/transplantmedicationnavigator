@@ -269,7 +269,7 @@
       },
       {
         "q": "¿Hay un límite anual en lo que pago por los medicamentos de Medicare?",
-        "a": "Sí. A partir de 2026, hay un **tope anual de $2,100** en lo que usted paga de su bolsillo por los medicamentos recetados de la Parte D.\n\n**Es bueno saber:**\n• Cuando llega al tope, paga $0 por los medicamentos cubiertos el resto del año\n• Puede llegar al tope temprano en el año, así que haga un presupuesto para eso\n• Solicite Extra Help si sus ingresos son bajos\n• Solicite a las fundaciones de copago temprano, antes de que se agoten los fondos\n• Revise su plan de Medicare cada otoño durante la Inscripción Abierta"
+        "a": "Sí. A partir de 2026, hay un **límite anual de $2,100** en lo que usted paga de su bolsillo por los medicamentos recetados de la Parte D.\n\n**Es bueno saber:**\n• Cuando llega al tope, paga $0 por los medicamentos cubiertos el resto del año\n• Puede llegar al tope temprano en el año, así que haga un presupuesto para eso\n• Solicite Extra Help si sus ingresos son bajos\n• Solicite a las fundaciones de copago temprano, antes de que se agoten los fondos\n• Revise su plan de Medicare cada otoño durante la Inscripción Abierta"
       },
       {
         "q": "Estoy por cumplir 26 años y voy a perder el seguro de mis padres. ¿Cuáles son mis opciones?",
@@ -293,7 +293,7 @@
       },
       {
         "q": "¿Cómo manejo los efectos secundarios de mis medicamentos?",
-        "a": "Los medicamentos antirrechazo tienen efectos secundarios. Estos son los más comunes y qué hacer:\n\n**Tacrolimus:**\n• Temblor en las manos - Avise a su equipo. Limite la cafeína.\n• Dolores de cabeza - Tome suficiente agua. Pregunte qué medicina para el dolor es segura.\n• Azúcar alta en la sangre - Revise sus niveles con frecuencia.\n\n**Mycophenolate (CellCept):**\n• Malestar de estómago, náuseas, diarrea - Tómelo con comida. Avise a su equipo si se siente mal.\n\n**Prednisone:**\n• Aumento de peso, cambios de humor, problemas para dormir - Suele mejorar cuando baja la dosis.\n\n**Importante:** Nunca deje de tomar ni cambie sus medicamentos por su cuenta. Hable primero con su equipo de trasplante."
+        "a": "Los medicamentos antirrechazo tienen efectos secundarios. Estos son los más comunes y qué hacer:\n\n**Tacrolimus:**\n• Temblor en las manos - Avise a su equipo. Limite la cafeína.\n• Dolores de cabeza - Tome suficiente agua. Pregunte qué medicina para el dolor es segura.\n• Azúcar alta en la sangre - Revise sus niveles con frecuencia.\n\n**Mycophenolate (CellCept):**\n• Malestar de estómago, náuseas, diarrea - Tómelo con comida. Avise a su equipo si se siente mal.\n\n**Prednisone (prednisona):**\n• Aumento de peso, cambios de humor, problemas para dormir - Suele mejorar cuando baja la dosis.\n\n**Importante:** Nunca deje de tomar ni cambie sus medicamentos por su cuenta. Hable primero con su equipo de trasplante."
       },
       {
         "q": "¿Las necesidades de medicamentos son diferentes para cada tipo de órgano?",
@@ -306,23 +306,23 @@
     "questions": [
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de corazón?",
-        "a": "Las personas con trasplante de corazón normalmente reciben una combinación de tres tipos de medicamentos:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine)**\n• Base del tratamiento de mantenimiento\n• Evita que su sistema inmunológico ataque el corazón nuevo\n\n**Antimetabolito (Mycophenolate Mofetil o Azathioprine)**\n• Se usa en combinación con el inhibidor de calcineurina\n• Da supresión inmunológica adicional\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo\n• Ayuda a controlar la inflamación"
+        "a": "Las personas con trasplante de corazón normalmente reciben una combinación de tres tipos de medicamentos:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine (ciclosporina))**\n• Base del tratamiento de mantenimiento\n• Evita que su sistema inmunológico ataque el corazón nuevo\n\n**Antimetabolito (Mycophenolate Mofetil (micofenolato) o Azathioprine (azatioprina))**\n• Se usa en combinación con el inhibidor de calcineurina\n• Da supresión inmunológica adicional\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo\n• Ayuda a controlar la inflamación"
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de riñón?",
-        "a": "La inmunosupresión en el trasplante de riñón es parecida a la del corazón, con enfoque en equilibrar la eficacia y reducir los efectos secundarios:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine)**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil o Mycophenolic Acid)**\n• Se usa comúnmente en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Muchos centros buscan tratamientos sin esteroides para reducir los efectos secundarios a largo plazo\n\n**Belatacept (Nulojix)**\n• Una alternativa biológica a los inhibidores de calcineurina para ciertos pacientes"
+        "a": "La inmunosupresión en el trasplante de riñón es parecida a la del corazón, con enfoque en equilibrar la eficacia y reducir los efectos secundarios:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine (ciclosporina))**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil o Mycophenolic Acid (micofenolato))**\n• Se usa comúnmente en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Muchos centros buscan tratamientos sin esteroides para reducir los efectos secundarios a largo plazo\n\n**Belatacept (Nulojix)**\n• Una alternativa biológica a los inhibidores de calcineurina para ciertos pacientes"
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de hígado?",
-        "a": "Los pacientes de trasplante de hígado suelen necesitar niveles más bajos de inmunosupresión que otros pacientes, por las propiedades inmunológicas únicas del hígado:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI más usado en el trasplante de hígado\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Muchas veces se usa en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Normalmente se reduce y se suspende en los primeros meses después del trasplante"
+        "a": "Los pacientes de trasplante de hígado suelen necesitar niveles más bajos de inmunosupresión que otros pacientes, por las propiedades inmunológicas únicas del hígado:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI más usado en el trasplante de hígado\n\n**Antimetabolito (Mycophenolate Mofetil — micofenolato)**\n• Muchas veces se usa en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Normalmente se reduce y se suspende en los primeros meses después del trasplante"
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de pulmón?",
-        "a": "Las personas con trasplante de pulmón tienen un riesgo alto de rechazo, y sus tratamientos inmunosupresores suelen ser más intensivos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI preferido para pacientes de trasplante de pulmón\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Se mantiene en una dosis baja a largo plazo\n\nLos pacientes de trasplante de pulmón normalmente necesitan la inmunosupresión más intensiva por el mayor riesgo de rechazo."
+        "a": "Las personas con trasplante de pulmón tienen un riesgo alto de rechazo, y sus tratamientos inmunosupresores suelen ser más intensivos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• El CNI preferido para pacientes de trasplante de pulmón\n\n**Antimetabolito (Mycophenolate Mofetil — micofenolato)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Se mantiene en una dosis baja a largo plazo\n\nLos pacientes de trasplante de pulmón normalmente necesitan la inmunosupresión más intensiva por el mayor riesgo de rechazo."
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de páncreas?",
-        "a": "La inmunosupresión en el trasplante de páncreas es parecida a la del riñón, ya que los dos muchas veces se hacen juntos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo"
+        "a": "La inmunosupresión en el trasplante de páncreas es parecida a la del riñón, ya que los dos muchas veces se hacen juntos:\n\n**Inhibidor de calcineurina (Tacrolimus)**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil — micofenolato)**\n• Se usa en combinación con tacrolimus\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo"
       },
       {
         "q": "Importante: ¿Qué debo saber sobre el manejo de mis medicamentos de trasplante?",
