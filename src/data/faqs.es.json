@@ -37,7 +37,7 @@
       },
       {
         "q": "¿Cómo solicito un PAP?",
-        "a": "Cada programa es diferente. Por lo general necesita:\n• Su información básica (nombre, dirección)\n• Prueba de ingresos (formularios de impuestos o talones de pago)\n• Un formulario firmado por su doctor\n\nNuestro sitio le muestra dónde solicitar."
+        "a": "Cada programa es diferente. Por lo general necesita:\n• Su información básica (nombre, dirección)\n• Prueba de ingresos (declaración de impuestos (la 'planilla') o talones de pago)\n• Un formulario firmado por su doctor\n\nNuestro sitio le muestra dónde solicitar."
       },
       {
         "q": "¿Cuál es la diferencia entre los PAP y las tarjetas de copago?",
@@ -45,7 +45,7 @@
       },
       {
         "q": "¿Puedo usar un PAP si tengo Medicare?",
-        "a": "La mayoría de los PAP NO ayudan a pacientes con Medicare. Esto se debe a una ley federal.\n\nPero los pacientes con Medicare SÍ pueden recibir ayuda de:\n• Fundaciones de copago (grupos sin fines de lucro)\n• Medicare Extra Help (\"Ayuda Adicional\"), un programa del gobierno\n• Programas estatales de medicamentos"
+        "a": "Muchos PAP SÍ aceptan a pacientes con Medicare que cumplen los límites de ingresos: así se consigue la medicina gratis directamente del fabricante. Lo que la ley federal NO permite usar con Medicare son las tarjetas de copago.\n\nLos pacientes con Medicare también pueden recibir ayuda de:\n• Fundaciones de copago (grupos sin fines de lucro)\n• Medicare Extra Help (\"Ayuda Adicional\"), un programa del gobierno\n• Programas estatales de medicamentos"
       },
       {
         "q": "¿Tengo que renovar mi PAP cada año?",
@@ -62,7 +62,7 @@
       },
       {
         "q": "¿Cuál es la diferencia entre una fundación y un PAP?",
-        "a": "**Las fundaciones** son grupos sin fines de lucro. SÍ pueden ayudar a pacientes con Medicare.\n\n**Los PAP** los manejan las compañías farmacéuticas. Muchas veces NO pueden ayudar a pacientes con Medicare, pero pueden darle medicina gratis."
+        "a": "**Las fundaciones** son grupos sin fines de lucro. SÍ pueden ayudar a pacientes con Medicare.\n\n**Los PAP** los manejan las compañías farmacéuticas. Muchos SÍ aceptan a pacientes con Medicare que cumplen los límites de ingresos, y dan la medicina gratis."
       },
       {
         "q": "¿Cómo sé si una fundación es real?",
@@ -79,11 +79,11 @@
     "questions": [
       {
         "q": "¿Qué es una tarjeta de copago?",
-        "a": "Las tarjetas de copago (también llamadas tarjetas de asistencia de copago o cupones del fabricante) son programas de las compañías farmacéuticas que reducen o eliminan lo que usted paga de su bolsillo por medicamentos de marca.\n\n**Quién puede usarlas:**\n• Solo pacientes con seguro comercial (privado)\n• NO están disponibles para Medicare, Medicaid, Tricare ni beneficios del VA\n\nLas tarjetas de copago son diferentes de las fundaciones de copago. Las tarjetas de copago vienen de las compañías farmacéuticas y solo funcionan con seguro privado. Las fundaciones de copago son organizaciones sin fines de lucro que SÍ pueden ayudar a pacientes con Medicare."
+        "a": "Las tarjetas de copago (también llamadas tarjetas de asistencia de copago o cupones del fabricante) son programas de las compañías farmacéuticas que reducen o eliminan lo que usted paga de su bolsillo por medicamentos de marca.\n\n**Quién puede usarlas:**\n• Solo pacientes con seguro comercial (privado)\n• NO están disponibles para Medicare, Medicaid, TRICARE ni beneficios del VA\n\nLas tarjetas de copago son diferentes de las fundaciones de copago. Las tarjetas de copago vienen de las compañías farmacéuticas y solo funcionan con seguro privado. Las fundaciones de copago son organizaciones sin fines de lucro que SÍ pueden ayudar a pacientes con Medicare."
       },
       {
         "q": "¿Cómo funcionan las tarjetas de copago?",
-        "a": "Cuando surte una receta, esto es lo que pasa:\n\n**Paso 1:** Su seguro comercial procesa el reclamo y decide cuánto es su copago o coseguro.\n\n**Paso 2:** La tarjeta de copago cubre entonces parte o todo ese costo restante.\n\n**El resultado:** Lo que usted paga de su bolsillo muchas veces baja a $0-$25 por surtido, sin importar si el medicamento cuesta $500 o $15,000.\n\n**Ejemplo:**\nSu seguro dice que usted debe $200 por su tacrolimus. Usted presenta su tarjeta de copago y esta cubre $195. Usted paga solo $5."
+        "a": "Cuando surte (despacha) una receta, esto es lo que pasa:\n\n**Paso 1:** Su seguro comercial procesa el reclamo y decide cuánto es su copago o coseguro.\n\n**Paso 2:** La tarjeta de copago cubre entonces parte o todo ese costo restante.\n\n**El resultado:** Lo que usted paga de su bolsillo muchas veces baja a $0-$25 por surtido, sin importar si el medicamento cuesta $500 o $15,000.\n\n**Ejemplo:**\nSu seguro dice que usted debe $200 por su tacrolimus. Usted presenta su tarjeta de copago y esta cubre $195. Usted paga solo $5."
       },
       {
         "q": "¿Quién paga las tarjetas de copago?",
@@ -91,7 +91,7 @@
       },
       {
         "q": "¿Puedo usar tarjetas de copago con Medicare, Medicaid u otro seguro del gobierno?",
-        "a": "**No.** Las tarjetas de copago no se pueden usar con programas de seguro del gobierno:\n• Medicare (incluida la Parte D)\n• Medicaid\n• Tricare\n• Beneficios del VA\n• Otros programas federales o estatales\n\n**¿Por qué no?**\nLas leyes federales contra sobornos prohíben que los fabricantes de medicamentos den este tipo de asistencia a los beneficiarios de seguros del gobierno.\n\n**Qué SÍ pueden usar los pacientes con seguro del gobierno:**\n• Fundaciones de copago (grupos sin fines de lucro como HealthWell, PAN Foundation)\n• Medicare Extra Help (si sus ingresos califican)\n• Programas estatales de asistencia farmacéutica"
+        "a": "**No.** Las tarjetas de copago no se pueden usar con programas de seguro del gobierno:\n• Medicare (incluida la Parte D)\n• Medicaid\n• TRICARE\n• Beneficios del VA\n• Otros programas federales o estatales\n\n**¿Por qué no?**\nLas leyes federales contra sobornos prohíben que los fabricantes de medicamentos den este tipo de asistencia a los beneficiarios de seguros del gobierno.\n\n**Qué SÍ pueden usar los pacientes con seguro del gobierno:**\n• Fundaciones de copago (grupos sin fines de lucro como HealthWell, PAN Foundation)\n• Medicare Extra Help (si sus ingresos califican)\n• Programas estatales de asistencia farmacéutica"
       },
       {
         "q": "¿Las tarjetas de copago tienen límites anuales?",
@@ -99,7 +99,7 @@
       },
       {
         "q": "¿Qué es un programa acumulador o maximizador de copagos?",
-        "a": "Esto es cada vez más importante para los pacientes de trasplante que toman inmunosupresores caros.\n\n**Qué es:**\nAlgunos planes de seguro usan programas llamados \"acumulador de copagos\" o \"maximizador de copagos\" que NO cuentan la asistencia de copago del fabricante hacia su deducible ni su máximo de gastos de bolsillo.\n\n**Por qué importa:**\nNormalmente, sus copagos cuentan hacia su deducible. Cuando llega a su máximo de gastos de bolsillo, el seguro paga el 100%. Pero con los programas acumuladores:\n• La tarjeta de copago paga sus costos\n• Pero esos pagos no cuentan hacia su deducible\n• Cuando la tarjeta de copago se agota, todavía le queda todo su deducible por cumplir\n• Podría enfrentar miles de dólares en costos inesperados\n\n**Qué hacer:**\n• Pregunte a su seguro si tienen un programa acumulador o maximizador\n• Lea con cuidado los documentos de su plan\n• Haga un presupuesto para los costos después de que se agote el beneficio de su tarjeta de copago\n• Hable con el trabajador social de su equipo de trasplante sobre opciones de respaldo"
+        "a": "Esto es cada vez más importante para los pacientes de trasplante que toman inmunosupresores caros.\n\n**Qué es:**\nAlgunos planes de seguro usan programas llamados \"acumulador de copagos\" o \"maximizador de copagos\" que NO cuentan la asistencia de copago del fabricante hacia su deducible ni su máximo de gastos de bolsillo.\n\n**Por qué importa:**\nNormalmente, sus copagos cuentan para su deducible. Cuando llega a su máximo de gastos de bolsillo, el seguro paga el 100%. Pero con los programas acumuladores:\n• La tarjeta de copago paga sus costos\n• Pero esos pagos no cuentan para su deducible\n• Cuando la tarjeta de copago se agota, todavía le queda todo su deducible por cumplir\n• Podría enfrentar miles de dólares en costos inesperados\n\n**Qué hacer:**\n• Pregunte a su seguro si tienen un programa acumulador o maximizador\n• Lea con cuidado los documentos de su plan\n• Haga un presupuesto para los costos después de que se agote el beneficio de su tarjeta de copago\n• Hable con el trabajador social de su equipo de trasplante sobre opciones de respaldo"
       }
     ]
   },
@@ -116,11 +116,11 @@
       },
       {
         "q": "¿Cómo sé si mi plan hace esto?",
-        "a": "**Esté atento a estas señales:**\n• Los papeles de su plan dicen \"copay accumulator\" (acumulador de copagos)\n• El dinero de la tarjeta de copago no aparece en su registro de gastos\n• Le dicen que primero llame a otra compañía\n• Su medicamento está \"excluido\" (no cubierto)\n• Debe pedir medicamentos gratis antes de que su plan ayude\n\n**Pregunte a su plan:**\n• \"¿Usan un acumulador de copagos?\"\n• \"¿El dinero de mi tarjeta de copago cuenta hacia lo que debo?\"\n• \"¿Mi medicamento está totalmente cubierto?\""
+        "a": "**Esté atento a estas señales:**\n• Los papeles de su plan dicen \"copay accumulator\" (acumulador de copagos)\n• El dinero de la tarjeta de copago no aparece en su registro de gastos\n• Le dicen que primero llame a otra compañía\n• Su medicamento está \"excluido\" (no cubierto)\n• Debe pedir medicamentos gratis antes de que su plan ayude\n\n**Pregunte a su plan:**\n• \"¿Usan un acumulador de copagos?\"\n• \"¿El dinero de mi tarjeta de copago cuenta para lo que debo?\"\n• \"¿Mi medicamento está totalmente cubierto?\""
       },
       {
         "q": "¿Qué estados tienen leyes para detener esto?",
-        "a": "Muchos estados ya tienen leyes para ayudar. En esos estados, el dinero de la tarjeta de copago debe contar hacia lo que usted debe.\n\n**Estados con leyes que ayudan:**\nArizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Louisiana, Maine, Maryland, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Tennessee, Texas, Virginia, Washington, West Virginia y más.\n\n**Qué hacer:**\nLlame a su estado. Pregunte qué leyes le protegen. Cada año más estados agregan leyes."
+        "a": "Muchos estados ya tienen leyes para ayudar. En esos estados, el dinero de la tarjeta de copago debe contar para lo que usted debe.\n\n**Estados con leyes que ayudan:**\nArizona, Arkansas, California, Connecticut, Delaware, Georgia, Illinois, Kentucky, Luisiana, Maine, Maryland, Misuri, Nueva Jersey, Nueva York, Carolina del Norte, Ohio, Oklahoma, Oregón, Tennessee, Texas, Virginia, Washington, Virginia Occidental y más.\n\n**Qué hacer:**\nLlame a su estado. Pregunte qué leyes le protegen. Cada año más estados agregan leyes."
       },
       {
         "q": "¿Qué puedo hacer si esto me pasa a mí?",
@@ -157,7 +157,7 @@
       },
       {
         "q": "¿Qué son los programas estatales de medicamentos?",
-        "a": "Algunos estados tienen programas que ayudan a sus residentes a pagar los medicamentos.\n\n**Quién puede usarlos:**\n• Muchas veces personas de 65 años o más, o con discapacidad\n• Personas con ingresos limitados\n• Residentes del estado\n\n**Ejemplos:**\n• New York: EPIC\n• Pennsylvania: PACE\n• New Jersey: PAAD\n\n**Cómo encontrar el programa de su estado:**\n• Visite Medicare.gov\n• Llame al 1-800-MEDICARE\n• Pregunte a su trabajador social"
+        "a": "Algunos estados tienen programas que ayudan a sus residentes a pagar los medicamentos.\n\n**Quién puede usarlos:**\n• Muchas veces personas de 65 años o más, o con discapacidad\n• Personas con ingresos limitados\n• Residentes del estado\n\n**Ejemplos:**\n• Nueva York: EPIC\n• Pennsylvania: PACE\n• Nueva Jersey: PAAD\n\n**Cómo encontrar el programa de su estado:**\n• Visite Medicare.gov\n• Llame al 1-800-MEDICARE\n• Pregunte a su trabajador social"
       },
       {
         "q": "¿Qué es Medicare Part B-ID y cuánto cuesta en 2026?",
@@ -169,7 +169,7 @@
       },
       {
         "q": "¿Qué es el programa piloto de autorización previa WISeR de CMS?",
-        "a": "Desde enero de 2026, CMS lanzó el modelo **WISeR** (Wasteful and Inappropriate Service Reduction). Agrega autorización previa para 17 servicios ambulatorios de Medicare Parte B.\n\n**Estados afectados:** Arizona, New Jersey, Ohio, Oklahoma, Texas y Washington.\n\n**Qué deben saber los pacientes de trasplante:**\n• WISeR NO afecta sus medicamentos de trasplante\n• Cubre procedimientos ambulatorios como estimuladores de nervios, procedimientos de columna y cuidado de heridas\n• Si necesita uno de estos procedimientos, su proveedor debe pedir aprobación primero\n• Las decisiones se toman dentro de 72 horas (48 horas para casos urgentes)\n\n**Importante:** Esto solo afecta a Medicare Original (pago por servicio), no a los planes Medicare Advantage. El modelo estará vigente hasta diciembre de 2031."
+        "a": "Desde enero de 2026, CMS lanzó el modelo **WISeR** (Wasteful and Inappropriate Service Reduction). Agrega autorización previa para 17 servicios ambulatorios de Medicare Parte B.\n\n**Estados afectados:** Arizona, Nueva Jersey, Ohio, Oklahoma, Texas y Washington.\n\n**Qué deben saber los pacientes de trasplante:**\n• WISeR NO afecta sus medicamentos de trasplante\n• Cubre procedimientos ambulatorios como estimuladores de nervios, procedimientos de columna y cuidado de heridas\n• Si necesita uno de estos procedimientos, su proveedor debe pedir aprobación primero\n• Las decisiones se toman dentro de 72 horas (48 horas para casos urgentes)\n\n**Importante:** Esto solo afecta a Medicare Original (pago por servicio), no a los planes Medicare Advantage. El modelo estará vigente hasta diciembre de 2031."
       }
     ]
   },
@@ -211,11 +211,11 @@
       },
       {
         "q": "¿Qué es la \"trampa del deducible\" con las tarjetas de descuento?",
-        "a": "Cuando usa una tarjeta de descuento, el dinero que paga NO cuenta hacia su deducible.\n\n**Por qué importa:**\nLos pacientes de trasplante tienen costos altos de medicamentos. Muchos llegan a su máximo de gastos de bolsillo en pocos meses. Después de eso, el seguro paga el 100%.\n\nLas tarjetas de descuento retrasan el momento en que llega a ese máximo. Usted termina pagando de su bolsillo por más tiempo."
+        "a": "Cuando usa una tarjeta de descuento, el dinero que paga NO cuenta para su deducible.\n\n**Por qué importa:**\nLos pacientes de trasplante tienen costos altos de medicamentos. Muchos llegan a su máximo de gastos de bolsillo en pocos meses. Después de eso, el seguro paga el 100%.\n\nLas tarjetas de descuento retrasan el momento en que llega a ese máximo. Usted termina pagando de su bolsillo por más tiempo."
       },
       {
         "q": "¿Puedo usar una tarjeta de descuento Y mi seguro al mismo tiempo?",
-        "a": "No. Debe elegir una cosa o la otra. Si usa una tarjeta de descuento, ese pago NO cuenta hacia su deducible."
+        "a": "No. Debe elegir una cosa o la otra. Si usa una tarjeta de descuento, ese pago NO cuenta para su deducible."
       },
       {
         "q": "¿Cuándo deberían usar tarjetas de descuento los pacientes de trasplante?",
@@ -244,7 +244,7 @@
       },
       {
         "q": "¿Puedo usar Cost Plus Drugs si tengo seguro, o solo si no tengo seguro?",
-        "a": "Cost Plus Drugs (Mark Cuban Cost Plus Drug Company) está disponible para todos, con o sin seguro.\n\n• Aceptan algunos planes de seguro.\n• La mayoría de las veces sus precios son mejores que el precio de su seguro, y para algunos medicamentos el precio en efectivo es más barato que su copago, así que vale la pena comparar.\n• Si no tiene seguro, puede ser una de las formas más baratas de comprar muchas medicinas genéricas.\n\n**Siempre consulte con su equipo de trasplante** antes de cambiar dónde surte sus medicinas antirrechazo. Cost Plus tiene muchos genéricos, pero no todos los medicamentos de trasplante, y pagar en efectivo por lo general no cuenta hacia el máximo de gastos de bolsillo de su seguro."
+        "a": "Cost Plus Drugs (Mark Cuban Cost Plus Drug Company) está disponible para todos, con o sin seguro.\n\n• Aceptan algunos planes de seguro.\n• La mayoría de las veces sus precios son mejores que el precio de su seguro, y para algunos medicamentos el precio en efectivo es más barato que su copago, así que vale la pena comparar.\n• Si no tiene seguro, puede ser una de las formas más baratas de comprar muchas medicinas genéricas.\n\n**Siempre consulte con su equipo de trasplante** antes de cambiar dónde surte sus medicinas antirrechazo. Cost Plus tiene muchos genéricos, pero no todos los medicamentos de trasplante, y pagar en efectivo por lo general no cuenta para el máximo de gastos de bolsillo de su seguro."
       },
       {
         "q": "¿Qué programas de membresía de farmacias existen?",
@@ -261,7 +261,7 @@
     "questions": [
       {
         "q": "¿Qué pasa si gano demasiado dinero para los programas de asistencia?",
-        "a": "¡No se rinda! Estas son las razones:\n\n1. Cada programa tiene reglas diferentes. Algunos le permiten ganar bastante dinero y aun así recibir ayuda.\n\n2. Algunos programas miran sus gastos, no solo sus ingresos. Si tiene costos médicos altos, todavía podría calificar.\n\n3. Suscríbase y tome el cuestionario Mi Camino. Le mostrará programas que se ajustan a su situación.\n\n¡Muchas personas se sorprenden de que califican!"
+        "a": "¡No se rinda! Estas son las razones:\n\n1. Cada programa tiene reglas diferentes. Algunos le permiten ganar bastante dinero y aun así recibir ayuda.\n\n2. Algunos programas miran sus gastos, no solo sus ingresos. Si tiene costos médicos altos, todavía podría calificar.\n\n3. Suscríbase y tome el cuestionario Mi Camino. Le mostrará programas que se ajustan a su situación.\n\n¡Muchas personas se llevan una sorpresa cuando ven que sí califican!"
       },
       {
         "q": "¿Son seguros los medicamentos antirrechazo genéricos?",
@@ -269,7 +269,7 @@
       },
       {
         "q": "¿Hay un límite anual en lo que pago por los medicamentos de Medicare?",
-        "a": "Sí. A partir de 2026, hay un **tope anual de $2,100** en lo que usted paga de su bolsillo por los medicamentos recetados de la Parte D.\n\n**Bueno saber:**\n• Cuando llega al tope, paga $0 por los medicamentos cubiertos el resto del año\n• Puede llegar al tope temprano en el año, así que haga un presupuesto para eso\n• Solicite Extra Help si sus ingresos son bajos\n• Solicite a las fundaciones de copago temprano, antes de que se agoten los fondos\n• Revise su plan de Medicare cada otoño durante la Inscripción Abierta"
+        "a": "Sí. A partir de 2026, hay un **tope anual de $2,100** en lo que usted paga de su bolsillo por los medicamentos recetados de la Parte D.\n\n**Es bueno saber:**\n• Cuando llega al tope, paga $0 por los medicamentos cubiertos el resto del año\n• Puede llegar al tope temprano en el año, así que haga un presupuesto para eso\n• Solicite Extra Help si sus ingresos son bajos\n• Solicite a las fundaciones de copago temprano, antes de que se agoten los fondos\n• Revise su plan de Medicare cada otoño durante la Inscripción Abierta"
       },
       {
         "q": "Estoy por cumplir 26 años y voy a perder el seguro de mis padres. ¿Cuáles son mis opciones?",
@@ -285,11 +285,11 @@
       },
       {
         "q": "Mi seguro negó mi medicina. ¿Cómo presento una apelación?",
-        "a": "Las negaciones son comunes. Las apelaciones muchas veces funcionan. No se rinda.\n\n**Paso 1:** Averigüe por qué la negaron. Pídalo por escrito.\n\n**Paso 2:** Trabaje con su equipo de trasplante. Ellos pueden escribir una carta explicando por qué usted necesita esta medicina.\n\n**Paso 3:** Presente la apelación antes de la fecha límite (por lo general 30-60 días).\n\n**Paso 4:** Si pronto se va a quedar sin medicina, pida una revisión urgente.\n\n**Paso 5:** Si la niegan otra vez, puede pedir una revisión por un grupo externo.\n\nSu trabajador social o su farmacéutico pueden ayudarle con esto."
+        "a": "Las denegaciones son comunes. Las apelaciones muchas veces funcionan. No se rinda.\n\n**Paso 1:** Averigüe por qué la negaron. Pídalo por escrito.\n\n**Paso 2:** Trabaje con su equipo de trasplante. Ellos pueden escribir una carta explicando por qué usted necesita esta medicina.\n\n**Paso 3:** Presente la apelación antes de la fecha límite (por lo general 30-60 días).\n\n**Paso 4:** Si pronto se va a quedar sin medicina, pida una revisión urgente.\n\n**Paso 5:** Si la niegan otra vez, puede pedir una revisión por un grupo externo.\n\nSu trabajador social o su farmacéutico pueden ayudarle con esto."
       },
       {
         "q": "Es viernes por la noche y me acabo de quedar sin medicina. ¿Qué hago?",
-        "a": "**Esto es urgente.** Dejar de tomar sus medicamentos antirrechazo puede causar problemas.\n\n**Esta noche:**\n• Llame a la línea de fuera de horario de su centro de trasplante. Tienen ayuda 24/7.\n• Busque farmacias abiertas 24 horas (CVS, Walgreens). Su equipo puede enviar una receta ahí.\n• Como último recurso, una sala de emergencias puede darle un suministro pequeño de emergencia.\n\n**Para evitar esto en el futuro:**\n• Configure resurtidos automáticos\n• Tenga en casa un suministro de emergencia de 3-5 días\n• Ponga recordatorios en su teléfono 7 días antes de que se le acabe\n• Cuando viaje, lleve medicina extra"
+        "a": "**Esto es urgente.** Dejar de tomar sus medicamentos antirrechazo puede causar problemas.\n\n**Esta noche:**\n• Llame a la línea de atención fuera de horario (número de guardia) de su centro de trasplante. Tienen ayuda 24/7.\n• Busque farmacias abiertas 24 horas (CVS, Walgreens). Su equipo puede enviar una receta ahí.\n• Como último recurso, una sala de emergencias puede darle un suministro pequeño de emergencia.\n\n**Para evitar esto en el futuro:**\n• Configure resurtidos (refills) automáticos\n• Tenga en casa un suministro de emergencia de 3-5 días\n• Ponga recordatorios en su teléfono 7 días antes de que se le acabe\n• Cuando viaje, lleve medicina extra"
       },
       {
         "q": "¿Cómo manejo los efectos secundarios de mis medicamentos?",
@@ -343,7 +343,7 @@
       },
       {
         "q": "¿Qué significan las etiquetas de costo en las tarjetas de medicinas?",
-        "a": "Cuando busca una medicina, ve etiquetas de colores:\n\n• **Etiqueta de costo:** Costo bajo (verde), medio (amarillo) o alto (rojo)\n• **Etiqueta de nivel (tier):** Niveles más bajos (azul) = copagos más bajos. Niveles más altos (naranja/morado) = copagos más altos\n• **Genérico disponible (marca verde):** Existe una versión genérica más barata\n\nSu costo real depende de SU plan de seguro."
+        "a": "Cuando busca una medicina, ve etiquetas de colores:\n\n• **Etiqueta de costo:** Costo bajo (verde), medio (amarillo) o alto (rojo)\n• **Etiqueta de nivel (tier):** Niveles más bajos (azul) = copagos más bajos. Niveles más altos (naranja/morado) = copagos más altos\n• **Genérico disponible (marca de verificación verde):** Existe una versión genérica más barata\n\nSu costo real depende de SU plan de seguro."
       },
       {
         "q": "¿Qué tan exactos son los precios estimados?",
@@ -393,18 +393,18 @@
     ]
   },
   {
-    "category": "¿Le negaron la ayuda? Cómo pelear las negaciones del seguro",
+    "category": "¿Le negaron la ayuda? Cómo pelear las denegaciones del seguro",
     "questions": [
       {
         "q": "¿Por qué mi seguro negó mi medicamento de trasplante?",
-        "a": "Su carta de negación le dice por qué dijeron que no. Estas son las razones más comunes:\n\n• **Se necesita autorización previa:** Su doctor debe pedir permiso primero\n• **No está en la lista:** Su medicamento no está en su lista aprobada (formulario)\n• **Terapia escalonada:** Quieren que pruebe primero un medicamento más barato\n• **Límites de cantidad:** Dicen que usted está recibiendo demasiado de este medicamento\n• **Use el genérico:** Quieren que use una versión más barata\n\nLa carta debe decir qué hacer después. Si no lo dice, llame a su seguro y pregunte."
+        "a": "Su carta de denegación le dice por qué dijeron que no. Estas son las razones más comunes:\n\n• **Se necesita autorización previa:** Su doctor debe pedir permiso primero\n• **No está en la lista:** Su medicamento no está en su lista aprobada (formulario)\n• **Terapia escalonada:** Quieren que pruebe primero un medicamento más barato\n• **Límites de cantidad:** Dicen que usted está recibiendo demasiado de este medicamento\n• **Use el genérico:** Quieren que use una versión más barata\n\nLa carta debe decir qué hacer después. Si no lo dice, llame a su seguro y pregunte."
       },
       {
         "q": "¿Qué es la terapia escalonada y por qué es mala para los pacientes de trasplante?",
-        "a": "**La terapia escalonada** significa que su seguro quiere que pruebe un medicamento más barato antes de pagar el que su doctor eligió. Algunos la llaman \"fracasar primero\" (fail first).\n\n**Por qué puede ser mala para los pacientes de trasplante:**\n• Los medicamentos antirrechazo deben mantenerse en el nivel correcto en su sangre. Los cambios pequeños importan mucho.\n• Probar el medicamento equivocado podría dañar su trasplante.\n• Su equipo de trasplante eligió su medicamento por buenas razones.\n• Cambiar de medicamento significa más análisis de sangre y visitas al doctor.\n\n**Buenas noticias:** Puede pedir que le salten la terapia escalonada. Los medicamentos de trasplante muchas veces se aprueban cuando su doctor dice que usted los necesita."
+        "a": "**La terapia escalonada** significa que su seguro quiere que pruebe un medicamento más barato antes de pagar el que su doctor eligió. Algunos la llaman \"fallar primero\" (fail first).\n\n**Por qué puede ser mala para los pacientes de trasplante:**\n• Los medicamentos antirrechazo deben mantenerse en el nivel correcto en su sangre. Los cambios pequeños importan mucho.\n• Probar el medicamento equivocado podría dañar su trasplante.\n• Su equipo de trasplante eligió su medicamento por buenas razones.\n• Cambiar de medicamento significa más análisis de sangre y visitas al doctor.\n\n**Buenas noticias:** Puede pedir una excepción para que no le apliquen la terapia escalonada. Los medicamentos de trasplante muchas veces se aprueban cuando su doctor dice que usted los necesita."
       },
       {
-        "q": "¿Puedo pedir a mi seguro que me salte la terapia escalonada?",
+        "q": "¿Puedo pedir a mi seguro que no me aplique la terapia escalonada?",
         "a": "¡Sí! Puede pedir una excepción a la terapia escalonada.\n\n**Qué ayuda:**\n• Una carta de su doctor de trasplante que explique por qué necesita este medicamento específico\n• Sus registros de trasplante y resultados de laboratorio\n• Notas sobre por qué otros medicamentos no le funcionarían\n\n**También sepa:**\n• Muchos estados tienen leyes que protegen a los pacientes de la terapia escalonada\n• Los medicamentos de trasplante muchas veces reciben excepciones por necesidad médica\n• Su centro de trasplante puede ayudarle a pelear esto"
       },
       {
@@ -416,7 +416,7 @@
         "a": "Considere pelear por el de marca cuando:\n\n• Sus niveles del medicamento han estado estables con esta marca\n• Tuvo problemas cuando cambió antes\n• Su centro de trasplante exige el de marca\n• Su cuerpo tiene problemas para absorber el medicamento\n• Está tomando tacrolimus u otro medicamento de índice terapéutico estrecho\n\n**Qué hacer:**\n• Pida a su doctor de trasplante que escriba una carta explicando por qué necesita el de marca\n• Incluya su historial de laboratorio que muestre niveles estables\n• Anote cualquier problema que haya tenido con versiones genéricas"
       },
       {
-        "q": "¿Cómo presento una apelación por una negación del seguro?",
+        "q": "¿Cómo presento una apelación por una denegación del seguro?",
         "a": "**Paso 1: Pídalo por escrito**\nPida una carta que diga exactamente por qué dijeron que no. La necesita para saber qué decir en su apelación.\n\n**Paso 2: Cuide los plazos**\nPor lo general tiene de 30 a 60 días para apelar. Marque la fecha en su calendario.\n\n**Paso 3: Junte sus documentos**\n• Una carta de su doctor que diga por qué necesita este medicamento\n• Sus registros de trasplante\n• Resultados recientes de laboratorio\n• Cualquier registro de rechazos o problemas anteriores\n\n**Paso 4: Envíe su apelación**\nEnvíe todo junto. Guarde copias de todo.\n\n**Paso 5: Pida una revisión rápida**\nSi pronto se va a quedar sin medicina, pida una revisión acelerada (rápida)."
       },
       {
@@ -429,7 +429,7 @@
       },
       {
         "q": "¿Puedo recibir mi medicina mientras espero mi apelación?",
-        "a": "¡A veces sí! Esto es lo que puede pedir:\n\n**Revisión acelerada:** Si se le está acabando la medicina, dígales que es urgente. Los medicamentos de trasplante normalmente cuentan como urgentes porque dejarlos de tomar es peligroso.\n\n**Continuación de cobertura:** Si ya estaba tomando el medicamento y ahora se lo niegan, puede que pueda seguir recibiéndolo mientras apela.\n\n**Suministro puente:** Algunas farmacias o compañías farmacéuticas pueden darle un suministro corto mientras espera.\n\n**Suministro de emergencia:** Si es una emergencia, llame a su centro de trasplante. Pueden tener muestras u otras opciones."
+        "a": "¡A veces sí! Esto es lo que puede pedir:\n\n**Revisión acelerada:** Si se le está acabando la medicina, dígales que es urgente. Los medicamentos de trasplante normalmente cuentan como urgentes porque dejar de tomarlos es peligroso.\n\n**Continuación de cobertura:** Si ya estaba tomando el medicamento y ahora se lo niegan, puede que pueda seguir recibiéndolo mientras apela.\n\n**Suministro puente:** Algunas farmacias o compañías farmacéuticas pueden darle un suministro corto mientras espera.\n\n**Suministro de emergencia:** Si es una emergencia, llame a su centro de trasplante. Pueden tener muestras u otras opciones."
       },
       {
         "q": "¿Quién puede ayudarme con mi apelación?",
@@ -442,7 +442,7 @@
     "questions": [
       {
         "q": "¿Cómo viajo con mis medicamentos de trasplante?",
-        "a": "**Antes de viajar:**\n• Consiga medicina extra (por lo menos 7 días más)\n• Consiga una carta de su doctor con la lista de sus medicamentos\n• Revise si algún medicamento debe mantenerse frío\n\n**Al empacar:**\n• SIEMPRE lleve los medicamentos en su bolsa de mano\n• Manténgalos en sus frascos originales\n• Lleve más de lo que necesita\n\n**En el aeropuerto:**\n• Los medicamentos no tienen que seguir las reglas de líquidos\n• Puede mostrar la carta de su doctor si se la piden\n\n**Zonas horarias:**\n• Para viajes cortos, siga tomando los medicamentos según la hora de su casa\n• Para viajes más largos, cambie sus horarios poco a poco, 1-2 horas por día"
+        "a": "**Antes de viajar:**\n• Consiga medicina extra (por lo menos 7 días más)\n• Consiga una carta de su doctor con la lista de sus medicamentos\n• Revise si algún medicamento debe mantenerse frío\n\n**Al empacar:**\n• SIEMPRE lleve los medicamentos en su equipaje de mano\n• Manténgalos en sus frascos originales\n• Lleve más de lo que necesita\n\n**En el aeropuerto:**\n• Los medicamentos no tienen que seguir las reglas de líquidos\n• Puede mostrar la carta de su doctor si se la piden\n\n**Zonas horarias:**\n• Para viajes cortos, siga tomando los medicamentos según la hora de su casa\n• Para viajes más largos, cambie sus horarios poco a poco, 1-2 horas por día"
       },
       {
         "q": "Soy padre o madre de un niño con trasplante. ¿Qué debo saber?",
@@ -454,7 +454,7 @@
       },
       {
         "q": "Soy un adulto joven y vivo solo por primera vez. ¿Algún consejo?",
-        "a": "**Consejos sobre medicinas:**\n• Cree un sistema YA (pastillero, alarmas del teléfono o aplicaciones)\n• Nunca dependa solo de la memoria\n• Encuentre una farmacia cerca de su nuevo hogar\n• Guarde el número de su centro de trasplante en su teléfono\n\n**Seguro:**\n• Si va a cumplir 26 años, empiece a planear a los 25\n• Conozca su cobertura: deducibles, copagos y qué farmacia usar\n\n**Consejos para la universidad:**\n• Cuéntele a por lo menos un amigo de confianza sobre su trasplante\n• Sepa dónde están los servicios de salud para estudiantes\n• Planee cómo guardar la medicina en un dormitorio\n\n**Consejos de dinero:**\n• Infórmese sobre los programas de ayuda financiera\n• Guarde registros de todos los costos médicos\n• Pregunte por ayuda basada en ingresos si el dinero está apretado"
+        "a": "**Consejos sobre medicinas:**\n• Cree un sistema YA (pastillero, alarmas del teléfono o aplicaciones)\n• Nunca dependa solo de la memoria\n• Encuentre una farmacia cerca de su nuevo hogar\n• Guarde el número de su centro de trasplante en su teléfono\n\n**Seguro:**\n• Si va a cumplir 26 años, empiece a planear a los 25\n• Conozca su cobertura: deducibles, copagos y qué farmacia usar\n\n**Consejos para la universidad:**\n• Cuéntele a por lo menos un amigo de confianza sobre su trasplante\n• Sepa dónde están los servicios de salud para estudiantes\n• Planee cómo guardar la medicina en una residencia estudiantil (dormitorio universitario)\n\n**Consejos de dinero:**\n• Infórmese sobre los programas de ayuda financiera\n• Guarde registros de todos los costos médicos\n• Pregunte por ayuda basada en ingresos si anda corto de dinero"
       }
     ]
   }

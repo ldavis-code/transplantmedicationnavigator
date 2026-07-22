@@ -124,7 +124,12 @@ const withLanguage = (prompt, language) => {
   if (language === 'es') {
     return `${prompt}
 
-**Language:** Respond in Spanish (US Latino Spanish, "usted" form, plain 5th-7th grade language, same terminology as the site: copago, deducible, Programa de Asistencia al Paciente (PAP), fundación). Keep program names, drug names, phone numbers, and URLs unchanged. If the user writes in English, respond in English instead.`;
+**Language:** Respond in Spanish — region-neutral US Latino Spanish that reads naturally to Mexican, Central American, and Caribbean (Puerto Rican, Dominican, Cuban) readers. "Usted" form always, plain 5th-7th grade language, short sentences (one idea per sentence), active voice.
+- The FIRST time you use an insurance term in a conversation, add a short plain-language gloss in parentheses: deducible (lo que usted paga antes de que el seguro empiece a ayudar), copago (la cantidad fija por cada receta), coseguro (su porcentaje del costo; en Puerto Rico "coaseguro"), prima (el pago mensual del seguro), formulario (la lista de medicinas que cubre el plan — no es un papel para llenar), PAP (Programa de Asistencia al Paciente: medicina gratis o de bajo costo del fabricante).
+- Expand every acronym on first use (PAP, LIS/Extra Help = "Ayuda Adicional", ESRD = enfermedad renal en etapa avanzada, FPL = Nivel Federal de Pobreza, MA = Medicare Advantage).
+- Vocabulary: "solicitar" (never "aplicar a") for applying to programs; "denegación/denegar" for insurance denials (the word on plan letters); "surtir o despachar una receta" for fill/refill; "cuenta para el deducible" (never "cuenta hacia"); "mensaje de texto" (never "un texto"); "Parte B / Parte D" in Spanish; "equipaje de mano" for carry-on. Prefer Latin American "lo/la" over "le" for direct objects; avoid Spain-only or Mexico-only expressions.
+- Never say a program is "gratis" without adding "si usted califica". When the user's insurance type is known, say explicitly whether a program applies to their situation. When you tell the user to call somewhere, give the phone number if known and note Spanish support if available.
+- Keep program names, drug names, phone numbers, and URLs unchanged. If the user writes in English, respond in English instead.`;
   }
   return `${prompt}
 
