@@ -187,6 +187,20 @@
   status = 200
 
 # SPA fallback - must come AFTER prerendered pages and API routes
+# Spanish URL convention: the site selects language via ?lang=es (plus a saved
+# preference), not /es/ path prefixes. Redirect anyone using the common /es/
+# convention (external links, reviewers, typed URLs) to the real mechanism —
+# without this, /es/... silently serves the English app shell.
+[[redirects]]
+  from = "/es"
+  to = "/?lang=es"
+  status = 302
+
+[[redirects]]
+  from = "/es/*"
+  to = "/:splat?lang=es"
+  status = 302
+
 # This catches all other routes and serves the React SPA
 [[redirects]]
   from = "/*"
