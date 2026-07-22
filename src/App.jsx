@@ -3782,7 +3782,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">TrumpRx.gov</td>
-                                            <td className="p-3 text-slate-600">{t('medications.card.overview.trumpRxDesc')}<a href="/trumprx" className="text-teal-600 hover:underline font-medium">{t('medications.card.overview.trumpRxGuideLink')}</a></td>
+                                            <td className="p-3 text-slate-600">{t('medications.card.overview.trumpRxDesc')}<a href={t('medications.card.trumpRxGuideHref')} className="text-teal-600 hover:underline font-medium">{t('medications.card.overview.trumpRxGuideLink')}</a></td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
                                             <td className="p-3 font-medium text-slate-900">Walmart Pharmacy</td>
@@ -4308,7 +4308,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href="/trumprx" className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.ourGuideAria')}>
+                                                <a href={t('medications.card.trumpRxGuideHref')} className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.ourGuideAria')}>
                                                     {t('medications.card.price.ourGuide')}<ArrowRight size={14} aria-hidden="true" />
                                                 </a>
                                                 <a href="/out/pap/trumprx-gov" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label={t('medications.card.price.visitTrumpRxAria')}>
@@ -4364,7 +4364,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         )}
                                         {isTrumpRxAvailable && (
                                             <div className="bg-teal-100 border border-teal-300 rounded p-2 mb-3 text-xs text-teal-900">
-                                                <Trans i18nKey="medications.card.price.trumpRxNotePre" />{trumpRxData.medicareRestriction ? t('medications.card.price.trumpRxNoteMedicare') : ''}{t('medications.card.price.trumpRxNoteCompare')}<a href="/trumprx" className="text-teal-700 font-bold underline">{t('medications.card.price.readFullGuide')}</a>.
+                                                <Trans i18nKey="medications.card.price.trumpRxNotePre" />{trumpRxData.medicareRestriction ? t('medications.card.price.trumpRxNoteMedicare') : ''}{t('medications.card.price.trumpRxNoteCompare')}<a href={t('medications.card.trumpRxGuideHref')} className="text-teal-700 font-bold underline">{t('medications.card.price.readFullGuide')}</a>.
                                             </div>
                                         )}
                                         <div className="grid grid-cols-2 gap-2 text-xs mb-3">
