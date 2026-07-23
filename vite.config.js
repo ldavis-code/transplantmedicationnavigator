@@ -141,6 +141,11 @@ export default defineConfig({
             }
           }
         ],
+        // Without this, the plugin registers an offline-first NavigationRoute
+        // that serves the precached index.html for every navigation — ahead of
+        // the NetworkFirst rule above — so server redirects (e.g. /es →
+        // /?lang=es) never run. Navigations must reach the network first.
+        navigateFallback: null,
         // Pre-cache important pages
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         // Exclude large infographic images from precaching

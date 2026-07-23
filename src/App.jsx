@@ -6954,12 +6954,28 @@ const PageLoadingFallback = () => (
     </div>
 );
 
+// The /es path convention maps to the real language mechanism: Netlify
+// redirects /es/* to /:splat?lang=es server-side, but an installed service
+// worker can serve the app shell before the request reaches the server, so
+// the router needs its own handler or these URLs land on the 404 page.
+const SpanishPathRedirect = () => {
+    const location = useLocation();
+    const { i18n } = useTranslation();
+    useEffect(() => {
+        if (i18n.language !== 'es') i18n.changeLanguage('es');
+    }, [i18n]);
+    const pathname = location.pathname.replace(/^\/es(?=\/|$)/, '') || '/';
+    return <Navigate to={{ pathname, search: location.search, hash: location.hash }} replace />;
+};
+
 // Wrapper component for main site layout
 const MainSiteRoutes = () => (
     <Layout>
         <Suspense fallback={<PageLoadingFallback />}>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/es" element={<SpanishPathRedirect />} />
+                <Route path="/es/*" element={<SpanishPathRedirect />} />
                 <Route path="/about" element={<LazyAbout />} />
                 <Route path="/wizard" element={<Wizard />} />
                 <Route path="/my-path-quiz" element={<Navigate to="/wizard" replace />} />
