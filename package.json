@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:readability && npm run check:i18n && node scripts/generate-sitemap.js && vite build && node scripts/prerender-seo.js",
+    "build": "npm run check:readability && npm run check:i18n && node scripts/generate-sitemap.js && vite build && node scripts/stamp-freshness.js && node scripts/prerender-seo.js",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
     "sync:medications": "node scripts/sync-medications-json.js",
