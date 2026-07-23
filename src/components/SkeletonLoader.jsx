@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 /**
  * SkeletonLoader components for displaying loading placeholders
  */
@@ -6,6 +7,7 @@
  * Base skeleton component for creating custom skeleton loaders
  */
 export const Skeleton = ({ className = '', width, height }) => {
+  const { t } = useTranslation();
   const style = {};
   if (width) style.width = width;
   if (height) style.height = height;
@@ -15,7 +17,7 @@ export const Skeleton = ({ className = '', width, height }) => {
       className={`animate-pulse bg-slate-200 rounded ${className}`}
       style={style}
       role="status"
-      aria-label="Loading content"
+      aria-label={t('common.loading')}
     />
   );
 };

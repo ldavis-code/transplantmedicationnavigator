@@ -8,6 +8,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 // Active site language — sent with chat requests so answers match the
 // language the patient is reading the site in.
 import i18n from '../i18n.js';
+import { useTranslation } from 'react-i18next';
 import {
   MessageCircle, X, Send, HeartHandshake, Check, Search,
   ChevronRight, ChevronLeft, Loader2, Pill, ExternalLink, RefreshCw,
@@ -15,7 +16,7 @@ import {
   ClipboardList, Sparkles, ArrowLeftRight, CheckCircle2, Circle, Lightbulb, PlusCircle,
   Gift, Shield
 } from 'lucide-react';
-import { useChatQuiz, QUIZ_QUESTIONS } from '../context/ChatQuizContext.jsx';
+import { useChatQuiz, QUIZ_QUESTIONS, translateQuizQuestion } from '../context/ChatQuizContext.jsx';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
 import { trackMedicationSearch } from '../lib/medicationTrackingApi.js';
 
@@ -44,11 +45,12 @@ const normalizeDiscountUrl = (url) => {
 
 // Mode toggle tabs
 const MODE_TABS = [
-  { id: 'chat', label: 'Chat', icon: MessageCircle, description: 'Conversational guidance' },
-  { id: 'quiz', label: 'My Path Quiz', icon: ClipboardList, description: 'Step-by-step questions' },
+  { id: 'chat', labelKey: 'widgets.chat.tabChat', icon: MessageCircle },
+  { id: 'quiz', labelKey: 'widgets.chat.tabQuiz', icon: ClipboardList },
 ];
 
 const MedicationAssistantChat = () => {
+  const { t } = useTranslation();
   // Context for shared state
   const {
     mode,
@@ -151,7 +153,7 @@ const MedicationAssistantChat = () => {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'start' }),
+        body: JSON.stringify({ action: 'start', language: i18n.language }),
       });
 
       const data = await response.json();
@@ -173,7 +175,7 @@ const MedicationAssistantChat = () => {
       setMessages([{
         id: Date.now(),
         role: 'assistant',
-        content: "Hi! I'm your Medication Navigator. I'll help you find assistance programs for your transplant medications. Let's get started!\n\nFirst, who am I helping today?",
+        content: t('widgets.chat.fallbackGreeting'),
         timestamp: new Date(),
       }]);
     } finally {
@@ -211,6 +213,7 @@ const MedicationAssistantChat = () => {
             questionId: question.id,
             answer: option.value,
             answers: newAnswers,
+            language: i18n.language,
           }),
         });
 
@@ -220,7 +223,7 @@ const MedicationAssistantChat = () => {
           setMessages(prev => [...prev, {
             id: Date.now(),
             role: 'assistant',
-            content: data.message || QUIZ_QUESTIONS[chatQuestionIndex + 1]?.question || '',
+            content: data.message || translateQuizQuestion(t, QUIZ_QUESTIONS[chatQuestionIndex + 1])?.question || '',
             timestamp: new Date(),
           }]);
           setChatQuestionIndex(prev => prev + 1);
@@ -229,7 +232,7 @@ const MedicationAssistantChat = () => {
       } catch (err) {
         console.error('Failed to process answer:', err);
         setTimeout(() => {
-          const nextQ = QUIZ_QUESTIONS[chatQuestionIndex + 1];
+          const nextQ = translateQuizQuestion(t, QUIZ_QUESTIONS[chatQuestionIndex + 1]);
           if (nextQ) {
             setMessages(prev => [...prev, {
               id: Date.now(),
@@ -330,7 +333,7 @@ const MedicationAssistantChat = () => {
   const handleMedicationsContinue = () => {
     if (selectedMedications.length === 0) {
       if (mode === 'chat') {
-        handleChatOptionSelect({ value: 'general', label: 'General assistance (no specific medication)' });
+        handleChatOptionSelect({ value: 'general', label: t('widgets.chat.generalAssistanceFull') });
       } else {
         setAnswer('medication', 'general');
         nextQuizQuestion();
@@ -401,13 +404,13 @@ const MedicationAssistantChat = () => {
       }
     } catch (err) {
       console.error('Failed to generate results:', err);
-      setError('Sorry, I had trouble finding programs. Please try again.');
+      setError(t('widgets.chat.resultsError'));
 
       if (mode === 'chat') {
         setMessages(prev => [...prev, {
           id: Date.now(),
           role: 'assistant',
-          content: "I apologize, but I'm having trouble connecting to our database right now. Please try again in a moment, or visit our Resources page to browse assistance programs manually.",
+          content: t('widgets.chat.resultsErrorMessage'),
           timestamp: new Date(),
         }]);
       }
@@ -456,7 +459,7 @@ const MedicationAssistantChat = () => {
       setMessages(prev => [...prev, {
         id: Date.now(),
         role: 'assistant',
-        content: "I'm sorry, I couldn't process that. Please try selecting from the options above, or ask your question again.",
+        content: t('widgets.chat.freeTextError'),
         timestamp: new Date(),
       }]);
     } finally {
@@ -518,11 +521,11 @@ const MedicationAssistantChat = () => {
             ${medGroup.programs?.length > 0 ? medGroup.programs.map(program => `
               <div style="border: 1px solid #10b981; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #ecfdf5;">
                 <strong style="color: #065f46;">${program.program_name}</strong>
-                ${program.max_benefit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Benefit:</strong> ${program.max_benefit}</p>` : ''}
-                ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 13px;"><strong>Eligibility:</strong> ${program.eligibility_summary}</p>` : ''}
-                ${program.application_url ? (() => { const u = normalizeDiscountUrl(program.application_url); return `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>Apply:</strong> <a href="${u}" style="color: #059669;">${u}</a></p>`; })() : ''}
+                ${program.max_benefit ? `<p style="margin: 4px 0; font-size: 13px;"><strong>${t('widgets.chat.printBenefit')}</strong> ${program.max_benefit}</p>` : ''}
+                ${program.eligibility_summary ? `<p style="margin: 4px 0; font-size: 13px;"><strong>${t('widgets.chat.printEligibility')}</strong> ${program.eligibility_summary}</p>` : ''}
+                ${program.application_url ? (() => { const u = normalizeDiscountUrl(program.application_url); return `<p style="margin: 8px 0 0 0; font-size: 13px;"><strong>${t('widgets.chat.printApply')}</strong> <a href="${u}" style="color: #059669;">${u}</a></p>`; })() : ''}
               </div>
-            `).join('') : '<p style="color: #64748b;">Contact your transplant center social worker for assistance.</p>'}
+            `).join('') : `<p style="color: #64748b;">${t('widgets.chat.printContactSw')}</p>`}
           </div>
         </div>
       `).join('');
@@ -530,10 +533,10 @@ const MedicationAssistantChat = () => {
 
     const profileHtml = `
       <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-        <h3 style="margin: 0 0 12px 0; color: #334155;">Your Profile</h3>
-        <p style="margin: 4px 0; font-size: 14px;"><strong>Insurance:</strong> ${answers.insurance_type || 'Not specified'}</p>
-        <p style="margin: 4px 0; font-size: 14px;"><strong>Transplant Stage:</strong> ${answers.transplant_stage || 'Not specified'}</p>
-        <p style="margin: 4px 0; font-size: 14px;"><strong>Organ Type:</strong> ${answers.organ_type || 'Not specified'}</p>
+        <h3 style="margin: 0 0 12px 0; color: #334155;">${t('widgets.chat.printProfile')}</h3>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>${t('widgets.chat.printInsurance')}</strong> ${answers.insurance_type || t('widgets.chat.printNotSpecified')}</p>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>${t('widgets.chat.printStage')}</strong> ${answers.transplant_stage || t('widgets.chat.printNotSpecified')}</p>
+        <p style="margin: 4px 0; font-size: 14px;"><strong>${t('widgets.chat.printOrgan')}</strong> ${answers.organ_type || t('widgets.chat.printNotSpecified')}</p>
       </div>
     `;
 
@@ -541,7 +544,7 @@ const MedicationAssistantChat = () => {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Medication Assistance Action Plan</title>
+        <title>${t('widgets.chat.printTitle')}</title>
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 24px; color: #1e293b; }
           h1 { color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 12px; }
@@ -549,13 +552,13 @@ const MedicationAssistantChat = () => {
         </style>
       </head>
       <body>
-        <h1>Medication Assistance Action Plan</h1>
-        <p style="color: #64748b;">Generated: ${new Date().toLocaleDateString()}</p>
+        <h1>${t('widgets.chat.printTitle')}</h1>
+        <p style="color: #64748b;">${t('widgets.chat.printGenerated')} ${new Date().toLocaleDateString(i18n.language?.startsWith('es') ? 'es-US' : 'en-US')}</p>
         ${profileHtml}
-        <h2>Recommended Programs</h2>
+        <h2>${t('widgets.chat.printRecommended')}</h2>
         ${programsHtml}
         <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">
-          <p>Generated by TransplantMedicationNavigator.com</p>
+          <p>${t('widgets.chat.printFooter')}</p>
         </div>
         <script>window.onload = function() { window.print(); }</script>
       </body>
@@ -619,9 +622,9 @@ const MedicationAssistantChat = () => {
           <div className="space-y-3">
             <div className="text-sm font-semibold text-slate-700 flex items-center gap-2">
               <CheckCircle2 size={18} className="text-emerald-600" aria-hidden="true" />
-              Selected Medications ({selectedMedications.length}):
+              {t('widgets.chat.selectedMeds', { count: selectedMedications.length })}
             </div>
-            <div className="flex flex-wrap gap-2" role="list" aria-label="Selected medications">
+            <div className="flex flex-wrap gap-2" role="list" aria-label={t('widgets.chat.selectedMedsAria')}>
               {selectedMedications.map((med) => (
                 <span
                   key={med.id}
@@ -632,7 +635,7 @@ const MedicationAssistantChat = () => {
                   <button
                     onClick={() => handleMedicationRemove(med.id)}
                     className="hover:bg-emerald-200 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
-                    aria-label={`Remove ${med.brand_name} from selection`}
+                    aria-label={t('widgets.chat.removeMedAria', { name: med.brand_name })}
                   >
                     <X size={16} aria-hidden="true" />
                   </button>
@@ -645,7 +648,7 @@ const MedicationAssistantChat = () => {
         {/* Search Input with proper ARIA */}
         <div className="relative">
           <label htmlFor={searchInputId} className="sr-only">
-            Search for a medication
+            {t('widgets.chat.searchLabel')}
           </label>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
           <input
@@ -653,7 +656,7 @@ const MedicationAssistantChat = () => {
             type="text"
             value={medicationSearch}
             onChange={(e) => setMedicationSearch(e.target.value)}
-            placeholder={selectedMedications.length > 0 ? "Add another medication..." : "Type medication name..."}
+            placeholder={selectedMedications.length > 0 ? t('widgets.chat.searchPlaceholderAdd') : t('widgets.chat.searchPlaceholderType')}
             className="w-full pl-12 pr-12 py-4 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
             autoFocus
             role="combobox"
@@ -668,7 +671,7 @@ const MedicationAssistantChat = () => {
             </div>
           )}
           {isSearching && (
-            <div className="sr-only" aria-live="polite">Searching for medications...</div>
+            <div className="sr-only" aria-live="polite">{t('widgets.chat.searchingSr')}</div>
           )}
         </div>
 
@@ -678,10 +681,10 @@ const MedicationAssistantChat = () => {
             id={listboxId}
             className="max-h-64 overflow-y-auto border-2 border-slate-200 rounded-xl bg-white shadow-lg"
             role="listbox"
-            aria-label="Medication search results"
+            aria-label={t('widgets.chat.resultsAria')}
           >
             <div className="sr-only" aria-live="polite">
-              {medicationResults.length} medication{medicationResults.length !== 1 ? 's' : ''} found
+              {t('widgets.chat.resultsCount', { count: medicationResults.length })}
             </div>
             {medicationResults.map((med, index) => {
               const isAlreadySelected = selectedMedications.find(m => m.id === med.id);
@@ -702,7 +705,7 @@ const MedicationAssistantChat = () => {
                       <div className="font-semibold text-lg text-slate-900 flex items-center gap-2">
                         {med.brand_name}
                         {isAlreadySelected && (
-                          <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">Added</span>
+                          <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">{t('widgets.chat.addedTag')}</span>
                         )}
                       </div>
                       <div className="text-base text-slate-600">{med.generic_name} {med.category && `· ${med.category}`}</div>
@@ -722,13 +725,13 @@ const MedicationAssistantChat = () => {
         {/* Custom medication entry */}
         {medicationSearch && medicationSearch.length >= 2 && medicationResults.length === 0 && !isSearching && (
           <button
-            onClick={() => handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: 'Custom entry' })}
+            onClick={() => handleMedicationSelect({ id: medicationSearch, brand_name: medicationSearch, generic_name: t('widgets.chat.customEntry') })}
             className="w-full text-left p-4 bg-white border-2 border-emerald-300 rounded-xl hover:bg-emerald-50 transition min-h-[60px]"
           >
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="font-semibold text-lg text-emerald-700">Add "{medicationSearch}"</div>
-                <div className="text-base text-slate-600">Add this medication to your list</div>
+                <div className="font-semibold text-lg text-emerald-700">{t('widgets.chat.customAddTitle', { name: medicationSearch })}</div>
+                <div className="text-base text-slate-600">{t('widgets.chat.customAddDesc')}</div>
               </div>
               <PlusCircle size={24} className="text-emerald-500 flex-shrink-0" aria-hidden="true" />
             </div>
@@ -741,7 +744,7 @@ const MedicationAssistantChat = () => {
             onClick={handleMedicationsContinue}
             className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg min-h-[56px] shadow-lg"
           >
-            Continue with {selectedMedications.length} medication{selectedMedications.length > 1 ? 's' : ''}
+            {t('widgets.chat.continueWith', { count: selectedMedications.length })}
             <ChevronRight size={24} aria-hidden="true" />
           </button>
         )}
@@ -751,7 +754,7 @@ const MedicationAssistantChat = () => {
           <button
             onClick={() => {
               if (mode === 'chat') {
-                handleChatOptionSelect({ value: 'general', label: 'General assistance' });
+                handleChatOptionSelect({ value: 'general', label: t('widgets.chat.generalAssistance') });
               } else {
                 setAnswer('medication', 'general');
                 nextQuizQuestion();
@@ -761,8 +764,8 @@ const MedicationAssistantChat = () => {
           >
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="font-semibold text-lg text-slate-700">Skip this step</div>
-                <div className="text-base text-slate-600">Show general assistance programs instead</div>
+                <div className="font-semibold text-lg text-slate-700">{t('widgets.chat.skipTitle')}</div>
+                <div className="text-base text-slate-600">{t('widgets.chat.skipDesc')}</div>
               </div>
               <ChevronRight size={24} className="text-slate-400 flex-shrink-0" aria-hidden="true" />
             </div>
@@ -783,10 +786,10 @@ const MedicationAssistantChat = () => {
               <HeartHandshake size={32} className="text-emerald-600" />
             </div>
             <h3 className="text-xl font-bold text-slate-800 mb-2">
-              Find Your Medication Pathway
+              {t('widgets.chat.introTitle')}
             </h3>
             <p className="text-slate-600 text-sm">
-              Answer a few quick questions and we'll show you assistance programs you may qualify for.
+              {t('widgets.chat.introSubtitle')}
             </p>
           </div>
 
@@ -794,24 +797,24 @@ const MedicationAssistantChat = () => {
           <div className="bg-white border border-slate-200 rounded-xl p-4">
             <h4 className="font-semibold text-slate-700 text-sm mb-3 flex items-center gap-2">
               <Sparkles size={16} className="text-purple-500" />
-              What you'll discover:
+              {t('widgets.chat.introDiscover')}
             </h4>
             <ul className="space-y-2 text-sm text-slate-600">
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                Copay assistance and savings cards
+                {t('widgets.chat.introItem1')}
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                Patient assistance programs (free meds)
+                {t('widgets.chat.introItem2')}
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                Foundation grants for out-of-pocket costs
+                {t('widgets.chat.introItem3')}
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                Low-cost pharmacy alternatives
+                {t('widgets.chat.introItem4')}
               </li>
             </ul>
           </div>
@@ -819,7 +822,7 @@ const MedicationAssistantChat = () => {
           {/* Privacy Note */}
           <div className="flex items-center gap-2 text-xs text-slate-500 justify-center">
             <Shield size={14} />
-            <span>Your answers stay on your device. No account needed.</span>
+            <span>{t('widgets.chat.introPrivacy')}</span>
           </div>
 
           {/* Start Button */}
@@ -829,13 +832,13 @@ const MedicationAssistantChat = () => {
             }}
             className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition text-lg shadow-lg hover:shadow-xl"
           >
-            Start My Path Quiz
+            {t('widgets.chat.introStart')}
             <ChevronRight size={20} />
           </button>
 
           {/* Time estimate */}
           <p className="text-center text-xs text-slate-400">
-            Takes about 2 minutes • {visibleQuestionCount} simple questions
+            {t('widgets.chat.introTime', { count: visibleQuestionCount })}
           </p>
         </div>
       </div>
@@ -851,7 +854,7 @@ const MedicationAssistantChat = () => {
       <div className="px-4 py-3 bg-slate-50 border-b border-slate-200">
         {/* Screen reader announcement */}
         <div className="sr-only" aria-live="polite" aria-atomic="true">
-          Question {currentPosition + 1} of {visibleQuestionCount}. {progressPercent}% complete.
+          {t('widgets.chat.progressSr', { current: currentPosition + 1, total: visibleQuestionCount, percent: progressPercent })}
         </div>
 
         {/* Visual progress */}
@@ -860,9 +863,9 @@ const MedicationAssistantChat = () => {
             <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-bold">
               {currentPosition + 1}/{visibleQuestionCount}
             </span>
-            <span>Question {currentPosition + 1} of {visibleQuestionCount}</span>
+            <span>{t('widgets.chat.progressLabel', { current: currentPosition + 1, total: visibleQuestionCount })}</span>
           </span>
-          <span className="text-emerald-600 font-semibold">{progressPercent}% complete</span>
+          <span className="text-emerald-600 font-semibold">{t('widgets.chat.progressPercent', { percent: progressPercent })}</span>
         </div>
 
         {/* Progress bar with better visibility */}
@@ -872,7 +875,7 @@ const MedicationAssistantChat = () => {
           aria-valuenow={progressPercent}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-label={`Quiz progress: ${progressPercent}% complete`}
+          aria-label={t('widgets.chat.progressAria', { percent: progressPercent })}
         >
           <div
             className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500 ease-out rounded-full"
@@ -912,7 +915,7 @@ const MedicationAssistantChat = () => {
       return renderQuizIntro();
     }
 
-    const question = currentQuizQuestion;
+    const question = translateQuizQuestion(t, currentQuizQuestion);
     if (!question) return null;
     const questionId = `quiz-question-${question.id}`;
     const helpTextId = `quiz-help-${question.id}`;
@@ -995,7 +998,7 @@ const MedicationAssistantChat = () => {
                             )}
                             {option.urgent && (
                               <span className="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded-full font-medium">
-                                Urgent
+                                {t('widgets.chat.urgentTag')}
                               </span>
                             )}
                           </div>
@@ -1018,7 +1021,7 @@ const MedicationAssistantChat = () => {
 
         {/* Blue Lightbulb Tip Section - Below Options */}
         {question.tip && (
-          <div className="mt-5 bg-blue-50 border-2 border-blue-200 rounded-xl p-5" role="note" aria-label="Helpful tip">
+          <div className="mt-5 bg-blue-50 border-2 border-blue-200 rounded-xl p-5" role="note" aria-label={t('common.helpfulTipAria')}>
             <div className="flex gap-4">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center" aria-hidden="true">
@@ -1026,7 +1029,7 @@ const MedicationAssistantChat = () => {
                 </div>
               </div>
               <div>
-                <p className="font-semibold text-blue-800 mb-1">Helpful Tip</p>
+                <p className="font-semibold text-blue-800 mb-1">{t('widgets.chat.helpfulTip')}</p>
                 <p className="text-base text-blue-700 leading-relaxed">{question.tip}</p>
               </div>
             </div>
@@ -1038,19 +1041,19 @@ const MedicationAssistantChat = () => {
           <button
             onClick={prevQuizQuestion}
             className="mt-5 flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-base font-medium py-3 px-4 rounded-lg hover:bg-slate-100 transition-colors min-h-[48px]"
-            aria-label={`Go back to question ${quizProgress.currentQuestionIndex}`}
+            aria-label={t('widgets.chat.previousAria', { number: quizProgress.currentQuestionIndex })}
           >
             <ChevronLeft size={20} aria-hidden="true" />
-            Previous question
+            {t('widgets.chat.previousQuestion')}
           </button>
         )}
 
         {/* Keyboard navigation hint */}
         <div className="mt-4 text-center text-sm text-slate-500" aria-hidden="true">
           <kbd className="px-2 py-1 bg-slate-100 rounded border border-slate-300 text-xs font-mono">Tab</kbd>
-          <span className="mx-2">to navigate</span>
+          <span className="mx-2">{t('widgets.chat.kbdNavigate')}</span>
           <kbd className="px-2 py-1 bg-slate-100 rounded border border-slate-300 text-xs font-mono">Enter</kbd>
-          <span className="mx-2">to select</span>
+          <span className="mx-2">{t('widgets.chat.kbdSelect')}</span>
         </div>
       </div>
     );
@@ -1067,21 +1070,21 @@ const MedicationAssistantChat = () => {
         {/* Success Header */}
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4 text-center">
           <Sparkles className="mx-auto text-emerald-600 mb-2" size={28} />
-          <h3 className="font-bold text-emerald-800 text-lg">Your Personalized Results</h3>
-          <p className="text-sm text-emerald-600">Based on your profile, here are programs you may qualify for</p>
+          <h3 className="font-bold text-emerald-800 text-lg">{t('widgets.chat.resultsTitle')}</h3>
+          <p className="text-sm text-emerald-600">{t('widgets.chat.resultsSubtitle')}</p>
         </div>
 
         {/* Profile Summary */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
           <h4 className="font-semibold text-slate-700 mb-2 flex items-center gap-2">
             <User size={16} />
-            Your Profile
+            {t('widgets.chat.profileTitle')}
           </h4>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div><span className="text-slate-500">Insurance:</span> <span className="font-medium">{answers.insurance_type || '-'}</span></div>
-            <div><span className="text-slate-500">Stage:</span> <span className="font-medium">{answers.transplant_stage || '-'}</span></div>
-            <div><span className="text-slate-500">Organ:</span> <span className="font-medium">{answers.organ_type || '-'}</span></div>
-            <div><span className="text-slate-500">Cost:</span> <span className="font-medium">{answers.cost_burden || '-'}</span></div>
+            <div><span className="text-slate-500">{t('widgets.chat.profileInsurance')}</span> <span className="font-medium">{answers.insurance_type || '-'}</span></div>
+            <div><span className="text-slate-500">{t('widgets.chat.profileStage')}</span> <span className="font-medium">{answers.transplant_stage || '-'}</span></div>
+            <div><span className="text-slate-500">{t('widgets.chat.profileOrgan')}</span> <span className="font-medium">{answers.organ_type || '-'}</span></div>
+            <div><span className="text-slate-500">{t('widgets.chat.profileCost')}</span> <span className="font-medium">{answers.cost_burden || '-'}</span></div>
           </div>
         </div>
 
@@ -1102,16 +1105,16 @@ const MedicationAssistantChat = () => {
                   {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-start justify-between gap-2">
-                        <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
+                        <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>{/* i18n-ok: brand name */}
                         <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Low Cost
+                          {t('widgets.chat.lowCostBadge')}
                         </span>
                       </div>
                       <div className="text-xs text-blue-700 mt-1">
-                        <strong>Benefit:</strong> Wholesale cost + 15% + $5 pharmacy fee
+                        <strong>{t('widgets.chat.benefitLabel')}</strong> {t('widgets.chat.costPlusBenefit')}
                       </div>
                       <p className="text-xs text-blue-600 mt-1">
-                        Mark Cuban's transparent pricing pharmacy - often 50-90% less than retail
+                        {t('widgets.chat.costPlusDesc')}
                       </p>
                       <a
                         href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}`}
@@ -1119,7 +1122,7 @@ const MedicationAssistantChat = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                       >
-                        Check Price <ExternalLink size={12} />
+                        {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                       </a>
                     </div>
                   )}
@@ -1129,11 +1132,11 @@ const MedicationAssistantChat = () => {
                       <div className="flex items-start justify-between gap-2">
                         <div className="font-semibold text-blue-800 text-sm">GoodRx</div>
                         <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Discount Card
+                          {t('widgets.chat.discountCardBadge')}
                         </span>
                       </div>
                       <p className="text-xs text-blue-600 mt-1">
-                        Free coupons accepted at 70,000+ pharmacies, often 50-80% off retail
+                        {t('widgets.chat.goodrxDesc')}
                       </p>
                       <a
                         href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}`}
@@ -1141,7 +1144,7 @@ const MedicationAssistantChat = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                       >
-                        Check Price <ExternalLink size={12} />
+                        {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                       </a>
                     </div>
                   )}
@@ -1151,11 +1154,11 @@ const MedicationAssistantChat = () => {
                       <div className="flex items-start justify-between gap-2">
                         <div className="font-semibold text-blue-800 text-sm">SingleCare</div>
                         <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Discount Card
+                          {t('widgets.chat.discountCardBadge')}
                         </span>
                       </div>
                       <p className="text-xs text-blue-600 mt-1">
-                        Free card at 35,000+ pharmacies, compare and save on generic prescriptions
+                        {t('widgets.chat.singlecareDesc')}
                       </p>
                       <a
                         href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}`}
@@ -1163,7 +1166,7 @@ const MedicationAssistantChat = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                       >
-                        Check Price <ExternalLink size={12} />
+                        {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                       </a>
                     </div>
                   )}
@@ -1185,15 +1188,15 @@ const MedicationAssistantChat = () => {
                           <div className="font-semibold text-emerald-800 text-sm">{program.program_name}</div>
                           {program.program_type && (
                             <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap">
-                              {program.program_type === 'copay_card' && 'Copay Card'}
-                              {program.program_type === 'pap' && 'Free Meds'}
-                              {program.program_type === 'foundation' && 'Foundation'}
+                              {program.program_type === 'copay_card' && t('widgets.chat.badgeCopay')}
+                              {program.program_type === 'pap' && t('widgets.chat.badgePap')}
+                              {program.program_type === 'foundation' && t('widgets.chat.badgeFoundation')}
                             </span>
                           )}
                         </div>
                         {program.max_benefit && (
                           <div className="text-xs text-emerald-700 mt-1">
-                            <strong>Benefit:</strong> {program.max_benefit}
+                            <strong>{t('widgets.chat.benefitLabel')}</strong> {program.max_benefit}
                           </div>
                         )}
                         {program.application_url && (
@@ -1203,19 +1206,19 @@ const MedicationAssistantChat = () => {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                           >
-                            Apply <ExternalLink size={12} />
+                            {t('widgets.chat.apply')} <ExternalLink size={12} />
                           </a>
                         )}
                         {program.program_type === 'foundation' && (
                           <p className="text-xs text-emerald-600 mt-2 italic">
-                            💡 Tip: Funds open throughout the year, check back if currently closed!
+                            {t('widgets.chat.foundationTip')}
                           </p>
                         )}
                       </div>
                     ))
                   ) : (
                     <p className="text-sm text-slate-500 p-2">
-                      Contact your transplant center social worker for assistance options.
+                      {t('widgets.chat.contactSocialWorker')}
                     </p>
                   );
                   })()}
@@ -1230,7 +1233,7 @@ const MedicationAssistantChat = () => {
         ) : (
           <div className="text-center py-8 text-slate-500">
             <AlertCircle size={32} className="mx-auto mb-2 opacity-50" />
-            <p>No specific programs found. Contact your transplant center for assistance.</p>
+            <p>{t('widgets.chat.noPrograms')}</p>
           </div>
         )}
       </div>
@@ -1241,7 +1244,7 @@ const MedicationAssistantChat = () => {
   const renderChatQuestionOptions = () => {
     if (isChatComplete || isLoading) return null;
 
-    const question = QUIZ_QUESTIONS[chatQuestionIndex];
+    const question = translateQuizQuestion(t, QUIZ_QUESTIONS[chatQuestionIndex]);
     if (!question) return null;
 
     if (question.type === 'medication_search') {
@@ -1306,15 +1309,15 @@ const MedicationAssistantChat = () => {
                 {/* Cost Plus Drugs - show only for NON-commercial insurance and if generic is available */}
                 {answers.insurance_type !== 'commercial' && medGroup.cost_plus_available && medGroup.generic_available !== false && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>
-                    <p className="text-xs text-blue-600 mt-1">Low-cost transparent pricing</p>
+                    <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>{/* i18n-ok: brand name */}
+                    <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.costPlusDescShort')}</p>
                     <a
                       href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                     >
-                      Check Price <ExternalLink size={12} />
+                      {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                     </a>
                   </div>
                 )}
@@ -1322,14 +1325,14 @@ const MedicationAssistantChat = () => {
                 {medGroup.generic_available !== false && medGroup.generic_name && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="font-semibold text-blue-800 text-sm">GoodRx</div>
-                    <p className="text-xs text-blue-600 mt-1">Free coupons at 70,000+ pharmacies</p>
+                    <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.goodrxDescShort')}</p>
                     <a
                       href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                     >
-                      Check Price <ExternalLink size={12} />
+                      {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                     </a>
                   </div>
                 )}
@@ -1337,14 +1340,14 @@ const MedicationAssistantChat = () => {
                 {medGroup.generic_available !== false && medGroup.generic_name && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="font-semibold text-blue-800 text-sm">SingleCare</div>
-                    <p className="text-xs text-blue-600 mt-1">Free card at 35,000+ pharmacies</p>
+                    <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.singlecareDescShort')}</p>
                     <a
                       href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                     >
-                      Check Price <ExternalLink size={12} />
+                      {t('widgets.chat.checkPrice')} <ExternalLink size={12} />
                     </a>
                   </div>
                 )}
@@ -1370,13 +1373,13 @@ const MedicationAssistantChat = () => {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
                           >
-                            Apply <ExternalLink size={12} />
+                            {t('widgets.chat.apply')} <ExternalLink size={12} />
                           </a>
                         )}
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-slate-500 p-2">Contact your transplant center.</p>
+                    <p className="text-sm text-slate-500 p-2">{t('widgets.chat.contactCenterShort')}</p>
                   );
                 })()}
               </div>
@@ -1397,11 +1400,11 @@ const MedicationAssistantChat = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2 group hover:scale-105"
-          aria-label="Open medication assistance"
+          aria-label={t('widgets.chat.openAria')}
         >
           <MessageCircle size={24} />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">
-            {hasProgress ? 'Continue where you left off' : 'Need help with medication costs?'}
+            {hasProgress ? t('widgets.chat.launcherContinue') : t('widgets.chat.launcherHelp')}
           </span>
         </button>
       )}
@@ -1412,7 +1415,7 @@ const MedicationAssistantChat = () => {
           className="bg-white rounded-2xl shadow-2xl w-[calc(100vw-2rem)] sm:w-[420px] h-[85vh] sm:h-[650px] max-h-[700px] flex flex-col border border-slate-200 animate-in slide-in-from-bottom-5"
           role="dialog"
           aria-modal="true"
-          aria-label="Medication assistance"
+          aria-label={t('widgets.chat.dialogAria')}
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-t-2xl">
@@ -1422,8 +1425,8 @@ const MedicationAssistantChat = () => {
                   <HeartHandshake size={22} />
                 </div>
                 <div>
-                  <h2 className="font-bold text-lg">Medication Navigator</h2>
-                  <p className="text-xs text-emerald-100">Find assistance programs</p>
+                  <h2 className="font-bold text-lg">{t('widgets.chat.headerTitle')}</h2>
+                  <p className="text-xs text-emerald-100">{t('widgets.chat.headerSubtitle')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
@@ -1431,8 +1434,8 @@ const MedicationAssistantChat = () => {
                   <button
                     onClick={handleReset}
                     className="hover:bg-white/20 p-2 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center"
-                    aria-label="Start over"
-                    title="Start over"
+                    aria-label={t('widgets.chat.startOver')}
+                    title={t('widgets.chat.startOver')}
                   >
                     <RefreshCw size={18} />
                   </button>
@@ -1440,7 +1443,7 @@ const MedicationAssistantChat = () => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="hover:bg-white/20 p-2 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  aria-label="Close"
+                  aria-label={t('widgets.chat.close')}
                 >
                   <X size={20} />
                 </button>
@@ -1463,7 +1466,7 @@ const MedicationAssistantChat = () => {
                     }`}
                   >
                     <Icon size={16} />
-                    {tab.label}
+                    {t(tab.labelKey)}
                   </button>
                 );
               })}
@@ -1509,7 +1512,7 @@ const MedicationAssistantChat = () => {
                   <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div className="flex items-center gap-2 text-slate-500">
                       <Loader2 size={18} className="animate-spin" />
-                      <span className="text-sm">Finding the best options for you...</span>
+                      <span className="text-sm">{t('widgets.chat.finding')}</span>
                     </div>
                   </div>
                 </div>
@@ -1534,13 +1537,13 @@ const MedicationAssistantChat = () => {
                   >
                     <AlertCircle size={18} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
-                      <p className="font-medium">Popup blocked</p>
-                      <p className="text-amber-700">Please allow popups in your browser settings to print your action plan.</p>
+                      <p className="font-medium">{t('widgets.chat.popupBlockedTitle')}</p>
+                      <p className="text-amber-700">{t('widgets.chat.popupBlockedText')}</p>
                     </div>
                     <button
                       onClick={() => setPopupBlockedWarning(false)}
                       className="ml-auto p-2 hover:bg-amber-100 rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
-                      aria-label="Dismiss warning"
+                      aria-label={t('widgets.chat.dismissAria')}
                     >
                       <X size={16} aria-hidden="true" />
                     </button>
@@ -1551,21 +1554,21 @@ const MedicationAssistantChat = () => {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition min-h-[44px]"
                 >
                   <Printer size={18} aria-hidden="true" />
-                  Print Action Plan
+                  {t('widgets.chat.printButton')}
                 </button>
                 <button
                   onClick={handleReset}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
                 >
                   <RefreshCw size={18} />
-                  Start New Search
+                  {t('widgets.chat.newSearch')}
                 </button>
                 <a
                   href="/wizard"
                   className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition block text-center"
                 >
                   <Search size={18} />
-                  Start My Path Quiz
+                  {t('widgets.chat.goToWizard')}
                 </a>
               </div>
             ) : mode === 'chat' ? (
@@ -1576,7 +1579,7 @@ const MedicationAssistantChat = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
-                  placeholder="Or type a question..."
+                  placeholder={t('widgets.chat.inputPlaceholder')}
                   className="flex-1 px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                   disabled={isLoading}
                 />
@@ -1584,7 +1587,7 @@ const MedicationAssistantChat = () => {
                   onClick={handleTextSubmit}
                   disabled={!inputValue.trim() || isLoading}
                   className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white p-3 rounded-xl transition disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  aria-label="Send message"
+                  aria-label={t('widgets.chat.sendAria')}
                 >
                   <Send size={20} aria-hidden="true" />
                 </button>
@@ -1592,13 +1595,11 @@ const MedicationAssistantChat = () => {
             ) : (
               <div className="text-center text-sm text-slate-500">
                 <ArrowLeftRight size={16} className="inline mr-1" />
-                Switch to Chat mode to ask questions
+                {t('widgets.chat.switchToChat')}
               </div>
             )}
             <p className="text-[11px] leading-snug text-slate-400 mt-2 text-center">
-              {i18n.language?.startsWith('es')
-                ? 'Asistente de IA (inteligencia artificial): información educativa; no es consejo médico y puede cometer errores. Confirme los detalles con su equipo de trasplante. No escriba su nombre ni sus datos de contacto.'
-                : 'AI assistant: educational information only, not medical advice. It can make mistakes — confirm details with your transplant team. Please don’t include your name or contact info.'}
+              {t('widgets.chat.disclaimer')}
             </p>
           </div>
         </div>

@@ -2934,5 +2934,304 @@
     "adherenceFind": "Buscar programas para mis medicamentos",
     "adherenceExpensiveNote": "Las tarjetas de copago y los programas de asistencia para sus medicamentos también aparecen junto a cada uno más arriba. Si está a punto de quedarse sin medicamento, llame hoy al farmacéutico o al trabajador social de su equipo de trasplante.",
     "adherenceOtherText": "Saltarse dosis puede poner en riesgo su trasplante. Si el costo es una barrera, revise los programas de asistencia junto a sus medicamentos más arriba o hable con su equipo de trasplante."
+  },
+  "widgets": {
+    "readAloud": {
+      "label": "Leer en voz alta",
+      "stop": "Detener",
+      "stopAria": "Dejar de leer en voz alta"
+    },
+    "feedbackThanks": "Sus comentarios ayudan a los centros de trasplante a entender las necesidades de los pacientes.",
+    "chat": {
+      "tabChat": "Chat",
+      "tabQuiz": "Cuestionario Mi Camino",
+      "openAria": "Abrir la asistencia con medicamentos",
+      "launcherContinue": "Continúe donde lo dejó",
+      "launcherHelp": "¿Necesita ayuda con el costo de sus medicamentos?",
+      "dialogAria": "Asistencia con medicamentos",
+      "headerTitle": "Navegador de Medicamentos",
+      "headerSubtitle": "Encuentre programas de asistencia",
+      "startOver": "Empezar de nuevo",
+      "close": "Cerrar",
+      "fallbackGreeting": "¡Hola! Soy su Navegador de Medicamentos. Le ayudaré a encontrar programas de asistencia para sus medicamentos de trasplante. ¡Empecemos!\n\nPrimero, ¿a quién estoy ayudando hoy?",
+      "resultsError": "Lo sentimos, hubo un problema al buscar los programas. Inténtelo de nuevo.",
+      "resultsErrorMessage": "Disculpe, en este momento tengo problemas para conectarme a nuestra base de datos. Inténtelo de nuevo en un momento, o visite nuestra página de recursos para ver los programas de asistencia.",
+      "freeTextError": "Lo siento, no pude procesar eso. Elija una de las opciones anteriores o haga su pregunta de nuevo.",
+      "finding": "Buscando las mejores opciones para usted...",
+      "generalAssistanceFull": "Asistencia general (sin un medicamento específico)",
+      "generalAssistance": "Asistencia general",
+      "selectedMeds": "Medicamentos seleccionados ({{count}}):",
+      "selectedMedsAria": "Medicamentos seleccionados",
+      "removeMedAria": "Quitar {{name}} de la selección",
+      "searchLabel": "Buscar un medicamento",
+      "searchPlaceholderAdd": "Agregar otro medicamento...",
+      "searchPlaceholderType": "Escriba el nombre del medicamento...",
+      "searchingSr": "Buscando medicamentos...",
+      "resultsAria": "Resultados de la búsqueda de medicamentos",
+      "resultsCount_one": "Se encontró {{count}} medicamento",
+      "resultsCount_other": "Se encontraron {{count}} medicamentos",
+      "addedTag": "Agregado",
+      "customAddTitle": "Agregar \"{{name}}\"",
+      "customAddDesc": "Agregar este medicamento a su lista",
+      "customEntry": "Entrada personalizada",
+      "continueWith_one": "Continuar con {{count}} medicamento",
+      "continueWith_other": "Continuar con {{count}} medicamentos",
+      "skipTitle": "Saltar este paso",
+      "skipDesc": "Mostrar programas de asistencia generales",
+      "introTitle": "Encuentre su camino con los medicamentos",
+      "introSubtitle": "Responda unas preguntas rápidas y le mostraremos programas de asistencia para los que puede calificar.",
+      "introDiscover": "Lo que va a descubrir:",
+      "introItem1": "Ayuda con copagos y tarjetas de ahorro",
+      "introItem2": "Programas de asistencia al paciente (medicamentos gratis)",
+      "introItem3": "Ayudas de fundaciones para gastos de bolsillo",
+      "introItem4": "Farmacias alternativas de bajo costo",
+      "introPrivacy": "Sus respuestas se quedan en su dispositivo. No necesita una cuenta.",
+      "introStart": "Empezar el Cuestionario Mi Camino",
+      "introTime": "Toma unos 2 minutos • {{count}} preguntas sencillas",
+      "progressSr": "Pregunta {{current}} de {{total}}. {{percent}}% completado.",
+      "progressLabel": "Pregunta {{current}} de {{total}}",
+      "progressPercent": "{{percent}}% completado",
+      "progressAria": "Progreso del cuestionario: {{percent}}% completado",
+      "urgentTag": "Urgente",
+      "helpfulTip": "Consejo útil",
+      "previousQuestion": "Pregunta anterior",
+      "previousAria": "Volver a la pregunta {{number}}",
+      "kbdNavigate": "para navegar",
+      "kbdSelect": "para seleccionar",
+      "resultsTitle": "Sus resultados personalizados",
+      "resultsSubtitle": "Según su perfil, estos son programas para los que puede calificar",
+      "profileTitle": "Su perfil",
+      "profileInsurance": "Seguro:",
+      "profileStage": "Etapa:",
+      "profileOrgan": "Órgano:",
+      "profileCost": "Costos:",
+      "lowCostBadge": "Bajo costo",
+      "discountCardBadge": "Tarjeta de descuento",
+      "benefitLabel": "Beneficio:",
+      "costPlusBenefit": "Costo mayorista + 15% + $5 de tarifa de farmacia",
+      "costPlusDesc": "La farmacia de precios transparentes de Mark Cuban; muchas veces 50-90% menos que el precio de venta al público",
+      "costPlusDescShort": "Precios transparentes de bajo costo",
+      "goodrxDesc": "Cupones gratis aceptados en más de 70,000 farmacias; muchas veces 50-80% de descuento",
+      "goodrxDescShort": "Cupones gratis en más de 70,000 farmacias",
+      "singlecareDesc": "Tarjeta gratis en más de 35,000 farmacias; compare y ahorre en recetas genéricas",
+      "singlecareDescShort": "Tarjeta gratis en más de 35,000 farmacias",
+      "checkPrice": "Ver precio",
+      "apply": "Solicitar",
+      "badgeCopay": "Tarjeta de copago",
+      "badgePap": "Medicinas gratis",
+      "badgeFoundation": "Fundación",
+      "foundationTip": "💡 Consejo: Los fondos abren durante todo el año; vuelva a revisar si ahora está cerrado.",
+      "contactSocialWorker": "Contacte al trabajador social de su centro de trasplante para ver opciones de asistencia.",
+      "contactCenterShort": "Contacte a su centro de trasplante.",
+      "noPrograms": "No se encontraron programas específicos. Contacte a su centro de trasplante para recibir asistencia.",
+      "printTitle": "Plan de Acción de Asistencia con Medicamentos",
+      "printGenerated": "Generado:",
+      "printProfile": "Su perfil",
+      "printInsurance": "Seguro:",
+      "printStage": "Etapa del trasplante:",
+      "printOrgan": "Tipo de órgano:",
+      "printNotSpecified": "No especificado",
+      "printRecommended": "Programas recomendados",
+      "printBenefit": "Beneficio:",
+      "printEligibility": "Requisitos:",
+      "printApply": "Solicitar:",
+      "printContactSw": "Contacte al trabajador social de su centro de trasplante para recibir asistencia.",
+      "printFooter": "Generado por TransplantMedicationNavigator.com",
+      "popupBlockedTitle": "Ventana emergente bloqueada",
+      "popupBlockedText": "Permita las ventanas emergentes en la configuración de su navegador para imprimir su plan de acción.",
+      "dismissAria": "Cerrar el aviso",
+      "printButton": "Imprimir plan de acción",
+      "newSearch": "Empezar una búsqueda nueva",
+      "goToWizard": "Empezar el Cuestionario Mi Camino",
+      "inputPlaceholder": "O escriba una pregunta...",
+      "sendAria": "Enviar mensaje",
+      "switchToChat": "Cambie al modo Chat para hacer preguntas",
+      "disclaimer": "Asistente de IA (inteligencia artificial): información educativa; no es consejo médico y puede cometer errores. Confirme los detalles con su equipo de trasplante. No escriba su nombre ni sus datos de contacto."
+    }
+  },
+  "chatQuiz": {
+    "role": {
+      "question": "¿A quién estoy ayudando hoy?",
+      "tip": "Los trabajadores sociales y los cuidadores pueden completar este cuestionario en nombre de un paciente para encontrar programas de asistencia.",
+      "options": {
+        "patient": {
+          "label": "Paciente",
+          "description": "Soy el paciente de trasplante"
+        },
+        "carepartner": {
+          "label": "Cuidador / Familiar",
+          "description": "Estoy ayudando a un ser querido"
+        },
+        "social_worker": {
+          "label": "Trabajador social / Coordinador",
+          "description": "Soy profesional de la salud"
+        }
+      }
+    },
+    "transplant_stage": {
+      "question": "¿En qué etapa del proceso de trasplante está?",
+      "tip": "Algunos programas tienen requisitos distintos según el tiempo desde el trasplante. El primer año suele tener más opciones.",
+      "options": {
+        "pre": {
+          "label": "Antes del trasplante",
+          "description": "En lista de espera o en evaluación"
+        },
+        "post_1yr": {
+          "label": "Después del trasplante (menos de 1 año)",
+          "description": "Dentro del primer año"
+        },
+        "post_1yr_plus": {
+          "label": "Después del trasplante (más de 1 año)",
+          "description": "Más de un año después del trasplante"
+        }
+      }
+    },
+    "organ_type": {
+      "question": "¿Qué tipo de trasplante?",
+      "tip": "Con un trasplante de varios órganos, puede calificar para la asistencia de varias fundaciones específicas de cada órgano.",
+      "options": {
+        "kidney": {
+          "label": "Riñón"
+        },
+        "liver": {
+          "label": "Hígado"
+        },
+        "heart": {
+          "label": "Corazón"
+        },
+        "lung": {
+          "label": "Pulmón"
+        },
+        "pancreas": {
+          "label": "Páncreas"
+        },
+        "multi": {
+          "label": "Varios órganos"
+        },
+        "other": {
+          "label": "Otro"
+        }
+      }
+    },
+    "insurance_type": {
+      "question": "¿Cuál es su seguro principal?",
+      "tip": "Las tarjetas de copago funcionan mejor con seguro comercial. Los pacientes con Medicare o Medicaid suelen tener acceso a los Programas de Asistencia al Paciente (PAP) con medicamentos gratis.",
+      "options": {
+        "commercial": {
+          "label": "Seguro comercial",
+          "description": "De mi trabajo, del trabajo de mi cónyuge, o lo compré por mi cuenta"
+        },
+        "medicare": {
+          "label": "Medicare",
+          "description": "El programa para personas de 65+ años o con discapacidades"
+        },
+        "medicaid": {
+          "label": "Medicaid",
+          "description": "Programa estatal para personas con ingresos más bajos"
+        },
+        "tricare_va": {
+          "label": "TRICARE o VA (veteranos)",
+          "description": "Beneficios militares o de veteranos"
+        },
+        "ihs": {
+          "label": "Indian Health Service",
+          "description": "Programas de salud tribales"
+        },
+        "uninsured": {
+          "label": "No tengo seguro",
+          "description": "Sin cobertura de seguro en este momento"
+        }
+      }
+    },
+    "has_multiple_insurance": {
+      "question": "¿Tiene más de un tipo de seguro de salud?",
+      "tip": "Tener varios planes de seguro (como Medicare más un plan del trabajo) afecta qué programas de asistencia puede usar. Esto se llama Coordinación de Beneficios.",
+      "options": {
+        "yes": {
+          "label": "Sí",
+          "description": "Tengo varios planes de seguro"
+        },
+        "no": {
+          "label": "No",
+          "description": "Solo tengo un plan de seguro"
+        }
+      }
+    },
+    "insurance_combination": {
+      "question": "¿Cuál de las siguientes opciones aplica en su caso?",
+      "tip": "Su combinación de seguros determina para qué programas califica. Medicare + cobertura activa del trabajo es especial: el plan del trabajo paga primero, ¡así que las tarjetas de copago pueden estar disponibles!",
+      "options": {
+        "medicare_employer_active": {
+          "label": "Medicare + cobertura del trabajo (trabajando)",
+          "description": "Yo o mi cónyuge trabajamos actualmente y tenemos seguro del trabajo"
+        },
+        "medicare_retiree": {
+          "label": "Medicare + beneficios de jubilado",
+          "description": "Tengo beneficios de salud de jubilado de un antiguo empleador"
+        },
+        "medicare_medicaid": {
+          "label": "Medicare + Medicaid (doble elegibilidad)",
+          "description": "Califico para Medicare y Medicaid"
+        },
+        "other_combination": {
+          "label": "Otra combinación",
+          "description": "Mi situación es diferente de las opciones anteriores"
+        }
+      }
+    },
+    "medication": {
+      "question": "¿Con qué medicamento necesita ayuda?",
+      "skipLabel": "No estoy seguro / Mostrar todas las opciones",
+      "tip": "Busque su medicamento por el nombre de marca (como Prograf o Envarsus) o el nombre genérico (como tacrolimus). Puede agregar varios medicamentos."
+    },
+    "cost_burden": {
+      "question": "¿Cómo describiría los costos actuales de sus medicamentos?",
+      "tip": "Si está en crisis, comuníquese de inmediato con el trabajador social de su centro de trasplante. Nunca se salte dosis; hay opciones de emergencia disponibles.",
+      "options": {
+        "manageable": {
+          "label": "Manejables",
+          "description": "Puedo pagar mis medicamentos"
+        },
+        "challenging": {
+          "label": "Difíciles",
+          "description": "Es apretado, pero me las arreglo"
+        },
+        "unaffordable": {
+          "label": "Casi no puedo pagarlos",
+          "description": "Me cuesta mucho pagar los medicamentos"
+        },
+        "crisis": {
+          "label": "Crisis",
+          "description": "Me he saltado o he racionado dosis"
+        }
+      }
+    },
+    "transplant_pharmacy": {
+      "question": "¿Surte sus recetas en la farmacia de su centro de trasplante?",
+      "tip": "Algunos centros de trasplante tienen su propia farmacia con precios más bajos que los pacientes no conocen. Vale la pena una llamada para preguntar; podría ahorrar mucho en sus medicamentos.",
+      "options": {
+        "yes": {
+          "label": "Sí",
+          "description": "Uso la farmacia de mi centro de trasplante"
+        },
+        "no": {
+          "label": "No",
+          "description": "Uso otra farmacia"
+        },
+        "not_sure": {
+          "label": "No estoy seguro",
+          "description": "No sé si mi centro tiene una"
+        },
+        "will_check": {
+          "label": "¡Voy a preguntar!",
+          "description": "Buena idea, llamaré para preguntar"
+        }
+      }
+    }
+  },
+  "common": {
+    "closeDialog": "Cerrar el diálogo",
+    "loading": "Cargando el contenido",
+    "helpfulTipAria": "Consejo útil"
   }
 }

@@ -156,6 +156,29 @@ const QUIZ_QUESTIONS = [
   },
 ];
 
+
+// Translate a quiz question's display strings for the active language.
+// English in QUIZ_QUESTIONS is canonical; Spanish lives under chatQuiz.* in
+// es.json, and t() falls back to the canonical text when a key is missing.
+export const translateQuizQuestion = (t, q) => {
+  if (!q) return q;
+  const base = `chatQuiz.${q.id}`;
+  return {
+    ...q,
+    question: t(`${base}.question`, { defaultValue: q.question }),
+    tip: q.tip ? t(`${base}.tip`, { defaultValue: q.tip }) : q.tip,
+    helpText: q.helpText ? t(`${base}.helpText`, { defaultValue: q.helpText }) : q.helpText,
+    skipLabel: q.skipLabel ? t(`${base}.skipLabel`, { defaultValue: q.skipLabel }) : q.skipLabel,
+    options: q.options?.map(o => ({
+      ...o,
+      label: t(`${base}.options.${o.value}.label`, { defaultValue: o.label }),
+      description: o.description
+        ? t(`${base}.options.${o.value}.description`, { defaultValue: o.description })
+        : o.description,
+    })),
+  };
+};
+
 // Initial state
 const initialState = {
   // Current mode: 'chat' or 'quiz'
