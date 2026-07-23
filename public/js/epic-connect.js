@@ -95,6 +95,23 @@ export function verifyState(stateFromUrl) {
  * @param {string} code - The authorization code from Epic
  * @returns {Promise<{access_token: string, patient: string, expires_in: number, scope: string}>}
  */
+// Fetch with a hard timeout so a hanging request becomes a visible,
+// reportable error instead of an endless spinner.
+async function fetchWithTimeout(url, options, timeoutMs, stepName) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+        return await fetch(url, { ...options, signal: controller.signal });
+    } catch (err) {
+        if (err.name === 'AbortError') {
+            throw new Error(stepName + ' did not respond within ' + Math.round(timeoutMs / 1000) + ' seconds. Please try again. If this keeps happening, note this message and the time it occurred.');
+        }
+        throw new Error(stepName + ' could not be reached: ' + (err.message || 'network error') + '. Check your connection and any ad blocker or firewall, then try again.');
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
 export async function exchangeCodeForToken(code) {
     const codeVerifier = sessionStorage.getItem(STORAGE_KEYS.CODE_VERIFIER);
     sessionStorage.removeItem(STORAGE_KEYS.CODE_VERIFIER);
@@ -109,7 +126,7 @@ export async function exchangeCodeForToken(code) {
         throw new Error('PKCE code_verifier not found. Please try connecting again.');
     }
 
-    const response = await fetch('/api/epic-token-exchange', {
+    const response = await fetchWithTimeout('/api/epic-token-exchange', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -118,9 +135,14 @@ export async function exchangeCodeForToken(code) {
             token_endpoint: tokenEndpoint || undefined,
             fhir_base_url: fhirBaseUrl || undefined
         })
-    });
+    }, 30000, 'The authorization step (step 1 of 2)');
 
-    const data = await response.json();
+    let data;
+    try {
+        data = await response.json();
+    } catch {
+        throw new Error('The authorization step returned an unreadable response (HTTP ' + response.status + '). Please try again.');
+    }
 
     if (!response.ok || !data.access_token) {
         throw new Error(data.error || 'Failed to authorize with Epic');
@@ -137,13 +159,18 @@ export async function exchangeCodeForToken(code) {
  * @returns {Promise<{matched: string[], unmatched: string[], totalFhirMeds: number, assistancePrograms: Array}>}
  */
 export async function fetchEpicMedications(accessToken, patientId, grantedScope) {
-    const response = await fetch('/api/epic-medications', {
+    const response = await fetchWithTimeout('/api/epic-medications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ access_token: accessToken, patient: patientId, scope: grantedScope })
-    });
+    }, 30000, 'The medication import (step 2 of 2)');
 
-    const data = await response.json();
+    let data;
+    try {
+        data = await response.json();
+    } catch {
+        throw new Error('The medication import returned an unreadable response (HTTP ' + response.status + '). Please try again.');
+    }
 
     if (!response.ok) {
         throw new Error(data.error || 'Failed to fetch medications from Epic');

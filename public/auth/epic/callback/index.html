@@ -215,6 +215,19 @@
 
         const $ = (id) => document.getElementById(id);
 
+        // Visible elapsed-time ticker: makes 'how long has it been stuck'
+        // readable from a screenshot, no DevTools needed.
+        const __startedAt = Date.now();
+        let __currentStep = 'Exchanging authorization...';
+        setInterval(() => {
+            const el = $('processing-msg');
+            const processing = $('state-processing');
+            if (!el || !processing || processing.classList.contains('hidden')) return;
+            const secs = Math.round((Date.now() - __startedAt) / 1000);
+            if (secs >= 3) el.textContent = __currentStep + ' (' + secs + 's)';
+        }, 1000);
+        const setStep = (text) => { __currentStep = text; const el = $('processing-msg'); if (el) el.textContent = text; };
+
         function showState(state) {
             $('state-processing').classList.toggle('hidden', state !== 'processing');
             $('state-success').classList.toggle('hidden', state !== 'success');
@@ -322,7 +335,7 @@
 
             try {
                 // Step 1: Exchange code for token
-                $('processing-msg').textContent = 'Exchanging authorization...';
+                setStep('Exchanging authorization...');
                 const tokenData = await exchangeCodeForToken(code);
 
                 console.log('Token data received:', JSON.stringify({
@@ -362,7 +375,7 @@
                 }
 
                 // Step 2: Fetch medications
-                $('processing-msg').textContent = 'Importing your medications...';
+                setStep('Importing your medications...');
                 const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient, grantedScope);
 
                 // Step 3: Store results for the calling page
