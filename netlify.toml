@@ -225,6 +225,15 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Un-hashed scripts in /js (e.g. epic-connect.js) must revalidate: they are
+# imported by pages at fixed URLs, so a year-old immutable copy can mismatch
+# the page that imports it. This rule comes after the generic *.js rule so it
+# wins for /js/*.
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
 # Cache fonts (1 year)
 [[headers]]
   for = "*.woff2"
