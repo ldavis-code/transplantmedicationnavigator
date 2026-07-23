@@ -2525,5 +2525,48 @@
       "generic": "Generic Switch",
       "other": "Other"
     }
+  },
+  "feedback": {
+    "header": {
+      "title": "Share Your Feedback",
+      "subtitle": "Help us understand how this tool is working for patients"
+    },
+    "q1": {
+      "title": "Did you find a program that helped?",
+      "found_copay_card": "Yes - found a copay card",
+      "found_pap": "Yes - found a patient assistance program (PAP)",
+      "found_not_tried": "Found options, but haven't tried yet",
+      "no_didnt_qualify": "No - didn't qualify for programs",
+      "no_not_listed": "No - my medication wasn't listed"
+    },
+    "q2": {
+      "title": "How much did this save you?",
+      "subtitle": "Estimate your monthly savings from the program you found.",
+      "unsure": "Not sure yet"
+    },
+    "q3": {
+      "title": "What would you have done without this tool?",
+      "paid_full": "Paid full price",
+      "skipped_rationed": "Skipped or rationed doses",
+      "called_coordinator": "Called my transplant coordinator",
+      "not_filled": "Not filled the prescription",
+      "other": "Other"
+    },
+    "q4": {
+      "title": "Share Your Story (Optional)",
+      "subtitle": "Your story can help other patients and improve the system. Feedback is anonymous — please don't include your name or contact information.",
+      "commentLabel": "Your comment or experience",
+      "commentPlaceholder": "Tell us about your experience finding medication assistance...",
+      "submit": "Submit Feedback",
+      "submitting": "Submitting...",
+      "skip": "Skip & Submit"
+    },
+    "submitted": {
+      "title": "Thank You!",
+      "text": "Your feedback helps us improve and helps transplant centers understand patient needs.",
+      "backHome": "Back to Home"
+    },
+    "privacyBold": "Privacy:",
+    "privacyText": "Your feedback is anonymous unless you provide an email"
   }
 }

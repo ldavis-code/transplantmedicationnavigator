@@ -2525,5 +2525,48 @@
       "generic": "Cambio a genérico",
       "other": "Otro"
     }
+  },
+  "feedback": {
+    "header": {
+      "title": "Comparta sus comentarios",
+      "subtitle": "Ayúdenos a entender cómo les está funcionando esta herramienta a los pacientes"
+    },
+    "q1": {
+      "title": "¿Encontró un programa que le ayudó?",
+      "found_copay_card": "Sí, encontré una tarjeta de copago",
+      "found_pap": "Sí, encontré un programa de asistencia al paciente (PAP)",
+      "found_not_tried": "Encontré opciones, pero todavía no las he probado",
+      "no_didnt_qualify": "No, no califiqué para los programas",
+      "no_not_listed": "No, mi medicamento no estaba en la lista"
+    },
+    "q2": {
+      "title": "¿Cuánto le ayudó a ahorrar?",
+      "subtitle": "Calcule su ahorro mensual con el programa que encontró.",
+      "unsure": "Todavía no lo sé"
+    },
+    "q3": {
+      "title": "¿Qué habría hecho sin esta herramienta?",
+      "paid_full": "Pagar el precio completo",
+      "skipped_rationed": "Saltarme o racionar dosis",
+      "called_coordinator": "Llamar a mi coordinador de trasplante",
+      "not_filled": "No surtir la receta",
+      "other": "Otra cosa"
+    },
+    "q4": {
+      "title": "Comparta su historia (opcional)",
+      "subtitle": "Su historia puede ayudar a otros pacientes y a mejorar el sistema. Los comentarios son anónimos; por favor no incluya su nombre ni información de contacto.",
+      "commentLabel": "Su comentario o experiencia",
+      "commentPlaceholder": "Cuéntenos cómo le fue al buscar asistencia para sus medicamentos...",
+      "submit": "Enviar comentarios",
+      "submitting": "Enviando...",
+      "skip": "Omitir y enviar"
+    },
+    "submitted": {
+      "title": "¡Gracias!",
+      "text": "Sus comentarios nos ayudan a mejorar y ayudan a los centros de trasplante a entender las necesidades de los pacientes.",
+      "backHome": "Volver al inicio"
+    },
+    "privacyBold": "Privacidad:",
+    "privacyText": "Sus comentarios son anónimos, a menos que usted proporcione un correo electrónico"
   }
 }
