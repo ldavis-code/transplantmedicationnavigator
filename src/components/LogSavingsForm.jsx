@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { DollarSign, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { logSavings, programTypeLabels } from '../lib/savingsApi';
 
 export default function LogSavingsForm({ onSuccess, medications = [] }) {
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState({ text: '', type: '' });
+    const [message, setMessage] = useState({ text: '', type: '', field: '' });
     const [formData, setFormData] = useState({
         medicationName: '',
         medicationId: '',
@@ -34,23 +36,23 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage({ text: '', type: '' });
+        setMessage({ text: '', type: '', field: '' });
 
         // Validation
         if (!formData.medicationName.trim()) {
-            setMessage({ text: 'Please enter a medication name', type: 'error' });
+            setMessage({ text: t('savings.form.errorMedication'), type: 'error', field: 'medication' });
             return;
         }
         if (!formData.originalPrice || parseFloat(formData.originalPrice) <= 0) {
-            setMessage({ text: 'Please enter the original price', type: 'error' });
+            setMessage({ text: t('savings.form.errorOriginalPrice'), type: 'error', field: 'original' });
             return;
         }
         if (formData.paidPrice === '' || parseFloat(formData.paidPrice) < 0) {
-            setMessage({ text: 'Please enter what you paid (can be $0)', type: 'error' });
+            setMessage({ text: t('savings.form.errorPaidPrice'), type: 'error', field: 'paid' });
             return;
         }
         if (parseFloat(formData.paidPrice) > parseFloat(formData.originalPrice)) {
-            setMessage({ text: 'Paid price cannot exceed original price', type: 'error' });
+            setMessage({ text: t('savings.form.errorPaidExceeds'), type: 'error', field: 'paid' });
             return;
         }
 
@@ -69,8 +71,12 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
             });
 
             setMessage({
-                text: `Saved $${result.amountSaved.toFixed(2)}! Total savings: $${parseFloat(result.totalSaved).toFixed(2)}`,
-                type: 'success'
+                text: t('savings.form.successMessage', {
+                    amount: result.amountSaved.toFixed(2),
+                    total: parseFloat(result.totalSaved).toFixed(2)
+                }),
+                type: 'success',
+                field: ''
             });
 
             // Reset form
@@ -92,8 +98,9 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
 
         } catch (error) {
             setMessage({
-                text: 'Failed to save. Entry stored locally and will sync later.',
-                type: 'warning'
+                text: t('savings.form.offlineWarning'),
+                type: 'warning',
+                field: ''
             });
         } finally {
             setIsLoading(false);
@@ -108,14 +115,14 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
         <div className="bg-white rounded-xl border border-slate-200 p-6">
             <div className="flex items-center gap-2 mb-4">
                 <DollarSign className="text-emerald-600" size={24} aria-hidden="true" />
-                <h3 className="text-lg font-bold text-slate-900">Log Your Savings</h3>
+                <h3 className="text-lg font-bold text-slate-900">{t('savings.form.title')}</h3>
             </div>
 
             <p className="text-sm text-slate-600 mb-4">
-                Did you just fill a prescription using an assistance program? Log it here to track your savings!
+                {t('savings.form.intro')}
             </p>
             <p className="text-xs text-slate-500 mb-6">
-                <strong>Anonymous tracking:</strong> Your data is stored locally on your device only.
+                <strong>{t('savings.form.anonymousBold')}</strong> {t('savings.form.anonymousText')}
             </p>
 
             {/* Status message with aria-live for screen reader announcements */}
@@ -142,8 +149,8 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Medication Name */}
                 <div>
                     <label htmlFor="medicationName" className="block text-sm font-medium text-slate-700 mb-1">
-                        Medication Name <span aria-hidden="true">*</span>
-                        <span className="sr-only">(required)</span>
+                        {t('savings.form.medicationNameLabel')} <span aria-hidden="true">*</span>
+                        <span className="sr-only">{t('savings.form.requiredSr')}</span>
                     </label>
                     <input
                         type="text"
@@ -151,13 +158,13 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                         name="medicationName"
                         value={formData.medicationName}
                         onChange={handleChange}
-                        placeholder="e.g., Tacrolimus, Eliquis"
+                        placeholder={t('savings.form.medicationNamePlaceholder')}
                         className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         list="medication-suggestions"
                         required
                         aria-required="true"
-                        aria-invalid={message.type === 'error' && message.text.includes('medication') ? 'true' : undefined}
-                        aria-describedby={message.type === 'error' && message.text.includes('medication') ? 'form-message' : undefined}
+                        aria-invalid={message.type === 'error' && message.field === 'medication' ? 'true' : undefined}
+                        aria-describedby={message.type === 'error' && message.field === 'medication' ? 'form-message' : undefined}
                     />
                     {medications.length > 0 && (
                         <datalist id="medication-suggestions">
@@ -172,7 +179,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label htmlFor="programName" className="block text-sm font-medium text-slate-700 mb-1">
-                            Program Used
+                            {t('savings.form.programNameLabel')}
                         </label>
                         <input
                             type="text"
@@ -180,13 +187,13 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                             name="programName"
                             value={formData.programName}
                             onChange={handleChange}
-                            placeholder="e.g., HealthWell Foundation"
+                            placeholder={t('savings.form.programNamePlaceholder')}
                             className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         />
                     </div>
                     <div>
                         <label htmlFor="programType" className="block text-sm font-medium text-slate-700 mb-1">
-                            Program Type
+                            {t('savings.form.programTypeLabel')}
                         </label>
                         <select
                             id="programType"
@@ -195,9 +202,11 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                             onChange={handleChange}
                             className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         >
-                            <option value="">Select type...</option>
-                            {Object.entries(programTypeLabels).map(([value, label]) => (
-                                <option key={value} value={value}>{label}</option>
+                            <option value="">{t('savings.form.programTypePlaceholder')}</option>
+                            {Object.keys(programTypeLabels).map(value => (
+                                <option key={value} value={value}>
+                                    {t(`savings.programTypes.${value}`, { defaultValue: programTypeLabels[value] })}
+                                </option>
                             ))}
                         </select>
                     </div>
@@ -207,8 +216,8 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label htmlFor="originalPrice" className="block text-sm font-medium text-slate-700 mb-1">
-                            Original Price <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">(without assistance)</span>
-                            <span className="sr-only">(required)</span>
+                            {t('savings.form.originalPriceLabel')} <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">{t('savings.form.originalPriceHint')}</span>
+                            <span className="sr-only">{t('savings.form.requiredSr')}</span>
                         </label>
                         <div className="relative">
                             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" aria-hidden="true">$</span>
@@ -224,14 +233,14 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                                 className="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                 required
                                 aria-required="true"
-                                aria-invalid={message.type === 'error' && message.text.includes('original') ? 'true' : undefined}
+                                aria-invalid={message.type === 'error' && message.field === 'original' ? 'true' : undefined}
                             />
                         </div>
                     </div>
                     <div>
                         <label htmlFor="paidPrice" className="block text-sm font-medium text-slate-700 mb-1">
-                            What You Paid <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">(after assistance)</span>
-                            <span className="sr-only">(required)</span>
+                            {t('savings.form.paidPriceLabel')} <span aria-hidden="true">*</span> <span className="text-slate-600 font-normal">{t('savings.form.paidPriceHint')}</span>
+                            <span className="sr-only">{t('savings.form.requiredSr')}</span>
                         </label>
                         <div className="relative">
                             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" aria-hidden="true">$</span>
@@ -247,7 +256,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                                 className="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                                 required
                                 aria-required="true"
-                                aria-invalid={message.type === 'error' && message.text.includes('paid') ? 'true' : undefined}
+                                aria-invalid={message.type === 'error' && message.field === 'paid' ? 'true' : undefined}
                             />
                         </div>
                     </div>
@@ -256,7 +265,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Savings Preview */}
                 {savingsPreview !== null && (
                     <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
-                        <span className="text-sm text-emerald-700">You saved</span>
+                        <span className="text-sm text-emerald-700">{t('savings.form.savedPreviewLabel')}</span>
                         <div className="text-3xl font-bold text-emerald-600">
                             ${savingsPreview.toFixed(2)}
                         </div>
@@ -266,7 +275,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Fill Date */}
                 <div>
                     <label htmlFor="fillDate" className="block text-sm font-medium text-slate-700 mb-1">
-                        Fill Date
+                        {t('savings.form.fillDateLabel')}
                     </label>
                     <input
                         type="date"
@@ -281,7 +290,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                 {/* Notes */}
                 <div>
                     <label htmlFor="notes" className="block text-sm font-medium text-slate-700 mb-1">
-                        Notes <span className="text-slate-600 font-normal">(optional)</span>
+                        {t('savings.form.notesLabel')} <span className="text-slate-600 font-normal">{t('savings.form.notesHint')}</span>
                     </label>
                     <textarea
                         id="notes"
@@ -289,7 +298,7 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                         value={formData.notes}
                         onChange={handleChange}
                         rows={2}
-                        placeholder="Any additional details..."
+                        placeholder={t('savings.form.notesPlaceholder')}
                         className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                 </div>
@@ -303,12 +312,12 @@ export default function LogSavingsForm({ onSuccess, medications = [] }) {
                     {isLoading ? (
                         <>
                             <Loader2 className="animate-spin" size={20} aria-hidden="true" />
-                            Saving...
+                            {t('savings.form.submitLoading')}
                         </>
                     ) : (
                         <>
                             <Check size={20} aria-hidden="true" />
-                            Log Savings
+                            {t('savings.form.submitButton')}
                         </>
                     )}
                 </button>

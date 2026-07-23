@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Calculator, TrendingUp, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SavingsCalculator from '../components/SavingsCalculator';
-import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 import LogSavingsForm from '../components/LogSavingsForm';
 import SavingsDashboard from '../components/SavingsDashboard';
 import { syncPendingEntries } from '../lib/savingsApi';
@@ -12,10 +12,11 @@ import { seoMetadata } from '../data/seo-metadata';
 
 export default function SavingsTracker() {
     useMetaTags(seoMetadata.savingsTracker);
+    const { t } = useTranslation();
 
     const [activeTab, setActiveTab] = useState('calculator');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
-    const [syncMessage, setSyncMessage] = useState(null);
+    const [syncedCount, setSyncedCount] = useState(0);
     const { medications } = useMedications();
 
     // Try to sync any pending local entries on mount
@@ -24,9 +25,9 @@ export default function SavingsTracker() {
             try {
                 const result = await syncPendingEntries();
                 if (result.synced > 0) {
-                    setSyncMessage(`Synced ${result.synced} pending entries`);
+                    setSyncedCount(result.synced);
                     setRefreshTrigger(prev => prev + 1);
-                    setTimeout(() => setSyncMessage(null), 3000);
+                    setTimeout(() => setSyncedCount(0), 3000);
                 }
             } catch (error) {
                 console.error('Sync error:', error);
@@ -42,32 +43,31 @@ export default function SavingsTracker() {
     return (
         <>
         <div className="max-w-4xl mx-auto">
-            <EnglishOnlyNotice />
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 mb-6 text-white">
                 <div className="flex items-center gap-2 mb-2">
                     <Link
                         to="/my-medications"
                         className="text-white/80 hover:text-white flex items-center gap-1 text-sm min-h-[44px] min-w-[44px]"
-                        aria-label="Go back to My Medications page"
+                        aria-label={t('savings.page.backAria')}
                     >
                         <ArrowLeft size={16} aria-hidden="true" />
-                        My Medications
+                        {t('savings.page.backLink')}
                     </Link>
                 </div>
                 <div className="flex items-center gap-3">
                     <Calculator size={32} aria-hidden="true" />
                     <div>
-                        <h1 className="text-2xl font-bold">Savings Calculator</h1>
+                        <h1 className="text-2xl font-bold">{t('savings.page.title')}</h1>
                         <p className="text-emerald-100">
-                            See how much you could save with assistance programs
+                            {t('savings.page.subtitle')}
                         </p>
                     </div>
                 </div>
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl" role="tablist" aria-label="Savings options">
+            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl" role="tablist" aria-label={t('savings.page.tablistAria')}>
                 <button
                     onClick={() => setActiveTab('calculator')}
                     role="tab"
@@ -81,7 +81,7 @@ export default function SavingsTracker() {
                     }`}
                 >
                     <Calculator size={18} aria-hidden="true" />
-                    Estimate Savings
+                    {t('savings.page.tabCalculator')}
                 </button>
                 <button
                     onClick={() => setActiveTab('tracker')}
@@ -96,14 +96,14 @@ export default function SavingsTracker() {
                     }`}
                 >
                     <TrendingUp size={18} aria-hidden="true" />
-                    Track Actual Savings
+                    {t('savings.page.tabTracker')}
                 </button>
             </div>
 
             {/* Sync Message */}
-            {syncMessage && (
+            {syncedCount > 0 && (
                 <div role="status" aria-live="polite" className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 rounded-lg mb-6 text-sm">
-                    {syncMessage}
+                    {t('savings.page.syncMessage', { count: syncedCount })}
                 </div>
             )}
 
@@ -140,12 +140,12 @@ export default function SavingsTracker() {
 
                             {/* Tips */}
                             <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                                <h4 className="font-semibold text-blue-900 mb-2">Tips for Tracking</h4>
+                                <h4 className="font-semibold text-blue-900 mb-2">{t('savings.page.tipsTitle')}</h4>
                                 <ul className="text-sm text-blue-800 space-y-2">
-                                    <li>• Log each prescription fill as you pick it up</li>
-                                    <li>• Include what you would have paid without assistance</li>
-                                    <li>• Check your pharmacy receipt for the "You Saved" amount</li>
-                                    <li>• Track different program types to see which save you most</li>
+                                    <li>• {t('savings.page.tip1')}</li>
+                                    <li>• {t('savings.page.tip2')}</li>
+                                    <li>• {t('savings.page.tip3')}</li>
+                                    <li>• {t('savings.page.tip4')}</li>
                                 </ul>
                             </div>
                         </div>
@@ -158,16 +158,15 @@ export default function SavingsTracker() {
 
                     {/* Call to Action for Programs */}
                     <div className="mt-8 bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">
-                        <h3 className="font-bold text-purple-900 mb-2">Want to save more?</h3>
+                        <h3 className="font-bold text-purple-900 mb-2">{t('savings.page.ctaTitle')}</h3>
                         <p className="text-purple-700 mb-4">
-                            Use our medication search to find Patient Assistance Programs, foundation grants,
-                            and copay cards for your specific medications.
+                            {t('savings.page.ctaText')}
                         </p>
                         <Link
                             to="/medications"
                             className="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors"
                         >
-                            Search Medications
+                            {t('savings.page.ctaButton')}
                         </Link>
                     </div>
                 </>
