@@ -2,12 +2,14 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Globe } from 'lucide-react';
 
-// The invitation to switch is always written in the TARGET language, so a
-// Spanish speaker landing on the English page can find it. These two strings
-// are intentionally not in the locale files.
+// On the English page the invitation is in Spanish so a Spanish speaker can
+// find it. On the Spanish page it is also in Spanish: the reader chose
+// Spanish, and the accessibility review flagged English UI instructions
+// interrupting Spanish pages ("inglés" stays recognizable to English
+// speakers who switched by accident). Intentionally not in the locale files.
 const SWITCH_LABELS = {
     en: 'Ver esta página en español',
-    es: 'View this page in English',
+    es: 'Ver esta página en inglés',
 };
 
 /**

@@ -1660,6 +1660,9 @@
       },
       "crisis": {
         "title": "Immediate Assistance Path",
+        "callTeamTitle": "Call your transplant team or pharmacy today",
+        "callTeamText": "If you cannot pay for your medication right now, your transplant team's social worker or pharmacist can often arrange an emergency supply or bridge assistance the same day.",
+        "notEmergency": "This questionnaire is educational and is not an emergency service. If you think you may have a medical emergency, call your doctor or 911.",
         "emergencyLink": "Out of medication, or down to your last few days? See emergency steps →",
         "notAlone": "You are not alone. Help is available. Please follow these steps in order.",
         "papTitle": "Manufacturer PAPs (Free Drug).",
@@ -1860,6 +1863,8 @@
       "additionalInfoPlaceholder": "Any other details that might help your doctor (e.g., previous drug reactions, why you need this specific medication, etc.)",
       "optional": "(optional)",
       "ifKnown": "(if known)",
+      "blankPrompt": "Prefer not to type your details online? Download a blank letter to print and fill in by hand.",
+      "blankButton": "Download blank letter",
       "generate": "Generate My Letter",
       "previewTitle": "Your Letter to Dr. ",
       "doctorFallback": "[Doctor's Name]",

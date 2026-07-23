@@ -1660,6 +1660,9 @@
       },
       "crisis": {
         "title": "Camino de asistencia inmediata",
+        "callTeamTitle": "Llame hoy a su equipo de trasplante o a su farmacia",
+        "callTeamText": "Si no puede pagar su medicamento ahora mismo, el trabajador social o el farmacéutico de su equipo de trasplante muchas veces puede conseguirle un suministro de emergencia o una ayuda puente el mismo día.",
+        "notEmergency": "Este cuestionario es educativo y no es un servicio de emergencia. Si cree que puede tener una emergencia médica, llame a su médico o al 911.",
         "emergencyLink": "¿Se quedó sin medicamento o le quedan solo unos días? Vea los pasos de emergencia →",
         "notAlone": "Usted no está solo. Hay ayuda disponible. Por favor, siga estos pasos en orden.",
         "papTitle": "PAP de los fabricantes (medicamento gratis).",
@@ -1860,6 +1863,8 @@
       "additionalInfoPlaceholder": "Cualquier otro detalle que pueda ayudar a su médico (p. ej., reacciones previas a medicamentos, por qué necesita este medicamento específico, etc.)",
       "optional": "(opcional)",
       "ifKnown": "(si lo sabe)",
+      "blankPrompt": "¿Prefiere no escribir sus datos en línea? Descargue una carta en blanco para imprimirla y llenarla a mano.",
+      "blankButton": "Descargar carta en blanco",
       "generate": "Generar mi carta",
       "previewTitle": "Su carta para el Dr. ",
       "doctorFallback": "[Nombre del médico]",
