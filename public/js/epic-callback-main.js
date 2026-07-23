@@ -174,7 +174,7 @@ async function processCallback() {
 
         // Step 2: Fetch medications
         setStep('Importing your medications...');
-        const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient, grantedScope);
+        const medsData = await fetchEpicMedications(tokenData.access_token, tokenData.patient, grantedScope, tokenData.fhir_base_url);
 
         // Step 3: Store results for the calling page
         storeImportedMeds(medsData);
