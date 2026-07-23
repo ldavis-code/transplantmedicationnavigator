@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:readability && node scripts/generate-sitemap.js && vite build && node scripts/prerender-seo.js",
+    "build": "npm run check:readability && npm run check:i18n && node scripts/generate-sitemap.js && vite build && node scripts/prerender-seo.js",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
     "sync:medications": "node scripts/sync-medications-json.js",
@@ -13,6 +13,7 @@
     "generate-icons": "node scripts/generate-icons.js",
     "generate:og": "node scripts/generate-og-images.js",
     "check:readability": "node scripts/check-readability.js",
+    "check:i18n": "node scripts/check-i18n.js",
     "snapshot:update": "node scripts/snapshot-pages.js --update",
     "snapshot:verify": "node scripts/snapshot-pages.js",
     "check:readability:strict": "node scripts/check-readability.js --strict",

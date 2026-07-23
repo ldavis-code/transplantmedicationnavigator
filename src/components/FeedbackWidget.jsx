@@ -6,10 +6,12 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Check, X, DollarSign, HelpCircle, CheckCircle } from 'lucide-react';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
 
 const FeedbackWidget = ({ medicationName }) => {
+  const { t } = useTranslation();
   const [step, setStep] = useState('q1'); // 'q1', 'q2', 'q3', 'submitted'
   const [responses, setResponses] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,9 +92,9 @@ const FeedbackWidget = ({ medicationName }) => {
       <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center">
         <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold text-lg">
           <CheckCircle size={24} aria-hidden="true" />
-          Thank you!
+          {t('feedback.submitted.title')}
         </div>
-        <p className="text-emerald-600 mt-2">Your feedback helps transplant centers understand patient needs.</p>
+        <p className="text-emerald-600 mt-2">{t('widgets.feedbackThanks')}</p>
       </div>
     );
   }
@@ -101,22 +103,22 @@ const FeedbackWidget = ({ medicationName }) => {
     return (
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
         <p className="font-semibold text-slate-800 text-lg mb-4">
-          What would you have done without this tool?
+          {t('feedback.q3.title')}
         </p>
         <OptionButton onClick={() => answerQ3('paid_full')} color="blue" disabled={isSubmitting}>
-          Paid full price
+          {t('feedback.q3.paid_full')}
         </OptionButton>
         <OptionButton onClick={() => answerQ3('skipped_rationed')} color="red" disabled={isSubmitting}>
-          Skipped or rationed doses
+          {t('feedback.q3.skipped_rationed')}
         </OptionButton>
         <OptionButton onClick={() => answerQ3('called_coordinator')} color="amber" disabled={isSubmitting}>
-          Called my transplant coordinator
+          {t('feedback.q3.called_coordinator')}
         </OptionButton>
         <OptionButton onClick={() => answerQ3('not_filled')} color="red" disabled={isSubmitting}>
-          Not filled the prescription
+          {t('feedback.q3.not_filled')}
         </OptionButton>
         <OptionButton onClick={() => answerQ3('other')} color="gray" disabled={isSubmitting}>
-          Other
+          {t('feedback.q3.other')}
         </OptionButton>
       </div>
     );
@@ -126,7 +128,7 @@ const FeedbackWidget = ({ medicationName }) => {
     return (
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
         <p className="font-semibold text-slate-800 text-lg mb-4">
-          How much did this save you?
+          {t('feedback.q2.title')}
         </p>
         <OptionButton onClick={() => answerQ2('0-50')} color="blue">
           $0 – $50
@@ -144,7 +146,7 @@ const FeedbackWidget = ({ medicationName }) => {
           $500+
         </OptionButton>
         <OptionButton onClick={() => answerQ2('unsure')} color="gray">
-          Not sure yet
+          {t('feedback.q2.unsure')}
         </OptionButton>
       </div>
     );
@@ -154,21 +156,21 @@ const FeedbackWidget = ({ medicationName }) => {
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
       <p className="font-semibold text-slate-800 text-lg mb-4">
-        Did you get your medication today?
+        {t('myMeds.adherenceQuestion')}
       </p>
       <OptionButton onClick={() => answerQ1('yes')} color="green">
         <span className="flex items-center gap-2">
-          <Check size={18} aria-hidden="true" /> Yes
+          <Check size={18} aria-hidden="true" /> {t('myMeds.adherenceYes')}
         </span>
       </OptionButton>
       <OptionButton onClick={() => answerQ1('no_too_expensive')} color="red">
-        No – still too expensive
+        {t('myMeds.adherenceNoExpensive')}
       </OptionButton>
       <OptionButton onClick={() => answerQ1('no_another_pharmacy')} color="amber">
-        No – will try another pharmacy
+        {t('myMeds.adherenceNoPharmacy')}
       </OptionButton>
       <OptionButton onClick={() => answerQ1('no_other')} color="gray">
-        No – other reason
+        {t('myMeds.adherenceNoOther')}
       </OptionButton>
     </div>
   );

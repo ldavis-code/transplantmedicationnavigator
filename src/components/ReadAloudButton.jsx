@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Volume2, Square } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-const ReadAloudButton = ({ contentRef, label = 'Read Aloud' }) => {
+const ReadAloudButton = ({ contentRef, label = null }) => {
+    const { t } = useTranslation();
+    const buttonLabel = label || t('widgets.readAloud.label');
     const [isSpeaking, setIsSpeaking] = useState(false);
     const utteranceRef = useRef(null);
 
@@ -65,19 +68,19 @@ const ReadAloudButton = ({ contentRef, label = 'Read Aloud' }) => {
                 <button
                     onClick={stop}
                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 transition min-h-[44px] min-w-[44px]"
-                    aria-label="Stop reading aloud"
+                    aria-label={t('widgets.readAloud.stopAria')}
                 >
                     <Square size={16} aria-hidden="true" />
-                    Stop
+                    {t('widgets.readAloud.stop')}
                 </button>
             ) : (
                 <button
                     onClick={speak}
                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition min-h-[44px] min-w-[44px]"
-                    aria-label={label}
+                    aria-label={buttonLabel}
                 >
                     <Volume2 size={16} aria-hidden="true" />
-                    {label}
+                    {buttonLabel}
                 </button>
             )}
         </div>

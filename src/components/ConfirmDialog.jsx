@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle, X, CheckCircle, Info, AlertCircle } from 'lucide-react';
 
 /**
@@ -40,6 +41,7 @@ export default function ConfirmDialog({
   type = 'confirm', // 'confirm', 'warning', 'success', 'info', 'error'
   showCancel = true // Set to false for alert-style (single button)
 }) {
+  const { t } = useTranslation();
   const dialogRef = useRef(null);
   const confirmButtonRef = useRef(null);
   const cancelButtonRef = useRef(null);
@@ -156,7 +158,7 @@ export default function ConfirmDialog({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-          aria-label="Close dialog"
+          aria-label={t('common.closeDialog')}
         >
           <X size={20} aria-hidden="true" />
         </button>

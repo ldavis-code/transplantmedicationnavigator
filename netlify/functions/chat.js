@@ -507,14 +507,18 @@ const handleAction = async (action, body) => {
 
     case 'start': {
       const conversationId = generateConversationId();
+      const isSpanish = (body.language || '').startsWith('es');
       return {
         conversationId,
-        message: "Hi! I'm your Medication Navigator. I'll help you find the best assistance programs for your transplant medications—whether that's copay cards, foundations, or free medication programs.\n\nLet's get started! **Who am I helping today?**",
+        message: isSpanish
+          ? "¡Hola! Soy su Navegador de Medicamentos. Le ayudaré a encontrar los mejores programas de asistencia para sus medicamentos de trasplante, ya sean tarjetas de copago, fundaciones o programas de medicamentos gratis.\n\n¡Empecemos! **¿A quién estoy ayudando hoy?**"
+          : "Hi! I'm your Medication Navigator. I'll help you find the best assistance programs for your transplant medications—whether that's copay cards, foundations, or free medication programs.\n\nLet's get started! **Who am I helping today?**",
       };
     }
 
     case 'answer': {
       const { questionId, answer, answers } = body;
+      const isSpanish = (body.language || '').startsWith('es');
 
       // Generate contextual responses based on the answer
       let message = '';
@@ -522,40 +526,62 @@ const handleAction = async (action, body) => {
       switch (questionId) {
         case 'role':
           if (answer === 'patient') {
-            message = "Thank you! I'm glad you're taking steps to manage your medication costs. **Where are you in the transplant process?**";
+            message = isSpanish
+              ? "¡Gracias! Me alegra que esté tomando medidas para manejar el costo de sus medicamentos. **¿En qué etapa del proceso de trasplante está?**"
+              : "Thank you! I'm glad you're taking steps to manage your medication costs. **Where are you in the transplant process?**";
           } else if (answer === 'carepartner') {
-            message = "It's wonderful that you're helping your loved one. **Where are they in the transplant process?**";
+            message = isSpanish
+              ? "Es maravilloso que esté ayudando a su ser querido. **¿En qué etapa del proceso de trasplante está?**"
+              : "It's wonderful that you're helping your loved one. **Where are they in the transplant process?**";
           } else {
-            message = "Thank you for the important work you do helping patients! **Where is your patient in the transplant process?**";
+            message = isSpanish
+              ? "¡Gracias por el trabajo tan importante que hace ayudando a los pacientes! **¿En qué etapa del proceso de trasplante está su paciente?**"
+              : "Thank you for the important work you do helping patients! **Where is your patient in the transplant process?**";
           }
           break;
 
         case 'transplant_stage':
-          message = "Got it! Different stages have different medication needs. **What type of transplant?**";
+          message = isSpanish
+            ? "¡Entendido! Cada etapa tiene necesidades de medicamentos diferentes. **¿Qué tipo de trasplante?**"
+            : "Got it! Different stages have different medication needs. **What type of transplant?**";
           break;
 
         case 'organ_type':
-          message = "Thank you! Now, this is important—your insurance type determines which assistance programs you're eligible for. **What's your primary insurance?**";
+          message = isSpanish
+            ? "¡Gracias! Ahora, esto es importante: su tipo de seguro determina para qué programas de asistencia califica. **¿Cuál es su seguro principal?**"
+            : "Thank you! Now, this is important—your insurance type determines which assistance programs you're eligible for. **What's your primary insurance?**";
           break;
 
         case 'insurance_type':
           if (answer === 'commercial') {
-            message = "Great news! With commercial insurance, you're eligible for **manufacturer copay cards** that can reduce your costs to as little as $0-$50 per month. Let's find the right programs.\n\n**Which medication do you need help with?**";
+            message = isSpanish
+              ? "¡Buenas noticias! Con seguro comercial, califica para las **tarjetas de copago del fabricante**, que pueden bajar sus costos hasta $0-$50 al mes. Busquemos los programas correctos.\n\n**¿Con qué medicamento necesita ayuda?**"
+              : "Great news! With commercial insurance, you're eligible for **manufacturer copay cards** that can reduce your costs to as little as $0-$50 per month. Let's find the right programs.\n\n**Which medication do you need help with?**";
           } else if (answer === 'medicare') {
-            message = "Important to know: Medicare patients **cannot use copay cards** (it's a legal thing), but there are still great options! Foundations like HealthWell and PAN, plus Patient Assistance Programs, can help significantly.\n\n**Which medication do you need help with?**";
+            message = isSpanish
+              ? "Importante saberlo: los pacientes con Medicare **no pueden usar tarjetas de copago** (es una regla legal), ¡pero todavía hay muy buenas opciones! Las fundaciones como HealthWell y PAN, más los Programas de Asistencia al Paciente (PAP), pueden ayudar mucho.\n\n**¿Con qué medicamento necesita ayuda?**"
+              : "Important to know: Medicare patients **cannot use copay cards** (it's a legal thing), but there are still great options! Foundations like HealthWell and PAN, plus Patient Assistance Programs, can help significantly.\n\n**Which medication do you need help with?**";
           } else if (answer === 'uninsured') {
-            message = "I understand—being uninsured is challenging. The good news is that **Patient Assistance Programs (PAPs) can provide your medications completely FREE**. Let's find the right programs.\n\n**Which medication do you need help with?**";
+            message = isSpanish
+              ? "Entiendo; estar sin seguro es difícil. La buena noticia es que los **Programas de Asistencia al Paciente (PAP) pueden darle sus medicamentos completamente GRATIS**. Busquemos los programas correctos.\n\n**¿Con qué medicamento necesita ayuda?**"
+              : "I understand—being uninsured is challenging. The good news is that **Patient Assistance Programs (PAPs) can provide your medications completely FREE**. Let's find the right programs.\n\n**Which medication do you need help with?**";
           } else {
-            message = "Let's find the best options for your situation.\n\n**Which medication do you need help with?**";
+            message = isSpanish
+              ? "Busquemos las mejores opciones para su situación.\n\n**¿Con qué medicamento necesita ayuda?**"
+              : "Let's find the best options for your situation.\n\n**Which medication do you need help with?**";
           }
           break;
 
         case 'medication':
-          message = "Almost done! One last question to help me prioritize your options.\n\n**How would you describe your current medication costs?**";
+          message = isSpanish
+            ? "¡Casi terminamos! Una última pregunta para ayudarme a priorizar sus opciones.\n\n**¿Cómo describiría los costos actuales de sus medicamentos?**"
+            : "Almost done! One last question to help me prioritize your options.\n\n**How would you describe your current medication costs?**";
           break;
 
         default:
-          message = "Let's continue. What else can I help you with?";
+          message = isSpanish
+            ? "Continuemos. ¿En qué más puedo ayudarle?"
+            : "Let's continue. What else can I help you with?";
       }
 
       return { message };
