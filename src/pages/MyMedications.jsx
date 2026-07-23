@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator, Bell, ShieldCheck, ExternalLink, CreditCard, Heart, ClipboardCheck } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
+import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 import programsData from '../data/programs.json';
@@ -274,6 +275,7 @@ export default function MyMedications() {
     <>
       {DialogComponent}
       <div className="max-w-2xl mx-auto">
+      <EnglishOnlyNotice />
       {/* Privacy Notice */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="alert">
         <div className="flex items-start gap-3">

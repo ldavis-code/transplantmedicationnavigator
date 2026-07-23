@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { FileText, Mail } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
+import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 
 const TermsAndConditions = () => {
     useMetaTags(seoMetadata.termsAndConditions);
 
     return (
         <article className="max-w-4xl mx-auto space-y-8 pb-12">
+            <EnglishOnlyNotice />
             <header className="text-center py-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
                     <FileText size={32} className="text-emerald-700" aria-hidden="true" />

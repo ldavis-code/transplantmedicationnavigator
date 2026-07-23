@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 import {
   CheckCircle,
   Heart,
@@ -212,6 +213,7 @@ export default function FeedbackSurvey() {
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-emerald-100">
         <div className="max-w-2xl mx-auto px-6 py-8 text-center">
+          <EnglishOnlyNotice />
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
             Share Your Feedback
           </h1>
