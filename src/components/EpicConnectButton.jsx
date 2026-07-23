@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
 import Fuse from 'fuse.js';
 import EPIC_ENDPOINTS from '../data/epic-endpoints.json';
+import PrivacyPointNotice from './PrivacyPointNotice.jsx';
 
 /**
  * Curated transplant-center Epic endpoints. These are hand-verified
@@ -95,6 +97,7 @@ const MAX_VISIBLE_SYSTEMS = 50;
  * @param {string} className - Optional additional CSS classes for the wrapper div
  */
 const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = null, className = '' }) => {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedSystem, setSelectedSystem] = useState('');
@@ -150,7 +153,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
 
     const handleConnect = async () => {
         if (!selectedSystem) {
-            setError('Please select your health system first.');
+            setError(t('epic.errorSelectFirst'));
             return;
         }
 
@@ -159,7 +162,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
 
         const system = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
         if (!system) {
-            setError('Invalid health system selection.');
+            setError(t('epic.errorInvalidSelection'));
             setLoading(false);
             return;
         }
@@ -179,7 +182,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                             i.includes('is not set') || i.includes('does not start with https')
                         );
                         if (critical.length > 0) {
-                            setError('Epic integration is not configured correctly: ' + critical[0]);
+                            setError(t('epic.errorNotConfigured') + ' ' + critical[0]);
                             setLoading(false);
                             return;
                         }
@@ -195,7 +198,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
             const data = await response.json();
 
             if (!response.ok || !data.url) {
-                setError(data.error || 'Could not connect to your health system. Please try again.');
+                setError(data.error || t('epic.errorConnect'));
                 setLoading(false);
                 return;
             }
@@ -228,7 +231,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
 
         } catch (err) {
             console.error('Epic connect error:', err);
-            setError('Could not connect to your health system. Please check your connection and try again.');
+            setError(t('epic.errorConnectNetwork'));
             setLoading(false);
         }
     };
@@ -244,11 +247,13 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                 </div>
                 <div className="flex-1">
                     <h3 className="font-bold text-lg text-blue-900 mb-1">
-                        Connect to My Health System
+                        {t('epic.title')}
                     </h3>
                     <p className="text-blue-700 text-sm mb-3">
-                        Securely connect to your health system to automatically import your current medications. This saves time and helps us find the right assistance programs for you.
+                        {t('epic.description')}
                     </p>
+
+                    <PrivacyPointNotice textKey="privacyNotice.epic" className="mb-3" />
 
                     {error && (
                         <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2" role="alert">
@@ -263,12 +268,12 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <div className="text-sm">
                                     <p className="text-emerald-700">
-                                        Imported {importedData.matched.length} medication{importedData.matched.length !== 1 ? 's' : ''} from your health system.
+                                        {t('epic.imported', { count: importedData.matched.length })}
                                     </p>
                                     {importedData.unmatched && importedData.unmatched.length > 0 && (
                                         <div className="mt-2 text-slate-600">
                                             <p>
-                                                We could not match {importedData.unmatched.length} of your medication{importedData.unmatched.length !== 1 ? 's' : ''}. If any of these are transplant medications, please search for them below and add them by hand:
+                                                {t('epic.unmatchedIntro', { count: importedData.unmatched.length })}
                                             </p>
                                             <ul className="mt-1 flex flex-wrap gap-1.5">
                                                 {importedData.unmatched.map((name, idx) => (
@@ -281,11 +286,11 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                     )}
                                     {importedData.assistancePrograms && importedData.assistancePrograms.length > 0 && (
                                         <p className="text-blue-700 mt-2 font-medium">
-                                            {importedData.assistancePrograms.length} assistance program{importedData.assistancePrograms.length !== 1 ? 's' : ''} found for your medications.
+                                            {t('epic.programsFound', { count: importedData.assistancePrograms.length })}
                                         </p>
                                     )}
                                     <p className="text-slate-500 text-xs mt-2">
-                                        Copay card and patient assistance searches are based on the medication name, not the dose or strength (mg).
+                                        {t('epic.doseNote')}
                                     </p>
                                 </div>
                             </div>
@@ -301,7 +306,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 <AlertCircle size={16} className="text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <div className="text-sm">
                                     <p className="text-amber-800 font-medium">
-                                        {importedData.unmatched.length} medication{importedData.unmatched.length !== 1 ? 's' : ''} from your chart {importedData.unmatched.length !== 1 ? 'are' : 'is'} not in our transplant assistance database yet, you'll need to look {importedData.unmatched.length !== 1 ? 'these' : 'this one'} up on your own:
+                                        {t('epic.notInDb', { count: importedData.unmatched.length })}
                                     </p>
                                     <ul className="mt-1.5 list-disc list-inside text-amber-900 space-y-0.5">
                                         {importedData.unmatched.map((name, i) => (
@@ -309,7 +314,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                         ))}
                                     </ul>
                                     <p className="text-amber-700 text-xs mt-2">
-                                        We don't have copay card or patient assistance details for these. Ask your pharmacist, or check the manufacturer's website for a copay card or patient assistance program.
+                                        {t('epic.notInDbHint')}
                                     </p>
                                 </div>
                             </div>
@@ -319,10 +324,10 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                     {/* Health System Selector */}
                     <div className="mb-3 relative">
                         <label htmlFor="health-system-search" className="block text-sm font-semibold text-blue-900 mb-1">
-                            Select Your Health System
+                            {t('epic.selectorLabel')}
                         </label>
                         <p id="health-system-help" className="text-xs text-blue-700 mb-1.5">
-                            Start typing your hospital or health system name, close spellings still work, so don't worry if you're not sure how to spell it.
+                            {t('epic.selectorHelp')}
                         </p>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -331,7 +336,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                             <input
                                 id="health-system-search"
                                 type="text"
-                                placeholder="Search for your hospital or health system..."
+                                placeholder={t('epic.searchPlaceholder')}
                                 value={showDropdown ? searchTerm : (selectedSystemData?.name || searchTerm)}
                                 onChange={(e) => {
                                     setSearchTerm(e.target.value);
@@ -361,7 +366,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                             <ul className="absolute z-10 w-full mt-1 bg-white border border-blue-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
                                 {filteredSystems.length === 0 ? (
                                     <li className="px-4 py-3 text-sm text-slate-500">
-                                        No matching health systems found. Contact us to add yours.
+                                        {t('epic.noMatches')}
                                     </li>
                                 ) : (
                                     filteredSystems.map(sys => (
@@ -381,7 +386,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                             >
                                                 {sys.name}
                                                 {sys.id === 'epic-sandbox' && (
-                                                    <span className="ml-2 text-xs text-amber-600 font-normal">(Testing Only)</span>
+                                                    <span className="ml-2 text-xs text-amber-600 font-normal">{t('epic.sandboxTag')}</span>
                                                 )}
                                             </button>
                                         </li>
@@ -389,7 +394,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                                 )}
                                 {hiddenSystemCount > 0 && (
                                     <li className="px-4 py-2.5 text-xs text-slate-500 border-t border-slate-100 bg-slate-50">
-                                        {hiddenSystemCount} more, keep typing to narrow your search.
+                                        {t('epic.moreResults', { count: hiddenSystemCount })}
                                     </li>
                                 )}
                             </ul>
@@ -400,23 +405,23 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
                         onClick={handleConnect}
                         disabled={loading || !selectedSystem}
                         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
-                        aria-label="Connect to your health system to import your medications"
+                        aria-label={t('epic.connectAria')}
                     >
                         {loading ? (
                             <>
                                 <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-                                Connecting...
+                                {t('epic.connecting')}
                             </>
                         ) : (
                             <>
                                 <ShieldCheck size={18} aria-hidden="true" />
-                                Connect to My Health System
+                                {t('epic.connectButton')}
                             </>
                         )}
                     </button>
 
                     <p className="text-xs text-blue-600 mt-2">
-                        Your data is transmitted securely using PKCE. We do not store your login credentials.
+                        {t('epic.securityNote')}
                     </p>
                 </div>
             </div>
