@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calculator, TrendingUp, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SavingsCalculator from '../components/SavingsCalculator';
+import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 import LogSavingsForm from '../components/LogSavingsForm';
 import SavingsDashboard from '../components/SavingsDashboard';
 import { syncPendingEntries } from '../lib/savingsApi';
@@ -41,6 +42,7 @@ export default function SavingsTracker() {
     return (
         <>
         <div className="max-w-4xl mx-auto">
+            <EnglishOnlyNotice />
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 mb-6 text-white">
                 <div className="flex items-center gap-2 mb-2">

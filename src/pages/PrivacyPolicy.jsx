@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { Shield, Mail } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
+import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 
 const PrivacyPolicy = () => {
     useMetaTags(seoMetadata.privacyPolicy);
 
     return (
         <article className="max-w-4xl mx-auto space-y-8 pb-12">
+            <EnglishOnlyNotice />
             <header className="text-center py-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
                     <Shield size={32} className="text-emerald-700" aria-hidden="true" />

@@ -151,7 +151,7 @@
       },
       "strategies": {
         "title": "Estrategias según el tipo de seguro",
-        "commercialTitle": "¿Seguro comercial?",
+        "commercialTitle": "¿Seguro privado o del trabajo (comercial)?",
         "commercialItem1": "Use las <strong>tarjetas de copago de los fabricantes</strong> para bajar lo que paga en la farmacia.",
         "commercialItem2": "Use las <strong>fundaciones</strong> para los deducibles.",
         "medicareTitle": "¿Medicare?",
@@ -280,7 +280,7 @@
       },
       "note": "Cada tipo de seguro tiene sus propios beneficios, costos y mejores formas de ahorrar.",
       "infographicAlt": "Tabla comparativa de la ayuda con medicamentos de trasplante según el tipo de seguro: comercial, Medicare, Medicaid y sin seguro",
-      "infographicDesc": "Esta infografía compara la ayuda disponible con los medicamentos de trasplante en cuatro tipos de seguro. Seguro comercial: seguro a través de su trabajo o que usted compra por su cuenta. Puede calificar para tarjetas de copago del fabricante, programas de asistencia al paciente y fundaciones de copago. Usted paga primas mensuales, copagos y deducibles, y luego el seguro cubre el resto. Los problemas comunes incluyen deducibles altos, requisitos de autorización previa y acumuladores de copago. Siguiente paso: busque sus medicamentos para encontrar tarjetas de copago y programas de asistencia. Medicare: seguro del gobierno para personas de 65 años o más o con discapacidades. Puede calificar para programas de asistencia al paciente, la Ayuda Adicional (Extra Help) o el Subsidio por Bajos Ingresos, y fundaciones de copago. La Parte D cubre la mayoría de los medicamentos de trasplante con primas mensuales y copagos. Los problemas comunes incluyen los costos de la Parte D y que no se pueden usar tarjetas de copago del fabricante. Siguiente paso: revise si califica para Extra Help y busque programas de asistencia al paciente. Medicaid: seguro del gobierno para personas con ingresos bajos. Puede calificar para programas de asistencia al paciente y programas específicos de su estado. Cubre la mayoría de los medicamentos de trasplante con copagos muy bajos o sin copagos. Los problemas comunes incluyen redes de farmacias limitadas, restricciones del formulario y la pérdida de la cobertura si cambian sus ingresos. Siguiente paso: busque sus medicamentos y consulte con la oficina de Medicaid de su estado. Sin seguro o pago por cuenta propia: sin cobertura de seguro en este momento. Puede calificar para programas de asistencia al paciente del fabricante con medicamentos gratis, programas estatales y tarjetas de descuento. Usted paga el precio completo de venta al público sin ayuda. Los problemas comunes incluyen costos muy altos, la falta de precios negociados y la dificultad para pagar medicamentos especializados. Siguiente paso: solicite programas de asistencia al paciente de inmediato, ya que la mayoría ofrece medicamentos gratis a los pacientes que califican. La infografía termina con un mensaje de ánimo: usted no está solo y hay ayuda disponible sin importar el tipo de seguro que tenga.",
+      "infographicDesc": "Esta infografía compara la ayuda disponible con los medicamentos de trasplante en cuatro tipos de seguro. Seguro comercial: seguro a través de su trabajo o que usted compra por su cuenta. Puede calificar para tarjetas de copago del fabricante, programas de asistencia al paciente y fundaciones de copago. Usted paga primas mensuales, copagos y deducibles, y luego el seguro cubre el resto. Los problemas comunes incluyen deducibles altos, requisitos de autorización previa y acumuladores de copago. Siguiente paso: busque sus medicamentos para encontrar tarjetas de copago y programas de asistencia. Medicare: seguro del gobierno para personas de 65 años o más o con discapacidades. Puede calificar para programas de asistencia al paciente, la Ayuda Adicional (Extra Help) o el Subsidio por Bajos Ingresos, y fundaciones de copago. La Parte D cubre la mayoría de los medicamentos de trasplante con primas mensuales y copagos. Los problemas comunes incluyen los costos de la Parte D y que no se pueden usar tarjetas de copago del fabricante. Siguiente paso: revise si califica para Extra Help y busque programas de asistencia al paciente. Medicaid: seguro del gobierno para personas con ingresos bajos. Puede calificar para programas de asistencia al paciente y programas específicos de su estado. Cubre la mayoría de los medicamentos de trasplante con copagos muy bajos o sin copagos. Los problemas comunes incluyen redes de farmacias limitadas, restricciones del formulario (la lista de medicamentos que cubre su plan) y la pérdida de la cobertura si cambian sus ingresos. Siguiente paso: busque sus medicamentos y consulte con la oficina de Medicaid de su estado. Sin seguro o pago por cuenta propia: sin cobertura de seguro en este momento. Puede calificar para programas de asistencia al paciente del fabricante con medicamentos gratis, programas estatales y tarjetas de descuento. Usted paga el precio completo de venta al público sin ayuda. Los problemas comunes incluyen costos muy altos, la falta de precios negociados y la dificultad para pagar medicamentos especializados. Siguiente paso: solicite programas de asistencia al paciente de inmediato, ya que la mayoría ofrece medicamentos gratis a los pacientes que califican. La infografía termina con un mensaje de ánimo: usted no está solo y hay ayuda disponible sin importar el tipo de seguro que tenga.",
       "medicareGuide": {
         "title": "Guía de Medicare",
         "partsTitle": "Las partes de Medicare para los medicamentos de trasplante",
@@ -289,7 +289,7 @@
         "partBTitle": "Parte B (médica)",
         "partBItems": [
           "Infusiones IV (Belatacept)",
-          "Medicamentos antirrechazo (si es elegible para la Part B-ID)",
+          "Medicamentos antirrechazo (si es elegible para la Part B-ID, la cobertura de Medicare para inmunosupresores)",
           "2026: prima de $202.90/mes, deducible de $283",
           "Prima de la Part B-ID (cubre los antirrechazo de por vida a pacientes de riñón): $121.60/mes"
         ],
@@ -312,11 +312,11 @@
         ]
       },
       "commercial": {
-        "title": "Seguro comercial",
+        "title": "Seguro comercial (privado o del trabajo)",
         "intro": "Seguro de su trabajo o comprado por su cuenta. Si también tiene Medicare por enfermedad de los riñones, este seguro paga primero ('pagador principal') durante los primeros 30 meses; después se invierte el orden.",
         "keyPointsTitle": "Puntos clave",
         "keyPoints": [
-          "Puede usar la mayoría de los PAP de los fabricantes",
+          "Puede usar la mayoría de los programas de asistencia al paciente (PAP) de los fabricantes",
           "Las tarjetas de copago suelen funcionar",
           "Las fundaciones ayudan con los copagos altos",
           "Puede que tenga que usar una farmacia en específico"
@@ -345,7 +345,7 @@
         "intro": "Para pacientes sin seguro.",
         "strategyTitle": "Mejor estrategia",
         "items": [
-          "Empiece con los PAP de los fabricantes",
+          "Empiece con los programas de asistencia al paciente (PAP) de los fabricantes",
           "Revise los precios de Cost Plus Drugs",
           "Use herramientas de descuento (GoodRx, SingleCare, etc.)",
           "Averigüe sobre Medicaid o los planes del Mercado de Seguros"
@@ -1153,8 +1153,8 @@
     "meds": {
       "title": "Medicamentos y programas PAP",
       "intro": "Vea sus medicamentos junto con sus Programas de Asistencia al Paciente. Busque medicamentos para ver los enlaces de solicitud.",
-      "loadedBanner_one": "Cargamos {{count}} medicamento de su cuestionario Mi Camino. Agregue más abajo o vea los detalles de los programas.",
-      "loadedBanner_other": "Cargamos {{count}} medicamentos de su cuestionario Mi Camino. Agregue más abajo o vea los detalles de los programas.",
+      "loadedBanner_one": "Cargamos {{count}} medicamento de su cuestionario Mi Camino. Agregue más medicamentos a continuación o vea los detalles de los programas.",
+      "loadedBanner_other": "Cargamos {{count}} medicamentos de su cuestionario Mi Camino. Agregue más medicamentos a continuación o vea los detalles de los programas.",
       "clearListAriaLabel": "Borrar los medicamentos cargados de su cuestionario Mi Camino",
       "clearList": "Borrar la lista",
       "searchTitle": "Buscar medicamentos",
@@ -1510,7 +1510,7 @@
       "selectedHeading": "Sus Medicamentos Seleccionados ({{count}})",
       "removeAria": "Quitar {{name}}",
       "separatorAria": "O agregue sus medicamentos usted mismo",
-      "separatorLabel": "O agregue sus medicamentos abajo",
+      "separatorLabel": "O agregue sus medicamentos a continuación",
       "searchHeadingPre": "Escriba el medicamento y presione el botón ",
       "searchHeadingPost": " para agregarlo a su lista",
       "searchLabel": "Buscar medicamentos",
@@ -1519,7 +1519,7 @@
       "clearSearchAria": "Borrar la búsqueda",
       "added": "Agregado",
       "add": "Agregar",
-      "noResults": "No se encontraron medicamentos. Pruebe otra forma de escribirlo o revise la lista de abajo.",
+      "noResults": "No se encontraron medicamentos. Pruebe otra forma de escribirlo o revise la lista a continuación.",
       "medicalInfoTitle": "Información médica importante",
       "medicalInfoText": "Tomar sus medicamentos de por vida es esencial para el éxito del trasplante. Consulte siempre a su equipo de trasplante antes de cambiar sus medicamentos o agregar uno nuevo, incluidas las medicinas sin receta y los suplementos.",
       "continueButton": "Mis medicamentos se ven bien, continuar →",
@@ -1528,11 +1528,11 @@
         "basedOnPre": "Según su trasplante de ",
         "and": " y ",
         "basedOnPost": ", hemos filtrado los medicamentos más comunes.",
-        "selectBelow": "Seleccione sus medicamentos de las opciones de abajo.",
+        "selectBelow": "Seleccione sus medicamentos de las opciones a continuación.",
         "selectCore": "Primero seleccione sus inmunosupresores principales y luego agregue cualquier otro medicamento relacionado con su trasplante que usted tome.",
         "clickPre": "Haga clic en un tipo de órgano para ver los medicamentos típicos y luego toque ",
         "addWord": "Agregar",
-        "clickPost": " junto a cada uno que usted toma. También puede usar la barra de búsqueda de abajo para encontrar cualquier medicamento.",
+        "clickPost": " junto a cada uno que usted toma. También puede usar la barra de búsqueda a continuación para encontrar cualquier medicamento.",
         "thMedication": "Medicamento",
         "thClass": "Clase",
         "thNotes": "Notas",
@@ -1560,7 +1560,7 @@
       "commercialHelp": "Puede usar tarjetas de copago del fabricante + PAP",
       "medicareLabel": "Medicare",
       "medicareDescription": "El programa para personas de 65 años o más o con discapacidades",
-      "medicareHelp": "La Part B-ID (cobertura especial de Medicare para los medicamentos antirrechazo) es importante para pacientes de riñón. Con Medicare puede usar los PAP, pero NO las tarjetas de copago",
+      "medicareHelp": "La Part B-ID (cobertura especial de Medicare para los medicamentos antirrechazo) es importante para pacientes de riñón. Con Medicare puede usar los programas de asistencia al paciente (PAP), pero NO las tarjetas de copago",
       "medicaidLabel": "Medicaid",
       "medicaidDescription": "Programa estatal para personas con ingresos más bajos",
       "medicaidHelp": "Puede tener cobertura completa; revise la lista de medicamentos cubiertos (el 'formulario') de su estado",
@@ -1588,9 +1588,9 @@
       "groupAria": "Seleccione su situación económica",
       "manageableLabel": "Manejables",
       "manageableDesc": "Puedo pagar mis medicamentos, pero me gustaría ahorrar dinero",
-      "challengingLabel": "Difíciles",
+      "challengingLabel": "Difíciles, pero los pago",
       "challengingDesc": "Los costos de los medicamentos son una carga pesada",
-      "unaffordableLabel": "Difíciles de pagar",
+      "unaffordableLabel": "Casi no puedo pagarlos",
       "unaffordableDesc": "Me cuesta mucho pagar mis medicamentos",
       "crisisLabel": "No puedo pagarlos ahora",
       "crisisDesc": "No puedo pagar mis medicamentos sin ayuda urgente"
@@ -1818,7 +1818,7 @@
         {
           "title": "Reúna sus papeles",
           "description": "Pida a su equipo de trasplante: una carta de su médico, sus registros del trasplante, resultados recientes de laboratorio y notas sobre por qué otros medicamentos no funcionarán.",
-          "tips": "¡Use el creador de cartas de abajo para ayudar a su médico a escribir una carta de apoyo!"
+          "tips": "¡Use el creador de cartas a continuación para ayudar a su médico a escribir una carta de apoyo!"
         },
         {
           "title": "Envíe su apelación",
@@ -1896,7 +1896,7 @@
       "subtitle": "Conozca sus derechos y opciones cuando su seguro lo obliga a usar cierta farmacia.",
       "builder": {
         "title": "Creador de cartas de apelación para farmacia especializada",
-        "intro": "Llene sus datos abajo para crear una carta que puede copiar y enviar a su compañía de seguros.",
+        "intro": "Llene sus datos a continuación para crear una carta que puede copiar y enviar a su compañía de seguros.",
         "yourName": "Su nombre",
         "yourNamePlaceholder": "Su nombre",
         "medicationName": "Nombre del medicamento",
@@ -1916,7 +1916,7 @@
           "title": "Apelaciones de Medicare",
           "note": "Importante: actúe a tiempo.",
           "step1": "<strong>Decisión de cobertura:</strong> Pida a su plan que pague por la farmacia que usted elija.",
-          "step2": "<strong>Nivel 1 (segunda revisión):</strong> Si dicen que no, tiene 65 días desde la fecha de la carta de dedenegación para presentar su apelación.",
+          "step2": "<strong>Nivel 1 (segunda revisión):</strong> Si dicen que no, tiene 65 días desde la fecha de la carta de denegación para presentar su apelación.",
           "step3": "<strong>Nivel 2 (revisión externa):</strong> Un grupo externo revisa su caso si le niegan otra vez.",
           "link": "Guía oficial de Medicare",
           "linkAria": "Visitar la Guía oficial de Medicare (se abre en una pestaña nueva)"
@@ -1961,7 +1961,7 @@
       "added": "Agregado",
       "add": "Agregar",
       "noMatches": "No hay resultados en nuestra base de datos de trasplante",
-      "noMatchesHint": "Pruebe con otra forma de escribirlo o use la opción de abajo para agregarlo como medicamento personalizado.",
+      "noMatchesHint": "Pruebe con otra forma de escribirlo o use la opción a continuación para agregarlo como medicamento personalizado.",
       "addCustomAria": "Agregar el medicamento personalizado {{term}} a la lista",
       "addCustomLabel": "Agregar \"{{term}}\" a la lista",
       "checkExternal": "Consultar el precio en sitios externos",
@@ -1976,14 +1976,14 @@
       "printAria": "Imprimir su lista de medicamentos",
       "print": "Imprimir",
       "alertTitle": "Por favor verifique sus medicamentos",
-      "alertText": "Revise con cuidado la lista de medicamentos de abajo. Si toma otros medicamentos de trasplante que no aparecen, agréguelos con el cuadro de búsqueda.",
+      "alertText": "Revise con cuidado la lista de medicamentos a continuación. Si toma otros medicamentos de trasplante que no aparecen, agréguelos con el cuadro de búsqueda.",
       "alertNote": "La información correcta de sus medicamentos nos ayuda a encontrar las mejores opciones de ahorro para usted.",
       "addMoreLabel": "Agregar más medicamentos",
       "addMorePlaceholder": "Agregar otro medicamento...",
       "removeAria": "Quitar {{name}}",
       "ready": {
         "title": "¿Listo para encontrar ahorros?",
-        "text": "Haga clic en el botón <strong>\"Mis ahorros en medicamentos\"</strong> de abajo para ver dónde puede ahorrar dinero en cada medicamento. Le mostraremos tarjetas de copago, programas de asistencia al paciente, farmacias de descuento y más."
+        "text": "Haga clic en el botón <strong>\"Mis ahorros en medicamentos\"</strong> a continuación para ver dónde puede ahorrar dinero en cada medicamento. Le mostraremos tarjetas de copago, programas de asistencia al paciente, farmacias de descuento y más."
       },
       "savingsButton": "Mis ahorros en medicamentos",
       "selectInsuranceFirst": "Por favor seleccione arriba su tipo de seguro para continuar",
@@ -2131,7 +2131,7 @@
       },
       "assistance": {
         "takesGenericTitle": "Usted toma el genérico",
-        "takesGenericText": "Los medicamentos genéricos no tienen tarjetas de copago del fabricante; esas son solo para medicamentos de marca. La buena noticia: los genéricos suelen ser mucho más baratos. Compare los precios en efectivo de abajo, especialmente <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx y SingleCare.",
+        "takesGenericText": "Los medicamentos genéricos no tienen tarjetas de copago del fabricante; esas son solo para medicamentos de marca. La buena noticia: los genéricos suelen ser mucho más baratos. Compare los precios en efectivo a continuación, especialmente <strong>Mark Cuban Cost Plus Drugs</strong>, GoodRx y SingleCare.",
         "recommended": "RECOMENDADO PARA USTED",
         "eligible": "Usted es elegible",
         "copayFor": "Para seguro comercial/del empleador • Programa del fabricante",
@@ -2249,7 +2249,7 @@
     },
     "external": {
       "label": "Búsqueda externa / personalizada",
-      "note": "<strong>Nota:</strong> Este medicamento no está en nuestra base de datos educativa. Use los enlaces de abajo para buscar precios directamente.",
+      "note": "<strong>Nota:</strong> Este medicamento no está en nuestra base de datos educativa. Use los enlaces a continuación para buscar precios directamente.",
       "navAria": "Opciones externas para consultar el precio de {{name}}",
       "checkCostPlusAria": "Consultar el precio de {{name}} en Cost Plus Drugs (se abre en una pestaña nueva)",
       "checkGoodRxAria": "Consultar el precio de {{name}} en GoodRx (se abre en una pestaña nueva)",
