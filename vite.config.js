@@ -82,8 +82,12 @@ export default defineConfig({
         // Cache strategies
         runtimeCaching: [
           {
-            // Navigation requests - always network first to prevent stale redirects
-            urlPattern: ({ request }) => request.mode === 'navigate',
+            // Navigation requests - always network first to prevent stale redirects.
+            // The Epic OAuth callback is fully excluded: it must always come
+            // straight from the network (it carries one-time auth codes and its
+            // own no-store headers), never from service-worker machinery.
+            urlPattern: ({ request, url }) =>
+              request.mode === 'navigate' && !url.pathname.startsWith('/auth/epic/'),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'pages-v2',
@@ -91,8 +95,12 @@ export default defineConfig({
             }
           },
           {
-            // Cache API calls with network-first strategy
-            urlPattern: /^https:\/\/.*\/api\/.*/i,
+            // Cache GET API calls with network-first strategy. POSTs (token
+            // exchange, medication import, feedback) must NOT be routed through
+            // a caching strategy: Cache storage cannot hold POST responses, and
+            // routing them through the strategy machinery can stall the request.
+            urlPattern: ({ url, request }) =>
+              request.method === 'GET' && /\/api\//i.test(url.href),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache-v2',
