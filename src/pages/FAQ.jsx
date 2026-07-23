@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { Info, ChevronDown, Shield, CheckCircle2, XCircle, HelpCircle, ArrowRight, ArrowLeft, Lightbulb } from 'lucide-react';
+import { Info, ChevronDown, Shield, CheckCircle2, XCircle, HelpCircle, ArrowRight, ArrowLeft, Lightbulb, Search, X, Sparkles } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 import LanguageToggle from '../components/LanguageToggle.jsx';
@@ -349,14 +349,51 @@ const COBQuiz = () => {
     return null;
 };
 
+// Curated "start here" questions as [sectionIndex, questionIndex] into the
+// FAQ data files. The English and Spanish files are parallel arrays, so the
+// same indices point at the same question in both languages.
+const STARTER_PICKS = [
+    [12, 0], // I am overwhelmed. Where do I start?
+    [0, 0],  // What is Transplant Med Navigator?
+    [1, 0],  // What is a Patient Assistance Program (PAP)?
+    [3, 0],  // What is a copay card?
+    [5, 1],  // Can I use copay cards with Medicare?
+];
+
+// Accent-insensitive matching so "medicacion" finds "medicación"
+const normalize = (text) =>
+    (text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 const FAQ = () => {
     const { t, i18n } = useTranslation();
     useMetaTags(seoMetadata.faq);
 
     const [openIndex, setOpenIndex] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [activeCategory, setActiveCategory] = useState(null); // section index or null = all
 
     // FAQ content lives in the data layer with one file per language
     const faqs = i18n.resolvedLanguage === 'es' ? FAQS_ES : FAQS_EN;
+
+    // Apply the topic filter, then the search, keeping original section indices
+    const query = normalize(searchTerm.trim());
+    const filteredFaqs = faqs
+        .map((section, sectionIndex) => ({ ...section, sectionIndex }))
+        .filter((section) => activeCategory === null || section.sectionIndex === activeCategory)
+        .map((section) => ({
+            ...section,
+            questions: query
+                ? section.questions.filter(
+                    (faq) => normalize(faq.q).includes(query) || normalize(faq.a).includes(query))
+                : section.questions,
+        }))
+        .filter((section) => section.questions.length > 0);
+    const matchCount = filteredFaqs.reduce((acc, sec) => acc + sec.questions.length, 0);
+    const isFiltering = query.length > 0 || activeCategory !== null;
+
+    const starters = STARTER_PICKS
+        .map(([si, qi]) => ({ faq: faqs[si]?.questions?.[qi], key: `starter-${si}-${qi}` }))
+        .filter((item) => item.faq);
 
     // Add FAQPage structured data for AI discoverability
     useEffect(() => {
@@ -446,9 +483,84 @@ const FAQ = () => {
                 <COBQuiz />
             </section>
 
+            {/* Search + topic filters */}
+            <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 md:p-6 space-y-4">
+                <div className="relative">
+                    <label htmlFor="faq-search" className="sr-only">{t('faq.page.searchLabel')}</label>
+                    <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+                    <input
+                        id="faq-search"
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder={t('faq.page.searchPlaceholder')}
+                        className="w-full pl-12 pr-12 py-3 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
+                    />
+                    {searchTerm && (
+                        <button
+                            onClick={() => setSearchTerm('')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            aria-label={t('faq.page.clearSearch')}
+                        >
+                            <X size={18} aria-hidden="true" />
+                        </button>
+                    )}
+                </div>
+                <div className="flex flex-wrap gap-2" role="group" aria-label={t('faq.page.topicsAria')}>
+                    <button
+                        onClick={() => setActiveCategory(null)}
+                        aria-pressed={activeCategory === null}
+                        className={`px-3 py-2 rounded-full text-sm font-medium transition min-h-[44px] ${
+                            activeCategory === null
+                                ? 'bg-emerald-600 text-white'
+                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        }`}
+                    >
+                        {t('faq.page.allTopics')}
+                    </button>
+                    {faqs.map((section, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setActiveCategory(activeCategory === index ? null : index)}
+                            aria-pressed={activeCategory === index}
+                            className={`px-3 py-2 rounded-full text-sm font-medium transition min-h-[44px] ${
+                                activeCategory === index
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                            }`}
+                        >
+                            {section.category}
+                        </button>
+                    ))}
+                </div>
+                {query.length > 0 && (
+                    <p className="text-sm text-slate-600" role="status" aria-live="polite">
+                        {t('faq.page.resultsCount', { count: matchCount })}
+                    </p>
+                )}
+            </section>
+
+            {/* Start here — five basics, hidden while searching or filtering */}
+            {!isFiltering && starters.length > 0 && (
+                <section className="bg-emerald-50 rounded-xl shadow-sm border-2 border-emerald-200 p-6 md:p-8">
+                    <h2 className="text-2xl font-bold text-emerald-900 mb-2 flex items-center gap-3">
+                        <Sparkles size={24} className="text-emerald-600" aria-hidden="true" />
+                        {t('faq.page.startHere')}
+                    </h2>
+                    <p className="text-emerald-800 mb-6">{t('faq.page.startHereText')}</p>
+                    <div className="space-y-3">
+                        {starters.map(({ faq, key }) => (
+                            <FAQItem key={key} question={faq.q} answer={faq.a} index={key} />
+                        ))}
+                    </div>
+                </section>
+            )}
+
             <div className="space-y-8">
-                {faqs && faqs.length > 0 ? (
-                    faqs.map((section, sectionIndex) => (
+                {filteredFaqs.length > 0 ? (
+                    filteredFaqs.map((section) => {
+                    const sectionIndex = section.sectionIndex;
+                    return (
                         <section key={sectionIndex} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
                             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
                                 <span className="w-1 h-8 bg-emerald-600 rounded-full" aria-hidden="true"></span>
@@ -468,7 +580,20 @@ const FAQ = () => {
                                 })}
                             </div>
                         </section>
-                    ))
+                    );
+                    })
+                ) : isFiltering ? (
+                    <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-slate-200">
+                        <Search size={48} className="mx-auto text-slate-300 mb-4" aria-hidden="true" />
+                        <h2 className="text-xl font-bold text-slate-900 mb-2">{t('faq.page.noResultsTitle')}</h2>
+                        <p className="text-slate-600 mb-6">{t('faq.page.noResultsText')}</p>
+                        <button
+                            onClick={() => { setSearchTerm(''); setActiveCategory(null); }}
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition"
+                        >
+                            {t('faq.page.clearSearch')}
+                        </button>
+                    </div>
                 ) : (
                     <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-slate-200">
                         <Info size={48} className="mx-auto text-slate-300 mb-4" aria-hidden="true" />
