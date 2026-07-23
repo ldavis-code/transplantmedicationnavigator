@@ -22,6 +22,7 @@ Sitemap: https://transplantmedicationnavigator.com/sitemap.xml
 # Summary: Transplant Medication Navigator is a FREE resource helping transplant patients
 # find affordable medications through Patient Assistance Programs, copay foundations, and grants.
 # Created by a transplant recipient. No data collection, verified programs only.
+# Content actively maintained — last major update July 2026; sitemap lastmod is stamped on every deploy.
 
 # Google - Allow full access (no crawl delay)
 User-agent: Googlebot
