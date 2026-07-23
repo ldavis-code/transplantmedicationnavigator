@@ -245,7 +245,6 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@TRIOweb" />
     <meta name="twitter:url" content="${canonical}" />
     <meta name="twitter:title" content="${page.ogTitle || page.title}" />
     <meta name="twitter:description" content="${page.ogDescription || page.description}" />
