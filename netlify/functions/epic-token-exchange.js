@@ -93,8 +93,14 @@ export async function handler(event) {
 
     const fhirBaseUrl = normalizeUrl(rawFhirBaseUrl);
 
+    // Match the client-ID selection in epic-auth-url.js: the sandbox only
+    // accepts the non-production client ID.
+    let clientId = process.env.EPIC_CLIENT_ID;
     if (fhirBaseUrl.includes('interconnect-fhir-oauth')) {
       console.warn('[epic-token-exchange] NOTE: Using Epic SANDBOX endpoint.');
+      if (process.env.EPIC_SANDBOX_CLIENT_ID) {
+        clientId = process.env.EPIC_SANDBOX_CLIENT_ID;
+      }
     }
 
     // Determine token endpoint:
@@ -162,7 +168,7 @@ export async function handler(event) {
           grant_type: 'authorization_code',
           code,
           redirect_uri: redirectUri,
-          client_id: process.env.EPIC_CLIENT_ID,
+          client_id: clientId,
           code_verifier: codeVerifier
         })
       }

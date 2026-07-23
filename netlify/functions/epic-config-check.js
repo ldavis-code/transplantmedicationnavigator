@@ -26,6 +26,7 @@ export async function handler(event) {
   }
 
   const clientId = process.env.EPIC_CLIENT_ID;
+  const sandboxClientId = process.env.EPIC_SANDBOX_CLIENT_ID;
   const redirectUri = process.env.EPIC_REDIRECT_URI;
   const fhirBaseUrl = process.env.EPIC_FHIR_BASE_URL;
   const authorizeUrl = process.env.EPIC_AUTHORIZE_URL;
@@ -122,6 +123,7 @@ export async function handler(event) {
 
   const config = {
     epic_client_id: mask(clientId, 8),
+    epic_sandbox_client_id: sandboxClientId ? mask(sandboxClientId, 8) : '(NOT SET — sandbox connects will use EPIC_CLIENT_ID, which the Epic sandbox rejects if it is a production ID)',
     epic_redirect_uri: redirectUri || '(NOT SET)',
     epic_fhir_base_url: fhirBaseUrl || '(NOT SET — using sandbox default)',
     epic_authorize_url: authorizeUrl || '(NOT SET — will use SMART discovery)',
@@ -144,7 +146,8 @@ export async function handler(event) {
         `2. EPIC_REDIRECT_URI must EXACTLY match what's registered in Epic (currently: ${redirectUri || 'NOT SET'})`,
         `3. EPIC_FHIR_BASE_URL must point to the production FHIR server (currently: ${fhirBaseUrl ? (fhirBaseUrl.includes('interconnect-fhir-oauth') ? 'SANDBOX' : 'custom') : 'NOT SET — defaulting to SANDBOX'})`,
         `4. All requested scopes must be enabled in your Epic app registration`,
-        `5. Your app must be approved for production use in Epic App Orchard`
+        `5. Your app must be approved for production use in Epic App Orchard`,
+        `6. EPIC_SANDBOX_CLIENT_ID should be your NON-production client ID so the "Epic Sandbox (Test Patients)" option works — the sandbox rejects production client IDs with a generic OAuth2 Error page`
       ]
     }, null, 2)
   };

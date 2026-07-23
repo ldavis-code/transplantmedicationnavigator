@@ -120,7 +120,7 @@ export async function handler(event) {
     }
 
     try {
-        const clientId = process.env.EPIC_CLIENT_ID;
+        let clientId = process.env.EPIC_CLIENT_ID;
         const redirectUri = process.env.EPIC_REDIRECT_URI;
 
         // Support dynamic FHIR base URL from query param (for multi-health-system support)
@@ -161,6 +161,20 @@ export async function handler(event) {
         }
 
         const fhirBaseUrl = normalizeUrl(rawFhirBaseUrl);
+
+        // Epic issues separate production and non-production client IDs, and
+        // the hosted sandbox (interconnect-fhir-oauth) only accepts the
+        // non-production one. Select by target environment; fall back to the
+        // production ID when EPIC_SANDBOX_CLIENT_ID is unset so existing
+        // deployments keep their current behavior.
+        if (fhirBaseUrl.includes('interconnect-fhir-oauth')) {
+            if (process.env.EPIC_SANDBOX_CLIENT_ID) {
+                clientId = process.env.EPIC_SANDBOX_CLIENT_ID;
+                console.log('[epic-auth-url] Sandbox target — using EPIC_SANDBOX_CLIENT_ID.');
+            } else {
+                console.warn('[epic-auth-url] Sandbox target but EPIC_SANDBOX_CLIENT_ID is not set; using EPIC_CLIENT_ID. The sandbox rejects production client IDs with a generic "OAuth2 Error" page.');
+            }
+        }
 
         // Validate redirect URI format before sending to Epic.
         // Epic shows a generic "OAuth2 Error — Something went wrong trying to
