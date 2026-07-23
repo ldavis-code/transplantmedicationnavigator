@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import LanguageToggle from '../components/LanguageToggle.jsx';
+import PrivacyPointNotice from '../components/PrivacyPointNotice.jsx';
 
 export default function Appeals() {
   const { t } = useTranslation();
@@ -638,6 +639,8 @@ Contact: [Your Phone Number]
               </div>
             </div>
           </div>
+
+          <PrivacyPointNotice textKey="privacyNotice.appeals" className="mb-6" />
 
           <div className="space-y-5">
             <div className="grid md:grid-cols-2 gap-5">

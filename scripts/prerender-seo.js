@@ -93,6 +93,13 @@ const pages = [
     ogDescription: 'Free educational resources for all patients. Partnership options for healthcare organizations.',
   },
   {
+    route: '/my-medications',
+    title: 'My Medications | Transplant Medication Navigator™',
+    description: 'Keep a private list of your transplant medications, track renewal dates, and see matching copay cards and patient assistance programs. Stored on your device only.',
+    ogTitle: 'My Medication List',
+    ogDescription: 'Track your transplant medications and renewal dates, and find matching assistance programs. Private: your list stays on your device.',
+  },
+  {
     route: '/savings-tracker',
     title: 'Savings Calculator | Transplant Medication Navigator™',
     description: 'Calculate how much you could save on transplant medications with assistance programs. Track actual savings and see your total benefits over time.',

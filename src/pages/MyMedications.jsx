@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, AlertTriangle, Download, Upload, Calculator, Bell, ShieldCheck, ExternalLink, CreditCard, Heart, ClipboardCheck } from 'lucide-react';
 import { useConfirmDialog } from '../components/ConfirmDialog';
-import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 import programsData from '../data/programs.json';
@@ -85,6 +85,7 @@ function generateId() {
 
 export default function MyMedications() {
   useMetaTags(seoMetadata.myMedications);
+  const { t, i18n } = useTranslation();
 
   const [medications, setMedications] = useState([]);
   const [medMessage, setMedMessage] = useState({ text: '', type: '' });
@@ -102,10 +103,11 @@ export default function MyMedications() {
   const { showConfirm, DialogComponent } = useConfirmDialog();
 
   const renewalTypeLabels = {
-    'calendar_year': 'Calendar year',
-    'enrollment_anniversary': 'Enrollment anniversary',
-    'after_max_reached': 'After max reached'
+    'calendar_year': t('myMeds.renewalCalendar'),
+    'enrollment_anniversary': t('myMeds.renewalAnniversary'),
+    'after_max_reached': t('myMeds.renewalMax')
   };
+  const dateLocale = i18n.language?.startsWith('es') ? 'es-US' : 'en-US';
 
   // Load medications and insurance preference from localStorage on mount
   useEffect(() => {
@@ -183,7 +185,7 @@ export default function MyMedications() {
   function handleAddMedication(e) {
     e.preventDefault();
     if (!newMed.name.trim()) {
-      setMedMessage({ text: 'Please enter a medication name', type: 'error' });
+      setMedMessage({ text: t('myMeds.errorName'), type: 'error' });
       return;
     }
 
@@ -199,7 +201,7 @@ export default function MyMedications() {
     };
 
     setMedications(prev => [medication, ...prev]);
-    setMedMessage({ text: 'Medication saved!', type: 'success' });
+    setMedMessage({ text: t('myMeds.savedMessage'), type: 'success' });
     setNewMed({ name: '', brand: '', dosage: '', cost: '', renewal: '', renewalType: '' });
 
     // Track medication added to personal list
@@ -211,10 +213,10 @@ export default function MyMedications() {
 
   async function handleDeleteMedication(id) {
     const confirmed = await showConfirm({
-      title: 'Delete Medication',
-      message: 'Are you sure you want to delete this medication from your list?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
+      title: t('myMeds.deleteTitle'),
+      message: t('myMeds.deleteMessage'),
+      confirmText: t('myMeds.deleteConfirm'),
+      cancelText: t('myMeds.deleteCancel'),
       type: 'confirm'
     });
     if (!confirmed) return;
@@ -259,12 +261,12 @@ export default function MyMedications() {
             id: med.id || generateId()
           }));
           setMedications(prev => [...withIds, ...prev]);
-          setMedMessage({ text: `Imported ${imported.length} medication(s)`, type: 'success' });
+          setMedMessage({ text: t('myMeds.imported', { count: imported.length }), type: 'success' });
         } else {
-          setMedMessage({ text: 'Invalid file format', type: 'error' });
+          setMedMessage({ text: t('myMeds.errorInvalidFile'), type: 'error' });
         }
       } catch (err) {
-        setMedMessage({ text: 'Error reading file', type: 'error' });
+        setMedMessage({ text: t('myMeds.errorReadFile'), type: 'error' });
       }
     };
     reader.readAsText(file);
@@ -275,16 +277,14 @@ export default function MyMedications() {
     <>
       {DialogComponent}
       <div className="max-w-2xl mx-auto">
-      <EnglishOnlyNotice />
       {/* Privacy Notice */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6" role="alert">
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <div>
-            <p className="text-amber-800 font-medium">Your data stays on this device</p>
+            <p className="text-amber-800 font-medium">{t('myMeds.privacyTitle')}</p>
             <p className="text-amber-700 text-sm mt-1">
-              Medications are stored in your browser only. They are not sent to any server.
-              Clearing your browser data will remove this list. Use Export to save a backup.
+              {t('myMeds.privacyText')}
             </p>
           </div>
         </div>
@@ -300,8 +300,8 @@ export default function MyMedications() {
           <div className="flex items-center gap-3">
             <Calculator size={24} />
             <div>
-              <div className="font-semibold">Savings Calculator</div>
-              <div className="text-emerald-100 text-sm">See how much you could save</div>
+              <div className="font-semibold">{t('myMeds.calcTitle')}</div>
+              <div className="text-emerald-100 text-sm">{t('myMeds.calcSubtitle')}</div>
             </div>
           </div>
         </Link>
@@ -314,8 +314,8 @@ export default function MyMedications() {
           <div className="flex items-center gap-3">
             <Bell size={24} />
             <div>
-              <div className="font-semibold">Copay Card Reminders</div>
-              <div className="text-amber-100 text-sm">Never miss a renewal</div>
+              <div className="font-semibold">{t('myMeds.remindersTitle')}</div>
+              <div className="text-amber-100 text-sm">{t('myMeds.remindersSubtitle')}</div>
             </div>
           </div>
         </Link>
@@ -324,20 +324,20 @@ export default function MyMedications() {
       {/* Header with Export/Import */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold text-slate-900">My Medications</h1>
+          <h1 className="text-2xl font-bold text-slate-900">{t('myMeds.title')}</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={handleExport}
               disabled={medications.length === 0}
               className="flex items-center gap-1 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Export medications"
+              title={t('myMeds.exportTitle')}
             >
               <Download className="w-4 h-4" />
-              Export
+              {t('myMeds.export')}
             </button>
             <label className="flex items-center gap-1 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition cursor-pointer">
               <Upload className="w-4 h-4" />
-              Import
+              {t('myMeds.import')}
               <input
                 type="file"
                 accept=".json"
@@ -348,7 +348,7 @@ export default function MyMedications() {
           </div>
         </div>
         <p className="text-slate-600 text-sm">
-          Track your transplant medications and renewal dates
+          {t('myMeds.subtitle')}
         </p>
       </div>
 
@@ -356,7 +356,7 @@ export default function MyMedications() {
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6">
         <h2 id="add-medication-heading" className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
           <Plus className="w-5 h-5 text-emerald-600" aria-hidden="true" />
-          Add a Medication
+          {t('myMeds.addTitle')}
         </h2>
 
         {/* Form status message for screen readers */}
@@ -367,57 +367,57 @@ export default function MyMedications() {
           id="form-status"
           className={medMessage.text ? `mb-4 p-3 rounded-lg text-center ${medMessage.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}` : 'sr-only'}
         >
-          {medMessage.text || 'Form ready'}
+          {medMessage.text || t('myMeds.formReady')}
         </div>
 
         <form onSubmit={handleAddMedication} className="space-y-4" aria-labelledby="add-medication-heading" aria-describedby="form-status">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="med-name" className="block text-sm font-medium text-slate-700 mb-1">
-                Medication name <span className="text-red-500" aria-hidden="true">*</span>
-                <span className="sr-only">(required)</span>
+                {t('myMeds.nameLabel')} <span className="text-red-500" aria-hidden="true">*</span>
+                <span className="sr-only">{t('myMeds.requiredSr')}</span>
               </label>
               <input
                 id="med-name"
                 type="text"
                 value={newMed.name}
                 onChange={(e) => setNewMed({ ...newMed, name: e.target.value })}
-                placeholder="e.g., Tacrolimus"
+                placeholder={t('myMeds.namePlaceholder')}
                 aria-required="true"
                 aria-describedby="med-name-hint"
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
-              <p id="med-name-hint" className="sr-only">Enter the generic or brand name of your medication</p>
+              <p id="med-name-hint" className="sr-only">{t('myMeds.nameHint')}</p>
             </div>
             <div>
               <label htmlFor="med-brand" className="block text-sm font-medium text-slate-700 mb-1">
-                Brand name <span className="text-slate-400">(optional)</span>
+                {t('myMeds.brandLabel')} <span className="text-slate-400">{t('myMeds.optional')}</span>
               </label>
               <input
                 id="med-brand"
                 type="text"
                 value={newMed.brand}
                 onChange={(e) => setNewMed({ ...newMed, brand: e.target.value })}
-                placeholder="e.g., Prograf"
+                placeholder={t('myMeds.brandPlaceholder')}
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
             </div>
             <div>
               <label htmlFor="med-dosage" className="block text-sm font-medium text-slate-700 mb-1">
-                Dosage <span className="text-slate-400">(optional)</span>
+                {t('myMeds.dosageLabel')} <span className="text-slate-400">{t('myMeds.optional')}</span>
               </label>
               <input
                 id="med-dosage"
                 type="text"
                 value={newMed.dosage}
                 onChange={(e) => setNewMed({ ...newMed, dosage: e.target.value })}
-                placeholder="e.g., 1mg twice daily"
+                placeholder={t('myMeds.dosagePlaceholder')}
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
             </div>
             <div>
               <label htmlFor="med-cost" className="block text-sm font-medium text-slate-700 mb-1">
-                Monthly cost ($) <span className="text-slate-400">(optional)</span>
+                {t('myMeds.costLabel')} <span className="text-slate-400">{t('myMeds.optional')}</span>
               </label>
               <input
                 id="med-cost"
@@ -426,15 +426,15 @@ export default function MyMedications() {
                 min="0"
                 value={newMed.cost}
                 onChange={(e) => setNewMed({ ...newMed, cost: e.target.value })}
-                placeholder="e.g., 150.00"
+                placeholder={t('myMeds.costPlaceholder')}
                 aria-describedby="med-cost-hint"
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
-              <p id="med-cost-hint" className="sr-only">Enter the amount in US dollars</p>
+              <p id="med-cost-hint" className="sr-only">{t('myMeds.costHint')}</p>
             </div>
             <div>
               <label htmlFor="med-renewal" className="block text-sm font-medium text-slate-700 mb-1">
-                Renewal date <span className="text-slate-400">(optional)</span>
+                {t('myMeds.renewalLabel')} <span className="text-slate-400">{t('myMeds.optional')}</span>
               </label>
               <input
                 id="med-renewal"
@@ -446,7 +446,7 @@ export default function MyMedications() {
             </div>
             <div>
               <label htmlFor="med-renewal-type" className="block text-sm font-medium text-slate-700 mb-1">
-                Renewal type <span className="text-slate-400">(optional)</span>
+                {t('myMeds.renewalTypeLabel')} <span className="text-slate-400">{t('myMeds.optional')}</span>
               </label>
               <select
                 id="med-renewal-type"
@@ -454,10 +454,10 @@ export default function MyMedications() {
                 onChange={(e) => setNewMed({ ...newMed, renewalType: e.target.value })}
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               >
-                <option value="">-- Select --</option>
-                <option value="calendar_year">Calendar year (Jan 1)</option>
-                <option value="enrollment_anniversary">Enrollment anniversary</option>
-                <option value="after_max_reached">After max benefit reached</option>
+                <option value="">{t('myMeds.renewalTypeSelect')}</option>
+                <option value="calendar_year">{t('myMeds.renewalCalendarOption')}</option>
+                <option value="enrollment_anniversary">{t('myMeds.renewalAnniversaryOption')}</option>
+                <option value="after_max_reached">{t('myMeds.renewalMaxOption')}</option>
               </select>
             </div>
           </div>
@@ -466,7 +466,7 @@ export default function MyMedications() {
             className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 flex items-center justify-center gap-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
           >
             <Plus className="w-5 h-5" aria-hidden="true" />
-            Save Medication
+            {t('myMeds.saveButton')}
           </button>
         </form>
       </div>
@@ -476,12 +476,12 @@ export default function MyMedications() {
         <fieldset>
           <legend className="text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-blue-600" aria-hidden="true" />
-            Do you have commercial insurance?
+            {t('myMeds.insuranceQuestion')}
           </legend>
           <p className="text-slate-600 text-sm mb-4">
-            Commercial insurance is coverage you get through an employer, the ACA marketplace, or that you buy privately, not Medicare, Medicaid, or TRICARE. Copay cards are only available with commercial insurance, so this helps us show you the right savings programs.
+            {t('myMeds.insuranceHelp')}
           </p>
-          <div className="flex gap-4" role="radiogroup" aria-label="Commercial insurance status">
+          <div className="flex gap-4" role="radiogroup" aria-label={t('myMeds.insuranceAria')}>
             <button
               type="button"
               onClick={() => setHasCommercialInsurance('yes')}
@@ -493,7 +493,7 @@ export default function MyMedications() {
               role="radio"
               aria-checked={hasCommercialInsurance === 'yes'}
             >
-              Yes
+              {t('myMeds.yes')}
             </button>
             <button
               type="button"
@@ -506,20 +506,20 @@ export default function MyMedications() {
               role="radio"
               aria-checked={hasCommercialInsurance === 'no'}
             >
-              No
+              {t('myMeds.no')}
             </button>
           </div>
           {hasCommercialInsurance === 'yes' && (
             <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-blue-800 text-sm">
-                <strong>Copay cards can help!</strong> With commercial insurance, manufacturer copay cards can lower your cost to $0-$50/month for many transplant medications.
+                <strong>{t('myMeds.insuranceYesBold')}</strong> {t('myMeds.insuranceYesText')}
               </p>
             </div>
           )}
           {hasCommercialInsurance === 'no' && (
             <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
               <p className="text-purple-800 text-sm">
-                <strong>Patient Assistance Programs (PAPs) may help.</strong> Drug manufacturers offer free medication programs for patients who qualify based on income. Foundations may also help with copays.
+                <strong>{t('myMeds.insuranceNoBold')}</strong> {t('myMeds.insuranceNoText')}
               </p>
             </div>
           )}
@@ -529,20 +529,20 @@ export default function MyMedications() {
       {/* Medications List */}
       <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
         <h2 className="text-lg font-semibold text-slate-900 mb-4">
-          Your Medications {medications.length > 0 && <span className="text-slate-500 font-normal">({medications.length})</span>}
+          {t('myMeds.listTitle')} {medications.length > 0 && <span className="text-slate-500 font-normal">({medications.length})</span>}
         </h2>
 
         {/* Prompt to answer insurance question if not yet answered and has medications */}
         {hasCommercialInsurance === null && medications.length > 0 && (
           <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
             <p className="text-blue-800 text-sm">
-              Answer the insurance question above to see savings programs for your medications.
+              {t('myMeds.answerPrompt')}
             </p>
           </div>
         )}
 
         {medications.length === 0 ? (
-          <p className="text-slate-500 text-center py-8">No medications saved yet.</p>
+          <p className="text-slate-500 text-center py-8">{t('myMeds.emptyList')}</p>
         ) : (
           <div className="space-y-4">
             {medications.map((med) => {
@@ -555,16 +555,16 @@ export default function MyMedications() {
                   <div className="flex items-start justify-between">
                     <div>
                       <h3 className="font-semibold text-slate-900">{med.medication_name}</h3>
-                      {med.brand_name && <p className="text-slate-600">Brand: {med.brand_name}</p>}
-                      {med.dosage && <p className="text-slate-600">Dosage: {med.dosage}</p>}
-                      {med.monthly_cost && <p className="text-slate-600">Monthly cost: ${med.monthly_cost}</p>}
-                      {med.renewal_date && <p className="text-slate-600">Renewal: {new Date(med.renewal_date).toLocaleDateString()}</p>}
-                      {med.renewal_type && <p className="text-slate-600">Type: {renewalTypeLabels[med.renewal_type] || med.renewal_type}</p>}
+                      {med.brand_name && <p className="text-slate-600">{t('myMeds.brandField')} {med.brand_name}</p>}
+                      {med.dosage && <p className="text-slate-600">{t('myMeds.dosageField')} {med.dosage}</p>}
+                      {med.monthly_cost && <p className="text-slate-600">{t('myMeds.costField')} ${med.monthly_cost}</p>}
+                      {med.renewal_date && <p className="text-slate-600">{t('myMeds.renewalField')} {new Date(med.renewal_date).toLocaleDateString(dateLocale)}</p>}
+                      {med.renewal_type && <p className="text-slate-600">{t('myMeds.typeField')} {renewalTypeLabels[med.renewal_type] || med.renewal_type}</p>}
                     </div>
                     <button
                       onClick={() => handleDeleteMedication(med.id)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-red-500/50"
-                      aria-label={`Delete ${med.medication_name}`}
+                      aria-label={t('myMeds.deleteAria', { name: med.medication_name })}
                     >
                       <Trash2 className="w-5 h-5" aria-hidden="true" />
                     </button>
@@ -575,7 +575,7 @@ export default function MyMedications() {
                     <div className="mt-3 border-t border-slate-100 pt-3">
                       <h4 className="text-sm font-semibold text-emerald-700 mb-2 flex items-center gap-1.5">
                         <CreditCard className="w-4 h-4" aria-hidden="true" />
-                        Copay Card Programs Available
+                        {t('myMeds.copayAvailable')}
                       </h4>
                       <div className="space-y-2">
                         {copayCards.map((program) => (
@@ -585,7 +585,7 @@ export default function MyMedications() {
                                 <p className="font-medium text-emerald-900 text-sm">{program.name}</p>
                                 <p className="text-emerald-700 text-xs mt-0.5">{program.maxBenefit}</p>
                                 {program.phone && (
-                                  <p className="text-emerald-700 text-xs mt-0.5">Phone: {program.phone}</p>
+                                  <p className="text-emerald-700 text-xs mt-0.5">{t('myMeds.phoneLabel')} {program.phone}</p>
                                 )}
                               </div>
                               {program.url && (
@@ -596,7 +596,7 @@ export default function MyMedications() {
                                   className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition flex-shrink-0 min-h-[32px]"
                                   onClick={() => trackProgramClick(med.medication_name)}
                                 >
-                                  Apply
+                                  {t('myMeds.apply')}
                                   <ExternalLink className="w-3 h-3" aria-hidden="true" />
                                 </a>
                               )}
@@ -613,7 +613,7 @@ export default function MyMedications() {
                     <div className="mt-3 border-t border-slate-100 pt-3">
                       <h4 className="text-sm font-semibold text-purple-700 mb-2 flex items-center gap-1.5">
                         <Heart className="w-4 h-4" aria-hidden="true" />
-                        Patient Assistance Programs Available
+                        {t('myMeds.papAvailable')}
                       </h4>
                       <div className="space-y-2">
                         {papPrograms.map((program) => (
@@ -623,10 +623,10 @@ export default function MyMedications() {
                                 <p className="font-medium text-purple-900 text-sm">{program.name}</p>
                                 <p className="text-purple-700 text-xs mt-0.5">{program.maxBenefit}</p>
                                 {program.incomeLimit && (
-                                  <p className="text-purple-700 text-xs mt-0.5">Income limit: {program.incomeLimit}</p>
+                                  <p className="text-purple-700 text-xs mt-0.5">{t('myMeds.incomeLimitLabel')} {program.incomeLimit}</p>
                                 )}
                                 {program.phone && (
-                                  <p className="text-purple-700 text-xs mt-0.5">Phone: {program.phone}</p>
+                                  <p className="text-purple-700 text-xs mt-0.5">{t('myMeds.phoneLabel')} {program.phone}</p>
                                 )}
                               </div>
                               {program.url && (
@@ -637,7 +637,7 @@ export default function MyMedications() {
                                   className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition flex-shrink-0 min-h-[32px]"
                                   onClick={() => trackProgramClick(med.medication_name)}
                                 >
-                                  Apply
+                                  {t('myMeds.apply')}
                                   <ExternalLink className="w-3 h-3" aria-hidden="true" />
                                 </a>
                               )}
@@ -654,30 +654,30 @@ export default function MyMedications() {
                     <div className="mt-3 border-t border-slate-100 pt-3">
                       <h4 className="text-sm font-semibold text-purple-700 mb-2 flex items-center gap-1.5">
                         <Heart className="w-4 h-4" aria-hidden="true" />
-                        Assistance Programs
+                        {t('myMeds.assistanceTitle')}
                       </h4>
                       <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
                         <p className="text-purple-800 text-sm">
-                          No specific manufacturer PAP found for this medication. Check these foundations that may help:
+                          {t('myMeds.noPapText')}
                         </p>
                         <ul className="mt-2 space-y-1 text-sm text-purple-700">
                           <li>
                             <a href="/out/foundation/healthwell-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               HealthWell Foundation
                             </a>
-                            {' '}- copay and premium assistance
+                            {' '}{t('myMeds.healthwellDesc')}
                           </li>
                           <li>
                             <a href="/out/foundation/pan-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               PAN Foundation
                             </a>
-                            {' '}- medication and insurance help
+                            {' '}{t('myMeds.panDesc')}
                           </li>
                           <li>
                             <a href="/out/foundation/paf-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               Patient Advocate Foundation
                             </a>
-                            {' '}- copay relief programs
+                            {' '}{t('myMeds.pafDesc')}
                           </li>
                         </ul>
                       </div>
@@ -689,15 +689,15 @@ export default function MyMedications() {
                     <div className="mt-3 border-t border-slate-100 pt-3">
                       <h4 className="text-sm font-semibold text-blue-700 mb-2 flex items-center gap-1.5">
                         <CreditCard className="w-4 h-4" aria-hidden="true" />
-                        Copay Cards
+                        {t('myMeds.copayCardsTitle')}
                       </h4>
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                         <p className="text-blue-800 text-sm">
-                          No specific copay card found for this medication name. Try searching with the exact brand name, or visit{' '}
+                          {t('myMeds.noCopayPre')}{' '}
                           <a href="https://phrma.org/resources/patient-assistance" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-900 font-medium">
-                            PhRMA Patient Assistance
+                            {t('myMeds.noCopayLink')}
                           </a>
-                          {' '}to search for available programs.
+                          {' '}{t('myMeds.noCopayPost')}
                         </p>
                       </div>
                     </div>
@@ -715,14 +715,14 @@ export default function MyMedications() {
           <fieldset>
             <legend className="text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
               <ClipboardCheck className="w-5 h-5 text-emerald-600" aria-hidden="true" />
-              Did you get your medication today?
+              {t('myMeds.adherenceQuestion')}
             </legend>
-            <div className="space-y-2 mt-4" role="radiogroup" aria-label="Medication adherence check-in">
+            <div className="space-y-2 mt-4" role="radiogroup" aria-label={t('myMeds.adherenceAria')}>
               {[
-                { value: 'yes', label: 'Yes' },
-                { value: 'no_expensive', label: 'No \u2013 still too expensive' },
-                { value: 'no_another_pharmacy', label: 'No \u2013 will try another pharmacy' },
-                { value: 'no_other', label: 'No \u2013 other reason' },
+                { value: 'yes', label: t('myMeds.adherenceYes') },
+                { value: 'no_expensive', label: t('myMeds.adherenceNoExpensive') },
+                { value: 'no_another_pharmacy', label: t('myMeds.adherenceNoPharmacy') },
+                { value: 'no_other', label: t('myMeds.adherenceNoOther') },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -743,35 +743,35 @@ export default function MyMedications() {
             {adherenceAnswer === 'yes' && (
               <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                 <p className="text-emerald-800 text-sm font-medium">
-                  Great! Staying on track with your medications is one of the most important things you can do for your transplant health.
+                  {t('myMeds.adherenceYesText')}
                 </p>
               </div>
             )}
             {adherenceAnswer === 'no_expensive' && (
               <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
                 <p className="text-amber-800 text-sm font-medium mb-3">
-                  Missing doses can put your transplant at risk. Cost should not be the reason &mdash; here is where to get help:
+                  {t('myMeds.adherenceExpensiveText')}
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2">
                   <Link to="/savings-tracker" className="flex items-center gap-2 bg-emerald-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-emerald-700 transition min-h-[44px]">
-                    <Calculator className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> See ways to save
+                    <Calculator className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> {t('myMeds.adherenceSave')}
                   </Link>
                   <Link to="/application-help" className="flex items-center gap-2 bg-purple-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-purple-700 transition min-h-[44px]">
-                    <ClipboardCheck className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> Help applying for assistance
+                    <ClipboardCheck className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> {t('myMeds.adherenceApply')}
                   </Link>
                   <Link to="/medications" className="flex items-center gap-2 bg-blue-600 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition min-h-[44px]">
-                    <Heart className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> Find programs for my meds
+                    <Heart className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> {t('myMeds.adherenceFind')}
                   </Link>
                 </div>
                 <p className="text-amber-700 text-xs mt-3">
-                  The copay cards and assistance programs for your medications are also listed with each one above. If you are about to run out, call your transplant team&rsquo;s pharmacist or social worker today.
+                  {t('myMeds.adherenceExpensiveNote')}
                 </p>
               </div>
             )}
             {adherenceAnswer && adherenceAnswer !== 'yes' && adherenceAnswer !== 'no_expensive' && (
               <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                 <p className="text-amber-800 text-sm font-medium">
-                  Missing doses can put your transplant at risk. If cost is a barrier, check the assistance programs listed with your medications above or talk to your transplant team.
+                  {t('myMeds.adherenceOtherText')}
                 </p>
               </div>
             )}
