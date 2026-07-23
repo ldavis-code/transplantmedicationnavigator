@@ -148,7 +148,11 @@ export async function exchangeCodeForToken(code) {
         throw new Error(data.error || 'Failed to authorize with Epic');
     }
 
-    return data;
+    // Thread the health system's FHIR base URL through to the medications
+    // step. Without it the server falls back to its env default (the Epic
+    // sandbox) and presents this hospital's token to the wrong FHIR server,
+    // which rejects it with 401 'insufficient permissions'.
+    return { ...data, fhir_base_url: data.fhir_base_url || fhirBaseUrl || undefined };
 }
 
 /**
@@ -158,11 +162,16 @@ export async function exchangeCodeForToken(code) {
  * @param {string} patientId - The patient ID from the token exchange
  * @returns {Promise<{matched: string[], unmatched: string[], totalFhirMeds: number, assistancePrograms: Array}>}
  */
-export async function fetchEpicMedications(accessToken, patientId, grantedScope) {
+export async function fetchEpicMedications(accessToken, patientId, grantedScope, fhirBaseUrl) {
     const response = await fetchWithTimeout('/api/epic-medications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ access_token: accessToken, patient: patientId, scope: grantedScope })
+        body: JSON.stringify({
+            access_token: accessToken,
+            patient: patientId,
+            scope: grantedScope,
+            fhir_base_url: fhirBaseUrl || undefined
+        })
     }, 30000, 'The medication import (step 2 of 2)');
 
     let data;
