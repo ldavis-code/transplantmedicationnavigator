@@ -83,23 +83,27 @@ export default function Appeals() {
   const totalSteps = 6;
   const progressPercent = Math.round((completedCount / totalSteps) * 100);
 
-  const generateLetter = () => {
-    const date = new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+  // Letter body intentionally not localized — goes to US insurers/providers in
+  // English. Shared by the interactive generator and the blank download, which
+  // exists for readers who prefer not to enter their details online.
+  const buildDoctorLetter = (v) => {
+    const date = v.blank
+      ? '[Date]'
+      : new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
 
-    // Letter body intentionally not localized — goes to US insurers/providers in English.
-    const letter = `Date: ${date}
+    return `Date: ${date}
 
-Dear Dr. ${doctorName || "[Doctor's Name]"},
+Dear Dr. ${v.doctorName || "[Doctor's Name]"},
 
 I am writing to ask for your help with an insurance appeal for my transplant medication.
 
-My insurance company has denied coverage for ${medicationName || "[Medication Name]"}. ${denialReason ? `They stated the reason was: ${denialReason}.` : ''}
+My insurance company has denied coverage for ${v.medicationName || "[Medication Name]"}. ${v.denialReason ? `They stated the reason was: ${v.denialReason}.` : ''}
 
-As you know, I received a ${transplantType || "[organ type]"} transplant${transplantDate ? ` on ${transplantDate}` : ''}, and I need this medication to prevent rejection of my transplant.
+As you know, I received a ${v.transplantType || "[organ type]"} transplant${v.transplantDate ? ` on ${v.transplantDate}` : ''}, and I need this medication to prevent rejection of my transplant.
 
 I am requesting that you write a letter of medical necessity on my behalf to support my appeal. A strong letter from you explaining why I need this specific medication would greatly help my case.
 
@@ -109,20 +113,34 @@ In your letter, it would be helpful if you could include:
 • Any clinical reasons why alternative medications are not appropriate for me
 • The risks of not having access to this medication
 
-${additionalInfo ? `Additional information that may be helpful: ${additionalInfo}` : ''}
+${v.additionalInfo ? `Additional information that may be helpful: ${v.additionalInfo}` : ''}
 
 I have attached a copy of my denial letter for your reference. Please let me know if you need any additional information from me, or if there is anything else I can provide to help with this appeal.
 
 Thank you so much for your support. I know you are busy, and I truly appreciate your help with this.
 
 Sincerely,
-${patientName || "[Your Name]"}
+${v.patientName || "[Your Name]"}
 
 Contact: [Your Phone Number]
 [Your Email Address]`;
+  };
 
-    setGeneratedLetter(letter);
+  const generateLetter = () => {
+    setGeneratedLetter(buildDoctorLetter({
+      patientName, doctorName, medicationName, transplantType, transplantDate, denialReason, additionalInfo
+    }));
     setCopied(false);
+  };
+
+  const downloadBlankLetter = () => {
+    const blob = new Blob([buildDoctorLetter({ blank: true })], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'appeal-letter-template.txt';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const copyToClipboard = () => {
@@ -640,7 +658,18 @@ Contact: [Your Phone Number]
             </div>
           </div>
 
-          <PrivacyPointNotice textKey="privacyNotice.appeals" className="mb-6" />
+          <PrivacyPointNotice textKey="privacyNotice.appeals" className="mb-3" />
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6 bg-white border border-purple-200 rounded-lg p-3">
+            <p className="text-sm text-slate-600 flex-1">{t('appeals.letter.blankPrompt')}</p>
+            <button
+              onClick={downloadBlankLetter}
+              className="inline-flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-800 text-sm font-bold px-4 py-2 rounded-lg transition min-h-[44px] flex-shrink-0"
+            >
+              <Download size={16} aria-hidden="true" />
+              {t('appeals.letter.blankButton')}
+            </button>
+          </div>
 
           <div className="space-y-5">
             <div className="grid md:grid-cols-2 gap-5">

@@ -2559,6 +2559,13 @@ const Wizard = () => {
                                 <h2 id="assistance-heading" className="text-lg font-bold text-rose-800 border-b pb-2 mb-4 flex items-center gap-2">
                                     <AlertTriangle size={20} aria-hidden="true" /> {t('wizard.results.crisis.title')}
                                 </h2>
+                                {financial === FinancialStatus.CRISIS && (
+                                    <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-4">
+                                        <p className="text-rose-900 font-semibold">{t('wizard.results.crisis.callTeamTitle')}</p>
+                                        <p className="text-rose-800 text-sm mt-1">{t('wizard.results.crisis.callTeamText')}</p>
+                                        <p className="text-rose-700 text-xs mt-2">{t('wizard.results.crisis.notEmergency')}</p>
+                                    </div>
+                                )}
                                 <Link to="/education?topic=EMERGENCY" className="flex items-center gap-3 bg-rose-600 text-white p-3 rounded-lg font-semibold hover:bg-rose-700 transition mb-4">
                                     <Clock size={20} aria-hidden="true" />
                                     <span>{t('wizard.results.crisis.emergencyLink')}</span>
