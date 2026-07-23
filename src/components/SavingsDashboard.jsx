@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, Calendar, Pill, DollarSign, Trash2, RefreshCw, Share2, Award } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { fetchSavingsSummary, fetchSavingsEntries, deleteSavingsEntry, programTypeLabels } from '../lib/savingsApi';
 import { useConfirmDialog } from './ConfirmDialog';
 
 export default function SavingsDashboard({ refreshTrigger }) {
+    const { t, i18n } = useTranslation();
     const [summary, setSummary] = useState(null);
     const [entries, setEntries] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +13,9 @@ export default function SavingsDashboard({ refreshTrigger }) {
     const [showEntries, setShowEntries] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null);
     const { showConfirm, showAlert, DialogComponent } = useConfirmDialog();
+
+    // Date formatting follows the interface language (es → Spanish month names)
+    const dateLocale = i18n.language?.startsWith('es') ? 'es-US' : 'en-US';
 
     useEffect(() => {
         loadData();
@@ -28,7 +33,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
             setEntries(entriesData.entries || []);
         } catch (err) {
             console.error('Error loading savings data:', err);
-            setError('Having trouble loading right now. Try again in a moment.');
+            setError(t('savings.dashboard.errorLoading'));
         } finally {
             setIsLoading(false);
         }
@@ -36,10 +41,10 @@ export default function SavingsDashboard({ refreshTrigger }) {
 
     async function handleDelete(entryId) {
         const confirmed = await showConfirm({
-            title: 'Delete Entry',
-            message: 'Are you sure you want to delete this savings entry? This cannot be undone.',
-            confirmText: 'Delete',
-            cancelText: 'Cancel',
+            title: t('savings.dashboard.deleteTitle'),
+            message: t('savings.dashboard.deleteMessage'),
+            confirmText: t('savings.dashboard.deleteConfirm'),
+            cancelText: t('savings.dashboard.deleteCancel'),
             type: 'confirm'
         });
         if (!confirmed) return;
@@ -51,8 +56,8 @@ export default function SavingsDashboard({ refreshTrigger }) {
             loadData(); // Refresh totals
         } catch (error) {
             await showAlert({
-                title: 'Error',
-                message: 'Failed to delete entry. Please try again.',
+                title: t('savings.dashboard.deleteErrorTitle'),
+                message: t('savings.dashboard.deleteErrorMessage'),
                 type: 'error'
             });
         } finally {
@@ -62,17 +67,17 @@ export default function SavingsDashboard({ refreshTrigger }) {
 
     async function handleShare() {
         const total = summary?.summary?.total_saved || 0;
-        const text = `I've saved $${parseFloat(total).toFixed(2)} on my medications with Transplant Med Navigator! Track your savings too: transplantmednavigator.com`;
+        const text = t('savings.dashboard.shareText', { total: parseFloat(total).toFixed(2) });
 
         if (navigator.share) {
             navigator.share({ text });
         } else {
             navigator.clipboard.writeText(text);
             await showAlert({
-                title: 'Copied!',
-                message: 'Your savings summary has been copied to clipboard.',
+                title: t('savings.dashboard.shareCopiedTitle'),
+                message: t('savings.dashboard.shareCopiedMessage'),
                 type: 'success',
-                confirmText: 'OK'
+                confirmText: t('savings.dashboard.shareCopiedOk')
             });
         }
     }
@@ -97,7 +102,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                         className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors min-h-[44px] flex items-center gap-2"
                     >
                         <RefreshCw size={16} aria-hidden="true" />
-                        Try Again
+                        {t('savings.dashboard.tryAgain')}
                     </button>
                 </div>
             </div>
@@ -111,12 +116,12 @@ export default function SavingsDashboard({ refreshTrigger }) {
 
     // Milestone badges
     const milestones = [
-        { amount: 100, label: 'First $100', emoji: '🌱' },
-        { amount: 500, label: '$500 Club', emoji: '🌟' },
-        { amount: 1000, label: '$1K Saved', emoji: '🎉' },
-        { amount: 2500, label: '$2.5K Hero', emoji: '🏆' },
-        { amount: 5000, label: '$5K Legend', emoji: '👑' },
-        { amount: 10000, label: '$10K Champion', emoji: '💎' }
+        { amount: 100, label: t('savings.dashboard.milestone100'), emoji: '🌱' },
+        { amount: 500, label: t('savings.dashboard.milestone500'), emoji: '🌟' },
+        { amount: 1000, label: t('savings.dashboard.milestone1000'), emoji: '🎉' },
+        { amount: 2500, label: t('savings.dashboard.milestone2500'), emoji: '🏆' },
+        { amount: 5000, label: t('savings.dashboard.milestone5000'), emoji: '👑' },
+        { amount: 10000, label: t('savings.dashboard.milestone10000'), emoji: '💎' }
     ];
     const achievedMilestones = milestones.filter(m => totalSaved >= m.amount);
     const nextMilestone = milestones.find(m => totalSaved < m.amount);
@@ -133,7 +138,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                         onClick={loadData}
                         className="text-red-600 hover:text-red-800 text-sm font-medium underline ml-4"
                     >
-                        Retry
+                        {t('savings.dashboard.retry')}
                     </button>
                 </div>
             )}
@@ -142,24 +147,24 @@ export default function SavingsDashboard({ refreshTrigger }) {
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                         <TrendingUp className="text-emerald-600" size={24} aria-hidden="true" />
-                        <h3 className="text-lg font-bold text-emerald-900">Your Total Savings</h3>
+                        <h3 className="text-lg font-bold text-emerald-900">{t('savings.dashboard.totalTitle')}</h3>
                     </div>
                     <div className="flex gap-2">
                         <button
                             onClick={loadData}
                             className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                            aria-label="Refresh savings data"
-                            title="Refresh"
+                            aria-label={t('savings.dashboard.refreshAria')}
+                            title={t('savings.dashboard.refreshTitle')}
                         >
                             <RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} aria-hidden="true" />
-                            {isLoading && <span className="sr-only">Loading...</span>}
+                            {isLoading && <span className="sr-only">{t('savings.dashboard.loadingSr')}</span>}
                         </button>
                         {totalSaved > 0 && (
                             <button
                                 onClick={handleShare}
                                 className="p-2 text-emerald-600 hover:bg-emerald-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                aria-label="Share your savings on social media"
-                                title="Share your savings"
+                                aria-label={t('savings.dashboard.shareAria')}
+                                title={t('savings.dashboard.shareTitle')}
                             >
                                 <Share2 size={18} aria-hidden="true" />
                             </button>
@@ -172,7 +177,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                         ${totalSaved.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <p className="text-emerald-700">
-                        across {totalEntries} {totalEntries === 1 ? 'fill' : 'fills'}
+                        {t('savings.dashboard.fills', { count: totalEntries })}
                     </p>
                 </div>
 
@@ -180,7 +185,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                 {nextMilestone && (
                     <div className="mt-4 bg-white/50 rounded-lg p-3">
                         <div className="flex justify-between text-sm mb-1">
-                            <span className="text-emerald-700">Progress to {nextMilestone.label}</span>
+                            <span className="text-emerald-700">{t('savings.dashboard.progressTo', { label: nextMilestone.label })}</span>
                             <span className="text-emerald-800 font-medium">
                                 ${totalSaved.toFixed(0)} / ${nextMilestone.amount}
                             </span>
@@ -212,22 +217,22 @@ export default function SavingsDashboard({ refreshTrigger }) {
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
                         <DollarSign className="mx-auto text-blue-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">${avgPerFill.toFixed(0)}</div>
-                        <div className="text-sm text-slate-500">Avg per fill</div>
+                        <div className="text-sm text-slate-500">{t('savings.dashboard.avgPerFill')}</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
                         <Pill className="mx-auto text-purple-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{uniqueMeds}</div>
-                        <div className="text-sm text-slate-500">Medications</div>
+                        <div className="text-sm text-slate-500">{t('savings.dashboard.medications')}</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
                         <Calendar className="mx-auto text-amber-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{totalEntries}</div>
-                        <div className="text-sm text-slate-500">Total fills</div>
+                        <div className="text-sm text-slate-500">{t('savings.dashboard.totalFills')}</div>
                     </div>
                     <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
                         <Award className="mx-auto text-emerald-500 mb-2" size={24} aria-hidden="true" />
                         <div className="text-2xl font-bold text-slate-900">{achievedMilestones.length}</div>
-                        <div className="text-sm text-slate-500">Milestones</div>
+                        <div className="text-sm text-slate-500">{t('savings.dashboard.milestones')}</div>
                     </div>
                 </div>
             )}
@@ -235,12 +240,12 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {/* Monthly Breakdown */}
             {summary?.monthly?.length > 0 && (
                 <div className="bg-white rounded-xl border border-slate-200 p-6">
-                    <h4 className="font-bold text-slate-900 mb-4">Monthly Savings</h4>
+                    <h4 className="font-bold text-slate-900 mb-4">{t('savings.dashboard.monthlyTitle')}</h4>
                     <div className="space-y-3">
                         {summary.monthly.slice(0, 6).map((month, i) => (
                             <div key={i} className="flex items-center justify-between">
                                 <span className="text-slate-600">
-                                    {new Date(month.month).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                                    {new Date(month.month).toLocaleDateString(dateLocale, { month: 'short', year: 'numeric' })}
                                 </span>
                                 <div className="flex items-center gap-3">
                                     <div className="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -264,16 +269,18 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {/* Savings by Program Type */}
             {summary?.byProgram?.length > 0 && (
                 <div className="bg-white rounded-xl border border-slate-200 p-6">
-                    <h4 className="font-bold text-slate-900 mb-4">Savings by Program Type</h4>
+                    <h4 className="font-bold text-slate-900 mb-4">{t('savings.dashboard.byProgramTitle')}</h4>
                     <div className="space-y-3">
                         {summary.byProgram.map((program, i) => (
                             <div key={i} className="flex items-center justify-between">
                                 <span className="text-slate-600">
-                                    {programTypeLabels[program.program_type] || program.program_type}
+                                    {t(`savings.programTypes.${program.program_type}`, {
+                                        defaultValue: programTypeLabels[program.program_type] || program.program_type
+                                    })}
                                 </span>
                                 <span className="font-medium text-slate-900">
                                     ${parseFloat(program.total_saved).toFixed(2)}
-                                    <span className="text-slate-600 text-sm ml-1">({program.count} fills)</span>
+                                    <span className="text-slate-600 text-sm ml-1">{t('savings.dashboard.byProgramFills', { count: program.count })}</span>
                                 </span>
                             </div>
                         ))}
@@ -285,13 +292,13 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {entries.length > 0 && (
                 <div className="bg-white rounded-xl border border-slate-200 p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h4 className="font-bold text-slate-900">Recent Savings</h4>
+                        <h4 className="font-bold text-slate-900">{t('savings.dashboard.recentTitle')}</h4>
                         <button
                             onClick={() => setShowEntries(!showEntries)}
                             className="text-sm text-emerald-600 hover:text-emerald-700 min-h-[44px] px-3 flex items-center"
                             aria-expanded={showEntries}
                         >
-                            {showEntries ? 'Hide entries' : `Show all (${entries.length})`}
+                            {showEntries ? t('savings.dashboard.hideEntries') : t('savings.dashboard.showAll', { count: entries.length })}
                         </button>
                     </div>
                     <div className="space-y-3">
@@ -301,7 +308,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                                     <div className="font-medium text-slate-900">{entry.medication_name}</div>
                                     <div className="text-sm text-slate-500">
                                         {entry.program_name && <span>{entry.program_name} • </span>}
-                                        {entry.fill_date && new Date(entry.fill_date).toLocaleDateString()}
+                                        {entry.fill_date && new Date(entry.fill_date).toLocaleDateString(dateLocale)}
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -312,7 +319,7 @@ export default function SavingsDashboard({ refreshTrigger }) {
                                         onClick={() => handleDelete(entry.id)}
                                         disabled={deleteLoading === entry.id}
                                         className="p-2 text-slate-500 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                        aria-label={`Delete savings entry for ${entry.medication_name}`}
+                                        aria-label={t('savings.dashboard.deleteEntryAria', { name: entry.medication_name })}
                                     >
                                         <Trash2 size={16} className={deleteLoading === entry.id ? 'animate-spin' : ''} aria-hidden="true" />
                                     </button>
@@ -327,9 +334,9 @@ export default function SavingsDashboard({ refreshTrigger }) {
             {totalEntries === 0 && !isLoading && (
                 <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 text-center">
                     <DollarSign className="mx-auto text-slate-500 mb-4" size={48} aria-hidden="true" />
-                    <h4 className="font-bold text-slate-900 mb-2">No savings logged yet</h4>
+                    <h4 className="font-bold text-slate-900 mb-2">{t('savings.dashboard.emptyTitle')}</h4>
                     <p className="text-slate-600 text-sm">
-                        Use the form above to log your first medication savings and start tracking your progress!
+                        {t('savings.dashboard.emptyText')}
                     </p>
                 </div>
             )}

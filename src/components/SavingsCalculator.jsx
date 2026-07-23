@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import priceEstimates from '../data/price-estimates.json';
 
 // Assistance type savings estimates (percentage off retail)
@@ -58,6 +59,7 @@ const FALLBACK_MEDICATIONS = [
 ];
 
 export default function SavingsCalculator({ medications = [] }) {
+    const { t } = useTranslation();
     const [selectedMeds, setSelectedMeds] = useState([
         { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', quantity: 1 }
     ]);
@@ -126,10 +128,10 @@ export default function SavingsCalculator({ medications = [] }) {
         const newErrors = {};
         selectedMeds.forEach((med, index) => {
             if (!med.id && !med.name) {
-                newErrors[`medication-${index}`] = 'Please select a medication';
+                newErrors[`medication-${index}`] = t('savings.calculator.medicationError');
             }
             if (!med.quantity || med.quantity < 1 || med.quantity > 12) {
-                newErrors[`quantity-${index}`] = 'Quantity must be between 1 and 12';
+                newErrors[`quantity-${index}`] = t('savings.calculator.quantityError');
             }
         });
         setErrors(newErrors);
@@ -183,19 +185,18 @@ export default function SavingsCalculator({ medications = [] }) {
                     <Calculator className="w-8 h-8 text-emerald-600" aria-hidden="true" />
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                    Estimate Your Medication Savings
+                    {t('savings.calculator.title')}
                 </h2>
                 <p className="text-slate-600 max-w-xl mx-auto">
-                    Transplant medications are expensive, but you shouldn't have to overpay.
-                    Use our calculator to see how much you could save with assistance programs.
+                    {t('savings.calculator.intro')}
                 </p>
             </div>
 
             {/* Medication List Card */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Medication List</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">{t('savings.calculator.listTitle')}</h3>
                 <p className="text-sm text-slate-500 mb-4">
-                    Add your current prescriptions to calculate potential savings
+                    {t('savings.calculator.listSubtitle')}
                 </p>
 
                 {/* Medication Entries */}
@@ -204,7 +205,7 @@ export default function SavingsCalculator({ medications = [] }) {
                         <div key={index} className="flex items-end gap-3 p-3 bg-slate-50 rounded-lg">
                             <div className="flex-1">
                                 <label htmlFor={`medication-select-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
-                                    Medication {index + 1}
+                                    {t('savings.calculator.medicationLabel', { number: index + 1 })}
                                 </label>
                                 <select
                                     id={`medication-select-${index}`}
@@ -214,7 +215,7 @@ export default function SavingsCalculator({ medications = [] }) {
                                     aria-describedby={errors[`medication-${index}`] ? `medication-error-${index}` : undefined}
                                     aria-invalid={errors[`medication-${index}`] ? 'true' : undefined}
                                 >
-                                    <option value="">Select a medication...</option>
+                                    <option value="">{t('savings.calculator.selectPlaceholder')}</option>
                                     {allMedications.map(m => (
                                         <option key={m.id} value={m.id}>{m.name}</option>
                                     ))}
@@ -227,7 +228,7 @@ export default function SavingsCalculator({ medications = [] }) {
                             </div>
                             <div className="w-24">
                                 <label htmlFor={`medication-quantity-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
-                                    Qty/mo
+                                    {t('savings.calculator.quantityLabel')}
                                 </label>
                                 <input
                                     id={`medication-quantity-${index}`}
@@ -250,7 +251,7 @@ export default function SavingsCalculator({ medications = [] }) {
                                 <button
                                     onClick={() => removeMedication(index)}
                                     className="p-2 text-slate-500 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                    aria-label={`Remove ${med.name || 'medication'} from list`}
+                                    aria-label={t('savings.calculator.removeAria', { name: med.name || t('savings.calculator.removeFallbackName') })}
                                 >
                                     <Trash2 size={18} aria-hidden="true" />
                                 </button>
@@ -265,7 +266,7 @@ export default function SavingsCalculator({ medications = [] }) {
                     className="mt-4 w-full py-3 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px] border-slate-300 text-slate-600 hover:border-emerald-400 hover:text-emerald-600"
                 >
                     <Plus size={18} aria-hidden="true" />
-                    Add Another Medication
+                    {t('savings.calculator.addButton')}
                 </button>
 
                 {/* Calculate Button */}
@@ -275,7 +276,7 @@ export default function SavingsCalculator({ medications = [] }) {
                     className="mt-6 w-full bg-emerald-600 text-white py-4 px-6 rounded-xl font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg min-h-[44px]"
                 >
                     <Calculator size={22} aria-hidden="true" />
-                    Calculate My Savings
+                    {t('savings.calculator.calculateButton')}
                 </button>
             </div>
 
@@ -286,25 +287,25 @@ export default function SavingsCalculator({ medications = [] }) {
                     {/* Main Savings Display */}
                     <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-8 text-white text-center">
                         <p className="text-emerald-100 text-sm uppercase tracking-wide mb-2">
-                            Estimated Annual Savings
+                            {t('savings.calculator.annualSavingsLabel')}
                         </p>
                         <div className="text-5xl font-bold mb-2">
                             {range(calculations.totalAnnualLow, calculations.totalAnnualHigh)}
                         </div>
                         <p className="text-emerald-100">
-                            Estimated range from typical cash and discount prices, not a quote
+                            {t('savings.calculator.annualSavingsNote')}
                         </p>
 
                         {/* Monthly Comparison */}
                         <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/20">
                             <div>
-                                <p className="text-emerald-100 text-xs uppercase mb-1">Monthly Retail Cost</p>
+                                <p className="text-emerald-100 text-xs uppercase mb-1">{t('savings.calculator.monthlyRetailLabel')}</p>
                                 <p className="text-2xl font-bold">
                                     {range(calculations.totalMonthlyRetailLow, calculations.totalMonthlyRetailHigh)}
                                 </p>
                             </div>
                             <div>
-                                <p className="text-emerald-100 text-xs uppercase mb-1">New Monthly Cost</p>
+                                <p className="text-emerald-100 text-xs uppercase mb-1">{t('savings.calculator.monthlyNewLabel')}</p>
                                 <p className="text-2xl font-bold">
                                     {range(calculations.totalMonthlyAssistedLow, calculations.totalMonthlyAssistedHigh)}
                                 </p>
@@ -315,31 +316,31 @@ export default function SavingsCalculator({ medications = [] }) {
                     {/* Estimate caveat */}
                     <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
                         <p>
-                            <strong>These are estimates, not a quote.</strong> Your real cost depends on your insurance, pharmacy, and dose.
-                            {calculations.anyRough && " Some medications use category averages because we don't have drug-specific pricing for them yet, so their range is wider."}
-                            {' '}Search the assistance programs below to see your actual options.
+                            <strong>{t('savings.calculator.caveatBold')}</strong> {t('savings.calculator.caveatText')}
+                            {calculations.anyRough && ` ${t('savings.calculator.caveatRough')}`}
+                            {' '}{t('savings.calculator.caveatSearch')}
                         </p>
                         {priceEstimates.lastUpdated && (
-                            <p className="text-amber-700 text-xs mt-1">Price data last updated {priceEstimates.lastUpdated}.</p>
+                            <p className="text-amber-700 text-xs mt-1">{t('savings.calculator.priceDataUpdated', { date: priceEstimates.lastUpdated })}</p>
                         )}
                     </div>
 
                     {/* Savings Breakdown */}
                     <div className="bg-white rounded-xl border border-slate-200 p-6">
-                        <h3 className="text-lg font-semibold text-slate-900 mb-4">Savings Breakdown</h3>
+                        <h3 className="text-lg font-semibold text-slate-900 mb-4">{t('savings.calculator.breakdownTitle')}</h3>
                         <div className="space-y-3">
                             {calculations.medications.map((med, index) => (
                                 <div key={index} className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
                                     <div>
                                         <p className="font-medium text-slate-900">{med.name}</p>
                                         <p className="text-sm text-slate-500">
-                                            {range(med.retailLow, med.retailHigh)}/mo → {range(med.assistedLow, med.assistedHigh)}/mo
-                                            {!med.hasOverride && <span className="ml-1 text-amber-600">(rough estimate)</span>}
+                                            {range(med.retailLow, med.retailHigh)}{t('savings.calculator.perMonth')} → {range(med.assistedLow, med.assistedHigh)}{t('savings.calculator.perMonth')}
+                                            {!med.hasOverride && <span className="ml-1 text-amber-600">{t('savings.calculator.roughEstimate')}</span>}
                                         </p>
                                     </div>
                                     <div className="text-right">
                                         <p className="font-bold text-emerald-600 text-lg">
-                                            -{range(med.annualSavingsLow, med.annualSavingsHigh)}/yr
+                                            -{range(med.annualSavingsLow, med.annualSavingsHigh)}{t('savings.calculator.perYear')}
                                         </p>
                                     </div>
                                 </div>
@@ -349,16 +350,15 @@ export default function SavingsCalculator({ medications = [] }) {
 
                     {/* CTA to Find Programs */}
                     <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">
-                        <h3 className="text-lg font-bold text-purple-900 mb-2">Unlock These Savings</h3>
+                        <h3 className="text-lg font-bold text-purple-900 mb-2">{t('savings.calculator.unlockTitle')}</h3>
                         <p className="text-purple-700 mb-4">
-                            Find the specific assistance programs, copay cards, and patient support
-                            for your medications.
+                            {t('savings.calculator.unlockText')}
                         </p>
                         <Link
                             to="/medications"
                             className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors min-h-[44px]"
                         >
-                            Search Assistance Programs
+                            {t('savings.calculator.unlockButton')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
                     </div>
@@ -372,27 +372,27 @@ export default function SavingsCalculator({ medications = [] }) {
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-emerald-100 rounded-full mb-3">
                         <Shield className="w-5 h-5 text-emerald-600" aria-hidden="true" />
                     </div>
-                    <h4 className="font-semibold text-slate-900 mb-1">Verified Programs</h4>
+                    <h4 className="font-semibold text-slate-900 mb-1">{t('savings.calculator.trustVerifiedTitle')}</h4>
                     <p className="text-sm text-slate-600">
-                        We only list verified patient assistance programs and manufacturer discounts.
+                        {t('savings.calculator.trustVerifiedText')}
                     </p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4 text-center">
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mb-3">
                         <Database className="w-5 h-5 text-blue-600" aria-hidden="true" />
                     </div>
-                    <h4 className="font-semibold text-slate-900 mb-1">Real Price Data</h4>
+                    <h4 className="font-semibold text-slate-900 mb-1">{t('savings.calculator.trustDataTitle')}</h4>
                     <p className="text-sm text-slate-600">
-                        Our estimates use current NADAC and retail pricing data for accuracy.
+                        {t('savings.calculator.trustDataText')}
                     </p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4 text-center">
                     <div className="inline-flex items-center justify-center w-10 h-10 bg-rose-100 rounded-full mb-3">
                         <Heart className="w-5 h-5 text-rose-600" aria-hidden="true" />
                     </div>
-                    <h4 className="font-semibold text-slate-900 mb-1">Patient First</h4>
+                    <h4 className="font-semibold text-slate-900 mb-1">{t('savings.calculator.trustPatientTitle')}</h4>
                     <p className="text-sm text-slate-600">
-                        Created by transplant patients, for transplant patients. Always transparent.
+                        {t('savings.calculator.trustPatientText')}
                     </p>
                 </div>
             </div>
