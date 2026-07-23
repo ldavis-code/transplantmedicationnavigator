@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import EnglishOnlyNotice from '../components/EnglishOnlyNotice.jsx';
+import { useTranslation } from 'react-i18next';
 import {
   CheckCircle,
   Heart,
@@ -18,16 +18,16 @@ import {
   Home
 } from 'lucide-react';
 
-// Q1 options - Did you find a program that helped?
+// Q1 options - Did you find a program that helped? (labels come from i18n: feedback.q1.<value>)
 const PROGRAM_FOUND_OPTIONS = [
-  { value: 'found_copay_card', label: 'Yes - found a copay card', color: 'emerald' },
-  { value: 'found_pap', label: 'Yes - found a patient assistance program (PAP)', color: 'emerald' },
-  { value: 'found_not_tried', label: 'Found options, but haven\'t tried yet', color: 'amber' },
-  { value: 'no_didnt_qualify', label: 'No - didn\'t qualify for programs', color: 'rose' },
-  { value: 'no_not_listed', label: 'No - my medication wasn\'t listed', color: 'slate' },
+  { value: 'found_copay_card', color: 'emerald' },
+  { value: 'found_pap', color: 'emerald' },
+  { value: 'found_not_tried', color: 'amber' },
+  { value: 'no_didnt_qualify', color: 'rose' },
+  { value: 'no_not_listed', color: 'slate' },
 ];
 
-// Q2 options - How much did this save you?
+// Q2 options - How much did this save you? (dollar ranges are language-neutral)
 const SAVINGS_OPTIONS = [
   { value: '0-50', label: '$0 - $50' },
   { value: '50-100', label: '$50 - $100' },
@@ -35,19 +35,20 @@ const SAVINGS_OPTIONS = [
   { value: '250-500', label: '$250 - $500' },
   { value: '500-1000', label: '$500 - $1,000' },
   { value: '1000+', label: '$1,000+' },
-  { value: 'unsure', label: 'Not sure yet' },
+  { value: 'unsure', labelKey: 'feedback.q2.unsure' },
 ];
 
-// Q3 options - What would you have done without this tool?
+// Q3 options - What would you have done without this tool? (labels: feedback.q3.<value>)
 const WITHOUT_TOOL_OPTIONS = [
-  { value: 'paid_full', label: 'Paid full price', color: 'blue' },
-  { value: 'skipped_rationed', label: 'Skipped or rationed doses', color: 'rose' },
-  { value: 'called_coordinator', label: 'Called my transplant coordinator', color: 'amber' },
-  { value: 'not_filled', label: 'Not filled the prescription', color: 'rose' },
-  { value: 'other', label: 'Other', color: 'slate' },
+  { value: 'paid_full', color: 'blue' },
+  { value: 'skipped_rationed', color: 'rose' },
+  { value: 'called_coordinator', color: 'amber' },
+  { value: 'not_filled', color: 'rose' },
+  { value: 'other', color: 'slate' },
 ];
 
 export default function FeedbackSurvey() {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1); // 1, 2, 3, 4, or 'submitted'
   const [responses, setResponses] = useState({
     program_found: null,
@@ -190,17 +191,17 @@ export default function FeedbackSurvey() {
               <CheckCircle className="w-10 h-10 text-emerald-600" />
             </div>
             <h1 className="text-3xl font-bold text-slate-800 mb-4">
-              Thank You!
+              {t('feedback.submitted.title')}
             </h1>
             <p className="text-lg text-slate-600 mb-8">
-              Your feedback helps us improve and helps transplant centers understand patient needs.
+              {t('feedback.submitted.text')}
             </p>
             <Link
               to="/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 font-medium rounded-xl hover:bg-emerald-200 transition-colors"
             >
               <Home className="w-5 h-5" />
-              Back to Home
+              {t('feedback.submitted.backHome')}
             </Link>
           </div>
         </div>
@@ -213,12 +214,11 @@ export default function FeedbackSurvey() {
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-emerald-100">
         <div className="max-w-2xl mx-auto px-6 py-8 text-center">
-          <EnglishOnlyNotice />
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
-            Share Your Feedback
+            {t('feedback.header.title')}
           </h1>
           <p className="text-lg text-slate-600">
-            Help us understand how this tool is working for patients
+            {t('feedback.header.subtitle')}
           </p>
         </div>
       </div>
@@ -235,7 +235,7 @@ export default function FeedbackSurvey() {
                   <Heart className="w-5 h-5 text-emerald-600" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-800">
-                  Did you find a program that helped?
+                  {t('feedback.q1.title')}
                 </h2>
               </div>
               <div className="space-y-1">
@@ -245,7 +245,7 @@ export default function FeedbackSurvey() {
                     onClick={() => handleQ1Answer(option.value)}
                     color={option.color}
                   >
-                    {option.label}
+                    {t(`feedback.q1.${option.value}`)}
                   </OptionButton>
                 ))}
               </div>
@@ -260,11 +260,11 @@ export default function FeedbackSurvey() {
                   <DollarSign className="w-5 h-5 text-emerald-600" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-800">
-                  How much did this save you?
+                  {t('feedback.q2.title')}
                 </h2>
               </div>
               <p className="text-slate-600 mb-6">
-                Estimate your monthly savings from the program you found.
+                {t('feedback.q2.subtitle')}
               </p>
               <div className="space-y-1">
                 {SAVINGS_OPTIONS.map((option) => (
@@ -273,7 +273,7 @@ export default function FeedbackSurvey() {
                     onClick={() => handleQ2Answer(option.value)}
                     color="blue"
                   >
-                    {option.label}
+                    {option.labelKey ? t(option.labelKey) : option.label}
                   </OptionButton>
                 ))}
               </div>
@@ -288,7 +288,7 @@ export default function FeedbackSurvey() {
                   <HelpCircle className="w-5 h-5 text-emerald-600" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-800">
-                  What would you have done without this tool?
+                  {t('feedback.q3.title')}
                 </h2>
               </div>
               <div className="space-y-1">
@@ -298,7 +298,7 @@ export default function FeedbackSurvey() {
                     onClick={() => handleQ3Answer(option.value)}
                     color={option.color}
                   >
-                    {option.label}
+                    {t(`feedback.q3.${option.value}`)}
                   </OptionButton>
                 ))}
               </div>
@@ -313,11 +313,11 @@ export default function FeedbackSurvey() {
                   <MessageSquare className="w-5 h-5 text-emerald-600" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-800">
-                  Share Your Story (Optional)
+                  {t('feedback.q4.title')}
                 </h2>
               </div>
               <p className="text-slate-600 mb-6">
-                Your story can help other patients and improve the system. Feedback is anonymous — please don't include your name or contact information.
+                {t('feedback.q4.subtitle')}
               </p>
 
               <div className="space-y-5">
@@ -326,14 +326,14 @@ export default function FeedbackSurvey() {
                     htmlFor="comment"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Your comment or experience
+                    {t('feedback.q4.commentLabel')}
                   </label>
                   <textarea
                     id="comment"
                     rows={4}
                     value={responses.comment}
                     onChange={(e) => updateResponse('comment', e.target.value)}
-                    placeholder="Tell us about your experience finding medication assistance..."
+                    placeholder={t('feedback.q4.commentPlaceholder')}
                     className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
                   />
                 </div>
@@ -345,7 +345,7 @@ export default function FeedbackSurvey() {
                   disabled={isSubmitting}
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 font-medium rounded-xl hover:bg-emerald-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+                  {isSubmitting ? t('feedback.q4.submitting') : t('feedback.q4.submit')}
                   {!isSubmitting && <ArrowRight className="w-5 h-5" />}
                 </button>
                 <button
@@ -354,7 +354,7 @@ export default function FeedbackSurvey() {
                   disabled={isSubmitting}
                   className="flex-1 px-6 py-4 bg-slate-50 border-2 border-slate-300 text-slate-700 font-medium rounded-xl hover:bg-slate-100 transition-colors disabled:opacity-50"
                 >
-                  Skip & Submit
+                  {t('feedback.q4.skip')}
                 </button>
               </div>
             </form>
@@ -365,7 +365,7 @@ export default function FeedbackSurvey() {
         <div className="text-center mt-8">
           <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm">
             <Shield className="w-4 h-4" />
-            <span><strong>Privacy:</strong> Your feedback is anonymous unless you provide an email</span>
+            <span><strong>{t('feedback.privacyBold')}</strong> {t('feedback.privacyText')}</span>
           </div>
         </div>
       </div>
