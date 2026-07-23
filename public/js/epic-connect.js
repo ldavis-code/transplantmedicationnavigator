@@ -196,10 +196,18 @@ export function storeImportedMeds(medsData) {
     sessionStorage.setItem(STORAGE_KEYS.IMPORTED_MEDS, JSON.stringify({
         matched: medsData.matched || [],
         unmatched: medsData.unmatched || [],
+        genericIds: medsData.genericIds || [],
         totalFhirMeds: medsData.totalFhirMeds || 0,
         assistancePrograms: medsData.assistancePrograms || [],
         timestamp: Date.now()
     }));
+    // Medication cards read this to hide brand-only copay cards for meds the
+    // patient takes as the generic (same key the React callback used).
+    try {
+        localStorage.setItem('tmn_epic_generic_meds', JSON.stringify(medsData.genericIds || []));
+    } catch (e) {
+        // ignore storage errors (e.g. private mode)
+    }
 }
 
 /**

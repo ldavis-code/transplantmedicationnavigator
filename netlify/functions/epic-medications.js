@@ -1,3 +1,5 @@
+import MEDICATIONS_DATA from '../../src/data/medications.json';
+import { matchEpicMedications } from '../../src/lib/epicMedicationMatching.js';
 // netlify/functions/epic-medications.js
 // NO node-fetch import needed - Node 18+ has built-in fetch
 
@@ -228,13 +230,34 @@ export async function handler(event) {
       }
     }
 
+    // Match against the transplant medication database server-side so every
+    // client (static callback page, React app) receives finished results:
+    // matched internal med IDs, unmatched names, generic flags, and the
+    // assistance programs tied to the matched medications.
+    const { matched, unmatched, genericIds } = matchEpicMedications(medications, MEDICATIONS_DATA);
+    const matchedMeds = MEDICATIONS_DATA.filter(m => matched.includes(m.id));
+    const assistancePrograms = matchedMeds
+      .filter(m => m.papProgramId || m.copayProgramId)
+      .map(m => ({
+        medId: m.id,
+        papProgramId: m.papProgramId || null,
+        copayProgramId: m.copayProgramId || null
+      }));
+
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({ medications })
+      body: JSON.stringify({
+        medications,
+        matched,
+        unmatched,
+        genericIds,
+        totalFhirMeds: medications.length,
+        assistancePrograms
+      })
     };
   } catch (error) {
     console.error('Medication fetch error:', error.message);
