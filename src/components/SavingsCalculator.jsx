@@ -3,6 +3,7 @@ import { Calculator, Plus, Trash2, ChevronDown, Shield, Database, Heart, ArrowRi
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import priceEstimates from '../data/price-estimates.json';
+import { localizeMedName } from '../utils/medNames.js';
 
 // Assistance type savings estimates (percentage off retail)
 const ASSISTANCE_SAVINGS = {
@@ -81,7 +82,7 @@ export default function SavingsCalculator({ medications = [] }) {
     const allMedications = medications?.length > 0
         ? medications.map(med => ({
             id: med.id,
-            name: med.brandName || med.genericName || med.name,
+            name: localizeMedName(med.brandName || med.genericName || med.name),
             category: med.category
         }))
         : [...FALLBACK_MEDICATIONS];

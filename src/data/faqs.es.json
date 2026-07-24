@@ -354,8 +354,8 @@
         "a": "La pestaña de Asistencia muestra:\n• Enlaces a programas de las compañías farmacéuticas para conseguir medicina gratis\n• Enlaces a fundaciones de copago que ayudan a pagar\n\nLo conectamos directamente con los recursos correctos para cada medicina."
       },
       {
-        "q": "¿Cuál es la diferencia entre las pestañas PRICE, ASSISTANCE y OVERVIEW?",
-        "a": "• **PRICE (Precio):** Muestra estimados de costo en diferentes farmacias\n• **ASSISTANCE (Asistencia):** Muestra programas que pueden ayudarle a pagar (¡lo más importante!)\n• **OVERVIEW (Información general):** Muestra información general sobre la medicina"
+        "q": "¿Cuál es la diferencia entre las pestañas Precio, Asistencia y Resumen?",
+        "a": "• **Precio:** Muestra estimados de costo en diferentes farmacias\n• **Asistencia:** Muestra programas que pueden ayudarle a pagar (¡lo más importante!)\n• **Resumen:** Muestra información general sobre la medicina"
       },
       {
         "q": "¿Qué pasa si mi medicina no está en la lista?",

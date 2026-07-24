@@ -17,6 +17,7 @@ import MEDICATIONS_DATA from '../data/medications.json';
 import PROGRAMS_DATA from '../data/programs.json';
 import PRICE_ESTIMATES from '../data/price-estimates.json';
 import { useMetaTags } from '../hooks/useMetaTags';
+import { localizeMedName } from '../utils/medNames.js';
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 
@@ -84,6 +85,8 @@ const MedicationDetail = () => {
         noindex: true,
     });
 
+    const brandDisplay = med ? localizeMedName(med.brandName) : '';
+
     const hasCopay = !!(med && (med.copayUrl || med.copayProgramId));
     const hasPap = !!(med && (med.papUrl || med.papProgramId));
     const copayLink = med && (med.copayUrl || findProgram(med.copayProgramId)?.url);
@@ -95,19 +98,19 @@ const MedicationDetail = () => {
     // FAQ content — also emitted as structured data below.
     const faqs = med ? [
         hasCopay && {
-            q: t('medications.detail.faq.copayQ', { name: med.brandName }),
-            a: t('medications.detail.faq.copayA', { name: med.brandName }),
+            q: t('medications.detail.faq.copayQ', { name: brandDisplay }),
+            a: t('medications.detail.faq.copayA', { name: brandDisplay }),
         },
         {
-            q: t('medications.detail.faq.freeQ', { name: med.brandName }),
-            a: t('medications.detail.faq.freeA', { name: med.brandName }),
+            q: t('medications.detail.faq.freeQ', { name: brandDisplay }),
+            a: t('medications.detail.faq.freeA', { name: brandDisplay }),
         },
         med.generic_available && {
-            q: t('medications.detail.faq.genericQ', { name: med.brandName }),
+            q: t('medications.detail.faq.genericQ', { name: brandDisplay }),
             a: t('medications.detail.faq.genericA', { generic: med.genericName }),
         },
         price && {
-            q: t('medications.detail.faq.costQ', { name: med.brandName }),
+            q: t('medications.detail.faq.costQ', { name: brandDisplay }),
             a: t('medications.detail.faq.costA', { price }),
         },
     ].filter(Boolean) : [];
@@ -159,7 +162,7 @@ const MedicationDetail = () => {
                 <span className="mx-1.5" aria-hidden="true">/</span>
                 <Link to="/medications" className="hover:underline">{t('medications.detail.medications')}</Link>
                 <span className="mx-1.5" aria-hidden="true">/</span>
-                <span className="text-slate-700">{med.brandName}</span>
+                <span className="text-slate-700">{brandDisplay}</span>
             </nav>
 
             {/* Header */}
@@ -168,10 +171,10 @@ const MedicationDetail = () => {
                     <Pill size={14} aria-hidden="true" /> {t(`medications.categories.${med.category}`, { defaultValue: med.category })}
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
-                    {t('medications.detail.heading', { name: med.brandName })}
+                    {t('medications.detail.heading', { name: brandDisplay })}
                 </h1>
                 <p className="text-lg text-slate-600 mt-3">
-                    {med.brandName}{genericDiffers ? ` (${med.genericName})` : ''}{t('medications.detail.introIs')}{aOrAn(med.category)} {med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
+                    {brandDisplay}{genericDiffers ? ` (${med.genericName})` : ''}{t('medications.detail.introIs')}{aOrAn(med.category)} {med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
                 </p>
                 {price && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>
@@ -180,7 +183,7 @@ const MedicationDetail = () => {
 
             {/* Ways to save */}
             <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">{t('medications.detail.waysTitle', { name: med.brandName })}</h2>
+                <h2 className="text-xl font-bold text-slate-900">{t('medications.detail.waysTitle', { name: brandDisplay })}</h2>
 
                 {hasCopay && (
                     <div className="border border-emerald-200 bg-emerald-50 rounded-xl p-5">
@@ -192,7 +195,7 @@ const MedicationDetail = () => {
 
                 <div className="border border-amber-200 bg-amber-50 rounded-xl p-5">
                     <h3 className="flex items-center gap-2 font-bold text-amber-900 mb-1"><HeartHandshake size={18} aria-hidden="true" /> {t('medications.detail.papTitle')}</h3>
-                    <p className="text-slate-700 text-sm">{t('medications.detail.papText', { name: med.brandName })}{hasPap ? '' : t('medications.detail.papAsk')}</p>
+                    <p className="text-slate-700 text-sm">{t('medications.detail.papText', { name: brandDisplay })}{hasPap ? '' : t('medications.detail.papAsk')}</p>
                     {hasPap && papLink && <a href={papLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-amber-800 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.papLink')}<ArrowRight size={14} aria-hidden="true" /></a>}
                 </div>
 
@@ -213,13 +216,13 @@ const MedicationDetail = () => {
                 <div className="border border-slate-200 bg-white rounded-xl p-5">
                     <h3 className="flex items-center gap-2 font-bold text-slate-900 mb-1"><DollarSign size={18} aria-hidden="true" /> {t('medications.detail.discountTitle')}</h3>
                     <p className="text-slate-700 text-sm">{t('medications.detail.discountText')}</p>
-                    <Link to="/medications" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.discountLink', { name: med.brandName })}<ArrowRight size={14} aria-hidden="true" /></Link>
+                    <Link to="/medications" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.discountLink', { name: brandDisplay })}<ArrowRight size={14} aria-hidden="true" /></Link>
                 </div>
             </section>
 
             {/* CTA */}
             <section className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl p-6 md:p-8 text-center">
-                <h2 className="text-2xl font-extrabold mb-2">{t('medications.detail.ctaTitle', { name: med.brandName })}</h2>
+                <h2 className="text-2xl font-extrabold mb-2">{t('medications.detail.ctaTitle', { name: brandDisplay })}</h2>
                 <p className="text-emerald-50 mb-5">{t('medications.detail.ctaText')}</p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link to="/wizard" className="px-6 py-3 bg-white text-emerald-700 font-bold rounded-xl hover:bg-emerald-50 inline-flex items-center justify-center gap-2">{t('medications.detail.ctaQuiz')}<ArrowRight size={18} aria-hidden="true" /></Link>
@@ -230,7 +233,7 @@ const MedicationDetail = () => {
             {/* FAQ */}
             {faqs.length > 0 && (
                 <section>
-                    <h2 className="text-xl font-bold text-slate-900 mb-4">{t('medications.detail.faqTitle', { name: med.brandName })}</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-4">{t('medications.detail.faqTitle', { name: brandDisplay })}</h2>
                     <div className="space-y-3">
                         {faqs.map((f) => (
                             <div key={f.q} className="border border-slate-200 rounded-xl p-5">
@@ -249,7 +252,7 @@ const MedicationDetail = () => {
                     <div className="flex flex-wrap gap-2">
                         {related.map((m) => (
                             <Link key={m.id} to={`/medications/${m.id}`} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 text-sm font-medium px-3 py-1.5 rounded-full">
-                                {m.brandName}
+                                {localizeMedName(m.brandName)}
                             </Link>
                         ))}
                     </div>

@@ -10,6 +10,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { seoMetadata } from '../src/data/seo-metadata.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,37 @@ const projectRoot = path.resolve(__dirname, '..');
 // SEO metadata for each page (copied from src/data/seo-metadata.js)
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 const SITE_NAME = 'Transplant Medication Navigator™';
+
+// Routes with a full Spanish translation (reached via ?lang=es). Each gets
+// hreflang alternates and a prerendered Spanish variant (index-es.html,
+// served by the lang=:lang redirect rules in public/_redirects) so search
+// engines and link previews see Spanish text without running JavaScript.
+const SPANISH_ROUTES = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
+
+// Spanish titles/descriptions come from the same source the app uses
+// (seoMetadata imported at the top of the file).
+const SPANISH_META = {
+  '/': seoMetadata.home.es,
+  '/wizard': seoMetadata.wizard.es,
+  '/education': seoMetadata.education.es,
+  '/application-help': seoMetadata.applicationHelp.es,
+  '/faq': seoMetadata.faq.es,
+};
+const ES_LOCALE = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')
+);
+
+// Home-page stat tiles, computed from the data files so the static fallback
+// can never drift from the app (same formula as Home in src/App.jsx).
+const PROGRAMS = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'programs.json'), 'utf8')
+);
+const countGroup = (group) => (group ? Object.keys(group).length : 0);
+const HOME_STATS = {
+  medications: null, // filled in after MEDICATIONS loads below
+  assistancePrograms: countGroup(PROGRAMS.papPrograms) + countGroup(PROGRAMS.foundationPrograms),
+  copayCards: countGroup(PROGRAMS.copayPrograms),
+};
 
 const pages = [
   {
@@ -163,6 +195,7 @@ const pages = [
 const MEDICATIONS = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'data', 'medications.json'), 'utf8')
 );
+HOME_STATS.medications = MEDICATIONS.length;
 
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -202,16 +235,17 @@ const medicationPages = MEDICATIONS.map((m) => {
  * Generate HTML content for a page with proper meta tags
  * This version includes the main SPA script so React can take over after initial render
  */
-function generatePageHTML(page, mainScriptPath, stylesheetTags) {
+function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
   const canonical = `${BASE_URL}${page.route}`;
+  const isEs = lang === 'es';
+  // The Spanish version of a page lives at the same route with ?lang=es;
+  // it is its own canonical so both language versions can be indexed.
+  const pageUrl = isEs ? `${canonical}?lang=es` : canonical;
   const pageTitle = page.title.split(' | ')[0];
   const aiSummaryTag = page.aiSummary
     ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
     : '';
 
-  // Routes with a full Spanish translation (reached via ?lang=es) get
-  // hreflang alternates so search engines index both language versions.
-  const SPANISH_ROUTES = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
   const hreflangTags = SPANISH_ROUTES.has(page.route)
     ? `
     <!-- Language alternates -->
@@ -221,7 +255,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
     : '';
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${lang}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -231,11 +265,12 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
     <meta name="title" content="${page.title}" />
     <meta name="description" content="${page.description}" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="${canonical}" />${aiSummaryTag}${hreflangTags}
+    <link rel="canonical" href="${pageUrl}" />${aiSummaryTag}${hreflangTags}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="${canonical}" />
+    <meta property="og:locale" content="${isEs ? 'es_US' : 'en_US'}" />
+    <meta property="og:url" content="${pageUrl}" />
     <meta property="og:title" content="${page.ogTitle || page.title}" />
     <meta property="og:description" content="${page.ogDescription || page.description}" />
     <meta property="og:image" content="${BASE_URL}${page.ogImage || '/og-image.png'}" />
@@ -245,7 +280,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="${canonical}" />
+    <meta name="twitter:url" content="${pageUrl}" />
     <meta name="twitter:title" content="${page.ogTitle || page.title}" />
     <meta name="twitter:description" content="${page.ogDescription || page.description}" />
     <meta name="twitter:image" content="${BASE_URL}${page.ogImage || '/twitter-image.png'}" />
@@ -274,8 +309,8 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
-            <p style="color: #64748b; margin-bottom: 16px;">Loading interactive features... <span lang="es">/ Cargando la página...</span></p>
-            <a href="/" style="color: #059669; text-decoration: underline;">Go to Homepage</a>
+            <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página... <span lang="en">/ Loading interactive features...</span>' : 'Loading interactive features... <span lang="es">/ Cargando la página...</span>'}</p>
+            <a href="${isEs ? '/?lang=es' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
         </main>
     </div>
 
@@ -283,6 +318,74 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags) {
     <script type="module" src="${mainScriptPath}"></script>
 </body>
 </html>`;
+}
+
+/**
+ * Static Spanish homepage body for dist/index-es.html, built from the same
+ * locale strings the app renders (src/locales/es.json) plus the computed
+ * stat tiles, so crawlers and no-JS visitors get real Spanish content.
+ */
+function spanishHomeBody() {
+  const h = ES_LOCALE.home;
+  return `<div style="text-align: center;">
+      <p style="background: linear-gradient(135deg, #047857 0%, #059669 40%, #10B981 100%); color: white; padding: 12px 24px; border-radius: 12px; font-size: 0.9375rem;">
+        <strong>${h.updateBanner.verified}</strong> — ${h.updateBanner.totalAssist.replace(/<\/?strong>/g, '')}
+      </p>
+      <h1 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin: 24px 0 16px; line-height: 1.2;">
+        ${h.hero.titlePre}<span style="color: #059669;">${h.hero.titleHighlight}</span>
+      </h1>
+      <p style="font-size: 1.25rem; font-weight: 600; color: #059669; margin-bottom: 12px;">${h.hero.tagline}</p>
+      <p style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 24px;">${h.hero.subtitle}</p>
+      <p style="margin-bottom: 24px;">
+        <a href="/wizard?lang=es" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.hero.quizButton}</a>
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 560px; margin: 0 auto 32px;">
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px; text-align: center;">
+          <p style="font-size: 1.5rem; font-weight: 800; color: #047857; margin: 0;">${HOME_STATS.medications}</p>
+          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.medications}</p>
+        </div>
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 14px; text-align: center;">
+          <p style="font-size: 1.5rem; font-weight: 800; color: #b45309; margin: 0;">${HOME_STATS.assistancePrograms}</p>
+          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.assistancePrograms}</p>
+        </div>
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px; text-align: center;">
+          <p style="font-size: 1.5rem; font-weight: 800; color: #047857; margin: 0;">${HOME_STATS.copayCards}</p>
+          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.copayCards}</p>
+        </div>
+      </div>
+      <section style="background: #064e3b; color: white; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">${h.mission.missionTitle}</h2>
+        <p style="color: #d1fae5; line-height: 1.7; margin: 0;">${h.mission.missionText}</p>
+      </section>
+      <section style="background: linear-gradient(to bottom right, #f8fafc, #ecfdf5); border: 2px solid #a7f3d0; border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: left;">
+        <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${h.founder.title}</h2>
+        <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${h.founder.name}</h3>
+        <p style="color: #047857; font-size: 0.875rem; margin-bottom: 10px;">${h.founder.role}</p>
+        <p style="color: #334155; line-height: 1.7; margin: 0;">${h.founder.bio}</p>
+      </section>
+      <section style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 12px; padding: 20px;">
+        <p style="color: white; font-weight: 700; font-size: 1.0625rem; margin: 0 0 4px;">
+          ¿Crisis de salud mental? Llame o envíe un mensaje de texto al <a href="tel:988" style="color: white;">988</a> (para atención en español, oprima el 2)
+        </p>
+        <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">${h.hotline.lifeline} — 24/7, confidencial y también en español</p>
+      </section>
+    </div>`;
+}
+
+/**
+ * Merge a page definition with its Spanish metadata for the ?lang=es variant.
+ */
+function spanishPage(page) {
+  const es = SPANISH_META[page.route] || {};
+  return {
+    ...page,
+    title: es.title || page.title,
+    description: es.description || page.description,
+    ogTitle: (es.title || page.title).split(' | ')[0],
+    ogDescription: es.description || page.description,
+    aiSummary: undefined,
+    bodyHtml: page.route === '/' ? spanishHomeBody() : undefined,
+  };
 }
 
 /**
@@ -361,10 +464,50 @@ function prerenderPages() {
 
       console.log(`  ✅ ${page.route} -> ${routePath}/index.html`);
       created++;
+
+      // Spanish variant (?lang=es), plus an English twin so the
+      // "lang=:lang -> index-:lang.html" redirect resolves for both values.
+      if (SPANISH_ROUTES.has(page.route)) {
+        const esHtml = generatePageHTML(spanishPage(page), mainScriptPath, stylesheetTags, 'es');
+        fs.writeFileSync(path.join(pageDir, 'index-es.html'), esHtml, 'utf8');
+        fs.writeFileSync(path.join(pageDir, 'index-en.html'), html, 'utf8');
+        console.log(`  ✅ ${page.route}?lang=es -> ${routePath}/index-es.html`);
+        created++;
+      }
     } catch (error) {
       console.error(`  ❌ Error creating ${page.route}:`, error.message);
       errors++;
     }
+  }
+
+  // Homepage: refresh the static stat tiles in dist/index.html from the data
+  // files (they are hand-written in index.html and would otherwise go stale),
+  // then emit the language variants for the lang=:lang redirect.
+  try {
+    const homePath = path.join(distDir, 'index.html');
+    if (fs.existsSync(homePath)) {
+      let homeHtml = fs.readFileSync(homePath, 'utf8');
+      for (const [key, value] of Object.entries(HOME_STATS)) {
+        homeHtml = homeHtml.replace(
+          new RegExp(`(<span data-stat="${key}">)[^<]*(</span>)`, 'g'),
+          `$1${value}$2`
+        );
+      }
+      fs.writeFileSync(homePath, homeHtml, 'utf8');
+      fs.writeFileSync(path.join(distDir, 'index-en.html'), homeHtml, 'utf8');
+      const esHome = generatePageHTML(
+        spanishPage({ route: '/', title: SITE_NAME, description: '' }),
+        mainScriptPath,
+        stylesheetTags,
+        'es'
+      );
+      fs.writeFileSync(path.join(distDir, 'index-es.html'), esHome, 'utf8');
+      console.log('  ✅ / stats refreshed; /?lang=es -> index-es.html');
+      created += 1;
+    }
+  } catch (error) {
+    console.error('  ❌ Error creating homepage language variants:', error.message);
+    errors++;
   }
 
   console.log(`\n📊 Summary:`);
