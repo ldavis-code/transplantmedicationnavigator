@@ -94,7 +94,10 @@ const TermTooltip = ({
         onMouseLeave={() => setIsOpen(false)}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setIsOpen(false)}
-        className="inline-flex items-center gap-0.5 text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help"
+        // display:inline (not inline-flex): an atomic inline-flex box makes
+        // text extraction (innerText, crawlers, some read-aloud tools) break
+        // the line after the term, orphaning whatever punctuation follows.
+        className="inline text-emerald-700 underline decoration-dotted decoration-emerald-400 underline-offset-2 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 rounded cursor-help"
         aria-describedby={`tooltip-${termKey}`}
         aria-expanded={isOpen}
       >
@@ -102,7 +105,7 @@ const TermTooltip = ({
         {showIcon && (
           <HelpCircle
             size={14}
-            className="inline-block text-emerald-600 flex-shrink-0"
+            className="inline-block ml-0.5 align-[-2px] text-emerald-600"
             aria-hidden="true"
           />
         )}

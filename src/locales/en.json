@@ -1325,7 +1325,7 @@
       "price3": "$10",
       "quotePost": ".\"",
       "savedLabel": "Saved Per Year",
-      "why": "This is why we built this tool, so no patient misses out on savings their pharmacy never mentioned.",
+      "why": "This is why we built this tool — so no patient misses out on savings their pharmacy never mentioned.",
       "notAloneTitle": "You're not alone — and the research proves it.",
       "notAloneText": "A 2026 multicenter study found that 1 in 4 liver transplant candidates spends more than 10% of their income on medical costs — before they even get listed. We're here to change that.",
       "evidenceLink": "See the evidence"
@@ -1357,7 +1357,7 @@
     "quizCta": {
       "ariaLabel": "Start your personalized medication path",
       "button": "Start My Medication Path Quiz",
-      "text": "Take our free quiz to see how we can help, Patient Founded. Patient First."
+      "text": "Take our free quiz to see how we can help. Patient founded. Patient first."
     },
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
@@ -1365,7 +1365,7 @@
       "name": "Lorrinda Gray-Davis",
       "role": "Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee",
       "bio": "Lorrinda built this tool from lived experience. Since March 2020 she has led a daily peer support program for transplant patients and caregivers — supporting more than 550 people, with more than 190 going on to receive transplants and results published in peer-reviewed medical journals.",
-      "stat1Label": "Years post-transplant",
+      "stat1Label": "Liver transplant recipient",
       "stat2Label": "Transplants among program participants",
       "stat3Label": "Patients & caregivers supported",
       "link": "Read Lorrinda's full story & research"
@@ -1664,7 +1664,7 @@
         "step2Aria": "Step two",
         "foundationsPre": "Apply to ",
         "foundationsTerm": "Foundations",
-        "foundationsPost": ".",
+        "foundationsPost": " for copay help.",
         "foundationsText": "Organizations like HealthWell or PAN Foundation help pay for copays. Apply to them for your specific disease fund.",
         "step3Badge": "Step 3",
         "step3Aria": "Step three",
@@ -2188,6 +2188,7 @@
         "pre": " Discount cards (GoodRx, SingleCare) or cash payments do ",
         "notCount": "NOT count toward your ",
         "deductible": "deductible",
+        "notCountPost": " or out-of-pocket max.",
         "text2": "If you use a card too early, you might pay more money over the year. The card pays for you, but that money doesn't count. You still have to pay your full deductible later.",
         "usingInsurance": "✅ Using Insurance",
         "usingInsuranceDesc": "Pay more early → then $0 the rest of the year",
