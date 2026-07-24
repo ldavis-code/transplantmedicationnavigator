@@ -101,34 +101,42 @@
 # Spanish prerendered variants (?lang=es) — mirror of the rules in
 # public/_redirects (which is evaluated first); kept in both places like the
 # per-page rules below. Placeholder capture serves index-en/index-es.html.
+# Forced because non-forced rewrites are skipped when the path resolves to
+# an existing static file; the query condition keeps parameterless requests
+# untouched.
 [[redirects]]
   from = "/"
   to = "/index-:lang.html"
   status = 200
+  force = true
   query = { lang = ":lang" }
 
 [[redirects]]
   from = "/wizard"
   to = "/wizard/index-:lang.html"
   status = 200
+  force = true
   query = { lang = ":lang" }
 
 [[redirects]]
   from = "/education"
   to = "/education/index-:lang.html"
   status = 200
+  force = true
   query = { lang = ":lang" }
 
 [[redirects]]
   from = "/application-help"
   to = "/application-help/index-:lang.html"
   status = 200
+  force = true
   query = { lang = ":lang" }
 
 [[redirects]]
   from = "/faq"
   to = "/faq/index-:lang.html"
   status = 200
+  force = true
   query = { lang = ":lang" }
 
 # Prerendered pages - serve static HTML with SEO meta tags
