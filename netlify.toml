@@ -98,6 +98,39 @@
   to = "/trumprx-es.html"
   status = 200
 
+# Spanish prerendered variants (?lang=es) — mirror of the rules in
+# public/_redirects (which is evaluated first); kept in both places like the
+# per-page rules below. Placeholder capture serves index-en/index-es.html.
+[[redirects]]
+  from = "/"
+  to = "/index-:lang.html"
+  status = 200
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/wizard"
+  to = "/wizard/index-:lang.html"
+  status = 200
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/education"
+  to = "/education/index-:lang.html"
+  status = 200
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/application-help"
+  to = "/application-help/index-:lang.html"
+  status = 200
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq/index-:lang.html"
+  status = 200
+  query = { lang = ":lang" }
+
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
 [[redirects]]

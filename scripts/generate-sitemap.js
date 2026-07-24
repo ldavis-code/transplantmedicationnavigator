@@ -38,19 +38,40 @@ const routes = [
     { path: '/accessibility', changefreq: 'yearly', priority: 0.4 },
 ];
 
+// Routes with a full Spanish translation, reached via ?lang=es. Each is
+// listed as its own URL (with hreflang alternates on both language versions)
+// so the Spanish pages are discoverable by search engines.
+const SPANISH_PATHS = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
+
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
 
     const allRoutes = [...routes, ...medicationRoutes];
-    const urls = allRoutes.map(route => `    <url>
-        <loc>${SITE_URL}${route.path}</loc>
+    const alternates = (path) => `
+        <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${path}" />
+        <xhtml:link rel="alternate" hreflang="es" href="${SITE_URL}${path}?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${path}" />`;
+    const urls = allRoutes.flatMap(route => {
+        const hasEs = SPANISH_PATHS.has(route.path);
+        const entries = [`    <url>
+        <loc>${SITE_URL}${route.path}</loc>${hasEs ? alternates(route.path) : ''}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>
-    </url>`).join('\n');
+    </url>`];
+        if (hasEs) {
+            entries.push(`    <url>
+        <loc>${SITE_URL}${route.path}?lang=es</loc>${alternates(route.path)}
+        <lastmod>${today}</lastmod>
+        <changefreq>${route.changefreq}</changefreq>
+        <priority>${route.priority}</priority>
+    </url>`);
+        }
+        return entries;
+    }).join('\n');
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}
 </urlset>
 `;

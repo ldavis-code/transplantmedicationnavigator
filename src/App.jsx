@@ -136,6 +136,7 @@ import APPLICATION_CHECKLIST_DATA from './data/application-checklist.json';
 import APPLICATION_CHECKLIST_ES from './data/application-checklist.es.json';
 import FAQS_DATA from './data/faqs.json';
 import PRICE_ESTIMATES_DATA from './data/price-estimates.json';
+import { localizeMedName } from './utils/medNames.js';
 import { useMetaTags } from './hooks/useMetaTags.js';
 import { seoMetadata } from './data/seo-metadata.js';
 import { fetchPriceStats, submitPriceReport, fetchAllPriceStats } from './lib/priceReportsApi.js';
@@ -253,6 +254,22 @@ const ScrollToTop = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [pathname]);
+    return null;
+};
+
+// Applies ?lang= on every navigation, not only on the initial page load
+// (which i18n.js handles at module init). This covers in-app navigations to
+// links that carry ?lang=es and any load path where the initial detection
+// was missed — e.g. an app shell restored by an out-of-date service worker.
+const LanguageParamSync = () => {
+    const { search } = useLocation();
+    const { i18n } = useTranslation();
+    useEffect(() => {
+        const param = new URLSearchParams(search).get('lang');
+        if ((param === 'en' || param === 'es') && i18n.resolvedLanguage !== param) {
+            i18n.changeLanguage(param);
+        }
+    }, [search, i18n]);
     return null;
 };
 
@@ -2169,7 +2186,7 @@ const Wizard = () => {
                                                 className="w-full text-left p-3 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 <div>
-                                                    <span className="font-bold text-slate-900">{med.brandName}</span>
+                                                    <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
                                                     <span className="text-sm text-slate-600 ml-2">({med.genericName})</span>
                                                 </div>
                                                 {isAlreadySelected ? (
@@ -2309,6 +2326,15 @@ const Wizard = () => {
         const isCommercial = answers.insurance === InsuranceType.COMMERCIAL || answers.insurance === InsuranceType.MARKETPLACE;
         const isUninsured = answers.insurance === InsuranceType.UNINSURED;
         const financial = answers.financialStatus;
+        // Manufacturer PAPs are brand-only. When every selected medication is a
+        // generic, the "check manufacturer PAPs" step doesn't apply — swap in
+        // generic-specific guidance so the plan matches the patient's list.
+        const resultsMeds = (answers.medications || [])
+            .map((id) => MEDICATIONS.find((m) => m.id === id))
+            .filter(Boolean);
+        const hasOnlyGenericMeds = resultsMeds.length > 0 && resultsMeds.every(
+            (m) => /\(generic\)/i.test(m.brandName || '') || (m.manufacturer || '').toLowerCase() === 'generic'
+        );
 
         return (
             <article className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -2420,7 +2446,7 @@ const Wizard = () => {
                                                             className="w-full text-left p-2 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                                                         >
                                                             <div>
-                                                                <span className="font-medium text-slate-900">{med.brandName}</span>
+                                                                <span className="font-medium text-slate-900">{localizeMedName(med.brandName)}</span>
                                                                 <span className="text-slate-500 ml-1">({med.genericName})</span>
                                                             </div>
                                                             {isAlreadySelected ? (
@@ -2532,14 +2558,14 @@ const Wizard = () => {
                                     <li className="flex gap-3 items-start">
                                         <div className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step1Aria')}>{t('wizard.results.challenging.step1Badge')}</div>
                                         <div>
-                                            <strong>{t('wizard.results.challenging.papTitle')}</strong>
-                                            <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.papText')}</p>
+                                            <strong>{hasOnlyGenericMeds ? t('wizard.results.challenging.papTitleGeneric') : t('wizard.results.challenging.papTitle')}</strong>
+                                            <p className="text-sm text-slate-600 mt-1">{hasOnlyGenericMeds ? t('wizard.results.challenging.papTextGeneric') : t('wizard.results.challenging.papText')}</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 items-start">
                                         <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step2Aria')}>{t('wizard.results.challenging.step2Badge')}</div>
                                         <div>
-                                            <strong>{t('wizard.results.challenging.foundationsPre')}<TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</strong>
+                                            <strong>{t('wizard.results.challenging.foundationsPre')}<span className="whitespace-nowrap"><TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</span></strong>
                                             <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.foundationsText')}</p>
                                         </div>
                                     </li>
@@ -2577,11 +2603,11 @@ const Wizard = () => {
                                 )}
                                 <ol className="space-y-4 text-slate-700 list-decimal pl-6">
                                     <li>
-                                        <strong>{t('wizard.results.crisis.papTitle')}</strong>
+                                        <strong>{hasOnlyGenericMeds ? t('wizard.results.crisis.papTitleGeneric') : t('wizard.results.crisis.papTitle')}</strong>
                                         <p className="text-sm text-slate-600 mt-1">
-                                            {t('wizard.results.crisis.papText')}
+                                            {hasOnlyGenericMeds ? t('wizard.results.crisis.papTextGeneric') : t('wizard.results.crisis.papText')}
                                             <br/>
-                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">{t('wizard.results.crisis.papLinkText')}</Link>{t('wizard.results.crisis.papLinkPost')}
+                                            <Link to={`/medications?ids=${(answers.medications || []).join(',')}`} className="text-rose-700 font-bold underline">{t('wizard.results.crisis.papLinkText')}</Link>{hasOnlyGenericMeds ? t('wizard.results.crisis.papLinkPostGeneric') : t('wizard.results.crisis.papLinkPost')}
                                         </p>
                                     </li>
                                     <li>
@@ -2926,7 +2952,7 @@ const MedicationSearch = () => {
                                         return (
                                             <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: med.brandName })}>
                                                 <div>
-                                                    <span className="font-bold text-slate-900 block">{med.brandName}</span>
+                                                    <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
                                                     <span className="text-sm text-slate-600">{med.genericName}</span>
                                                 </div>
                                                 {isAlreadyIn ? (
@@ -3039,7 +3065,7 @@ const MedicationSearch = () => {
                                             return (
                                                 <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50" role="option" aria-selected={isAlreadyIn}>
                                                     <div>
-                                                        <span className="font-bold text-slate-900 block">{med.brandName}</span>
+                                                        <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
                                                         <span className="text-sm text-slate-600">{med.genericName}</span>
                                                     </div>
                                                     {isAlreadyIn ? (
@@ -3067,7 +3093,7 @@ const MedicationSearch = () => {
                         {displayListInternal.map(med => (
                             <div key={med.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                 <div>
-                                    <span className="font-bold text-slate-900">{med.brandName}</span>
+                                    <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
                                     <span className="text-slate-600 ml-2">({med.genericName})</span>
                                 </div>
                                 <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name: med.brandName })}>
@@ -3482,9 +3508,9 @@ function medDisplayName(med) {
     if (!med) return '';
     const multipleBrands = (med.brandName || '').includes('/');
     if ((med.id && isEpicGenericMed(med.id)) || multipleBrands) {
-        return med.genericName || med.brandName || '';
+        return localizeMedName(med.genericName || med.brandName || '');
     }
-    return (med.brandName || '').split('/')[0];
+    return localizeMedName((med.brandName || '').split('/')[0]);
 }
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
@@ -3522,7 +3548,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     // Don't substitute a brand the patient isn't actually on.
     const hasMultipleBrands = (med.brandName || '').includes('/');
     const leadWithGeneric = takesGeneric || hasMultipleBrands;
-    const displayName = leadWithGeneric ? med.genericName : med.brandName;
+    const displayName = localizeMedName(leadWithGeneric ? med.genericName : med.brandName);
 
     // Extract program info from new nested structure or legacy flat fields
     const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer }) } : null);
@@ -4399,7 +4425,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <div className="border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.detailsTitle')}</h3>
                             <div className="grid grid-cols-2 gap-2 text-sm">
-                                <div><span className="text-slate-600">{t('medications.card.print.brandName')}</span> <strong>{med.brandName}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.brandName')}</span> <strong>{localizeMedName(med.brandName)}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.genericName')}</span> <strong>{med.genericName}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.category')}</span> <strong>{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.manufacturer')}</span> <strong>{med.manufacturer}</strong></div>
@@ -6645,7 +6671,7 @@ ${patientName || "[Your Name]"}`;
                                                     return (
                                                         <button key={med.id} onClick={() => addMedToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed">
                                                             <div>
-                                                                <span className="font-bold text-slate-900 block">{med.brandName}</span>
+                                                                <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
                                                                 <span className="text-sm text-slate-600">{med.genericName}</span>
                                                             </div>
                                                             {isAlreadyIn ? (
@@ -7117,6 +7143,7 @@ const App = () => {
                             <ConsentBanner />
                             <GoogleAnalytics />
                             <ScrollToTop />
+                            <LanguageParamSync />
                             <RouteAnnouncer />
                             <AppRoutes />
                         </DemoModeProvider>

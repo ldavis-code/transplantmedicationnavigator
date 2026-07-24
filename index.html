@@ -310,10 +310,10 @@
 
     <!-- React root - contains static SEO content that gets replaced when JS loads -->
     <div id="root">
-        <!-- TrumpRx Breaking News Banner -->
-        <div style="background: linear-gradient(135deg, #0F766E 0%, #0D9488 40%, #14B8A6 100%); color: white; padding: 12px 24px; text-align: center;">
-            <a href="/trumprx" style="color: white; text-decoration: none; font-size: 0.9375rem;">
-                <strong>TrumpRx.gov</strong> launched with 43 discounted medications — several relevant to transplant patients. <span style="color: #FEF3C7; text-decoration: underline;">See which ones →</span>
+        <!-- Verified & Up to Date Banner (mirrors the live app's TotalAssist banner) -->
+        <div style="background: linear-gradient(135deg, #047857 0%, #059669 40%, #10B981 100%); color: white; padding: 12px 24px; text-align: center;">
+            <a href="/education" style="color: white; text-decoration: none; font-size: 0.9375rem;">
+                <strong>Verified &amp; up to date</strong> — now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026). <span style="color: #FEF3C7; text-decoration: underline;">See what's new →</span>
             </a>
         </div>
 
@@ -323,24 +323,39 @@
             <!-- Hero -->
             <header style="text-align: center; margin-bottom: 48px;">
                 <h1 style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 16px; line-height: 1.2;">
-                    See your medication options <span style="color: #059669;">in one place.</span>
+                    Compare estimated medication prices and find verified assistance programs <span style="color: #059669;">in one place.</span>
                 </h1>
                 <p style="font-size: 1.5rem; font-weight: 600; color: #059669; margin-bottom: 16px;">
                     From Prescription to Possession
                 </p>
                 <p style="font-size: 1.25rem; font-weight: 600; color: #0f172a; margin-bottom: 16px;">
-                    One patient went from $624/month to $10 with a copay card. Start the My Path Quiz to find your savings.
+                    One patient went from $624/month to $10 with a copay card. Find out what you could save.
                 </p>
                 <p style="font-size: 1.25rem; color: #334155; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
                     A guide for transplant patients and care partners to find affordable medications and assistance programs.
                 </p>
                 <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
                     <a href="/wizard" style="display: inline-block; padding: 16px 32px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">
-                        Start My Medication Path Quiz
+                        Start My Path Quiz
                     </a>
                     <a href="/medications" style="display: inline-block; padding: 16px 32px; background: white; color: #334155; font-weight: 700; border-radius: 12px; text-decoration: none; border: 2px solid #e2e8f0;">
                         Compare Prices &amp; Meds
                     </a>
+                </div>
+                <!-- Stats (numbers are refreshed from the data files at build time by prerender-seo.js) -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 600px; margin: 32px auto 0;">
+                    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
+                        <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="medications">219</span></p>
+                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Medications</p>
+                    </div>
+                    <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; text-align: center;">
+                        <p style="font-size: 1.75rem; font-weight: 800; color: #b45309; margin: 0;"><span data-stat="assistancePrograms">47</span></p>
+                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Assistance Programs</p>
+                    </div>
+                    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
+                        <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="copayCards">53</span></p>
+                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Copay Cards</p>
+                    </div>
                 </div>
             </header>
 
@@ -381,13 +396,10 @@
                 </h2>
                 <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Lorrinda Gray-Davis</h3>
                 <p style="color: #047857; font-weight: 500; font-size: 0.875rem; margin-bottom: 12px;">
-                    Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)
-                </p>
-                <p style="color: #334155; line-height: 1.7; margin-bottom: 12px;">
-                    Lorrinda built this tool from lived experience. She has spent seven years post-transplant turning her journey into national patient advocacy, published peer-reviewed research, and built programs that have supported nearly 500 patients.
+                    Liver transplant recipient &middot; President of TRIO &middot; Vice Chair, OPTN Patient Affairs Committee
                 </p>
                 <p style="color: #334155; line-height: 1.7; margin-bottom: 20px;">
-                    Her daily AA recovery program at 5:30 PM has facilitated 183 successful transplants and helped over 500 patients.
+                    Lorrinda built this tool from lived experience. Since March 2020 she has led a daily peer support program for transplant patients and caregivers &mdash; supporting more than 550 people, with more than 190 going on to receive transplants and results published in peer-reviewed medical journals.
                 </p>
                 <!-- Impact Stats -->
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
@@ -396,12 +408,12 @@
                         <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Years Post-Transplant</p>
                     </div>
                     <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #d1fae5;">
-                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">183</p>
-                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Transplants Facilitated</p>
+                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">190+</p>
+                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Transplants Among Program Participants</p>
                     </div>
                     <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #d1fae5;">
-                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">500+</p>
-                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Patients Supported</p>
+                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">540+</p>
+                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Patients &amp; Caregivers Supported</p>
                     </div>
                 </div>
                 <!-- Credentials -->
