@@ -1075,7 +1075,7 @@ const Home = () => {
                         <p className="text-emerald-700 font-medium text-sm mb-3">{t('home.founder.role')}</p>
                         <p className="text-slate-700 leading-relaxed mb-4">{t('home.founder.bio')}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">7</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">8/8/18</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">190+</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">540+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
                         </div>
@@ -1359,7 +1359,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                         return (
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
-                                                    <span className="font-bold text-slate-900">{med.brand}</span>
+                                                    <span className="font-bold text-slate-900">{localizeMedName(med.brand)}</span>
                                                     <span className="text-slate-500 ml-1">({med.name})</span>
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{guideEs?.classes?.[med.class] || med.class}</td>
@@ -1372,7 +1372,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                                                 ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                                                                 : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                                                         }`}
-                                                        aria-label={isAdded ? t('wizard.meds.guide.removeFromListAria', { name: med.brand }) : t('wizard.meds.guide.addToListAria', { name: med.brand })}
+                                                        aria-label={isAdded ? t('wizard.meds.guide.removeFromListAria', { name: localizeMedName(med.brand) }) : t('wizard.meds.guide.addToListAria', { name: localizeMedName(med.brand) })}
                                                         aria-pressed={isAdded}
                                                     >
                                                         {isAdded ? (
@@ -2565,7 +2565,7 @@ const Wizard = () => {
                                     <li className="flex gap-3 items-start">
                                         <div className="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded mt-0.5" aria-label={t('wizard.results.challenging.step2Aria')}>{t('wizard.results.challenging.step2Badge')}</div>
                                         <div>
-                                            <strong>{t('wizard.results.challenging.foundationsPre')}<span className="whitespace-nowrap"><TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</span></strong>
+                                            <strong>{t('wizard.results.challenging.foundationsPre')}<TermTooltip term="foundation-grant">{t('wizard.results.challenging.foundationsTerm')}</TermTooltip>{t('wizard.results.challenging.foundationsPost')}</strong>
                                             <p className="text-sm text-slate-600 mt-1">{t('wizard.results.challenging.foundationsText')}</p>
                                         </div>
                                     </li>
@@ -4028,7 +4028,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 <div>
                                     <h4 className="font-bold text-red-900 text-sm mb-2">{t('medications.card.warning.title')}</h4>
                                     <p className="text-xs text-red-800 mb-2">
-                                        <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>.
+                                        <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>{t('medications.card.warning.notCountPost')}
                                     </p>
                                     <p className="text-xs text-slate-700 mb-3">
                                         {t('medications.card.warning.text2')}
@@ -4385,7 +4385,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     <div>
                                         <h4 className="font-bold text-red-900 text-sm mb-2">{t('medications.card.warning.title')}</h4>
                                         <p className="text-xs text-red-800 mb-2">
-                                            <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>.
+                                            <strong>{t('medications.card.warning.word')}</strong>{t('medications.card.warning.pre')}<span className="font-bold bg-yellow-200 px-1 rounded">{t('medications.card.warning.notCount')}<TermTooltip term="deductible">{t('medications.card.warning.deductible')}</TermTooltip></span>{t('medications.card.warning.notCountPost')}
                                         </p>
                                         <p className="text-xs text-slate-700 mb-3">
                                             {t('medications.card.warning.text2')}
