@@ -44,7 +44,7 @@ const About = () => {
                             In 2017, Lorrinda was diagnosed with end-stage liver disease and inoperable liver cancer. She received her liver transplant in 2018 — and built Transplant Medication Navigator because she knows what it's like to face a pharmacy counter and a price you can't pay.
                         </p>
                         <p className="text-slate-700 leading-relaxed mb-3">
-                            Since March 2020, she has led a daily peer support program for transplant patients and caregivers — every day, without missing a single one. The program has supported more than 550 patients and caregivers, and more than 190 of them have gone on to receive transplants, with results published in peer-reviewed medical journals.
+                            Since March 2020, she has led a peer support program for transplant patients and caregivers. The program has supported more than 550 patients and caregivers, and 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.
                         </p>
                         <p className="text-slate-700 leading-relaxed">
                             She serves as President of Transplant Recipients International Organization (TRIO) and Vice Chair of the OPTN Patient Affairs Committee, and advises HRSA on national transplant safety standards.
@@ -63,12 +63,12 @@ const About = () => {
                         <p className="text-xs md:text-sm text-slate-600 font-medium">Patients &amp; Caregivers Supported</p>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">190+</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">Transplants Among Program Participants</p>
+                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">183</p>
+                        <p className="text-xs md:text-sm text-slate-600 font-medium">Patients Reached Transplant While Participating</p>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">Daily</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">Peer Support Meetings Since March 2020</p>
+                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">7</p>
+                        <p className="text-xs md:text-sm text-slate-600 font-medium">Published Research Papers &amp; Presentations</p>
                     </div>
                 </div>
 
