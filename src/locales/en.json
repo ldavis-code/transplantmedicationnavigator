@@ -21,7 +21,7 @@
       "badge": "New · Now Live",
       "title": "TotalAssist Is Here, the Nation's Largest Charitable Patient Assistance Program",
       "p1": "The Patient Advocate Foundation and PAN Foundation have merged to launch <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program. Over a combined 50 years, the two organizations have helped 3.8 million patients and granted over $7 billion in financial assistance.",
-      "p2": "As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level, and a six-month lookback can reimburse recent expenses.",
+      "p2": "As of <strong>July 1, 2026</strong>, TotalAssist combines all financial assistance into one place, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Grants help cover medication copays, coinsurance, deductibles, insurance premiums, office visit charges, and treatment-related costs. Eligibility generally extends to patients with income at or below 500% of the Federal Poverty Level — that's 5 times that figure, so many middle-income families qualify — and a six-month lookback can reimburse recent expenses.",
       "applyPre": "Apply online or call ",
       "phone": "866-512-3861",
       "applyPost": " (Mon–Fri, 8:30am–5:30pm ET; press 2 for Spanish).",
@@ -384,7 +384,7 @@
         "boxP1Highlight": "the money you pay does NOT count toward your deductible",
         "boxP1Post": ".",
         "boxP2": "You still have to pay your full deductible later. This can cost you more money over the year.",
-        "boxP3": "What to do: Ask your insurance company when to start using discount cards."
+        "boxP3": "What to do: Call the customer service number on your insurance card and ask: 'Have I met my deductible this year? Is it better for me to use insurance or a discount card for this medication?'"
       },
       "example": {
         "title": "Real-World Example",
@@ -438,7 +438,7 @@
         "t4Rest": "They can connect you with people who know these programs and can help you through the system."
       },
       "questionsTitle": "Questions?",
-      "questionsText": "Not sure if a discount card is right for you? Ask your transplant center's money helper or social worker. They can look at your insurance plan and help you choose."
+      "questionsText": "Not sure if a discount card is right for you? Ask your transplant center's financial coordinator (the person who helps with money questions) or social worker. They can look at your insurance plan and help you choose."
     },
     "diversion": {
       "title": "When Insurance Sends You Elsewhere",
@@ -540,7 +540,7 @@
       },
       "help": {
         "title": "Need Help?",
-        "text": "Think this is happening to you? Talk to your transplant center's money helper or social worker. They know how to help.",
+        "text": "Think this is happening to you? Talk to your transplant center's financial coordinator (the person who helps with money questions) or social worker. They know how to help.",
         "pafPre": "You can also call the ",
         "pafLink": "Patient Advocate Foundation",
         "pafPost": " for free help."
@@ -554,8 +554,8 @@
         "name": "National Suicide & Crisis Lifeline",
         "availability": "24/7 • Free • Private",
         "callTitle": "Call or Text",
-        "callText": "Dial or text <strong>988</strong> from any phone",
-        "chatTitle": "Online Chat"
+        "callText": "Dial or text <strong>988</strong> from any phone (Spanish-language support: press 2 / oprima el 2)",
+        "chatTitle": "Online Chat (also available in Spanish)"
       },
       "samhsa": {
         "aria": "Visit SAMHSA (opens in new tab)",
@@ -889,7 +889,7 @@
         "reasonsTitle": "Common reasons transplant patients have two plans:",
         "reasons": {
           "kidney": "<strong>Kidney disease</strong>: You may get Medicare even if you're under 65",
-          "disability": "<strong>Disability</strong>: After 2 years on disability, you get Medicare",
+          "disability": "<strong>Disability</strong>: After 2 years on Social Security disability benefits (SSDI), you get Medicare",
           "working": "<strong>Still working at 65+</strong>: You have Medicare AND job insurance",
           "spouse": "<strong>Spouse's insurance</strong>: Your spouse's job covers you too"
         },
@@ -1377,14 +1377,56 @@
       "availability": "24/7 • Confidential",
       "encouragement": "Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.",
       "callTitle": "Call or Text",
-      "callText": "Dial or text <strong>988</strong> from any phone",
-      "chatTitle": "Online Chat"
+      "callText": "Dial or text <strong>988</strong> from any phone (Spanish-language support: press 2 / oprima el 2)",
+      "chatTitle": "Online Chat (also available in Spanish)"
     },
     "privacy": {
       "title": "We Keep Your Info Safe",
       "text": "We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options."
     },
     "tagline": "Built for patients by a patient"
+  },
+  "about": {
+    "back": "Back to home",
+    "heading": "Created by Someone Who's Been There",
+    "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
+    "name": "Lorrinda Gray-Davis",
+    "role": "Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)",
+    "bio1": "In 2017, Lorrinda was diagnosed with end-stage liver disease and inoperable liver cancer. She received her liver transplant in 2018 — and built Transplant Medication Navigator because she knows what it's like to face a pharmacy counter and a price you can't pay.",
+    "bio2": "Since March 2020, she has led a peer support program for transplant patients and caregivers. The program has supported more than 550 patients and caregivers, and 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.",
+    "bio3": "She serves as President of Transplant Recipients International Organization (TRIO) and Vice Chair of the OPTN Patient Affairs Committee, and advises HRSA on national transplant safety standards.",
+    "stat1Label": "Transplant Recipient Since",
+    "stat2Label": "Patients & Caregivers Supported",
+    "stat3Label": "Patients Reached Transplant While Participating",
+    "stat4Label": "Published Research Papers & Presentations",
+    "credsTitle": "Leadership & Recognition",
+    "credentials": [
+      "Vice Chair, OPTN Patient Affairs Committee",
+      "OPTN Transitional Nominating Committee (2025)",
+      "President, TRIO (1,500+ members)",
+      "Harrison Fellow, Fatty Liver Foundation",
+      "AASLD Patient Advisory Group",
+      "HRSA Letter of Commendation (2025)",
+      "Co-First Author, Hepatology Communications",
+      "Featured in Cancer Today magazine (2025)"
+    ],
+    "pubsTitle": "Published Research & Presentations (7 Publications)",
+    "pubsNote": "Publication titles are shown in English, as originally published.",
+    "badgePeer": "Peer-Reviewed Journal",
+    "badgeDistinction": "Poster of Distinction",
+    "badgePoster": "Conference Poster",
+    "badgeWtc": "World Transplant Congress",
+    "pub1Venue": "Hepatology Communications, Vol. 10, Issue 2 (2026) · Co-First Author",
+    "pub2Venue": "Liver Transplantation, 2026 · First Author",
+    "pub3Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · First Author",
+    "pub4Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Co-Author",
+    "pub5Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
+    "pub6Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
+    "pub7Venue": "American Journal of Transplantation, Vol. 25, S1 · WTC 2025 (San Francisco, CA) · Co-Author",
+    "whyTitle": "Why We Built This: The Independent Evidence",
+    "whyText": "Two national peer-reviewed studies now document what this tool was built to solve: 1 in 4 liver transplant candidates faces high financial burden before listing, and nearly 40% of transplant recipients miss medication fills because of cost.",
+    "evidenceLink": "Read the evidence",
+    "learnMore": "Learn more about Lorrinda"
   },
   "evidence": {
     "hero": {
@@ -1603,8 +1645,8 @@
       "challengingDesc": "Medication costs are a significant burden",
       "unaffordableLabel": "Unaffordable",
       "unaffordableDesc": "I struggle to pay for my medications",
-      "crisisLabel": "I can't afford my medications",
-      "crisisDesc": "I cannot afford my medications without help"
+      "crisisLabel": "I've already skipped doses or gone without",
+      "crisisDesc": "I need help right away to keep taking my medications"
     },
     "results": {
       "backAria": "Go back to previous step",
@@ -1665,7 +1707,7 @@
         "foundationsPre": "Apply to ",
         "foundationsTerm": "Foundations",
         "foundationsPost": " for copay help.",
-        "foundationsText": "Organizations like HealthWell or PAN Foundation help pay for copays. Apply to them for your specific disease fund.",
+        "foundationsText": "Organizations like HealthWell or TotalAssist (formerly PAN Foundation / Patient Advocate Foundation) help pay for copays. Apply to them for your specific disease fund.",
         "step3Badge": "Step 3",
         "step3Aria": "Step three",
         "cashTitle": "Compare vs. Cash.",
@@ -1937,7 +1979,7 @@
           "title": "Medicare Appeals",
           "note": "Important: Act on time.",
           "step1": "<strong>Coverage Decision:</strong> Ask your plan to pay for your choice of pharmacy.",
-          "step2": "<strong>Level 1 (Second Look):</strong> File within 65 days if they say no.",
+          "step2": "<strong>Level 1 (Second Look):</strong> If they say no, you have 65 days from the date on the denial letter to file your appeal.",
           "step3": "<strong>Level 2 (Outside Review):</strong> An outside group looks at your case if denied again.",
           "link": "Official Medicare Guide",
           "linkAria": "Visit Official Medicare Guide (opens in new tab)"
@@ -2027,7 +2069,7 @@
         "title": "100% Federal Poverty Level (annual income)",
         "familyOf": "Family of {{size}}:",
         "dontDisqualify": "Don't disqualify yourself",
-        "papRange": ", Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts."
+        "papRange": ", Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts. If you're not sure, apply anyway — it costs nothing."
       },
       "help": {
         "title": "Need Help Applying for Assistance?",
@@ -2168,7 +2210,7 @@
         "apply": "Apply ",
         "foundations": "Foundations",
         "andGrants": " & Grants",
-        "foundationsText": "These groups may help pay for your medicine. Check HealthWell, PAN Foundation, and PAF.",
+        "foundationsText": "These groups may help pay for your medicine. Check HealthWell and TotalAssist (formerly PAN Foundation / Patient Advocate Foundation).",
         "fundFinderAria": "Check PAN Foundation FundFinder Tool (opens in new tab)",
         "fundFinderLink": "Check FundFinder Tool ",
         "partDTitle": "Medicare Part D Information",
@@ -2260,10 +2302,10 @@
         "papProgramFallback": "Patient Assistance Program (PAP)",
         "papEligibilityFallback": "For Medicare, Medicaid, uninsured, or underinsured patients.",
         "foundationGrants": "Foundation Grants",
-        "foundationCheck": "Check PAN Foundation, HealthWell, and Patient Advocate Foundation.",
+        "foundationCheck": "Check HealthWell and TotalAssist (formerly PAN Foundation / Patient Advocate Foundation).",
         "checklistTitle": "Action Checklist",
         "applyFor": "Apply for ",
-        "checkFoundation": "Check foundation eligibility (PAN, HealthWell, PAF)",
+        "checkFoundation": "Check foundation eligibility (HealthWell, TotalAssist)",
         "comparePrices": "Compare prices on GoodRx and SingleCare",
         "askTeam": "Ask transplant team about generic alternatives",
         "printButton": "Print This Summary"
@@ -2937,8 +2979,7 @@
     "assistanceTitle": "Assistance Programs",
     "noPapText": "No specific manufacturer PAP found for this medication. Check these foundations that may help:",
     "healthwellDesc": "- copay and premium assistance",
-    "panDesc": "- medication and insurance help",
-    "pafDesc": "- copay relief programs",
+    "totalAssistDesc": "(formerly PAN Foundation / Patient Advocate Foundation) - nearly 150 funds for copays and treatment costs",
     "copayCardsTitle": "Copay Cards",
     "noCopayPre": "No specific copay card found for this medication name. Try searching with the exact brand name, or visit",
     "noCopayLink": "PhRMA Patient Assistance",

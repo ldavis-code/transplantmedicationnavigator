@@ -668,16 +668,10 @@ export default function MyMedications() {
                             {' '}{t('myMeds.healthwellDesc')}
                           </li>
                           <li>
-                            <a href="/out/foundation/pan-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
-                              PAN Foundation
-                            </a>
-                            {' '}{t('myMeds.panDesc')}
-                          </li>
-                          <li>
                             <a href="/out/foundation/paf-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
-                              Patient Advocate Foundation
+                              TotalAssist
                             </a>
-                            {' '}{t('myMeds.pafDesc')}
+                            {' '}{t('myMeds.totalAssistDesc')}
                           </li>
                         </ul>
                       </div>

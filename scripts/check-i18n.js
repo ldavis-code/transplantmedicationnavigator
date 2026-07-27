@@ -38,7 +38,6 @@ const ALLOWLIST = [
   'pages/ForPayers.jsx',
   'pages/ForTransplantPrograms.jsx',
   'pages/Evidence.jsx',
-  'pages/About.jsx',
   'pages/NotLicensed.jsx',
   'pages/EpicCallback.jsx',
   'pages/SurveyLanding.jsx',

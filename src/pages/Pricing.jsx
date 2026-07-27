@@ -73,6 +73,7 @@ const Pricing = () => {
                                         <p className="text-slate-600 text-sm mb-4">{tier.description}</p>
                                         <div className="mb-6">
                                             <span className="text-3xl font-bold text-slate-900">{tier.price}</span>
+                                            {' '}
                                             <span className="text-slate-500 text-sm ml-2">{tier.priceSubtext}</span>
                                         </div>
                                         <ul className="space-y-3 mb-6 flex-grow">

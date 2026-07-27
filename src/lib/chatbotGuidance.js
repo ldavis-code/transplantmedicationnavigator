@@ -299,7 +299,7 @@ export const generateGuidanceSummary = (answers, medications) => {
         'Ask your pharmacy for an emergency supply so you do not miss doses',
         'Ask the drug maker about a bridge or quick-start supply while your application is reviewed',
         'Apply for free medicine programs right away (many can help fast)',
-        'Call HealthWell Foundation or PAN Foundation for emergency help',
+        'Call HealthWell Foundation or TotalAssist (formerly PAN Foundation) for emergency help',
       ],
     });
   }
@@ -334,17 +334,10 @@ export const getRelevantResources = (insuranceType, organs = []) => {
   });
 
   resources.push({
-    name: 'PAN Foundation',
-    url: 'https://www.panfoundation.org/',
-    description: 'Copay assistance for chronic conditions',
+    name: 'TotalAssist (formerly PAN Foundation + Patient Advocate Foundation)',
+    url: 'https://portal.totalassist.org/',
+    description: 'Nearly 150 funds for copays, premiums, and treatment costs, plus free case management',
     category: 'Foundation',
-  });
-
-  resources.push({
-    name: 'Patient Advocate Foundation',
-    url: 'https://www.patientadvocate.org/',
-    description: 'Free case management and financial assistance',
-    category: 'Advocacy',
   });
 
   // Kidney-specific
