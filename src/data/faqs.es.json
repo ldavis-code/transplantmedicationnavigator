@@ -66,7 +66,7 @@
       },
       {
         "q": "¿Cómo sé si una fundación es real?",
-        "a": "Las fundaciones reales NUNCA le cobran por solicitar. Están registradas como organizaciones sin fines de lucro.\n\nSi alguien le pide dinero para recibir ayuda, es una estafa.\n\nEjemplos de grupos reales:\n• HealthWell Foundation\n• PAN Foundation\n• NORD"
+        "a": "Las fundaciones reales NUNCA le cobran por solicitar. Están registradas como organizaciones sin fines de lucro.\n\nSi alguien le pide dinero para recibir ayuda, es una estafa.\n\nEjemplos de grupos reales:\n• HealthWell Foundation\n• TotalAssist (antes PAN Foundation / Patient Advocate Foundation)\n• NORD"
       },
       {
         "q": "¿Las fundaciones tienen listas de espera?",
@@ -91,7 +91,7 @@
       },
       {
         "q": "¿Puedo usar tarjetas de copago con Medicare, Medicaid u otro seguro del gobierno?",
-        "a": "**No.** Las tarjetas de copago no se pueden usar con programas de seguro del gobierno:\n• Medicare (incluida la Parte D)\n• Medicaid\n• TRICARE\n• Beneficios del VA\n• Otros programas federales o estatales\n\n**¿Por qué no?**\nLas leyes federales contra sobornos prohíben que los fabricantes de medicamentos den este tipo de asistencia a los beneficiarios de seguros del gobierno.\n\n**Qué SÍ pueden usar los pacientes con seguro del gobierno:**\n• Fundaciones de copago (grupos sin fines de lucro como HealthWell, PAN Foundation)\n• Medicare Extra Help (si sus ingresos califican)\n• Programas estatales de asistencia farmacéutica"
+        "a": "**No.** Las tarjetas de copago no se pueden usar con programas de seguro del gobierno:\n• Medicare (incluida la Parte D)\n• Medicaid\n• TRICARE\n• Beneficios del VA\n• Otros programas federales o estatales\n\n**¿Por qué no?**\nLas leyes federales contra sobornos prohíben que los fabricantes de medicamentos den este tipo de asistencia a los beneficiarios de seguros del gobierno.\n\n**Qué SÍ pueden usar los pacientes con seguro del gobierno:**\n• Fundaciones de copago (grupos sin fines de lucro como HealthWell y TotalAssist)\n• Medicare Extra Help (si sus ingresos califican)\n• Programas estatales de asistencia farmacéutica"
       },
       {
         "q": "¿Las tarjetas de copago tienen límites anuales?",
@@ -219,7 +219,7 @@
       },
       {
         "q": "¿Cuándo deberían usar tarjetas de descuento los pacientes de trasplante?",
-        "a": "Solo en casos limitados:\n1. Para un medicamento que su seguro no cubre\n2. Para un medicamento barato de una sola vez (como un antibiótico)\n3. Si no tiene seguro\n\n**Nunca use tarjetas de descuento** para sus medicamentos diarios de trasplante como Tacrolimus o Mycophenolate."
+        "a": "Solo en casos limitados:\n1. Para un medicamento que su seguro no cubre\n2. Para un medicamento barato de una sola vez (como un antibiótico)\n3. Si no tiene seguro\n\n**Nunca use tarjetas de descuento** para sus medicamentos diarios de trasplante como Tacrolimus (tacrolimus) o Mycophenolate (micofenolato)."
       },
       {
         "q": "¿Qué opciones son mejores que las tarjetas de descuento?",
@@ -277,7 +277,7 @@
       },
       {
         "q": "¿Puedo usar tarjetas de copago si tengo Medicare?",
-        "a": "No. La ley federal no permite las tarjetas de copago de las compañías farmacéuticas para pacientes con Medicare.\n\n**Qué SÍ puede hacer:**\n• Solicitar ayudas económicas de fundaciones (HealthWell, PAN Foundation)\n• Solicitar Medicare Extra Help si sus ingresos son bajos\n• Hablar con su trabajador social sobre otros recursos"
+        "a": "No. La ley federal no permite las tarjetas de copago de las compañías farmacéuticas para pacientes con Medicare.\n\n**Qué SÍ puede hacer:**\n• Solicitar ayudas económicas de fundaciones (HealthWell, TotalAssist)\n• Solicitar Medicare Extra Help si sus ingresos son bajos\n• Hablar con su trabajador social sobre otros recursos"
       },
       {
         "q": "Mi farmacia especializada no envía a mi estado. ¿Qué hago?",

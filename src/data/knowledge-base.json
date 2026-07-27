@@ -13,7 +13,7 @@
   },
   "foundation": {
     "keywords": ["foundation", "healthwell", "pan", "copay"],
-    "response": "**Help From Foundations:**\n\nThese nonprofit groups help pay what you owe at the pharmacy:\n\n• **HealthWell Foundation**: Has funds for specific diseases\n• **PAN Foundation**: Helps with many long-term conditions\n• **Patient Advocate Foundation**: Helps with paperwork and money\n• **American Kidney Fund**: For kidney patients only\n\nThese funds run out fast. Apply as early as you can!"
+    "response": "**Help From Foundations:**\n\nThese nonprofit groups help pay what you owe at the pharmacy:\n\n• **HealthWell Foundation**: Has funds for specific diseases\n• **TotalAssist** (formerly PAN Foundation + Patient Advocate Foundation): Nearly 150 funds for copays and treatment costs, plus help with paperwork\n• **American Kidney Fund**: For kidney patients only\n\nThese funds run out fast. Apply as early as you can!"
   },
   "specialtyPharmacy": {
     "keywords": ["specialty pharmacy", "mail order", "cvs", "walgreens"],
@@ -49,7 +49,7 @@
   },
   "diversion": {
     "keywords": ["diversion", "accumulator", "maximizer", "afp", "alternative funding", "copay accumulator", "copay maximizer", "carved out", "carve out"],
-    "response": "**When Plans Send You Away:**\n\nSome plans try to avoid paying for your drugs:\n\n• **Copay Accumulator**: Takes your copay card help but does not count it toward what you owe\n• **Copay Maximizer**: Keeps the savings for the plan, not you\n• **Alternative Funding (AFP)**: Won't cover your drug. Makes you get free drugs from drug makers.\n\n**Watch for these signs:**\n• Copay card money not showing on your tracker\n• They tell you to get free drugs first\n• Your drug is \"carved out\" (not covered)\n\n**What to do:**\n• Ask your plan if they use these tricks\n• Many states have laws to protect you\n• Appeal if your plan says no\n• Talk to your transplant team's money helper\n\nVisit our **Diversion Programs** tab in Education to learn more."
+    "response": "**When Plans Send You Away:**\n\nSome plans try to avoid paying for your drugs:\n\n• **Copay Accumulator**: Takes your copay card help but does not count it toward what you owe\n• **Copay Maximizer**: Keeps the savings for the plan, not you\n• **Alternative Funding (AFP)**: Won't cover your drug. Makes you get free drugs from drug makers.\n\n**Watch for these signs:**\n• Copay card money not showing on your tracker\n• They tell you to get free drugs first\n• Your drug is \"carved out\" (not covered)\n\n**What to do:**\n• Ask your plan if they use these tricks\n• Many states have laws to protect you\n• Appeal if your plan says no\n• Talk to your transplant team's financial coordinator\n\nVisit our **Diversion Programs** tab in Education to learn more."
   },
   "partBID": {
     "keywords": ["part b-id", "part b id", "b-id", "immunosuppressive drug benefit", "36 month", "36 months", "lose medicare", "medicare ending", "medicare ends", "coverage ending", "anti-rejection coverage", "sign up for part b-id", "enroll part b-id", "how do i get part b-id"],
@@ -57,6 +57,6 @@
   },
   "emergency": {
     "keywords": ["out of medication", "out of meds", "ran out", "run out", "running low", "running out", "almost out", "no medication", "no meds", "no refills", "emergency", "bridge supply", "cant afford refill", "can't afford my refill", "skip a dose", "skip doses", "skipping doses", "ration", "last pill", "few pills left"],
-    "response": "**Out of medicine, or almost?**\n\nDo not skip anti-rejection doses. Act today:\n\n1. **Call your transplant team first.** Ask for the transplant pharmacist or social worker. They can often send an emergency prescription, give samples, or start a fast assistance request the same day.\n2. **Ask your pharmacy for an emergency supply.** Many states let a pharmacist give a few days of a regular medicine so you don't miss doses.\n3. **Ask the drug maker about a bridge supply.** Some give a free short-term supply while your free-medicine (PAP) application is reviewed.\n4. **Check foundations for urgent help** (HealthWell, PAN Foundation).\n\nIf you have a fever, pain over your transplant, or feel very unwell, call your transplant team right away, or 911 in an emergency. Never change or stop your doses on your own."
+    "response": "**Out of medicine, or almost?**\n\nDo not skip anti-rejection doses. Act today:\n\n1. **Call your transplant team first.** Ask for the transplant pharmacist or social worker. They can often send an emergency prescription, give samples, or start a fast assistance request the same day.\n2. **Ask your pharmacy for an emergency supply.** Many states let a pharmacist give a few days of a regular medicine so you don't miss doses.\n3. **Ask the drug maker about a bridge supply.** Some give a free short-term supply while your free-medicine (PAP) application is reviewed.\n4. **Check foundations for urgent help** (HealthWell, TotalAssist).\n\nIf you have a fever, pain over your transplant, or feel very unwell, call your transplant team right away, or 911 in an emergency. Never change or stop your doses on your own."
   }
 }
