@@ -5996,7 +5996,7 @@ const ApplicationHelp = () => {
     const MEDICATIONS = useMedicationsList();
 
     // Get quiz context for pre-selected medications
-    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer, setSelectedMedications, removeMedication } = useChatQuiz();
+    const { answers: quizAnswers, selectedMedications: quizSelectedMeds, setAnswer: setContextAnswer, setSelectedMedications, addMedication, removeMedication } = useChatQuiz();
 
     // Local commercial insurance state - independent of quiz answers
     // This is the yes/no question shown in the MEDS tab
@@ -6089,18 +6089,22 @@ const ApplicationHelp = () => {
         minMatchCharLength: 2
     }), [MEDICATIONS]);
 
-    // Initialize medsTabListIds from quiz selections on mount
+    // Merge quiz selections into the tab's list. This must MERGE, never
+    // overwrite: on the return from the Epic (MyChart) redirect the
+    // EpicConnectButton's mount effect adds the imported meds first, and both
+    // effects run in the same commit where medsTabListIds still reads as the
+    // initial []. A plain set here would clobber the whole import with the
+    // saved quiz selection, cutting the list down to the old quiz meds.
     useEffect(() => {
-        if (quizSelectedMeds && quizSelectedMeds.length > 0 && medsTabListIds.length === 0) {
-            // Extract medication IDs from quiz selections
-            const quizMedIds = quizSelectedMeds
-                .filter(m => m && m.id)
-                .map(m => m.id);
-            if (quizMedIds.length > 0) {
-                setMedsTabListIds(quizMedIds);
-            }
-        }
-    }, [quizSelectedMeds, medsTabListIds.length]);
+        const quizMedIds = (quizSelectedMeds || [])
+            .filter(m => m && m.id)
+            .map(m => m.id);
+        if (quizMedIds.length === 0) return;
+        setMedsTabListIds(prev => {
+            const newIds = quizMedIds.filter(id => !prev.includes(id));
+            return newIds.length > 0 ? [...prev, ...newIds] : prev;
+        });
+    }, [quizSelectedMeds]);
 
     // Handle medication search
     const handleMedSearch = useCallback(() => {
@@ -6157,6 +6161,27 @@ const ApplicationHelp = () => {
             parsed.answers.medications = idToRemove === null
                 ? []
                 : parsed.answers.medications.filter(m => m !== idToRemove);
+            sessionStorage.setItem('quiz_resume', JSON.stringify(parsed));
+        } catch (e) {
+            // ignore storage errors (e.g. private mode)
+        }
+    };
+
+    // Counterpart of pruneQuizResumeMeds: merge medication ids INTO the My Path
+    // Quiz's saved answers. Without this, meds imported on this tab exist only in
+    // local component state — the wizard's next visit mirrors its own (smaller)
+    // saved list back into the shared selection and the import disappears.
+    const mergeQuizResumeMeds = (idsToAdd) => {
+        try {
+            const saved = sessionStorage.getItem('quiz_resume');
+            if (!saved) return;
+            const parsed = JSON.parse(saved);
+            if (!parsed?.answers || !Array.isArray(parsed.answers.medications)) return;
+            const merged = [...parsed.answers.medications];
+            for (const id of idsToAdd) {
+                if (!merged.includes(id)) merged.push(id);
+            }
+            parsed.answers.medications = merged;
             sessionStorage.setItem('quiz_resume', JSON.stringify(parsed));
         } catch (e) {
             // ignore storage errors (e.g. private mode)
@@ -6616,10 +6641,18 @@ ${patientName || "[Your Name]"}`;
                                 try { sessionStorage.setItem('apphelp_resume_tab', 'MEDS'); } catch (e) { /* ignore */ }
                             }}
                             onMedicationsImported={(matchedIds) => {
-                                const newIds = matchedIds.filter(id => !medsTabListIds.includes(id));
-                                if (newIds.length > 0) {
-                                    setMedsTabListIds(prev => [...prev, ...newIds]);
-                                }
+                                setMedsTabListIds(prev => {
+                                    const newIds = matchedIds.filter(id => !prev.includes(id));
+                                    return newIds.length > 0 ? [...prev, ...newIds] : prev;
+                                });
+                                // Mirror the import into the shared selection and the
+                                // quiz's saved answers so it persists across navigation
+                                // and every surface shows the same medication list.
+                                matchedIds
+                                    .map(id => MEDICATIONS.find(m => m.id === id))
+                                    .filter(Boolean)
+                                    .forEach(med => addMedication(med));
+                                mergeQuizResumeMeds(matchedIds);
                             }}
                         />
 

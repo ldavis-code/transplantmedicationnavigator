@@ -1164,9 +1164,9 @@
     "meds": {
       "title": "Medications & PAP Programs",
       "intro": "View your medications alongside their Patient Assistance Programs. Search for medications to see application links.",
-      "loadedBanner_one": "We loaded {{count}} medication from your My Path Quiz. Add more below or view program details.",
-      "loadedBanner_other": "We loaded {{count}} medications from your My Path Quiz. Add more below or view program details.",
-      "clearListAriaLabel": "Clear the medications loaded from your My Path Quiz",
+      "loadedBanner_one": "We loaded {{count}} medication from your My Path Quiz or health system import. Add more below or view program details.",
+      "loadedBanner_other": "We loaded {{count}} medications from your My Path Quiz or health system import. Add more below or view program details.",
+      "clearListAriaLabel": "Clear the medications loaded from your My Path Quiz or health system import",
       "clearList": "Clear list",
       "searchTitle": "Search for Medications",
       "searchIntro": "Search for your transplant medications to see their Patient Assistance Program information.",
