@@ -1164,9 +1164,9 @@
     "meds": {
       "title": "Medicamentos y programas PAP",
       "intro": "Vea sus medicamentos junto con sus Programas de Asistencia al Paciente. Busque medicamentos para ver los enlaces de solicitud.",
-      "loadedBanner_one": "Cargamos {{count}} medicamento de su cuestionario Mi Camino. Agregue más medicamentos a continuación o vea los detalles de los programas.",
-      "loadedBanner_other": "Cargamos {{count}} medicamentos de su cuestionario Mi Camino. Agregue más medicamentos a continuación o vea los detalles de los programas.",
-      "clearListAriaLabel": "Borrar los medicamentos cargados de su cuestionario Mi Camino",
+      "loadedBanner_one": "Cargamos {{count}} medicamento de su cuestionario Mi Camino o de la importación de su sistema de salud. Agregue más medicamentos a continuación o vea los detalles de los programas.",
+      "loadedBanner_other": "Cargamos {{count}} medicamentos de su cuestionario Mi Camino o de la importación de su sistema de salud. Agregue más medicamentos a continuación o vea los detalles de los programas.",
+      "clearListAriaLabel": "Borrar los medicamentos cargados de su cuestionario Mi Camino o de la importación de su sistema de salud",
       "clearList": "Borrar la lista",
       "searchTitle": "Buscar medicamentos",
       "searchIntro": "Busque sus medicamentos de trasplante para ver la información de sus Programas de Asistencia al Paciente.",
