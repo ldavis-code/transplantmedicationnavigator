@@ -23,6 +23,13 @@ const GA4_MEASUREMENT_ID = 'G-MRRECSDQWC';
 // ============================================================================
 
 /**
+ * The app's UI language ('en' or 'es'), distinct from GA4's built-in
+ * Language dimension which only reflects the browser/OS setting. i18n.js
+ * keeps <html lang> in sync with the active i18next language.
+ */
+const getAppLanguage = () => document.documentElement.lang || 'en';
+
+/**
  * Initialize Google Analytics 4
  * Loads the gtag.js script and configures it with the measurement ID
  */
@@ -57,6 +64,9 @@ const initializeGA4 = () => {
   window.gtag('config', GA4_MEASUREMENT_ID, {
     send_page_view: false, // We'll handle page views manually for SPA routing
   });
+
+  // Segment all sessions by the app's UI language (English vs Spanish)
+  window.gtag('set', 'user_properties', { app_language: getAppLanguage() });
 };
 
 /**
@@ -69,10 +79,14 @@ const trackPageView = (path, title) => {
     return;
   }
 
+  // Keep the user property current if the visitor switched language mid-session
+  window.gtag('set', 'user_properties', { app_language: getAppLanguage() });
+
   window.gtag('event', 'page_view', {
     page_path: path,
     page_title: title,
     page_location: window.location.href,
+    app_language: getAppLanguage(),
   });
 };
 

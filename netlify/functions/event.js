@@ -113,7 +113,7 @@ export async function handler(event) {
             };
         }
 
-        const { event_name, partner, page_source, meta } = body;
+        const { event_name, partner, page_source, meta, lang } = body;
 
         // Validate required fields
         if (!event_name) {
@@ -166,6 +166,9 @@ export async function handler(event) {
         // Sanitize page_source (URL path format)
         const sanitizedPageSource = String(page_source).slice(0, 255);
 
+        // Sanitize lang - whitelist of supported UI languages
+        const sanitizedLang = ['en', 'es'].includes(lang) ? lang : null;
+
         // Sanitize meta - remove any PHI fields that might have slipped through
         let sanitizedMeta = null;
         if (meta && typeof meta === 'object') {
@@ -198,18 +201,20 @@ export async function handler(event) {
                 if (!schemaFixed) {
                     await db`ALTER TABLE events ALTER COLUMN program_type DROP NOT NULL`.catch(() => {});
                     await db`ALTER TABLE events ALTER COLUMN program_id DROP NOT NULL`.catch(() => {});
+                    await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS lang TEXT`.catch(() => {});
                     schemaFixed = true;
                 }
 
                 await db`
-                    INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json)
+                    INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json, lang)
                     VALUES (
                         ${event_name},
                         ${sanitizedPartner},
                         ${sanitizedPageSource},
                         ${programType},
                         ${programId},
-                        ${sanitizedMeta ? JSON.stringify(sanitizedMeta) : null}
+                        ${sanitizedMeta ? JSON.stringify(sanitizedMeta) : null},
+                        ${sanitizedLang}
                     )
                 `;
             } catch (err) {
