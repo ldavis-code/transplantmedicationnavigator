@@ -25,6 +25,11 @@ const getDb = () => {
     return sql;
 };
 
+// Whitelist the lang filter param to the supported UI languages
+function sanitizeLang(lang) {
+    return ['en', 'es'].includes(lang) ? lang : null;
+}
+
 // Ensure the events.lang column exists (self-healing if migration 043 hasn't
 // run yet). Runs once per cold start; queries below select events.lang.
 let langColumnEnsured = false;
@@ -238,6 +243,7 @@ async function getEvents(db, params) {
     const limit = Math.min(parseInt(params.limit) || 50, 100);
     const offset = parseInt(params.offset) || 0;
     const { partner, event_name, start, end } = params;
+    const lang = sanitizeLang(params.lang);
 
     // Build dynamic query conditions
     let conditions = [];
@@ -246,6 +252,11 @@ async function getEvents(db, params) {
     if (partner) {
         conditions.push(`partner = $${values.length + 1}`);
         values.push(partner);
+    }
+
+    if (lang) {
+        conditions.push(`lang = $${values.length + 1}`);
+        values.push(lang);
     }
 
     if (event_name) {
@@ -293,29 +304,39 @@ async function getEvents(db, params) {
 // Get events by partner
 async function getEventsByPartner(db, params) {
     const dates = parseDateRange(params);
+    const lang = sanitizeLang(params.lang);
 
     const startIso = params.start ? new Date(params.start).toISOString() : '1970-01-01T00:00:00.000Z';
     const endIso = params.end ? (() => { const d = new Date(params.end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
-    const result = await db`
-        SELECT COALESCE(partner, '(none)') as partner, COUNT(*) as total,
-            COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
-            COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
+    const values = [dates.startOfWeek.toISOString(), dates.startOfMonth.toISOString(), startIso, endIso];
+    let langClause = '';
+    if (lang) {
+        values.push(lang);
+        langClause = ` AND lang = $${values.length}`;
+    }
+
+    const result = await db.query(
+        `SELECT COALESCE(partner, '(none)') as partner, COUNT(*) as total,
+            COUNT(*) FILTER (WHERE ts >= $1) as this_week,
+            COUNT(*) FILTER (WHERE ts >= $2) as this_month
         FROM events
-        WHERE ts >= ${startIso} AND ts <= ${endIso}
-        GROUP BY partner ORDER BY total DESC
-    `;
+        WHERE ts >= $3 AND ts <= $4${langClause}
+        GROUP BY partner ORDER BY total DESC`,
+        values
+    );
 
     // Get top program for each partner
-    const topPrograms = await db`
-        SELECT DISTINCT ON (COALESCE(partner, '(none)'))
+    const topPrograms = await db.query(
+        `SELECT DISTINCT ON (COALESCE(partner, '(none)'))
             COALESCE(partner, '(none)') as partner,
             program_id as top_program
         FROM events
-        WHERE program_id IS NOT NULL
+        WHERE program_id IS NOT NULL${lang ? ' AND lang = $1' : ''}
         GROUP BY partner, program_id
-        ORDER BY COALESCE(partner, '(none)'), COUNT(*) DESC
-    `;
+        ORDER BY COALESCE(partner, '(none)'), COUNT(*) DESC`,
+        lang ? [lang] : []
+    );
 
     const programMap = Object.fromEntries(
         topPrograms.map(p => [p.partner, p.top_program])
@@ -334,29 +355,29 @@ async function getEventsByPartner(db, params) {
 async function getEventsByProgram(db, params) {
     const dates = parseDateRange(params);
     const { program_type, start, end } = params;
+    const lang = sanitizeLang(params.lang);
     const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
     const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
-    let result;
+    const values = [dates.startOfWeek.toISOString(), dates.startOfMonth.toISOString(), startIso, endIso];
+    const conditions = ['program_id IS NOT NULL', 'ts >= $3', 'ts <= $4'];
     if (program_type) {
-        result = await db`
-            SELECT program_id, program_type, COUNT(*) as total,
-                COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
-                COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
-            FROM events WHERE program_id IS NOT NULL AND program_type = ${program_type}
-              AND ts >= ${startIso} AND ts <= ${endIso}
-            GROUP BY program_id, program_type ORDER BY total DESC
-        `;
-    } else {
-        result = await db`
-            SELECT program_id, program_type, COUNT(*) as total,
-                COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
-                COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month
-            FROM events WHERE program_id IS NOT NULL
-              AND ts >= ${startIso} AND ts <= ${endIso}
-            GROUP BY program_id, program_type ORDER BY total DESC
-        `;
+        values.push(program_type);
+        conditions.push(`program_type = $${values.length}`);
     }
+    if (lang) {
+        values.push(lang);
+        conditions.push(`lang = $${values.length}`);
+    }
+
+    const result = await db.query(
+        `SELECT program_id, program_type, COUNT(*) as total,
+            COUNT(*) FILTER (WHERE ts >= $1) as this_week,
+            COUNT(*) FILTER (WHERE ts >= $2) as this_month
+        FROM events WHERE ${conditions.join(' AND ')}
+        GROUP BY program_id, program_type ORDER BY total DESC`,
+        values
+    );
 
     return result.map(r => ({
         programId: r.program_id,
@@ -403,26 +424,29 @@ async function getEventsByLanguage(db, params) {
 // Get funnel metrics
 async function getFunnel(db, params) {
     const { partner, start, end } = params;
+    const lang = sanitizeLang(params.lang);
     // Use extreme date bounds as defaults to avoid nested tagged templates
     const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
     const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
-    let result;
+    const conditions = ['ts >= $1', 'ts <= $2'];
+    const values = [startIso, endIso];
     if (partner) {
-        result = await db`
-            SELECT event_name, COUNT(*) as count
-            FROM events
-            WHERE partner = ${partner} AND ts >= ${startIso} AND ts <= ${endIso}
-            GROUP BY event_name
-        `;
-    } else {
-        result = await db`
-            SELECT event_name, COUNT(*) as count
-            FROM events
-            WHERE ts >= ${startIso} AND ts <= ${endIso}
-            GROUP BY event_name
-        `;
+        values.push(partner);
+        conditions.push(`partner = $${values.length}`);
     }
+    if (lang) {
+        values.push(lang);
+        conditions.push(`lang = $${values.length}`);
+    }
+
+    const result = await db.query(
+        `SELECT event_name, COUNT(*) as count
+         FROM events
+         WHERE ${conditions.join(' AND ')}
+         GROUP BY event_name`,
+        values
+    );
 
     const counts = Object.fromEntries(
         result.map(r => [r.event_name, parseInt(r.count)])
@@ -453,25 +477,28 @@ async function getFunnel(db, params) {
 // Generate CSV export
 async function exportCsv(db, params) {
     const { partner, start, end } = params;
+    const lang = sanitizeLang(params.lang);
     const startIso = start ? new Date(start).toISOString() : '1970-01-01T00:00:00.000Z';
     const endIso = end ? (() => { const d = new Date(end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
 
-    let result;
+    const conditions = ['ts >= $1', 'ts <= $2'];
+    const values = [startIso, endIso];
     if (partner) {
-        result = await db`
-            SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
-            FROM events
-            WHERE partner = ${partner} AND ts >= ${startIso} AND ts <= ${endIso}
-            ORDER BY ts DESC LIMIT 10000
-        `;
-    } else {
-        result = await db`
-            SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
-            FROM events
-            WHERE ts >= ${startIso} AND ts <= ${endIso}
-            ORDER BY ts DESC LIMIT 10000
-        `;
+        values.push(partner);
+        conditions.push(`partner = $${values.length}`);
     }
+    if (lang) {
+        values.push(lang);
+        conditions.push(`lang = $${values.length}`);
+    }
+
+    const result = await db.query(
+        `SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
+         FROM events
+         WHERE ${conditions.join(' AND ')}
+         ORDER BY ts DESC LIMIT 10000`,
+        values
+    );
 
     // Build CSV
     const csvRows = [
