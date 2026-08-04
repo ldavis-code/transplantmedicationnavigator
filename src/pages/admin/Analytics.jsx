@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Download, TrendingUp, Users, MousePointerClick, Filter } from 'lucide-react';
+import { ArrowLeft, Download, TrendingUp, Users, MousePointerClick, Filter, Globe } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const API = '/.netlify/functions/admin-api';
@@ -15,6 +15,7 @@ export default function Analytics() {
   const [funnel, setFunnel] = useState(null);
   const [byPartner, setByPartner] = useState([]);
   const [byProgram, setByProgram] = useState([]);
+  const [byLanguage, setByLanguage] = useState([]);
   const [partners, setPartners] = useState([]);
   const [selectedPartner, setSelectedPartner] = useState('');
   const [loading, setLoading] = useState(true);
@@ -26,16 +27,18 @@ export default function Analytics() {
     if (!isAdmin) return;
     async function load() {
       try {
-        const [funnelRes, partnerRes, programRes, partnersRes] = await Promise.all([
+        const [funnelRes, partnerRes, programRes, languageRes, partnersRes] = await Promise.all([
           fetch(`${API}/funnel${selectedPartner ? `?partner=${selectedPartner}` : ''}`, { headers: authHeaders }),
           fetch(`${API}/events/by-partner`, { headers: authHeaders }),
           fetch(`${API}/events/by-program`, { headers: authHeaders }),
+          fetch(`${API}/events/by-language`, { headers: authHeaders }),
           fetch(`${API}/partners`, { headers: authHeaders }),
         ]);
 
         if (funnelRes.ok) setFunnel(await funnelRes.json());
         if (partnerRes.ok) setByPartner(await partnerRes.json());
         if (programRes.ok) setByProgram(await programRes.json());
+        if (languageRes.ok) setByLanguage(await languageRes.json());
         if (partnersRes.ok) setPartners(await partnersRes.json());
       } catch (err) {
         setError(err.message);
@@ -169,6 +172,51 @@ export default function Analytics() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </section>
+        )}
+
+        {/* Events by Language */}
+        {byLanguage.length > 0 && (
+          <section>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <Globe className="h-5 w-5 text-blue-500" />
+              Events by Language
+            </h2>
+            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Language</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Page Views</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Quiz Starts</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Quiz Completes</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Med Searches</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">App Clicks</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">This Week</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">All Events</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {byLanguage.map(row => (
+                    <tr key={row.lang} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {row.lang === 'en' ? 'English' : row.lang === 'es' ? 'Spanish' : row.lang}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.pageViews.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.quizStarts.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.quizCompletes.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.medSearches.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.applicationClicks.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.thisWeek.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 text-right">{row.allTime.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="px-6 py-3 text-xs text-gray-400 border-t">
+                "(unknown)" rows are events recorded before language tracking was added.
+              </p>
             </div>
           </section>
         )}

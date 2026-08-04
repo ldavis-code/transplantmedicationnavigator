@@ -15,6 +15,17 @@ function getPartner() {
   }
 }
 
+// Get the current UI language ('en' or 'es'). i18n.js keeps <html lang> in
+// sync with the active i18next language, so reading it at send time reflects
+// mid-session language switches.
+function getLang() {
+  try {
+    return document.documentElement.lang || 'en';
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Track an event to the backend database.
  * @param {string} eventName - One of the allowed event names (page_view, quiz_start, quiz_complete, med_search, etc.)
@@ -26,6 +37,7 @@ export function trackServerEvent(eventName, meta) {
       event_name: eventName,
       page_source: window.location.pathname,
       partner: getPartner(),
+      lang: getLang(),
     };
     if (meta) body.meta = meta;
 

@@ -7,6 +7,7 @@
  * GET /api/admin-api/events - Paginated events list
  * GET /api/admin-api/events/by-partner - Events aggregated by partner
  * GET /api/admin-api/events/by-program - Events aggregated by program
+ * GET /api/admin-api/events/by-language - Events aggregated by UI language (en/es)
  * GET /api/admin-api/funnel - Funnel metrics
  * GET /api/admin-api/export/csv - CSV export
  * GET /api/admin-api/report/:partner - Partner pilot report
@@ -23,6 +24,15 @@ const getDb = () => {
     }
     return sql;
 };
+
+// Ensure the events.lang column exists (self-healing if migration 043 hasn't
+// run yet). Runs once per cold start; queries below select events.lang.
+let langColumnEnsured = false;
+async function ensureLangColumn(db) {
+    if (langColumnEnsured) return;
+    await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS lang TEXT`.catch(() => {});
+    langColumnEnsured = true;
+}
 
 // Token secret for verification — must match auth.js
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -265,7 +275,7 @@ async function getEvents(db, params) {
 
     // Get events
     const eventsResult = await db.query(
-        `SELECT id, ts, event_name, partner, page_source, program_type, program_id, meta_json
+        `SELECT id, ts, event_name, partner, page_source, program_type, program_id, meta_json, lang
          FROM events ${whereClause}
          ORDER BY ts DESC
          LIMIT $${values.length + 1} OFFSET $${values.length + 2}`,
@@ -357,6 +367,39 @@ async function getEventsByProgram(db, params) {
     }));
 }
 
+// Get events by language (English vs Spanish UI usage)
+async function getEventsByLanguage(db, params) {
+    const dates = parseDateRange(params);
+    const startIso = params.start ? new Date(params.start).toISOString() : '1970-01-01T00:00:00.000Z';
+    const endIso = params.end ? (() => { const d = new Date(params.end); d.setHours(23,59,59,999); return d.toISOString(); })() : '2099-12-31T23:59:59.999Z';
+
+    const result = await db`
+        SELECT COALESCE(lang, '(unknown)') as lang, COUNT(*) as total,
+            COUNT(*) FILTER (WHERE ts >= ${dates.startOfWeek.toISOString()}) as this_week,
+            COUNT(*) FILTER (WHERE ts >= ${dates.startOfMonth.toISOString()}) as this_month,
+            COUNT(*) FILTER (WHERE event_name = 'page_view') as page_views,
+            COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
+            COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completes,
+            COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches,
+            COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as application_clicks
+        FROM events
+        WHERE ts >= ${startIso} AND ts <= ${endIso}
+        GROUP BY lang ORDER BY total DESC
+    `;
+
+    return result.map(r => ({
+        lang: r.lang,
+        thisWeek: parseInt(r.this_week),
+        thisMonth: parseInt(r.this_month),
+        allTime: parseInt(r.total),
+        pageViews: parseInt(r.page_views),
+        quizStarts: parseInt(r.quiz_starts),
+        quizCompletes: parseInt(r.quiz_completes),
+        medSearches: parseInt(r.med_searches),
+        applicationClicks: parseInt(r.application_clicks),
+    }));
+}
+
 // Get funnel metrics
 async function getFunnel(db, params) {
     const { partner, start, end } = params;
@@ -416,14 +459,14 @@ async function exportCsv(db, params) {
     let result;
     if (partner) {
         result = await db`
-            SELECT id, ts, event_name, partner, page_source, program_type, program_id
+            SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
             FROM events
             WHERE partner = ${partner} AND ts >= ${startIso} AND ts <= ${endIso}
             ORDER BY ts DESC LIMIT 10000
         `;
     } else {
         result = await db`
-            SELECT id, ts, event_name, partner, page_source, program_type, program_id
+            SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
             FROM events
             WHERE ts >= ${startIso} AND ts <= ${endIso}
             ORDER BY ts DESC LIMIT 10000
@@ -432,7 +475,7 @@ async function exportCsv(db, params) {
 
     // Build CSV
     const csvRows = [
-        ['ID', 'Timestamp', 'Event Name', 'Partner', 'Page Source', 'Program Type', 'Program ID'].join(','),
+        ['ID', 'Timestamp', 'Event Name', 'Partner', 'Page Source', 'Program Type', 'Program ID', 'Language'].join(','),
         ...result.map(r => [
             r.id,
             r.ts,
@@ -441,6 +484,7 @@ async function exportCsv(db, params) {
             `"${(r.page_source || '').replace(/"/g, '""')}"`,
             r.program_type || '',
             r.program_id || '',
+            r.lang || '',
         ].join(',')),
     ];
 
@@ -779,6 +823,7 @@ export async function handler(event) {
 
     try {
         const db = getDb();
+        await ensureLangColumn(db);
 
         // GET /admin-api/stats
         if (path === '/stats') {
@@ -827,6 +872,16 @@ export async function handler(event) {
         // GET /admin-api/events/by-partner
         if (path === '/events/by-partner') {
             const result = await getEventsByPartner(db, params);
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify(result),
+            };
+        }
+
+        // GET /admin-api/events/by-language
+        if (path === '/events/by-language') {
+            const result = await getEventsByLanguage(db, params);
             return {
                 statusCode: 200,
                 headers,
