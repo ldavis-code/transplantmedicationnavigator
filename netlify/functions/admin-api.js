@@ -279,13 +279,13 @@ async function getEvents(db, params) {
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
     // Get total count
-    const countResult = await db.query(
+    const countResult = await db(
         `SELECT COUNT(*) as count FROM events ${whereClause}`,
         values
     );
 
     // Get events
-    const eventsResult = await db.query(
+    const eventsResult = await db(
         `SELECT id, ts, event_name, partner, page_source, program_type, program_id, meta_json, lang
          FROM events ${whereClause}
          ORDER BY ts DESC
@@ -316,7 +316,7 @@ async function getEventsByPartner(db, params) {
         langClause = ` AND lang = $${values.length}`;
     }
 
-    const result = await db.query(
+    const result = await db(
         `SELECT COALESCE(partner, '(none)') as partner, COUNT(*) as total,
             COUNT(*) FILTER (WHERE ts >= $1) as this_week,
             COUNT(*) FILTER (WHERE ts >= $2) as this_month
@@ -327,7 +327,7 @@ async function getEventsByPartner(db, params) {
     );
 
     // Get top program for each partner
-    const topPrograms = await db.query(
+    const topPrograms = await db(
         `SELECT DISTINCT ON (COALESCE(partner, '(none)'))
             COALESCE(partner, '(none)') as partner,
             program_id as top_program
@@ -370,7 +370,7 @@ async function getEventsByProgram(db, params) {
         conditions.push(`lang = $${values.length}`);
     }
 
-    const result = await db.query(
+    const result = await db(
         `SELECT program_id, program_type, COUNT(*) as total,
             COUNT(*) FILTER (WHERE ts >= $1) as this_week,
             COUNT(*) FILTER (WHERE ts >= $2) as this_month
@@ -440,7 +440,7 @@ async function getFunnel(db, params) {
         conditions.push(`lang = $${values.length}`);
     }
 
-    const result = await db.query(
+    const result = await db(
         `SELECT event_name, COUNT(*) as count
          FROM events
          WHERE ${conditions.join(' AND ')}
@@ -492,7 +492,7 @@ async function exportCsv(db, params) {
         conditions.push(`lang = $${values.length}`);
     }
 
-    const result = await db.query(
+    const result = await db(
         `SELECT id, ts, event_name, partner, page_source, program_type, program_id, lang
          FROM events
          WHERE ${conditions.join(' AND ')}
