@@ -30,7 +30,11 @@ export default function MedicationConfig() {
             headers: { Authorization: `Bearer ${getToken()}` },
           }),
         ]);
-        if (medsRes.ok) setMedications(await medsRes.json());
+        if (medsRes.ok) {
+          // The medications function returns { medications: [...], count }
+          const data = await medsRes.json();
+          setMedications(Array.isArray(data) ? data : data.medications || []);
+        }
         if (configsRes.ok) {
           const data = await configsRes.json();
           const map = {};
@@ -50,8 +54,8 @@ export default function MedicationConfig() {
 
   const filtered = medications.filter(m => {
     const matchSearch = !search ||
-      m.brand_name?.toLowerCase().includes(search.toLowerCase()) ||
-      m.generic_name?.toLowerCase().includes(search.toLowerCase());
+      m.brandName?.toLowerCase().includes(search.toLowerCase()) ||
+      m.genericName?.toLowerCase().includes(search.toLowerCase());
     const matchCategory = !categoryFilter || m.category === categoryFilter;
     return matchSearch && matchCategory;
   });
@@ -153,8 +157,8 @@ export default function MedicationConfig() {
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <h3 className="font-medium text-gray-900 text-sm">{med.brand_name}</h3>
-                    <p className="text-xs text-gray-500">{med.generic_name}</p>
+                    <h3 className="font-medium text-gray-900 text-sm">{med.brandName}</h3>
+                    <p className="text-xs text-gray-500">{med.genericName}</p>
                   </div>
                   {saving === med.id && (
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
