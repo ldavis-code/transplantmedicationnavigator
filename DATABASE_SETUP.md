@@ -20,6 +20,19 @@ In the Neon dashboard:
 
 This creates the `price_reports` table and necessary indexes.
 
+### Scheduled Migrations
+
+Migrations in `db/migrations/` numbered 043 and later are applied
+automatically by the `run-migrations` Netlify scheduled function, which runs
+nightly at a low-traffic hour (07:00 UTC — see `netlify.toml`) and records
+applied migrations in a `schema_migrations` table so each one runs exactly
+once. To ship a new migration, add the `.sql` file as usual and register its
+statements in `netlify/functions/run-migrations.js`. To apply immediately
+instead of waiting for the nightly run, either trigger the function with an
+admin token or paste the SQL into the Neon SQL Editor (the runner's
+statements are idempotent, so doing both is safe). Migrations 001–042
+predate the runner and were applied manually.
+
 ### 3. Configure Environment Variables
 
 #### For Local Development
