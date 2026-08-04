@@ -337,6 +337,12 @@
 [functions."data-retention"]
   schedule = "0 4 1 * *"
 
+# Pending schema migrations - applied nightly at a low-traffic hour
+# (07:00 UTC = 3 AM ET in summer / 2 AM ET in winter). No-op when nothing
+# is pending; see netlify/functions/run-migrations.js.
+[functions."run-migrations"]
+  schedule = "0 7 * * *"
+
 # Security headers for all responses
 [[headers]]
   for = "/*"
