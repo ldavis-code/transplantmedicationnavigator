@@ -18,19 +18,31 @@ export default function Analytics() {
   const [byLanguage, setByLanguage] = useState([]);
   const [partners, setPartners] = useState([]);
   const [selectedPartner, setSelectedPartner] = useState('');
+  const [selectedLang, setSelectedLang] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const authHeaders = { Authorization: `Bearer ${getToken()}` };
+
+  // Combined filter query shared by the funnel and CSV export; the language
+  // filter alone applies to the by-partner/by-program breakdowns (which have
+  // never been partner-filtered), and the by-language comparison table always
+  // shows both languages.
+  const buildFilterQuery = (withPartner) => {
+    const qs = new URLSearchParams();
+    if (withPartner && selectedPartner) qs.set('partner', selectedPartner);
+    if (selectedLang) qs.set('lang', selectedLang);
+    return qs.toString() ? `?${qs.toString()}` : '';
+  };
 
   useEffect(() => {
     if (!isAdmin) return;
     async function load() {
       try {
         const [funnelRes, partnerRes, programRes, languageRes, partnersRes] = await Promise.all([
-          fetch(`${API}/funnel${selectedPartner ? `?partner=${selectedPartner}` : ''}`, { headers: authHeaders }),
-          fetch(`${API}/events/by-partner`, { headers: authHeaders }),
-          fetch(`${API}/events/by-program`, { headers: authHeaders }),
+          fetch(`${API}/funnel${buildFilterQuery(true)}`, { headers: authHeaders }),
+          fetch(`${API}/events/by-partner${buildFilterQuery(false)}`, { headers: authHeaders }),
+          fetch(`${API}/events/by-program${buildFilterQuery(false)}`, { headers: authHeaders }),
           fetch(`${API}/events/by-language`, { headers: authHeaders }),
           fetch(`${API}/partners`, { headers: authHeaders }),
         ]);
@@ -47,10 +59,10 @@ export default function Analytics() {
       }
     }
     load();
-  }, [isAdmin, selectedPartner]);
+  }, [isAdmin, selectedPartner, selectedLang]);
 
   const handleExport = () => {
-    const url = `${API}/export/csv${selectedPartner ? `?partner=${selectedPartner}` : ''}`;
+    const url = `${API}/export/csv${buildFilterQuery(true)}`;
     const a = document.createElement('a');
     a.href = url;
     // We need auth header so use fetch
@@ -96,6 +108,16 @@ export default function Analytics() {
                   {partners.map(p => (
                     <option key={p} value={p}>{p}</option>
                   ))}
+                </select>
+                <select
+                  value={selectedLang}
+                  onChange={(e) => setSelectedLang(e.target.value)}
+                  className="text-sm border border-gray-300 rounded-lg px-3 py-1.5"
+                  aria-label="Filter by language"
+                >
+                  <option value="">All Languages</option>
+                  <option value="en">English</option>
+                  <option value="es">Spanish</option>
                 </select>
               </div>
               <button
