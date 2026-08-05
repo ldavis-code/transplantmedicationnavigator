@@ -670,7 +670,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     </thead>
                                     <tbody className="divide-y divide-slate-200">
                                         <tr className="bg-white hover:bg-slate-50">
-                                            <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>
+                                            <td className="p-3 font-medium text-slate-900">Cost Plus Drugs</td>{/* i18n-ok: brand name */}
                                             <td className="p-3 text-slate-600">{t('medications.card.overview.costPlusDesc')}</td>
                                         </tr>
                                         <tr className="bg-white hover:bg-slate-50">
@@ -1139,7 +1139,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <td className="p-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-slate-400 flex-shrink-0"></span>
-                                                <div className="font-bold text-slate-500">Cost Plus Drugs</div>
+                                                <div className="font-bold text-slate-500">Cost Plus Drugs</div>{/* i18n-ok: brand name */}
                                             </div>
                                             <div className="text-xs text-slate-500 mt-0.5 ml-4.5">{t('medications.card.price.costPlusDesc')}</div>
                                             {costPlusStats && (
