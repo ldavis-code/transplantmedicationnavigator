@@ -12,11 +12,11 @@
       },
       {
         "q": "¿Quién debería usar este sitio?",
-        "a": "Este sitio es para:\n• Pacientes de trasplante\n• Familiares y cuidadores\n• Trabajadores sociales\n• Cualquier persona que necesite ayuda para pagar los medicamentos de trasplante"
+        "a": "Este sitio es para:\n• Pacientes de trasplante\n• Su familia y las personas que los cuidan\n• Trabajadores sociales\n• Toda persona que necesite ayuda para pagar sus medicinas de trasplante"
       },
       {
         "q": "¿Cómo se financia este sitio?",
-        "a": "Nuestras herramientas son gratis para los pacientes. Ofrecemos planes empresariales para hospitales y organizaciones de salud que quieren ayudar a sus pacientes a encontrar programas de asistencia con medicamentos. Esto nos permite mantener gratis nuestras herramientas para pacientes."
+        "a": "Nuestras herramientas son gratis para los pacientes. Los hospitales y grupos de salud nos pagan por planes hechos para ellos. Usan esos planes para ayudar a sus pacientes a hallar programas de ayuda. Gracias a eso, el sitio sigue siendo gratis para usted."
       },
       {
         "q": "¿Se mantiene privada mi información?",
@@ -137,7 +137,7 @@
     "questions": [
       {
         "q": "¿Qué es una farmacia especializada?",
-        "a": "Una farmacia especializada maneja medicamentos caros como las medicinas de trasplante. Muchas veces envían los medicamentos a su casa.\n\nLa mayoría de los planes de seguro le obligan a usar una farmacia especializada específica. Por lo general, no puede surtir estos medicamentos en su farmacia local."
+        "a": "Una farmacia especializada maneja medicinas caras, como las de trasplante. Casi siempre las envía por correo a su casa.\n\nLa mayoría de los seguros le exigen usar una farmacia especializada en concreto. Por eso, muchas veces no puede comprar estas medicinas en la farmacia de su barrio."
       },
       {
         "q": "¿Puedo usar tarjetas de copago con Medicare?",
@@ -169,7 +169,7 @@
       },
       {
         "q": "¿Qué es el programa piloto de autorización previa WISeR de CMS?",
-        "a": "Desde enero de 2026, CMS lanzó el modelo **WISeR** (Wasteful and Inappropriate Service Reduction). Agrega autorización previa para 17 servicios ambulatorios de Medicare Parte B.\n\n**Estados afectados:** Arizona, Nueva Jersey, Ohio, Oklahoma, Texas y Washington.\n\n**Qué deben saber los pacientes de trasplante:**\n• WISeR NO afecta sus medicamentos de trasplante\n• Cubre procedimientos ambulatorios como estimuladores de nervios, procedimientos de columna y cuidado de heridas\n• Si necesita uno de estos procedimientos, su proveedor debe pedir aprobación primero\n• Las decisiones se toman dentro de 72 horas (48 horas para casos urgentes)\n\n**Importante:** Esto solo afecta a Medicare Original (pago por servicio), no a los planes Medicare Advantage. El modelo estará vigente hasta diciembre de 2031."
+        "a": "WISeR es un programa de prueba de Medicare. Empezó en enero de 2026. Agrega un paso de permiso (la autorización previa) para 17 servicios ambulatorios de Medicare Parte B.\n\n**Estados del piloto:** Arizona, Nueva Jersey, Ohio, Oklahoma, Texas y Washington.\n\n**Qué deben saber los pacientes de trasplante:**\n• WISeR NO afecta sus medicinas de trasplante\n• Cubre servicios como estimuladores de nervios, columna y cuidado de heridas\n• Si necesita uno de estos, su médico debe pedir permiso primero\n• La respuesta llega en 72 horas (48 horas si es urgente)\n\n**Importante:** Esto solo aplica a Medicare Original, no a Medicare Advantage. La prueba dura hasta diciembre de 2031."
       }
     ]
   },
@@ -306,11 +306,11 @@
     "questions": [
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de corazón?",
-        "a": "Las personas con trasplante de corazón normalmente reciben una combinación de tres tipos de medicamentos:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine (ciclosporina))**\n• Base del tratamiento de mantenimiento\n• Evita que su sistema inmunológico ataque el corazón nuevo\n\n**Antimetabolito (Mycophenolate Mofetil (micofenolato) o Azathioprine (azatioprina))**\n• Se usa en combinación con el inhibidor de calcineurina\n• Da supresión inmunológica adicional\n\n**Corticosteroide (Prednisone)**\n• Muchas veces se reduce a una dosis baja o se suspende con el tiempo\n• Ayuda a controlar la inflamación"
+        "a": "La mayoría de los pacientes con trasplante de corazón toman tres tipos de medicinas:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine — ciclosporina)**\n• La medicina principal contra el rechazo, de por vida\n• Evita que su cuerpo ataque el corazón nuevo\n\n**Antimetabolito (Mycophenolate Mofetil — micofenolato — o Azathioprine — azatioprina)**\n• Se toma junto con el inhibidor de calcineurina\n• Da una capa extra de protección contra el rechazo\n\n**Corticosteroide (Prednisone — prednisona)**\n• Con el tiempo, el médico suele bajar la dosis o quitarla\n• Ayuda a controlar la inflamación"
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de riñón?",
-        "a": "La inmunosupresión en el trasplante de riñón es parecida a la del corazón, con enfoque en equilibrar la eficacia y reducir los efectos secundarios:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine (ciclosporina))**\n• Es el tratamiento estándar de mantenimiento\n\n**Antimetabolito (Mycophenolate Mofetil o Mycophenolic Acid (micofenolato))**\n• Se usa comúnmente en combinación con un CNI\n\n**Corticosteroide (Prednisone)**\n• Muchos centros buscan tratamientos sin esteroides para reducir los efectos secundarios a largo plazo\n\n**Belatacept (Nulojix)**\n• Una alternativa biológica a los inhibidores de calcineurina para ciertos pacientes"
+        "a": "Los pacientes con trasplante de riñón toman medicinas muy parecidas a las del corazón. La meta es proteger el riñón nuevo con los menores efectos secundarios:\n\n**Inhibidor de calcineurina (Tacrolimus o Cyclosporine — ciclosporina)**\n• La medicina principal estándar\n\n**Antimetabolito (Mycophenolate Mofetil o Mycophenolic Acid — micofenolato)**\n• Suele tomarse junto con el inhibidor (CNI)\n\n**Corticosteroide (Prednisone — prednisona)**\n• Muchos centros evitan los esteroides para reducir efectos a largo plazo\n\n**Belatacept (Nulojix)**\n• Una opción en vez del CNI para algunos pacientes"
       },
       {
         "q": "¿Qué medicamentos toman normalmente los pacientes de trasplante de hígado?",
@@ -339,7 +339,7 @@
       },
       {
         "q": "¿Puedo buscar una medicina específica?",
-        "a": "¡Sí! Use la página \"Search Meds\" (Buscar medicamentos). Verá precios, programas de las compañías farmacéuticas y recursos de fundaciones para cada medicamento."
+        "a": "¡Sí! Use la página \"Search Meds\" (Buscar medicinas). Verá tres cosas: los precios, los programas de las empresas que hacen cada medicina y las ayudas de las fundaciones."
       },
       {
         "q": "¿Qué significan las etiquetas de costo en las tarjetas de medicinas?",
@@ -351,11 +351,11 @@
       },
       {
         "q": "¿Cómo uso la pestaña de Asistencia en la página de una medicina?",
-        "a": "La pestaña de Asistencia muestra:\n• Enlaces a programas de las compañías farmacéuticas para conseguir medicina gratis\n• Enlaces a fundaciones de copago que ayudan a pagar\n\nLo conectamos directamente con los recursos correctos para cada medicina."
+        "a": "La pestaña de Asistencia muestra:\n• Enlaces a programas de las empresas para pedir medicina gratis\n• Enlaces a fundaciones que ayudan a pagar el copago\n\nLo llevamos directo a las ayudas correctas para cada medicina."
       },
       {
         "q": "¿Cuál es la diferencia entre las pestañas Precio, Asistencia y Resumen?",
-        "a": "• **Precio:** Muestra estimados de costo en diferentes farmacias\n• **Asistencia:** Muestra programas que pueden ayudarle a pagar (¡lo más importante!)\n• **Resumen:** Muestra información general sobre la medicina"
+        "a": "• **Precio:** muestra cuánto puede costar en varias farmacias\n• **Asistencia:** muestra programas que ayudan a pagar (¡lo más útil!)\n• **Resumen:** muestra datos generales de la medicina"
       },
       {
         "q": "¿Qué pasa si mi medicina no está en la lista?",
