@@ -1,19 +1,16 @@
 #!/usr/bin/env node
 /**
- * Post-build: inject <link rel="modulepreload"> hints for the homepage's
- * lazy route chunk into the homepage HTML variants.
+ * Post-build: bring dist/index-es.html's resource hints up to parity with
+ * dist/index.html, plus the lazy Spanish locale chunk.
  *
- * Why: route-based code splitting made Home a dynamically-imported chunk.
- * Without hints the browser only discovers it after the entry module has
- * downloaded and executed — an extra network round trip on the critical
- * path that showed up as a Lighthouse LCP regression on the deploy preview.
- * Preloading Home + its static dependency graph (and, for the Spanish
- * homepage, the lazy locale chunk) restores a flat waterfall: everything
- * needed for first paint downloads in parallel with the entry.
+ * Vite injects <link rel="modulepreload"> for the entry's static chunk graph
+ * into index.html, but index-es.html (the prerendered Spanish homepage that
+ * /es serves) is generated from a template without them — so Spanish
+ * visitors paid an extra round trip for chunks the browser could have
+ * fetched in parallel, and another for the lazy locale chunk that
+ * i18nReady always needs on that page.
  *
- * Runs AFTER prerender-seo.js on purpose: the per-route prerendered pages
- * are copies of index.html, and only the two homepage documents should
- * preload the Home chunk.
+ * Runs AFTER prerender-seo.js (which writes index-es.html).
  */
 
 import fs from 'fs';
@@ -22,55 +19,33 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
-const assetsDir = path.join(distDir, 'assets');
 
-const assets = fs.readdirSync(assetsDir);
-const findChunk = (prefix) => {
-  const matches = assets.filter((f) => f.startsWith(prefix) && f.endsWith('.js') && !f.endsWith('.map'));
-  if (matches.length !== 1) {
-    throw new Error(`Expected exactly one ${prefix}*.js chunk, found: ${matches.join(', ') || 'none'}`);
-  }
-  return matches[0];
-};
-
-// Transitive static imports of a chunk (minified ESM: from"./x.js" / import"./x.js").
-function staticGraph(chunkName) {
-  const seen = new Set();
-  const queue = [chunkName];
-  while (queue.length) {
-    const name = queue.shift();
-    if (seen.has(name)) continue;
-    seen.add(name);
-    const code = fs.readFileSync(path.join(assetsDir, name), 'utf8');
-    for (const m of code.matchAll(/(?:from|import)\s*"\.\/([^"]+\.js)"/g)) {
-      if (!seen.has(m[1])) queue.push(m[1]);
-    }
-  }
-  return [...seen];
+const indexHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+const esFile = path.join(distDir, 'index-es.html');
+if (!fs.existsSync(esFile)) {
+  console.warn('⚠️  dist/index-es.html not found, skipping preload injection');
+  process.exit(0);
 }
 
-function inject(htmlFile, chunkNames) {
-  const file = path.join(distDir, htmlFile);
-  if (!fs.existsSync(file)) {
-    console.warn(`  ⚠️  ${htmlFile} not found, skipping`);
-    return;
-  }
-  let html = fs.readFileSync(file, 'utf8');
-  const links = chunkNames
-    .filter((name) => !html.includes(`/assets/${name}`))
-    .map((name) => `    <link rel="modulepreload" crossorigin href="/assets/${name}">`);
-  if (!links.length) {
-    console.log(`  ✅ ${htmlFile}: all chunks already referenced`);
-    return;
-  }
+// The entry graph as Vite declared it in index.html.
+const hints = [...indexHtml.matchAll(/<link rel="modulepreload"[^>]*href="([^"]+)"[^>]*>/g)]
+  .map((m) => m[1]);
+
+// The lazy Spanish locale chunk (es-<hash>.js) — always needed on this page.
+const assets = fs.readdirSync(path.join(distDir, 'assets'));
+const esChunks = assets.filter((f) => /^es-[\w-]+\.js$/.test(f));
+if (esChunks.length !== 1) {
+  throw new Error(`Expected exactly one es-*.js locale chunk, found: ${esChunks.join(', ') || 'none'}`);
+}
+hints.push(`/assets/${esChunks[0]}`);
+
+let html = fs.readFileSync(esFile, 'utf8');
+const links = hints
+  .filter((href) => !html.includes(href))
+  .map((href) => `    <link rel="modulepreload" crossorigin href="${href}">`);
+
+if (links.length) {
   html = html.replace('</head>', links.join('\n') + '\n</head>');
-  fs.writeFileSync(file, html, 'utf8');
-  console.log(`  ✅ ${htmlFile}: +${links.length} modulepreload hint(s)`);
+  fs.writeFileSync(esFile, html, 'utf8');
 }
-
-const homeGraph = staticGraph(findChunk('Home-'));
-const esLocale = findChunk('es-');
-
-console.log('Injecting route-chunk modulepreload hints...');
-inject('index.html', homeGraph);
-inject('index-es.html', [...homeGraph, esLocale]);
+console.log(`✅ index-es.html: +${links.length} modulepreload hint(s)`);

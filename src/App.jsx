@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from 'react
 import { useTranslation, Trans } from 'react-i18next';
 // Lazy loaded page components for code splitting
 const LazyFAQ = lazy(() => import('./pages/FAQ.jsx'));
-const LazyHome = lazy(() => import('./pages/main/Home.jsx'));
 const LazyWizard = lazy(() => import('./pages/main/Wizard.jsx'));
 const LazyMedicationSearch = lazy(() => import('./pages/main/MedicationSearch.jsx'));
 const LazyEducation = lazy(() => import('./pages/main/Education.jsx'));
@@ -59,6 +58,12 @@ const LazyReportingPartnerReport = lazy(() => import('./pages/reporting/Reportin
 
 // Google Analytics 4 integration
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
+// Home is imported statically on purpose: index.html paints static hero
+// content before hydration, and a lazy Home would replace it with the route
+// Suspense fallback for a network round trip before repainting — a visible
+// flash and an LCP regression (measured on the deploy preview). Its graph is
+// small; the other route pages stay lazy.
+import Home from './pages/main/Home.jsx';
 // First-visit disclaimer modal
 import DisclaimerModal from './components/DisclaimerModal.jsx';
 // Paywall modal for free tier limits
@@ -624,7 +629,7 @@ const MainSiteRoutes = () => (
     <Layout>
         <Suspense fallback={<PageLoadingFallback />}>
             <Routes>
-                <Route path="/" element={<LazyHome />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/es" element={<SpanishPathRedirect />} />
                 <Route path="/es/*" element={<SpanishPathRedirect />} />
                 <Route path="/about" element={<LazyAbout />} />

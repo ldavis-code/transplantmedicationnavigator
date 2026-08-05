@@ -298,9 +298,11 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Fonts: one variable-font file per family covers all weights -->
+    <!-- Fonts: one variable-font file per family covers all weights.
+         Only the body font is preloaded; preloading the (larger) heading
+         font too competed with critical JS on slow connections, and
+         font-display: swap paints headings with the fallback either way. -->
     <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link href="/fonts/fonts.css" rel="stylesheet" />
 </head>
 <body class="bg-slate-50">
