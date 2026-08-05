@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2, ShieldCheck, AlertCircle, Zap, ChevronDown, Search } from 'lucide-react';
 import Fuse from 'fuse.js';
-import EPIC_ENDPOINTS from '../data/epic-endpoints.json';
 import PrivacyPointNotice from './PrivacyPointNotice.jsx';
 
 /**
@@ -61,7 +60,12 @@ const SANDBOX_SYSTEM = { id: 'epic-sandbox', name: 'Epic Sandbox (Test Patients)
 
 const normalizeUrl = (url) => (url || '').replace(/\/+$/, '').toLowerCase();
 
-const HEALTH_SYSTEMS = (() => {
+// Sandbox + curated centers are available immediately; the full Epic
+// production directory (~70 KB of JSON) is merged in asynchronously after
+// mount so it ships as its own chunk instead of inflating the main bundle
+// every visitor downloads. Until it arrives, the picker still works with the
+// curated transplant centers, which cover the common cases.
+const BASE_HEALTH_SYSTEMS = (() => {
     const seen = new Set([normalizeUrl(SANDBOX_SYSTEM.fhirBaseUrl)]);
     const list = [SANDBOX_SYSTEM];
     for (const sys of CURATED_SYSTEMS) {
@@ -70,16 +74,21 @@ const HEALTH_SYSTEMS = (() => {
         seen.add(key);
         list.push(sys);
     }
+    return list;
+})();
+
+function mergeDirectory(baseList, endpoints) {
+    const seen = new Set(baseList.map((sys) => normalizeUrl(sys.fhirBaseUrl)));
     const directory = [];
-    for (const sys of EPIC_ENDPOINTS) {
+    for (const sys of endpoints) {
         const key = normalizeUrl(sys.fhirBaseUrl);
         if (seen.has(key)) continue;
         seen.add(key);
         directory.push(sys);
     }
     directory.sort((a, b) => a.name.localeCompare(b.name));
-    return [...list, ...directory];
-})();
+    return [...baseList, ...directory];
+}
 
 // Cap how many options render at once. With the full Epic directory bundled
 // (hundreds of hospitals), rendering every row on an empty search is wasteful;
@@ -104,6 +113,20 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [importedData, setImportedData] = useState(null);
+    const [healthSystems, setHealthSystems] = useState(BASE_HEALTH_SYSTEMS);
+
+    // Load the full Epic directory (own chunk) after mount; see note above.
+    useEffect(() => {
+        let cancelled = false;
+        import('../data/epic-endpoints.json')
+            .then((mod) => {
+                if (!cancelled) setHealthSystems(mergeDirectory(BASE_HEALTH_SYSTEMS, mod.default));
+            })
+            .catch(() => {
+                // Directory unavailable (offline?): curated list keeps working.
+            });
+        return () => { cancelled = true; };
+    }, []);
 
     // On mount, pick up medications imported via the OAuth callback (stored in
     // sessionStorage before the redirect back to this page). This MUST run in an
@@ -130,26 +153,26 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
     // Fuzzy matcher so patients still find their hospital when they misspell it
     // ("Houstn Methodist" -> "Houston Methodist") or type only part of the name.
     // threshold 0.4 tolerates typos; ignoreLocation matches anywhere in the name.
-    const fuse = useMemo(() => new Fuse(HEALTH_SYSTEMS, {
+    const fuse = useMemo(() => new Fuse(healthSystems, {
         keys: ['name'],
         threshold: 0.4,
         ignoreLocation: true,
         minMatchCharLength: 2,
-    }), []);
+    }), [healthSystems]);
 
     const trimmedSearch = searchTerm.trim();
     const matchingSystems = (() => {
         const q = trimmedSearch.toLowerCase();
-        if (!q) return HEALTH_SYSTEMS;
+        if (!q) return healthSystems;
         // Single character is too short for fuzzy matching, fall back to a plain
         // substring match so the list still narrows as the patient starts typing.
-        if (q.length < 2) return HEALTH_SYSTEMS.filter(s => s.name.toLowerCase().includes(q));
+        if (q.length < 2) return healthSystems.filter(s => s.name.toLowerCase().includes(q));
         return fuse.search(trimmedSearch).map(r => r.item);
     })();
     const filteredSystems = matchingSystems.slice(0, MAX_VISIBLE_SYSTEMS);
     const hiddenSystemCount = matchingSystems.length - filteredSystems.length;
 
-    const selectedSystemData = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
+    const selectedSystemData = healthSystems.find(s => s.id === selectedSystem);
 
     const handleConnect = async () => {
         if (!selectedSystem) {
@@ -160,7 +183,7 @@ const EpicConnectButton = ({ onMedicationsImported, onBeforeConnect, intro = nul
         setLoading(true);
         setError(null);
 
-        const system = HEALTH_SYSTEMS.find(s => s.id === selectedSystem);
+        const system = healthSystems.find(s => s.id === selectedSystem);
         if (!system) {
             setError(t('epic.errorInvalidSelection'));
             setLoading(false);
