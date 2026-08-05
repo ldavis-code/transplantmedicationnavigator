@@ -194,9 +194,13 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'icons': ['lucide-react']
+        // Function form: works under both Rollup (Vite 5) and Rolldown
+        // (Vite 8+), which rejects the object form with "manualChunks is
+        // not a function" — this is what broke the Dependabot vite-8 PR's
+        // deploys. Keep this form so the upgrade path stays open.
+        manualChunks(id) {
+          if (id.includes('node_modules/lucide-react/')) return 'icons';
+          if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler|@remix-run\/router)\//.test(id)) return 'react-vendor';
         }
       }
     },
