@@ -174,7 +174,7 @@ const MedicationDetail = () => {
                     {t('medications.detail.heading', { name: brandDisplay })}
                 </h1>
                 <p className="text-lg text-slate-600 mt-3">
-                    {brandDisplay}{genericDiffers ? ` (${med.genericName})` : ''}{t('medications.detail.introIs')}{aOrAn(med.category)} {med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
+                    {brandDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{aOrAn(med.category)} {med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
                 </p>
                 {price && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>
