@@ -2,19 +2,17 @@ import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import LanguageToggle from '../../components/LanguageToggle.jsx';
 import { Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck, ShieldAlert, HeartHandshake, CheckCircle, DollarSign, ExternalLink, Building2, Phone, Pill, CreditCard, Sparkles, Download, Smartphone } from 'lucide-react';
-import MEDICATIONS_DATA from '../../data/medications.json';
-import PROGRAMS_DATA from '../../data/programs.json';
+import HOME_STATS from '../../data/home-stats.json';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
 import { seoMetadata } from '../../data/seo-metadata.js';
 
-// Home-page stat tiles are computed from the data files so they can never go
-// stale. Copay cards = copay-card programs; Assistance Programs = income-based
-// PAPs + foundation grants (kept separate from copay so the two tiles never
-// double-count the same program).
-const countGroup = (group) => (group ? Object.keys(group).length : 0);
-const STAT_MEDICATIONS = MEDICATIONS_DATA.length;
-const STAT_COPAY_CARDS = countGroup(PROGRAMS_DATA.copayPrograms);
-const STAT_ASSISTANCE_PROGRAMS = countGroup(PROGRAMS_DATA.papPrograms) + countGroup(PROGRAMS_DATA.foundationPrograms);
+// Home-page stat tiles are counted from the data files at build time
+// (scripts/generate-home-stats.js regenerates home-stats.json on every
+// build, so they can never go stale) instead of importing 156 KB of
+// medication/program JSON into the entry bundle to show three integers.
+const STAT_MEDICATIONS = HOME_STATS.medications;
+const STAT_COPAY_CARDS = HOME_STATS.copayCards;
+const STAT_ASSISTANCE_PROGRAMS = HOME_STATS.assistancePrograms;
 
 // Home Page
 const Home = () => {

@@ -99,15 +99,10 @@ import { TenantProvider } from './context/TenantContext.jsx';
 import { Map, Search, Menu, X, ShieldAlert, HeartHandshake, Shield, Check, ClipboardList, MessageCircle, Send, Clock, Loader2, Eye, EyeOff } from 'lucide-react';
 // --- CONSTANTS & DATA ---
 import { LAST_UPDATED, TransplantStatus } from './data/constants.js';
-import MEDICATIONS_DATA from './data/medications.json';
-// Sparse Spanish overlay for patient-facing program text (maxBenefit/notes)
-// Spanish overlay for the wizard's organ medication guides (titles,
-// descriptions, class display names, per-med notes)
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
 import QUICK_ACTIONS_DATA from './data/quick-actions.json';
+// Shared with the wizard route: powers the chat widget's med suggestions here
 import { ORGAN_MEDICATIONS, PRE_TRANSPLANT_MEDICATIONS } from './data/organMedications.js';
-// Initialize data from imported JSON files - MEDICATIONS_DATA is used as fallback
-// Medications will be fetched from the database API when available
 const ASSISTANT_KNOWLEDGE_BASE = ASSISTANT_KNOWLEDGE_BASE_DATA;
 
 // Icon mapping for quick actions

@@ -1,8 +1,20 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { fetchAllMedications } from '../lib/medicationsApi.js';
-import MEDICATIONS_FALLBACK from '../data/medications.json';
 
 const MedicationsContext = createContext(null);
+
+// The 94 KB medications fallback loads as its own chunk instead of riding in
+// the entry bundle. main.jsx awaits `medicationsReady` (alongside i18nReady)
+// before the first render, and index.html carries a modulepreload hint for
+// the chunk, so by the time any component runs, MEDICATIONS_FALLBACK is
+// populated exactly as if it were statically imported — no consumer ever
+// sees an empty list unless the chunk itself failed to load (same failure
+// class as the entry bundle; the API fetch below can still populate).
+let MEDICATIONS_FALLBACK = [];
+export const medicationsReady = import('../data/medications.json').then(
+    (mod) => { MEDICATIONS_FALLBACK = mod.default; },
+    () => { /* chunk unreachable — keep [] and rely on the API fetch */ }
+);
 
 /**
  * Collapse duplicate medication rows (same brand + generic that exist more than
