@@ -8,6 +8,7 @@
  * Usage:
  *   npm run check:readability          # Check all content
  *   npm run check:readability -- --strict  # Fail if any content exceeds target
+ *   npm run check:readability -- --json    # Machine-readable per-entry results
  *
  * Target: 6th grade reading level (Flesch-Kincaid Grade Level <= 6.0)
  */
@@ -28,18 +29,62 @@ const TARGET_GRADE_LEVEL = 8.0;      // Ideal target for health literacy
 const WARNING_GRADE_LEVEL = 10.0;    // Acceptable with some complex terms
 const FAIL_GRADE_LEVEL = 12.0;       // Needs simplification
 const STRICT_MODE = process.argv.includes('--strict');
+const JSON_MODE = process.argv.includes('--json');
 
 // Content files to analyze
+//
+// aggregate: true — glossary definitions are 8-20 word fragments, and
+// passage formulas (Flesch-Kincaid, Fernández-Huerta) are not valid on
+// micro-texts: with so few words, one unavoidable term ("pharmacy",
+// "insurance") swings syllables-per-word enough to score a definition a
+// human audit rates ~5th grade as 11+. Those files are scored as one
+// concatenated document, which is how the formulas are meant to be used.
 const CONTENT_FILES = [
-    { path: 'src/data/glossary.json', name: 'Glossary', extractor: extractGlossary },
+    { path: 'src/data/glossary.json', name: 'Glossary', extractor: extractGlossary, aggregate: true },
     { path: 'src/data/knowledge-base.json', name: 'Knowledge Base', extractor: extractKnowledgeBase },
     { path: 'src/data/faqs.json', name: 'FAQs', extractor: extractFaqs },
     // Spanish content is scored with Fernández-Huerta (the Spanish adaptation
     // of Flesch); scores are mapped to US-grade equivalents so the same
     // thresholds apply. English syllable counting is meaningless for Spanish.
-    { path: 'src/data/glossary.es.json', name: 'Glossary (Spanish)', extractor: extractGlossary, lang: 'es' },
+    { path: 'src/data/glossary.es.json', name: 'Glossary (Spanish)', extractor: extractGlossary, lang: 'es', aggregate: true },
     { path: 'src/data/faqs.es.json', name: 'FAQs (Spanish)', extractor: extractFaqs, lang: 'es' },
 ];
+
+// Medication brand and generic names, excluded from scoring in BOTH
+// languages. Readability convention (SMOG, Fry) is to not count proper
+// nouns: "Tacrolimus" and "Mycophenolate Mofetil" are names patients
+// recognize from their pill bottles, not vocabulary the writer chose, and
+// they are unsimplifiable. Without this, the transplant-regimen FAQs score
+// grade 13-15 while their actual prose reads at ~6th grade. The set is
+// built from medications.json so it never goes stale.
+const MEDICATION_NAME_TOKENS = (() => {
+    const tokens = new Set();
+    try {
+        const meds = JSON.parse(readFileSync(join(__dirname, '..', 'src/data/medications.json'), 'utf-8'));
+        for (const med of meds) {
+            for (const field of [med.brandName, med.genericName]) {
+                for (const tok of String(field || '').split(/[^a-zA-Z]+/)) {
+                    if (tok.length > 3) tokens.add(tok.toLowerCase());
+                }
+            }
+        }
+        // Spanish spellings of the same names (ciclosporina, micofenolato…),
+        // maintained in the wizard's Spanish drug-name overlay.
+        const organEs = JSON.parse(readFileSync(join(__dirname, '..', 'src/data/organ-medications.es.json'), 'utf-8'));
+        for (const map of [organEs.generics || {}, organEs.examples || {}]) {
+            for (const name of Object.values(map)) {
+                for (const tok of String(name).split(/[^a-zA-Záéíóúüñ]+/i)) {
+                    if (tok.length > 3) tokens.add(tok.toLowerCase());
+                }
+            }
+        }
+    } catch {
+        // If medications.json is unreadable, score without exclusions.
+    }
+    return tokens;
+})();
+
+const isMedicationName = (word) => MEDICATION_NAME_TOKENS.has(word.toLowerCase());
 
 /**
  * Count syllables in a word using a rule-based approach
@@ -134,7 +179,7 @@ function getWords(text) {
  * Formula: 0.39 * (words/sentences) + 11.8 * (syllables/words) - 15.59
  */
 function calculateFleschKincaid(text) {
-    const words = getWords(text);
+    const words = getWords(text).filter((w) => !isMedicationName(w));
     const wordCount = words.length;
 
     if (wordCount === 0) {
@@ -214,7 +259,7 @@ function calculateFernandezHuerta(text) {
         .replace(/#{1,6}\s+/g, '')
         .replace(/•/g, '')
         .replace(/\n/g, ' ');
-    const words = cleaned.match(/[a-zA-Záéíóúüñ]+/gi) || [];
+    const words = (cleaned.match(/[a-zA-Záéíóúüñ]+/gi) || []).filter((w) => !isMedicationName(w));
     const wordCount = words.length;
 
     if (wordCount === 0) {
@@ -291,14 +336,23 @@ function extractFaqs(data) {
 /**
  * Analyze a single content file
  */
-function analyzeFile(filePath, name, extractor, lang = 'en') {
+function analyzeFile(filePath, name, extractor, lang = 'en', aggregate = false) {
     const fullPath = join(__dirname, '..', filePath);
     const calculate = lang === 'es' ? calculateFernandezHuerta : calculateFleschKincaid;
 
     try {
         const content = readFileSync(fullPath, 'utf-8');
         const data = JSON.parse(content);
-        const entries = extractor(data);
+        let entries = extractor(data);
+        if (aggregate) {
+            // Micro-text file: score all entries as one document (see the
+            // CONTENT_FILES comment). Definitions are joined as sentences.
+            entries = [{
+                id: `all ${entries.length} definitions (scored as one document)`,
+                text: entries.map((e) => e.text.replace(/[.!?]?\s*$/, '.')).join(' '),
+                context: 'aggregate'
+            }];
+        }
 
         const results = {
             name,
@@ -441,11 +495,16 @@ function printResults(results) {
  * Main execution
  */
 function main() {
-    console.log('Checking content readability...\n');
+    if (!JSON_MODE) console.log('Checking content readability...\n');
 
     const results = CONTENT_FILES.map(file =>
-        analyzeFile(file.path, file.name, file.extractor, file.lang)
+        analyzeFile(file.path, file.name, file.extractor, file.lang, file.aggregate)
     );
+
+    if (JSON_MODE) {
+        console.log(JSON.stringify(results, null, 2));
+        return;
+    }
 
     const shouldFail = printResults(results);
 

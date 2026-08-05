@@ -79,7 +79,7 @@
     "questions": [
       {
         "q": "What is a copay card?",
-        "a": "Copay cards (also called copay assistance cards or manufacturer coupons) are programs offered by pharmaceutical companies that reduce or eliminate your out-of-pocket costs for brand-name medications.\n\n**Who can use them:**\n• Patients with commercial (private) insurance only\n• NOT available for Medicare, Medicaid, Tricare, or VA benefits\n\nCopay cards are different from copay foundations. Copay cards come from drug companies and only work with private insurance. Copay foundations are nonprofits that CAN help Medicare patients."
+        "a": "A copay card is a discount program from the company that makes a brand-name drug. Some people call them copay assistance cards or drug coupons. The card lowers what you pay at the pharmacy — often to $0 or close to it.\n\n**Who can use them:**\n• Only patients with commercial (private) insurance\n• NOT allowed with Medicare, Medicaid, Tricare, or VA benefits\n\nCopay cards are not the same as copay foundations. Copay cards come from drug companies. They only work with private insurance. Copay foundations are charities, and they CAN help Medicare patients."
       },
       {
         "q": "How do copay cards work?",
@@ -91,7 +91,7 @@
       },
       {
         "q": "Can I use copay cards with Medicare, Medicaid, or other government insurance?",
-        "a": "**No.** Copay cards cannot be used with government insurance programs:\n• Medicare (including Part D)\n• Medicaid\n• Tricare\n• VA benefits\n• Other federal or state programs\n\n**Why not?**\nFederal anti-kickback laws prohibit drug manufacturers from providing this type of assistance to government insurance beneficiaries.\n\n**What government insurance patients CAN use:**\n• Copay foundations (nonprofit groups like HealthWell and TotalAssist)\n• Medicare Extra Help (if income qualifies)\n• State pharmaceutical assistance programs"
+        "a": "**No.** Copay cards do not work with government insurance:\n• Medicare (including Part D)\n• Medicaid\n• Tricare\n• VA benefits\n• Other federal or state programs\n\n**Why not?**\nA federal law (the anti-kickback law) does not let drug companies give this kind of help to people with government insurance.\n\n**What you CAN use instead:**\n• Copay foundations (charities like HealthWell and TotalAssist)\n• Medicare Extra Help (if your income qualifies)\n• Drug help programs run by your state"
       },
       {
         "q": "Do copay cards have annual limits?",
@@ -169,7 +169,7 @@
       },
       {
         "q": "What is the CMS WISeR prior authorization pilot?",
-        "a": "Starting January 2026, CMS launched the **WISeR** (Wasteful and Inappropriate Service Reduction) model. It adds prior authorization for 17 outpatient Medicare Part B services.\n\n**Affected states:** Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington.\n\n**What transplant patients should know:**\n• WISeR does NOT affect your transplant medications\n• It covers outpatient procedures like nerve stimulators, spinal procedures, and wound care\n• If you need one of these procedures, your provider must get approval first\n• Decisions are made within 72 hours (48 hours for urgent cases)\n\n**Important:** This only affects Original Medicare (fee-for-service), not Medicare Advantage plans. The model runs through December 2031."
+        "a": "WISeR is a new Medicare test program that started in January 2026. It adds an approval step (prior authorization) for 17 outpatient Medicare Part B services.\n\n**States in the pilot:** Arizona, New Jersey, Ohio, Oklahoma, Texas, and Washington.\n\n**What transplant patients should know:**\n• WISeR does NOT affect your transplant medicines\n• It covers outpatient procedures like nerve stimulators, spine procedures, and wound care\n• If you need one of these, your doctor must get approval first\n• Decisions come within 72 hours (48 hours if urgent)\n\n**Important:** This only affects Original Medicare, not Medicare Advantage plans. The test runs through December 2031."
       }
     ]
   },
@@ -198,7 +198,7 @@
       },
       {
         "q": "What drugs are being negotiated by Medicare?",
-        "a": "Medicare is negotiating drug prices under the Inflation Reduction Act. Here is where things stand:\n\n**First 10 drugs (prices in effect January 2026):**\nEliquis, Jardiance, Xarelto, Januvia, Farxiga, Entresto, Enbrel, Imbruvica, Stelara, and NovoLog/Fiasp. These save patients up to 79% on some drugs.\n\n**Second round (15 drugs, prices effective 2027):**\nA second group of 15 drugs was selected for negotiation with prices taking effect in 2027.\n\n**Third round (announced January 27, 2026, prices effective 2028):**\n15 new drugs including the first-ever Part B drugs. Transplant-relevant picks include Orencia (related to Belatacept for kidney transplant), Trulicity (for post-transplant diabetes), Xolair and Anoro Ellipta (for lung transplant patients). Also includes Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.\n\n**Why it matters:** Lower prices mean you hit your $2,100 out-of-pocket cap faster, or pay less overall."
+        "a": "Medicare now negotiates prices for some costly drugs. A law called the Inflation Reduction Act made this possible. Here is where things stand:\n\n**First 10 drugs (lower prices started January 2026):**\nEliquis, Jardiance, Xarelto, Januvia, Farxiga, Entresto, Enbrel, Imbruvica, Stelara, and NovoLog/Fiasp. Patients save up to 79% on some of these.\n\n**Second round (15 drugs, lower prices start 2027):**\nMedicare picked 15 more drugs. Their lower prices start in 2027.\n\n**Third round (named January 27, 2026; lower prices start 2028):**\n15 new drugs, including the first Part B drugs. Some matter for transplant: Orencia (related to Belatacept for kidney transplant), Trulicity (for diabetes after transplant), and Xolair and Anoro Ellipta (for lung transplant patients). The list also has Botox, Biktarvy, Cimzia, Cosentyx, Entyvio, Erleada, Kisqali, Lenvima, Rexulti, Verzenio, and Xeljanz.\n\n**Why it matters:** Lower prices help you reach your $2,100 yearly cost cap sooner — or just pay less."
       }
     ]
   },
@@ -306,27 +306,27 @@
     "questions": [
       {
         "q": "What medications do heart transplant patients typically take?",
-        "a": "Heart transplant recipients typically receive a combination of three types of medications:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• Mainstay of maintenance therapy\n• Prevents your immune system from attacking the new heart\n\n**Antimetabolite (Mycophenolate Mofetil or Azathioprine)**\n• Used in combination with the calcineurin inhibitor\n• Provides additional immune suppression\n\n**Corticosteroid (Prednisone)**\n• Often tapered to a low dose or discontinued over time\n• Helps control inflammation"
+        "a": "Most heart transplant patients take three types of medicines:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• The main long-term anti-rejection medicine\n• Keeps your immune system from attacking the new heart\n\n**Antimetabolite (Mycophenolate Mofetil or Azathioprine)**\n• Taken along with the calcineurin inhibitor\n• Adds extra protection against rejection\n\n**Corticosteroid (Prednisone)**\n• Doctors often lower the dose over time, or stop it\n• Helps control swelling and inflammation"
       },
       {
         "q": "What medications do kidney transplant patients typically take?",
-        "a": "Kidney transplant immunosuppression is similar to heart transplants, with a focus on balancing efficacy and minimizing side effects:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• Standard of care for maintenance therapy\n\n**Antimetabolite (Mycophenolate Mofetil or Mycophenolic Acid)**\n• Commonly used in combination with a CNI\n\n**Corticosteroid (Prednisone)**\n• Many centers aim for steroid-free regimens to reduce long-term side effects\n\n**Belatacept (Nulojix)**\n• A biologic alternative to calcineurin inhibitors for certain patients"
+        "a": "Kidney transplant patients take medicines much like heart patients. The goal is to protect the new kidney with the fewest side effects:\n\n**Calcineurin Inhibitor (Tacrolimus or Cyclosporine)**\n• The standard main medicine\n\n**Antimetabolite (Mycophenolate Mofetil or Mycophenolic Acid)**\n• Often taken with the calcineurin inhibitor (CNI)\n\n**Corticosteroid (Prednisone)**\n• Many centers try to avoid steroids to cut long-term side effects\n\n**Belatacept (Nulojix)**\n• An option instead of a CNI for some patients"
       },
       {
         "q": "What medications do liver transplant patients typically take?",
-        "a": "Liver transplant patients often require lower levels of immunosuppression compared to other organ recipients due to the liver's unique immunological properties:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• The most commonly used CNI in liver transplantation\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Often used in combination with a CNI\n\n**Corticosteroid (Prednisone)**\n• Typically tapered and discontinued within the first few months post-transplant"
+        "a": "Liver transplant patients often need lower doses than other transplant patients. The body tends to accept a new liver more easily:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• The most common choice for liver transplants\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Often taken with the CNI\n\n**Corticosteroid (Prednisone)**\n• Usually lowered and stopped in the first few months after transplant"
       },
       {
         "q": "What medications do lung transplant patients typically take?",
-        "a": "Lung transplant recipients are at a high risk of rejection, and immunosuppressive regimens are often more intensive:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• Preferred CNI for lung transplant patients\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Used in combination with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Maintained at a low dose long-term\n\nLung transplant patients typically require the most intensive immunosuppression due to the higher rejection risk."
+        "a": "Lung transplant patients have a higher risk of rejection. Their medicine plans are often stronger:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• The preferred choice for lung transplants\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Taken with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Kept at a low dose long-term\n\nLung transplant patients usually need the strongest anti-rejection treatment."
       },
       {
         "q": "What medications do pancreas transplant patients typically take?",
-        "a": "Pancreas transplant immunosuppression is similar to kidney transplantation, as the two are often performed together:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• Standard of care for maintenance therapy\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Used in combination with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Often tapered to a low dose or discontinued over time"
+        "a": "Pancreas transplant medicines are much like kidney transplant medicines. The two transplants are often done together. Your team checks your blood levels often and fits each dose to you:\n\n**Calcineurin Inhibitor (Tacrolimus)**\n• The standard main medicine\n\n**Antimetabolite (Mycophenolate Mofetil)**\n• Taken with tacrolimus\n\n**Corticosteroid (Prednisone)**\n• Doctors often lower the dose over time, or stop it"
       },
       {
         "q": "Important: What should I know about managing my transplant medications?",
-        "a": "Post-transplant medication regimens are complex and require careful management by a specialized transplant team.\n\n**Key points to remember:**\n• Lifelong adherence to these medications is crucial for the long-term success of your transplant and your health\n• Never change your medication regimen without consulting your transplant team first\n• This includes stopping, adjusting doses, or adding new medications\n• Even over-the-counter drugs and supplements can interact with your transplant medications\n\n**Always consult your transplant team before:**\n• Making any changes to your medication schedule\n• Starting any new medications\n• Taking over-the-counter drugs\n• Using herbal supplements or vitamins\n\nYour transplant team is your best resource for medication questions."
+        "a": "Transplant medicines need careful, lifelong management with your transplant team.\n\n**Key points to remember:**\n• Taking your medicines every day, for life, is key to keeping your transplant healthy\n• Never change your medicines without asking your transplant team first\n• That includes stopping a medicine, changing a dose, or adding something new\n• Even store-bought drugs and supplements can interfere with your transplant medicines\n\n**Always ask your transplant team before:**\n• Changing your medicine schedule\n• Starting any new medicine\n• Taking store-bought (over-the-counter) drugs\n• Using herbal supplements or vitamins\n\nYour transplant team is your best resource for medicine questions."
       }
     ]
   },
@@ -363,7 +363,7 @@
       },
       {
         "q": "Can I print my results?",
-        "a": "Yes! Exporting or printing your medication lists is available to all users. You can use the Export button on the My Medications page to download your list, or use your browser's print function on any page to share with your healthcare team."
+        "a": "Yes! Anyone can print or save their medication list. On the My Medications page, use the Export button to download your list. You can also use your browser's print option on any page. Bring the printout to your care team."
       }
     ]
   },
