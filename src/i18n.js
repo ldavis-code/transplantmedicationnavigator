@@ -1,12 +1,14 @@
 /**
  * i18next configuration.
  *
- * English is bundled inline (it is the default and the fallback), so t() is
- * available on first render for English visitors. Spanish is a separate
- * lazily-loaded chunk: bundling both languages put ~425 KB of JSON in the
- * main bundle every visitor paid for. main.jsx awaits `i18nReady` before the
- * first render, so Spanish visitors never see an English flash — they wait
- * for the (small, cached) Spanish chunk instead of the old everything-bundle.
+ * BOTH locales load as their own chunks — neither rides in the entry
+ * bundle (together they were ~425 KB of JSON every visitor parsed).
+ * main.jsx awaits `i18nReady` before the first render, and index.html
+ * carries a modulepreload hint for the English chunk (index-es.html for
+ * both), so the locale downloads in parallel with the entry module and
+ * t() is fully populated before anything renders: no missing-key flash,
+ * no English flash for Spanish visitors. English is always loaded (it is
+ * the fallback language); Spanish additionally when active.
  * English is the source of truth: en.json strings must match the original
  * hardcoded copy exactly (verified by `npm run snapshot:verify` — see
  * tests/page-snapshots/).
@@ -20,7 +22,6 @@
  */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from './locales/en.json';
 
 const STORAGE_KEY = 'tmn-lang';
 const SUPPORTED = ['en', 'es'];
@@ -41,25 +42,27 @@ function detectInitialLanguage() {
     return 'en';
 }
 
-// Fetch the Spanish bundle on demand. Idempotent: repeated calls reuse the
-// same promise, and the chunk is served immutable so the network cost is
+// Fetch locale bundles on demand. Idempotent: repeated calls reuse the same
+// promise, and the chunks are served immutable so the network cost is
 // one-time.
-let spanishLoad = null;
-function loadSpanish() {
-    if (!spanishLoad) {
-        spanishLoad = import('./locales/es.json').then((mod) => {
-            i18n.addResourceBundle('es', 'translation', mod.default);
-        });
+const localeLoads = {};
+function loadLocale(lng) {
+    if (!localeLoads[lng]) {
+        localeLoads[lng] = (lng === 'es' ? import('./locales/es.json') : import('./locales/en.json'))
+            .then((mod) => {
+                i18n.addResourceBundle(lng, 'translation', mod.default);
+            });
     }
-    return spanishLoad;
+    return localeLoads[lng];
 }
+const loadSpanish = () => loadLocale('es');
 
 const initialLanguage = detectInitialLanguage();
 
 i18n.use(initReactI18next).init({
-    resources: {
-        en: { translation: en },
-    },
+    // Resource bundles are added asynchronously by loadLocale before the
+    // first render (main.jsx awaits i18nReady).
+    resources: {},
     lng: initialLanguage,
     fallbackLng: 'en',
     interpolation: {
@@ -80,11 +83,14 @@ i18n.changeLanguage = (lng, ...args) => {
 };
 
 // Resolves when the initially-detected language is ready to render.
-// English: already resolved. Spanish: after the Spanish chunk loads (on
-// failure, fall through to English fallback rather than blocking render).
-export const i18nReady = initialLanguage === 'es'
-    ? loadSpanish().then(() => originalChangeLanguage('es')).catch(() => {})
-    : Promise.resolve();
+// English always loads (it is the fallback for missing Spanish keys);
+// Spanish additionally when it is the active language. The trailing
+// changeLanguage makes i18next re-resolve now that bundles exist. On a
+// load failure, render anyway rather than blocking the page.
+export const i18nReady = Promise.all([
+    loadLocale('en'),
+    initialLanguage === 'es' ? loadLocale('es') : null,
+]).then(() => originalChangeLanguage(initialLanguage)).catch(() => {});
 
 i18n.on('languageChanged', (lng) => {
     if (typeof document !== 'undefined') {
