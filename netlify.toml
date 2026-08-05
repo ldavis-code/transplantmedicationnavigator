@@ -275,6 +275,15 @@
   [headers.values]
     Cache-Control = "public, max-age=300, must-revalidate"
 
+# The font stylesheet is served at a fixed (un-hashed) URL, so it must
+# revalidate: a year-old immutable copy would keep pointing browsers at
+# whatever font URLs it referenced when cached. This rule comes after the
+# generic *.css rule so it wins for this path.
+[[headers]]
+  for = "/fonts/fonts.css"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
 # Cache fonts (1 year)
 [[headers]]
   for = "*.woff2"

@@ -156,8 +156,17 @@ export default defineConfig({
         navigateFallback: null,
         // Pre-cache important pages
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        // Exclude large infographic images from precaching
-        globIgnores: ['**/photos/tmn_infographic.jpg'],
+        // Exclude large infographic images from precaching, plus the legacy
+        // per-weight font copies: fonts.css now uses one variable-font file
+        // per family; the old files stay on disk only for visitors whose
+        // cached (formerly immutable) fonts.css still points at them, and
+        // precaching all 16 would re-download ~700 KB nobody renders with.
+        globIgnores: [
+            '**/photos/tmn_infographic.jpg',
+            '**/fonts/fraunces-[57]00-*.woff2',
+            '**/fonts/fraunces-600-*.woff2',
+            '**/fonts/plus-jakarta-sans-[45678]00-*.woff2',
+        ],
         // Don't precache large files
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
         // Clean up old caches
