@@ -29,7 +29,10 @@ import LanguageToggle from '../components/LanguageToggle.jsx';
 import PrivacyPointNotice from '../components/PrivacyPointNotice.jsx';
 
 export default function Appeals() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  // Letters go to US insurers/doctors, so they generate in English even in
+  // Spanish mode — this note tells Spanish readers that's intentional.
+  const showEnglishLetterNote = i18n.resolvedLanguage === 'es';
   useMetaTags({
     title: t('appeals.meta.title'),
     description: t('appeals.meta.description'),
@@ -796,6 +799,9 @@ Contact: [Your Phone Number]
                     {copied ? t('appeals.letter.copied') : t('appeals.letter.copyText')}
                   </button>
                 </div>
+                {showEnglishLetterNote && (
+                  <p className="text-sm text-slate-600 mb-3">{t('appeals.letter.englishNote')}</p>
+                )}
                 <pre className="whitespace-pre-wrap font-serif text-base text-slate-800 leading-relaxed bg-purple-50 p-5 rounded-lg border-l-4 border-purple-400">
                   {generatedLetter}
                 </pre>
@@ -926,6 +932,9 @@ Contact: [Your Phone Number]
             {spGeneratedLetter && (
               <div className="mt-6 bg-white p-4 rounded border border-indigo-200 relative fade-in">
                 <h4 className="text-xs font-bold text-slate-600 uppercase mb-2">{t('appeals.spGuide.builder.preview')}</h4>
+                {showEnglishLetterNote && (
+                  <p className="text-sm text-slate-600 mb-3">{t('appeals.letter.englishNote')}</p>
+                )}
                 <pre className="whitespace-pre-wrap font-serif text-sm text-slate-800 leading-relaxed border-l-4 border-slate-200 pl-4">{spGeneratedLetter}</pre>
                 <button onClick={copySpToClipboard} className="absolute top-4 right-4 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold transition" aria-label={t('appeals.spGuide.builder.copyAria')}>{spCopied ? <Check size={14} className="text-green-600" aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{spCopied ? t('appeals.letter.copied') : t('appeals.letter.copyText')}</button>
               </div>

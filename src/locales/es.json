@@ -289,9 +289,9 @@
         "partBTitle": "Parte B (médica)",
         "partBItems": [
           "Infusiones IV (Belatacept)",
-          "Medicamentos antirrechazo (si es elegible para la Part B-ID, la cobertura de Medicare para inmunosupresores)",
+          "Medicamentos antirrechazo (si es elegible para la Parte B-ID, la cobertura de Medicare para inmunosupresores)",
           "2026: prima de $202.90/mes, deducible de $283",
-          "Prima de la Part B-ID (cubre los antirrechazo de por vida a pacientes de riñón): $121.60/mes"
+          "Prima de la Parte B-ID (cubre los antirrechazo de por vida a pacientes de riñón): $121.60/mes"
         ],
         "partCTitle": "Parte C (Medicare Advantage)",
         "partCItems": ["Combina A, B y normalmente D", "Puede tener beneficios adicionales", "Debe usar ciertos médicos"],
@@ -629,7 +629,7 @@
             { "title": "Tarjetas de copago", "desc": "La mayoría de las tarjetas de copago del fabricante NO se permiten con Medicare. Este es un cambio grande." },
             { "title": "Acceso a los PAP", "desc": "Ahora podría calificar para los Programas de Asistencia al Paciente si sus ingresos son lo bastante bajos (muchos tienen límites más altos para pacientes de Medicare)." },
             { "title": "Ayuda de fundaciones", "desc": "Fundaciones como PAN, PANF y HealthWell SÍ pueden ayudar a los pacientes de Medicare con los copagos." },
-            { "title": "Opción Part B-ID", "desc": "Los pacientes de trasplante de riñón pueden calificar para la cobertura de inmunosupresores de la Parte B (Part B-ID). Prima: $121.60/mes en 2026 (subió de $110.40 en 2025), más 20% de coseguro después del deducible de $283." },
+            { "title": "Opción Parte B-ID", "desc": "Los pacientes de trasplante de riñón pueden calificar para la cobertura de inmunosupresores de la Parte B (Parte B-ID). Prima: $121.60/mes en 2026 (subió de $110.40 en 2025), más 20% de coseguro después del deducible de $283." },
             { "title": "Límite de 2026", "desc": "Límite anual de gastos de bolsillo en medicamentos de la Parte D: $2,100 en 2026 (subió de $2,000 en 2025)." }
           ],
           "action": "Solicite los PAP de los fabricantes 3 meses antes de la fecha en que empieza su Medicare. Regístrese temprano con las fundaciones, porque los fondos se acaban."
@@ -674,7 +674,7 @@
             { "title": "Cobertura de medicamentos", "desc": "La Parte D da cobertura de recetas con un límite de gastos de bolsillo de $2,100 (2026)." },
             { "title": "PAP + fundaciones", "desc": "Acceso completo a los Programas de Asistencia al Paciente y a la ayuda con copagos de las fundaciones." },
             { "title": "Tarjetas de descuento", "desc": "GoodRx/SingleCare normalmente no se pueden usar una vez que tiene cobertura de la Parte D." },
-            { "title": "Part B-ID", "desc": "Pacientes de riñón: la Part B-ID cubre los inmunosupresores incluso sin Parte A/B. Prima: $121.60/mes (2026)." }
+            { "title": "Parte B-ID", "desc": "Pacientes de riñón: la Parte B-ID cubre los inmunosupresores incluso sin Parte A/B. Prima: $121.60/mes (2026)." }
           ],
           "action": "Inscríbase durante su Período Inicial de Inscripción. Solicite Extra Help (LIS) si sus ingresos son limitados."
         },
@@ -743,7 +743,7 @@
           "Inscríbase en Medicare Parte A, B y D (o Advantage).",
           "Solicite Extra Help si sus ingresos son limitados.",
           "Revise cada otoño la lista de medicamentos cubiertos (el 'formulario') de su Parte D.",
-          "¿Trasplante de riñón? El Medicare por enfermedad renal termina 36 meses después del trasplante. Antes de esa fecha, pregunte al Seguro Social (1-800-772-1213, tienen español) por la Part B-ID."
+          "¿Trasplante de riñón? El Medicare por enfermedad renal termina 36 meses después del trasplante. Antes de esa fecha, pregunte al Seguro Social (1-800-772-1213, tienen español) por la Parte B-ID."
         ]
       },
       "medicaid": {
@@ -1304,7 +1304,7 @@
       },
       "coverage": {
         "title": "Educación sobre cobertura",
-        "text": "Aprenda sobre el seguro, Medicare (incluida la Part B-ID para pacientes de riñón), Medicaid y los beneficios de IHS.",
+        "text": "Aprenda sobre el seguro, Medicare (incluida la Parte B-ID para pacientes de riñón), Medicaid y los beneficios de IHS.",
         "linkAriaLabel": "Aprenda sobre las opciones de cobertura",
         "link": "Aprenda sobre la cobertura"
       },
@@ -1365,7 +1365,7 @@
       "name": "Lorrinda Gray-Davis",
       "role": "Receptora de un trasplante de hígado · Presidenta de TRIO · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
       "bio": "Lorrinda creó esta herramienta desde su propia experiencia. Dirige un programa de apoyo entre pares para pacientes de trasplante y cuidadores que ha apoyado a más de 550 personas: 183 pacientes llegaron a recibir su trasplante mientras participaban, con resultados publicados en revistas médicas revisadas por pares.",
-      "stat1Label": "Receptora de trasplante de hígado",
+      "stat1Label": "Receptora de trasplante de hígado desde",
       "stat2Label": "Pacientes que llegaron al trasplante mientras participaban",
       "stat3Label": "Pacientes y cuidadores apoyados",
       "link": "Lea la historia completa y la investigación de Lorrinda"
@@ -1560,7 +1560,7 @@
     "meds": {
       "title": "Sus medicamentos",
       "intro": "Conéctese a su sistema de salud (MyChart, el portal de su hospital) para traer su lista de medicamentos.",
-      "selectedHeading": "Sus Medicamentos Seleccionados ({{count}})",
+      "selectedHeading": "Sus medicamentos seleccionados ({{count}})",
       "removeAria": "Quitar {{name}}",
       "separatorAria": "O agregue sus medicamentos usted mismo",
       "separatorLabel": "O agregue sus medicamentos a continuación",
@@ -1608,12 +1608,12 @@
       "insuranceBadge": "3a",
       "insuranceQuestion": "¿Qué tipo de seguro médico (plan médico) tiene?",
       "insuranceAria": "Seleccione su tipo de seguro",
-      "commercialLabel": "Seguro Comercial (plan privado)",
+      "commercialLabel": "Seguro comercial (plan privado)",
       "commercialDescription": "De mi trabajo, del trabajo de mi cónyuge, o lo compré por mi cuenta",
       "commercialHelp": "Puede usar tarjetas de copago del fabricante + PAP",
       "medicareLabel": "Medicare",
       "medicareDescription": "El programa para personas de 65 años o más o con discapacidades",
-      "medicareHelp": "La Part B-ID (cobertura especial de Medicare para los medicamentos antirrechazo) es importante para pacientes de riñón. Con Medicare puede usar los programas de asistencia al paciente (PAP), pero NO las tarjetas de copago",
+      "medicareHelp": "La Parte B-ID (cobertura especial de Medicare para los medicamentos antirrechazo) es importante para pacientes de riñón. Con Medicare puede usar los programas de asistencia al paciente (PAP), pero NO las tarjetas de copago",
       "medicaidLabel": "Medicaid",
       "medicaidDescription": "Programa estatal para personas con ingresos más bajos",
       "medicaidHelp": "Puede tener cobertura completa; revise la lista de medicamentos cubiertos (el 'formulario') de su estado",
@@ -1655,8 +1655,8 @@
       "printAria": "Imprimir su plan de medicamentos",
       "printButton": "Imprimir el plan",
       "medicareAlert": {
-        "title": "Importante: Medicare Part B-ID",
-        "text": "Como usted recibió un trasplante de riñón y tiene Medicare, puede calificar para <strong>Medicare Part B-ID</strong>. Este beneficio cubre los medicamentos inmunosupresores de por vida. En 2026 cuesta <strong>$121.60 al mes</strong> (la prima). Además, cada año usted paga los primeros $283 (el deducible) y después el 20% del costo de cada medicamento; Medicare paga el resto.",
+        "title": "Importante: Medicare Parte B-ID",
+        "text": "Como usted recibió un trasplante de riñón y tiene Medicare, puede calificar para <strong>Medicare Parte B-ID</strong>. Este beneficio cubre los medicamentos inmunosupresores de por vida. En 2026 cuesta <strong>$121.60 al mes</strong> (la prima). Además, cada año usted paga los primeros $283 (el deducible) y después el 20% del costo de cada medicamento; Medicare paga el resto.",
         "cta": "Revise si Califica en Medicare.gov"
       },
       "medListTitle": "Su lista de medicamentos",
@@ -1771,7 +1771,7 @@
       },
       "guideTitle": "Guía de apelaciones gratis",
       "guideSubtitle": "Guía lista para imprimir con listas de verificación y modelos de cartas",
-      "guideDownload": "Descargar la guía gratis"
+      "guideDownload": "Descargar la guía gratis (en inglés)"
     },
     "nav": {
       "ariaLabel": "Secciones de la página",
@@ -1922,7 +1922,8 @@
       "optional": "(opcional)",
       "ifKnown": "(si lo sabe)",
       "blankPrompt": "¿Prefiere no escribir sus datos en línea? Descargue una carta en blanco para imprimirla y llenarla a mano.",
-      "blankButton": "Descargar carta en blanco",
+      "blankButton": "Descargar carta en blanco (en inglés)",
+      "englishNote": "Su carta se genera en inglés porque va dirigida a su compañía de seguros.",
       "generate": "Generar mi carta",
       "previewTitle": "Su carta para el Dr. ",
       "doctorFallback": "[Nombre del médico]",
@@ -1941,7 +1942,7 @@
           "Modelo de carta de apelación",
           "Guiones para llamar al seguro por teléfono"
         ],
-        "download": "Descargar la guía de apelaciones"
+        "download": "Descargar la guía de apelaciones (en inglés)"
       },
       "doctorTemplate": {
         "title": "Modelo de carta para el médico",
@@ -1951,7 +1952,7 @@
           "Referencias a guías clínicas",
           "Secciones para llenar los espacios"
         ],
-        "download": "Descargar el modelo gratis"
+        "download": "Descargar el modelo gratis (en inglés)"
       }
     },
     "spGuide": {
@@ -2067,8 +2068,9 @@
       "fpl": {
         "aria": "Referencia de elegibilidad por ingresos",
         "title": "100% del Nivel Federal de Pobreza (ingreso anual)",
-        "familyOf": "Familia de {{size}}:",
-        "dontDisqualify": "No se descarte usted mismo",
+        "familyOf_one": "1 persona:",
+        "familyOf_other": "Familia de {{size}}:",
+        "dontDisqualify": "No asuma que no califica",
         "papRange": ", los Programas de Asistencia al Paciente (PAP) a menudo aceptan ingresos de hasta 3, 4 o hasta 5 veces estas cantidades. Si no está seguro, solicite de todos modos: no cuesta nada."
       },
       "help": {
@@ -2382,6 +2384,7 @@
     },
     "categories": {
       "Immunosuppressant": "Inmunosupresor",
+      "Immunosuppressants": "Inmunosupresores",
       "Induction": "Inducción",
       "Steroid": "Esteroide",
       "Anti-viral": "Antiviral",

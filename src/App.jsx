@@ -107,7 +107,7 @@ import {
 // --- CONSTANTS & DATA ---
 import {
     LAST_UPDATED,
-    LINKS_LAST_VERIFIED_DISPLAY,
+    LINKS_LAST_VERIFIED,
     Role,
     TransplantStatus,
     OrganType,
@@ -1075,7 +1075,7 @@ const Home = () => {
                         <p className="text-emerald-700 font-medium text-sm mb-3">{t('home.founder.role')}</p>
                         <p className="text-slate-700 leading-relaxed mb-4">{t('home.founder.bio')}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-5 mb-4">
-                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">8/8/18</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
+                            <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">2018</span><span className="text-xs text-slate-600">{t('home.founder.stat1Label')}</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">183</span><span className="text-xs text-slate-600">{t('home.founder.stat2Label')}</span></span>
                             <span className="text-center"><span className="block text-2xl font-extrabold text-emerald-700">550+</span><span className="text-xs text-slate-600">{t('home.founder.stat3Label')}</span></span>
                         </div>
@@ -1266,8 +1266,10 @@ const organIcons = {
 // Organ-Specific Medication Guide Component
 const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
     const { t, i18n } = useTranslation();
-    // Spanish display text comes from the organ-medications.es.json overlay;
-    // drug names/brands and the data itself stay untouched.
+    // Spanish display text comes from the organ-medications.es.json overlay.
+    // Brand names stay untouched; generic names show their Spanish form
+    // (Brand (generic-in-Spanish)), matching Spanish-language pill bottles
+    // and providers. The underlying data is never modified.
     const guideEs = i18n.resolvedLanguage === 'es' ? ORGAN_MEDS_ES : null;
     // Auto-expand the user's selected organ(s), first selected organ is expanded by default
     const selectedOrgans = answers.organs || [];
@@ -1360,7 +1362,7 @@ const OrganMedicationGuide = ({ answers, onMedicationToggle }) => {
                                             <tr key={med.id} className="hover:bg-white">
                                                 <td className="py-3 px-3">
                                                     <span className="font-bold text-slate-900">{localizeMedName(med.brand)}</span>
-                                                    <span className="text-slate-500 ml-1">({med.name})</span>
+                                                    <span className="text-slate-500 ml-1">({guideEs?.generics?.[med.name] || med.name})</span>
                                                 </td>
                                                 <td className="py-3 px-3 text-slate-600">{guideEs?.classes?.[med.class] || med.class}</td>
                                                 <td className="py-3 px-3 text-slate-600">{guideEs?.organs?.[expandedOrgan]?.notes?.[med.id] || med.notes}</td>
@@ -1483,15 +1485,16 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
                                                     <div className="flex flex-wrap gap-1.5">
                                                         {med.examples.map((ex) => {
                                                             const selected = (answers.medications || []).includes(ex.id);
+                                                            const exLabel = guideEs?.examples?.[ex.id] || ex.label;
                                                             return (
                                                                 <button
                                                                     key={ex.id}
                                                                     onClick={() => onMedicationClick && onMedicationClick(ex.id)}
                                                                     className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border transition-colors ${selected ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-white border-slate-300 text-slate-700 hover:border-blue-400 hover:text-blue-700'}`}
-                                                                    aria-label={selected ? t('wizard.meds.preGuide.addedAria', { name: ex.label }) : t('wizard.meds.guide.addToListAria', { name: ex.label })}
+                                                                    aria-label={selected ? t('wizard.meds.preGuide.addedAria', { name: exLabel }) : t('wizard.meds.guide.addToListAria', { name: exLabel })}
                                                                 >
                                                                     {selected ? <Check size={12} aria-hidden="true" /> : <PlusCircle size={12} aria-hidden="true" />}
-                                                                    {ex.label}
+                                                                    {exLabel}
                                                                 </button>
                                                             );
                                                         })}
@@ -2187,7 +2190,7 @@ const Wizard = () => {
                                             >
                                                 <div>
                                                     <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
-                                                    <span className="text-sm text-slate-600 ml-2">({med.genericName})</span>
+                                                    <span className="text-sm text-slate-600 ml-2">({localizeMedName(med.genericName)})</span>
                                                 </div>
                                                 {isAlreadySelected ? (
                                                     <span className="text-emerald-600 text-sm font-medium flex items-center gap-1"><CheckCircle size={14} /> {t('wizard.meds.added')}</span>
@@ -2447,7 +2450,7 @@ const Wizard = () => {
                                                         >
                                                             <div>
                                                                 <span className="font-medium text-slate-900">{localizeMedName(med.brandName)}</span>
-                                                                <span className="text-slate-500 ml-1">({med.genericName})</span>
+                                                                <span className="text-slate-500 ml-1">({localizeMedName(med.genericName)})</span>
                                                             </div>
                                                             {isAlreadySelected ? (
                                                                 <span className="text-emerald-600 text-xs"><CheckCircle size={14} /></span>
@@ -2953,7 +2956,7 @@ const MedicationSearch = () => {
                                             <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: med.brandName })}>
                                                 <div>
                                                     <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
-                                                    <span className="text-sm text-slate-600">{med.genericName}</span>
+                                                    <span className="text-sm text-slate-600">{localizeMedName(med.genericName)}</span>
                                                 </div>
                                                 {isAlreadyIn ? (
                                                     <span className="text-emerald-600 text-sm font-bold flex items-center gap-1" aria-label={t('medications.search.alreadyAddedAria')}><CheckCircle size={16} aria-hidden="true" /> {t('medications.search.added')}</span>
@@ -3066,7 +3069,7 @@ const MedicationSearch = () => {
                                                 <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50" role="option" aria-selected={isAlreadyIn}>
                                                     <div>
                                                         <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
-                                                        <span className="text-sm text-slate-600">{med.genericName}</span>
+                                                        <span className="text-sm text-slate-600">{localizeMedName(med.genericName)}</span>
                                                     </div>
                                                     {isAlreadyIn ? (
                                                         <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> {t('medications.search.added')}</span>
@@ -3094,7 +3097,7 @@ const MedicationSearch = () => {
                             <div key={med.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                 <div>
                                     <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
-                                    <span className="text-slate-600 ml-2">({med.genericName})</span>
+                                    <span className="text-slate-600 ml-2">({localizeMedName(med.genericName)})</span>
                                 </div>
                                 <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name: med.brandName })}>
                                     <X size={18} />
@@ -3211,10 +3214,10 @@ const MedicationSearch = () => {
                                     <div className="flex-1 min-w-0">
                                         <p className="font-bold text-amber-900 mb-2">{t('medications.verify.fpl.title')}</p>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-amber-900 mb-3">
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 1 })}</span> $15,960</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 2 })}</span> $21,640</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 3 })}</span> $27,320</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 4 })}</span> $33,000</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 1, count: 1 })}</span> $15,960</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 2, count: 2 })}</span> $21,640</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 3, count: 3 })}</span> $27,320</div>
+                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 4, count: 4 })}</span> $33,000</div>
                                         </div>
                                         <p className="text-sm text-amber-800">
                                             <span className="font-bold">{t('medications.verify.fpl.dontDisqualify')}</span>{t('medications.verify.fpl.papRange')}
@@ -3513,6 +3516,12 @@ function medDisplayName(med) {
     return localizeMedName((med.brandName || '').split('/')[0]);
 }
 
+// "Link verified" stamp: "July 2026" in English, "julio de 2026" in Spanish.
+// iso is a YYYY-MM-DD date string.
+function formatVerifiedMonthYear(iso, lang) {
+    return new Date(iso + 'T00:00:00').toLocaleDateString(lang === 'es' ? 'es' : 'en-US', { month: 'long', year: 'numeric' });
+}
+
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
     const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState('ASSISTANCE');
@@ -3657,7 +3666,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     </div>
                     <div>
                         <h2 id={`med-${med.id}-title`} className="text-xl font-bold text-slate-900">{displayName}</h2>
-                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{med.genericName} • </>}<span className="text-emerald-600">{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</span></p>
+                        <p className="text-slate-600 font-medium text-sm">{!leadWithGeneric && med.genericName !== med.brandName && <>{localizeMedName(med.genericName)} • </>}<span className="text-emerald-600">{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</span></p>
                         {/* Cost Tier Badges */}
                         <div className="flex flex-wrap gap-2 mt-2">
                             {med.cost_tier && (
@@ -3886,7 +3895,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
                                 <h3 className="font-bold text-emerald-800 flex items-center gap-2">
                                     <CheckCircle size={16} aria-hidden="true" />
-                                    {t('medications.card.assistance.takesGenericTitle')}{med.genericName ? ` (${med.genericName})` : ''}
+                                    {t('medications.card.assistance.takesGenericTitle')}{med.genericName ? ` (${localizeMedName(med.genericName)})` : ''}
                                 </h3>
                                 <p className="text-sm text-slate-700 mt-2">
                                     <Trans i18nKey="medications.card.assistance.takesGenericText" />
@@ -3931,7 +3940,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     </a>
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        {t('medications.card.assistance.linkVerified', { date: copayProgram?.lastVerified ? new Date(copayProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY })}
+                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedMonthYear(copayProgram?.lastVerified || LINKS_LAST_VERIFIED, i18n.resolvedLanguage) })}
                                     </p>
                                 </div>
                             </section>
@@ -3971,7 +3980,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 {papUrl && (
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        {t('medications.card.assistance.linkVerified', { date: papProgram?.lastVerified ? new Date(papProgram.lastVerified + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : LINKS_LAST_VERIFIED_DISPLAY })}
+                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedMonthYear(papProgram?.lastVerified || LINKS_LAST_VERIFIED, i18n.resolvedLanguage) })}
                                     </p>
                                 )}
                             </section>
@@ -4426,7 +4435,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             <h3 className="text-lg font-bold text-slate-900 mb-2">{t('medications.card.print.detailsTitle')}</h3>
                             <div className="grid grid-cols-2 gap-2 text-sm">
                                 <div><span className="text-slate-600">{t('medications.card.print.brandName')}</span> <strong>{localizeMedName(med.brandName)}</strong></div>
-                                <div><span className="text-slate-600">{t('medications.card.print.genericName')}</span> <strong>{med.genericName}</strong></div>
+                                <div><span className="text-slate-600">{t('medications.card.print.genericName')}</span> <strong>{localizeMedName(med.genericName)}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.category')}</span> <strong>{t(`medications.categories.${med.category}`, { defaultValue: med.category })}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.manufacturer')}</span> <strong>{med.manufacturer}</strong></div>
                                 <div><span className="text-slate-600">{t('medications.card.print.organs')}</span> <strong>{(med.commonOrgans || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(', ')}</strong></div>
@@ -6705,7 +6714,7 @@ ${patientName || "[Your Name]"}`;
                                                         <button key={med.id} onClick={() => addMedToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed">
                                                             <div>
                                                                 <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
-                                                                <span className="text-sm text-slate-600">{med.genericName}</span>
+                                                                <span className="text-sm text-slate-600">{localizeMedName(med.genericName)}</span>
                                                             </div>
                                                             {isAlreadyIn ? (
                                                                 <span className="text-emerald-600 text-sm font-bold flex items-center gap-1"><CheckCircle size={16} /> {t('applicationHelp.meds.added')}</span>

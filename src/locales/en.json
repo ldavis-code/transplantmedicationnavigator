@@ -1365,7 +1365,7 @@
       "name": "Lorrinda Gray-Davis",
       "role": "Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee",
       "bio": "Lorrinda built this tool from lived experience. She leads a peer support program for transplant patients and caregivers that has supported more than 550 people — 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.",
-      "stat1Label": "Liver transplant recipient",
+      "stat1Label": "Liver transplant recipient since",
       "stat2Label": "Patients reached transplant while participating",
       "stat3Label": "Patients & caregivers supported",
       "link": "Read Lorrinda's full story & research"
@@ -1923,6 +1923,7 @@
       "ifKnown": "(if known)",
       "blankPrompt": "Prefer not to type your details online? Download a blank letter to print and fill in by hand.",
       "blankButton": "Download blank letter",
+      "englishNote": "Your letter is generated in English because it is addressed to your insurance company.",
       "generate": "Generate My Letter",
       "previewTitle": "Your Letter to Dr. ",
       "doctorFallback": "[Doctor's Name]",
@@ -2067,7 +2068,8 @@
       "fpl": {
         "aria": "Income eligibility reference",
         "title": "100% Federal Poverty Level (annual income)",
-        "familyOf": "Family of {{size}}:",
+        "familyOf_one": "Family of {{size}}:",
+        "familyOf_other": "Family of {{size}}:",
         "dontDisqualify": "Don't disqualify yourself",
         "papRange": ", Patient Assistance Programs (PAPs) often go up to 300%, 400%, or 500% of these amounts. If you're not sure, apply anyway — it costs nothing."
       },
