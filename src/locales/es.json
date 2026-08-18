@@ -1233,7 +1233,6 @@
         "applicationHelp": { "label": "Ayudas y fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
         "savingsTracker": { "label": "Calculadora de ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
         "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
-        "pricing": { "label": "Precios", "ariaLabel": "Ver información de precios" },
         "faq": { "label": "Preguntas frecuentes", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }
@@ -1255,6 +1254,7 @@
         "accessibility": "Accesibilidad y Sección 504",
         "feedback": "Comentarios",
         "hospitals": "Hospitales",
+        "pricing": "Planes y precios",
         "evidence": "La evidencia",
         "admin": "Admin",
         "privacyChoices": "Opciones de privacidad"

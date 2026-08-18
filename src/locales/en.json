@@ -1233,7 +1233,6 @@
         "applicationHelp": { "label": "Grants & Foundations", "ariaLabel": "View grants and foundations guide" },
         "savingsTracker": { "label": "Savings Calculator", "ariaLabel": "Calculate your medication savings" },
         "hospitals": { "label": "Hospitals", "ariaLabel": "Information for hospital administrators and transplant coordinators" },
-        "pricing": { "label": "Pricing", "ariaLabel": "View pricing information" },
         "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
         "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
       }
@@ -1255,6 +1254,7 @@
         "accessibility": "Accessibility & Section 504",
         "feedback": "Feedback",
         "hospitals": "Hospitals",
+        "pricing": "Plans & Pricing",
         "evidence": "The Evidence",
         "admin": "Admin",
         "privacyChoices": "Privacy Choices"
