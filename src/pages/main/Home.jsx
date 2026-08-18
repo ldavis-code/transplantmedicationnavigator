@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import LanguageToggle from '../../components/LanguageToggle.jsx';
-import { Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck, ShieldAlert, HeartHandshake, CheckCircle, DollarSign, ExternalLink, Building2, Phone, Pill, CreditCard, Sparkles, Download, Smartphone } from 'lucide-react';
+import { Map, Search, BookOpen, ShieldCheck, ArrowRight, Heart, Anchor, Lock, UserCheck, ShieldAlert, HeartHandshake, CheckCircle, DollarSign, ExternalLink, Phone, Pill, CreditCard, Sparkles, Download, Smartphone } from 'lucide-react';
 import HOME_STATS from '../../data/home-stats.json';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
 import { seoMetadata } from '../../data/seo-metadata.js';
@@ -17,9 +17,7 @@ const STAT_ASSISTANCE_PROGRAMS = HOME_STATS.assistancePrograms;
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
-    const { t, i18n } = useTranslation();
-    // B2B pitch is an English-only offering — hidden in Spanish mode
-    const isSpanish = i18n.resolvedLanguage === 'es';
+    const { t } = useTranslation();
 
     return (
         <article className="space-y-8">
@@ -227,46 +225,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
-            {/* For Hospitals & Transplant Centers (English-only B2B offering) */}
-            {!isSpanish && (
-            <section className="max-w-5xl mx-auto" aria-labelledby="for-hospitals-heading">
-                <div className="rounded-2xl bg-slate-900 text-white p-8 md:p-10 shadow-lg">
-                    <div className="flex flex-col md:flex-row md:items-center gap-6">
-                        <div className="flex-grow">
-                            <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide text-emerald-300 uppercase mb-2">
-                                <Building2 size={14} aria-hidden="true" /> {t('home.hospitals.eyebrow')}
-                            </span>
-                            <h2 id="for-hospitals-heading" className="text-2xl md:text-3xl font-extrabold leading-tight mb-3">
-                                {t('home.hospitals.title')}
-                            </h2>
-                            <p className="text-slate-300 md:text-lg mb-4 max-w-2xl">
-                                {t('home.hospitals.text')}
-                            </p>
-                            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-200">
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature1')}</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature2')}</li>
-                                <li className="inline-flex items-center gap-1.5"><CheckCircle size={16} className="text-emerald-400 flex-shrink-0" aria-hidden="true" /> {t('home.hospitals.feature3')}</li>
-                            </ul>
-                        </div>
-                        <div className="flex flex-col gap-3 flex-shrink-0 w-full md:w-auto">
-                            <Link
-                                to="/for-hospitals"
-                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold rounded-xl transition whitespace-nowrap"
-                            >
-                                {t('home.hospitals.demo')} <ArrowRight size={18} aria-hidden="true" />
-                            </Link>
-                            <Link
-                                to="/pilot"
-                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border-2 border-slate-600 hover:border-slate-400 text-white font-bold rounded-xl transition whitespace-nowrap"
-                            >
-                                {t('home.hospitals.pilot')}
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            )}
 
             {/* Mission & Vision Section */}
             <section className="max-w-5xl mx-auto" aria-labelledby="mission-heading">

@@ -1232,7 +1232,6 @@
         "education": { "label": "Educación y recursos", "ariaLabel": "Explorar educación y recursos" },
         "applicationHelp": { "label": "Ayudas y fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
         "savingsTracker": { "label": "Calculadora de ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
-        "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
         "faq": { "label": "Preguntas frecuentes", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }
@@ -1329,16 +1328,6 @@
       "notAloneTitle": "No está solo — y la investigación lo demuestra.",
       "notAloneText": "Un estudio de 2026 en varios hospitales encontró que 1 de cada 4 candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos, incluso antes de entrar en la lista de espera. Estamos aquí para cambiar eso.",
       "evidenceLink": "Vea la evidencia"
-    },
-    "hospitals": {
-      "eyebrow": "Para hospitales y centros de trasplante",
-      "title": "Dé a cada paciente una plataforma de educación sobre medicamentos, con su propia marca",
-      "text": "Ofrezca Transplant Medication Navigator como educación para pacientes con su marca. Integrado con Epic MyChart, con privacidad HIPAA desde el diseño, y creado para reducir la falta de adherencia por costos y los reingresos evitables.",
-      "feature1": "Panel de administración de marca blanca",
-      "feature2": "Integración con Epic MyChart",
-      "feature3": "Informes de resultados y ahorros",
-      "demo": "Reserve una demostración",
-      "pilot": "Vea el programa piloto"
     },
     "mission": {
       "badge": "Creado por un paciente, para pacientes.",

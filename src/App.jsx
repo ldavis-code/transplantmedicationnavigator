@@ -410,12 +410,10 @@ const Layout = ({ children }) => {
     const { isSimpleView, toggleSimpleView } = useSimpleView();
     const { t, i18n } = useTranslation();
 
-    // B2B pages (hospital sales, plan pricing) are English-only offerings —
-    // they are hidden from the Spanish patient experience. Plan pricing is not
-    // a patient concern at all, so it lives in the footer B2B group rather than
+    // B2B pages (hospital sales, plan pricing) are English-only offerings and
+    // not a patient concern, so they live in the footer B2B group rather than
     // the patient-facing top nav.
     const isSpanish = i18n.resolvedLanguage === 'es';
-    const B2B_PATHS = ['/for-hospitals'];
 
     const navLinks = [
         { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
@@ -423,10 +421,9 @@ const Layout = ({ children }) => {
         { path: '/education', label: t('layout.nav.links.education.label'), ariaLabel: t('layout.nav.links.education.ariaLabel') },
         { path: '/application-help', label: t('layout.nav.links.applicationHelp.label'), ariaLabel: t('layout.nav.links.applicationHelp.ariaLabel') },
         { path: '/savings-tracker', label: t('layout.nav.links.savingsTracker.label'), ariaLabel: t('layout.nav.links.savingsTracker.ariaLabel') },
-        { path: '/for-hospitals', label: t('layout.nav.links.hospitals.label'), ariaLabel: t('layout.nav.links.hospitals.ariaLabel') },
         { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
         { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
-    ].filter((link) => !isSpanish || !B2B_PATHS.includes(link.path));
+    ];
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
