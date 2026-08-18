@@ -1232,7 +1232,6 @@
         "education": { "label": "Education & Resources", "ariaLabel": "Browse education and resources" },
         "applicationHelp": { "label": "Grants & Foundations", "ariaLabel": "View grants and foundations guide" },
         "savingsTracker": { "label": "Savings Calculator", "ariaLabel": "Calculate your medication savings" },
-        "hospitals": { "label": "Hospitals", "ariaLabel": "Information for hospital administrators and transplant coordinators" },
         "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
         "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
       }
