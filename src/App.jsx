@@ -410,9 +410,9 @@ const Layout = ({ children }) => {
     const { isSimpleView, toggleSimpleView } = useSimpleView();
     const { t, i18n } = useTranslation();
 
-    // B2B pages (hospital sales, plan pricing) are English-only offerings and
-    // not a patient concern, so they live in the footer B2B group rather than
-    // the patient-facing top nav.
+    // B2B pages (hospital sales, plan pricing) are not patient concerns, so
+    // they live in the footer's English-only B2B group rather than the
+    // patient-facing top nav. isSpanish gates that footer group.
     const isSpanish = i18n.resolvedLanguage === 'es';
 
     const navLinks = [
