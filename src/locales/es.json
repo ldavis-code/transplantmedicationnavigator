@@ -1232,7 +1232,6 @@
         "education": { "label": "Educación y recursos", "ariaLabel": "Explorar educación y recursos" },
         "applicationHelp": { "label": "Ayudas y fundaciones", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
         "savingsTracker": { "label": "Calculadora de ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
-        "hospitals": { "label": "Hospitales", "ariaLabel": "Información para administradores de hospitales y coordinadores de trasplante" },
         "faq": { "label": "Preguntas frecuentes", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }
