@@ -366,7 +366,7 @@ const Education = () => {
                             </div>
 
                             <div className="bg-amber-50 p-5 rounded-xl border border-amber-100 flex items-start gap-4">
-                                <div className="bg-amber-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
+                                <div className="bg-amber-700 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
                                 <div>
                                     <h3 className="font-bold text-amber-900 mb-1 flex items-center gap-2"><Heart size={16} aria-hidden="true" /> {t('education.emergency.step4Title')}</h3>
                                     <p className="text-slate-700 text-sm">{t('education.emergency.step4Text')}</p>
@@ -1027,19 +1027,19 @@ const Education = () => {
                             <h2 id="key-takeaways" className="text-2xl font-bold text-slate-900 mb-6">{t('education.deductibleTrap.takeaways.title')}</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t1Bold')}</span> {t('education.deductibleTrap.takeaways.t1Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t2Bold')}</span> {t('education.deductibleTrap.takeaways.t2Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t3Bold')}</span> {t('education.deductibleTrap.takeaways.t3Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.deductibleTrap.takeaways.t4Bold')}</span> {t('education.deductibleTrap.takeaways.t4Rest')}</p>
                                 </li>
                             </ul>
@@ -1238,19 +1238,19 @@ const Education = () => {
                             <h2 id="why-matters" className="text-2xl font-bold text-slate-900 mb-6">{t('education.diversion.whyMatters.title')}</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t1Bold')}</span> {t('education.diversion.whyMatters.t1Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t2Bold')}</span> {t('education.diversion.whyMatters.t2Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t3Bold')}</span> {t('education.diversion.whyMatters.t3Rest')}</p>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <div className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
+                                    <div className="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
                                     <p className="text-slate-800 pt-1"><span className="font-bold">{t('education.diversion.whyMatters.t4Bold')}</span> {t('education.diversion.whyMatters.t4Rest')}</p>
                                 </li>
                             </ul>

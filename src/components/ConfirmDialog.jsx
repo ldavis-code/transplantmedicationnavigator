@@ -23,7 +23,7 @@ const iconMap = {
 };
 
 const colorMap = {
-  warning: { bg: 'bg-amber-100', icon: 'text-amber-600', button: 'bg-amber-600 hover:bg-amber-700' },
+  warning: { bg: 'bg-amber-100', icon: 'text-amber-600', button: 'bg-amber-700 hover:bg-amber-800' },
   success: { bg: 'bg-emerald-100', icon: 'text-emerald-600', button: 'bg-emerald-600 hover:bg-emerald-700' },
   info: { bg: 'bg-blue-100', icon: 'text-blue-600', button: 'bg-blue-600 hover:bg-blue-700' },
   error: { bg: 'bg-red-100', icon: 'text-red-600', button: 'bg-red-600 hover:bg-red-700' },

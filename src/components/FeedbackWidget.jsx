@@ -71,7 +71,7 @@ const FeedbackWidget = ({ medicationName }) => {
     const colorClasses = {
       green: 'bg-emerald-600 hover:bg-emerald-700',
       red: 'bg-rose-500 hover:bg-rose-600',
-      amber: 'bg-amber-500 hover:bg-amber-600',
+      amber: 'bg-amber-700 hover:bg-amber-800',
       gray: 'bg-slate-500 hover:bg-slate-600',
       blue: 'bg-blue-600 hover:bg-blue-700'
     };
