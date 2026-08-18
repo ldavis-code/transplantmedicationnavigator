@@ -411,9 +411,11 @@ const Layout = ({ children }) => {
     const { t, i18n } = useTranslation();
 
     // B2B pages (hospital sales, plan pricing) are English-only offerings —
-    // they are hidden from the Spanish patient experience.
+    // they are hidden from the Spanish patient experience. Plan pricing is not
+    // a patient concern at all, so it lives in the footer B2B group rather than
+    // the patient-facing top nav.
     const isSpanish = i18n.resolvedLanguage === 'es';
-    const B2B_PATHS = ['/for-hospitals', '/pricing'];
+    const B2B_PATHS = ['/for-hospitals'];
 
     const navLinks = [
         { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
@@ -422,7 +424,6 @@ const Layout = ({ children }) => {
         { path: '/application-help', label: t('layout.nav.links.applicationHelp.label'), ariaLabel: t('layout.nav.links.applicationHelp.ariaLabel') },
         { path: '/savings-tracker', label: t('layout.nav.links.savingsTracker.label'), ariaLabel: t('layout.nav.links.savingsTracker.ariaLabel') },
         { path: '/for-hospitals', label: t('layout.nav.links.hospitals.label'), ariaLabel: t('layout.nav.links.hospitals.ariaLabel') },
-        { path: '/pricing', label: t('layout.nav.links.pricing.label'), ariaLabel: t('layout.nav.links.pricing.ariaLabel') },
         { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
         { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
     ].filter((link) => !isSpanish || !B2B_PATHS.includes(link.path));
@@ -578,6 +579,8 @@ const Layout = ({ children }) => {
                             <>
                                 <span className="text-slate-600" aria-hidden="true">|</span>
                                 <Link to="/for-hospitals" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.hospitals')}</Link>
+                                <span className="text-slate-600" aria-hidden="true">|</span>
+                                <Link to="/pricing" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.pricing')}</Link>
                             </>
                         )}
                         <span className="text-slate-600" aria-hidden="true">|</span>
