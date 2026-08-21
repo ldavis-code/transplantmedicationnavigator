@@ -41,10 +41,18 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
     const isCommercial = eligKey === 'commercial';
     const isUninsured = insurance === InsuranceType.UNINSURED;
 
-    // Spanish eligibility notes come from the programs.es.json overlay,
-    // keyed by programId — same convention as MedicationCardKit.
+    // Spanish eligibility notes and name overrides come from the
+    // programs.es.json overlay, keyed by programId — same convention as
+    // MedicationCardKit.
+    const isEs = i18n.resolvedLanguage === 'es';
     const esNotes = (group, programId) =>
-        (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
+        (isEs && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
+    const esName = (group, programId) =>
+        (isEs && programId && PROGRAMS_ES[group]?.[programId]?.name) || null;
+    // Income limits in the data read like "400% FPL" — in Spanish, expand the
+    // acronym the way the rest of the Spanish site does.
+    const localizeIncome = (income) =>
+        isEs && income ? income.replace(/%\s*FPL\b/, '% del nivel federal de pobreza (FPL)') : income;
 
     const meds = (medIds || [])
         .map((id) => (medications || []).find((m) => m.id === id))
@@ -76,7 +84,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
         if (isCommercial && (copay || med.copayUrl)) {
             rows.push({
                 kind: 'copay',
-                name: copay?.name || t('wizard.results.programs.copayFallbackName', { manufacturer: med.manufacturer }),
+                name: esName('copayPrograms', med.copayProgramId) || copay?.name || t('wizard.results.programs.copayFallbackName', { manufacturer: med.manufacturer }),
                 url: copay?.url || med.copayUrl,
                 programId: med.copayProgramId,
                 benefit: copay?.maxBenefit || null,
@@ -89,7 +97,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
         if ((pap || med.papUrl) && !(pap && eligKey && pap.eligibility?.[eligKey] === false)) {
             rows.push({
                 kind: 'pap',
-                name: pap?.name || t('wizard.results.programs.papFallbackName', { manufacturer: med.manufacturer }),
+                name: esName('papPrograms', med.papProgramId) || pap?.name || t('wizard.results.programs.papFallbackName', { manufacturer: med.manufacturer }),
                 url: pap?.url || med.papUrl,
                 programId: med.papProgramId,
                 incomeLimit: pap?.incomeLimit || null,
@@ -141,7 +149,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                                 const eligibilityLine = isPap
                                     ? (row.eligible === true && insuranceLabel
                                         ? (row.incomeLimit
-                                            ? t('wizard.results.programs.likelyQualify', { insurance: insuranceLabel, income: row.incomeLimit })
+                                            ? t('wizard.results.programs.likelyQualify', { insurance: insuranceLabel, income: localizeIncome(row.incomeLimit) })
                                             : t('wizard.results.programs.likelyQualifyNoIncome', { insurance: insuranceLabel }))
                                         : (esNotes('papPrograms', row.programId) || t('wizard.results.programs.checkEligibility')))
                                     : (row.benefit || esNotes('copayPrograms', row.programId) || t('wizard.results.programs.copayGenericBenefit'));
@@ -184,10 +192,10 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                             {foundations.map(([id, p]) => (
                                 <li key={id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-white rounded-lg p-3 border border-amber-100">
                                     <div className="flex-grow">
-                                        <span className="font-semibold text-slate-900">{p.name}</span>
+                                        <span className="font-semibold text-slate-900">{esName('foundationPrograms', id) || p.name}</span>
                                         <p className="text-sm text-slate-600 mt-0.5">
                                             {p.incomeLimit && /\d/.test(p.incomeLimit)
-                                                ? t('wizard.results.programs.foundationIncome', { income: p.incomeLimit })
+                                                ? t('wizard.results.programs.foundationIncome', { income: localizeIncome(p.incomeLimit) })
                                                 : t('wizard.results.programs.foundationIncomeGeneric')}
                                         </p>
                                     </div>
