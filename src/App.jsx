@@ -498,7 +498,7 @@ const Layout = ({ children }) => {
                             }`}
                         >
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
-                            {t('layout.nav.simpleView')}
+                            {isSimpleView ? t('layout.nav.simpleViewExit') : t('layout.nav.simpleView')}
                         </button>
                         <LanguageToggle compact />
                     </nav>
@@ -547,7 +547,7 @@ const Layout = ({ children }) => {
                                 }`}
                             >
                                 {isSimpleView ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
-                                {t('layout.nav.simpleView')}
+                                {isSimpleView ? t('layout.nav.simpleViewExit') : t('layout.nav.simpleView')}
                             </button>
                         </div>
                     </nav>
