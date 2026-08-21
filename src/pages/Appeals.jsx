@@ -388,6 +388,18 @@ habla español) pueden ayudarle gratis.
             <div className="text-sm text-slate-600">{t('appeals.header.stats.freeLabel')}</div>
           </div>
         </div>
+        <p className="mt-3 text-xs text-slate-500">
+          {t('appeals.header.stats.sourcesIntro')}
+          <a href="https://oig.hhs.gov/oei/reports/oei-09-16-00410.asp" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-700">
+            {t('appeals.header.stats.source1')}
+          </a>
+          {' · '}
+          <a href="https://www.kff.org/private-insurance/issue-brief/claims-denials-and-appeals-in-aca-marketplace-plans/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-700">
+            {t('appeals.header.stats.source2')}
+          </a>
+          {' '}
+          {t('appeals.header.stats.deadlineNote')}
+        </p>
 
         {/* Download Appeal Guide CTA */}
         <div className="mt-6 bg-white rounded-lg p-4 border-2 border-emerald-300 shadow-sm">

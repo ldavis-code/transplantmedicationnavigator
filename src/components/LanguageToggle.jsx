@@ -38,11 +38,11 @@ const LanguageToggle = ({ compact = false }) => {
     const switchLanguage = () => {
         i18n.changeLanguage(next);
         const params = new URLSearchParams(searchParams);
-        if (next === 'es') {
-            params.set('lang', 'es');
-        } else {
-            params.delete('lang');
-        }
+        // Always set the param explicitly (lang=en rather than deleting it):
+        // LanguageParamSync re-adds ?lang=es to any URL without a lang param
+        // while Spanish is active, so a bare URL right after switching to
+        // English could race back to Spanish.
+        params.set('lang', next);
         // replace, not push: back should return to the previous page, not
         // re-toggle the language (which only applies on initial load anyway)
         setSearchParams(params, { replace: true });

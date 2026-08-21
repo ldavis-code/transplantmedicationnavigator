@@ -162,6 +162,11 @@ https://transplantmedicationnavigator.com/
 7. **Savings Calculator**: https://transplantmedicationnavigator.com/savings-tracker
 8. **Appeals Guide & Letter Builder**: https://transplantmedicationnavigator.com/education/appeals
 9. **Spanish version (full site)**: https://transplantmedicationnavigator.com/?lang=es
+10. **About** (Founder's story & credentials): https://transplantmedicationnavigator.com/about
+11. **The Evidence** (Peer-reviewed research): https://transplantmedicationnavigator.com/evidence
+12. **Feedback** (Share your experience): https://transplantmedicationnavigator.com/feedback
+13. **Privacy Policy**: https://transplantmedicationnavigator.com/privacy
+14. **Accessibility & Section 504**: https://transplantmedicationnavigator.com/accessibility
 
 ## Contact
 For transplant medication assistance questions, users should:

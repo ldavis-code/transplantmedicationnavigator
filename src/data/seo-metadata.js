@@ -165,7 +165,7 @@ export const seoMetadata = {
     breadcrumbName: 'Evidence',
     es: {
       title: 'La evidencia: por qué importa la navegación de medicamentos y finanzas | Transplant Medication Navigator™',
-      description: 'Investigación revisada por expertos: el 23% de los candidatos a trasplante de hígado enfrenta una alta carga financiera, y casi el 40% de los receptores deja de surtir medicamentos por el costo.',
+      description: 'Investigación revisada por pares: el 23% de los candidatos a trasplante de hígado enfrenta una alta carga financiera, y casi el 40% de los receptores deja de surtir medicamentos por el costo.',
       breadcrumbName: 'La evidencia',
     },
   },
@@ -350,6 +350,38 @@ export const seoMetadata = {
       title: 'Accesibilidad y Sección 504 | Transplant Medication Navigator™',
       description: 'Cumplimiento de la Sección 504 del HHS, conformidad con WCAG 2.1 nivel AA, aviso de no discriminación y procedimiento de quejas.',
       breadcrumbName: 'Accesibilidad y Sección 504',
+    },
+  },
+
+  about: {
+    title: "About Lorrinda Gray-Davis & Our Story | Transplant Medication Navigator™",
+    description: 'Created by Lorrinda Gray-Davis, liver transplant recipient and President of TRIO. Read the story and peer-reviewed research behind this free medication assistance guide for transplant patients.',
+    canonical: `${BASE_URL}/about`,
+    ogTitle: 'About Transplant Medication Navigator™',
+    ogDescription: 'Created by a liver transplant recipient who leads a peer support program with results published in peer-reviewed journals. Read the full story.',
+    twitterTitle: 'About Transplant Medication Navigator™',
+    twitterDescription: 'Created by a liver transplant recipient. Read the story and research behind this free medication assistance guide.',
+    breadcrumbName: 'About',
+    es: {
+      title: 'Sobre Lorrinda Gray-Davis y nuestra historia | Transplant Medication Navigator™',
+      description: 'Creado por Lorrinda Gray-Davis, receptora de un trasplante de hígado y presidenta de TRIO. Conozca la historia y la investigación revisada por pares detrás de esta guía gratuita.',
+      breadcrumbName: 'Sobre nosotros',
+    },
+  },
+
+  feedback: {
+    title: 'Share Your Feedback | Transplant Medication Navigator™',
+    description: 'Tell us what is working and what we can improve. Your feedback helps make this free transplant medication assistance guide better for every patient and caregiver.',
+    canonical: `${BASE_URL}/feedback`,
+    ogTitle: 'Share Your Feedback',
+    ogDescription: 'Tell us what is working and what we can improve in this free transplant medication assistance guide.',
+    twitterTitle: 'Share Your Feedback',
+    twitterDescription: 'Help us improve this free transplant medication assistance guide.',
+    breadcrumbName: 'Feedback',
+    es: {
+      title: 'Comparta sus comentarios | Transplant Medication Navigator™',
+      description: 'Cuéntenos qué funciona y qué podemos mejorar. Sus comentarios ayudan a que esta guía gratuita de asistencia con medicamentos sea mejor para cada paciente y cuidador.',
+      breadcrumbName: 'Comentarios',
     },
   },
 };

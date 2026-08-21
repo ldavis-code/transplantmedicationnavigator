@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 // Lazy loaded page components for code splitting
 const LazyFAQ = lazy(() => import('./pages/FAQ.jsx'));
@@ -130,19 +130,34 @@ const ScrollToTop = () => {
     return null;
 };
 
-// Applies ?lang= on every navigation, not only on the initial page load
-// (which i18n.js handles at module init). This covers in-app navigations to
-// links that carry ?lang=es and any load path where the initial detection
-// was missed — e.g. an app shell restored by an out-of-date service worker.
+// Keeps the URL and the active language in sync in both directions.
+// URL → language: applies ?lang= on every navigation, not only on the initial
+// page load (which i18n.js handles at module init). This covers in-app
+// navigations to links that carry ?lang=es and any load path where the
+// initial detection was missed — e.g. an app shell restored by an
+// out-of-date service worker.
+// Language → URL: while Spanish is active, re-adds ?lang=es to any page the
+// patient navigates to, so every Spanish page can be shared or bookmarked
+// and opens in Spanish for the next reader (not just in this browser's
+// saved preference).
 const LanguageParamSync = () => {
-    const { search } = useLocation();
+    const location = useLocation();
+    const navigate = useNavigate();
     const { i18n } = useTranslation();
     useEffect(() => {
-        const param = new URLSearchParams(search).get('lang');
+        const param = new URLSearchParams(location.search).get('lang');
         if ((param === 'en' || param === 'es') && i18n.resolvedLanguage !== param) {
             i18n.changeLanguage(param);
         }
-    }, [search, i18n]);
+    }, [location.search, i18n]);
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if (i18n.resolvedLanguage === 'es' && !params.get('lang')) {
+            params.set('lang', 'es');
+            // replace, not push: back should leave the page, not strip the param
+            navigate({ pathname: location.pathname, search: params.toString(), hash: location.hash }, { replace: true });
+        }
+    }, [location, i18n.resolvedLanguage, navigate]);
     return null;
 };
 

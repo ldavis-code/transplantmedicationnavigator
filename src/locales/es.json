@@ -400,8 +400,10 @@
         "trapM112Label": "Meses 1-12:",
         "trapM112": "Paga el precio con descuento (~$200/mes = $2,400), pero NADA cuenta para su deducible ni su límite anual",
         "trapResultLabel": "Resultado:",
-        "trapResult": "Nunca alcanza su límite anual, así que el seguro nunca llega a pagar el 100%. Además sigue pagando de su bolsillo los laboratorios, las consultas y sus otras medicinas todo el año.",
-        "trapTotal": "Costo total del año: $2,400 por estas medicinas, más todo lo demás que sigue pagando",
+        "trapResult": "Nunca alcanza su límite anual, así que el seguro nunca llega a pagar el 100%.",
+        "trapRestLabel": "Lo demás:",
+        "trapRest": "Sigue pagando de su bolsillo los laboratorios, las consultas y sus otras medicinas todo el año — muchas veces entre $3,000 y $8,000 más.",
+        "trapTotal": "Costo total del año: $2,400 + muchas veces entre $3,000 y $8,000 más por el resto de su atención",
         "takeaway": "El precio con descuento parece un ahorro pequeño cada mes. Pero como nada cuenta para su límite anual, el seguro nunca llega a pagar el 100%, y así la trampa puede sumar miles de dólares en un año."
       },
       "whenToUse": {
@@ -413,7 +415,7 @@
         "s3Title": "Situación 3: deducible extremadamente alto",
         "s3Text": "Si tiene un deducible muy alto Y el precio en efectivo es mucho más bajo; pero aun así, piense bien en el costo de no alcanzar su límite anual.",
         "neverTitle": "🛑 NUNCA use tarjetas de descuento para:",
-        "neverP1": "Sus medicinas antirrechazo de todos los días, como Tacrolimus (tacrolimus), Mycophenolate (micofenolato) o Cyclosporine (ciclosporina).",
+        "neverP1": "Sus medicinas antirrechazo de todos los días, como tacrolimus, micofenolato (Mycophenolate) o ciclosporina (Cyclosporine).",
         "neverP2": "Estas son las medicinas que le ayudan a alcanzar su límite anual rápido."
       },
       "alternatives": {
@@ -1278,7 +1280,7 @@
       "deniedTitle": "¿Se lo negaron?",
       "deniedSubtitle": "Ayuda con terapia escalonada, autorización previa y apelaciones",
       "grantsAriaLabel": "Encontrar ayudas económicas y fundaciones",
-      "grantsButton": "Encontrar Ayudas y fundaciones"
+      "grantsButton": "Encontrar ayudas y fundaciones"
     },
     "stats": {
       "medications": "Medicamentos",
@@ -1418,7 +1420,7 @@
   "evidence": {
     "hero": {
       "title": "La evidencia: por qué importa la navegación de medicamentos y finanzas",
-      "intro": "Nuevas investigaciones revisadas por expertos confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
+      "intro": "Nuevas investigaciones revisadas por pares confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
     },
     "burden": {
       "title": "1 de cada 4 candidatos a trasplante de hígado enfrenta una alta carga financiera",
@@ -1427,8 +1429,8 @@
       "stat2": "seguían con empleo al momento de la evaluación del trasplante",
       "stat3": "de los pacientes con carga alta retrasaron la atención médica o no la recibieron (vs. 33.5% de los pacientes con carga baja)",
       "stat4": "no podían pagar necesidades básicas como comida, calefacción o renta (vs. 11.3%)",
-      "stat5": "perdieron ahorros o bienes",
-      "stat6": "enfrentaron deuda médica o bancarrota"
+      "stat5": "de los pacientes con carga alta perdieron ahorros o bienes",
+      "stat6": "de los pacientes con carga alta enfrentaron deuda médica o bancarrota"
     },
     "odds": {
       "title": "La carga financiera predice angustia en todas las dimensiones",
@@ -1493,7 +1495,7 @@
       "openAccess": "(acceso abierto)",
         "study1Summary": "En resumen: este estudio siguió a 453 candidatos a trasplante de hígado en 13 centros de EE. UU. Casi 1 de cada 4 gastaba más del 10% de sus ingresos en costos médicos, y esa carga se asoció con mucho más estrés económico y con retrasar o saltarse atención médica. (El artículo completo está disponible solo en inglés.)",
         "study2Summary": "En resumen: esta encuesta nacional de más de 10,000 receptores de trasplante encontró que casi el 40% dejó de surtir un medicamento en el último año por el costo, y más de 1 de cada 4 tomó menos dosis de sus medicamentos antirrechazo por la misma razón. (El artículo completo está disponible solo en inglés.)",
-      "disclaimer": "Esta página resume investigaciones independientes revisadas por expertos. Transplant Medication Navigator no participó en los estudios. Este contenido es educativo y no es consejo médico, legal ni financiero."
+      "disclaimer": "Esta página resume investigaciones independientes revisadas por pares. Transplant Medication Navigator no participó en los estudios. Este contenido es educativo y no es consejo médico, legal ni financiero."
     }
   },
   "wizard": {
@@ -1749,12 +1751,16 @@
       "tagline": "¡Usted puede defenderse y GANAR!",
       "intro": "El seguro le dice \"no\" a casi todo el mundo en algún momento. ¿La buena noticia? <strong>Muchas personas ganan cuando apelan.</strong> Esta guía interactiva le muestra cómo hacerlo, paso a paso.",
       "stats": {
-        "winRate": "50%+",
-        "winRateLabel": "Apelaciones ganadas",
-        "days": "30-60",
-        "daysLabel": "Días para apelar",
+        "winRate": "40-75%",
+        "winRateLabel": "De las denegaciones apeladas se revierten",
+        "days": "60+",
+        "daysLabel": "Días para apelar — su carta indica su fecha límite",
         "free": "Gratis",
-        "freeLabel": "Presentar una apelación"
+        "freeLabel": "Presentar una apelación",
+        "sourcesIntro": "Fuentes: ",
+        "source1": "HHS OIG (2018): los planes Medicare Advantage revirtieron el 75% de las denegaciones apeladas",
+        "source2": "KFF: cerca de 4 de cada 10 denegaciones apeladas en el Mercado se revirtieron",
+        "deadlineNote": "Las fechas límite dependen de su plan: Medicare da 65 días y muchos planes del trabajo y del Mercado dan hasta 180; su carta de denegación indica su fecha límite exacta."
       },
       "guideTitle": "Guía de apelaciones gratis",
       "guideSubtitle": "Guía lista para imprimir con listas de verificación y modelos de cartas",
@@ -1778,7 +1784,7 @@
         },
         "notOnList": {
           "title": "No está en la lista",
-          "description": "Su medicamento no está en su lista de aprobados (llamada formulario)."
+          "description": "Su medicamento no está en la lista de medicamentos que su seguro cubre (en inglés la llaman \"formulary\")."
         },
         "stepTherapy": {
           "title": "Pruebe otra cosa primero",
@@ -1860,7 +1866,7 @@
         },
         {
           "title": "Esté pendiente del tiempo",
-          "description": "Por lo general tiene de 30 a 60 días para apelar. Marque la fecha en su calendario. No la deje pasar.",
+          "description": "Tiene al menos 60 días para apelar; su carta de denegación indica su fecha límite exacta. Marque la fecha en su calendario. No la deje pasar.",
           "tips": "¡Ponga un recordatorio en su teléfono 2 semanas antes de la fecha límite!"
         },
         {
@@ -2466,7 +2472,7 @@
       "listSubtitle": "Agregue sus recetas actuales para calcular sus posibles ahorros",
       "medicationLabel": "Medicamento {{number}}",
       "selectPlaceholder": "Seleccione un medicamento...",
-      "quantityLabel": "Cant./mes",
+      "quantityLabel": "Cantidad por mes",
       "removeAria": "Quitar {{name}} de la lista",
       "removeFallbackName": "el medicamento",
       "medicationError": "Seleccione un medicamento",

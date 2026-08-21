@@ -954,6 +954,10 @@ const Education = () => {
                                             <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.trapResultLabel')}</span>
                                             <span>{t('education.deductibleTrap.example.trapResult')}</span>
                                         </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="font-bold text-slate-900">{t('education.deductibleTrap.example.trapRestLabel')}</span>
+                                            <span>{t('education.deductibleTrap.example.trapRest')}</span>
+                                        </li>
                                         <li className="pt-3 border-t-2 border-red-200">
                                             <span className="font-bold text-red-700 text-xl">{t('education.deductibleTrap.example.trapTotal')}</span>
                                         </li>
