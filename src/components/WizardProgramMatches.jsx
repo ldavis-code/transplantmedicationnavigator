@@ -61,6 +61,11 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
 
     const insuranceLabel = eligKey ? t(`wizard.results.programs.insuranceLabels.${eligKey}`) : null;
 
+    // A long medication list is mostly generics with no manufacturer program.
+    // Rendering a near-identical "no program" card for each drowns the real
+    // matches, so those medications collapse into one summary row below.
+    const hasProgramRows = (med) => rowsForMed(med).some((r) => r.kind === 'pap' || r.kind === 'copay');
+
     // Foundations that accept this insurance type (shown for Medicare, where
     // copay cards are legally off the table, and as a backup for others).
     const foundations = Object.entries(PROGRAMS.foundationPrograms || {})
@@ -109,6 +114,9 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
         return rows;
     };
 
+    const medsWithPrograms = meds.filter(hasProgramRows);
+    const medsWithout = meds.filter((m) => !hasProgramRows(m));
+
     return (
         <section
             className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 overflow-hidden"
@@ -122,7 +130,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
             </div>
 
             <div className="p-6 space-y-4">
-                {meds.map((med) => (
+                {medsWithPrograms.map((med) => (
                     <div key={med.id} className="border border-slate-200 rounded-lg p-4">
                         <h3 className="font-bold text-slate-900 flex items-center gap-2 mb-3">
                             <Pill size={16} className="text-emerald-600" aria-hidden="true" />
@@ -181,6 +189,23 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                         </ul>
                     </div>
                 ))}
+
+                {medsWithout.length > 0 && (
+                    <div className="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                        <h3 className="font-bold text-slate-900 flex items-center gap-2 mb-2">
+                            <Pill size={16} className="text-slate-500" aria-hidden="true" />
+                            {t('wizard.results.programs.othersTitle', { count: medsWithout.length })}
+                        </h3>
+                        <p className="text-sm text-slate-600 mb-3">{t('wizard.results.programs.othersNote')}</p>
+                        <ul className="flex flex-wrap gap-2">
+                            {medsWithout.map((m) => (
+                                <li key={m.id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200">
+                                    {medDisplayName(m)}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
                 {isMedicare && (
                     <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-lg p-4">

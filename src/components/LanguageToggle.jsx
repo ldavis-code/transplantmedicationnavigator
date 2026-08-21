@@ -55,7 +55,7 @@ const LanguageToggle = ({ compact = false }) => {
                 lang={next}
                 aria-label={SWITCH_LABELS[current]}
                 title={SWITCH_LABELS[current]}
-                className="hidden min-[360px]:inline-flex items-center gap-1.5 px-2 py-2 bg-white hover:bg-emerald-50 text-emerald-700 text-sm font-semibold rounded-lg border border-emerald-300 transition min-h-[44px] min-w-[44px] justify-center whitespace-nowrap"
+                className="hidden min-[360px]:inline-flex items-center gap-1.5 px-2 2xl:px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-700 text-sm 2xl:text-base font-semibold rounded-lg border border-emerald-300 transition min-h-[44px] min-w-[44px] justify-center whitespace-nowrap"
             >
                 <Globe size={16} aria-hidden="true" />
                 {/* On the narrowest phones only the globe fits next to the

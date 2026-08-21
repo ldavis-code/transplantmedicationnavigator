@@ -130,6 +130,16 @@ body {
     line-height: 1.5 !important;
 }
 
+/* The rule above is a size FLOOR, but its !important also blocks Tailwind's
+   responsive upgrades (e.g. the header nav's 2xl:text-base). Re-assert the
+   2xl variant with matching strength so wide screens get full-size labels. */
+@media (min-width: 1536px) {
+    .\32xl\:text-base {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+}
+
 /* ========================================
    COLOR CONTRAST OVERRIDES - WCAG AA Compliant
    Transplant patients often have vision changes from medications

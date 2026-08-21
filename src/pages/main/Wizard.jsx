@@ -1162,130 +1162,7 @@ const Wizard = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
 
-                    {/* Column 1 (Left): Med List & Tools */}
-                    <div className="space-y-6">
-                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
-                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.medListTitle')}</h2>
-                            {(answers.medications || []).length > 0 && (
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {(answers.medications || []).map(id => {
-                                        const med = MEDICATIONS.find(m => m.id === id);
-                                        return (
-                                            <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
-                                                {medDisplayName(med)}
-                                                <button
-                                                    onClick={() => handleMultiSelect('medications', id)}
-                                                    className="text-slate-400 hover:text-red-500 ml-1"
-                                                    aria-label={t('wizard.meds.removeAria', { name: med?.brandName })}
-                                                >
-                                                    <X size={14} />
-                                                </button>
-                                            </span>
-                                        )
-                                    })}
-                                </div>
-                            )}
-
-                            {/* Add More Medications */}
-                            <div className="mb-4 no-print">
-                                <div className="relative">
-                                    <label htmlFor="results-med-search" className="sr-only">{t('wizard.results.addMoreLabel')}</label>
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
-                                    <input
-                                        id="results-med-search"
-                                        type="text"
-                                        placeholder={t('wizard.results.addMorePlaceholder')}
-                                        className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition text-sm"
-                                        value={medSearchTerm}
-                                        onChange={(e) => setMedSearchTerm(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Escape') { setMedSearchResult(null); setMedSearchTerm(''); }
-                                        }}
-                                    />
-                                    {medSearchTerm && (
-                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
-                                            <X size={16} />
-                                        </button>
-                                    )}
-                                </div>
-                                {medSearchResult && medSearchTerm && !isMedSearching && (
-                                    <div className="mt-1 bg-white border border-slate-200 rounded-lg max-h-48 overflow-y-auto shadow-sm">
-                                        {medSearchResult.length > 0 ? (
-                                            <div className="divide-y divide-slate-100">
-                                                {medSearchResult.slice(0, 6).map(med => {
-                                                    const isAlreadySelected = (answers.medications || []).includes(med.id);
-                                                    return (
-                                                        <button
-                                                            key={med.id}
-                                                            onClick={() => addMedFromSearch(med.id)}
-                                                            disabled={isAlreadySelected}
-                                                            className="w-full text-left p-2 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                                                        >
-                                                            <div>
-                                                                <span className="font-medium text-slate-900">{localizeMedName(med.brandName)}</span>
-                                                                <span className="text-slate-500 ml-1">({localizeMedName(med.genericName)})</span>
-                                                            </div>
-                                                            {isAlreadySelected ? (
-                                                                <span className="text-emerald-600 text-xs"><CheckCircle size={14} /></span>
-                                                            ) : (
-                                                                <span className="text-emerald-600 text-xs"><PlusCircle size={14} /></span>
-                                                            )}
-                                                        </button>
-                                                    );
-                                                })}
-                                            </div>
-                                        ) : (
-                                            <div className="p-2 text-center text-slate-500 text-xs">
-                                                {t('wizard.results.noResults')}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="space-y-2 no-print">
-                                {answers.medications.length > 0 && (
-                                    <Link
-                                        to={`/medications?ids=${answers.medications.join(',')}`}
-                                        className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
-                                        aria-label={t('wizard.results.viewPricesAria')}
-                                    >
-                                        <DollarSign size={22} aria-hidden="true" />
-                                        {t('wizard.results.viewPricesButton')}
-                                    </Link>
-                                )}
-                            </div>
-                        </section>
-
-                        <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
-                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.toolsTitle')}</h2>
-                            <p className="text-sm text-slate-600 mb-4">{t('wizard.results.toolsIntro')}</p>
-
-                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label={t('wizard.results.appEducationAria')}>
-                                <div className="flex items-center gap-3">
-                                    <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
-                                    <div>
-                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.appEducationTitle')}</span>
-                                        <span className="text-xs text-slate-600">{t('wizard.results.appEducationDesc')}</span>
-                                    </div>
-                                </div>
-                                <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
-                            </Link>
-
-                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label={t('wizard.results.insuranceAria')}>
-                                <div className="flex items-center gap-3">
-                                    <div className="bg-amber-100 text-amber-600 p-2 rounded" aria-hidden="true"><Shield size={18} /></div>
-                                    <div>
-                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.insuranceTitle')}</span>
-                                        <span className="text-xs text-slate-600">{t('wizard.results.insuranceDesc')}</span>
-                                    </div>
-                                </div>
-                                <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
-                            </Link>
-                        </section>
-                    </div>
-
-                    {/* Column 2 (Right): Strategy / Action Plan */}
+                    {/* Column 1: Strategy / Action Plan — leads the page */}
                     <div className="space-y-6">
                         {financial === FinancialStatus.MANAGEABLE && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="savings-heading">
@@ -1411,6 +1288,129 @@ const Wizard = () => {
                             </section>
                         )}
                     </div>
+                    {/* Column 2: Med List & Tools (reference — the plan reads first) */}
+                    <div className="space-y-6">
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
+                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.medListTitle')}</h2>
+                            {(answers.medications || []).length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    {(answers.medications || []).map(id => {
+                                        const med = MEDICATIONS.find(m => m.id === id);
+                                        return (
+                                            <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
+                                                {medDisplayName(med)}
+                                                <button
+                                                    onClick={() => handleMultiSelect('medications', id)}
+                                                    className="text-slate-400 hover:text-red-500 ml-1"
+                                                    aria-label={t('wizard.meds.removeAria', { name: med?.brandName })}
+                                                >
+                                                    <X size={14} />
+                                                </button>
+                                            </span>
+                                        )
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Add More Medications */}
+                            <div className="mb-4 no-print">
+                                <div className="relative">
+                                    <label htmlFor="results-med-search" className="sr-only">{t('wizard.results.addMoreLabel')}</label>
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
+                                    <input
+                                        id="results-med-search"
+                                        type="text"
+                                        placeholder={t('wizard.results.addMorePlaceholder')}
+                                        className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition text-sm"
+                                        value={medSearchTerm}
+                                        onChange={(e) => setMedSearchTerm(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Escape') { setMedSearchResult(null); setMedSearchTerm(''); }
+                                        }}
+                                    />
+                                    {medSearchTerm && (
+                                        <button onClick={() => { setMedSearchTerm(''); setMedSearchResult(null); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label={t('wizard.meds.clearSearchAria')}>
+                                            <X size={16} />
+                                        </button>
+                                    )}
+                                </div>
+                                {medSearchResult && medSearchTerm && !isMedSearching && (
+                                    <div className="mt-1 bg-white border border-slate-200 rounded-lg max-h-48 overflow-y-auto shadow-sm">
+                                        {medSearchResult.length > 0 ? (
+                                            <div className="divide-y divide-slate-100">
+                                                {medSearchResult.slice(0, 6).map(med => {
+                                                    const isAlreadySelected = (answers.medications || []).includes(med.id);
+                                                    return (
+                                                        <button
+                                                            key={med.id}
+                                                            onClick={() => addMedFromSearch(med.id)}
+                                                            disabled={isAlreadySelected}
+                                                            className="w-full text-left p-2 hover:bg-emerald-50 flex justify-between items-center transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                                        >
+                                                            <div>
+                                                                <span className="font-medium text-slate-900">{localizeMedName(med.brandName)}</span>
+                                                                <span className="text-slate-500 ml-1">({localizeMedName(med.genericName)})</span>
+                                                            </div>
+                                                            {isAlreadySelected ? (
+                                                                <span className="text-emerald-600 text-xs"><CheckCircle size={14} /></span>
+                                                            ) : (
+                                                                <span className="text-emerald-600 text-xs"><PlusCircle size={14} /></span>
+                                                            )}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div className="p-2 text-center text-slate-500 text-xs">
+                                                {t('wizard.results.noResults')}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="space-y-2 no-print">
+                                {answers.medications.length > 0 && (
+                                    <Link
+                                        to={`/medications?ids=${answers.medications.join(',')}`}
+                                        className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
+                                        aria-label={t('wizard.results.viewPricesAria')}
+                                    >
+                                        <DollarSign size={22} aria-hidden="true" />
+                                        {t('wizard.results.viewPricesButton')}
+                                    </Link>
+                                )}
+                            </div>
+                        </section>
+
+                        <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 break-inside-avoid" aria-labelledby="tools-heading">
+                            <h2 id="tools-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.toolsTitle')}</h2>
+                            <p className="text-sm text-slate-600 mb-4">{t('wizard.results.toolsIntro')}</p>
+
+                            <Link to="/application-help" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition" aria-label={t('wizard.results.appEducationAria')}>
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-emerald-100 text-emerald-600 p-2 rounded" aria-hidden="true"><HeartHandshake size={18} /></div>
+                                    <div>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.appEducationTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.appEducationDesc')}</span>
+                                    </div>
+                                </div>
+                                <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
+                            </Link>
+
+                            <Link to="/education" className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 group transition mt-2" aria-label={t('wizard.results.insuranceAria')}>
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-amber-100 text-amber-600 p-2 rounded" aria-hidden="true"><Shield size={18} /></div>
+                                    <div>
+                                        <span className="font-bold text-slate-800 block text-sm">{t('wizard.results.insuranceTitle')}</span>
+                                        <span className="text-xs text-slate-600">{t('wizard.results.insuranceDesc')}</span>
+                                    </div>
+                                </div>
+                                <ArrowRight size={16} className="text-slate-300 group-hover:text-emerald-600 no-print" aria-hidden="true" />
+                            </Link>
+                        </section>
+                    </div>
+
                 </div>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">

@@ -473,13 +473,13 @@ const Layout = ({ children }) => {
                         Spanish labels on one line instead of wrapping and
                         crowding the Simple View toggle; below xl everything
                         moves into the menu so nothing overlaps. */}
-                    <nav className="hidden xl:flex items-center gap-1" aria-label={t('layout.nav.mainAriaLabel')}>
+                    <nav className="hidden xl:flex items-center gap-1 2xl:gap-1.5" aria-label={t('layout.nav.mainAriaLabel')}>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 to={link.path}
                                 aria-label={link.ariaLabel}
-                                className={`text-sm font-medium transition-colors px-2 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap ${
+                                className={`text-sm 2xl:text-base font-medium transition-colors px-2 2xl:px-3 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap ${
                                     location.pathname === link.path
                                         ? 'text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600'
                                         : 'text-slate-700 hover:text-emerald-700 hover:bg-emerald-50'
@@ -491,7 +491,7 @@ const Layout = ({ children }) => {
                         <button
                             onClick={toggleSimpleView}
                             aria-pressed={isSimpleView}
-                            className={`ml-1 px-2 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors whitespace-nowrap ${
+                            className={`ml-1 2xl:ml-2 px-2 2xl:px-3 py-2 rounded-lg text-sm 2xl:text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors whitespace-nowrap ${
                                 isSimpleView
                                     ? 'bg-emerald-700 text-white border-emerald-700'
                                     : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700'
