@@ -28,6 +28,23 @@ const getAnthropic = () => {
   return anthropic;
 };
 
+// Claude model for every chat call. Single constant so the next model
+// update is a one-line change — the previous hardcoded model
+// ('claude-sonnet-4-20250514') was retired by Anthropic, which made every
+// call 404 and broke free-text chat while the guided path's non-LLM
+// fallbacks masked the failure.
+const CLAUDE_MODEL = 'claude-opus-5';
+
+// Current Claude models think before answering by default, so the first
+// content block can be a thinking block. Join the text blocks instead of
+// assuming content[0] is text (content[0].text returned undefined and
+// silently produced empty chat replies).
+const extractText = (response) =>
+  response.content
+    .filter((block) => block.type === 'text')
+    .map((block) => block.text)
+    .join('');
+
 // CORS headers
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -455,8 +472,8 @@ ${programContext}
 Be specific and actionable. Reference the exact program names and URLs from the database.`;
 
     const response = await getAnthropic().messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1500,
+      model: CLAUDE_MODEL,
+      max_tokens: 4000,
       system: withLanguage(SYSTEM_PROMPT, language),
       messages: [
         ...previousMessages,
@@ -464,7 +481,11 @@ Be specific and actionable. Reference the exact program names and URLs from the 
       ],
     });
 
-    return response.content[0].text;
+    const text = extractText(response);
+    if (!text || response.stop_reason === 'refusal') {
+      throw new Error(`Empty or refused response (stop_reason: ${response.stop_reason})`);
+    }
+    return text;
   } catch (error) {
     console.error('Claude API error:', error);
     throw error;
@@ -501,6 +522,33 @@ const handleAction = async (action, body) => {
           success: false,
           error: error.message,
           hint: 'Check DATABASE_URL environment variable'
+        };
+      }
+    }
+
+    case 'testClaude': {
+      // Health check for the Anthropic path (POST-only so it stays behind
+      // the LLM rate limit). Distinguishes a bad/missing API key from a
+      // retired model id — the failure modes that silently turn every
+      // free-text answer into the apology fallback.
+      try {
+        const response = await getAnthropic().messages.create({
+          model: CLAUDE_MODEL,
+          max_tokens: 50,
+          messages: [{ role: 'user', content: 'Reply with the single word: ok' }],
+        });
+        return { success: true, model: response.model, reply: extractText(response).slice(0, 100) };
+      } catch (error) {
+        return {
+          success: false,
+          model: CLAUDE_MODEL,
+          status: error.status || null,
+          error: error.message,
+          hint: error.status === 401
+            ? 'Check the ANTHROPIC_API_KEY environment variable in Netlify'
+            : error.status === 404
+              ? 'Model id not available — update CLAUDE_MODEL in netlify/functions/chat.js'
+              : 'See function logs for details',
         };
       }
     }
@@ -742,8 +790,8 @@ const handleAction = async (action, body) => {
       // For free text, use Claude to respond
       try {
         const response = await getAnthropic().messages.create({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 800,
+          model: CLAUDE_MODEL,
+          max_tokens: 4000,
           system: withLanguage(SYSTEM_PROMPT, language),
           messages: [
             {
@@ -757,11 +805,17 @@ Please help them with their question about medication assistance. If they're ask
           ],
         });
 
-        return { message: response.content[0].text };
+        const text = extractText(response);
+        if (!text || response.stop_reason === 'refusal') {
+          throw new Error(`Empty or refused response (stop_reason: ${response.stop_reason})`);
+        }
+        return { message: text };
       } catch (error) {
         console.error('Claude API error:', error);
         return {
-          message: "I apologize, but I'm having trouble processing your question right now. Please try selecting from the options above, or rephrase your question.",
+          message: (language || '').startsWith('es')
+            ? 'Lo siento, en este momento no puedo procesar su pregunta. Por favor elija una de las opciones de arriba, o escriba su pregunta de otra manera.'
+            : "I apologize, but I'm having trouble processing your question right now. Please try selecting from the options above, or rephrase your question.",
         };
       }
     }
@@ -829,13 +883,16 @@ Respond ONLY with valid JSON in this exact format (no markdown, no explanation):
 }`;
 
         const response = await client.messages.create({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 500,
+          model: CLAUDE_MODEL,
+          max_tokens: 2000,
           messages: [{ role: 'user', content: prompt }],
         });
 
-        // Parse Claude's response
-        const responseText = response.content[0].text.trim();
+        // Parse Claude's response (strip markdown code fences if present)
+        const responseText = extractText(response)
+          .trim()
+          .replace(/^```(?:json)?\s*/, '')
+          .replace(/\s*```$/, '');
         const parsed = JSON.parse(responseText);
 
         // Validate medication IDs exist in our database
@@ -999,7 +1056,7 @@ export async function handler(event) {
     if (!(await allowRequest(db, event, 'chat', 120, 15))) {
       return rateLimitedResponse(headers);
     }
-    const LLM_ACTIONS = ['generateResults', 'freeText', 'getMedicationSuggestions'];
+    const LLM_ACTIONS = ['generateResults', 'freeText', 'getMedicationSuggestions', 'testClaude'];
     if (LLM_ACTIONS.includes(action) && !(await allowRequest(db, event, 'chat-llm', 30, 15))) {
       return rateLimitedResponse(headers);
     }
