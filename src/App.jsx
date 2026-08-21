@@ -81,6 +81,7 @@ import { DemoModeProvider } from './context/DemoModeContext.jsx';
 import { SimpleViewProvider, useSimpleView } from './context/SimpleViewContext.jsx';
 // Demo Banner Component
 import DemoBanner from './components/DemoBanner.jsx';
+import LanguageToggle from './components/LanguageToggle.jsx';
 import ConsentBanner from './components/ConsentBanner.jsx';
 import { openConsentBanner } from './lib/consent.js';
 // Feedback Widget for medication results
@@ -446,21 +447,24 @@ const Layout = ({ children }) => {
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition" aria-label={t('layout.nav.brandAriaLabel')}>
+                    <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition flex-shrink-0" aria-label={t('layout.nav.brandAriaLabel')}>
                         <img src="/photos/logo.png" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
-                        <span className="font-bold text-lg md:text-xl leading-tight">
-                            {t('layout.nav.brandLine1')}<br className="md:hidden"/>{t('layout.nav.brandLine2')}<sup className="text-xs">{t('layout.nav.brandTm')}</sup>
+                        <span className="font-bold text-lg leading-tight">
+                            {t('layout.nav.brandLine1')}<br/>{t('layout.nav.brandLine2')}<sup className="text-xs">{t('layout.nav.brandTm')}</sup>
                         </span>
                     </Link>
 
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-4" aria-label={t('layout.nav.mainAriaLabel')}>
+                    {/* Desktop Nav — whitespace-nowrap keeps the longer
+                        Spanish labels on one line instead of wrapping and
+                        crowding the Simple View toggle; below xl everything
+                        moves into the menu so nothing overlaps. */}
+                    <nav className="hidden xl:flex items-center gap-1" aria-label={t('layout.nav.mainAriaLabel')}>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 to={link.path}
                                 aria-label={link.ariaLabel}
-                                className={`text-base font-medium transition-colors px-3 py-2 rounded-lg min-h-[44px] flex items-center ${
+                                className={`text-sm font-medium transition-colors px-2 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap ${
                                     location.pathname === link.path
                                         ? 'text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600'
                                         : 'text-slate-700 hover:text-emerald-700 hover:bg-emerald-50'
@@ -472,7 +476,7 @@ const Layout = ({ children }) => {
                         <button
                             onClick={toggleSimpleView}
                             aria-pressed={isSimpleView}
-                            className={`ml-2 px-3 py-2 rounded-lg text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors ${
+                            className={`ml-1 px-2 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors whitespace-nowrap ${
                                 isSimpleView
                                     ? 'bg-emerald-700 text-white border-emerald-700'
                                     : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700'
@@ -481,22 +485,27 @@ const Layout = ({ children }) => {
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                             {t('layout.nav.simpleView')}
                         </button>
+                        <LanguageToggle compact />
                     </nav>
 
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        className="md:hidden p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label={isMobileMenuOpen ? t('layout.nav.closeMenu') : t('layout.nav.openMenu')}
-                        aria-expanded={isMobileMenuOpen}
-                    >
-                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                    {/* Mobile/tablet: language switch stays visible in the top
+                        bar so it isn't buried below the hero or behind the menu. */}
+                    <div className="xl:hidden flex items-center gap-1">
+                        <LanguageToggle compact />
+                        <button
+                            className="p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label={isMobileMenuOpen ? t('layout.nav.closeMenu') : t('layout.nav.openMenu')}
+                            aria-expanded={isMobileMenuOpen}
+                        >
+                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile Nav */}
                 {isMobileMenuOpen && (
-                    <nav className="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label={t('layout.nav.mobileAriaLabel')}>
+                    <nav className="xl:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label={t('layout.nav.mobileAriaLabel')}>
                         <div className="flex flex-col p-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link

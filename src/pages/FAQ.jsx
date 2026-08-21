@@ -5,6 +5,7 @@ import { Info, ChevronDown, Shield, CheckCircle2, XCircle, HelpCircle, ArrowRigh
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 import LanguageToggle from '../components/LanguageToggle.jsx';
+import FaqAnswer from '../components/FaqAnswer.jsx';
 import FAQS_EN from '../data/faqs.json';
 import FAQS_ES from '../data/faqs.es.json';
 
@@ -404,7 +405,9 @@ const FAQ = () => {
                 'name': faq.q,
                 'acceptedAnswer': {
                     '@type': 'Answer',
-                    'text': faq.a
+                    // Strip the ** bold markers so raw markdown doesn't leak
+                    // into the structured data search engines read.
+                    'text': faq.a.replace(/\*\*/g, '')
                 }
             }))
         );
@@ -456,7 +459,7 @@ const FAQ = () => {
                         className="px-6 py-4 bg-slate-50 border-t border-slate-200"
                         role="region"
                     >
-                        <p className="text-slate-700 leading-relaxed">{answer}</p>
+                        <FaqAnswer answer={answer} />
                     </div>
                 )}
             </div>
