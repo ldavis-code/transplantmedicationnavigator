@@ -215,6 +215,27 @@
   force = true
   query = { lang = ":lang" }
 
+[[redirects]]
+  from = "/about"
+  to = "/about/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/feedback"
+  to = "/feedback/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/education/appeals"
+  to = "/education/appeals/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
 [[redirects]]
@@ -295,6 +316,21 @@
 [[redirects]]
   from = "/accessibility"
   to = "/accessibility/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/feedback"
+  to = "/feedback/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/education/appeals"
+  to = "/education/appeals/index.html"
   status = 200
 
 # Epic FHIR OAuth callback - serve static HTML (must come before SPA fallback)

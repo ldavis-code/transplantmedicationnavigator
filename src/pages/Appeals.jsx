@@ -25,6 +25,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
+import { seoMetadata } from '../data/seo-metadata.js';
 import LanguageToggle from '../components/LanguageToggle.jsx';
 import PrivacyPointNotice from '../components/PrivacyPointNotice.jsx';
 
@@ -39,11 +40,7 @@ export default function Appeals() {
   // but every instruction a patient reads is translated).
   const appealGuideHref = isSpanish ? '/appeal-guide-es.html' : '/appeal-guide.html';
   const doctorTemplateHref = isSpanish ? '/medical-necessity-letter-template-es.html' : '/medical-necessity-letter-template.html';
-  useMetaTags({
-    title: t('appeals.meta.title'),
-    description: t('appeals.meta.description'),
-    keywords: 'insurance appeal, step therapy, prior authorization, transplant medication denial, medical necessity letter'
-  });
+  useMetaTags(seoMetadata.appeals);
 
   // Interactive section states
   const [expandedSections, setExpandedSections] = useState({

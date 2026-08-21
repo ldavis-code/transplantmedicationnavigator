@@ -33,6 +33,9 @@ const routes = [
     { path: '/pilot', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/transplant', changefreq: 'monthly', priority: 0.6 },
     { path: '/survey/general', changefreq: 'monthly', priority: 0.6 },
+    { path: '/about', changefreq: 'monthly', priority: 0.6 },
+    { path: '/feedback', changefreq: 'yearly', priority: 0.4 },
+    { path: '/education/appeals', changefreq: 'monthly', priority: 0.7 },
     { path: '/terms-and-conditions', changefreq: 'yearly', priority: 0.4 },
     { path: '/privacy', changefreq: 'yearly', priority: 0.4 },
     { path: '/accessibility', changefreq: 'yearly', priority: 0.4 },
@@ -46,6 +49,7 @@ const SPANISH_PATHS = new Set([
     '/medications', '/evidence', '/my-medications', '/savings-tracker',
     '/survey', '/survey/transplant', '/survey/general', '/pilot',
     '/terms-and-conditions', '/privacy', '/accessibility',
+    '/about', '/feedback', '/education/appeals',
 ]);
 
 function generateSitemap() {

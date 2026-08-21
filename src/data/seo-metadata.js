@@ -369,6 +369,22 @@ export const seoMetadata = {
     },
   },
 
+  appeals: {
+    title: 'Got Denied? Appeal Help for Transplant Patients | Transplant Medication Navigator™',
+    description: 'Learn how to appeal insurance denials for transplant medications. Includes step therapy exceptions, generic vs brand guidance, and medical necessity letter templates.',
+    canonical: `${BASE_URL}/education/appeals`,
+    ogTitle: 'Got Denied? Appeal Help for Transplant Patients',
+    ogDescription: 'Step-by-step help to appeal insurance denials for transplant medications, with letter templates and free downloadable guides.',
+    twitterTitle: 'Got Denied? Appeal Help for Transplant Patients',
+    twitterDescription: 'How to appeal insurance denials for transplant medications, with letter templates and free guides.',
+    breadcrumbName: 'Appeals',
+    es: {
+      title: '¿Le negaron? Ayuda con apelaciones para pacientes de trasplante | Transplant Medication Navigator™',
+      description: 'Aprenda cómo apelar las denegaciones del seguro para medicamentos de trasplante. Incluye excepciones a la terapia escalonada, guía sobre genéricos y de marca, y modelos de cartas de necesidad médica.',
+      breadcrumbName: 'Apelaciones',
+    },
+  },
+
   feedback: {
     title: 'Share Your Feedback | Transplant Medication Navigator™',
     description: 'Tell us what is working and what we can improve. Your feedback helps make this free transplant medication assistance guide better for every patient and caregiver.',
