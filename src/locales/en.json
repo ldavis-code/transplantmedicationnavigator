@@ -1670,6 +1670,8 @@
         "foundationIncome": "Copay help, typically income up to {{income}}. Funds open and close — check back if closed.",
         "foundationIncomeGeneric": "Copay help — eligibility is based on need. Funds open and close — check back if closed.",
         "foundationAria": "Open {{program}} (opens in a new tab)",
+        "othersTitle": "Your other medications ({{count}})",
+        "othersNote": "These are generics or have no manufacturer program — that's normal, and generics usually cost much less. Compare their cash prices with the link below.",
         "detailsLink": "See prices and full details for these medications",
         "insuranceLabels": {
           "commercial": "commercial insurance",

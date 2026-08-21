@@ -1670,6 +1670,8 @@
         "foundationIncome": "Ayuda con copagos, normalmente con ingresos de hasta {{income}}. Los fondos abren y cierran; vuelva a revisar si está cerrado.",
         "foundationIncomeGeneric": "Ayuda con copagos; los requisitos se basan en la necesidad. Los fondos abren y cierran; vuelva a revisar si está cerrado.",
         "foundationAria": "Abrir {{program}} (se abre en una pestaña nueva)",
+        "othersTitle": "Sus otros medicamentos ({{count}})",
+        "othersNote": "Estos son genéricos o no tienen programa del fabricante; es normal, y los genéricos suelen costar mucho menos. Compare sus precios en efectivo con el enlace de abajo.",
         "detailsLink": "Vea precios y todos los detalles de estos medicamentos",
         "insuranceLabels": {
           "commercial": "seguro comercial",
