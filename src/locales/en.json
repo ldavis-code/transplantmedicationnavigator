@@ -381,28 +381,28 @@
         "lead": "Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars each year.",
         "boxTitle": "Watch out for the \"deductible trap.\" Here's what happens:",
         "boxP1Pre": "If you use a discount card, ",
-        "boxP1Highlight": "the money you pay does NOT count toward your deductible",
+        "boxP1Highlight": "the money you pay does NOT count toward your deductible or your yearly out-of-pocket limit",
         "boxP1Post": ".",
-        "boxP2": "You still have to pay your full deductible later. This can cost you more money over the year.",
-        "boxP3": "What to do: Call the customer service number on your insurance card and ask: 'Have I met my deductible this year? Is it better for me to use insurance or a discount card for this medication?'"
+        "boxP2": "So insurance never starts paying in full. You keep paying out of pocket — for these medicines and for the rest of your care — all year long.",
+        "boxP3": "What to do: Call the customer service number on your insurance card and ask: 'Have I met my deductible and my yearly out-of-pocket limit? Is it better for me to use insurance or a discount card for this medication?'"
       },
       "example": {
         "title": "Real-World Example",
         "rightBadge": "✅ The Right Way",
         "rightTitle": "Using Insurance",
         "rightM13Label": "Month 1-3:",
-        "rightM13": "Pay $2,100 out-of-pocket (reaching your yearly limit)",
+        "rightM13": "Pay $2,100 out-of-pocket. Every dollar counts toward your deductible and your yearly out-of-pocket limit — you reach the limit.",
         "rightM412Label": "Month 4-12:",
-        "rightM412": "Insurance pays 100% = $0 out-of-pocket",
+        "rightM412": "Insurance pays 100% of your medicines, labs, and clinic visits = $0 out-of-pocket",
         "rightTotal": "Total Annual Cost: $2,100",
         "trapBadge": "❌ The Discount Card Trap",
         "trapTitle": "Using GoodRx/SingleCare",
         "trapM112Label": "Month 1-12:",
-        "trapM112": "Pay discounted price (~$200/month) but NONE counts toward yearly limit",
+        "trapM112": "Pay the discount price (~$200/month = $2,400), but NONE of it counts toward your deductible or yearly limit",
         "trapResultLabel": "Result:",
-        "trapResult": "You NEVER reach your yearly limit, so you pay all year long",
-        "trapTotal": "Total Annual Cost: $2,400",
-        "takeaway": "Small savings today = thousands of dollars in extra costs over the year."
+        "trapResult": "You never reach your yearly limit, so insurance never starts paying in full. You also keep paying out of pocket for labs, clinic visits, and your other medicines all year.",
+        "trapTotal": "Total Annual Cost: $2,400 for these medicines — plus everything else you keep paying",
+        "takeaway": "The discount price looks like a small saving each month. But nothing counts toward your yearly limit, so insurance never starts paying in full — and that is how the trap can add up to thousands over a year."
       },
       "whenToUse": {
         "title": "When Should Transplant Patients Use Discount Cards?",
@@ -1228,10 +1228,10 @@
       "simpleView": "Simple View",
       "links": {
         "home": { "label": "Home", "ariaLabel": "Go to home page" },
-        "wizard": { "label": "My Path Quiz", "ariaLabel": "Start medication path wizard" },
-        "education": { "label": "Education & Resources", "ariaLabel": "Browse education and resources" },
-        "applicationHelp": { "label": "Grants & Foundations", "ariaLabel": "View grants and foundations guide" },
-        "savingsTracker": { "label": "Savings Calculator", "ariaLabel": "Calculate your medication savings" },
+        "wizard": { "label": "My Path", "ariaLabel": "Start medication path wizard" },
+        "education": { "label": "Education", "ariaLabel": "Browse education and resources" },
+        "applicationHelp": { "label": "Grants", "ariaLabel": "View grants and foundations guide" },
+        "savingsTracker": { "label": "Savings", "ariaLabel": "Calculate your medication savings" },
         "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
         "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
       }
@@ -1485,7 +1485,7 @@
     "patient": {
       "title": "Facing these costs yourself?",
       "p1": "You don't have to navigate the maze alone. Take the free 2-minute quiz to find copay cards, patient assistance programs, and foundation grants for your medications.",
-      "p2": "And if you lost your job or insurance during evaluation — like nearly 3 in 4 candidates in the study — you may qualify for programs you didn't know existed.",
+      "p2": "And if you're not able to work right now — in the study, only about 1 in 4 candidates were still employed by the time of transplant evaluation — you may qualify for programs you didn't know existed.",
       "cta": "Find your path to affordable medications"
     },
     "sources": {

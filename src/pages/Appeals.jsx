@@ -32,7 +32,13 @@ export default function Appeals() {
   const { t, i18n } = useTranslation();
   // Letters go to US insurers/doctors, so they generate in English even in
   // Spanish mode — this note tells Spanish readers that's intentional.
-  const showEnglishLetterNote = i18n.resolvedLanguage === 'es';
+  const isSpanish = i18n.resolvedLanguage === 'es';
+  const showEnglishLetterNote = isSpanish;
+  // The guide and the doctor's template have Spanish editions (the letter
+  // bodies inside stay in English because they go to US insurers/doctors,
+  // but every instruction a patient reads is translated).
+  const appealGuideHref = isSpanish ? '/appeal-guide-es.html' : '/appeal-guide.html';
+  const doctorTemplateHref = isSpanish ? '/medical-necessity-letter-template-es.html' : '/medical-necessity-letter-template.html';
   useMetaTags({
     title: t('appeals.meta.title'),
     description: t('appeals.meta.description'),
@@ -136,8 +142,34 @@ Contact: [Your Phone Number]
     setCopied(false);
   };
 
+  // Spanish readers get a Spanish instruction header on top of the English
+  // letter, so they know the English body is intentional and what to fill in.
+  const SPANISH_LETTER_HEADER = `================================================================
+INSTRUCCIONES (puede borrar esta parte antes de entregar la carta)
+
+La carta de abajo está en inglés porque va dirigida a su médico
+en los Estados Unidos. Llene los espacios [entre corchetes]:
+  [Date] = la fecha de hoy, en inglés (ej.: "March 15, 2026")
+  [Doctor's Name] = el nombre de su médico
+  [Medication Name] = el nombre del medicamento negado
+  [organ type] = el órgano, en inglés: kidney (riñón),
+      liver (hígado), heart (corazón), lung (pulmón)
+  [Your Name] = su nombre completo
+  [Your Phone Number] / [Your Email Address] = su teléfono y correo
+
+Si necesita ayuda para llenarla, su equipo de trasplante o
+Patient Advocate Foundation (1-800-532-5274, con personal que
+habla español) pueden ayudarle gratis.
+================================================================
+
+`;
+
   const downloadBlankLetter = () => {
-    const blob = new Blob([buildDoctorLetter({ blank: true })], { type: 'text/plain' });
+    const letter = buildDoctorLetter({ blank: true });
+    // The \uFEFF BOM makes accented Spanish text open correctly in
+    // older Windows editors.
+    const content = i18n.resolvedLanguage === 'es' ? '\uFEFF' + SPANISH_LETTER_HEADER + letter : letter;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -370,7 +402,7 @@ Contact: [Your Phone Number]
               </div>
             </div>
             <a
-              href="/appeal-guide.html"
+              href={appealGuideHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg whitespace-nowrap"
@@ -851,7 +883,7 @@ Contact: [Your Phone Number]
                 ))}
               </ul>
               <a
-                href="/appeal-guide.html"
+                href={appealGuideHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
@@ -879,7 +911,7 @@ Contact: [Your Phone Number]
                 ))}
               </ul>
               <a
-                href="/medical-necessity-letter-template.html"
+                href={doctorTemplateHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg w-full justify-center"
