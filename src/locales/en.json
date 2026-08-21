@@ -1264,8 +1264,8 @@
   },
   "home": {
     "updateBanner": {
-      "ariaLabel": "Our resources are up to date, now including the new TotalAssist program",
-      "verified": "Verified & up to date",
+      "ariaLabel": "Assistance programs verified July 2026, now including the new TotalAssist program",
+      "verified": "Assistance programs verified July 2026",
       "totalAssist": "Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).",
       "seeWhatsNew": "See what's new"
     },

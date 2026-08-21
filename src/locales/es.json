@@ -1264,8 +1264,8 @@
   },
   "home": {
     "updateBanner": {
-      "ariaLabel": "Nuestros recursos están al día, ahora incluyen el nuevo programa TotalAssist",
-      "verified": "Verificado y al día",
+      "ariaLabel": "Programas de asistencia verificados en julio de 2026, ahora incluyen el nuevo programa TotalAssist",
+      "verified": "Programas de asistencia verificados en julio de 2026",
       "totalAssist": "Ahora incluye <strong>TotalAssist</strong>, el programa caritativo de asistencia al paciente más grande del país (lanzado el 1 de julio de 2026).",
       "seeWhatsNew": "Vea lo nuevo"
     },
