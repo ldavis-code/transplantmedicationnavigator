@@ -474,6 +474,11 @@ Be specific and actionable. Reference the exact program names and URLs from the 
     const response = await getAnthropic().messages.create({
       model: CLAUDE_MODEL,
       max_tokens: 4000,
+      // Medium effort keeps answers fast enough for Netlify's synchronous
+      // function timeout (~26s) — at the default (high) the model sometimes
+      // reasons long enough that the platform kills the request and the
+      // patient sees a silent failure.
+      output_config: { effort: 'medium' },
       system: withLanguage(SYSTEM_PROMPT, language),
       messages: [
         ...previousMessages,
@@ -792,6 +797,9 @@ const handleAction = async (action, body) => {
         const response = await getAnthropic().messages.create({
           model: CLAUDE_MODEL,
           max_tokens: 4000,
+          // See the effort note above — keeps free-text answers inside the
+          // platform timeout.
+          output_config: { effort: 'medium' },
           system: withLanguage(SYSTEM_PROMPT, language),
           messages: [
             {
@@ -885,6 +893,8 @@ Respond ONLY with valid JSON in this exact format (no markdown, no explanation):
         const response = await client.messages.create({
           model: CLAUDE_MODEL,
           max_tokens: 2000,
+          // Mechanical JSON grouping — low effort is plenty and fastest.
+          output_config: { effort: 'low' },
           messages: [{ role: 'user', content: prompt }],
         });
 
