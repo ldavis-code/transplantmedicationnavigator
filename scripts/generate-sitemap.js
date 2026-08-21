@@ -41,7 +41,12 @@ const routes = [
 // Routes with a full Spanish translation, reached via ?lang=es. Each is
 // listed as its own URL (with hreflang alternates on both language versions)
 // so the Spanish pages are discoverable by search engines.
-const SPANISH_PATHS = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
+const SPANISH_PATHS = new Set([
+    '/', '/wizard', '/education', '/application-help', '/faq',
+    '/medications', '/evidence', '/my-medications', '/savings-tracker',
+    '/survey', '/survey/transplant', '/survey/general', '/pilot',
+    '/terms-and-conditions', '/privacy', '/accessibility',
+]);
 
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];

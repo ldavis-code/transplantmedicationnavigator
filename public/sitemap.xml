@@ -38,6 +38,18 @@
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/medications</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/medications" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/medications?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/medications" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/medications?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/medications" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/medications?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/medications" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
@@ -92,12 +104,36 @@
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/evidence</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/evidence" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/evidence?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/evidence" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/evidence?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/evidence" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/evidence?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/evidence" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/savings-tracker</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/savings-tracker" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/savings-tracker?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/savings-tracker" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/savings-tracker?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/savings-tracker" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/savings-tracker?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/savings-tracker" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -122,42 +158,126 @@
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/survey?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/pilot</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/pilot" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/pilot?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/pilot" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/pilot?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/pilot" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/pilot?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/pilot" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey/transplant</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey/transplant" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey/transplant?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey/transplant" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/survey/transplant?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey/transplant" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey/transplant?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey/transplant" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/survey/general</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey/general" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey/general?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey/general" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/survey/general?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/survey/general" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/survey/general?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/survey/general" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/terms-and-conditions</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/terms-and-conditions" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/terms-and-conditions?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/terms-and-conditions" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/terms-and-conditions?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/terms-and-conditions" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/terms-and-conditions?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/terms-and-conditions" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/privacy</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/privacy?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/privacy" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/privacy?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/privacy?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/privacy" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://transplantmedicationnavigator.com/accessibility</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/accessibility" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/accessibility?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/accessibility" />
+        <lastmod>2026-08-21</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+    <url>
+        <loc>https://transplantmedicationnavigator.com/accessibility?lang=es</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/accessibility" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/accessibility?lang=es" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/accessibility" />
         <lastmod>2026-08-21</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>

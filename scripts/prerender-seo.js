@@ -24,7 +24,12 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 // hreflang alternates and a prerendered Spanish variant (index-es.html,
 // served by the lang=:lang redirect rules in public/_redirects) so search
 // engines and link previews see Spanish text without running JavaScript.
-const SPANISH_ROUTES = new Set(['/', '/wizard', '/education', '/application-help', '/faq']);
+const SPANISH_ROUTES = new Set([
+  '/', '/wizard', '/education', '/application-help', '/faq',
+  '/medications', '/evidence', '/my-medications', '/savings-tracker',
+  '/survey', '/survey/transplant', '/survey/general', '/pilot',
+  '/terms-and-conditions', '/privacy', '/accessibility',
+]);
 
 // Spanish titles/descriptions come from the same source the app uses
 // (seoMetadata imported at the top of the file).
@@ -34,6 +39,17 @@ const SPANISH_META = {
   '/education': seoMetadata.education.es,
   '/application-help': seoMetadata.applicationHelp.es,
   '/faq': seoMetadata.faq.es,
+  '/medications': seoMetadata.medications.es,
+  '/evidence': seoMetadata.evidence.es,
+  '/my-medications': seoMetadata.myMedications.es,
+  '/savings-tracker': seoMetadata.savingsTracker.es,
+  '/survey': seoMetadata.survey.es,
+  '/survey/transplant': seoMetadata.surveyTransplant.es,
+  '/survey/general': seoMetadata.surveyGeneral.es,
+  '/pilot': seoMetadata.pilot.es,
+  '/terms-and-conditions': seoMetadata.termsAndConditions.es,
+  '/privacy': seoMetadata.privacyPolicy.es,
+  '/accessibility': seoMetadata.accessibility.es,
 };
 const ES_LOCALE = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')

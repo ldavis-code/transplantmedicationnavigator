@@ -7,6 +7,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useMetaTags } from '../hooks/useMetaTags.js';
+import { seoMetadata } from '../data/seo-metadata.js';
 import {
   CheckCircle,
   Heart,
@@ -49,6 +51,7 @@ const WITHOUT_TOOL_OPTIONS = [
 
 export default function FeedbackSurvey() {
   const { t } = useTranslation();
+  useMetaTags(seoMetadata.feedback);
   const [step, setStep] = useState(1); // 1, 2, 3, 4, or 'submitted'
   const [responses, setResponses] = useState({
     program_found: null,

@@ -138,6 +138,83 @@
   force = true
   query = { lang = ":lang" }
 
+[[redirects]]
+  from = "/medications"
+  to = "/medications/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/evidence"
+  to = "/evidence/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/my-medications"
+  to = "/my-medications/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/savings-tracker"
+  to = "/savings-tracker/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/survey"
+  to = "/survey/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/survey/transplant"
+  to = "/survey/transplant/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/survey/general"
+  to = "/survey/general/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/pilot"
+  to = "/pilot/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/terms-and-conditions/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+[[redirects]]
+  from = "/accessibility"
+  to = "/accessibility/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
 [[redirects]]

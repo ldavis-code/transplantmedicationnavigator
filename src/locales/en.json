@@ -400,8 +400,10 @@
         "trapM112Label": "Month 1-12:",
         "trapM112": "Pay the discount price (~$200/month = $2,400), but NONE of it counts toward your deductible or yearly limit",
         "trapResultLabel": "Result:",
-        "trapResult": "You never reach your yearly limit, so insurance never starts paying in full. You also keep paying out of pocket for labs, clinic visits, and your other medicines all year.",
-        "trapTotal": "Total Annual Cost: $2,400 for these medicines — plus everything else you keep paying",
+        "trapResult": "You never reach your yearly limit, so insurance never starts paying in full.",
+        "trapRestLabel": "The rest:",
+        "trapRest": "You keep paying out of pocket for labs, clinic visits, and your other medicines all year — often $3,000–$8,000 more.",
+        "trapTotal": "Total Annual Cost: $2,400 + often $3,000–$8,000 more for the rest of your care",
         "takeaway": "The discount price looks like a small saving each month. But nothing counts toward your yearly limit, so insurance never starts paying in full — and that is how the trap can add up to thousands over a year."
       },
       "whenToUse": {
@@ -1213,7 +1215,7 @@
       "startPathAria": "Start medication assistance wizard"
     },
     "banner": {
-      "text": "Patient Assistance Programs provide FREE medication, never pay to apply. We help you find them."
+      "text": "Patient Assistance Programs give FREE medication to those who qualify — applying never costs anything. We help you find them."
     },
     "skipLink": "Skip to main content",
     "nav": {
@@ -1427,8 +1429,8 @@
       "stat2": "were still employed at the time of transplant evaluation",
       "stat3": "of high-burden patients delayed or went without medical care (vs. 33.5% of low-burden patients)",
       "stat4": "could not pay for basic necessities like food, heat, or rent (vs. 11.3%)",
-      "stat5": "lost savings or assets",
-      "stat6": "faced medical debt or bankruptcy"
+      "stat5": "of high-burden patients lost savings or assets",
+      "stat6": "of high-burden patients faced medical debt or bankruptcy"
     },
     "odds": {
       "title": "Financial Burden Predicts Distress Across Every Dimension",
@@ -1749,12 +1751,16 @@
       "tagline": "You can fight back, and WIN!",
       "intro": "Insurance says \"no\" to almost everyone at some point. The good news? <strong>Many people win when they appeal.</strong> This interactive guide shows you how, step by step.",
       "stats": {
-        "winRate": "50%+",
-        "winRateLabel": "Appeals are won",
-        "days": "30-60",
-        "daysLabel": "Days to appeal",
+        "winRate": "40-75%",
+        "winRateLabel": "Of appealed denials are overturned",
+        "days": "60+",
+        "daysLabel": "Days to appeal — your letter has your deadline",
         "free": "Free",
-        "freeLabel": "To file an appeal"
+        "freeLabel": "To file an appeal",
+        "sourcesIntro": "Sources: ",
+        "source1": "HHS OIG (2018): Medicare Advantage plans overturned 75% of appealed denials",
+        "source2": "KFF: about 4 in 10 appealed marketplace denials were overturned",
+        "deadlineNote": "Deadlines depend on your plan: Medicare gives 65 days and many employer and marketplace plans give up to 180 — your denial letter lists your exact deadline."
       },
       "guideTitle": "Free Appeal Guide",
       "guideSubtitle": "Print-ready guide with checklists & sample letters",
@@ -1860,7 +1866,7 @@
         },
         {
           "title": "Watch the Clock",
-          "description": "You usually have 30 to 60 days to appeal. Mark the date on your calendar. Don't miss it.",
+          "description": "You have at least 60 days to appeal — your denial letter lists your exact deadline. Mark the date on your calendar. Don't miss it.",
           "tips": "Set a phone reminder 2 weeks before your deadline!"
         },
         {
