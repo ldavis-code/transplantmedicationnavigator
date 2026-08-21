@@ -826,6 +826,19 @@ html.simple-view a {
     line-height: 1.8;
 }
 
+/* Spans and links inside headings must scale WITH the heading — without
+   this, a heading that ends in a highlighted <span> (like the home hero)
+   keeps a small tail while the rest of the line grows. */
+html.simple-view h1 span,
+html.simple-view h1 a,
+html.simple-view h2 span,
+html.simple-view h2 a,
+html.simple-view h3 span,
+html.simple-view h3 a {
+    font-size: inherit;
+    line-height: inherit;
+}
+
 /* Override Tailwind small text classes to be larger in simple view */
 html.simple-view .text-xs {
     font-size: 1rem !important;
@@ -864,8 +877,11 @@ html.simple-view .text-slate-900 {
     color: #111827 !important;
 }
 
-/* High contrast links */
-html.simple-view a:not([role="button"]):not([class*="bg-emerald"]) {
+/* High contrast links. Card-style links (rounded-xl/2xl blocks like the
+   home banner and MyChart card) are excluded: underlining every child span
+   — badges, decorative "•" separators — makes non-interactive text read as
+   separate links. Their borders and hover states already signal clickability. */
+html.simple-view a:not([role="button"]):not([class*="bg-emerald"]):not([class*="rounded-xl"]):not([class*="rounded-2xl"]) {
     color: #047857 !important;
     text-decoration: underline !important;
     text-decoration-thickness: 2px !important;

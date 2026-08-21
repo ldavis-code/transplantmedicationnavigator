@@ -16,6 +16,7 @@ import { seoMetadata } from '../../data/seo-metadata.js';
 import { trackServerEvent } from '../../lib/trackServerEvent.js';
 import { ORGAN_MEDICATIONS, PRE_TRANSPLANT_MEDICATIONS } from '../../data/organMedications.js';
 import { medDisplayName } from '../../utils/medDisplay.js';
+import WizardProgramMatches from '../../components/WizardProgramMatches.jsx';
 
 const organIcons = {
     Heart: Heart,
@@ -1148,7 +1149,17 @@ const Wizard = () => {
                         </a>
                     </aside>
                 )}
-                
+
+                {/* The payoff: the quiz knows the exact medications and the
+                    insurance type, so name the exact programs — don't send
+                    the patient off to search for what we already know. */}
+                <WizardProgramMatches
+                    medIds={answers.medications || []}
+                    insurance={answers.insurance}
+                    medications={MEDICATIONS}
+                    organs={answers.organs || []}
+                />
+
                 <div className="grid md:grid-cols-2 gap-6">
 
                     {/* Column 1 (Left): Med List & Tools */}

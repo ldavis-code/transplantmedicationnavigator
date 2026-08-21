@@ -53,9 +53,11 @@ const Home = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    {/* The quiz is the product's core path — it carries the
+                        filled primary style; the other two are outlined. */}
                     <Link
                         to="/wizard"
-                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold rounded-xl hover:border-slate-300 transition flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2"
                         aria-label={t('home.hero.quizAriaLabel')}
                     >
                         <Search size={20} aria-hidden="true" />
@@ -63,7 +65,7 @@ const Home = () => {
                     </Link>
                     <Link
                         to="/education/appeals"
-                        className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center gap-3"
+                        className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-emerald-800 border-2 border-emerald-200 font-bold rounded-xl hover:border-emerald-300 transition flex items-center gap-3"
                         aria-label={t('home.hero.deniedAriaLabel')}
                     >
                         <ShieldAlert size={20} aria-hidden="true" />
