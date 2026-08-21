@@ -58,12 +58,19 @@ const MedicationSearch = () => {
         }
     }, [searchParams]);
 
+    // Merge into the existing query string instead of replacing it: a plain
+    // setSearchParams({ ids }) wiped every other param, including the ?lang=es
+    // that keeps Spanish pages shareable.
     useEffect(() => {
-        if (myListIds.length > 0) {
-            setSearchParams({ ids: myListIds.join(',') });
-        } else {
-            setSearchParams({});
-        }
+        setSearchParams(prev => {
+            const params = new URLSearchParams(prev);
+            if (myListIds.length > 0) {
+                params.set('ids', myListIds.join(','));
+            } else {
+                params.delete('ids');
+            }
+            return params;
+        }, { replace: true });
     }, [myListIds, setSearchParams]);
 
     const handleSearch = useCallback(() => {

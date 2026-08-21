@@ -29,6 +29,7 @@ const SPANISH_ROUTES = new Set([
   '/medications', '/evidence', '/my-medications', '/savings-tracker',
   '/survey', '/survey/transplant', '/survey/general', '/pilot',
   '/terms-and-conditions', '/privacy', '/accessibility',
+  '/about', '/feedback', '/education/appeals',
 ]);
 
 // Spanish titles/descriptions come from the same source the app uses
@@ -50,6 +51,9 @@ const SPANISH_META = {
   '/terms-and-conditions': seoMetadata.termsAndConditions.es,
   '/privacy': seoMetadata.privacyPolicy.es,
   '/accessibility': seoMetadata.accessibility.es,
+  '/about': seoMetadata.about.es,
+  '/feedback': seoMetadata.feedback.es,
+  '/education/appeals': seoMetadata.appeals.es,
 };
 const ES_LOCALE = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')
@@ -195,6 +199,27 @@ const pages = [
     description: 'Read our Privacy Policy to understand how Transplant Medication Navigator collects, uses, and protects your personal information.',
     ogTitle: 'Privacy Policy - Transplant Medication Navigator™',
     ogDescription: 'Learn how Transplant Medication Navigator collects, uses, and safeguards your personal information.',
+  },
+  {
+    route: '/about',
+    title: seoMetadata.about.title,
+    description: seoMetadata.about.description,
+    ogTitle: seoMetadata.about.ogTitle,
+    ogDescription: seoMetadata.about.ogDescription,
+  },
+  {
+    route: '/feedback',
+    title: seoMetadata.feedback.title,
+    description: seoMetadata.feedback.description,
+    ogTitle: seoMetadata.feedback.ogTitle,
+    ogDescription: seoMetadata.feedback.ogDescription,
+  },
+  {
+    route: '/education/appeals',
+    title: seoMetadata.appeals.title,
+    description: seoMetadata.appeals.description,
+    ogTitle: seoMetadata.appeals.ogTitle,
+    ogDescription: seoMetadata.appeals.ogDescription,
   },
   {
     route: '/accessibility',

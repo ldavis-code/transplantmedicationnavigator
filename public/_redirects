@@ -47,6 +47,9 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /terms-and-conditions  lang=:lang  /terms-and-conditions/index-:lang.html  200!
 /privacy  lang=:lang  /privacy/index-:lang.html  200!
 /accessibility  lang=:lang  /accessibility/index-:lang.html  200!
+/about  lang=:lang  /about/index-:lang.html  200!
+/feedback  lang=:lang  /feedback/index-:lang.html  200!
+/education/appeals  lang=:lang  /education/appeals/index-:lang.html  200!
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
@@ -67,6 +70,9 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /terms-and-conditions  /terms-and-conditions/index.html  200
 /privacy  /privacy/index.html  200
 /accessibility  /accessibility/index.html  200
+/about  /about/index.html  200
+/feedback  /feedback/index.html  200
+/education/appeals  /education/appeals/index.html  200
 
 # Spanish URL convention: language is selected via ?lang=es, not /es/ paths.
 # Send anyone using the common /es/ convention to the real mechanism —

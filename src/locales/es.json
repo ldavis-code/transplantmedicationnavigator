@@ -1293,7 +1293,7 @@
       "title": "Su lista real de medicamentos, con un solo toque",
       "text": "Traiga sus medicamentos directamente desde <strong>MyChart</strong> (el portal del paciente de su hospital) de Epic y vea al instante cada tarjeta de copago y programa de asistencia que le corresponde. Sin escribir, sin errores.",
       "connect": "Conectar MyChart",
-      "footnote": "Funciona con MyChart (el portal del paciente de su hospital) en más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
+      "footnote": "Incluido en el Epic Connection Hub • Funciona con MyChart (el portal del paciente de su hospital) en más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
     },
     "features": {
       "ariaLabel": "Funciones principales",
@@ -1741,10 +1741,6 @@
     "loading": "Cargando..."
   },
   "appeals": {
-    "meta": {
-      "title": "¿Le negaron? Ayuda con apelaciones para pacientes de trasplante | TransplantMedicationNavigator",
-      "description": "Aprenda cómo apelar las denegaciones del seguro para medicamentos de trasplante. Incluye excepciones a la terapia escalonada, guía sobre genéricos y de marca, y modelos de cartas de necesidad médica."
-    },
     "header": {
       "back": "Volver a Educación y recursos",
       "title": "¿Le negaron? No se rinda.",
