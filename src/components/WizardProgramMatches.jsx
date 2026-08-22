@@ -5,6 +5,7 @@ import PROGRAMS from '../data/programs.json';
 import PROGRAMS_ES from '../data/programs.es.json';
 import { InsuranceType } from '../data/constants.js';
 import { medDisplayName } from '../utils/medDisplay.js';
+import { trackServerEvent } from '../lib/trackServerEvent.js';
 
 /**
  * WizardProgramMatches - the payoff panel on the wizard results screen.
@@ -179,6 +180,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                                                 href={row.url}
                                                 target="_blank"
                                                 rel="noreferrer"
+                                                onClick={() => trackServerEvent(isPap ? 'pap_click' : 'copay_card_click', { medication: med.brandName, programId: row.programId || null, source: 'wizard-results' })}
                                                 className="flex-shrink-0 inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-4 py-2 rounded-lg transition min-h-[44px] no-print"
                                                 aria-label={t('wizard.results.programs.applyAria', { program: row.name, med: medDisplayName(med) })}
                                             >
@@ -230,6 +232,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                                         href={p.url}
                                         target="_blank"
                                         rel="noreferrer"
+                                        onClick={() => trackServerEvent('foundation_click', { programId: id, source: 'wizard-results' })}
                                         className="flex-shrink-0 inline-flex items-center justify-center gap-1.5 bg-white hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold text-sm px-4 py-2 rounded-lg transition min-h-[44px] no-print"
                                         aria-label={t('wizard.results.programs.foundationAria', { program: p.name })}
                                     >

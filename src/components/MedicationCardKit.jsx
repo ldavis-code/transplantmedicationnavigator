@@ -659,7 +659,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             <Trans i18nKey="medications.card.overview.tip" />
                         </div>
                         <div className="flex gap-4 mt-4 no-print">
-                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={t('medications.card.overview.drugFactsAria', { name: med.brandName })}>{t('medications.card.overview.drugFactsLink')}<ExternalLink size={14} aria-hidden="true" /></a>
+                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}&source=medication-card`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={t('medications.card.overview.drugFactsAria', { name: med.brandName })}>{t('medications.card.overview.drugFactsLink')}<ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
 
                         {/* Pharmacies Section */}
@@ -794,7 +794,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <div className="text-xs text-slate-500">{t('medications.card.assistance.perMonth')}</div>
                                         </div>
                                     </div>
-                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.getCardAria', { name: med.brandName })}>
+                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.getCardAria', { name: med.brandName })}>
                                         {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
                                     </a>
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
@@ -833,7 +833,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <div className="text-xs text-slate-500">{t('medications.card.assistance.ifEligible')}</div>
                                     </div>
                                 </div>
-                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.applyAria', { name: med.brandName })}>
+                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.applyAria', { name: med.brandName })}>
                                     {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
                                 </a>
                                 {papUrl && (
@@ -857,7 +857,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <p className="text-sm text-slate-600 mt-2">
                                             {t('medications.card.assistance.foundationsText')}
                                         </p>
-                                        <a href="/out/foundation/totalassist" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label={t('medications.card.assistance.fundFinderAria')}>
+                                        <a href="/out/foundation/totalassist?source=medication-card" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label={t('medications.card.assistance.fundFinderAria')}>
                                             {t('medications.card.assistance.fundFinderLink')}<ExternalLink size={14} aria-hidden="true" />
                                         </a>
                                     </div>
@@ -1212,7 +1212,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 <a href={t('medications.card.trumpRxGuideHref')} className="text-teal-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.ourGuideAria')}>
                                                     {t('medications.card.price.ourGuide')}<ArrowRight size={14} aria-hidden="true" />
                                                 </a>
-                                                <a href="/out/pap/trumprx-gov" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label={t('medications.card.price.visitTrumpRxAria')}>
+                                                <a href="/out/pap/trumprx-gov?source=medication-card" target="_blank" rel="noreferrer" className="text-teal-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2" aria-label={t('medications.card.price.visitTrumpRxAria')}>
                                                     <ExternalLink size={14} aria-hidden="true" /> TrumpRx.gov
                                                 </a>
                                             </div>
@@ -1434,21 +1434,21 @@ const ExternalMedCard = ({ name, onRemove }) => {
                     <p><Trans i18nKey="medications.external.note" /></p>
                 </div>
                 <nav className="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label={t('medications.external.navAria', { name })}>
-                    <a href={`/out/copay/costplus-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkCostPlusAria', { name })}>
+                    <a href={`/out/copay/costplus-search?q=${encodedTerm}&source=medication-card-external`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkCostPlusAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">Cost Plus</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
-                    <a href={`/out/copay/goodrx-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkGoodRxAria', { name })}>
+                    <a href={`/out/copay/goodrx-search?q=${encodedTerm}&source=medication-card-external`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkGoodRxAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">GoodRx</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
-                    <a href={`/out/copay/singlecare-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkSingleCareAria', { name })}>
+                    <a href={`/out/copay/singlecare-search?q=${encodedTerm}&source=medication-card-external`} target="_blank" rel="noreferrer" className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm transition group" aria-label={t('medications.external.checkSingleCareAria', { name })}>
                         <span className="font-bold text-slate-800 group-hover:text-emerald-800">SingleCare</span>
                         <ExternalLink size={16} className="text-slate-400 group-hover:text-emerald-500" aria-hidden="true" />
                     </a>
                 </nav>
                 <div className="mt-4 pt-4 border-t border-slate-100 text-center no-print">
-                    <a href={`/out/pap/drugs-com-search?q=${encodedTerm}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-blue-600 hover:underline flex items-center justify-center gap-1" aria-label={t('medications.external.searchDrugsAria', { name })}>
+                    <a href={`/out/pap/drugs-com-search?q=${encodedTerm}&source=medication-card-external`} target="_blank" rel="noreferrer" className="text-sm font-bold text-blue-600 hover:underline flex items-center justify-center gap-1" aria-label={t('medications.external.searchDrugsAria', { name })}>
                         {t('medications.external.searchDrugsLink', { name })}<ExternalLink size={12} aria-hidden="true" />
                     </a>
                 </div>
