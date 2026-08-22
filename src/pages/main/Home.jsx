@@ -173,7 +173,7 @@ const Home = () => {
                 </div>
 
                 <Link
-                    to="/application-help?section=MEDS"
+                    to="/application-help?section=MEDS&connect=1"
                     className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold border-2 border-emerald-600 rounded-xl transition"
                     aria-label={t('home.steps.mychartAriaLabel')}
                 >
@@ -273,7 +273,7 @@ const Home = () => {
                     {t('home.explainer.intro')}
                 </p>
 
-                <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
                         <h3 className="font-bold text-slate-900 text-lg">{t('home.explainer.genericTitle')}</h3>
                         <p className="text-slate-600 text-sm mt-1">{t('home.explainer.genericText')}</p>

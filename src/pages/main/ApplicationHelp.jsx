@@ -92,6 +92,23 @@ const ApplicationHelp = () => {
         } catch (e) { /* ignore */ }
         return 'START';
     });
+    // Deep link from the home page's "Bring my list from MyChart" button:
+    // ?section=MEDS&connect=1 lands the patient directly on the Epic connect
+    // panel with the health-system picker focused and ready to type into.
+    useEffect(() => {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('connect') !== '1') return;
+        } catch (e) { return; }
+        const timer = setTimeout(() => {
+            document.getElementById('epic-connect')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('health-system-search')?.focus({ preventScroll: true });
+        }, 100);
+        return () => clearTimeout(timer);
+        // Mount-only: the deep link applies to the initial navigation.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     // Checklist items live in the data layer with one file per language
     const checklistItems = i18n.resolvedLanguage === 'es' ? APPLICATION_CHECKLIST_ES : APPLICATION_CHECKLIST_DATA;
     const [checkedItems, setCheckedItems] = useState({});
@@ -657,6 +674,7 @@ ${patientName || "[Your Name]"}`;
                         )}
 
                         {/* Epic MyChart Integration */}
+                        <div id="epic-connect" className="scroll-mt-24">
                         <EpicConnectButton
                             onBeforeConnect={() => {
                                 // Remember we were on the Medications tab so we can
@@ -681,6 +699,7 @@ ${patientName || "[Your Name]"}`;
                                 mergeQuizResumeMeds(matchedIds);
                             }}
                         />
+                        </div>
 
                         {/* Search bar to add medications */}
                         <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
