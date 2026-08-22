@@ -1269,7 +1269,7 @@ const Education = () => {
                                 {t('education.diversion.help.text')}
                             </p>
                             <p className="text-emerald-800 text-sm">
-                                {t('education.diversion.help.pafPre')}<a href="/out/foundation/paf-general" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">{t('education.diversion.help.pafLink')}</a>{t('education.diversion.help.pafPost')}
+                                {t('education.diversion.help.pafPre')}<a href="/out/foundation/totalassist" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">{t('education.diversion.help.pafLink')}</a>{t('education.diversion.help.pafPost')}
                             </p>
                         </aside>
                     </div>

@@ -429,14 +429,9 @@
       "maxBenefit": "Varía según el fondo",
       "notes": "Los fondos abren y cierran según el dinero disponible. Revise el sitio web con frecuencia."
     },
-    "pan-foundation": {
-      "name": "TotalAssist (antes PAN Foundation)",
+    "totalassist": {
       "maxBenefit": "Varía según el fondo",
-      "notes": "Los fondos abren y cierran según el dinero disponible. Inscríbase para recibir avisos."
-    },
-    "patient-advocate-foundation": {
-      "maxBenefit": "Varía según el fondo",
-      "notes": "PAF se unió con la Fundación PAN y lanzó TotalAssist el 1 de julio de 2026. Co-Pay Relief ahora es parte de TotalAssist, el programa de asistencia caritativa al paciente más grande del país, con casi 150 fondos para enfermedades específicas y equidad en salud, sin listas de espera y con decisiones al instante en la mayoría de los casos. Solicite la ayuda en portal.totalassist.org o llame al 866-512-3861."
+      "notes": "El programa benéfico de asistencia al paciente más grande del país, con casi 150 fondos para enfermedades específicas y equidad en salud, sin listas de espera y con decisiones al instante en la mayoría de los casos. Solicite en portal.totalassist.org o llame al 866-512-3861."
     },
     "american-kidney-fund": {
       "name": "American Kidney Fund (Fondo Americano del Riñón)",

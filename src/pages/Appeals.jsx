@@ -155,8 +155,8 @@ en los Estados Unidos. Llene los espacios [entre corchetes]:
   [Your Phone Number] / [Your Email Address] = su teléfono y correo
 
 Si necesita ayuda para llenarla, su equipo de trasplante o
-Patient Advocate Foundation (1-800-532-5274, con personal que
-habla español) pueden ayudarle gratis.
+TotalAssist (866-512-3861, presione 2 para español) pueden
+ayudarle gratis.
 ================================================================
 
 `;

@@ -244,16 +244,10 @@ const getResources = (insuranceType, organs = []) => {
             category: 'Foundation',
         },
         {
-            name: 'PAN Foundation',
-            url: 'https://www.panfoundation.org/',
-            description: 'Copay assistance for chronic conditions',
+            name: 'TotalAssist',
+            url: 'https://totalassist.org/',
+            description: 'Copay assistance funds and free case management',
             category: 'Foundation',
-        },
-        {
-            name: 'Patient Advocate Foundation',
-            url: 'https://www.patientadvocate.org/',
-            description: 'Free case management',
-            category: 'Advocacy',
         },
     ];
 
