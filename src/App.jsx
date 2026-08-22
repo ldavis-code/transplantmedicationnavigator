@@ -431,25 +431,46 @@ const Layout = ({ children }) => {
     // patient-facing top nav. isSpanish gates that footer group.
     const isSpanish = i18n.resolvedLanguage === 'es';
 
+    // One-time "Need bigger text?" prompt, remembered per device.
+    const [showSimplePrompt, setShowSimplePrompt] = useState(() => {
+        try {
+            return localStorage.getItem('tmn_simple_prompt_seen') !== 'true';
+        } catch {
+            return false;
+        }
+    });
+    const dismissSimplePrompt = () => {
+        setShowSimplePrompt(false);
+        try { localStorage.setItem('tmn_simple_prompt_seen', 'true'); } catch { /* ignore */ }
+    };
+
     const navLinks = [
         { path: '/', label: t('layout.nav.links.home.label'), ariaLabel: t('layout.nav.links.home.ariaLabel') },
         { path: '/wizard', label: t('layout.nav.links.wizard.label'), ariaLabel: t('layout.nav.links.wizard.ariaLabel') },
         { path: '/education', label: t('layout.nav.links.education.label'), ariaLabel: t('layout.nav.links.education.ariaLabel') },
+        // "Get help paying" absorbs the old Grants and Savings items — the
+        // savings tracker stays reachable from within the grants pages.
         { path: '/application-help', label: t('layout.nav.links.applicationHelp.label'), ariaLabel: t('layout.nav.links.applicationHelp.ariaLabel') },
-        { path: '/savings-tracker', label: t('layout.nav.links.savingsTracker.label'), ariaLabel: t('layout.nav.links.savingsTracker.ariaLabel') },
         { path: '/faq', label: t('layout.nav.links.faq.label'), ariaLabel: t('layout.nav.links.faq.ariaLabel') },
         { path: '/feedback', label: t('layout.nav.links.feedback.label'), ariaLabel: t('layout.nav.links.feedback.ariaLabel') },
     ];
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
-            {/* Safety Banner */}
-            <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+            {/* Urgent-help Banner — the person who needs it most may never
+                scroll, so the crisis path owns the first slot on every page. */}
+            <Link
+                to="/education?topic=EMERGENCY"
+                className="block bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-3 text-base text-center font-medium no-print transition-colors"
+                aria-label={t('layout.banner.urgentAriaLabel')}
+            >
                 <span className="inline-flex items-center justify-center gap-2">
-                    <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    {t('layout.banner.text')}
+                    <ShieldAlert size={18} className="text-emerald-100 flex-shrink-0" aria-hidden="true" />
+                    <span>
+                        {t('layout.banner.urgentText')} <span className="underline font-bold whitespace-nowrap">{t('layout.banner.urgentLink')} →</span>
+                    </span>
                 </span>
-            </div>
+            </Link>
 
             {/* Skip to Main Content Link - Accessibility */}
             <a
@@ -553,6 +574,31 @@ const Layout = ({ children }) => {
                     </nav>
                 )}
             </header>
+
+            {/* One-time Simple View offer: shown until dismissed or accepted,
+                remembered per device. Simple View is a real accessibility
+                asset (larger type, boxed nav) that the nav toggle alone
+                doesn't surface to the people who need it. */}
+            {showSimplePrompt && !isSimpleView && (
+                <div className="bg-sky-50 border-b border-sky-200 px-4 py-2.5 no-print" role="region" aria-label={t('layout.nav.simplePrompt.ariaLabel')}>
+                    <div className="container mx-auto flex items-center justify-center gap-x-4 gap-y-1 text-sm flex-wrap">
+                        <span className="text-slate-800 font-medium">{t('layout.nav.simplePrompt.text')}</span>
+                        <button
+                            onClick={() => { toggleSimpleView(); dismissSimplePrompt(); }}
+                            className="text-sky-800 font-bold underline hover:text-sky-900 min-h-[44px]"
+                        >
+                            {t('layout.nav.simplePrompt.tryIt')}
+                        </button>
+                        <button
+                            onClick={dismissSimplePrompt}
+                            className="text-slate-500 hover:text-slate-700 p-2"
+                            aria-label={t('layout.nav.simplePrompt.dismissAria')}
+                        >
+                            <X size={16} aria-hidden="true" />
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Main Content */}
             <main id="main-content" className="flex-grow container mx-auto px-4 py-6 md:py-10">

@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import LanguageToggle from '../../components/LanguageToggle.jsx';
-import { Search, Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Lock, Phone, ExternalLink, X, CheckCircle } from 'lucide-react';
+import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle } from 'lucide-react';
 import HOME_STATS from '../../data/home-stats.json';
 import { useChatQuiz } from '../../context/ChatQuizContext.jsx';
 import { useMedicationsList } from '../../context/MedicationsContext.jsx';
@@ -42,10 +41,9 @@ const Home = () => {
     const insuranceType = answers?.insurance_type;
 
     const [searchTerm, setSearchTerm] = useState('');
-    // Medication chosen before an insurance type exists: held here so the
-    // patient can finish step 2, then both land on the results page together.
+    // Medication chosen in step 1, carried to the results page by the
+    // "See my options" button under step 2.
     const [pendingMed, setPendingMed] = useState(null);
-    const insuranceRef = useRef(null);
 
     // fuse.js stays out of the entry bundle: the chunk loads on the first
     // keystroke, and plain substring matching answers until it arrives.
@@ -71,40 +69,53 @@ const Home = () => {
             : null
     ), [FuseCtor, MEDICATIONS]);
 
+    // Exact-first matching: names or name-tokens that start with the query,
+    // then substring hits. The typo-tolerant fuzzy search only fills in when
+    // nothing matches directly — on a medication tool a loose fuzzy list can
+    // surface an unrelated drug next to the right one, and a tired patient
+    // can click the wrong row.
     const results = useMemo(() => {
-        const term = searchTerm.trim();
+        const term = searchTerm.trim().toLowerCase();
         if (term.length < 2) return [];
-        if (fuse) return fuse.search(term).slice(0, 6).map(r => r.item);
-        const lower = term.toLowerCase();
-        return MEDICATIONS.filter(m =>
-            (m.brandName || '').toLowerCase().includes(lower) ||
-            (m.genericName || '').toLowerCase().includes(lower)
-        ).slice(0, 6);
+        const tokenPrefix = (name) => {
+            const n = (name || '').toLowerCase();
+            return n.startsWith(term) || n.split(/[^a-z0-9]+/).some(tok => tok.startsWith(term));
+        };
+        const contains = (name) => (name || '').toLowerCase().includes(term);
+        const prefix = [];
+        const substr = [];
+        for (const m of MEDICATIONS) {
+            if (tokenPrefix(m.brandName) || tokenPrefix(m.genericName)) prefix.push(m);
+            else if (contains(m.brandName) || contains(m.genericName)) substr.push(m);
+        }
+        const direct = [...prefix, ...substr];
+        if (direct.length > 0) return direct.slice(0, 6);
+        return fuse ? fuse.search(term).slice(0, 6).map(r => r.item) : [];
     }, [searchTerm, fuse, MEDICATIONS]);
 
-    const goToMedication = (med) => navigate(`/medications?ids=${med.id}`);
-
+    // Step 1 selects and stays put; the "See my options" button under step 2
+    // is the single navigation point, so the 1-2 sequence reads true whether
+    // the patient picks the medication or the insurance first.
     const chooseMedication = (med) => {
         setSearchTerm('');
+        setPendingMed(med);
         trackServerEvent('home_med_selected', { medicationId: med.id });
-        if (insuranceType) {
-            goToMedication(med);
-        } else {
-            setPendingMed(med);
-            insuranceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
     };
 
     const chooseExample = (id) => {
         const med = MEDICATIONS.find(m => m.id === id);
         if (med) chooseMedication(med);
-        else navigate(`/medications?ids=${id}`);
     };
 
     const chooseInsurance = (value) => {
         setAnswer('insurance_type', value);
         trackServerEvent('coverage_selected', { insuranceType: value, source: 'home' });
-        if (pendingMed) goToMedication(pendingMed);
+    };
+
+    const seeOptions = () => {
+        if (!pendingMed) return;
+        trackServerEvent('home_see_options', { medicationId: pendingMed.id, insuranceType: insuranceType || 'unset' });
+        navigate(`/medications?ids=${pendingMed.id}`);
     };
 
     return (
@@ -117,9 +128,6 @@ const Home = () => {
                 <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto">
                     {t('home.hero.subtitle')}
                 </p>
-                <div className="mt-4 flex justify-center">
-                    <LanguageToggle />
-                </div>
             </section>
 
             {/* Step 1: medications */}
@@ -135,6 +143,13 @@ const Home = () => {
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => {
+                            // Typing the full name and hitting Enter selects the top match
+                            if (e.key === 'Enter' && results.length > 0) {
+                                e.preventDefault();
+                                chooseMedication(results[0]);
+                            }
+                        }}
                         placeholder={t('home.steps.searchPlaceholder')}
                         autoComplete="off"
                         className="w-full px-5 py-4 text-lg bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 placeholder:text-slate-400"
@@ -197,18 +212,14 @@ const Home = () => {
                 </div>
 
                 {pendingMed && (
-                    <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-                        <CheckCircle size={20} className="text-emerald-600 flex-shrink-0 hidden sm:block" aria-hidden="true" />
-                        <p className="flex-grow text-sm text-slate-800">
-                            <span className="font-bold">{t('home.steps.selectedPre')}{localizeMedName(pendingMed.brandName)}.</span>{' '}
-                            {t('home.steps.selectedNext')}{' '}
-                            <button onClick={() => goToMedication(pendingMed)} className="text-emerald-700 font-semibold underline">
-                                {t('home.steps.selectedSkip')}
-                            </button>
+                    <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-3">
+                        <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                        <p className="flex-grow text-slate-800">
+                            <span className="font-bold">{t('home.steps.selectedPre')}{localizeMedName(pendingMed.brandName)}</span>
                         </p>
                         <button
                             onClick={() => setPendingMed(null)}
-                            className="text-slate-400 hover:text-slate-600 self-start sm:self-center"
+                            className="text-slate-400 hover:text-slate-600"
                             aria-label={t('home.steps.clearSelected')}
                         >
                             <X size={18} aria-hidden="true" />
@@ -218,7 +229,7 @@ const Home = () => {
             </section>
 
             {/* Step 2: insurance */}
-            <section className="max-w-2xl mx-auto" aria-labelledby="step-insurance-heading" ref={insuranceRef}>
+            <section className="max-w-2xl mx-auto" aria-labelledby="step-insurance-heading">
                 <h2 id="step-insurance-heading" className="text-sm font-extrabold tracking-widest uppercase text-slate-500 mb-3">
                     {t('home.steps.insuranceLabel')}
                 </h2>
@@ -240,26 +251,27 @@ const Home = () => {
                     })}
                 </div>
 
-                <p className="text-slate-600 mt-6 text-center sm:text-left">
+                <button
+                    onClick={seeOptions}
+                    disabled={!pendingMed}
+                    className={`mt-6 w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center justify-center gap-2 ${pendingMed
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                        : 'bg-slate-200 text-slate-500 cursor-not-allowed'}`}
+                >
+                    {t('home.steps.seeOptions')} <ArrowRight size={18} aria-hidden="true" />
+                </button>
+                {!pendingMed && (
+                    <p className="text-sm text-slate-500 mt-2">{t('home.steps.seeOptionsHint')}</p>
+                )}
+
+                <p className="text-slate-600 mt-6">
                     {t('home.steps.multiplePre')}{' '}
                     <Link to="/wizard" className="font-semibold text-slate-900 underline hover:text-emerald-700 inline-flex items-center gap-1">
                         {t('home.steps.multipleLink')} <ArrowRight size={15} aria-hidden="true" />
                     </Link>
                 </p>
-            </section>
 
-            {/* Urgent: out of medication */}
-            <section className="max-w-2xl mx-auto">
-                <Link
-                    to="/education?topic=EMERGENCY"
-                    className="block bg-orange-50 hover:bg-orange-100 border border-orange-200 hover:border-orange-300 rounded-xl px-5 py-4 text-center transition"
-                    aria-label={t('home.urgent.ariaLabel')}
-                >
-                    <span className="font-semibold text-red-800">
-                        {t('home.urgent.text')} <span className="underline">{t('home.urgent.link')}</span> <ArrowRight size={15} className="inline" aria-hidden="true" />
-                    </span>
-                </Link>
-                <p className="text-center text-sm text-slate-500 mt-4">
+                <p className="text-sm text-slate-500 mt-6">
                     {t('home.trust', { count: STAT_MEDICATIONS })}
                 </p>
             </section>
@@ -286,7 +298,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <p className="text-slate-700 mt-6 max-w-xl mx-auto text-center">
+                <p className="text-slate-700 mt-6 max-w-xl">
                     <strong className="text-slate-900">{t('home.explainer.neverTitle')}</strong>{' '}
                     {t('home.explainer.neverText')}
                 </p>
@@ -379,48 +391,42 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Mental Health Hotline */}
-            <section className="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-6 md:p-8 text-center max-w-3xl mx-auto" aria-labelledby="mental-health-hotline">
-                <div className="bg-rose-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" aria-hidden="true">
-                    <Phone size={32} />
-                </div>
-                <h3 id="mental-health-hotline" className="text-2xl font-bold text-slate-900 mb-3">
-                    {t('home.hotline.title')}
-                </h3>
-                <p className="text-slate-600 mb-4">
-                    {t('home.hotline.intro')}
-                </p>
-                <div className="mb-4">
-                    <a href="tel:988" className="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">
-                        988
-                    </a>
-                    <p className="text-lg font-bold text-slate-700">{t('home.hotline.lifeline')}</p>
-                    <p className="text-sm text-slate-600 mt-1">{t('home.hotline.availability')}</p>
-                </div>
-                <p className="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                    {t('home.hotline.encouragement')}
-                </p>
-                <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
-                    <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.callTitle')}</p>
-                        <p className="text-slate-600"><Trans i18nKey="home.hotline.callText" /></p>
+            {/* Mental health support — deliberately calm: this is "support is
+                here", not an emergency alarm. */}
+            <section className="bg-rose-50 border border-rose-200 rounded-2xl p-6 md:p-8 max-w-3xl mx-auto mb-12" aria-labelledby="mental-health-hotline">
+                <div className="flex items-start gap-4">
+                    <div className="bg-rose-100 text-rose-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <Phone size={22} />
                     </div>
-                    <div className="bg-white/80 p-3 rounded-lg">
-                        <p className="font-bold text-slate-900 mb-1">{t('home.hotline.chatTitle')}</p>
-                        <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-rose-600 font-medium hover:underline flex items-center gap-1">
-                            988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
-                        </a>
+                    <div className="flex-grow">
+                        <h3 id="mental-health-hotline" className="text-xl font-bold text-slate-900 mb-2">
+                            {t('home.hotline.title')}
+                        </h3>
+                        <p className="text-slate-700 mb-4">
+                            {t('home.hotline.intro')}
+                        </p>
+                        <p>
+                            <a href="tel:988" className="text-3xl font-bold text-rose-700 hover:text-rose-800 transition">988</a>
+                        </p>
+                        <p className="font-semibold text-slate-800 mt-1">{t('home.hotline.lifeline')}</p>
+                        <p className="text-sm text-slate-600 mb-4">{t('home.hotline.availability')}</p>
+                        <p className="text-sm text-slate-700 mb-5 leading-relaxed">
+                            {t('home.hotline.encouragement')}
+                        </p>
+                        <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                            <div className="bg-white p-3 rounded-lg border border-rose-100">
+                                <p className="font-bold text-slate-900 mb-1">{t('home.hotline.callTitle')}</p>
+                                <p className="text-slate-600"><Trans i18nKey="home.hotline.callText" /></p>
+                            </div>
+                            <div className="bg-white p-3 rounded-lg border border-rose-100">
+                                <p className="font-bold text-slate-900 mb-1">{t('home.hotline.chatTitle')}</p>
+                                <a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" className="text-rose-700 font-medium hover:underline flex items-center gap-1">
+                                    988lifeline.org/chat <ExternalLink size={12} aria-hidden="true" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-
-            {/* Privacy Note */}
-            <section className="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
-                <div className="flex justify-center mb-2 text-slate-400" aria-hidden="true"><Lock size={20} /></div>
-                <h3 id="privacy-heading" className="font-bold text-slate-800 mb-2">{t('home.privacy.title')}</h3>
-                <p className="text-slate-600 text-sm">
-                    {t('home.privacy.text')}
-                </p>
             </section>
         </article>
     );
