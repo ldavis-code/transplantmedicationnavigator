@@ -285,7 +285,10 @@
         "title": "Medicare Guide",
         "partsTitle": "Medicare Parts for Transplant Drugs",
         "partATitle": "Part A (Hospital)",
-        "partAItems": ["Induction agents", "(Thymoglobulin, Simulect)"],
+        "partAItems": [
+          "Induction agents",
+          "(Thymoglobulin, Simulect)"
+        ],
         "partBTitle": "Part B (Medical)",
         "partBItems": [
           "IV infusions (Belatacept)",
@@ -294,9 +297,17 @@
           "Part B-ID premium: $121.60/month (kidney patients)"
         ],
         "partCTitle": "Part C (Medicare Advantage)",
-        "partCItems": ["Combines A, B, and usually D", "May have extra benefits", "You must use certain doctors"],
+        "partCItems": [
+          "Combines A, B, and usually D",
+          "May have extra benefits",
+          "You must use certain doctors"
+        ],
         "partDTitle": "Part D (Prescription)",
-        "partDItems": ["Tacrolimus", "Mycophenolate", "Valcyte, etc."],
+        "partDItems": [
+          "Tacrolimus",
+          "Mycophenolate",
+          "Valcyte, etc."
+        ],
         "chooseTitle": "Part D vs Medicare Advantage: Choosing Your Plan",
         "tradTitle": "Part D (Traditional)",
         "tradItems": [
@@ -628,11 +639,26 @@
           "title": "Commercial → Medicare",
           "timing": "Common at 65 or after 24 months on SSDI",
           "changes": [
-            { "title": "Copay Cards", "desc": "Most manufacturer copay cards are NOT allowed with Medicare. This is a major change." },
-            { "title": "PAP Access", "desc": "You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients)." },
-            { "title": "Foundation Help", "desc": "Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays." },
-            { "title": "Part B-ID Option", "desc": "Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID). Premium: $121.60/month in 2026 (up from $110.40 in 2025), plus 20% coinsurance after $283 deductible." },
-            { "title": "2026 Cap", "desc": "Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025)." }
+            {
+              "title": "Copay Cards",
+              "desc": "Most manufacturer copay cards are NOT allowed with Medicare. This is a major change."
+            },
+            {
+              "title": "PAP Access",
+              "desc": "You may now qualify for Patient Assistance Programs if your income is low enough (many have higher limits for Medicare patients)."
+            },
+            {
+              "title": "Foundation Help",
+              "desc": "Foundations like PAN, PANF, and HealthWell CAN help Medicare patients with copays."
+            },
+            {
+              "title": "Part B-ID Option",
+              "desc": "Kidney transplant patients may qualify for Part B coverage of immunosuppressants (Part B-ID). Premium: $121.60/month in 2026 (up from $110.40 in 2025), plus 20% coinsurance after $283 deductible."
+            },
+            {
+              "title": "2026 Cap",
+              "desc": "Annual out-of-pocket cap on Part D drugs: $2,100 in 2026 (up from $2,000 in 2025)."
+            }
           ],
           "action": "Apply to manufacturer PAPs 3 months before your Medicare start date. Register with foundations early as funds run out."
         },
@@ -640,10 +666,22 @@
           "title": "Commercial → Medicaid",
           "timing": "Due to income change or disability",
           "changes": [
-            { "title": "Copay Cards", "desc": "Copay cards typically cannot be used with Medicaid." },
-            { "title": "Low/No Cost", "desc": "Medicaid typically has $0-$3 copays for prescriptions." },
-            { "title": "PAP Access", "desc": "Some PAPs still available as secondary assistance." },
-            { "title": "Covered Medicines", "desc": "May need to switch to Medicaid-preferred medications or get prior authorization." }
+            {
+              "title": "Copay Cards",
+              "desc": "Copay cards typically cannot be used with Medicaid."
+            },
+            {
+              "title": "Low/No Cost",
+              "desc": "Medicaid typically has $0-$3 copays for prescriptions."
+            },
+            {
+              "title": "PAP Access",
+              "desc": "Some PAPs still available as secondary assistance."
+            },
+            {
+              "title": "Covered Medicines",
+              "desc": "May need to switch to Medicaid-preferred medications or get prior authorization."
+            }
           ],
           "action": "Work with your transplant coordinator to ensure your medications are on the Medicaid covered medicines list before switching."
         },
@@ -651,10 +689,22 @@
           "title": "Medicaid → Medicare (Dual Eligible)",
           "timing": "At age 65 or qualifying for Medicare",
           "changes": [
-            { "title": "Dual Eligible Status", "desc": "You may qualify as \"dual eligible\" and keep some Medicaid benefits alongside Medicare." },
-            { "title": "Extra Help/LIS", "desc": "Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs." },
-            { "title": "Primary Payer", "desc": "Medicare becomes primary, Medicaid secondary for covered services." },
-            { "title": "MSP Programs", "desc": "Medicare Savings Programs can pay your Part B premium ($202.90/month in 2026)." }
+            {
+              "title": "Dual Eligible Status",
+              "desc": "You may qualify as \"dual eligible\" and keep some Medicaid benefits alongside Medicare."
+            },
+            {
+              "title": "Extra Help/LIS",
+              "desc": "Likely qualify for Low Income Subsidy (Extra Help) which covers most Part D costs."
+            },
+            {
+              "title": "Primary Payer",
+              "desc": "Medicare becomes primary, Medicaid secondary for covered services."
+            },
+            {
+              "title": "MSP Programs",
+              "desc": "Medicare Savings Programs can pay your Part B premium ($202.90/month in 2026)."
+            }
           ],
           "action": "Contact your State Health Insurance Assistance Program (SHIP) for free counseling on dual eligible benefits."
         },
@@ -662,10 +712,22 @@
           "title": "Commercial → ACA Marketplace",
           "timing": "Job loss, self-employment, or retirement before 65",
           "changes": [
-            { "title": "Copay Cards OK", "desc": "Manufacturer copay cards CAN be used with Marketplace plans." },
-            { "title": "Subsidies Available", "desc": "Premium tax credits based on income can significantly reduce costs." },
-            { "title": "Network Changes", "desc": "Check if your transplant center and pharmacy are in-network before enrolling." },
-            { "title": "CSR Plans", "desc": "If income <250% FPL, Silver plans offer reduced deductibles and copays." }
+            {
+              "title": "Copay Cards OK",
+              "desc": "Manufacturer copay cards CAN be used with Marketplace plans."
+            },
+            {
+              "title": "Subsidies Available",
+              "desc": "Premium tax credits based on income can significantly reduce costs."
+            },
+            {
+              "title": "Network Changes",
+              "desc": "Check if your transplant center and pharmacy are in-network before enrolling."
+            },
+            {
+              "title": "CSR Plans",
+              "desc": "If income <250% FPL, Silver plans offer reduced deductibles and copays."
+            }
           ],
           "action": "Use healthcare.gov to compare plans. Filter by your medications and doctors to find the best fit."
         },
@@ -673,10 +735,22 @@
           "title": "Uninsured → Medicare",
           "timing": "Turning 65 or qualifying through disability",
           "changes": [
-            { "title": "Drug Coverage", "desc": "Part D provides prescription coverage with $2,100 out-of-pocket cap (2026)." },
-            { "title": "PAPs + Foundations", "desc": "Full access to Patient Assistance Programs and foundation copay help." },
-            { "title": "Discount Cards", "desc": "GoodRx/SingleCare typically not usable once you have Part D coverage." },
-            { "title": "Part B-ID", "desc": "Kidney patients: Part B-ID covers immunosuppressants even without Part A/B. Premium: $121.60/month (2026)." }
+            {
+              "title": "Drug Coverage",
+              "desc": "Part D provides prescription coverage with $2,100 out-of-pocket cap (2026)."
+            },
+            {
+              "title": "PAPs + Foundations",
+              "desc": "Full access to Patient Assistance Programs and foundation copay help."
+            },
+            {
+              "title": "Discount Cards",
+              "desc": "GoodRx/SingleCare typically not usable once you have Part D coverage."
+            },
+            {
+              "title": "Part B-ID",
+              "desc": "Kidney patients: Part B-ID covers immunosuppressants even without Part A/B. Premium: $121.60/month (2026)."
+            }
           ],
           "action": "Enroll during your Initial Enrollment Period. Apply for Extra Help (LIS) if income-limited."
         },
@@ -684,9 +758,18 @@
           "title": "Uninsured → Medicaid",
           "timing": "Income qualifies (varies by state)",
           "changes": [
-            { "title": "Coverage", "desc": "Comprehensive coverage including prescriptions, often $0-$3 copays." },
-            { "title": "Retroactive", "desc": "Coverage goes back up to 3 months before you apply." },
-            { "title": "Covered Medicines", "desc": "Must use Medicaid covered medicines list - may need prior approval for some transplant drugs." }
+            {
+              "title": "Coverage",
+              "desc": "Comprehensive coverage including prescriptions, often $0-$3 copays."
+            },
+            {
+              "title": "Retroactive",
+              "desc": "Coverage goes back up to 3 months before you apply."
+            },
+            {
+              "title": "Covered Medicines",
+              "desc": "Must use Medicaid covered medicines list - may need prior approval for some transplant drugs."
+            }
           ],
           "action": "Apply at your state Medicaid office or healthcare.gov. Bring proof of income and transplant papers."
         },
@@ -694,10 +777,22 @@
           "title": "Uninsured → ACA Marketplace",
           "timing": "Open enrollment or qualifying life event",
           "changes": [
-            { "title": "Subsidies", "desc": "Help paying for insurance based on income - may get $0 premium plans." },
-            { "title": "Copay Cards", "desc": "Can use drug company help with what you owe on Marketplace plans." },
-            { "title": "Pre-existing OK", "desc": "Cannot be denied or charged more for transplant history." },
-            { "title": "Plan Selection", "desc": "Silver plans best value if income 100-250% FPL due to cost-sharing reductions." }
+            {
+              "title": "Subsidies",
+              "desc": "Help paying for insurance based on income - may get $0 premium plans."
+            },
+            {
+              "title": "Copay Cards",
+              "desc": "Can use drug company help with what you owe on Marketplace plans."
+            },
+            {
+              "title": "Pre-existing OK",
+              "desc": "Cannot be denied or charged more for transplant history."
+            },
+            {
+              "title": "Plan Selection",
+              "desc": "Silver plans best value if income 100-250% FPL due to cost-sharing reductions."
+            }
           ],
           "action": "Apply at healthcare.gov during Open Enrollment (Nov 1 - Jan 15) or after a qualifying event."
         }
@@ -1238,12 +1333,30 @@
       },
       "simpleViewExit": "Exit Simple View",
       "links": {
-        "home": { "label": "Home", "ariaLabel": "Go to home page" },
-        "wizard": { "label": "My Path", "ariaLabel": "Start medication path wizard" },
-        "education": { "label": "Resources", "ariaLabel": "Browse resources and coverage guides" },
-        "applicationHelp": { "label": "Education", "ariaLabel": "Learn how to get help paying for your medications" },
-        "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
-        "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
+        "home": {
+          "label": "Home",
+          "ariaLabel": "Go to home page"
+        },
+        "wizard": {
+          "label": "My Path",
+          "ariaLabel": "Start medication path wizard"
+        },
+        "education": {
+          "label": "Resources",
+          "ariaLabel": "Browse resources and coverage guides"
+        },
+        "applicationHelp": {
+          "label": "Education",
+          "ariaLabel": "Learn how to get help paying for your medications"
+        },
+        "faq": {
+          "label": "FAQ",
+          "ariaLabel": "View frequently asked questions"
+        },
+        "feedback": {
+          "label": "Feedback",
+          "ariaLabel": "Share your feedback"
+        }
       }
     },
     "footer": {
@@ -1373,6 +1486,54 @@
       "callTitle": "Call or Text",
       "callText": "Dial or text <strong>988</strong> from any phone (Spanish-language support: press 2 / oprima el 2)",
       "chatTitle": "Online Chat (also available in Spanish)"
+    }
+  },
+  "about": {
+    "back": "Back to home",
+    "heading": "Created by Someone Who's Been There",
+    "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
+    "name": "Lorrinda Gray-Davis",
+    "role": "Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)",
+    "bio1": "In 2017, Lorrinda was diagnosed with end-stage liver disease and inoperable liver cancer. She received her liver transplant in 2018 — and built Transplant Medication Navigator because she knows what it's like to face a pharmacy counter and a price you can't pay.",
+    "bio2": "Since March 2020, she has led a peer support program for transplant patients and caregivers. The program has supported more than 550 patients and caregivers, and 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.",
+    "bio3": "She serves as President of Transplant Recipients International Organization (TRIO) and Vice Chair of the OPTN Patient Affairs Committee, and advises HRSA on national transplant safety standards.",
+    "stat1Label": "Transplant Recipient Since",
+    "stat2Label": "Patients & Caregivers Supported",
+    "stat3Label": "Patients Reached Transplant While Participating",
+    "stat4Label": "Published Research Papers & Presentations",
+    "credsTitle": "Leadership & Recognition",
+    "credentials": [
+      "Vice Chair, OPTN Patient Affairs Committee",
+      "OPTN Transitional Nominating Committee (2025)",
+      "President, TRIO (1,500+ members)",
+      "Harrison Fellow, Fatty Liver Foundation",
+      "AASLD Patient Advisory Group",
+      "HRSA Letter of Commendation (2025)",
+      "Co-First Author, Hepatology Communications",
+      "Featured in Cancer Today magazine (2025)"
+    ],
+    "pubsTitle": "Published Research & Presentations (7 Publications)",
+    "pubsNote": "Publication titles are shown in English, as originally published.",
+    "badgePeer": "Peer-Reviewed Journal",
+    "badgeDistinction": "Poster of Distinction",
+    "badgePoster": "Conference Poster",
+    "badgeWtc": "World Transplant Congress",
+    "pub1Venue": "Hepatology Communications, Vol. 10, Issue 2 (2026) · Co-First Author",
+    "pub2Venue": "Liver Transplantation, 2026 · First Author",
+    "pub3Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · First Author",
+    "pub4Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Co-Author",
+    "pub5Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
+    "pub6Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
+    "pub7Venue": "American Journal of Transplantation, Vol. 25, S1 · WTC 2025 (San Francisco, CA) · Co-Author",
+    "whyTitle": "Why We Built This: The Independent Evidence",
+    "whyText": "Two national peer-reviewed studies now document what this tool was built to solve: 1 in 4 liver transplant candidates faces high financial burden before listing, and nearly 40% of transplant recipients miss medication fills because of cost.",
+    "evidenceLink": "Read the evidence",
+    "learnMore": "Learn more about Lorrinda"
+  },
+  "evidence": {
+    "hero": {
+      "title": "The Evidence: Why Medication & Financial Navigation Matters",
+      "intro": "New peer-reviewed research confirms what transplant patients have always known — the cost of survival is a clinical problem, not just a personal one. Two national studies now document it across the entire transplant journey: before transplant, financial burden threatens candidacy; after transplant, medication costs threaten the graft itself."
     },
     "burden": {
       "title": "1 in 4 Liver Transplant Candidates Faces High Financial Burden",
@@ -1445,8 +1606,8 @@
     "sources": {
       "title": "Sources",
       "openAccess": "(open access)",
-        "study1Summary": "",
-        "study2Summary": "",
+      "study1Summary": "",
+      "study2Summary": "",
       "disclaimer": "This page summarizes independently conducted, peer-reviewed research. Transplant Medication Navigator was not involved in the studies. This content is educational and is not medical, legal, or financial advice."
     }
   },
@@ -2083,7 +2244,7 @@
     },
     "card": {
       "perMo": "/mo",
-          "trumpRxGuideHref": "/trumprx",
+      "trumpRxGuideHref": "/trumprx",
       "context": {
         "insuranceLabel": "Insurance:",
         "commercial": "Commercial / Employer",
