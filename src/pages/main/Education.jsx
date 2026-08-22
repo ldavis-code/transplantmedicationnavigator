@@ -5,6 +5,7 @@ import TermTooltip from '../../components/TermTooltip.jsx';
 import Coverage101 from '../../components/Coverage101.jsx';
 import GenericsVsBrand from '../../components/GenericsVsBrand.jsx';
 import LanguageToggle from '../../components/LanguageToggle.jsx';
+import { getUiLang } from '../../lib/trackServerEvent.js';
 import { Search, BookOpen, ShieldCheck, ArrowRight, Heart, ShieldAlert, HeartHandshake, CheckCircle, DollarSign, Shield, AlertTriangle, AlertCircle, ExternalLink, Globe, List, Info, Check, LandPlot, Scale, Phone, AlertOctagon, Pill, ChevronDown, HelpCircle, Users, Clock } from 'lucide-react';
 import DIRECTORY_RESOURCES_DATA from '../../data/resources.json';
 import DIRECTORY_RESOURCES_ES from '../../data/resources.es.json';
@@ -1269,7 +1270,7 @@ const Education = () => {
                                 {t('education.diversion.help.text')}
                             </p>
                             <p className="text-emerald-800 text-sm">
-                                {t('education.diversion.help.pafPre')}<a href="/out/foundation/totalassist?source=education-diversion" target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">{t('education.diversion.help.pafLink')}</a>{t('education.diversion.help.pafPost')}
+                                {t('education.diversion.help.pafPre')}<a href={`/out/foundation/totalassist?source=education-diversion&lang=${getUiLang()}`} target="_blank" rel="noreferrer" className="font-bold text-emerald-700 hover:underline">{t('education.diversion.help.pafLink')}</a>{t('education.diversion.help.pafPost')}
                             </p>
                         </aside>
                     </div>

@@ -17,7 +17,7 @@ import {
   Gift, Shield
 } from 'lucide-react';
 import { useChatQuiz, QUIZ_QUESTIONS, translateQuizQuestion } from '../context/ChatQuizContext.jsx';
-import { trackServerEvent } from '../lib/trackServerEvent.js';
+import { trackServerEvent, getUiLang } from '../lib/trackServerEvent.js';
 import { trackMedicationSearch } from '../lib/medicationTrackingApi.js';
 
 // Demo mode storage keys (must match DemoModeContext)
@@ -1117,7 +1117,7 @@ const MedicationAssistantChat = () => {
                         {t('widgets.chat.costPlusDesc')}
                       </p>
                       <a
-                        href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}&source=assistant-chat`}
+                        href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}&source=assistant-chat&lang=${getUiLang()}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1139,7 +1139,7 @@ const MedicationAssistantChat = () => {
                         {t('widgets.chat.goodrxDesc')}
                       </p>
                       <a
-                        href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat`}
+                        href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat&lang=${getUiLang()}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1161,7 +1161,7 @@ const MedicationAssistantChat = () => {
                         {t('widgets.chat.singlecareDesc')}
                       </p>
                       <a
-                        href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat`}
+                        href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat&lang=${getUiLang()}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1312,7 +1312,7 @@ const MedicationAssistantChat = () => {
                     <div className="font-semibold text-blue-800 text-sm">Cost Plus Drugs</div>{/* i18n-ok: brand name */}
                     <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.costPlusDescShort')}</p>
                     <a
-                      href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}&source=assistant-chat`}
+                      href={`/out/copay/costplus-search?q=${encodeURIComponent(medGroup.generic_name || '')}&source=assistant-chat&lang=${getUiLang()}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1327,7 +1327,7 @@ const MedicationAssistantChat = () => {
                     <div className="font-semibold text-blue-800 text-sm">GoodRx</div>
                     <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.goodrxDescShort')}</p>
                     <a
-                      href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat`}
+                      href={`/out/copay/goodrx-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat&lang=${getUiLang()}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
@@ -1342,7 +1342,7 @@ const MedicationAssistantChat = () => {
                     <div className="font-semibold text-blue-800 text-sm">SingleCare</div>
                     <p className="text-xs text-blue-600 mt-1">{t('widgets.chat.singlecareDescShort')}</p>
                     <a
-                      href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat`}
+                      href={`/out/copay/singlecare-search?q=${encodeURIComponent(medGroup.generic_name)}&source=assistant-chat&lang=${getUiLang()}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg mt-2 font-medium transition"
