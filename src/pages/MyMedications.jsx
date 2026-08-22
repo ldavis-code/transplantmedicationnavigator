@@ -6,6 +6,7 @@ import { useConfirmDialog } from '../components/ConfirmDialog';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
 import programsData from '../data/programs.json';
+import PROGRAMS_ES from '../data/programs.es.json';
 import { trackMedicationAddToList, trackProgramClick } from '../lib/medicationTrackingApi.js';
 
 const STORAGE_KEY = 'tmn_my_medications';
@@ -547,8 +548,21 @@ export default function MyMedications() {
           <div className="space-y-4">
             {medications.map((med) => {
               const programs = medicationPrograms[med.id];
-              const copayCards = programs?.copayCards || [];
-              const papPrograms = programs?.papPrograms || [];
+              // In Spanish, program names, benefits, and notes come from the
+              // programs.es.json overlay (keyed by programId), same as the
+              // medication cards.
+              const localizeProgram = (group, program) =>
+                i18n.resolvedLanguage === 'es' && PROGRAMS_ES[group]?.[program.programId]
+                  ? { ...program, ...PROGRAMS_ES[group][program.programId] }
+                  : program;
+              // Income limits read like "400% FPL" — in Spanish, expand the
+              // acronym the way the rest of the Spanish site does.
+              const localizeIncome = (income) =>
+                i18n.resolvedLanguage === 'es' && income
+                  ? income.replace(/%\s*FPL\b/, '% del nivel federal de pobreza (FPL)')
+                  : income;
+              const copayCards = (programs?.copayCards || []).map((p) => localizeProgram('copayPrograms', p));
+              const papPrograms = (programs?.papPrograms || []).map((p) => localizeProgram('papPrograms', p));
 
               return (
                 <div key={med.id} className="border border-slate-200 rounded-xl p-4 hover:border-slate-300 transition">
@@ -623,7 +637,7 @@ export default function MyMedications() {
                                 <p className="font-medium text-purple-900 text-sm">{program.name}</p>
                                 <p className="text-purple-700 text-xs mt-0.5">{program.maxBenefit}</p>
                                 {program.incomeLimit && (
-                                  <p className="text-purple-700 text-xs mt-0.5">{t('myMeds.incomeLimitLabel')} {program.incomeLimit}</p>
+                                  <p className="text-purple-700 text-xs mt-0.5">{t('myMeds.incomeLimitLabel')} {localizeIncome(program.incomeLimit)}</p>
                                 )}
                                 {program.phone && (
                                   <p className="text-purple-700 text-xs mt-0.5">{t('myMeds.phoneLabel')} {program.phone}</p>

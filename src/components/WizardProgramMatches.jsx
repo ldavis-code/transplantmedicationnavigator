@@ -49,6 +49,8 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
         (isEs && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
     const esName = (group, programId) =>
         (isEs && programId && PROGRAMS_ES[group]?.[programId]?.name) || null;
+    const esBenefit = (group, programId) =>
+        (isEs && programId && PROGRAMS_ES[group]?.[programId]?.maxBenefit) || null;
     // Income limits in the data read like "400% FPL" — in Spanish, expand the
     // acronym the way the rest of the Spanish site does.
     const localizeIncome = (income) =>
@@ -92,7 +94,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                 name: esName('copayPrograms', med.copayProgramId) || copay?.name || t('wizard.results.programs.copayFallbackName', { manufacturer: med.manufacturer }),
                 url: copay?.url || med.copayUrl,
                 programId: med.copayProgramId,
-                benefit: copay?.maxBenefit || null,
+                benefit: esBenefit('copayPrograms', med.copayProgramId) || copay?.maxBenefit || null,
                 eligible: copay ? copay.eligibility?.commercial !== false : true,
             });
         }
