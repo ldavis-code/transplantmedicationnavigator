@@ -67,10 +67,9 @@ import Home from './pages/main/Home.jsx';
 // First-visit disclaimer modal
 import DisclaimerModal from './components/DisclaimerModal.jsx';
 // Paywall modal for free tier limits
-// AI Medication Assistant Chat Widget
-// Lazy: the chat widget is a floating helper, not first-paint content, and
-// its code + print styles are heavy enough to earn their own chunk.
-const MedicationAssistantChat = lazy(() => import('./components/MedicationAssistantChat.jsx'));
+// AI Medication Assistant Chat Widget: retired from the layout — the floating
+// bubble competed with the page's own task flow. The component is kept in the
+// tree in case it returns as an opt-in surface.
 // Term Tooltip for inline definitions
 // Chat Quiz Context Provider
 import { ChatQuizProvider } from './context/ChatQuizContext.jsx';
@@ -658,10 +657,6 @@ const Layout = ({ children }) => {
                 </div>
             </footer>
 
-            {/* AI Medication Assistant Chat Widget */}
-            <Suspense fallback={null}>
-                <MedicationAssistantChat />
-            </Suspense>
         </div>
     );
 };

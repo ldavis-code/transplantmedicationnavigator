@@ -285,7 +285,10 @@
         "title": "Guía de Medicare",
         "partsTitle": "Las partes de Medicare para los medicamentos de trasplante",
         "partATitle": "Parte A (hospital)",
-        "partAItems": ["Agentes de inducción", "(Thymoglobulin, Simulect)"],
+        "partAItems": [
+          "Agentes de inducción",
+          "(Thymoglobulin, Simulect)"
+        ],
         "partBTitle": "Parte B (médica)",
         "partBItems": [
           "Infusiones IV (Belatacept)",
@@ -294,9 +297,17 @@
           "Prima de la Parte B-ID (cubre los antirrechazo de por vida a pacientes de riñón): $121.60/mes"
         ],
         "partCTitle": "Parte C (Medicare Advantage)",
-        "partCItems": ["Combina A, B y normalmente D", "Puede tener beneficios adicionales", "Debe usar ciertos médicos"],
+        "partCItems": [
+          "Combina A, B y normalmente D",
+          "Puede tener beneficios adicionales",
+          "Debe usar ciertos médicos"
+        ],
         "partDTitle": "Parte D (recetas)",
-        "partDItems": ["Tacrolimus", "Mycophenolate", "Valcyte, etc."],
+        "partDItems": [
+          "Tacrolimus",
+          "Mycophenolate",
+          "Valcyte, etc."
+        ],
         "chooseTitle": "Parte D vs Medicare Advantage: cómo elegir su plan",
         "tradTitle": "Parte D (tradicional)",
         "tradItems": [
@@ -628,11 +639,26 @@
           "title": "Comercial → Medicare",
           "timing": "Común a los 65 años o después de 24 meses con beneficios por incapacidad del Seguro Social (SSDI)",
           "changes": [
-            { "title": "Tarjetas de copago", "desc": "La mayoría de las tarjetas de copago del fabricante NO se permiten con Medicare. Este es un cambio grande." },
-            { "title": "Acceso a los PAP", "desc": "Ahora podría calificar para los Programas de Asistencia al Paciente si sus ingresos son lo bastante bajos (muchos tienen límites más altos para pacientes de Medicare)." },
-            { "title": "Ayuda de fundaciones", "desc": "Fundaciones como PAN, PANF y HealthWell SÍ pueden ayudar a los pacientes de Medicare con los copagos." },
-            { "title": "Opción Parte B-ID", "desc": "Los pacientes de trasplante de riñón pueden calificar para la cobertura de inmunosupresores de la Parte B (Parte B-ID). Prima: $121.60/mes en 2026 (subió de $110.40 en 2025), más 20% de coseguro después del deducible de $283." },
-            { "title": "Límite de 2026", "desc": "Límite anual de gastos de bolsillo en medicamentos de la Parte D: $2,100 en 2026 (subió de $2,000 en 2025)." }
+            {
+              "title": "Tarjetas de copago",
+              "desc": "La mayoría de las tarjetas de copago del fabricante NO se permiten con Medicare. Este es un cambio grande."
+            },
+            {
+              "title": "Acceso a los PAP",
+              "desc": "Ahora podría calificar para los Programas de Asistencia al Paciente si sus ingresos son lo bastante bajos (muchos tienen límites más altos para pacientes de Medicare)."
+            },
+            {
+              "title": "Ayuda de fundaciones",
+              "desc": "Fundaciones como PAN, PANF y HealthWell SÍ pueden ayudar a los pacientes de Medicare con los copagos."
+            },
+            {
+              "title": "Opción Parte B-ID",
+              "desc": "Los pacientes de trasplante de riñón pueden calificar para la cobertura de inmunosupresores de la Parte B (Parte B-ID). Prima: $121.60/mes en 2026 (subió de $110.40 en 2025), más 20% de coseguro después del deducible de $283."
+            },
+            {
+              "title": "Límite de 2026",
+              "desc": "Límite anual de gastos de bolsillo en medicamentos de la Parte D: $2,100 en 2026 (subió de $2,000 en 2025)."
+            }
           ],
           "action": "Solicite los PAP de los fabricantes 3 meses antes de la fecha en que empieza su Medicare. Regístrese temprano con las fundaciones, porque los fondos se acaban."
         },
@@ -640,10 +666,22 @@
           "title": "Comercial → Medicaid",
           "timing": "Por un cambio de ingresos o por discapacidad",
           "changes": [
-            { "title": "Tarjetas de copago", "desc": "Las tarjetas de copago normalmente no se pueden usar con Medicaid." },
-            { "title": "Costo bajo o de $0", "desc": "Medicaid normalmente tiene copagos de $0 a $3 por las recetas." },
-            { "title": "Acceso a los PAP", "desc": "Algunos PAP siguen disponibles como asistencia secundaria." },
-            { "title": "Medicinas cubiertas", "desc": "Puede que necesite cambiar a los medicamentos preferidos de Medicaid o conseguir una autorización previa." }
+            {
+              "title": "Tarjetas de copago",
+              "desc": "Las tarjetas de copago normalmente no se pueden usar con Medicaid."
+            },
+            {
+              "title": "Costo bajo o de $0",
+              "desc": "Medicaid normalmente tiene copagos de $0 a $3 por las recetas."
+            },
+            {
+              "title": "Acceso a los PAP",
+              "desc": "Algunos PAP siguen disponibles como asistencia secundaria."
+            },
+            {
+              "title": "Medicinas cubiertas",
+              "desc": "Puede que necesite cambiar a los medicamentos preferidos de Medicaid o conseguir una autorización previa."
+            }
           ],
           "action": "Trabaje con su coordinador de trasplante para asegurarse de que sus medicamentos estén en la lista de medicinas cubiertas de Medicaid antes de cambiar."
         },
@@ -651,10 +689,22 @@
           "title": "Medicaid → Medicare (doble elegibilidad)",
           "timing": "A los 65 años o al calificar para Medicare",
           "changes": [
-            { "title": "Doble elegibilidad", "desc": "Puede calificar como \"doble elegible\" y conservar algunos beneficios de Medicaid junto con Medicare." },
-            { "title": "Extra Help/LIS", "desc": "Es probable que califique para el Subsidio por Bajos Ingresos (Extra Help), que cubre la mayoría de los costos de la Parte D." },
-            { "title": "Pagador principal", "desc": "Medicare pasa a ser el principal y Medicaid el secundario para los servicios cubiertos." },
-            { "title": "Programas MSP", "desc": "Los Programas de Ahorro de Medicare pueden pagar su prima de la Parte B ($202.90/mes en 2026)." }
+            {
+              "title": "Doble elegibilidad",
+              "desc": "Puede calificar como \"doble elegible\" y conservar algunos beneficios de Medicaid junto con Medicare."
+            },
+            {
+              "title": "Extra Help/LIS",
+              "desc": "Es probable que califique para el Subsidio por Bajos Ingresos (Extra Help), que cubre la mayoría de los costos de la Parte D."
+            },
+            {
+              "title": "Pagador principal",
+              "desc": "Medicare pasa a ser el principal y Medicaid el secundario para los servicios cubiertos."
+            },
+            {
+              "title": "Programas MSP",
+              "desc": "Los Programas de Ahorro de Medicare pueden pagar su prima de la Parte B ($202.90/mes en 2026)."
+            }
           ],
           "action": "Contacte a su Programa Estatal de Asistencia con el Seguro Médico (SHIP) para recibir consejería gratis sobre los beneficios de doble elegibilidad."
         },
@@ -662,10 +712,22 @@
           "title": "Comercial → Mercado de Seguros (ACA)",
           "timing": "Por pérdida del trabajo, trabajo por cuenta propia o jubilación antes de los 65",
           "changes": [
-            { "title": "Tarjetas de copago OK", "desc": "Las tarjetas de copago del fabricante SÍ se pueden usar con los planes del Mercado de Seguros." },
-            { "title": "Subsidios disponibles", "desc": "Los créditos fiscales para las primas, según sus ingresos, pueden reducir mucho los costos." },
-            { "title": "Cambios de red", "desc": "Antes de inscribirse, revise que su centro de trasplante y su farmacia estén dentro de la red." },
-            { "title": "Ayuda extra con los costos", "desc": "Si sus ingresos son bajos o moderados, elija un plan Silver (plata): el gobierno le baja los deducibles y los copagos automáticamente." }
+            {
+              "title": "Tarjetas de copago OK",
+              "desc": "Las tarjetas de copago del fabricante SÍ se pueden usar con los planes del Mercado de Seguros."
+            },
+            {
+              "title": "Subsidios disponibles",
+              "desc": "Los créditos fiscales para las primas, según sus ingresos, pueden reducir mucho los costos."
+            },
+            {
+              "title": "Cambios de red",
+              "desc": "Antes de inscribirse, revise que su centro de trasplante y su farmacia estén dentro de la red."
+            },
+            {
+              "title": "Ayuda extra con los costos",
+              "desc": "Si sus ingresos son bajos o moderados, elija un plan Silver (plata): el gobierno le baja los deducibles y los copagos automáticamente."
+            }
           ],
           "action": "Use healthcare.gov para comparar planes. Filtre por sus medicamentos y sus médicos para encontrar la mejor opción."
         },
@@ -673,10 +735,22 @@
           "title": "Sin seguro → Medicare",
           "timing": "Al cumplir 65 años o al calificar por discapacidad",
           "changes": [
-            { "title": "Cobertura de medicamentos", "desc": "La Parte D da cobertura de recetas con un límite de gastos de bolsillo de $2,100 (2026)." },
-            { "title": "PAP + fundaciones", "desc": "Acceso completo a los Programas de Asistencia al Paciente y a la ayuda con copagos de las fundaciones." },
-            { "title": "Tarjetas de descuento", "desc": "GoodRx/SingleCare normalmente no se pueden usar una vez que tiene cobertura de la Parte D." },
-            { "title": "Parte B-ID", "desc": "Pacientes de riñón: la Parte B-ID cubre los inmunosupresores incluso sin Parte A/B. Prima: $121.60/mes (2026)." }
+            {
+              "title": "Cobertura de medicamentos",
+              "desc": "La Parte D da cobertura de recetas con un límite de gastos de bolsillo de $2,100 (2026)."
+            },
+            {
+              "title": "PAP + fundaciones",
+              "desc": "Acceso completo a los Programas de Asistencia al Paciente y a la ayuda con copagos de las fundaciones."
+            },
+            {
+              "title": "Tarjetas de descuento",
+              "desc": "GoodRx/SingleCare normalmente no se pueden usar una vez que tiene cobertura de la Parte D."
+            },
+            {
+              "title": "Parte B-ID",
+              "desc": "Pacientes de riñón: la Parte B-ID cubre los inmunosupresores incluso sin Parte A/B. Prima: $121.60/mes (2026)."
+            }
           ],
           "action": "Inscríbase durante su Período Inicial de Inscripción. Solicite Extra Help (LIS) si sus ingresos son limitados."
         },
@@ -684,9 +758,18 @@
           "title": "Sin seguro → Medicaid",
           "timing": "Si sus ingresos califican (varía según el estado)",
           "changes": [
-            { "title": "Cobertura", "desc": "Cobertura completa que incluye las recetas, muchas veces con copagos de $0 a $3." },
-            { "title": "Retroactiva", "desc": "La cobertura puede aplicarse hasta 3 meses antes de la fecha de su solicitud." },
-            { "title": "Medicinas cubiertas", "desc": "Debe usar la lista de medicinas cubiertas de Medicaid; puede necesitar aprobación previa para algunos medicamentos de trasplante." }
+            {
+              "title": "Cobertura",
+              "desc": "Cobertura completa que incluye las recetas, muchas veces con copagos de $0 a $3."
+            },
+            {
+              "title": "Retroactiva",
+              "desc": "La cobertura puede aplicarse hasta 3 meses antes de la fecha de su solicitud."
+            },
+            {
+              "title": "Medicinas cubiertas",
+              "desc": "Debe usar la lista de medicinas cubiertas de Medicaid; puede necesitar aprobación previa para algunos medicamentos de trasplante."
+            }
           ],
           "action": "Solicite en la oficina de Medicaid de su estado o en healthcare.gov. Lleve prueba de ingresos y sus papeles del trasplante."
         },
@@ -694,10 +777,22 @@
           "title": "Sin seguro → Mercado de Seguros (ACA)",
           "timing": "Durante la inscripción abierta o por un evento de vida que califique",
           "changes": [
-            { "title": "Subsidios", "desc": "Ayuda para pagar el seguro según sus ingresos; puede conseguir planes con prima de $0." },
-            { "title": "Tarjetas de copago", "desc": "Puede usar la ayuda de las compañías farmacéuticas para lo que debe pagar en los planes del Mercado de Seguros." },
-            { "title": "Condiciones preexistentes OK", "desc": "No le pueden negar el seguro ni cobrarle más por su historial de trasplante." },
-            { "title": "Elección del plan", "desc": "Si sus ingresos son bajos o moderados, el plan Silver (plata) suele ser la mejor opción: el gobierno le baja los deducibles y los copagos." }
+            {
+              "title": "Subsidios",
+              "desc": "Ayuda para pagar el seguro según sus ingresos; puede conseguir planes con prima de $0."
+            },
+            {
+              "title": "Tarjetas de copago",
+              "desc": "Puede usar la ayuda de las compañías farmacéuticas para lo que debe pagar en los planes del Mercado de Seguros."
+            },
+            {
+              "title": "Condiciones preexistentes OK",
+              "desc": "No le pueden negar el seguro ni cobrarle más por su historial de trasplante."
+            },
+            {
+              "title": "Elección del plan",
+              "desc": "Si sus ingresos son bajos o moderados, el plan Silver (plata) suele ser la mejor opción: el gobierno le baja los deducibles y los copagos."
+            }
           ],
           "action": "Solicite en healthcare.gov durante la Inscripción Abierta (del 1 de noviembre al 15 de enero) o después de un evento que califique."
         }
@@ -1238,12 +1333,30 @@
       },
       "simpleViewExit": "Salir de vista simple",
       "links": {
-        "home": { "label": "Inicio", "ariaLabel": "Ir a la página de inicio" },
-        "wizard": { "label": "Mi Camino", "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos" },
-        "education": { "label": "Recursos", "ariaLabel": "Explorar recursos y guías de cobertura" },
-        "applicationHelp": { "label": "Educación", "ariaLabel": "Aprenda a conseguir ayuda para pagar sus medicamentos" },
-        "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
-        "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
+        "home": {
+          "label": "Inicio",
+          "ariaLabel": "Ir a la página de inicio"
+        },
+        "wizard": {
+          "label": "Mi Camino",
+          "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos"
+        },
+        "education": {
+          "label": "Recursos",
+          "ariaLabel": "Explorar recursos y guías de cobertura"
+        },
+        "applicationHelp": {
+          "label": "Educación",
+          "ariaLabel": "Aprenda a conseguir ayuda para pagar sus medicamentos"
+        },
+        "faq": {
+          "label": "Preguntas",
+          "ariaLabel": "Ver preguntas frecuentes"
+        },
+        "feedback": {
+          "label": "Comentarios",
+          "ariaLabel": "Compartir sus comentarios"
+        }
       }
     },
     "footer": {
@@ -1373,6 +1486,54 @@
       "callTitle": "Llame o envíe un mensaje de texto",
       "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono (para atención en español, oprima el 2)",
       "chatTitle": "Chat en línea (también en español)"
+    }
+  },
+  "about": {
+    "back": "Volver al inicio",
+    "heading": "Creado por alguien que ya pasó por esto",
+    "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
+    "name": "Lorrinda Gray-Davis",
+    "role": "Sobreviviente de cáncer de hígado, receptora de un trasplante de hígado y presidenta de Transplant Recipients International Organization (TRIO)",
+    "bio1": "En 2017, a Lorrinda le diagnosticaron enfermedad hepática terminal y un cáncer de hígado inoperable. Recibió su trasplante de hígado en 2018, y creó Transplant Medication Navigator porque sabe lo que es estar frente al mostrador de la farmacia con un precio que no puede pagar.",
+    "bio2": "Desde marzo de 2020, dirige un programa de apoyo entre pares para pacientes de trasplante y cuidadores. El programa ha apoyado a más de 550 pacientes y cuidadores, y 183 pacientes llegaron a recibir su trasplante mientras participaban, con resultados publicados en revistas médicas revisadas por pares.",
+    "bio3": "Es presidenta de Transplant Recipients International Organization (TRIO) y vicepresidenta del Comité de Asuntos del Paciente de la OPTN, y asesora a HRSA sobre los estándares nacionales de seguridad en trasplantes.",
+    "stat1Label": "Receptora de trasplante desde",
+    "stat2Label": "Pacientes y cuidadores apoyados",
+    "stat3Label": "Pacientes que llegaron al trasplante mientras participaban",
+    "stat4Label": "Trabajos de investigación y presentaciones publicados",
+    "credsTitle": "Liderazgo y reconocimientos",
+    "credentials": [
+      "Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
+      "Comité de Nominaciones de Transición de la OPTN (2025)",
+      "Presidenta de TRIO (más de 1,500 miembros)",
+      "Harrison Fellow, Fatty Liver Foundation",
+      "Grupo Asesor de Pacientes de la AASLD",
+      "Carta de reconocimiento de HRSA (2025)",
+      "Co-primera autora, Hepatology Communications",
+      "Destacada en la revista Cancer Today (2025)"
+    ],
+    "pubsTitle": "Investigación y presentaciones publicadas (7 publicaciones)",
+    "pubsNote": "Los títulos se muestran en inglés porque los trabajos se publicaron en inglés.",
+    "badgePeer": "Revista revisada por pares",
+    "badgeDistinction": "Póster de distinción",
+    "badgePoster": "Póster de congreso",
+    "badgeWtc": "World Transplant Congress",
+    "pub1Venue": "Hepatology Communications, Vol. 10, núm. 2 (2026) · Co-primera autora",
+    "pub2Venue": "Liver Transplantation, 2026 · Primera autora",
+    "pub3Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Primera autora",
+    "pub4Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Coautora",
+    "pub5Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · Primera autora",
+    "pub6Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · Primera autora",
+    "pub7Venue": "American Journal of Transplantation, Vol. 25, S1 · WTC 2025 (San Francisco, CA) · Coautora",
+    "whyTitle": "Por qué creamos esto: la evidencia independiente",
+    "whyText": "Dos estudios nacionales revisados por pares documentan lo que esta herramienta busca resolver: 1 de cada 4 candidatos a trasplante de hígado enfrenta una carga económica alta antes de entrar en la lista, y casi el 40% de los receptores de trasplante dejan de surtir sus medicamentos por el costo.",
+    "evidenceLink": "Lea la evidencia",
+    "learnMore": "Conozca más sobre Lorrinda"
+  },
+  "evidence": {
+    "hero": {
+      "title": "La evidencia: por qué importa la navegación de medicamentos y finanzas",
+      "intro": "Nuevas investigaciones revisadas por pares confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
     },
     "burden": {
       "title": "1 de cada 4 candidatos a trasplante de hígado enfrenta una alta carga financiera",
@@ -1445,8 +1606,8 @@
     "sources": {
       "title": "Fuentes",
       "openAccess": "(acceso abierto)",
-        "study1Summary": "En resumen: este estudio siguió a 453 candidatos a trasplante de hígado en 13 centros de EE. UU. Casi 1 de cada 4 gastaba más del 10% de sus ingresos en costos médicos, y esa carga se asoció con mucho más estrés económico y con retrasar o saltarse atención médica. (El artículo completo está disponible solo en inglés.)",
-        "study2Summary": "En resumen: esta encuesta nacional de más de 10,000 receptores de trasplante encontró que casi el 40% dejó de surtir un medicamento en el último año por el costo, y más de 1 de cada 4 tomó menos dosis de sus medicamentos antirrechazo por la misma razón. (El artículo completo está disponible solo en inglés.)",
+      "study1Summary": "En resumen: este estudio siguió a 453 candidatos a trasplante de hígado en 13 centros de EE. UU. Casi 1 de cada 4 gastaba más del 10% de sus ingresos en costos médicos, y esa carga se asoció con mucho más estrés económico y con retrasar o saltarse atención médica. (El artículo completo está disponible solo en inglés.)",
+      "study2Summary": "En resumen: esta encuesta nacional de más de 10,000 receptores de trasplante encontró que casi el 40% dejó de surtir un medicamento en el último año por el costo, y más de 1 de cada 4 tomó menos dosis de sus medicamentos antirrechazo por la misma razón. (El artículo completo está disponible solo en inglés.)",
       "disclaimer": "Esta página resume investigaciones independientes revisadas por pares. Transplant Medication Navigator no participó en los estudios. Este contenido es educativo y no es consejo médico, legal ni financiero."
     }
   },
@@ -2083,7 +2244,7 @@
     },
     "card": {
       "perMo": "/mes",
-          "trumpRxGuideHref": "/trumprx-es",
+      "trumpRxGuideHref": "/trumprx-es",
       "context": {
         "insuranceLabel": "Seguro:",
         "commercial": "Comercial / Del empleador",
