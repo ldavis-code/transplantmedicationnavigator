@@ -1344,12 +1344,12 @@
           "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos"
         },
         "education": {
-          "label": "Recursos",
-          "ariaLabel": "Explorar recursos y guías de cobertura"
+          "label": "Educación",
+          "ariaLabel": "Explorar educación y guías de cobertura"
         },
         "applicationHelp": {
-          "label": "Educación",
-          "ariaLabel": "Aprenda a conseguir ayuda para pagar sus medicamentos"
+          "label": "Cómo solicitar",
+          "ariaLabel": "Aprenda a solicitar ayuda para pagar sus medicamentos"
         },
         "faq": {
           "label": "Preguntas",
