@@ -367,48 +367,50 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
  * stat tiles, so crawlers and no-JS visitors get real Spanish content.
  */
 function spanishHomeBody() {
+  // Built from the CURRENT home locale structure (task-first redesign,
+  // Aug 2026). If a key is renamed in es.json this throws, the caller's
+  // catch logs it, and the errors counter fails the build — a missing
+  // dist/index-es.html turns the sitemap-listed /?lang=es into a hard 404.
   const h = ES_LOCALE.home;
+  const trustLine = h.trust.replace('{{count}}', HOME_STATS.medications);
   return `<div style="text-align: center;">
-      <p style="background: linear-gradient(135deg, #047857 0%, #059669 40%, #10B981 100%); color: white; padding: 12px 24px; border-radius: 12px; font-size: 0.9375rem;">
-        <strong>${h.updateBanner.verified}</strong> — ${h.updateBanner.totalAssist.replace(/<\/?strong>/g, '')}
-      </p>
-      <h1 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin: 24px 0 16px; line-height: 1.2;">
-        ${h.hero.titlePre}<span style="color: #059669;">${h.hero.titleHighlight}</span>
+      <h1 style="font-size: 2rem; font-weight: 800; color: #064e3b; margin: 24px 0 16px; line-height: 1.25;">
+        ${h.hero.title1}<br />${h.hero.title2}
       </h1>
-      <p style="font-size: 1.25rem; font-weight: 600; color: #059669; margin-bottom: 12px;">${h.hero.tagline}</p>
-      <p style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 24px;">${h.hero.subtitle}</p>
-      <p style="margin-bottom: 24px;">
-        <a href="/wizard?lang=es" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.hero.quizButton}</a>
+      <p style="font-size: 1.125rem; color: #64748b; max-width: 620px; margin: 0 auto 24px;">${h.hero.subtitle}</p>
+      <p style="margin-bottom: 12px;">
+        <a href="/medications?lang=es" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.steps.searchPlaceholder.replace(/\.\.\.$/, '')}</a>
       </p>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 560px; margin: 0 auto 32px;">
-        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px; text-align: center;">
-          <p style="font-size: 1.5rem; font-weight: 800; color: #047857; margin: 0;">${HOME_STATS.medications}</p>
-          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.medications}</p>
+      <p style="color: #475569; margin-bottom: 24px;">
+        ${h.steps.multiplePre} <a href="/wizard?lang=es" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
+      </p>
+      <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 32px;">${trustLine}</p>
+      <section style="text-align: left; max-width: 640px; margin: 0 auto 24px;">
+        <h2 style="font-size: 1.375rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">${h.explainer.title}</h2>
+        <p style="color: #475569; margin-bottom: 16px;">${h.explainer.intro}</p>
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 12px;">
+          <h3 style="font-size: 1.0625rem; font-weight: 700; color: #0f172a; margin: 0 0 6px;">${h.explainer.genericTitle}</h3>
+          <p style="color: #475569; font-size: 0.9375rem; margin: 0 0 8px;">${h.explainer.genericText}</p>
+          <p style="color: #065f46; font-weight: 700; font-size: 0.9375rem; margin: 0;">→ ${h.explainer.genericAction}</p>
         </div>
-        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 14px; text-align: center;">
-          <p style="font-size: 1.5rem; font-weight: 800; color: #b45309; margin: 0;">${HOME_STATS.assistancePrograms}</p>
-          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.assistancePrograms}</p>
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 12px;">
+          <h3 style="font-size: 1.0625rem; font-weight: 700; color: #0f172a; margin: 0 0 6px;">${h.explainer.brandTitle}</h3>
+          <p style="color: #475569; font-size: 0.9375rem; margin: 0 0 8px;">${h.explainer.brandText}</p>
+          <p style="color: #b45309; font-weight: 700; font-size: 0.9375rem; margin: 0;">→ ${h.explainer.brandAction}</p>
         </div>
-        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px; text-align: center;">
-          <p style="font-size: 1.5rem; font-weight: 800; color: #047857; margin: 0;">${HOME_STATS.copayCards}</p>
-          <p style="font-size: 0.8125rem; color: #475569; margin: 4px 0 0;">${h.stats.copayCards}</p>
-        </div>
-      </div>
-      <section style="background: #064e3b; color: white; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">${h.mission.missionTitle}</h2>
-        <p style="color: #d1fae5; line-height: 1.7; margin: 0;">${h.mission.missionText}</p>
+        <p style="color: #334155; margin: 16px 0 0;"><strong>${h.explainer.neverTitle}</strong> ${h.explainer.neverText}</p>
       </section>
       <section style="background: linear-gradient(to bottom right, #f8fafc, #ecfdf5); border: 2px solid #a7f3d0; border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: left;">
-        <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${h.founder.title}</h2>
-        <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${h.founder.name}</h3>
+        <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${h.founder.name}</h2>
         <p style="color: #047857; font-size: 0.875rem; margin-bottom: 10px;">${h.founder.role}</p>
+        <p style="color: #334155; font-style: italic; line-height: 1.7; margin: 0 0 10px;">${h.founder.quote}</p>
         <p style="color: #334155; line-height: 1.7; margin: 0;">${h.founder.bio}</p>
       </section>
-      <section style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 12px; padding: 20px;">
-        <p style="color: white; font-weight: 700; font-size: 1.0625rem; margin: 0 0 4px;">
-          ¿Crisis de salud mental? Llame o envíe un mensaje de texto al <a href="tel:988" style="color: white;">988</a> (para atención en español, oprima el 2)
+      <section style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; padding: 20px; text-align: left;">
+        <p style="color: #0f172a; font-weight: 700; font-size: 1.0625rem; margin: 0 0 4px;">
+          ${h.hotline.title} Llame o envíe un mensaje de texto al <a href="tel:988" style="color: #be123c;">988</a> (para atención en español, oprima el 2)
         </p>
-        <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">${h.hotline.lifeline} — 24/7, confidencial y también en español</p>
+        <p style="color: #64748b; font-size: 0.875rem; margin: 0;">${h.hotline.lifeline} — 24/7, confidencial y también en español</p>
       </section>
     </div>`;
 }
@@ -555,6 +557,10 @@ function prerenderPages() {
   console.log(`   Created: ${created} pages`);
   if (errors > 0) {
     console.log(`   Errors: ${errors}`);
+    // A missing prerendered file is a hard 404 behind the forced
+    // lang=:lang redirects (and those URLs are in the sitemap), so a
+    // prerender error must fail the build instead of shipping silently.
+    process.exitCode = 1;
   }
   console.log(`\n✅ Prerendering complete!`);
   console.log(`   Search engines will now see unique titles and descriptions for each page.\n`);

@@ -437,7 +437,9 @@
         "foundationsText": "Groups that help pay for your copays and deductibles.",
         "copayTitle": "Drug Maker Copay Cards",
         "copayText": "Help from drug makers for brand-name medicines (not for Medicare patients).",
-        "counts": "✅ Counts toward your yearly limit"
+        "counts": "✅ Counts toward your yearly limit",
+        "countsCopay": "⚠️ May not count toward your yearly limit",
+        "countsCopayAsk": "Many plans use \"copay accumulators\" that keep the card's money from counting. Before you use one, ask your plan: \"Will my copay card count toward what I owe?\""
       },
       "takeaways": {
         "title": "Key Takeaways",
@@ -1342,12 +1344,12 @@
           "ariaLabel": "Start medication path wizard"
         },
         "education": {
-          "label": "Resources",
-          "ariaLabel": "Browse resources and coverage guides"
+          "label": "Education",
+          "ariaLabel": "Browse education and coverage guides"
         },
         "applicationHelp": {
-          "label": "Education",
-          "ariaLabel": "Learn how to get help paying for your medications"
+          "label": "How to apply",
+          "ariaLabel": "Learn how to apply for help paying for your medications"
         },
         "faq": {
           "label": "FAQ",

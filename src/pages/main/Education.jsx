@@ -1023,7 +1023,11 @@ const Education = () => {
                                 <div className="bg-purple-50 p-6 rounded-xl border border-purple-200">
                                     <h3 className="font-bold text-purple-900 text-lg mb-3">{t('education.deductibleTrap.alternatives.copayTitle')}</h3>
                                     <p className="text-slate-700 text-sm mb-4">{t('education.deductibleTrap.alternatives.copayText')}</p>
-                                    <p className="text-purple-800 font-bold text-sm">{t('education.deductibleTrap.alternatives.counts')}</p>
+                                    {/* Copay cards can't share the green check: with a copay
+                                        accumulator the card's money does NOT count toward the
+                                        limit — the exact trap this page warns about. */}
+                                    <p className="text-amber-800 font-bold text-sm">{t('education.deductibleTrap.alternatives.countsCopay')}</p>
+                                    <p className="text-slate-600 text-sm mt-2">{t('education.deductibleTrap.alternatives.countsCopayAsk')}</p>
                                 </div>
                             </div>
                         </section>
