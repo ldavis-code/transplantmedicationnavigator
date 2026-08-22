@@ -1240,8 +1240,8 @@
       "links": {
         "home": { "label": "Inicio", "ariaLabel": "Ir a la página de inicio" },
         "wizard": { "label": "Mi Camino", "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos" },
-        "education": { "label": "Educación", "ariaLabel": "Explorar educación y recursos" },
-        "applicationHelp": { "label": "Ayuda para pagar", "ariaLabel": "Ayuda para pagar sus medicamentos" },
+        "education": { "label": "Recursos", "ariaLabel": "Explorar recursos y guías de cobertura" },
+        "applicationHelp": { "label": "Educación", "ariaLabel": "Aprenda a conseguir ayuda para pagar sus medicamentos" },
         "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }

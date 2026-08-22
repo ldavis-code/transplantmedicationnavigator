@@ -1240,8 +1240,8 @@
       "links": {
         "home": { "label": "Home", "ariaLabel": "Go to home page" },
         "wizard": { "label": "My Path", "ariaLabel": "Start medication path wizard" },
-        "education": { "label": "Education", "ariaLabel": "Browse education and resources" },
-        "applicationHelp": { "label": "Get help paying", "ariaLabel": "Get help paying for your medications" },
+        "education": { "label": "Resources", "ariaLabel": "Browse resources and coverage guides" },
+        "applicationHelp": { "label": "Education", "ariaLabel": "Learn how to get help paying for your medications" },
         "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
         "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
       }
