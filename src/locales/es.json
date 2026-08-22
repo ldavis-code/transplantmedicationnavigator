@@ -437,7 +437,9 @@
         "foundationsText": "Grupos que ayudan a pagar sus copagos y deducibles.",
         "copayTitle": "Tarjetas de copago de los fabricantes",
         "copayText": "Ayuda de los fabricantes para las medicinas de marca (no para pacientes de Medicare).",
-        "counts": "✅ Cuenta para su límite anual"
+        "counts": "✅ Cuenta para su límite anual",
+        "countsCopay": "⚠️ Puede no contar para su límite anual",
+        "countsCopayAsk": "Muchos planes usan \"acumuladores de copago\" que impiden que el dinero de la tarjeta cuente. Antes de usar una, pregunte a su plan: \"¿El dinero de mi tarjeta de copago contará para lo que debo?\""
       },
       "takeaways": {
         "title": "Puntos clave",
