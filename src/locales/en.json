@@ -1280,7 +1280,7 @@
       "or": "or",
       "mychartAriaLabel": "Import your medication list from MyChart",
       "mychartButton": "Bring my list from MyChart",
-      "mychartFootnote": "Imports your real list from 400+ Epic health systems — including whether you're on the brand or the generic. Your data stays on your device.",
+      "mychartFootnote": "Listed in the Epic Connection Hub. Imports your real list from 400+ Epic health systems — including whether you're on the brand or the generic. Your data stays on your device.",
       "examplesAriaLabel": "Common transplant medications",
       "tagGeneric": "generic",
       "tagBrand": "brand",
@@ -1302,7 +1302,7 @@
       "text": "Out of medication, or down to your last few days?",
       "link": "Get help today"
     },
-    "trust": "Listed in the Epic Connection Hub · {{count}} transplant medications · Free, no account · Built by a liver transplant recipient",
+    "trust": "{{count}} transplant medications · Free, no account · Built by a liver transplant recipient",
     "explainer": {
       "title": "Not sure whether you're on the brand or the generic?",
       "intro": "Most transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",

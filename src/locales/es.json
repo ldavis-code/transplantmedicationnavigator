@@ -1280,7 +1280,7 @@
       "or": "o",
       "mychartAriaLabel": "Importe su lista de medicamentos desde MyChart",
       "mychartButton": "Traer mi lista desde MyChart",
-      "mychartFootnote": "Importa su lista real desde más de 400 sistemas de salud con Epic — incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
+      "mychartFootnote": "Incluido en el Epic Connection Hub. Importa su lista real desde más de 400 sistemas de salud con Epic — incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
       "examplesAriaLabel": "Medicamentos comunes de trasplante",
       "tagGeneric": "genérico",
       "tagBrand": "marca",
@@ -1302,7 +1302,7 @@
       "text": "¿Se quedó sin medicamento, o le quedan solo unos días?",
       "link": "Reciba ayuda hoy"
     },
-    "trust": "Incluido en el Epic Connection Hub · {{count}} medicamentos de trasplante · Gratis, sin cuenta · Creado por una receptora de un trasplante de hígado",
+    "trust": "{{count}} medicamentos de trasplante · Gratis, sin cuenta · Creado por una receptora de un trasplante de hígado",
     "explainer": {
       "title": "¿No sabe si toma la marca o el genérico?",
       "intro": "La mayoría de los pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso decide qué opciones son suyas.",
