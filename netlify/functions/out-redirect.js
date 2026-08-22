@@ -17,6 +17,7 @@ const getUrlFromJson = (programType, programId) => {
 
 // Initialize Neon client lazily to avoid cold start overhead
 let sql;
+let schemaFixed = false;
 const getDb = () => {
     if (!sql) {
         sql = neon(process.env.DATABASE_URL);
@@ -69,6 +70,10 @@ export async function handler(event) {
         // Get partner from query param if provided
         const partner = event.queryStringParameters?.partner || null;
 
+        // UI language the click came from - whitelist of supported languages
+        const rawLang = event.queryStringParameters?.lang || null;
+        const lang = ['en', 'es'].includes(rawLang) ? rawLang : null;
+
         const db = getDb();
         let redirectUrl = null;
         let usedFallback = false;
@@ -110,16 +115,23 @@ export async function handler(event) {
 
         // Log the event to the database (best effort, don't fail if this errors)
         try {
+            // Ensure the lang column exists (self-healing for old schema,
+            // runs once per cold start - same guard as event.js)
+            if (!schemaFixed) {
+                await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS lang TEXT`.catch(() => {});
+                schemaFixed = true;
+            }
             const eventName = EVENT_NAMES[programType];
             await db`
-                INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json)
+                INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json, lang)
                 VALUES (
                     ${eventName},
                     ${partner},
                     ${pageSource},
                     ${programType},
                     ${programId},
-                    ${JSON.stringify({ redirect: true, fallback: usedFallback })}
+                    ${JSON.stringify({ redirect: true, fallback: usedFallback })},
+                    ${lang}
                 )
             `;
         } catch (logError) {

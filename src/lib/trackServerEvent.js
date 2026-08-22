@@ -27,6 +27,16 @@ function getLang() {
 }
 
 /**
+ * Current UI language for tagging outbound /out/ links ('en' or 'es').
+ * Exported so link hrefs carry the same language the client events carry —
+ * the out-redirect function logs it next to the click's source.
+ */
+export function getUiLang() {
+  const lang = getLang();
+  return lang && lang.startsWith('es') ? 'es' : 'en';
+}
+
+/**
  * Track an event to the backend database.
  * @param {string} eventName - One of the allowed event names (page_view, quiz_start, quiz_complete, med_search, etc.)
  * @param {object} [meta] - Optional metadata (no PHI allowed)

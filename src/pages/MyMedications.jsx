@@ -8,6 +8,7 @@ import { seoMetadata } from '../data/seo-metadata';
 import programsData from '../data/programs.json';
 import PROGRAMS_ES from '../data/programs.es.json';
 import { trackMedicationAddToList, trackProgramClick } from '../lib/medicationTrackingApi.js';
+import { getUiLang } from '../lib/trackServerEvent.js';
 
 const STORAGE_KEY = 'tmn_my_medications';
 const INSURANCE_STORAGE_KEY = 'tmn_has_commercial_insurance';
@@ -604,7 +605,7 @@ export default function MyMedications() {
                               </div>
                               {program.url && (
                                 <a
-                                  href={`/out/copay/${program.programId}?source=my-medications`}
+                                  href={`/out/copay/${program.programId}?source=my-medications&lang=${getUiLang()}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition flex-shrink-0 min-h-[32px]"
@@ -645,7 +646,7 @@ export default function MyMedications() {
                               </div>
                               {program.url && (
                                 <a
-                                  href={`/out/pap/${program.programId}?source=my-medications`}
+                                  href={`/out/pap/${program.programId}?source=my-medications&lang=${getUiLang()}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition flex-shrink-0 min-h-[32px]"
@@ -676,13 +677,13 @@ export default function MyMedications() {
                         </p>
                         <ul className="mt-2 space-y-1 text-sm text-purple-700">
                           <li>
-                            <a href="/out/foundation/healthwell-general?source=my-medications" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href={`/out/foundation/healthwell-general?source=my-medications&lang=${getUiLang()}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               HealthWell Foundation
                             </a>
                             {' '}{t('myMeds.healthwellDesc')}
                           </li>
                           <li>
-                            <a href="/out/foundation/totalassist?source=my-medications" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href={`/out/foundation/totalassist?source=my-medications&lang=${getUiLang()}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               TotalAssist
                             </a>
                             {' '}{t('myMeds.totalAssistDesc')}
