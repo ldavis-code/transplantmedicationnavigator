@@ -1150,19 +1150,21 @@ const Wizard = () => {
                     </aside>
                 )}
 
-                {/* The payoff: the quiz knows the exact medications and the
-                    insurance type, so name the exact programs — don't send
-                    the patient off to search for what we already know. */}
-                <WizardProgramMatches
-                    medIds={answers.medications || []}
-                    insurance={answers.insurance}
-                    medications={MEDICATIONS}
-                    organs={answers.organs || []}
-                />
+                <div className="grid md:grid-cols-2 gap-6 items-start">
 
-                <div className="grid md:grid-cols-2 gap-6">
+                    {/* Column 1: the payoff — the quiz knows the exact medications
+                        and the insurance type, so this panel names the exact
+                        programs and doubles as the full medication list. */}
+                    <div className="space-y-6">
+                        <WizardProgramMatches
+                            medIds={answers.medications || []}
+                            insurance={answers.insurance}
+                            medications={MEDICATIONS}
+                            organs={answers.organs || []}
+                        />
+                    </div>
 
-                    {/* Column 1: Strategy / Action Plan — leads the page */}
+                    {/* Column 2 (top right): Strategy / Action Plan, prices, tools */}
                     <div className="space-y-6">
                         {financial === FinancialStatus.MANAGEABLE && (
                             <section className="bg-white p-6 rounded-xl shadow-sm border border-slate-200" aria-labelledby="savings-heading">
@@ -1287,33 +1289,23 @@ const Wizard = () => {
                                 </div>
                             </section>
                         )}
-                    </div>
-                    {/* Column 2: Med List & Tools (reference — the plan reads first) */}
-                    <div className="space-y-6">
-                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200" aria-labelledby="med-list-heading">
-                            <h2 id="med-list-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.medListTitle')}</h2>
-                            {(answers.medications || []).length > 0 && (
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {(answers.medications || []).map(id => {
-                                        const med = MEDICATIONS.find(m => m.id === id);
-                                        return (
-                                            <span key={id} className="bg-white text-slate-700 px-3 py-1 rounded-full text-sm border border-slate-200 shadow-sm flex items-center gap-1">
-                                                {medDisplayName(med)}
-                                                <button
-                                                    onClick={() => handleMultiSelect('medications', id)}
-                                                    className="text-slate-400 hover:text-red-500 ml-1"
-                                                    aria-label={t('wizard.meds.removeAria', { name: med?.brandName })}
-                                                >
-                                                    <X size={14} />
-                                                </button>
-                                            </span>
-                                        )
-                                    })}
-                                </div>
-                            )}
+                        {/* Price estimates CTA — pulled up beside the action plan.
+                            The full medication list lives in the matched-programs
+                            panel, so the duplicate chip list is gone. */}
+                        {answers.medications.length > 0 && (
+                            <Link
+                                to={`/medications?ids=${answers.medications.join(',')}`}
+                                className="w-full text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2 no-print"
+                                aria-label={t('wizard.results.viewPricesAria')}
+                            >
+                                <DollarSign size={22} aria-hidden="true" />
+                                {t('wizard.results.viewPricesButton')}
+                            </Link>
+                        )}
 
-                            {/* Add More Medications */}
-                            <div className="mb-4 no-print">
+                        <section className="bg-slate-50 p-6 rounded-xl border border-slate-200 no-print" aria-labelledby="add-more-heading">
+                            <h2 id="add-more-heading" className="font-bold text-slate-800 mb-4">{t('wizard.results.addMoreLabel')}</h2>
+                            <div>
                                 <div className="relative">
                                     <label htmlFor="results-med-search" className="sr-only">{t('wizard.results.addMoreLabel')}</label>
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} aria-hidden="true" />
@@ -1366,19 +1358,6 @@ const Wizard = () => {
                                             </div>
                                         )}
                                     </div>
-                                )}
-                            </div>
-
-                            <div className="space-y-2 no-print">
-                                {answers.medications.length > 0 && (
-                                    <Link
-                                        to={`/medications?ids=${answers.medications.join(',')}`}
-                                        className="w-full block text-center py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg shadow-md transition-all flex items-center justify-center gap-2"
-                                        aria-label={t('wizard.results.viewPricesAria')}
-                                    >
-                                        <DollarSign size={22} aria-hidden="true" />
-                                        {t('wizard.results.viewPricesButton')}
-                                    </Link>
                                 )}
                             </div>
                         </section>
