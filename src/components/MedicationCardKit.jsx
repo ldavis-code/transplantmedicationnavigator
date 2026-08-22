@@ -411,8 +411,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const displayName = localizeMedName(leadWithGeneric ? med.genericName : med.brandName);
 
     // Extract program info from new nested structure or legacy flat fields
-    const copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer }) } : null);
-    const papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: t('medications.card.fallbacks.papName', { manufacturer: med.manufacturer }) } : null);
+    let copayProgram = med.copayProgram || (med.copayUrl ? { url: med.copayUrl, name: t('medications.card.fallbacks.copayCardName', { manufacturer: med.manufacturer }) } : null);
+    let papProgram = med.papProgram || (med.papUrl ? { url: med.papUrl, name: t('medications.card.fallbacks.papName', { manufacturer: med.manufacturer }) } : null);
     const medicarePartD = med.medicarePartD || (med.medicarePartDUrl ? { url: med.medicarePartDUrl, notes: med.medicare2026Note } : null);
 
     // Determine URLs for copay and PAP programs
@@ -421,6 +421,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const copayUrl = copayProgram?.url || med.copayUrl;
     const papProgramId = papProgram?.programId || med.papProgramId;
     const papUrl = papProgram?.url || med.papUrl;
+    // In Spanish, program names also come from the programs.es.json overlay;
+    // official brand names without an override stay as-is.
+    const esProgramName = (group, programId) =>
+        (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.name) || null;
+    const esCopayName = esProgramName('copayPrograms', copayProgramId);
+    if (copayProgram && esCopayName) copayProgram = { ...copayProgram, name: esCopayName };
+    const esPapName = esProgramName('papPrograms', papProgramId);
+    if (papProgram && esPapName) papProgram = { ...papProgram, name: esPapName };
     const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
     // Manufacturer Patient Assistance Programs are brand-specific. If the patient
     // takes the GENERIC, the brand's PAP (and copay) don't apply, hide both, so a
