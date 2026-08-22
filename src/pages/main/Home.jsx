@@ -286,7 +286,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <p className="text-slate-700 mt-6 max-w-xl">
+                <p className="text-slate-700 mt-6 max-w-xl mx-auto text-center">
                     <strong className="text-slate-900">{t('home.explainer.neverTitle')}</strong>{' '}
                     {t('home.explainer.neverText')}
                 </p>
