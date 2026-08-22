@@ -1230,13 +1230,18 @@
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú",
       "simpleView": "Vista simple",
+      "simplePrompt": {
+        "ariaLabel": "Opción de tamaño de pantalla",
+        "text": "¿Necesita letra más grande? La Vista simple agranda todo.",
+        "tryIt": "Activar la Vista simple",
+        "dismissAria": "Cerrar este mensaje"
+      },
       "simpleViewExit": "Salir de vista simple",
       "links": {
         "home": { "label": "Inicio", "ariaLabel": "Ir a la página de inicio" },
         "wizard": { "label": "Mi Camino", "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos" },
         "education": { "label": "Educación", "ariaLabel": "Explorar educación y recursos" },
-        "applicationHelp": { "label": "Ayudas", "ariaLabel": "Ver la guía de ayudas económicas y fundaciones" },
-        "savingsTracker": { "label": "Ahorros", "ariaLabel": "Calcular sus ahorros en medicamentos" },
+        "applicationHelp": { "label": "Ayuda para pagar", "ariaLabel": "Ayuda para pagar sus medicamentos" },
         "faq": { "label": "Preguntas", "ariaLabel": "Ver preguntas frecuentes" },
         "feedback": { "label": "Comentarios", "ariaLabel": "Compartir sus comentarios" }
       }
@@ -1244,7 +1249,7 @@
     "footer": {
       "disclaimer": "<strong>Aviso:</strong> Esta herramienta ofrece información educativa para ayudarle a encontrar opciones de asistencia con sus medicamentos. No sustituye el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su afección médica o su tratamiento.",
       "nlm": "Usamos información de la U.S. National Library of Medicine (NLM). La NLM no respalda ni recomienda esta herramienta.",
-      "lastUpdated": "Información actualizada por última vez: {{date}}",
+      "lastUpdated": "Verificado cada tres meses · Última verificación: {{date}}",
       "copyright": "© 2026 Transplant Medication Navigator™. Todos los derechos reservados.",
       "createdBy": "Creado por Lorrinda Gray-Davis · Fundado en agosto de 2025",
       "nondiscrimination": {

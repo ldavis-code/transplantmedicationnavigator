@@ -1230,13 +1230,18 @@
       "openMenu": "Open menu",
       "closeMenu": "Close menu",
       "simpleView": "Simple View",
+      "simplePrompt": {
+        "ariaLabel": "Display size option",
+        "text": "Need bigger text? Simple View makes everything larger.",
+        "tryIt": "Turn on Simple View",
+        "dismissAria": "Dismiss this message"
+      },
       "simpleViewExit": "Exit Simple View",
       "links": {
         "home": { "label": "Home", "ariaLabel": "Go to home page" },
         "wizard": { "label": "My Path", "ariaLabel": "Start medication path wizard" },
         "education": { "label": "Education", "ariaLabel": "Browse education and resources" },
-        "applicationHelp": { "label": "Grants", "ariaLabel": "View grants and foundations guide" },
-        "savingsTracker": { "label": "Savings", "ariaLabel": "Calculate your medication savings" },
+        "applicationHelp": { "label": "Get help paying", "ariaLabel": "Get help paying for your medications" },
         "faq": { "label": "FAQ", "ariaLabel": "View frequently asked questions" },
         "feedback": { "label": "Feedback", "ariaLabel": "Share your feedback" }
       }
@@ -1244,7 +1249,7 @@
     "footer": {
       "disclaimer": "<strong>Disclaimer:</strong> This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.",
       "nlm": "We use information from the U.S. National Library of Medicine (NLM). The NLM does not support or recommend this tool.",
-      "lastUpdated": "Information last updated: {{date}}",
+      "lastUpdated": "Verified quarterly · Last verified {{date}}",
       "copyright": "© 2026 Transplant Medication Navigator™. All Rights Reserved.",
       "createdBy": "Created by Lorrinda Gray-Davis · Established August 2025",
       "nondiscrimination": {
