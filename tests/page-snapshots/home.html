@@ -38,17 +38,20 @@
 </div>
 </div>
 <div class="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
-<div class="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+<a class="block bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-3 text-base text-center font-medium no-print transition-colors" aria-label="Out of medication? See emergency steps now" href="/education?topic=EMERGENCY" data-discover="true">
 <span class="inline-flex items-center justify-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-100" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-100 flex-shrink-0" aria-hidden="true">
 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
 </path>
 <path d="M12 8v4">
 </path>
 <path d="M12 16h.01">
 </path>
-</svg>Patient Assistance Programs give FREE medication to those who qualify — applying never costs anything. We help you find them.</span>
-</div>
+</svg>
+<span>Out of medication, or down to your last few days? <span class="underline font-bold whitespace-nowrap">Get help today →</span>
+</span>
+</span>
+</a>
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:bg-emerald-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-b-lg focus:font-semibold focus:shadow-lg">Skip to main content</a>
 <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
 <div class="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -114,17 +117,6 @@
 <section class="text-center max-w-3xl mx-auto pt-6 md:pt-10">
 <h1 class="text-3xl md:text-5xl font-extrabold text-emerald-900 leading-tight mb-4">Your transplant team decides your medicine.<br>We help you get it.</h1>
 <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto">What it should cost, which programs are actually yours, and what to do when your plan changes the rules.</p>
-<div class="mt-4 flex justify-center">
-<button lang="es" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-emerald-50 text-emerald-700 font-semibold rounded-lg border border-emerald-300 shadow-sm transition min-h-[44px]">
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe" aria-hidden="true">
-<circle cx="12" cy="12" r="10">
-</circle>
-<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20">
-</path>
-<path d="M2 12h20">
-</path>
-</svg>Ver esta página en español</button>
-</div>
 </section>
 <section class="max-w-2xl mx-auto" aria-labelledby="step-meds-heading">
 <h2 id="step-meds-heading" class="text-sm font-extrabold tracking-widest uppercase text-slate-500 mb-3">1 · Your medications</h2>
@@ -148,7 +140,7 @@
 <line x1="12" x2="12" y1="15" y2="3">
 </line>
 </svg>Bring my list from MyChart</a>
-<p class="text-sm text-slate-500 text-center mt-3">Listed in the Epic Connection Hub. Imports your real list from 400+ Epic health systems — including whether you're on the brand or the generic. Your data stays on your device.</p>
+<p class="text-sm text-slate-500 text-center mt-3">Listed in the Epic Connection Hub. You'll sign in on your hospital's own portal — we never store your login. Imports your real list from 400+ Epic health systems, including whether you're on the brand or the generic. Your data stays on your device.</p>
 <div class="flex flex-wrap gap-2 mt-4" role="group" aria-label="Common transplant medications">
 <button class="px-4 py-2 bg-white border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 rounded-full text-sm font-semibold text-slate-800 shadow-sm transition">Tacrolimus <span class="font-normal text-slate-500">generic</span>
 </button>
@@ -166,7 +158,15 @@
 <button aria-pressed="false" class="px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border transition bg-white border-slate-200 text-slate-800 hover:border-emerald-400 hover:bg-emerald-50">Medicaid</button>
 <button aria-pressed="false" class="px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border transition bg-white border-slate-200 text-slate-800 hover:border-emerald-400 hover:bg-emerald-50">No insurance</button>
 </div>
-<p class="text-slate-600 mt-6 text-center sm:text-left">Taking more than one? <a class="font-semibold text-slate-900 underline hover:text-emerald-700 inline-flex items-center gap-1" href="/wizard" data-discover="true">Answer 5 questions and we'll do all of them at once <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
+<button disabled="" class="mt-6 w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center justify-center gap-2 bg-slate-200 text-slate-500 cursor-not-allowed">See my options <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</button>
+<p class="text-sm text-slate-500 mt-2">Pick a medication in step 1 first.</p>
+<p class="text-slate-600 mt-6">Taking more than one? <a class="font-semibold text-slate-900 underline hover:text-emerald-700 inline-flex items-center gap-1" href="/wizard" data-discover="true">Answer 5 questions and we'll do all of them at once <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true">
 <path d="M5 12h14">
 </path>
 <path d="m12 5 7 7-7 7">
@@ -174,18 +174,7 @@
 </svg>
 </a>
 </p>
-</section>
-<section class="max-w-2xl mx-auto">
-<a class="block bg-orange-50 hover:bg-orange-100 border border-orange-200 hover:border-orange-300 rounded-xl px-5 py-4 text-center transition" aria-label="Out of medication? See emergency steps now" href="/education?topic=EMERGENCY" data-discover="true">
-<span class="font-semibold text-red-800">Out of medication, or down to your last few days? <span class="underline">Get help today</span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline" aria-hidden="true">
-<path d="M5 12h14">
-</path>
-<path d="m12 5 7 7-7 7">
-</path>
-</svg>
-</span>
-</a>
-<p class="text-center text-sm text-slate-500 mt-4">219 transplant medications · Free, no account · Built by a liver transplant recipient</p>
+<p class="text-sm text-slate-500 mt-6">219 transplant medications · Free, no account · Your answers stay on your device · Built by a liver transplant recipient</p>
 </section>
 <section class="max-w-3xl mx-auto pt-4" aria-labelledby="explainer-heading">
 <h2 id="explainer-heading" class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Not sure whether you're on the brand or the generic?</h2>
@@ -202,7 +191,7 @@
 <p class="font-bold text-amber-700 text-sm mt-2">→ Copay card or manufacturer assistance.</p>
 </div>
 </div>
-<p class="text-slate-700 mt-6 max-w-xl mx-auto text-center">
+<p class="text-slate-700 mt-6 max-w-xl">
 <strong class="text-slate-900">We never tell you to change your medication.</strong> That's your transplant team's decision — including switching between brand and generic, or between generic manufacturers. We show you what the medicine they prescribed should cost you.</p>
 </section>
 <section class="max-w-3xl mx-auto space-y-4" aria-label="Guides and programs">
@@ -315,29 +304,31 @@
 </div>
 </div>
 </section>
-<section class="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-6 md:p-8 text-center max-w-3xl mx-auto" aria-labelledby="mental-health-hotline">
-<div class="bg-rose-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" aria-hidden="true">
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+<section class="bg-rose-50 border border-rose-200 rounded-2xl p-6 md:p-8 max-w-3xl mx-auto mb-12" aria-labelledby="mental-health-hotline">
+<div class="flex items-start gap-4">
+<div class="bg-rose-100 text-rose-700 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
 </path>
 </svg>
 </div>
-<h3 id="mental-health-hotline" class="text-2xl font-bold text-slate-900 mb-3">Need to Talk to Someone?</h3>
-<p class="text-slate-600 mb-4">Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.</p>
-<div class="mb-4">
-<a href="tel:988" class="inline-block text-5xl md:text-6xl font-black text-rose-600 hover:text-rose-700 transition mb-2 tracking-tight">988</a>
-<p class="text-lg font-bold text-slate-700">National Suicide &amp; Crisis Lifeline</p>
-<p class="text-sm text-slate-600 mt-1">24/7 • Confidential</p>
-</div>
-<p class="text-sm text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.</p>
-<div class="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto text-left text-sm">
-<div class="bg-white/80 p-3 rounded-lg">
+<div class="flex-grow">
+<h3 id="mental-health-hotline" class="text-xl font-bold text-slate-900 mb-2">Struggling with more than the cost?</h3>
+<p class="text-slate-700 mb-4">Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.</p>
+<p>
+<a href="tel:988" class="text-3xl font-bold text-rose-700 hover:text-rose-800 transition">988</a>
+</p>
+<p class="font-semibold text-slate-800 mt-1">National Suicide &amp; Crisis Lifeline</p>
+<p class="text-sm text-slate-600 mb-4">24/7 • Confidential</p>
+<p class="text-sm text-slate-700 mb-5 leading-relaxed">Asking for help shows strength, not weakness. Life after a transplant is hard on your body and your feelings. Taking care of how you feel is just as important as taking your medicine. Having a hard time? Please reach out. We want to help you.</p>
+<div class="grid sm:grid-cols-2 gap-3 text-sm">
+<div class="bg-white p-3 rounded-lg border border-rose-100">
 <p class="font-bold text-slate-900 mb-1">Call or Text</p>
 <p class="text-slate-600">Dial or text <strong>988</strong> from any phone (Spanish-language support: press 2 / oprima el 2)</p>
 </div>
-<div class="bg-white/80 p-3 rounded-lg">
+<div class="bg-white p-3 rounded-lg border border-rose-100">
 <p class="font-bold text-slate-900 mb-1">Online Chat (also available in Spanish)</p>
-<a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" class="text-rose-600 font-medium hover:underline flex items-center gap-1">988lifeline.org/chat <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
+<a href="https://988lifeline.org/chat/" target="_blank" rel="noreferrer" class="text-rose-700 font-medium hover:underline flex items-center gap-1">988lifeline.org/chat <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true">
 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
 </path>
 <polyline points="15 3 21 3 21 9">
@@ -348,18 +339,8 @@
 </a>
 </div>
 </div>
-</section>
-<section class="bg-slate-100 rounded-xl p-6 text-center max-w-2xl mx-auto mb-12" aria-labelledby="privacy-heading">
-<div class="flex justify-center mb-2 text-slate-400" aria-hidden="true">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock">
-<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
-</rect>
-<path d="M7 11V7a5 5 0 0 1 10 0v4">
-</path>
-</svg>
 </div>
-<h3 id="privacy-heading" class="font-bold text-slate-800 mb-2">We Keep Your Info Safe</h3>
-<p class="text-slate-600 text-sm">We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options.</p>
+</div>
 </section>
 </article>
 </main>
@@ -412,7 +393,7 @@
 <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z">
 </path>
 </svg>
-<span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">Need help with medication costs?</span>
+<span class="hidden sm:inline whitespace-nowrap font-medium">Need help with medication costs?</span>
 </button>
 </div>
 </div>

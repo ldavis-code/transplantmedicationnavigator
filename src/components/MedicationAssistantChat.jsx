@@ -1403,7 +1403,9 @@ const MedicationAssistantChat = () => {
           aria-label={t('widgets.chat.openAria')}
         >
           <MessageCircle size={24} />
-          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-medium">
+          {/* Label stays visible — an unlabeled circle makes people guess.
+              On phones it collapses to the icon; aria-label still names it. */}
+          <span className="hidden sm:inline whitespace-nowrap font-medium">
             {hasProgress ? t('widgets.chat.launcherContinue') : t('widgets.chat.launcherHelp')}
           </span>
         </button>

@@ -1215,7 +1215,9 @@
       "startPathAria": "Comenzar el cuestionario de asistencia con medicamentos"
     },
     "banner": {
-      "text": "Los Programas de Asistencia al Paciente dan medicamentos GRATIS a quienes califican; solicitar nunca cuesta nada. Nosotros le ayudamos a encontrarlos."
+      "urgentText": "¿Se quedó sin medicamento, o le quedan solo unos días?",
+      "urgentLink": "Reciba ayuda hoy",
+      "urgentAriaLabel": "¿Sin medicamento? Vea los pasos de emergencia ahora"
     },
     "skipLink": "Saltar al contenido principal",
     "nav": {
@@ -1280,14 +1282,14 @@
       "or": "o",
       "mychartAriaLabel": "Importe su lista de medicamentos desde MyChart",
       "mychartButton": "Traer mi lista desde MyChart",
-      "mychartFootnote": "Incluido en el Epic Connection Hub. Importa su lista real desde más de 400 sistemas de salud con Epic — incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
+      "mychartFootnote": "Incluido en el Epic Connection Hub. Iniciará sesión en el portal de su propio hospital — nunca guardamos sus credenciales. Importa su lista real desde más de 400 sistemas de salud con Epic, incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
       "examplesAriaLabel": "Medicamentos comunes de trasplante",
       "tagGeneric": "genérico",
       "tagBrand": "marca",
       "selectedPre": "Su medicamento: ",
-      "selectedNext": "Ahora elija su seguro en el paso 2 para ver sus opciones.",
-      "selectedSkip": "O salte este paso y véalas ahora.",
       "clearSelected": "Quitar el medicamento elegido",
+      "seeOptions": "Ver mis opciones",
+      "seeOptionsHint": "Primero elija un medicamento en el paso 1.",
       "insuranceLabel": "2 · Su seguro",
       "insuranceAriaLabel": "Elija su tipo de seguro",
       "insCommercial": "Del trabajo / mercado",
@@ -1297,12 +1299,7 @@
       "multiplePre": "¿Toma más de uno?",
       "multipleLink": "Responda 5 preguntas y los revisamos todos a la vez"
     },
-    "urgent": {
-      "ariaLabel": "¿Sin medicamento? Vea los pasos de emergencia ahora",
-      "text": "¿Se quedó sin medicamento, o le quedan solo unos días?",
-      "link": "Reciba ayuda hoy"
-    },
-    "trust": "{{count}} medicamentos de trasplante · Gratis, sin cuenta · Creado por una receptora de un trasplante de hígado",
+    "trust": "{{count}} medicamentos de trasplante · Gratis, sin cuenta · Sus respuestas se quedan en su dispositivo · Creado por una receptora de un trasplante de hígado",
     "explainer": {
       "title": "¿No sabe si toma la marca o el genérico?",
       "intro": "La mayoría de los pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso decide qué opciones son suyas.",
@@ -1363,7 +1360,7 @@
       "link": "Lea su historia"
     },
     "hotline": {
-      "title": "¿Necesita hablar con alguien?",
+      "title": "¿Está luchando con algo más que el costo?",
       "intro": "Ser paciente de trasplante puede ser duro para sus emociones. Puede recibir ayuda gratis y privada a cualquier hora, de día o de noche.",
       "lifeline": "Línea Nacional de Prevención del Suicidio y Crisis",
       "availability": "24/7 • Confidencial",
@@ -1371,58 +1368,6 @@
       "callTitle": "Llame o envíe un mensaje de texto",
       "callText": "Marque o envíe un mensaje de texto al <strong>988</strong> desde cualquier teléfono (para atención en español, oprima el 2)",
       "chatTitle": "Chat en línea (también en español)"
-    },
-    "privacy": {
-      "title": "Protegemos su información",
-      "text": "No guardamos su información. No le pedimos su número de seguro social. No vendemos su información. Esta herramienta solo existe para enseñarle sobre sus opciones."
-    }
-  },
-  "about": {
-    "back": "Volver al inicio",
-    "heading": "Creado por alguien que ya pasó por esto",
-    "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
-    "name": "Lorrinda Gray-Davis",
-    "role": "Sobreviviente de cáncer de hígado, receptora de un trasplante de hígado y presidenta de Transplant Recipients International Organization (TRIO)",
-    "bio1": "En 2017, a Lorrinda le diagnosticaron enfermedad hepática terminal y un cáncer de hígado inoperable. Recibió su trasplante de hígado en 2018, y creó Transplant Medication Navigator porque sabe lo que es estar frente al mostrador de la farmacia con un precio que no puede pagar.",
-    "bio2": "Desde marzo de 2020, dirige un programa de apoyo entre pares para pacientes de trasplante y cuidadores. El programa ha apoyado a más de 550 pacientes y cuidadores, y 183 pacientes llegaron a recibir su trasplante mientras participaban, con resultados publicados en revistas médicas revisadas por pares.",
-    "bio3": "Es presidenta de Transplant Recipients International Organization (TRIO) y vicepresidenta del Comité de Asuntos del Paciente de la OPTN, y asesora a HRSA sobre los estándares nacionales de seguridad en trasplantes.",
-    "stat1Label": "Receptora de trasplante desde",
-    "stat2Label": "Pacientes y cuidadores apoyados",
-    "stat3Label": "Pacientes que llegaron al trasplante mientras participaban",
-    "stat4Label": "Trabajos de investigación y presentaciones publicados",
-    "credsTitle": "Liderazgo y reconocimientos",
-    "credentials": [
-      "Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
-      "Comité de Nominaciones de Transición de la OPTN (2025)",
-      "Presidenta de TRIO (más de 1,500 miembros)",
-      "Harrison Fellow, Fatty Liver Foundation",
-      "Grupo Asesor de Pacientes de la AASLD",
-      "Carta de reconocimiento de HRSA (2025)",
-      "Co-primera autora, Hepatology Communications",
-      "Destacada en la revista Cancer Today (2025)"
-    ],
-    "pubsTitle": "Investigación y presentaciones publicadas (7 publicaciones)",
-    "pubsNote": "Los títulos se muestran en inglés porque los trabajos se publicaron en inglés.",
-    "badgePeer": "Revista revisada por pares",
-    "badgeDistinction": "Póster de distinción",
-    "badgePoster": "Póster de congreso",
-    "badgeWtc": "World Transplant Congress",
-    "pub1Venue": "Hepatology Communications, Vol. 10, núm. 2 (2026) · Co-primera autora",
-    "pub2Venue": "Liver Transplantation, 2026 · Primera autora",
-    "pub3Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Primera autora",
-    "pub4Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Coautora",
-    "pub5Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · Primera autora",
-    "pub6Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · Primera autora",
-    "pub7Venue": "American Journal of Transplantation, Vol. 25, S1 · WTC 2025 (San Francisco, CA) · Coautora",
-    "whyTitle": "Por qué creamos esto: la evidencia independiente",
-    "whyText": "Dos estudios nacionales revisados por pares documentan lo que esta herramienta busca resolver: 1 de cada 4 candidatos a trasplante de hígado enfrenta una carga económica alta antes de entrar en la lista, y casi el 40% de los receptores de trasplante dejan de surtir sus medicamentos por el costo.",
-    "evidenceLink": "Lea la evidencia",
-    "learnMore": "Conozca más sobre Lorrinda"
-  },
-  "evidence": {
-    "hero": {
-      "title": "La evidencia: por qué importa la navegación de medicamentos y finanzas",
-      "intro": "Nuevas investigaciones revisadas por pares confirman lo que los pacientes de trasplante siempre han sabido: el costo de sobrevivir es un problema clínico, no solo personal. Dos estudios nacionales ahora lo documentan a lo largo de todo el camino del trasplante: antes del trasplante, la carga financiera amenaza la candidatura; después del trasplante, el costo de los medicamentos amenaza el órgano trasplantado."
     },
     "burden": {
       "title": "1 de cada 4 candidatos a trasplante de hígado enfrenta una alta carga financiera",
@@ -2077,6 +2022,7 @@
       "back": "Volver a los medicamentos",
       "options": {
         "title": "Sus opciones",
+        "howToRead": "Cómo leer esta página",
         "subtitle": "Cada tarjeta muestra uno de sus medicamentos. Haga clic en las pestañas para ver:",
         "assistance": "Asistencia",
         "assistanceDesc": "Programas de medicina gratis y tarjetas de copago",
@@ -3038,7 +2984,7 @@
       "launcherHelp": "¿Necesita ayuda con el costo de sus medicamentos?",
       "dialogAria": "Asistencia con medicamentos",
       "headerTitle": "Navegador de Medicamentos",
-      "headerSubtitle": "Encuentre programas de asistencia",
+      "headerSubtitle": "Guía automatizada · Encuentre programas de asistencia",
       "startOver": "Empezar de nuevo",
       "close": "Cerrar",
       "fallbackGreeting": "¡Hola! Soy su Navegador de Medicamentos. Le ayudaré a encontrar programas de asistencia para sus medicamentos de trasplante. ¡Empecemos!\n\nPrimero, ¿a quién estoy ayudando hoy?",

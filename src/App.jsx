@@ -443,13 +443,20 @@ const Layout = ({ children }) => {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
-            {/* Safety Banner */}
-            <div className="bg-emerald-800 text-white px-4 py-3 text-base text-center font-medium no-print" role="alert">
+            {/* Urgent-help Banner — the person who needs it most may never
+                scroll, so the crisis path owns the first slot on every page. */}
+            <Link
+                to="/education?topic=EMERGENCY"
+                className="block bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-3 text-base text-center font-medium no-print transition-colors"
+                aria-label={t('layout.banner.urgentAriaLabel')}
+            >
                 <span className="inline-flex items-center justify-center gap-2">
-                    <ShieldAlert size={18} className="text-emerald-100" aria-hidden="true" />
-                    {t('layout.banner.text')}
+                    <ShieldAlert size={18} className="text-emerald-100 flex-shrink-0" aria-hidden="true" />
+                    <span>
+                        {t('layout.banner.urgentText')} <span className="underline font-bold whitespace-nowrap">{t('layout.banner.urgentLink')} →</span>
+                    </span>
                 </span>
-            </div>
+            </Link>
 
             {/* Skip to Main Content Link - Accessibility */}
             <a

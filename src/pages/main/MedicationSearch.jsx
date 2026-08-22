@@ -79,9 +79,28 @@ const MedicationSearch = () => {
             setIsSearching(false);
             return;
         }
-        // Use Fuse.js for fuzzy matching (handles typos like "tacrolimus" vs "tacrolimis")
-        const fuseResults = fuse.search(searchTerm.trim());
-        const internalMatches = fuseResults.map(result => result.item);
+        // Exact-first matching: names or name-tokens that start with the query,
+        // then substring hits. Fuse.js fuzzy matching (typos like "tacrolimis")
+        // only fills in when nothing matches directly — a loose fuzzy list can
+        // put an unrelated drug next to the right one, and a tired patient can
+        // click the wrong row.
+        const term = searchTerm.trim().toLowerCase();
+        const tokenPrefix = (name) => {
+            const n = (name || '').toLowerCase();
+            return n.startsWith(term) || n.split(/[^a-z0-9]+/).some(tok => tok.startsWith(term));
+        };
+        const contains = (name) => (name || '').toLowerCase().includes(term);
+        const prefixMatches = [];
+        const substrMatches = [];
+        for (const m of MEDICATIONS) {
+            if (tokenPrefix(m.brandName) || tokenPrefix(m.genericName)) prefixMatches.push(m);
+            else if (contains(m.brandName) || contains(m.genericName)) substrMatches.push(m);
+        }
+        let internalMatches = [...prefixMatches, ...substrMatches];
+        if (internalMatches.length === 0) {
+            internalMatches = fuse.search(searchTerm.trim()).map(result => result.item);
+        }
+        internalMatches = internalMatches.slice(0, 6);
         setSearchResult({ internal: internalMatches, showExternalOption: true });
         setIsSearching(false);
 
@@ -90,7 +109,7 @@ const MedicationSearch = () => {
         if (internalMatches.length > 0) {
             trackMedicationSearch(internalMatches[0].genericName || internalMatches[0].brandName, searchTerm.trim());
         }
-    }, [searchTerm, fuse]);
+    }, [searchTerm, fuse, MEDICATIONS]);
 
     useEffect(() => {
         if (searchTerm.trim()) {
@@ -443,18 +462,50 @@ const MedicationSearch = () => {
                 </section>
             )}
 
+
             {hasItems && showSavings && (
-                <>
-                {/* Your Options - medication cards explanation */}
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-6 mb-6 no-print shadow-md">
-                    <div className="flex items-start gap-4">
-                        <div className="bg-emerald-600 text-white p-3 rounded-full flex-shrink-0">
-                            <Info size={28} aria-hidden="true" />
-                        </div>
-                        <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-emerald-800 mb-2">{t('medications.verify.options.title')}</h2>
-                            <p className="text-emerald-700 text-lg mb-4">{t('medications.verify.options.subtitle')}</p>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="flex items-center justify-between mb-4 no-print">
+                    <button
+                        onClick={() => setShowSavings(false)}
+                        className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]"
+                        aria-label={t('medications.verify.backAria')}
+                    >
+                        <ChevronLeft size={16} aria-hidden="true" /> {t('medications.verify.back')}
+                    </button>
+                    <h2 className="text-lg font-bold text-emerald-700">{t('medications.verify.savingsButton')}</h2>
+                </div>
+            )}
+
+            <div className="space-y-6 pb-12">
+                {!hasItems && (
+                    <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
+                        <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
+                        <h2 className="text-xl font-bold text-slate-900 mb-2">{t('medications.search.emptyTitle')}</h2>
+                        <p className="text-slate-700 max-w-md mx-auto">{t('medications.search.emptyText')}</p>
+                    </div>
+                )}
+                {hasItems && showSavings && (
+                    <>
+                        {displayListInternal.map(med => (
+                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} showCopayCards={showCopayCards} quizAnswers={quizAnswers} />
+                        ))}
+                        {myCustomMeds.map((name, idx) => (
+                            <ExternalMedCard key={`${name}-${idx}`} name={name} onRemove={() => removeCustomFromList(name)} />
+                        ))}
+                    </>
+                )}
+            </div>
+
+            {/* How-to-read panel: collapsed by default so the medication cards
+                — the thing the patient came for — are the first screen. */}
+            {hasItems && showSavings && (
+                <details className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl mb-6 no-print shadow-md">
+                    <summary className="cursor-pointer p-5 text-lg font-bold text-emerald-800 hover:text-emerald-900">
+                        {t('medications.verify.options.howToRead')}
+                    </summary>
+                    <div className="px-6 pb-6">
+                        <p className="text-emerald-700 text-lg mb-4">{t('medications.verify.options.subtitle')}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div className="flex items-center gap-3 bg-pink-100 border border-pink-300 rounded-xl p-4">
                                     <Heart className="text-pink-600 flex-shrink-0" size={24} aria-hidden="true" />
                                     <div>
@@ -503,43 +554,8 @@ const MedicationSearch = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                </>
+                </details>
             )}
-
-            {hasItems && showSavings && (
-                <div className="flex items-center justify-between mb-4 no-print">
-                    <button
-                        onClick={() => setShowSavings(false)}
-                        className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]"
-                        aria-label={t('medications.verify.backAria')}
-                    >
-                        <ChevronLeft size={16} aria-hidden="true" /> {t('medications.verify.back')}
-                    </button>
-                    <h2 className="text-lg font-bold text-emerald-700">{t('medications.verify.savingsButton')}</h2>
-                </div>
-            )}
-
-            <div className="space-y-6 pb-12">
-                {!hasItems && (
-                    <div className="text-center py-16 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
-                        <div className="text-slate-400 mb-4" aria-hidden="true"><List size={64} className="mx-auto"/></div>
-                        <h2 className="text-xl font-bold text-slate-900 mb-2">{t('medications.search.emptyTitle')}</h2>
-                        <p className="text-slate-700 max-w-md mx-auto">{t('medications.search.emptyText')}</p>
-                    </div>
-                )}
-                {hasItems && showSavings && (
-                    <>
-                        {displayListInternal.map(med => (
-                            <MedicationCard key={med.id} med={med} onRemove={() => removeInternalFromList(med.id)} onPriceReportSubmit={() => setPriceReportRefresh(prev => prev + 1)} showCopayCards={showCopayCards} quizAnswers={quizAnswers} />
-                        ))}
-                        {myCustomMeds.map((name, idx) => (
-                            <ExternalMedCard key={`${name}-${idx}`} name={name} onRemove={() => removeCustomFromList(name)} />
-                        ))}
-                    </>
-                )}
-            </div>
 
             {/* My Medication Savings Button */}
             {hasItems && !showSavings && (

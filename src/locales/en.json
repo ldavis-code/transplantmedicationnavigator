@@ -1215,7 +1215,9 @@
       "startPathAria": "Start medication assistance wizard"
     },
     "banner": {
-      "text": "Patient Assistance Programs give FREE medication to those who qualify — applying never costs anything. We help you find them."
+      "urgentText": "Out of medication, or down to your last few days?",
+      "urgentLink": "Get help today",
+      "urgentAriaLabel": "Out of medication? See emergency steps now"
     },
     "skipLink": "Skip to main content",
     "nav": {
@@ -1280,14 +1282,14 @@
       "or": "or",
       "mychartAriaLabel": "Import your medication list from MyChart",
       "mychartButton": "Bring my list from MyChart",
-      "mychartFootnote": "Listed in the Epic Connection Hub. Imports your real list from 400+ Epic health systems — including whether you're on the brand or the generic. Your data stays on your device.",
+      "mychartFootnote": "Listed in the Epic Connection Hub. You'll sign in on your hospital's own portal — we never store your login. Imports your real list from 400+ Epic health systems, including whether you're on the brand or the generic. Your data stays on your device.",
       "examplesAriaLabel": "Common transplant medications",
       "tagGeneric": "generic",
       "tagBrand": "brand",
       "selectedPre": "Your medication: ",
-      "selectedNext": "Now pick your insurance in step 2 to see your options.",
-      "selectedSkip": "Or skip ahead and see them now.",
       "clearSelected": "Clear selected medication",
+      "seeOptions": "See my options",
+      "seeOptionsHint": "Pick a medication in step 1 first.",
       "insuranceLabel": "2 · Your insurance",
       "insuranceAriaLabel": "Choose your insurance type",
       "insCommercial": "Job / marketplace",
@@ -1297,12 +1299,7 @@
       "multiplePre": "Taking more than one?",
       "multipleLink": "Answer 5 questions and we'll do all of them at once"
     },
-    "urgent": {
-      "ariaLabel": "Out of medication? See emergency steps now",
-      "text": "Out of medication, or down to your last few days?",
-      "link": "Get help today"
-    },
-    "trust": "{{count}} transplant medications · Free, no account · Built by a liver transplant recipient",
+    "trust": "{{count}} transplant medications · Free, no account · Your answers stay on your device · Built by a liver transplant recipient",
     "explainer": {
       "title": "Not sure whether you're on the brand or the generic?",
       "intro": "Most transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",
@@ -1363,7 +1360,7 @@
       "link": "Read her story"
     },
     "hotline": {
-      "title": "Need to Talk to Someone?",
+      "title": "Struggling with more than the cost?",
       "intro": "Being a transplant patient can be hard on your feelings. You can get free, private help any time, day or night.",
       "lifeline": "National Suicide & Crisis Lifeline",
       "availability": "24/7 • Confidential",
@@ -1371,58 +1368,6 @@
       "callTitle": "Call or Text",
       "callText": "Dial or text <strong>988</strong> from any phone (Spanish-language support: press 2 / oprima el 2)",
       "chatTitle": "Online Chat (also available in Spanish)"
-    },
-    "privacy": {
-      "title": "We Keep Your Info Safe",
-      "text": "We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options."
-    }
-  },
-  "about": {
-    "back": "Back to home",
-    "heading": "Created by Someone Who's Been There",
-    "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
-    "name": "Lorrinda Gray-Davis",
-    "role": "Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)",
-    "bio1": "In 2017, Lorrinda was diagnosed with end-stage liver disease and inoperable liver cancer. She received her liver transplant in 2018 — and built Transplant Medication Navigator because she knows what it's like to face a pharmacy counter and a price you can't pay.",
-    "bio2": "Since March 2020, she has led a peer support program for transplant patients and caregivers. The program has supported more than 550 patients and caregivers, and 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.",
-    "bio3": "She serves as President of Transplant Recipients International Organization (TRIO) and Vice Chair of the OPTN Patient Affairs Committee, and advises HRSA on national transplant safety standards.",
-    "stat1Label": "Transplant Recipient Since",
-    "stat2Label": "Patients & Caregivers Supported",
-    "stat3Label": "Patients Reached Transplant While Participating",
-    "stat4Label": "Published Research Papers & Presentations",
-    "credsTitle": "Leadership & Recognition",
-    "credentials": [
-      "Vice Chair, OPTN Patient Affairs Committee",
-      "OPTN Transitional Nominating Committee (2025)",
-      "President, TRIO (1,500+ members)",
-      "Harrison Fellow, Fatty Liver Foundation",
-      "AASLD Patient Advisory Group",
-      "HRSA Letter of Commendation (2025)",
-      "Co-First Author, Hepatology Communications",
-      "Featured in Cancer Today magazine (2025)"
-    ],
-    "pubsTitle": "Published Research & Presentations (7 Publications)",
-    "pubsNote": "Publication titles are shown in English, as originally published.",
-    "badgePeer": "Peer-Reviewed Journal",
-    "badgeDistinction": "Poster of Distinction",
-    "badgePoster": "Conference Poster",
-    "badgeWtc": "World Transplant Congress",
-    "pub1Venue": "Hepatology Communications, Vol. 10, Issue 2 (2026) · Co-First Author",
-    "pub2Venue": "Liver Transplantation, 2026 · First Author",
-    "pub3Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · First Author",
-    "pub4Venue": "Hepatology, Vol. 82, S1 · AASLD The Liver Meeting 2025 (Washington, DC) · Co-Author",
-    "pub5Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
-    "pub6Venue": "Hepatology, Vol. 80, S1 · AASLD The Liver Meeting 2024 (San Diego, CA) · First Author",
-    "pub7Venue": "American Journal of Transplantation, Vol. 25, S1 · WTC 2025 (San Francisco, CA) · Co-Author",
-    "whyTitle": "Why We Built This: The Independent Evidence",
-    "whyText": "Two national peer-reviewed studies now document what this tool was built to solve: 1 in 4 liver transplant candidates faces high financial burden before listing, and nearly 40% of transplant recipients miss medication fills because of cost.",
-    "evidenceLink": "Read the evidence",
-    "learnMore": "Learn more about Lorrinda"
-  },
-  "evidence": {
-    "hero": {
-      "title": "The Evidence: Why Medication & Financial Navigation Matters",
-      "intro": "New peer-reviewed research confirms what transplant patients have always known — the cost of survival is a clinical problem, not just a personal one. Two national studies now document it across the entire transplant journey: before transplant, financial burden threatens candidacy; after transplant, medication costs threaten the graft itself."
     },
     "burden": {
       "title": "1 in 4 Liver Transplant Candidates Faces High Financial Burden",
@@ -2077,6 +2022,7 @@
       "back": "Back to Medications",
       "options": {
         "title": "Your Options",
+        "howToRead": "How to read this page",
         "subtitle": "Each card shows one of your medications. Click the tabs to see:",
         "assistance": "Assistance",
         "assistanceDesc": "Free medicine programs and copay cards",
@@ -3037,7 +2983,7 @@
       "launcherHelp": "Need help with medication costs?",
       "dialogAria": "Medication assistance",
       "headerTitle": "Medication Navigator",
-      "headerSubtitle": "Find assistance programs",
+      "headerSubtitle": "Automated guide · Find assistance programs",
       "startOver": "Start over",
       "close": "Close",
       "fallbackGreeting": "Hi! I'm your Medication Navigator. I'll help you find assistance programs for your transplant medications. Let's get started!\n\nFirst, who am I helping today?",
