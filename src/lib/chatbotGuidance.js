@@ -299,7 +299,7 @@ export const generateGuidanceSummary = (answers, medications) => {
         'Ask your pharmacy for an emergency supply so you do not miss doses',
         'Ask the drug maker about a bridge or quick-start supply while your application is reviewed',
         'Apply for free medicine programs right away (many can help fast)',
-        'Call HealthWell Foundation or TotalAssist (formerly PAN Foundation) for emergency help',
+        'Call HealthWell Foundation or TotalAssist for emergency help',
       ],
     });
   }
@@ -334,7 +334,7 @@ export const getRelevantResources = (insuranceType, organs = []) => {
   });
 
   resources.push({
-    name: 'TotalAssist (formerly PAN Foundation + Patient Advocate Foundation)',
+    name: 'TotalAssist',
     url: 'https://portal.totalassist.org/',
     description: 'Nearly 150 funds for copays, premiums, and treatment costs, plus free case management',
     category: 'Foundation',

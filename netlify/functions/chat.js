@@ -115,7 +115,7 @@ const SYSTEM_PROMPT = `You are a medication assistance navigator for transplant 
 
 **Key Insurance Rules:**
 - Commercial/Employer Insurance: ELIGIBLE for manufacturer copay cards (can reduce costs to $0-$50/month)
-- Medicare: NOT eligible for copay cards (Anti-Kickback Statute), but CAN use foundations (HealthWell, PAN, etc.—funds open throughout the year, so check back if closed), PAPs, and discount cards
+- Medicare: NOT eligible for copay cards (Anti-Kickback Statute), but CAN use foundations (HealthWell, TotalAssist, etc.—funds open throughout the year, so check back if closed), PAPs, and discount cards
 - Medicaid: Usually well-covered, but can use discount cards if needed
 
 **2026 Medicare Updates:**
@@ -612,8 +612,8 @@ const handleAction = async (action, body) => {
               : "Great news! With commercial insurance, you're eligible for **manufacturer copay cards** that can reduce your costs to as little as $0-$50 per month. Let's find the right programs.\n\n**Which medication do you need help with?**";
           } else if (answer === 'medicare') {
             message = isSpanish
-              ? "Importante saberlo: los pacientes con Medicare **no pueden usar tarjetas de copago** (es una regla legal), ¡pero todavía hay muy buenas opciones! Las fundaciones como HealthWell y PAN, más los Programas de Asistencia al Paciente (PAP), pueden ayudar mucho.\n\n**¿Con qué medicamento necesita ayuda?**"
-              : "Important to know: Medicare patients **cannot use copay cards** (it's a legal thing), but there are still great options! Foundations like HealthWell and PAN, plus Patient Assistance Programs, can help significantly.\n\n**Which medication do you need help with?**";
+              ? "Importante saberlo: los pacientes con Medicare **no pueden usar tarjetas de copago** (es una regla legal), ¡pero todavía hay muy buenas opciones! Las fundaciones como HealthWell y TotalAssist, más los Programas de Asistencia al Paciente (PAP), pueden ayudar mucho.\n\n**¿Con qué medicamento necesita ayuda?**"
+              : "Important to know: Medicare patients **cannot use copay cards** (it's a legal thing), but there are still great options! Foundations like HealthWell and TotalAssist, plus Patient Assistance Programs, can help significantly.\n\n**Which medication do you need help with?**";
           } else if (answer === 'uninsured') {
             message = isSpanish
               ? "Entiendo; estar sin seguro es difícil. La buena noticia es que los **Programas de Asistencia al Paciente (PAP) pueden darle sus medicamentos completamente GRATIS**. Busquemos los programas correctos.\n\n**¿Con qué medicamento necesita ayuda?**"
@@ -969,7 +969,7 @@ const generateFallbackMessage = (programs, insuranceType, costBurden, costPlusAv
   } else if (insuranceType === 'medicare') {
     message += "**Important for Medicare patients:**\n\n";
     message += "You cannot use manufacturer copay cards (it's prohibited), but you have other options:\n\n";
-    message += "• **Foundations** - HealthWell, PAN Foundation, and Patient Advocate Foundation offer copay assistance. *Funds open throughout the year—check back if currently closed!*\n";
+    message += "• **Foundations** - HealthWell and TotalAssist offer copay assistance. *Funds open throughout the year—check back if currently closed!*\n";
     message += "• **Patient Assistance Programs** - Apply directly to manufacturers for free medication.\n";
     message += "• **Discount Cards** - Cost Plus Drugs or GoodRx may offer lower prices than your Part D copay.\n\n";
   } else if (insuranceType === 'uninsured') {

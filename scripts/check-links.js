@@ -80,7 +80,7 @@ const WAF_ALLOWLIST = new Set([
     'www.humalog.com', 'insulins.lilly.com',
     'www.trulicity.com', 'trulicity.lilly.com',
     'www.symbicort.com', 'www.mysymbicort.com',
-    'www.panfoundation.org', 'panfoundation.org',
+    'www.totalassist.org', 'totalassist.org',
     'www.azandmeapp.com', 'azandmeapp.com',
     'www.tezspire.com', 'copay.tezspiretogether.com',
 ]);

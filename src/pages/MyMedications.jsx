@@ -682,7 +682,7 @@ export default function MyMedications() {
                             {' '}{t('myMeds.healthwellDesc')}
                           </li>
                           <li>
-                            <a href="/out/foundation/paf-general" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
+                            <a href="/out/foundation/totalassist" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-900">
                               TotalAssist
                             </a>
                             {' '}{t('myMeds.totalAssistDesc')}

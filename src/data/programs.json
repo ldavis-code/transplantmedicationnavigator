@@ -1779,39 +1779,14 @@
       "maxBenefit": "Varies by fund",
       "notes": "Funds open/close based on availability - check website frequently."
     },
-    "pan-foundation": {
-      "programId": "pan-foundation",
-      "name": "TotalAssist (formerly PAN Foundation)",
-      "url": "https://www.panfoundation.org/",
-      "lastVerified": "2026-07-03",
-      "phone": "1-866-316-7263",
-      "fax": "1-866-316-7263",
-      "address": {
-        "street": "Patient Access Network Foundation",
-        "line2": "P.O. Box 221858",
-        "city": "Charlotte",
-        "state": "NC",
-        "zip": "28222-1858"
-      },
-      "eligibility": {
-        "commercial": true,
-        "medicare": true,
-        "medicaid": false,
-        "uninsured": false
-      },
-      "incomeLimit": "400% FPL",
-      "maxBenefit": "Varies by fund",
-      "notes": "PAN Foundation merged with the Patient Advocate Foundation and launched TotalAssist on July 1, 2026. Apply at portal.totalassist.org or call 866-512-3861."
-    },
-    "patient-advocate-foundation": {
-      "programId": "patient-advocate-foundation",
-      "name": "Patient Advocate Foundation Co-Pay Relief",
-      "url": "https://www.patientadvocate.org/connect-with-services/copay-relief/",
+    "totalassist": {
+      "programId": "totalassist",
+      "name": "TotalAssist",
+      "url": "https://totalassist.org/",
       "lastVerified": "2026-07-03",
       "phone": "1-866-512-3861",
-      "fax": "1-757-952-0119",
       "address": {
-        "street": "Patient Advocate Foundation",
+        "street": "TotalAssist",
         "line2": "421 Butler Farm Road",
         "city": "Hampton",
         "state": "VA",
@@ -1825,7 +1800,7 @@
       },
       "incomeLimit": "500% FPL",
       "maxBenefit": "Varies by fund",
-      "notes": "PAF merged with PAN Foundation and launched TotalAssist on July 1, 2026. Co-Pay Relief is now part of TotalAssist, the nation's largest charitable patient assistance program, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Apply at portal.totalassist.org or call 866-512-3861."
+      "notes": "The nation's largest charitable patient assistance program, with nearly 150 disease-specific and health equity funds, no wait lists, and instant eligibility decisions in most cases. Apply at portal.totalassist.org or call 866-512-3861."
     },
     "american-kidney-fund": {
       "programId": "american-kidney-fund",

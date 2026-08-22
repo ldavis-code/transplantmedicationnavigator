@@ -857,7 +857,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <p className="text-sm text-slate-600 mt-2">
                                             {t('medications.card.assistance.foundationsText')}
                                         </p>
-                                        <a href="/out/foundation/pan-fundfinder" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label={t('medications.card.assistance.fundFinderAria')}>
+                                        <a href="/out/foundation/totalassist" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sky-700 hover:text-sky-800 font-medium text-sm" aria-label={t('medications.card.assistance.fundFinderAria')}>
                                             {t('medications.card.assistance.fundFinderLink')}<ExternalLink size={14} aria-hidden="true" />
                                         </a>
                                     </div>
