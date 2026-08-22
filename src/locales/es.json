@@ -1264,101 +1264,103 @@
     }
   },
   "home": {
-    "updateBanner": {
-      "ariaLabel": "Programas de asistencia verificados en julio de 2026, ahora incluyen el nuevo programa TotalAssist",
-      "verified": "Programas de asistencia verificados en julio de 2026",
-      "totalAssist": "Ahora incluye <strong>TotalAssist</strong>, el programa caritativo de asistencia al paciente más grande del país (lanzado el 1 de julio de 2026).",
-      "seeWhatsNew": "Vea lo nuevo"
-    },
     "hero": {
-      "titlePre": "Compare precios estimados de medicamentos y encuentre programas de asistencia verificados ",
-      "titleHighlight": "en un solo lugar.",
-      "tagline": "De la receta a sus manos",
-      "subtitle": "Un paciente pasó de $624 al mes a $10 con una tarjeta de copago. Descubra cuánto podría ahorrar usted.",
-      "quizAriaLabel": "Comenzar el cuestionario Mi Camino",
-      "quizButton": "Comenzar el cuestionario Mi Camino",
-      "deniedAriaLabel": "Obtenga ayuda con las denegaciones del seguro",
-      "deniedTitle": "¿Se lo negaron?",
-      "deniedSubtitle": "Ayuda con terapia escalonada, autorización previa y apelaciones",
-      "grantsAriaLabel": "Encontrar ayudas económicas y fundaciones",
-      "grantsButton": "Encontrar ayudas y fundaciones"
+      "title1": "Su equipo de trasplante decide su medicina.",
+      "title2": "Nosotros le ayudamos a conseguirla.",
+      "subtitle": "Cuánto debería costar, qué programas son realmente para usted y qué hacer cuando su plan cambia las reglas."
     },
-    "stats": {
-      "medications": "Medicamentos",
-      "assistancePrograms": "Programas de asistencia",
-      "copayCards": "Tarjetas de copago"
+    "steps": {
+      "medsLabel": "1 · Sus medicamentos",
+      "searchAriaLabel": "Escriba el nombre de su medicamento para buscar",
+      "searchPlaceholder": "Escriba un medicamento...",
+      "resultsAriaLabel": "Medicamentos que coinciden",
+      "resultAria": "Vea precios y programas para {{name}}",
+      "noResults": "Todavía no tenemos ese.",
+      "noResultsLink": "Pruebe la búsqueda completa de medicamentos",
+      "or": "o",
+      "mychartAriaLabel": "Importe su lista de medicamentos desde MyChart",
+      "mychartButton": "Traer mi lista desde MyChart",
+      "mychartFootnote": "Importa su lista real desde más de 400 sistemas de salud con Epic — incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
+      "examplesAriaLabel": "Medicamentos comunes de trasplante",
+      "tagGeneric": "genérico",
+      "tagBrand": "marca",
+      "selectedPre": "Su medicamento: ",
+      "selectedNext": "Ahora elija su seguro en el paso 2 para ver sus opciones.",
+      "selectedSkip": "O salte este paso y véalas ahora.",
+      "clearSelected": "Quitar el medicamento elegido",
+      "insuranceLabel": "2 · Su seguro",
+      "insuranceAriaLabel": "Elija su tipo de seguro",
+      "insCommercial": "Del trabajo / mercado",
+      "insMedicare": "Medicare",
+      "insMedicaid": "Medicaid",
+      "insUninsured": "Sin seguro",
+      "multiplePre": "¿Toma más de uno?",
+      "multipleLink": "Responda 5 preguntas y los revisamos todos a la vez"
     },
-    "mychart": {
-      "ariaLabel": "Conecte su MyChart para importar su lista de medicamentos",
-      "new": "Nuevo",
-      "title": "Su lista real de medicamentos, con un solo toque",
-      "text": "Traiga sus medicamentos directamente desde <strong>MyChart</strong> (el portal del paciente de su hospital) de Epic y vea al instante cada tarjeta de copago y programa de asistencia que le corresponde. Sin escribir, sin errores.",
-      "connect": "Conectar MyChart",
-      "footnote": "Incluido en el Epic Connection Hub • Funciona con MyChart (el portal del paciente de su hospital) en más de 400 sistemas de salud con Epic • Sus datos se quedan en su dispositivo"
+    "urgent": {
+      "ariaLabel": "¿Sin medicamento? Vea los pasos de emergencia ahora",
+      "text": "¿Se quedó sin medicamento, o le quedan solo unos días?",
+      "link": "Reciba ayuda hoy"
     },
-    "features": {
-      "ariaLabel": "Funciones principales",
+    "trust": "Incluido en el Epic Connection Hub · {{count}} medicamentos de trasplante · Gratis, sin cuenta · Creado por una receptora de un trasplante de hígado",
+    "explainer": {
+      "title": "¿No sabe si toma la marca o el genérico?",
+      "intro": "La mayoría de los pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso decide qué opciones son suyas.",
+      "genericTitle": "Su etiqueta dice “tacrolimus”",
+      "genericText": "Nombre del medicamento en minúsculas, a menudo con un fabricante como Sandoz o Accord. Este es el genérico.",
+      "genericAction": "Compare precios en efectivo. No existe tarjeta de copago.",
+      "brandTitle": "Su etiqueta dice “Prograf”",
+      "brandText": "Nombre de marca con mayúscula. La misma medicina, distinto precio, distintos programas.",
+      "brandAction": "Tarjeta de copago o asistencia del fabricante.",
+      "neverTitle": "Nunca le decimos que cambie su medicamento.",
+      "neverText": "Esa es una decisión de su equipo de trasplante — incluido cambiar entre marca y genérico, o entre fabricantes de genéricos. Le mostramos cuánto debería costarle la medicina que le recetaron."
+    },
+    "cards": {
+      "ariaLabel": "Guías y programas",
       "learn": {
         "title": "Aprenda el proceso",
-        "text": "Aprenda a llenar por su cuenta las solicitudes del Programa de Asistencia al Paciente (PAP), gratis.",
-        "linkAriaLabel": "Ver la guía de solicitud",
+        "text": "Llene las solicitudes de asistencia por su cuenta, gratis. Listas de verificación y guiones para llamar.",
+        "ariaLabel": "Ver la guía de solicitud",
         "link": "Ver la guía"
       },
       "coverage": {
         "title": "Educación sobre cobertura",
-        "text": "Aprenda sobre el seguro, Medicare (incluida la Parte B-ID para pacientes de riñón), Medicaid y los beneficios de IHS.",
-        "linkAriaLabel": "Aprenda sobre las opciones de cobertura",
+        "text": "Medicare Parte B-ID, Parte D, Medicaid, VA y los beneficios de IHS, explicados.",
+        "ariaLabel": "Aprenda sobre las opciones de cobertura",
         "link": "Aprenda sobre la cobertura"
       },
-      "resources": {
-        "title": "Educación y recursos",
-        "text": "Enlaces directos y seguros a programas de fabricantes, fundaciones y sitios del gobierno. Sin estafas.",
-        "linkAriaLabel": "Explorar los recursos disponibles",
-        "link": "Explorar recursos"
+      "grants": {
+        "title": "Ayudas y fundaciones",
+        "text": "Programas verificados, enlaces directos, sin estafas. Actualizado en julio de 2026.",
+        "ariaLabel": "Explorar ayudas económicas y programas de fundaciones",
+        "link": "Explorar programas"
       }
     },
     "story": {
-      "badge": "Historia real de un paciente",
-      "quotePre": "\"Mi receta costaba ",
+      "ariaLabel": "Historia real de ahorro de un paciente",
+      "badge": "Si toma una medicina de marca con seguro del trabajo",
+      "quotePre": "“Mi receta costaba ",
       "price1": "$624",
       "quoteMid1": ". Con el seguro bajó a ",
       "price2": "$195",
       "quoteMid2": ". Pero nadie me habló de las tarjetas de copago. Encontré una por mi cuenta y ahora pago solo ",
       "price3": "$10",
-      "quotePost": ".\"",
-      "savedLabel": "Ahorro al año",
-      "why": "Por eso creamos esta herramienta: para que ningún paciente pierda los ahorros que su farmacia nunca le mencionó.",
-      "notAloneTitle": "No está solo — y la investigación lo demuestra.",
-      "notAloneText": "Un estudio de 2026 en varios hospitales encontró que 1 de cada 4 candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos, incluso antes de entrar en la lista de espera. Estamos aquí para cambiar eso.",
-      "evidenceLink": "Vea la evidencia"
+      "quotePost": ".”",
+      "attribution": "Paciente real · trasplante de hígado · 2025 · Los ahorros varían según el medicamento y el seguro"
     },
-    "mission": {
-      "badge": "Creado por un paciente, para pacientes.",
-      "missionTitle": "Nuestra misión",
-      "missionText": "Ayudamos a los pacientes de trasplante a conseguir la medicina que necesitan. Le mostramos cómo encontrar ayuda para pagar su medicina. Le damos información clara y honesta.",
-      "visionTitle": "Nuestra visión",
-      "visionText": "Cada paciente de trasplante merece una oportunidad justa. Usted no debería perder su salud porque la medicina cuesta demasiado.",
-      "whyTitle": "Por qué creamos esto",
-      "why1Title": "Fácil de entender",
-      "why1Text": "Convertimos los formularios difíciles en pasos sencillos, para que no necesite un título universitario para conseguir ayuda con su medicina.",
-      "why2Title": "Un lugar seguro",
-      "why2Text": "Estamos de su lado. No vendemos su información. No trabajamos para ninguna farmacia. Le ayudamos a protegerse de las personas que quieren engañarlo.",
-      "why3Title": "Ahorre dinero",
-      "why3Text": "Le mostramos precios y programas de medicina gratis, todo en un solo lugar. Usted puede elegir lo que mejor le funcione."
-    },
-    "quizCta": {
-      "ariaLabel": "Comience su camino personalizado de medicamentos",
-      "button": "Comenzar el cuestionario Mi Camino de medicamentos",
-      "text": "Haga nuestro cuestionario gratis para ver cómo podemos ayudarle. Fundado por un paciente. El paciente primero."
+    "evidence": {
+      "ariaLabel": "Lo que muestra la investigación",
+      "stat": "1 de cada 4",
+      "text": "<strong>candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos — incluso antes de entrar en la lista.</strong> Dos estudios nacionales revisados por pares documentan lo que esta herramienta existe para arreglar.",
+      "link": "Vea la evidencia"
     },
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
-      "title": "Creado por alguien que ya pasó por esto",
       "name": "Lorrinda Gray-Davis",
       "role": "Receptora de un trasplante de hígado · Presidenta de TRIO · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
-      "bio": "Lorrinda creó esta herramienta desde su propia experiencia. Dirige un programa de apoyo entre pares para pacientes de trasplante y cuidadores, con resultados publicados en revistas médicas revisadas por pares.",
-      "stat1Label": "Año del trasplante",
-      "link": "Lea la historia completa y la investigación de Lorrinda"
+      "quote": "“Mi administrador de beneficios de farmacia movió mi micofenolato — un genérico — al Nivel 3. Pasó de menos de $20 a $350. Nada de mi salud había cambiado. Tuve que pelearlo yo misma. La mayoría de los pacientes nunca se entera de que puede hacerlo.”",
+      "bio": "Lorrinda creó esto desde su propia experiencia en el mostrador de la farmacia, y dirige un programa de apoyo entre pares que ha ayudado a más de 550 pacientes y cuidadores, con resultados publicados en revistas revisadas por pares.",
+      "link": "Lea su historia"
     },
     "hotline": {
       "title": "¿Necesita hablar con alguien?",
@@ -1373,8 +1375,7 @@
     "privacy": {
       "title": "Protegemos su información",
       "text": "No guardamos su información. No le pedimos su número de seguro social. No vendemos su información. Esta herramienta solo existe para enseñarle sobre sus opciones."
-    },
-    "tagline": "Creado para pacientes por un paciente"
+    }
   },
   "about": {
     "back": "Volver al inicio",

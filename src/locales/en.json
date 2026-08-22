@@ -1264,101 +1264,103 @@
     }
   },
   "home": {
-    "updateBanner": {
-      "ariaLabel": "Assistance programs verified July 2026, now including the new TotalAssist program",
-      "verified": "Assistance programs verified July 2026",
-      "totalAssist": "Now includes <strong>TotalAssist</strong>, the nation's largest charitable patient assistance program (launched July 1, 2026).",
-      "seeWhatsNew": "See what's new"
-    },
     "hero": {
-      "titlePre": "Compare estimated medication prices and find verified assistance programs ",
-      "titleHighlight": "in one place.",
-      "tagline": "From Prescription to Possession",
-      "subtitle": "One patient went from $624/month to $10 with a copay card. Find out what you could save.",
-      "quizAriaLabel": "Start My Path Quiz",
-      "quizButton": "Start My Path Quiz",
-      "deniedAriaLabel": "Get help with insurance denials",
-      "deniedTitle": "Got Denied?",
-      "deniedSubtitle": "Step therapy, prior auth, and appeal help",
-      "grantsAriaLabel": "Find grants and foundations",
-      "grantsButton": "Find Grants & Foundations"
+      "title1": "Your transplant team decides your medicine.",
+      "title2": "We help you get it.",
+      "subtitle": "What it should cost, which programs are actually yours, and what to do when your plan changes the rules."
     },
-    "stats": {
-      "medications": "Medications",
-      "assistancePrograms": "Assistance Programs",
-      "copayCards": "Copay Cards"
+    "steps": {
+      "medsLabel": "1 · Your medications",
+      "searchAriaLabel": "Type your medication name to search",
+      "searchPlaceholder": "Type a medication...",
+      "resultsAriaLabel": "Matching medications",
+      "resultAria": "See prices and programs for {{name}}",
+      "noResults": "We don't have that one yet.",
+      "noResultsLink": "Try the full medication search",
+      "or": "or",
+      "mychartAriaLabel": "Import your medication list from MyChart",
+      "mychartButton": "Bring my list from MyChart",
+      "mychartFootnote": "Imports your real list from 400+ Epic health systems — including whether you're on the brand or the generic. Your data stays on your device.",
+      "examplesAriaLabel": "Common transplant medications",
+      "tagGeneric": "generic",
+      "tagBrand": "brand",
+      "selectedPre": "Your medication: ",
+      "selectedNext": "Now pick your insurance in step 2 to see your options.",
+      "selectedSkip": "Or skip ahead and see them now.",
+      "clearSelected": "Clear selected medication",
+      "insuranceLabel": "2 · Your insurance",
+      "insuranceAriaLabel": "Choose your insurance type",
+      "insCommercial": "Job / marketplace",
+      "insMedicare": "Medicare",
+      "insMedicaid": "Medicaid",
+      "insUninsured": "No insurance",
+      "multiplePre": "Taking more than one?",
+      "multipleLink": "Answer 5 questions and we'll do all of them at once"
     },
-    "mychart": {
-      "ariaLabel": "Connect your MyChart to import your medication list",
-      "new": "New",
-      "title": "Your real medication list, in one tap",
-      "text": "Pull your medications directly from your hospital's Epic <strong>MyChart</strong>, then instantly see every copay card and assistance program you qualify for. No typing, no errors.",
-      "connect": "Connect MyChart",
-      "footnote": "Listed in the Epic Connection Hub • Works with 400+ Epic health systems • Your data stays on your device"
+    "urgent": {
+      "ariaLabel": "Out of medication? See emergency steps now",
+      "text": "Out of medication, or down to your last few days?",
+      "link": "Get help today"
     },
-    "features": {
-      "ariaLabel": "Key features",
+    "trust": "Listed in the Epic Connection Hub · {{count}} transplant medications · Free, no account · Built by a liver transplant recipient",
+    "explainer": {
+      "title": "Not sure whether you're on the brand or the generic?",
+      "intro": "Most transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",
+      "genericTitle": "Your label says “tacrolimus”",
+      "genericText": "Lowercase drug name, often with a manufacturer like Sandoz or Accord. This is the generic.",
+      "genericAction": "Compare cash prices. No copay card exists.",
+      "brandTitle": "Your label says “Prograf”",
+      "brandText": "Capitalized brand name. Same medicine, different price, different programs.",
+      "brandAction": "Copay card or manufacturer assistance.",
+      "neverTitle": "We never tell you to change your medication.",
+      "neverText": "That's your transplant team's decision — including switching between brand and generic, or between generic manufacturers. We show you what the medicine they prescribed should cost you."
+    },
+    "cards": {
+      "ariaLabel": "Guides and programs",
       "learn": {
-        "title": "Learn the Process",
-        "text": "Learn how to fill out Patient Assistance Program (PAP) applications yourself, for free.",
-        "linkAriaLabel": "View application guide",
-        "link": "View Guide"
+        "title": "Learn the process",
+        "text": "Fill out assistance applications yourself, free. Checklists and phone scripts.",
+        "ariaLabel": "View the application guide",
+        "link": "View the guide"
       },
       "coverage": {
-        "title": "Coverage Education",
-        "text": "Learn about Insurance, Medicare (including Part B-ID for kidney patients), Medicaid, and IHS benefits.",
-        "linkAriaLabel": "Learn about coverage options",
-        "link": "Learn About Coverage"
+        "title": "Coverage education",
+        "text": "Medicare Part B-ID, Part D, Medicaid, VA and IHS benefits explained.",
+        "ariaLabel": "Learn about coverage options",
+        "link": "Learn about coverage"
       },
-      "resources": {
-        "title": "Education & Resources",
-        "text": "Direct, safe links to manufacturer programs, foundations, and government sites. No scams.",
-        "linkAriaLabel": "Browse available resources",
-        "link": "Browse Resources"
+      "grants": {
+        "title": "Grants & foundations",
+        "text": "Verified programs, direct links, no scams. Updated July 2026.",
+        "ariaLabel": "Browse grants and foundation programs",
+        "link": "Browse programs"
       }
     },
     "story": {
-      "badge": "Real Patient Story",
-      "quotePre": "\"My prescription was ",
+      "ariaLabel": "Real patient savings story",
+      "badge": "If you're on a brand-name medicine with job insurance",
+      "quotePre": "“My prescription was ",
       "price1": "$624",
       "quoteMid1": ". With insurance it dropped to ",
       "price2": "$195",
       "quoteMid2": ". But nobody told me about copay cards. I found one myself and now I pay just ",
       "price3": "$10",
-      "quotePost": ".\"",
-      "savedLabel": "Saved Per Year",
-      "why": "This is why we built this tool — so no patient misses out on savings their pharmacy never mentioned.",
-      "notAloneTitle": "You're not alone — and the research proves it.",
-      "notAloneText": "A 2026 multicenter study found that 1 in 4 liver transplant candidates spends more than 10% of their income on medical costs — before they even get listed. We're here to change that.",
-      "evidenceLink": "See the evidence"
+      "quotePost": ".”",
+      "attribution": "Real patient · liver transplant · 2025 · Savings vary by medication and insurance"
     },
-    "mission": {
-      "badge": "Built by a patient, for patients.",
-      "missionTitle": "Our Mission",
-      "missionText": "We help transplant patients get the medicine they need. We show you how to find help paying for your medicine. We give you clear, honest information.",
-      "visionTitle": "Our Vision",
-      "visionText": "Every transplant patient deserves a fair chance. You should not lose your health because medicine costs too much.",
-      "whyTitle": "Why We Built This",
-      "why1Title": "Easy to Understand",
-      "why1Text": "We break down hard forms into easy steps so you don't need a college degree to get help with your medicine.",
-      "why2Title": "A Safe Place",
-      "why2Text": "We are on your side. We do not sell your info. We do not work for any pharmacy. We help protect you from people trying to trick you.",
-      "why3Title": "Save Money",
-      "why3Text": "We show you prices and free medicine programs all in one place. You can pick what works best for you."
-    },
-    "quizCta": {
-      "ariaLabel": "Start your personalized medication path",
-      "button": "Start My Medication Path Quiz",
-      "text": "Take our free quiz to see how we can help. Patient founded. Patient first."
+    "evidence": {
+      "ariaLabel": "What the research shows",
+      "stat": "1 in 4",
+      "text": "<strong>liver transplant candidates spend more than 10% of their income on medical costs — before they're even listed.</strong> Two national peer-reviewed studies document what this tool exists to fix.",
+      "link": "See the evidence"
     },
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
-      "title": "Created by Someone Who's Been There",
       "name": "Lorrinda Gray-Davis",
-      "role": "Liver transplant recipient · President of TRIO · Vice Chair, OPTN Patient Affairs Committee",
-      "bio": "Lorrinda built this tool from lived experience. She leads a peer support program for transplant patients and caregivers, with results published in peer-reviewed medical journals.",
-      "stat1Label": "Liver transplant recipient since",
-      "link": "Read Lorrinda's full story & research"
+      "role": "Liver transplant recipient · President, TRIO · Vice Chair, OPTN Patient Affairs Committee",
+      "quote": "“My pharmacy benefit manager moved my mycophenolate — a generic — to Tier 3. It went from under $20 to $350. Nothing about my health had changed. I had to fight it myself. Most patients never find out they can.”",
+      "bio": "Lorrinda built this from her own experience at the pharmacy counter, and leads a peer support program that has supported more than 550 patients and caregivers, with results published in peer-reviewed journals.",
+      "link": "Read her story"
     },
     "hotline": {
       "title": "Need to Talk to Someone?",
@@ -1373,8 +1375,7 @@
     "privacy": {
       "title": "We Keep Your Info Safe",
       "text": "We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options."
-    },
-    "tagline": "Built for patients by a patient"
+    }
   },
   "about": {
     "back": "Back to home",
