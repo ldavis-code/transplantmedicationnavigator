@@ -19,10 +19,10 @@ const BASE_URL = 'https://transplantmedicationnavigator.com';
  * @param {string} [config.breadcrumbName] - Name for breadcrumb (if different from title)
  * @param {boolean} [config.noindex] - If true, add noindex meta tag to prevent search engine indexing
  * @param {boolean} [config.langAlternates] - Declare this page as having a Spanish
- *   variant at canonical?lang=es even without config.es (pages that localize
+ *   variant at the /es/ path prefix even without config.es (pages that localize
  *   through t() directly, like MedicationDetail). Pages with config.es get this
  *   automatically. Emits hreflang alternate links and, while Spanish is active,
- *   keeps the canonical (and og:url default) on the ?lang=es URL — without this,
+ *   keeps the canonical (and og:url default) on the /es/ URL — without this,
  *   hydration would revert the prerendered Spanish head to the English canonical.
  * @param {Object} [config.es] - Spanish overrides (title, description, breadcrumbName, ...).
  *   Applied when the active language is Spanish; og/twitter fields fall back to the
@@ -111,9 +111,12 @@ export function useMetaTags(config) {
     // Pages with a Spanish variant: each language version is its own
     // canonical (matching the prerendered heads), and both declare the
     // hreflang alternates. Everything else keeps the plain canonical.
+    // The Spanish URL is the /es/ path prefix: /medications/x -> /es/medications/x,
+    // and the homepage BASE_URL/ -> BASE_URL/es/.
     const hasEsVariant = !noindex && !!(config.es || config.langAlternates);
+    const esCanonical = canonical && canonical.replace(BASE_URL, `${BASE_URL}/es`);
     const localizedCanonical = hasEsVariant && isSpanish && canonical
-      ? `${canonical}?lang=es`
+      ? esCanonical
       : canonical;
 
     // Update canonical URL
@@ -125,7 +128,7 @@ export function useMetaTags(config) {
     if (hasEsVariant && canonical) {
       for (const [hreflang, href] of [
         ['en', canonical],
-        ['es', `${canonical}?lang=es`],
+        ['es', esCanonical],
         ['x-default', canonical],
       ]) {
         const el = document.createElement('link');

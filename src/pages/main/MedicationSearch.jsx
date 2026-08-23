@@ -59,8 +59,8 @@ const MedicationSearch = () => {
     }, [searchParams]);
 
     // Merge into the existing query string instead of replacing it: a plain
-    // setSearchParams({ ids }) wiped every other param, including the ?lang=es
-    // that keeps Spanish pages shareable.
+    // setSearchParams({ ids }) wiped every other param (historically the
+    // ?lang=es that kept Spanish pages shareable before /es/ paths).
     useEffect(() => {
         setSearchParams(prev => {
             const params = new URLSearchParams(prev);

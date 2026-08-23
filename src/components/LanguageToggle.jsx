@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Globe } from 'lucide-react';
+import { LANG_STORAGE_KEY } from '../i18n.js';
 
 // On the English page the invitation is in Spanish so a Spanish speaker can
 // find it. On the Spanish page it is also in Spanish: the reader chose
@@ -21,31 +22,34 @@ const SWITCH_LABELS_SHORT = {
 
 /**
  * Language switcher shown on pages that have a Spanish translation.
- * Persists the choice (via i18n.js) and updates <html lang> for screen
- * readers and the read-aloud feature. Also mirrors the choice into the
- * URL (?lang=es) so the current page is immediately shareable in Spanish;
- * English is the default, so switching back removes the parameter.
+ * Spanish lives at the /es/ path prefix, so switching is a full navigation
+ * between the two URL spaces: /es/<page> ⇄ /<page>. That lands the reader
+ * on the prerendered page in the chosen language with a shareable address,
+ * and the router restarts with the right basename. The choice is persisted
+ * to localStorage before navigating (the page unloads, so i18n's own
+ * languageChanged handler would be too late).
  *
  * compact: small header variant — shows just "Español" / "English" with the
  * full invitation moved to the accessible name.
  */
 const LanguageToggle = ({ compact = false }) => {
     const { i18n } = useTranslation();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation(); // basename-stripped: no /es prefix
     const current = i18n.resolvedLanguage === 'es' ? 'es' : 'en';
     const next = current === 'es' ? 'en' : 'es';
 
     const switchLanguage = () => {
-        i18n.changeLanguage(next);
-        const params = new URLSearchParams(searchParams);
-        // Always set the param explicitly (lang=en rather than deleting it):
-        // LanguageParamSync re-adds ?lang=es to any URL without a lang param
-        // while Spanish is active, so a bare URL right after switching to
-        // English could race back to Spanish.
-        params.set('lang', next);
-        // replace, not push: back should return to the previous page, not
-        // re-toggle the language (which only applies on initial load anyway)
-        setSearchParams(params, { replace: true });
+        try {
+            localStorage.setItem(LANG_STORAGE_KEY, next);
+        } catch {
+            // localStorage unavailable — the target URL still decides
+        }
+        const params = new URLSearchParams(location.search);
+        params.delete('lang'); // legacy parameter; the path carries the language
+        const qs = params.toString();
+        const suffix = location.pathname + (qs ? `?${qs}` : '') + location.hash;
+        // assign, not replace: back should return to the pre-switch language
+        window.location.assign(next === 'es' ? `/es${suffix}` : suffix);
     };
 
     if (compact) {

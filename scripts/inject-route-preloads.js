@@ -12,14 +12,14 @@
  *            Lighthouse caught when the Home chunk was lazy).
  *
  *   --pages  Runs AFTER prerender-seo.js. The prerenderer builds each
- *            route page (and every Spanish index-es.html variant) from its
+ *            route page (and every Spanish variant under dist/es/) from its
  *            own template, carrying over only the entry <script> and
  *            stylesheet links — so prerendered pages ship with NO preload
  *            hints at all, not even Vite's react-vendor/icons ones. This
  *            stage mirrors dist/index.html's full hint set into every
  *            SPA-shell HTML in dist (identified by the entry module script
- *            tag), adding the Spanish locale chunk on index-es.html
- *            variants, which always need it.
+ *            tag), adding the Spanish locale chunk on the dist/es/ pages,
+ *            which always need it.
  */
 
 import fs from 'fs';
@@ -69,6 +69,7 @@ if (stage === 'entry') {
 
   let pages = 0;
   let added = 0;
+  const esDirPrefix = path.join(distDir, 'es') + path.sep;
   const walk = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
@@ -77,7 +78,10 @@ if (stage === 'entry') {
       } else if (entry.name.endsWith('.html') && full !== rootPath) {
         const html = fs.readFileSync(full, 'utf8');
         if (!html.includes(entryScript)) continue; // standalone doc, skip
-        const pageHints = entry.name.endsWith('-es.html') ? [...hints, esChunk] : hints;
+        // Spanish pages live under dist/es/ and always need the es locale
+        // chunk (the -es.html suffix covers any legacy stragglers).
+        const isSpanish = full.startsWith(esDirPrefix) || entry.name.endsWith('-es.html');
+        const pageHints = isSpanish ? [...hints, esChunk] : hints;
         added += injectInto(full, pageHints);
         pages += 1;
       }

@@ -128,7 +128,10 @@ const GoogleAnalytics = () => {
   useEffect(() => {
     // Small delay to ensure the page title has updated
     const timeoutId = setTimeout(() => {
-      trackPageView(location.pathname + location.search, document.title);
+      // window.location, not the router location: under /es/ the router runs
+      // with basename="/es", so its pathname drops the prefix and Spanish
+      // page views would be logged as their English paths.
+      trackPageView(window.location.pathname + window.location.search, document.title);
       trackServerEvent('page_view');
     }, 100);
 

@@ -85,15 +85,170 @@
   status = 200
   force = true
 
-# TrumpRx guide: the Spanish version is its own static page at /trumprx-es,
-# so ?lang=es redirects there instead of rewriting to an index-es.html twin.
-# Forced because Netlify's pretty-URL handling resolves /trumprx to
-# trumprx.html and would skip a non-forced rule. Must come before the plain
-# /trumprx rule below.
+# Spanish lives at the /es/ path prefix: scripts/prerender-seo.js writes
+# every Spanish page to dist/es/<route>/index.html and Netlify serves the
+# static files directly — no query parameter involved. These rules mirror
+# public/_redirects (which is evaluated first); kept in both places like
+# the per-page rules below.
+#
+# Legacy ?lang=es URLs (indexed by Google, old bookmarks and shared links)
+# permanently redirect to their /es/ equivalent — one rule per published
+# URL, never a catch-all: Netlify forwards the query string on redirects
+# (observed live: /trumprx?lang=es 302'd to /trumprx-es?lang=es), so a
+# generic /* rule would match its own /es/... target again and loop. These
+# targets never re-match, and the forwarded ?lang=es left on the target
+# URL is harmless (the app strips it client-side). Forced because
+# non-forced rules are skipped when the path resolves to an existing
+# static file; ?lang=en needs no rule — the client still honors it, and
+# the plain path already serves English.
+#
+# /trumprx: its Spanish version is its own static page at /trumprx-es,
+# not an /es/ shell page.
 [[redirects]]
   from = "/trumprx"
   to = "/trumprx-es"
-  status = 302
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/"
+  to = "/es/"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/wizard"
+  to = "/es/wizard"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/education"
+  to = "/es/education"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/application-help"
+  to = "/es/application-help"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/faq"
+  to = "/es/faq"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/medications"
+  to = "/es/medications"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+# Per-medication pages — after the exact /medications rule above.
+[[redirects]]
+  from = "/medications/*"
+  to = "/es/medications/:splat"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/evidence"
+  to = "/es/evidence"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/my-medications"
+  to = "/es/my-medications"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/savings-tracker"
+  to = "/es/savings-tracker"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/survey"
+  to = "/es/survey"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/survey/transplant"
+  to = "/es/survey/transplant"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/survey/general"
+  to = "/es/survey/general"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/pilot"
+  to = "/es/pilot"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/es/terms-and-conditions"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/privacy"
+  to = "/es/privacy"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/accessibility"
+  to = "/es/accessibility"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/about"
+  to = "/es/about"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/feedback"
+  to = "/es/feedback"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
+[[redirects]]
+  from = "/education/appeals"
+  to = "/es/education/appeals"
+  status = 301
   force = true
   query = { lang = "es" }
 
@@ -108,154 +263,6 @@
   from = "/trumprx-es"
   to = "/trumprx-es.html"
   status = 200
-
-# Spanish prerendered variants (?lang=es) — mirror of the rules in
-# public/_redirects (which is evaluated first); kept in both places like the
-# per-page rules below. Placeholder capture serves index-en/index-es.html.
-# Forced because non-forced rewrites are skipped when the path resolves to
-# an existing static file; the query condition keeps parameterless requests
-# untouched.
-[[redirects]]
-  from = "/"
-  to = "/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/wizard"
-  to = "/wizard/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/education"
-  to = "/education/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/application-help"
-  to = "/application-help/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/faq"
-  to = "/faq/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/medications"
-  to = "/medications/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-# Per-medication pages (/medications/:id) — must come after the exact
-# /medications rule above so the search page keeps its own variants.
-[[redirects]]
-  from = "/medications/*"
-  to = "/medications/:splat/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/evidence"
-  to = "/evidence/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/my-medications"
-  to = "/my-medications/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/savings-tracker"
-  to = "/savings-tracker/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/survey"
-  to = "/survey/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/survey/transplant"
-  to = "/survey/transplant/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/survey/general"
-  to = "/survey/general/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/pilot"
-  to = "/pilot/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/terms-and-conditions"
-  to = "/terms-and-conditions/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/privacy"
-  to = "/privacy/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/accessibility"
-  to = "/accessibility/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/about"
-  to = "/about/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/feedback"
-  to = "/feedback/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
-
-[[redirects]]
-  from = "/education/appeals"
-  to = "/education/appeals/index-:lang.html"
-  status = 200
-  force = true
-  query = { lang = ":lang" }
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
@@ -360,20 +367,118 @@
   to = "/auth/epic/callback/index.html"
   status = 200
 
-# SPA fallback - must come AFTER prerendered pages and API routes
-# Spanish URL convention: the site selects language via ?lang=es (plus a saved
-# preference), not /es/ path prefixes. Redirect anyone using the common /es/
-# convention (external links, reviewers, typed URLs) to the real mechanism —
-# without this, /es/... silently serves the English app shell.
+# Spanish prerendered pages - serve the static /es/ HTML at the clean URL
+# (mirrors the English block above; without these, Netlify 301s /es/faq to
+# /es/faq/ before serving, an extra hop on every canonical URL). The
+# per-medication /es/ pages resolve implicitly, like their English twins.
 [[redirects]]
   from = "/es"
-  to = "/?lang=es"
-  status = 302
+  to = "/es/index.html"
+  status = 200
 
 [[redirects]]
+  from = "/es/faq"
+  to = "/es/faq/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/wizard"
+  to = "/es/wizard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/medications"
+  to = "/es/medications/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/education"
+  to = "/es/education/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/application-help"
+  to = "/es/application-help/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/evidence"
+  to = "/es/evidence/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/my-medications"
+  to = "/es/my-medications/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/savings-tracker"
+  to = "/es/savings-tracker/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/survey"
+  to = "/es/survey/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/survey/transplant"
+  to = "/es/survey/transplant/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/survey/general"
+  to = "/es/survey/general/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/pilot"
+  to = "/es/pilot/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/terms-and-conditions"
+  to = "/es/terms-and-conditions/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/privacy"
+  to = "/es/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/accessibility"
+  to = "/es/accessibility/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/about"
+  to = "/es/about/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/feedback"
+  to = "/es/feedback/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/education/appeals"
+  to = "/es/education/appeals/index.html"
+  status = 200
+
+# TrumpRx guide under the /es/ convention -> its real Spanish page
+[[redirects]]
+  from = "/es/trumprx"
+  to = "/trumprx-es"
+  status = 301
+
+# Spanish SPA fallback - /es/ routes without a prerendered file get the
+# Spanish app shell (the React app detects the /es prefix and renders in
+# Spanish). Must come before the generic fallback below.
+[[redirects]]
   from = "/es/*"
-  to = "/:splat?lang=es"
-  status = 302
+  to = "/es/index.html"
+  status = 200
 
 # This catches all other routes and serves the React SPA
 [[redirects]]

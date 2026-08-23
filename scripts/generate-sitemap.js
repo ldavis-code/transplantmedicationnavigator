@@ -41,9 +41,9 @@ const routes = [
     { path: '/accessibility', changefreq: 'yearly', priority: 0.4 },
 ];
 
-// Routes with a full Spanish translation, reached via ?lang=es. Each is
-// listed as its own URL (with hreflang alternates on both language versions)
-// so the Spanish pages are discoverable by search engines.
+// Routes with a full Spanish translation, served at the /es/ path prefix.
+// Each is listed as its own URL (with hreflang alternates on both language
+// versions) so the Spanish pages are discoverable by search engines.
 const SPANISH_PATHS = new Set([
     '/', '/wizard', '/education', '/application-help', '/faq',
     '/medications', '/evidence', '/my-medications', '/savings-tracker',
@@ -53,10 +53,13 @@ const SPANISH_PATHS = new Set([
 ]);
 
 // The per-medication pages (/medications/:id) are Spanish-capable too:
-// prerendered index-es.html variants exist for every one of them
+// prerendered /es/ variants exist for every one of them
 // (scripts/prerender-seo.js), so they get the same alternate treatment.
 const hasSpanishVariant = (path) =>
     SPANISH_PATHS.has(path) || path.startsWith('/medications/');
+
+// Path-based Spanish URL for a route: /es/<route> (the homepage is /es/).
+const esPath = (path) => (path === '/' ? '/es/' : `/es${path}`);
 
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
@@ -64,7 +67,7 @@ function generateSitemap() {
     const allRoutes = [...routes, ...medicationRoutes];
     const alternates = (path) => `
         <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${path}" />
-        <xhtml:link rel="alternate" hreflang="es" href="${SITE_URL}${path}?lang=es" />
+        <xhtml:link rel="alternate" hreflang="es" href="${SITE_URL}${esPath(path)}" />
         <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${path}" />`;
     const urls = allRoutes.flatMap(route => {
         const hasEs = hasSpanishVariant(route.path);
@@ -76,7 +79,7 @@ function generateSitemap() {
     </url>`];
         if (hasEs) {
             entries.push(`    <url>
-        <loc>${SITE_URL}${route.path}?lang=es</loc>${alternates(route.path)}
+        <loc>${SITE_URL}${esPath(route.path)}</loc>${alternates(route.path)}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>
