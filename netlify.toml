@@ -472,18 +472,21 @@
   to = "/trumprx-es"
   status = 301
 
-# Spanish SPA fallback - /es/ routes without a prerendered file get the
-# Spanish app shell (the React app detects the /es prefix and renders in
-# Spanish). Must come before the generic fallback below.
+# SPA fallbacks - routes without a prerendered file get a NEUTRAL app
+# shell (loading note + directory links + the app scripts), not the
+# homepage file: falling back to index.html made /es/anything statically
+# serve the Spanish homepage content — a soft-404 that reads as "this
+# page shows the wrong thing" to crawlers and no-JS visitors. React
+# renders the real page (or its localized 404) on load. The Spanish rule
+# must come before the generic one.
 [[redirects]]
   from = "/es/*"
-  to = "/es/index.html"
+  to = "/es/app-shell.html"
   status = 200
 
-# This catches all other routes and serves the React SPA
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/app-shell.html"
   status = 200
 
 # Cache static assets aggressively (1 year) - Vite adds content hashes to filenames

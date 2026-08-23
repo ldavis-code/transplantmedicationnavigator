@@ -114,10 +114,12 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 # TrumpRx guide under the /es/ convention -> its real Spanish page
 /es/trumprx  /trumprx-es  301
 
-# Spanish SPA fallback - /es/ routes without a prerendered file get the
-# Spanish app shell (the React app detects the /es prefix and renders in
-# Spanish). Must come before the generic fallback below.
-/es/*  /es/index.html  200
-
-# SPA fallback - all other routes go to index.html
-/*  /index.html  200
+# SPA fallbacks - routes without a prerendered file get a NEUTRAL app
+# shell (loading note + directory links + the app scripts), not the
+# homepage file: falling back to index.html made /es/anything statically
+# serve the Spanish homepage content — a soft-404 that reads as "this
+# page shows the wrong thing" to crawlers and no-JS visitors. React
+# renders the real page (or its localized 404) on load. The Spanish rule
+# must come before the generic one.
+/es/*  /es/app-shell.html  200
+/*  /app-shell.html  200
