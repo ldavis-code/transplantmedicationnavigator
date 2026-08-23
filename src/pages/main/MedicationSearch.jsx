@@ -249,7 +249,7 @@ const MedicationSearch = () => {
                                     {searchResult.internal.map(med => {
                                         const isAlreadyIn = myListIds.includes(med.id);
                                         return (
-                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: med.brandName })}>
+                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: localizeMedName(med.brandName) })}>
                                                 <div>
                                                     <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
                                                     <span className="text-sm text-slate-600">{localizeMedName(med.genericName)}</span>
@@ -395,7 +395,7 @@ const MedicationSearch = () => {
                                     <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
                                     <span className="text-slate-600 ml-2">({localizeMedName(med.genericName)})</span>
                                 </div>
-                                <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name: med.brandName })}>
+                                <button onClick={() => removeInternalFromList(med.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('medications.verify.removeAria', { name: localizeMedName(med.brandName) })}>
                                     <X size={18} />
                                 </button>
                             </div>

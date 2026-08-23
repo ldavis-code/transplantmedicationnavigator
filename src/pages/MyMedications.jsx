@@ -579,7 +579,7 @@ export default function MyMedications() {
                     <button
                       onClick={() => handleDeleteMedication(med.id)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-red-500/50"
-                      aria-label={t('myMeds.deleteAria', { name: med.medication_name })}
+                      aria-label={t('myMeds.deleteAria', { name: localizeMedName(med.medication_name) })}
                     >
                       <Trash2 className="w-5 h-5" aria-hidden="true" />
                     </button>

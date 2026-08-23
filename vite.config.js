@@ -155,8 +155,16 @@ export default defineConfig({
         // Spanish pages, the legacy ?lang=es 301s) never runs. Navigations
         // must reach the network first.
         navigateFallback: null,
-        // Pre-cache important pages
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Precache the hashed app assets, NOT the prerendered HTML pages.
+        // HTML used to be included, but with ~500 prerendered pages that
+        // meant every client re-downloaded the whole page set on every
+        // deploy, and worse: a stale precached shell could be served
+        // against the NEW deploy's hashed chunks (the old ones are gone
+        // from both server and cleaned-up caches), leaving a half-alive
+        // page whose buttons stop responding. Navigations are NetworkFirst
+        // (rule above), and the pages-v2 runtime cache still keeps visited
+        // pages available for offline revisits.
+        globPatterns: ['**/*.{js,css,ico,png,svg,woff2}'],
         // Exclude large infographic images from precaching, plus the legacy
         // per-weight font copies: fonts.css now uses one variable-font file
         // per family; the old files stay on disk only for visitors whose

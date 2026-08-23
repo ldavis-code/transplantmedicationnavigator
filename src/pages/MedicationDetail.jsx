@@ -113,7 +113,7 @@ const MedicationDetail = () => {
         },
         med.generic_available && {
             q: t('medications.detail.faq.genericQ', { name: brandDisplay }),
-            a: t('medications.detail.faq.genericA', { generic: med.genericName }),
+            a: t('medications.detail.faq.genericA', { generic: localizeMedName(med.genericName) }),
         },
         price && {
             q: t('medications.detail.faq.costQ', { name: brandDisplay }),
@@ -214,7 +214,7 @@ const MedicationDetail = () => {
                 {med.generic_available && (
                     <div className="border border-slate-200 bg-white rounded-xl p-5">
                         <h3 className="flex items-center gap-2 font-bold text-slate-900 mb-1"><Tag size={18} aria-hidden="true" /> {t('medications.detail.genericTitle')}</h3>
-                        <p className="text-slate-700 text-sm">{t('medications.detail.genericText', { generic: med.genericName })}</p>
+                        <p className="text-slate-700 text-sm">{t('medications.detail.genericText', { generic: localizeMedName(med.genericName) })}</p>
                         <Link to="/education?topic=GENERICS" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline"><ShieldCheck size={14} aria-hidden="true" /> {t('medications.detail.genericLink')}</Link>
                     </div>
                 )}

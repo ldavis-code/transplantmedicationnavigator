@@ -395,12 +395,14 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     ${stylesheetTags}
 </head>
 <body class="bg-slate-50">
-    <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] bg-emerald-700 text-white px-6 py-3 rounded-lg text-lg font-bold shadow-xl">
-        Skip to main content
-    </a>
-
     <div id="root">
+        <!-- Skip link lives INSIDE #root (in the page language): React
+             replaces the root's children on mount, so this pre-hydration
+             copy disappears when the app renders its own localized skip
+             link — one skip link on the page at all times, never two. -->
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] bg-emerald-700 text-white px-6 py-3 rounded-lg text-lg font-bold shadow-xl">
+            ${isEs ? 'Saltar al contenido principal' : 'Skip to main content'}
+        </a>
         <!-- Static content for SEO - React will replace this when it loads -->
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
