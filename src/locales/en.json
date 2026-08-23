@@ -1391,6 +1391,12 @@
       "title2": "We help you get it.",
       "subtitle": "What it should cost, which programs are actually yours, and what to do when your plan changes the rules."
     },
+    "flow": {
+      "ariaLabel": "How it works, in three steps",
+      "step1": "Find or import your meds",
+      "step2": "Pick your insurance",
+      "step3": "See your options"
+    },
     "steps": {
       "medsLabel": "1 · Your medications",
       "searchAriaLabel": "Type your medication name to search",
@@ -1406,6 +1412,8 @@
       "examplesAriaLabel": "Common transplant medications",
       "tagGeneric": "generic",
       "tagBrand": "brand",
+      "browseAll": "Browse all {{count}} medications",
+      "browseAllAria": "Browse the full list of {{count}} medications",
       "selectedPre": "Your medication: ",
       "clearSelected": "Clear selected medication",
       "seeOptions": "See my options",
@@ -1417,7 +1425,14 @@
       "insMedicaid": "Medicaid",
       "insUninsured": "No insurance",
       "multiplePre": "Taking more than one?",
-      "multipleLink": "Answer 5 questions and we'll do all of them at once"
+      "multipleLink": "Answer 5 questions and we'll do all of them at once",
+      "previewSummary": "See the 5 questions first",
+      "previewIntro": "Quick and anonymous. About 2 minutes, no name, no account.",
+      "previewQ1": "About you — before or after transplant",
+      "previewQ2": "Your transplant — which organ",
+      "previewQ3": "Your medications — pick from a list or import them",
+      "previewQ4": "Your coverage — what insurance you have",
+      "previewQ5": "Your costs — how hard they are to manage"
     },
     "trust": "{{count}} transplant medications · Free, no account · Your answers stay on your device · Built by a liver transplant recipient",
     "explainer": {
@@ -1448,7 +1463,7 @@
       },
       "grants": {
         "title": "Grants & foundations",
-        "text": "Verified programs, direct links, no scams. Updated July 2026.",
+        "text": "{{programs}} assistance programs and foundations, plus {{copayCards}} copay cards. Verified, direct links, no scams. Updated July 2026.",
         "ariaLabel": "Browse grants and foundation programs",
         "link": "Browse programs"
       }

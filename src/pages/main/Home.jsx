@@ -128,6 +128,20 @@ const Home = () => {
                 <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto">
                     {t('home.hero.subtitle')}
                 </p>
+
+                {/* Three-step journey map, so a first-time visitor sees the
+                    whole path before scrolling into step 1. */}
+                <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-3 mt-7" aria-label={t('home.flow.ariaLabel')}>
+                    {[1, 2, 3].map((n) => (
+                        <li key={n} className="flex items-center gap-3">
+                            {n > 1 && <ArrowRight size={16} className="text-slate-400 rotate-90 sm:rotate-0" aria-hidden="true" />}
+                            <span className="flex items-center gap-2 bg-white border border-slate-200 rounded-full pl-1.5 pr-4 py-1.5 shadow-sm">
+                                <span className="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center" aria-hidden="true">{n}</span>
+                                <span className="text-sm font-semibold text-slate-700">{t(`home.flow.step${n}`)}</span>
+                            </span>
+                        </li>
+                    ))}
+                </ol>
             </section>
 
             {/* Step 1: medications */}
@@ -211,6 +225,18 @@ const Home = () => {
                     ))}
                 </div>
 
+                {/* Confirms coverage up front: the visitor can check the full
+                    list instead of guessing whether their drug is in it. */}
+                <p className="text-sm text-slate-500 mt-3">
+                    <Link
+                        to="/medications"
+                        className="text-emerald-700 font-semibold underline hover:text-emerald-800"
+                        aria-label={t('home.steps.browseAllAria', { count: STAT_MEDICATIONS })}
+                    >
+                        {t('home.steps.browseAll', { count: STAT_MEDICATIONS })}
+                    </Link>
+                </p>
+
                 {pendingMed && (
                     <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-3">
                         <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
@@ -270,6 +296,20 @@ const Home = () => {
                         {t('home.steps.multipleLink')} <ArrowRight size={15} aria-hidden="true" />
                     </Link>
                 </p>
+
+                {/* The 5 questions up front, so nobody starts the quiz blind
+                    to the time commitment or what it asks. */}
+                <details className="mt-2 max-w-xl text-sm text-slate-600">
+                    <summary className="cursor-pointer font-semibold text-slate-700 underline decoration-dotted hover:text-emerald-700 w-fit">
+                        {t('home.steps.previewSummary')}
+                    </summary>
+                    <p className="mt-2">{t('home.steps.previewIntro')}</p>
+                    <ol className="list-decimal pl-5 mt-1 space-y-1">
+                        {[1, 2, 3, 4, 5].map((n) => (
+                            <li key={n}>{t(`home.steps.previewQ${n}`)}</li>
+                        ))}
+                    </ol>
+                </details>
 
                 <p className="text-sm text-slate-500 mt-6">
                     {t('home.trust', { count: STAT_MEDICATIONS })}
@@ -333,7 +373,7 @@ const Home = () => {
                         <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><HeartHandshake size={20} /></div>
                         <h3 className="text-xl font-bold text-slate-900">{t('home.cards.grants.title')}</h3>
                     </div>
-                    <p className="text-slate-600 mb-3">{t('home.cards.grants.text')}</p>
+                    <p className="text-slate-600 mb-3">{t('home.cards.grants.text', { programs: HOME_STATS.assistancePrograms, copayCards: HOME_STATS.copayCards })}</p>
                     <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.cards.grants.ariaLabel')}>
                         {t('home.cards.grants.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>
