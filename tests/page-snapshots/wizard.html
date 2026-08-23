@@ -60,7 +60,8 @@
 <span class="font-bold text-base sm:text-lg leading-tight">Transplant Medication<br> Navigator<sup class="text-xs">™</sup>
 </span>
 </a>
-<nav class="hidden xl:flex items-center gap-1 2xl:gap-1.5" aria-label="Main navigation">
+<div class="hidden xl:flex items-center min-w-0">
+<nav class="flex items-center gap-1 2xl:gap-1.5 min-w-0 overflow-x-auto" aria-label="Main navigation">
 <a aria-label="Go to home page" class="text-sm 2xl:text-base font-medium transition-colors px-2 2xl:px-3 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/" data-discover="true">Home</a>
 <a aria-label="Start medication path wizard" class="text-sm 2xl:text-base font-medium transition-colors px-2 2xl:px-3 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600" href="/wizard" data-discover="true">My Path</a>
 <a aria-label="Browse education and coverage guides" class="text-sm 2xl:text-base font-medium transition-colors px-2 2xl:px-3 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap text-slate-700 hover:text-emerald-700 hover:bg-emerald-50" href="/education" data-discover="true">Education</a>
@@ -74,6 +75,8 @@
 <circle cx="12" cy="12" r="3">
 </circle>
 </svg>Simple View</button>
+</nav>
+<div class="flex-shrink-0 ml-1 2xl:ml-1.5">
 <button lang="es" aria-label="Ver esta página en español" title="Ver esta página en español" class="hidden min-[360px]:inline-flex items-center gap-1.5 px-2 2xl:px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-700 text-sm 2xl:text-base font-semibold rounded-lg border border-emerald-300 transition min-h-[44px] min-w-[44px] justify-center whitespace-nowrap">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe" aria-hidden="true">
 <circle cx="12" cy="12" r="10">
@@ -85,7 +88,8 @@
 </svg>
 <span class="hidden sm:inline">Español</span>
 </button>
-</nav>
+</div>
+</div>
 <div class="xl:hidden flex items-center gap-1">
 <button lang="es" aria-label="Ver esta página en español" title="Ver esta página en español" class="hidden min-[360px]:inline-flex items-center gap-1.5 px-2 2xl:px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-700 text-sm 2xl:text-base font-semibold rounded-lg border border-emerald-300 transition min-h-[44px] min-w-[44px] justify-center whitespace-nowrap">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe" aria-hidden="true">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { isSpanishPath, LANG_STORAGE_KEY } from './i18n.js';
+import { isSpanishPath, LANG_STORAGE_KEY, ES_OFFER_DISMISS_KEY } from './i18n.js';
 // Lazy loaded page components for code splitting
 const LazyFAQ = lazy(() => import('./pages/FAQ.jsx'));
 const LazyWizard = lazy(() => import('./pages/main/Wizard.jsx'));
@@ -186,6 +186,77 @@ const LanguageUrlSync = () => {
 // server serves different static shells for /es/... and /...), so the
 // router's basename below is fixed for the lifetime of the page.
 const IN_ES_PATH = typeof window !== 'undefined' && isSpanishPath(window.location.pathname);
+
+// "¿Prefiere español?" offer bar, shown on English pages when the browser
+// itself prefers Spanish. An offer, never a redirect: in many households
+// the patient is Spanish-dominant while the person holding the phone is
+// English-dominant, so the English page must stay put — this bar is what
+// gets the phone handed over. Strings are deliberately not in the locale
+// files: they render Spanish ON the English page, same rationale as
+// LanguageToggle's SWITCH_LABELS.
+const ES_OFFER = {
+    question: '¿Prefiere español?',
+    link: 'Vea este sitio en español',
+    dismissAria: 'Cerrar este aviso',
+    regionAria: 'Este sitio está disponible en español',
+};
+
+const browserPrefersSpanish = () => {
+    if (typeof navigator === 'undefined') return false;
+    const langs = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language];
+    return (langs || []).some((l) => (l || '').toLowerCase().startsWith('es'));
+};
+
+const SpanishOfferBar = () => {
+    const location = useLocation();
+    const { i18n } = useTranslation();
+    const [dismissed, setDismissed] = useState(() => {
+        try {
+            return localStorage.getItem(ES_OFFER_DISMISS_KEY) === '1';
+        } catch {
+            // No storage means the dismissal couldn't persist — showing the
+            // bar anyway would nag on every page load, so keep it hidden.
+            return true;
+        }
+    });
+
+    if (dismissed || IN_ES_PATH || (i18n.resolvedLanguage || '').startsWith('es') || !browserPrefersSpanish()) {
+        return null;
+    }
+
+    // Offer this page's own Spanish version, not just the homepage.
+    const params = new URLSearchParams(location.search);
+    params.delete('lang');
+    const qs = params.toString();
+    const href = '/es' + location.pathname + (qs ? `?${qs}` : '') + location.hash;
+
+    const dismiss = () => {
+        setDismissed(true);
+        try {
+            localStorage.setItem(ES_OFFER_DISMISS_KEY, '1');
+        } catch { /* dismissal lasts this visit only */ }
+    };
+
+    return (
+        <div lang="es" role="region" aria-label={ES_OFFER.regionAria} className="bg-amber-50 border-b border-amber-200 px-4 py-1.5 no-print flex items-center justify-center gap-2 text-center">
+            <p className="text-sm sm:text-base text-slate-800">
+                <span className="font-semibold">{ES_OFFER.question}</span>{' '}
+                <a href={href} className="font-bold text-emerald-800 underline hover:text-emerald-900">
+                    {ES_OFFER.link} →
+                </a>
+            </p>
+            <button
+                onClick={dismiss}
+                aria-label={ES_OFFER.dismissAria}
+                className="text-slate-500 hover:text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center flex-shrink-0"
+            >
+                <X size={18} aria-hidden="true" />
+            </button>
+        </div>
+    );
+};
 
 // --- RULE-BASED ASSISTANT SYSTEM ---
 
@@ -519,8 +590,14 @@ const Layout = ({ children }) => {
                     {/* Desktop Nav — whitespace-nowrap keeps the longer
                         Spanish labels on one line instead of wrapping and
                         crowding the Simple View toggle; below xl everything
-                        moves into the menu so nothing overlaps. */}
-                    <nav className="hidden xl:flex items-center gap-1 2xl:gap-1.5" aria-label={t('layout.nav.mainAriaLabel')}>
+                        moves into the menu so nothing overlaps. The nav
+                        itself may shrink and scroll (min-w-0/overflow-x-auto)
+                        so the language toggle after it is NEVER clipped —
+                        between xl and 2xl the container caps at 1280px and
+                        the full label set can overflow, which used to cut
+                        off "Español" at ~1500px viewports. */}
+                    <div className="hidden xl:flex items-center min-w-0">
+                    <nav className="flex items-center gap-1 2xl:gap-1.5 min-w-0 overflow-x-auto" aria-label={t('layout.nav.mainAriaLabel')}>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
@@ -547,8 +624,12 @@ const Layout = ({ children }) => {
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                             {isSimpleView ? t('layout.nav.simpleViewExit') : t('layout.nav.simpleView')}
                         </button>
-                        <LanguageToggle compact />
                     </nav>
+                    {/* Outside the scrollable nav so it always stays visible */}
+                    <div className="flex-shrink-0 ml-1 2xl:ml-1.5">
+                        <LanguageToggle compact />
+                    </div>
+                    </div>
 
                     {/* Mobile/tablet: language switch stays visible in the top
                         bar so it isn't buried below the hero or behind the menu. */}
@@ -600,6 +681,10 @@ const Layout = ({ children }) => {
                     </nav>
                 )}
             </header>
+
+            {/* Spanish offer for browsers that prefer Spanish — an invitation,
+                never a redirect (see SpanishOfferBar). */}
+            <SpanishOfferBar />
 
             {/* One-time Simple View offer: shown until dismissed or accepted,
                 remembered per device. Simple View is a real accessibility

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Globe } from 'lucide-react';
-import { LANG_STORAGE_KEY } from '../i18n.js';
+import { LANG_STORAGE_KEY, ES_OFFER_DISMISS_KEY } from '../i18n.js';
 
 // On the English page the invitation is in Spanish so a Spanish speaker can
 // find it. On the Spanish page it is also in Spanish: the reader chose
@@ -41,6 +41,9 @@ const LanguageToggle = ({ compact = false }) => {
     const switchLanguage = () => {
         try {
             localStorage.setItem(LANG_STORAGE_KEY, next);
+            // Using the toggle means the reader found the language controls —
+            // retire the "¿Prefiere español?" offer bar for good.
+            localStorage.setItem(ES_OFFER_DISMISS_KEY, '1');
         } catch {
             // localStorage unavailable — the target URL still decides
         }
