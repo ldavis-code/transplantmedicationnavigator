@@ -34,7 +34,8 @@ const INSURANCE_OPTIONS = [
 // Home Page
 const Home = () => {
     useMetaTags(seoMetadata.home);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isSpanish = (i18n.resolvedLanguage || i18n.language || '').startsWith('es');
     const navigate = useNavigate();
     const MEDICATIONS = useMedicationsList();
     const { answers, setAnswer } = useChatQuiz();
@@ -142,6 +143,22 @@ const Home = () => {
                         </li>
                     ))}
                 </ol>
+
+                {/* One line of Spanish on the ENGLISH page: in many households
+                    the patient is Spanish-dominant while the person holding
+                    the phone is English-dominant — this line is what gets the
+                    phone handed over. Deliberately not in the locale files
+                    (it renders Spanish on the English page), and the URL is
+                    spelled out so it can be read aloud, copied, or printed.
+                    The Spanish page doesn't need it. */}
+                {!isSpanish && (
+                    <p lang="es" className="mt-5 text-sm text-slate-600">
+                        Este sitio está disponible en español:{' '}{/* i18n-ok */}
+                        <a href="/es" className="font-semibold text-emerald-700 underline hover:text-emerald-800 whitespace-nowrap">
+                            transplantmedicationnavigator.com/es
+                        </a>
+                    </p>
+                )}
             </section>
 
             {/* Step 1: medications */}

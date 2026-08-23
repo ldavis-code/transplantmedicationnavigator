@@ -31,6 +31,11 @@ import { initReactI18next } from 'react-i18next';
 // navigation (LanguageToggle, LanguageUrlSync), where changeLanguage's
 // languageChanged handler never gets to run before the page unloads.
 export const LANG_STORAGE_KEY = 'tmn-lang';
+
+// Once set, the "¿Prefiere español?" offer bar stays hidden. Set by its own
+// dismiss button and by any use of the language toggle — either way the
+// reader has found the language controls, so the offer's job is done.
+export const ES_OFFER_DISMISS_KEY = 'tmn-es-offer-dismissed';
 const STORAGE_KEY = LANG_STORAGE_KEY;
 const SUPPORTED = ['en', 'es'];
 
