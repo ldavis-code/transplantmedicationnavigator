@@ -4,7 +4,7 @@
  * BOTH locales load as their own chunks — neither rides in the entry
  * bundle (together they were ~425 KB of JSON every visitor parsed).
  * main.jsx awaits `i18nReady` before the first render, and index.html
- * carries a modulepreload hint for the English chunk (index-es.html for
+ * carries a modulepreload hint for the English chunk (the /es/ pages for
  * both), so the locale downloads in parallel with the entry module and
  * t() is fully populated before anything renders: no missing-key flash,
  * no English flash for Spanish visitors. English is always loaded (it is
@@ -14,21 +14,40 @@
  * tests/page-snapshots/).
  *
  * Language selection:
- *   1. ?lang=es|en URL parameter (shareable links; also saves the choice)
- *   2. previously saved choice in localStorage
- *   3. default: English
+ *   1. the /es/ path prefix (Spanish pages live at /es/<route>, served
+ *      statically by Netlify; also saves the choice)
+ *   2. ?lang=es|en URL parameter (legacy shareable links; the server 301s
+ *      ?lang=es to /es/, so this mostly covers ?lang=en and old cached
+ *      app shells; also saves the choice)
+ *   3. previously saved choice in localStorage
+ *   4. default: English
  * The choice is applied to <html lang> so screen readers and the
  * read-aloud feature use the right voice.
  */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-const STORAGE_KEY = 'tmn-lang';
+// Exported for the components that persist the choice around a full page
+// navigation (LanguageToggle, LanguageUrlSync), where changeLanguage's
+// languageChanged handler never gets to run before the page unloads.
+export const LANG_STORAGE_KEY = 'tmn-lang';
+const STORAGE_KEY = LANG_STORAGE_KEY;
 const SUPPORTED = ['en', 'es'];
+
+// Spanish pages live at the /es/ path prefix (e.g. /es/medications).
+export function isSpanishPath(pathname) {
+    return pathname === '/es' || pathname.startsWith('/es/');
+}
 
 function detectInitialLanguage() {
     if (typeof window === 'undefined') return 'en';
     try {
+        // The path is the page's identity: /es/... IS the Spanish page,
+        // whatever the saved preference says.
+        if (isSpanishPath(window.location.pathname)) {
+            localStorage.setItem(STORAGE_KEY, 'es');
+            return 'es';
+        }
         const param = new URLSearchParams(window.location.search).get('lang');
         if (SUPPORTED.includes(param)) {
             localStorage.setItem(STORAGE_KEY, param);
@@ -37,7 +56,10 @@ function detectInitialLanguage() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (SUPPORTED.includes(saved)) return saved;
     } catch {
-        // localStorage unavailable (private mode) — fall through to default
+        // localStorage unavailable (private mode) — fall through to default;
+        // the /es path check cannot throw, only the storage writes can, so
+        // re-derive it here rather than losing the page's language.
+        if (isSpanishPath(window.location.pathname)) return 'es';
     }
     return 'en';
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
+import { isSpanishPath, LANG_STORAGE_KEY } from './i18n.js';
 // Lazy loaded page components for code splitting
 const LazyFAQ = lazy(() => import('./pages/FAQ.jsx'));
 const LazyWizard = lazy(() => import('./pages/main/Wizard.jsx'));
@@ -129,36 +130,62 @@ const ScrollToTop = () => {
     return null;
 };
 
-// Keeps the URL and the active language in sync in both directions.
-// URL → language: applies ?lang= on every navigation, not only on the initial
-// page load (which i18n.js handles at module init). This covers in-app
-// navigations to links that carry ?lang=es and any load path where the
-// initial detection was missed — e.g. an app shell restored by an
-// out-of-date service worker.
-// Language → URL: while Spanish is active, re-adds ?lang=es to any page the
-// patient navigates to, so every Spanish page can be shared or bookmarked
-// and opens in Spanish for the next reader (not just in this browser's
-// saved preference).
-const LanguageParamSync = () => {
-    const location = useLocation();
+// Keeps the URL and the active language in sync. Spanish lives at the /es/
+// path prefix, served statically by Netlify; the router runs with
+// basename="/es" there (set in App below), so in-app navigation keeps the
+// prefix automatically and this component only handles the boundaries:
+//
+// Inside /es/: the path IS the language — force Spanish if a stale state
+// slipped through, and honor an explicit ?lang=en by doing a full
+// navigation to the unprefixed (English) page.
+//
+// Outside /es/: honor an explicit ?lang=en (legacy links; also how an old
+// cached app shell switches). When Spanish is active on an English URL —
+// a legacy ?lang=es link served by an out-of-date service worker shell, or
+// the saved preference on a plain link — move to the real /es/ page with a
+// full navigation, so the reader gets the prerendered Spanish page and an
+// address that stays Spanish when shared.
+const LanguageUrlSync = () => {
+    const location = useLocation(); // basename-stripped inside /es/
     const navigate = useNavigate();
     const { i18n } = useTranslation();
     useEffect(() => {
-        const param = new URLSearchParams(location.search).get('lang');
-        if ((param === 'en' || param === 'es') && i18n.resolvedLanguage !== param) {
-            i18n.changeLanguage(param);
-        }
-    }, [location.search, i18n]);
-    useEffect(() => {
         const params = new URLSearchParams(location.search);
-        if (i18n.resolvedLanguage === 'es' && !params.get('lang')) {
-            params.set('lang', 'es');
-            // replace, not push: back should leave the page, not strip the param
-            navigate({ pathname: location.pathname, search: params.toString(), hash: location.hash }, { replace: true });
+        const param = params.get('lang');
+        params.delete('lang');
+        const qs = params.toString();
+        const suffix = location.pathname + (qs ? `?${qs}` : '') + location.hash;
+        if (IN_ES_PATH) {
+            if (param === 'en') {
+                try { localStorage.setItem(LANG_STORAGE_KEY, 'en'); } catch { /* still switches */ }
+                window.location.replace(suffix);
+                return;
+            }
+            if (i18n.resolvedLanguage !== 'es') i18n.changeLanguage('es');
+            if (param === 'es') {
+                // Netlify forwards the query string on the legacy ?lang=es
+                // 301s, so the parameter can arrive here redundantly — shed
+                // it (router replace keeps the /es basename).
+                navigate(suffix, { replace: true });
+            }
+            return;
         }
-    }, [location, i18n.resolvedLanguage, navigate]);
+        if (param === 'en') {
+            if (i18n.resolvedLanguage !== 'en') i18n.changeLanguage('en');
+            return;
+        }
+        if (param === 'es' || i18n.resolvedLanguage === 'es') {
+            window.location.replace('/es' + suffix);
+        }
+    }, [location, navigate, i18n, i18n.resolvedLanguage]);
     return null;
 };
+
+// Whether this page load lives in the Spanish URL space. Computed once at
+// module load: a full page load is the only way to cross the boundary (the
+// server serves different static shells for /es/... and /...), so the
+// router's basename below is fixed for the lifetime of the page.
+const IN_ES_PATH = typeof window !== 'undefined' && isSpanishPath(window.location.pathname);
 
 // --- RULE-BASED ASSISTANT SYSTEM ---
 
@@ -670,10 +697,13 @@ const PageLoadingFallback = () => (
     </div>
 );
 
-// The /es path convention maps to the real language mechanism: Netlify
-// redirects /es/* to /:splat?lang=es server-side, but an installed service
-// worker can serve the app shell before the request reaches the server, so
-// the router needs its own handler or these URLs land on the 404 page.
+// Safety net for /es/... paths reaching the router itself. Normally the
+// /es prefix is absorbed by the router basename (set from the URL at page
+// load), so these routes never match; they can only fire when a stale app
+// shell state leaves the router on basename "/" while the path carries the
+// prefix (e.g. an out-of-date service worker shell). Strip the prefix and
+// switch to Spanish; LanguageUrlSync then moves the address back to the
+// real /es/ URL.
 const SpanishPathRedirect = () => {
     const location = useLocation();
     const { i18n } = useTranslation();
@@ -820,13 +850,17 @@ const App = () => {
         <SimpleViewProvider>
             <MedicationsProvider>
                 <ChatQuizProvider>
-                    <BrowserRouter>
+                    {/* Under /es/ the router runs with basename="/es": routes
+                        and <Link>s stay unprefixed while every URL keeps the
+                        Spanish prefix. Crossing the language boundary is a
+                        full navigation (LanguageToggle, LanguageUrlSync). */}
+                    <BrowserRouter basename={IN_ES_PATH ? '/es' : undefined}>
                         <DemoModeProvider>
                             <DemoBanner />
                             <ConsentBanner />
                             <GoogleAnalytics />
                             <ScrollToTop />
-                            <LanguageParamSync />
+                            <LanguageUrlSync />
                             <RouteAnnouncer />
                             <AppRoutes />
                         </DemoModeProvider>

@@ -81,7 +81,7 @@ const MedicationDetail = () => {
         description: t('medications.detail.meta.description', { name: localizeMedName(nameWithGeneric) }),
         canonical: `${BASE_URL}/medications/${med.id}`,
         breadcrumbName: med.brandName,
-        // Fully translated via t(): declare the ?lang=es variant so the
+        // Fully translated via t(): declare the /es/ variant so the
         // canonical and hreflang alternates track the active language.
         langAlternates: true,
     } : {

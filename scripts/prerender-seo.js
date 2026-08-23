@@ -20,10 +20,12 @@ const projectRoot = path.resolve(__dirname, '..');
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 const SITE_NAME = 'Transplant Medication Navigator™';
 
-// Routes with a full Spanish translation (reached via ?lang=es). Each gets
-// hreflang alternates and a prerendered Spanish variant (index-es.html,
-// served by the lang=:lang redirect rules in public/_redirects) so search
-// engines and link previews see Spanish text without running JavaScript.
+// Routes with a full Spanish translation, served at the /es/ path prefix
+// (dist/es/<route>/index.html — Netlify resolves the static file directly,
+// no query parameter involved). Each gets hreflang alternates and a
+// prerendered Spanish variant so search engines, link previews, and no-JS
+// visitors see Spanish text without running JavaScript. Legacy ?lang=es
+// URLs 301 to /es/<route> (see public/_redirects).
 // The per-medication pages (/medications/:id) are Spanish-capable too but
 // are generated dynamically — see hasSpanishVariant below.
 const SPANISH_ROUTES = new Set([
@@ -79,8 +81,11 @@ const fill = (tpl, vars) => String(tpl || '').replace(/\{\{(\w+)\}\}/g, (_, k) =
 
 // Every /medications/:id page has a full Spanish translation (the component
 // is entirely t()-driven), so each gets hreflang alternates and a
-// prerendered index-es.html just like the fixed SPANISH_ROUTES.
+// prerendered /es/ variant just like the fixed SPANISH_ROUTES.
 const hasSpanishVariant = (route) => SPANISH_ROUTES.has(route) || route.startsWith('/medications/');
+
+// Path-based Spanish URL for a route: /es/<route> (the homepage is /es/).
+const esPath = (route) => (route === '/' ? '/es/' : `/es${route}`);
 
 // Home-page stat tiles, computed from the data files so the static fallback
 // can never drift from the app (same formula as Home in src/App.jsx).
@@ -317,7 +322,7 @@ const medicationPages = MEDICATIONS.map((m) => {
       <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
         ${waysEs.map((w) => `<li>${esc(w)}</li>`).join('')}
       </ul>
-      <p style="margin-bottom:16px;"><a href="/wizard?lang=es" style="color:#059669;font-weight:600;text-decoration:underline;">${esc(ES_DETAIL.ctaQuiz.trim())}</a> para encontrar los programas para los que usted califica.</p>`,
+      <p style="margin-bottom:16px;"><a href="/es/wizard" style="color:#059669;font-weight:600;text-decoration:underline;">${esc(ES_DETAIL.ctaQuiz.trim())}</a> para encontrar los programas para los que usted califica.</p>`,
     },
   };
 });
@@ -329,9 +334,9 @@ const medicationPages = MEDICATIONS.map((m) => {
 function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
   const canonical = `${BASE_URL}${page.route}`;
   const isEs = lang === 'es';
-  // The Spanish version of a page lives at the same route with ?lang=es;
+  // The Spanish version of a page lives at the /es/ path prefix;
   // it is its own canonical so both language versions can be indexed.
-  const pageUrl = isEs ? `${canonical}?lang=es` : canonical;
+  const pageUrl = isEs ? `${BASE_URL}${esPath(page.route)}` : canonical;
   const pageTitle = page.title.split(' | ')[0];
   const aiSummaryTag = page.aiSummary
     ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
@@ -341,7 +346,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     ? `
     <!-- Language alternates -->
     <link rel="alternate" hreflang="en" href="${canonical}" />
-    <link rel="alternate" hreflang="es" href="${canonical}?lang=es" />
+    <link rel="alternate" hreflang="es" href="${BASE_URL}${esPath(page.route)}" />
     <link rel="alternate" hreflang="x-default" href="${canonical}" />`
     : '';
 
@@ -401,7 +406,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
             <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página... <span lang="en">/ Loading interactive features...</span>' : 'Loading interactive features... <span lang="es">/ Cargando la página...</span>'}</p>
-            <a href="${isEs ? '/?lang=es' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
+            <a href="${isEs ? '/es/' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
         </main>
     </div>
 ${page.noscriptHtml || ''}
@@ -412,7 +417,7 @@ ${page.noscriptHtml || ''}
 }
 
 /**
- * Static Spanish homepage body for dist/index-es.html, built from the same
+ * Static Spanish homepage body for dist/es/index.html, built from the same
  * locale strings the app renders (src/locales/es.json) plus the computed
  * stat tiles, so crawlers and no-JS visitors get real Spanish content.
  */
@@ -420,7 +425,7 @@ function spanishHomeBody() {
   // Built from the CURRENT home locale structure (task-first redesign,
   // Aug 2026). If a key is renamed in es.json this throws, the caller's
   // catch logs it, and the errors counter fails the build — a missing
-  // dist/index-es.html turns the sitemap-listed /?lang=es into a hard 404.
+  // dist/es/index.html turns the sitemap-listed /es/ into a hard 404.
   const h = ES_LOCALE.home;
   const trustLine = h.trust.replace('{{count}}', HOME_STATS.medications);
   return `<div style="text-align: center;">
@@ -429,10 +434,10 @@ function spanishHomeBody() {
       </h1>
       <p style="font-size: 1.125rem; color: #64748b; max-width: 620px; margin: 0 auto 24px;">${h.hero.subtitle}</p>
       <p style="margin-bottom: 12px;">
-        <a href="/medications?lang=es" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.steps.searchPlaceholder.replace(/\.\.\.$/, '')}</a>
+        <a href="/es/medications" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.steps.searchPlaceholder.replace(/\.\.\.$/, '')}</a>
       </p>
       <p style="color: #475569; margin-bottom: 24px;">
-        ${h.steps.multiplePre} <a href="/wizard?lang=es" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
+        ${h.steps.multiplePre} <a href="/es/wizard" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
       </p>
       <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 32px;">${trustLine}</p>
       <section style="text-align: left; max-width: 640px; margin: 0 auto 24px;">
@@ -466,7 +471,7 @@ function spanishHomeBody() {
 }
 
 /**
- * Static Spanish <noscript> fallback for dist/index-es.html. The English
+ * Static Spanish <noscript> fallback for dist/es/index.html. The English
  * homepage (index.html) ships a hand-written noscript block with the core
  * medication, PAP, and copay-foundation tables; this is its Spanish
  * counterpart so no-JS Spanish visitors (older phones, locked-down hospital
@@ -820,14 +825,15 @@ function prerenderPages() {
       console.log(`  ✅ ${page.route} -> ${routePath}/index.html`);
       created++;
 
-      // Spanish variant (?lang=es), plus an English twin so the
-      // "lang=:lang -> index-:lang.html" redirect resolves for both values.
+      // Spanish variant, served path-based at /es/<route> (Netlify resolves
+      // dist/es/<route>/index.html directly; legacy ?lang=es URLs 301 here).
       // Covers the fixed SPANISH_ROUTES and every /medications/:id page.
       if (hasSpanishVariant(page.route)) {
         const esHtml = generatePageHTML(spanishPage(page), mainScriptPath, stylesheetTags, 'es');
-        fs.writeFileSync(path.join(pageDir, 'index-es.html'), esHtml, 'utf8');
-        fs.writeFileSync(path.join(pageDir, 'index-en.html'), html, 'utf8');
-        console.log(`  ✅ ${page.route}?lang=es -> ${routePath}/index-es.html`);
+        const esDir = path.join(distDir, 'es', routePath);
+        fs.mkdirSync(esDir, { recursive: true });
+        fs.writeFileSync(path.join(esDir, 'index.html'), esHtml, 'utf8');
+        console.log(`  ✅ ${esPath(page.route)} -> es/${routePath}/index.html`);
         created++;
       }
     } catch (error) {
@@ -838,7 +844,7 @@ function prerenderPages() {
 
   // Homepage: refresh the static stat tiles in dist/index.html from the data
   // files (they are hand-written in index.html and would otherwise go stale),
-  // then emit the language variants for the lang=:lang redirect.
+  // then emit the Spanish homepage at dist/es/index.html.
   try {
     const homePath = path.join(distDir, 'index.html');
     if (fs.existsSync(homePath)) {
@@ -850,15 +856,15 @@ function prerenderPages() {
         );
       }
       fs.writeFileSync(homePath, homeHtml, 'utf8');
-      fs.writeFileSync(path.join(distDir, 'index-en.html'), homeHtml, 'utf8');
       const esHome = generatePageHTML(
         spanishPage({ route: '/', title: SITE_NAME, description: '' }),
         mainScriptPath,
         stylesheetTags,
         'es'
       );
-      fs.writeFileSync(path.join(distDir, 'index-es.html'), esHome, 'utf8');
-      console.log('  ✅ / stats refreshed; /?lang=es -> index-es.html');
+      fs.mkdirSync(path.join(distDir, 'es'), { recursive: true });
+      fs.writeFileSync(path.join(distDir, 'es', 'index.html'), esHome, 'utf8');
+      console.log('  ✅ / stats refreshed; /es/ -> es/index.html');
       created += 1;
     }
   } catch (error) {
@@ -870,9 +876,9 @@ function prerenderPages() {
   console.log(`   Created: ${created} pages`);
   if (errors > 0) {
     console.log(`   Errors: ${errors}`);
-    // A missing prerendered file is a hard 404 behind the forced
-    // lang=:lang redirects (and those URLs are in the sitemap), so a
-    // prerender error must fail the build instead of shipping silently.
+    // A missing prerendered file is a hard 404 for its /es/ URL (and
+    // those URLs are in the sitemap), so a prerender error must fail
+    // the build instead of shipping silently.
     process.exitCode = 1;
   }
   console.log(`\n✅ Prerendering complete!`);
