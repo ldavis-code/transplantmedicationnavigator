@@ -62,6 +62,15 @@ const SPANISH_META = {
 const ES_LOCALE = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')
 );
+const EN_LOCALE = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'en.json'), 'utf8')
+);
+const FAQS_EN = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'faqs.json'), 'utf8')
+);
+const FAQS_ES = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'faqs.es.json'), 'utf8')
+);
 
 // Spanish medication-detail strings — same source the app renders
 // (src/pages/MedicationDetail.jsx via t('medications.detail.*')), so the
@@ -266,14 +275,20 @@ const MEDICATIONS = JSON.parse(
 );
 HOME_STATS.medications = MEDICATIONS.length;
 
-// Static no-JS directory bodies for the two list pages (the data files
-// load above, after the pages array is declared, so attach them here).
+// Static no-JS bodies for the content/list pages (the data files load
+// above, after the pages array is declared, so attach them here).
 const medsIndexPage = pages.find((p) => p.route === '/medications');
 medsIndexPage.bodyHtml = medicationsIndexBody(false);
 medsIndexPage.es = { bodyHtml: medicationsIndexBody(true) };
 const programsPage = pages.find((p) => p.route === '/application-help');
 programsPage.bodyHtml = programsDirectoryBody(false);
 programsPage.es = { bodyHtml: programsDirectoryBody(true) };
+const faqPage = pages.find((p) => p.route === '/faq');
+faqPage.bodyHtml = faqBody(false);
+faqPage.es = { bodyHtml: faqBody(true) };
+const educationPage = pages.find((p) => p.route === '/education');
+educationPage.bodyHtml = educationBody(false);
+educationPage.es = { bodyHtml: educationBody(true) };
 
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -299,6 +314,49 @@ function medicationsIndexBody(isEs) {
         ? `La búsqueda interactiva necesita JavaScript. La lista completa de ${MEDICATIONS.length} medicamentos está abajo — cada enlace lleva a los precios y programas de asistencia de ese medicamento.`
         : `The interactive search needs JavaScript. The full list of ${MEDICATIONS.length} medications is below — each link goes to that medication's prices and assistance programs.`}</p>
       <ul style="color:#334155;text-align:left;max-width:640px;margin:0 auto 20px;list-style:none;padding:0;columns:2;column-gap:24px;font-size:0.9375rem;line-height:1.6;">${items}</ul>`;
+}
+
+// /faq — the actual questions and answers from the same data files the app
+// renders, so no-JS visitors and crawlers get the real content, not a
+// loading line. (The interactive tools on the page still need JavaScript.)
+function faqBody(isEs) {
+  const faqs = isEs ? FAQS_ES : FAQS_EN;
+  const sections = faqs.map((cat) => {
+    const qas = (cat.questions || []).map((qa) =>
+      `<h3 style="color:#0f172a;font-size:1rem;margin:14px 0 4px;">${esc(qa.q)}</h3>
+       <p style="margin:0;color:#334155;">${esc(qa.a)}</p>`
+    ).join('');
+    return `<h2 style="color:#047857;font-size:1.25rem;margin:24px 0 4px;border-bottom:1px solid #d1fae5;padding-bottom:6px;">${esc(cat.category)}</h2>${qas}`;
+  }).join('');
+  return `<h1 style="color:#0f172a;margin-bottom:12px;">${isEs ? 'Preguntas frecuentes' : 'Frequently Asked Questions'}</h1>
+      <div style="text-align:left;max-width:640px;margin:0 auto 20px;font-size:0.9375rem;line-height:1.65;">${sections}</div>`;
+}
+
+// /education — a directory of the education topics, each deep-linking to
+// its tab, with titles from the same locale strings the app renders.
+// [?topic= param, education.tabs.* locale key] — params from Education.jsx.
+function educationBody(isEs) {
+  const EDUCATION_TOPICS = [
+    ['EMERGENCY', 'emergency'],
+    ['GENERICS', 'generics'],
+    ['DEDUCTIBLE_TRAP', 'deductibleTrap'],
+    ['INSURANCE', 'insurance'],
+    ['DIVERSION', 'diversion'],
+    ['OOP', 'oop'],
+    ['DIRECTORY', 'directory'],
+    ['MENTAL', 'mental'],
+  ];
+  const tabs = (isEs ? ES_LOCALE : EN_LOCALE).education.tabs;
+  const items = EDUCATION_TOPICS
+    .filter(([, key]) => tabs[key])
+    .map(([param, key]) =>
+      `<li style="margin:6px 0;"><a href="${isEs ? '/es' : ''}/education?topic=${param}" style="color:#047857;font-weight:600;">${esc(tabs[key])}</a></li>`
+    ).join('');
+  return `<h1 style="color:#0f172a;margin-bottom:12px;">${isEs ? 'Educación y recursos' : 'Education &amp; Resources'}</h1>
+      <p style="color:#475569;margin-bottom:12px;">${isEs
+        ? 'Guías sobre cómo pagar sus medicamentos de trasplante. Elija un tema:'
+        : 'Guides on paying for your transplant medications. Choose a topic:'}</p>
+      <ul style="list-style:none;padding:0;max-width:520px;margin:0 auto 20px;text-align:left;font-size:1rem;">${items}</ul>`;
 }
 
 // /application-help — the program directory: every PAP, foundation, and
@@ -464,6 +522,9 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
             <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página... <span lang="en">/ Loading interactive features...</span>' : 'Loading interactive features... <span lang="es">/ Cargando la página...</span>'}</p>
+            <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">${isEs
+              ? 'Si esta página no carga, todavía puede ver la <a href="/es/medications" style="color:#059669;">lista de medicamentos</a> y el <a href="/es/application-help" style="color:#059669;">directorio de programas de asistencia</a>.'
+              : 'If this page doesn\'t load, you can still browse the <a href="/medications" style="color:#059669;">medication list</a> and the <a href="/application-help" style="color:#059669;">assistance program directory</a>.'}</p>
             <a href="${isEs ? '/es/' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
         </main>
     </div>
@@ -930,6 +991,54 @@ function prerenderPages() {
     }
   } catch (error) {
     console.error('  ❌ Error creating homepage language variants:', error.message);
+    errors++;
+  }
+
+  // Neutral SPA-fallback shells. Unknown routes used to fall back to the
+  // homepage files, so /es/anything statically served the Spanish HOME
+  // content (a soft-404 that reads as "this page shows the wrong thing"
+  // to crawlers and no-JS visitors). These shells carry no page content —
+  // just the loading note, the directory links, and the app scripts so
+  // React can render the real page (or its localized 404). No canonical
+  // and no robots directive: real non-prerendered routes are also served
+  // through them, and hydration supplies the correct head tags.
+  try {
+    const shell = (isEs) => `<!DOCTYPE html>
+<html lang="${isEs ? 'es' : 'en'}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${SITE_NAME}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#059669" />
+    <link rel="manifest" href="/manifest.json" />
+    ${stylesheetTags}
+</head>
+<body class="bg-slate-50">
+    <div id="root">
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] bg-emerald-700 text-white px-6 py-3 rounded-lg text-lg font-bold shadow-xl">
+            ${isEs ? 'Saltar al contenido principal' : 'Skip to main content'}
+        </a>
+        <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
+            <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página...' : 'Loading...'}</p>
+            <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">${isEs
+              ? 'Si esta página no carga, todavía puede ver la <a href="/es/medications" style="color:#059669;">lista de medicamentos</a> y el <a href="/es/application-help" style="color:#059669;">directorio de programas de asistencia</a>.'
+              : 'If this page doesn\'t load, you can still browse the <a href="/medications" style="color:#059669;">medication list</a> and the <a href="/application-help" style="color:#059669;">assistance program directory</a>.'}</p>
+            <a href="${isEs ? '/es/' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
+        </main>
+    </div>
+
+    <script type="module" src="${mainScriptPath}"></script>
+</body>
+</html>`;
+    fs.writeFileSync(path.join(distDir, 'app-shell.html'), shell(false), 'utf8');
+    fs.mkdirSync(path.join(distDir, 'es'), { recursive: true });
+    fs.writeFileSync(path.join(distDir, 'es', 'app-shell.html'), shell(true), 'utf8');
+    console.log('  ✅ SPA fallback shells -> app-shell.html, es/app-shell.html');
+    created += 2;
+  } catch (error) {
+    console.error('  ❌ Error creating SPA fallback shells:', error.message);
     errors++;
   }
 
