@@ -266,8 +266,64 @@ const MEDICATIONS = JSON.parse(
 );
 HOME_STATS.medications = MEDICATIONS.length;
 
+// Static no-JS directory bodies for the two list pages (the data files
+// load above, after the pages array is declared, so attach them here).
+const medsIndexPage = pages.find((p) => p.route === '/medications');
+medsIndexPage.bodyHtml = medicationsIndexBody(false);
+medsIndexPage.es = { bodyHtml: medicationsIndexBody(true) };
+const programsPage = pages.find((p) => p.route === '/application-help');
+programsPage.bodyHtml = programsDirectoryBody(false);
+programsPage.es = { bodyHtml: programsDirectoryBody(true) };
+
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// Static no-JS bodies for the two directory pages, so a blocked-JavaScript
+// browser (or a crawler) still gets the actual lists instead of a loading
+// line. Built from the same data files as the app, so they cannot drift.
+
+// /medications — every medication as a link to its own page (which carries
+// its own static body). "Brand (Generic)" unless the generic is already in
+// the brand name, names localized for the Spanish variant.
+function medicationsIndexBody(isEs) {
+  const items = MEDICATIONS.map((m) => {
+    const brand = isEs ? localizeMedNameEs(m.brandName) : m.brandName;
+    const generic = isEs ? localizeMedNameEs(m.genericName) : m.genericName;
+    const label = (m.genericName && !m.brandName.toLowerCase().includes(m.genericName.toLowerCase()))
+      ? `${esc(brand)} <span style="color:#64748b;">(${esc(generic)})</span>` : esc(brand);
+    return `<li style="margin:2px 0;"><a href="${isEs ? '/es' : ''}/medications/${m.id}" style="color:#047857;">${label}</a></li>`;
+  }).join('');
+  return `<h1 style="color:#0f172a;margin-bottom:12px;">${isEs ? 'Busque medicamentos de trasplante y precios' : 'Search Transplant Medications &amp; Prices'}</h1>
+      <p style="color:#475569;margin-bottom:16px;">${isEs
+        ? `La búsqueda interactiva necesita JavaScript. La lista completa de ${MEDICATIONS.length} medicamentos está abajo — cada enlace lleva a los precios y programas de asistencia de ese medicamento.`
+        : `The interactive search needs JavaScript. The full list of ${MEDICATIONS.length} medications is below — each link goes to that medication's prices and assistance programs.`}</p>
+      <ul style="color:#334155;text-align:left;max-width:640px;margin:0 auto 20px;list-style:none;padding:0;columns:2;column-gap:24px;font-size:0.9375rem;line-height:1.6;">${items}</ul>`;
+}
+
+// /application-help — the program directory: every PAP, foundation, and
+// copay program with its direct link and phone number.
+function programsDirectoryBody(isEs) {
+  const group = (progs, title) => {
+    const rows = Object.values(progs || {}).map((p) => {
+      const phone = p.phone ? ` &middot; <a href="tel:${esc(String(p.phone).replace(/[^\d+]/g, ''))}" style="color:#334155;">${esc(p.phone)}</a>` : '';
+      return `<li style="margin:3px 0;"><a href="${esc(p.url)}" style="color:#047857;">${esc(p.name)}</a>${phone}</li>`;
+    }).join('');
+    return `<h2 style="color:#0f172a;font-size:1.125rem;margin:20px 0 8px;">${title}</h2>
+      <ul style="list-style:disc;padding-left:20px;margin:0;font-size:0.9375rem;line-height:1.6;">${rows}</ul>`;
+  };
+  const nPap = countGroup(PROGRAMS.papPrograms);
+  const nFound = countGroup(PROGRAMS.foundationPrograms);
+  const nCopay = countGroup(PROGRAMS.copayPrograms);
+  return `<h1 style="color:#0f172a;margin-bottom:12px;">${isEs ? 'Cómo solicitar asistencia para medicamentos' : 'How to Apply for Medication Assistance'}</h1>
+      <p style="color:#475569;margin-bottom:8px;">${isEs
+        ? `La guía interactiva necesita JavaScript. El directorio completo está abajo: ${nPap} Programas de Asistencia al Paciente (medicamento gratis), ${nFound} fundaciones caritativas y ${nCopay} tarjetas de copago del fabricante, con enlaces directos y teléfonos.`
+        : `The interactive guide needs JavaScript. The full directory is below: ${nPap} Patient Assistance Programs (free medication), ${nFound} charitable foundations, and ${nCopay} manufacturer copay cards, with direct links and phone numbers.`}</p>
+      <div style="color:#334155;text-align:left;max-width:640px;margin:0 auto 20px;">
+        ${group(PROGRAMS.papPrograms, isEs ? 'Programas de Asistencia al Paciente (medicamento gratis)' : 'Patient Assistance Programs (free medication)')}
+        ${group(PROGRAMS.foundationPrograms, isEs ? 'Fundaciones caritativas' : 'Charitable foundations')}
+        ${group(PROGRAMS.copayPrograms, isEs ? 'Tarjetas de copago del fabricante (solo seguro comercial)' : 'Manufacturer copay cards (commercial insurance only)')}
+      </div>`;
 }
 
 const medicationPages = MEDICATIONS.map((m) => {
@@ -737,7 +793,10 @@ function spanishHomeNoscript() {
  * Merge a page definition with its Spanish metadata for the ?lang=es variant.
  */
 function spanishPage(page) {
-  const es = page.es || SPANISH_META[page.route] || {};
+  // Route-level Spanish meta merged with any page-supplied fields (the
+  // medication pages carry full es objects; the directory pages carry
+  // only es.bodyHtml on top of their SPANISH_META titles).
+  const es = { ...(SPANISH_META[page.route] || {}), ...(page.es || {}) };
   return {
     ...page,
     title: es.title || page.title,
