@@ -24,6 +24,8 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 // hreflang alternates and a prerendered Spanish variant (index-es.html,
 // served by the lang=:lang redirect rules in public/_redirects) so search
 // engines and link previews see Spanish text without running JavaScript.
+// The per-medication pages (/medications/:id) are Spanish-capable too but
+// are generated dynamically — see hasSpanishVariant below.
 const SPANISH_ROUTES = new Set([
   '/', '/wizard', '/education', '/application-help', '/faq',
   '/medications', '/evidence', '/my-medications', '/savings-tracker',
@@ -58,6 +60,27 @@ const SPANISH_META = {
 const ES_LOCALE = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')
 );
+
+// Spanish medication-detail strings — same source the app renders
+// (src/pages/MedicationDetail.jsx via t('medications.detail.*')), so the
+// static Spanish body cannot drift from the hydrated page.
+const ES_DETAIL = ES_LOCALE.medications.detail;
+const ES_CATEGORIES = ES_LOCALE.medications.categories || {};
+
+// Mirror of src/utils/medNames.js localizeMedName: brand names stay in
+// English (they must match the bottle), but qualifiers are labels and
+// localize in Spanish.
+const localizeMedNameEs = (name) => String(name || '')
+  .replace(/\(generic\)/gi, '(genérico)')
+  .replace(/Extended-Release/gi, 'de liberación prolongada');
+
+// i18next-style {{var}} interpolation for locale strings used at build time.
+const fill = (tpl, vars) => String(tpl || '').replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
+
+// Every /medications/:id page has a full Spanish translation (the component
+// is entirely t()-driven), so each gets hreflang alternates and a
+// prerendered index-es.html just like the fixed SPANISH_ROUTES.
+const hasSpanishVariant = (route) => SPANISH_ROUTES.has(route) || route.startsWith('/medications/');
 
 // Home-page stat tiles, computed from the data files so the static fallback
 // can never drift from the app (same formula as Home in src/App.jsx).
@@ -257,6 +280,23 @@ const medicationPages = MEDICATIONS.map((m) => {
     m.generic_available ? 'a lower-cost generic version' : null,
     'discount cards and cash-price comparison (GoodRx, Cost Plus Drugs, and more)',
   ].filter(Boolean);
+
+  // Spanish variant: names localized the way the app displays them, the
+  // intro assembled from the same locale strings the component renders,
+  // and the category translated via medications.categories.
+  const brandEs = esc(localizeMedNameEs(m.brandName));
+  const genericEs = esc(localizeMedNameEs(m.genericName));
+  const nameWithGenericEs = (m.genericName && !m.brandName.toLowerCase().includes(m.genericName.toLowerCase()))
+    ? `${brandEs} (${genericEs})` : brandEs;
+  const catEs = esc((ES_CATEGORIES[m.category] || m.category || 'medicamento').toLowerCase());
+  const waysEs = [
+    hasCopay ? 'Una tarjeta de copago del fabricante (para seguro comercial)' : null,
+    'Programas de Asistencia al Paciente que pueden darlo gratis si usted califica',
+    'Ayudas económicas de fundaciones',
+    m.generic_available ? 'Una versión genérica de menor costo' : null,
+    'Tarjetas de descuento y comparación de precios en efectivo (GoodRx, Cost Plus Drugs y más)',
+  ].filter(Boolean);
+
   return {
     route: `/medications/${m.id}`,
     title: `How to Afford ${nameWithGeneric}: Copay Cards & Assistance | Transplant Medication Navigator™`,
@@ -269,6 +309,16 @@ const medicationPages = MEDICATIONS.map((m) => {
         ${ways.map((w) => `<li>${esc(w[0].toUpperCase() + w.slice(1))}</li>`).join('')}
       </ul>
       <p style="margin-bottom:16px;"><a href="/wizard" style="color:#059669;font-weight:600;text-decoration:underline;">Take the free 2-minute quiz</a> to find the programs you qualify for.</p>`,
+    es: {
+      title: fill(ES_DETAIL.meta.title, { name: nameWithGenericEs }),
+      description: fill(ES_DETAIL.meta.description, { name: nameWithGenericEs }),
+      bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">${fill(ES_DETAIL.heading, { name: brandEs })}</h1>
+      <p style="color:#475569;margin-bottom:16px;">${nameWithGenericEs}${esc(ES_DETAIL.introIs)}${catEs}${esc(ES_DETAIL.introUsedBy)}${esc(ES_DETAIL.introTail)}</p>
+      <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
+        ${waysEs.map((w) => `<li>${esc(w)}</li>`).join('')}
+      </ul>
+      <p style="margin-bottom:16px;"><a href="/wizard?lang=es" style="color:#059669;font-weight:600;text-decoration:underline;">${esc(ES_DETAIL.ctaQuiz.trim())}</a> para encontrar los programas para los que usted califica.</p>`,
+    },
   };
 });
 
@@ -287,7 +337,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
     : '';
 
-  const hreflangTags = SPANISH_ROUTES.has(page.route)
+  const hreflangTags = hasSpanishVariant(page.route)
     ? `
     <!-- Language alternates -->
     <link rel="alternate" hreflang="en" href="${canonical}" />
@@ -354,7 +404,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
             <a href="${isEs ? '/?lang=es' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
         </main>
     </div>
-
+${page.noscriptHtml || ''}
     <!-- Load the SPA - React will take over and render the full page -->
     <script type="module" src="${mainScriptPath}"></script>
 </body>
@@ -416,10 +466,271 @@ function spanishHomeBody() {
 }
 
 /**
+ * Static Spanish <noscript> fallback for dist/index-es.html. The English
+ * homepage (index.html) ships a hand-written noscript block with the core
+ * medication, PAP, and copay-foundation tables; this is its Spanish
+ * counterpart so no-JS Spanish visitors (older phones, locked-down hospital
+ * browsers, slow connections) get the same substance. Program names, phone
+ * numbers, and URLs are identical to the English block — only prose is
+ * translated. Keep the two blocks' row sets in sync when editing either.
+ */
+function spanishHomeNoscript() {
+  return `
+    <!-- Noscript fallback - displays core content when JavaScript is disabled -->
+    <noscript>
+        <style>
+            #root > main > p:last-child { display: none; }
+            .noscript-section { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
+            .noscript-section h2 { color: #059669; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #d1fae5; padding-bottom: 8px; margin-top: 32px; margin-bottom: 16px; }
+            .noscript-section h3 { color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-top: 20px; margin-bottom: 8px; }
+            .noscript-section p, .noscript-section li { color: #334155; line-height: 1.7; }
+            .noscript-section a { color: #059669; text-decoration: underline; }
+            .noscript-section ul { list-style: disc; padding-left: 20px; margin: 8px 0; }
+            .noscript-section table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+            .noscript-section th, .noscript-section td { border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; }
+            .noscript-section th { background: #f0fdf4; color: #059669; font-weight: 700; }
+            .noscript-section tr:nth-child(even) { background: #f8fafc; }
+            .noscript-notice { max-width: 900px; margin: 0 auto; padding: 16px 20px; text-align: center; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
+        </style>
+
+        <div class="noscript-notice">
+            <p style="color: #92400e; font-weight: 700; margin: 0 0 4px;">JavaScript está desactivado</p>
+            <p style="color: #78350f; margin: 0; font-size: 0.875rem;">La búsqueda interactiva de medicamentos y el cuestionario necesitan JavaScript. El contenido principal sigue disponible abajo.</p>
+        </div>
+
+        <div class="noscript-section">
+
+            <!-- Core Transplant Medications -->
+            <h2>Medicamentos de trasplante comunes</h2>
+            <table>
+                <tr>
+                    <th>Medicamento (genérico)</th>
+                    <th>Marca(s)</th>
+                    <th>Fabricante</th>
+                    <th>Asistencia al paciente</th>
+                </tr>
+                <tr>
+                    <td>Tacrolimus</td>
+                    <td>Prograf / Astagraf XL</td>
+                    <td>Astellas</td>
+                    <td><a href="https://www.astellaspharmasupportsolutions.com/">Astellas Support</a></td>
+                </tr>
+                <tr>
+                    <td>Tacrolimus de liberación prolongada</td>
+                    <td>Envarsus XR</td>
+                    <td>Veloxis</td>
+                    <td><a href="https://www.envarsusxr.com/savings-support">Envarsus XR Support</a></td>
+                </tr>
+                <tr>
+                    <td>Ciclosporina</td>
+                    <td>Neoral / Sandimmune</td>
+                    <td>Novartis</td>
+                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
+                </tr>
+                <tr>
+                    <td>Ciclosporina (modificada)</td>
+                    <td>Gengraf</td>
+                    <td>AbbVie</td>
+                    <td><a href="https://www.abbvie.com/patients/patient-support/patient-assistance.html">myAbbVie Assist</a></td>
+                </tr>
+                <tr>
+                    <td>Micofenolato de mofetilo</td>
+                    <td>CellCept</td>
+                    <td>Genentech</td>
+                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
+                </tr>
+                <tr>
+                    <td>Ácido micofenólico</td>
+                    <td>Myfortic</td>
+                    <td>Novartis</td>
+                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
+                </tr>
+                <tr>
+                    <td>Azatioprina</td>
+                    <td>Imuran</td>
+                    <td>Genérico</td>
+                    <td>Hay genérico de bajo costo</td>
+                </tr>
+                <tr>
+                    <td>Sirolimus</td>
+                    <td>Rapamune</td>
+                    <td>Pfizer</td>
+                    <td><a href="https://www.pfizerrxpathways.com/">Pfizer RxPathways</a></td>
+                </tr>
+                <tr>
+                    <td>Everolimus</td>
+                    <td>Zortress</td>
+                    <td>Novartis</td>
+                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
+                </tr>
+                <tr>
+                    <td>Belatacept</td>
+                    <td>Nulojix</td>
+                    <td>Bristol Myers Squibb</td>
+                    <td><a href="https://www.bmspaf.org/">BMS Patient Assistance</a></td>
+                </tr>
+                <tr>
+                    <td>Prednisona</td>
+                    <td>Deltasone (genérico ampliamente disponible)</td>
+                    <td>Genérico</td>
+                    <td>Hay genérico de bajo costo</td>
+                </tr>
+                <tr>
+                    <td>Valganciclovir</td>
+                    <td>Valcyte</td>
+                    <td>Genentech</td>
+                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
+                </tr>
+            </table>
+
+            <!-- Patient Assistance Programs (PAPs) - Free Medications -->
+            <h2>Programas de Asistencia al Paciente (medicamentos gratis)</h2>
+            <p>Estos programas dan <strong>medicamentos gratis</strong> a pacientes sin seguro o con Medicare que cumplen con los límites de ingresos.</p>
+            <table>
+                <tr>
+                    <th>Programa</th>
+                    <th>Teléfono</th>
+                    <th>Cubre</th>
+                    <th>Sitio web</th>
+                </tr>
+                <tr>
+                    <td><strong>Astellas Patient Assistance</strong></td>
+                    <td><a href="tel:1-800-477-6472">1-800-477-6472</a></td>
+                    <td>Tacrolimus (Prograf), Cresemba</td>
+                    <td><a href="https://www.astellaspharmasupportsolutions.com/">astellaspharmasupportsolutions.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Novartis Patient Assistance Foundation</strong></td>
+                    <td><a href="tel:1-800-277-2254">1-800-277-2254</a></td>
+                    <td>Ciclosporina, Myfortic, Zortress, Simulect, Entresto</td>
+                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">novartis.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Genentech Patient Foundation</strong></td>
+                    <td><a href="tel:1-866-422-2377">1-866-422-2377</a></td>
+                    <td>CellCept, Valcyte, Rituxan</td>
+                    <td><a href="https://www.genentech-access.com/patient.html">genentech-access.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>BMS Patient Assistance Foundation</strong></td>
+                    <td><a href="tel:1-800-736-0003">1-800-736-0003</a></td>
+                    <td>Nulojix (Belatacept), Eliquis</td>
+                    <td><a href="https://www.bmspaf.org/">bmspaf.org</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Pfizer RxPathways</strong></td>
+                    <td><a href="tel:1-844-989-7284">1-844-989-7284</a></td>
+                    <td>Rapamune (Sirolimus), Diflucan, Vfend</td>
+                    <td><a href="https://www.pfizerrxpathways.com/">pfizerrxpathways.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Sanofi Patient Connection</strong></td>
+                    <td><a href="tel:1-888-847-4877">1-888-847-4877</a></td>
+                    <td>Thymoglobulin, Renvela</td>
+                    <td><a href="https://www.sanofipatientconnection.com/">sanofipatientconnection.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Gilead Advancing Access</strong></td>
+                    <td><a href="tel:1-800-226-2056">1-800-226-2056</a></td>
+                    <td>Vemlidy, Epclusa, Harvoni</td>
+                    <td><a href="https://www.gileadadvancingaccess.com/">gileadadvancingaccess.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Merck Patient Assistance</strong></td>
+                    <td><a href="tel:1-800-727-5400">1-800-727-5400</a></td>
+                    <td>Prevymis, Noxafil, Januvia</td>
+                    <td><a href="https://www.merckhelps.com/">merckhelps.com</a></td>
+                </tr>
+            </table>
+
+            <!-- Copay Foundations -->
+            <h2>Fundaciones de copago y ayuda económica</h2>
+            <p>Estas fundaciones ayudan a pagar copagos, primas y otros costos de medicamentos. Muchas ayudan a pacientes con Medicare.</p>
+            <table>
+                <tr>
+                    <th>Organización</th>
+                    <th>Teléfono / Sitio web</th>
+                    <th>Cómo ayudan</th>
+                </tr>
+                <tr>
+                    <td><strong>HealthWell Foundation</strong></td>
+                    <td><a href="https://www.healthwellfoundation.org/">healthwellfoundation.org</a></td>
+                    <td>Copagos, costos de viaje y primas de seguro</td>
+                </tr>
+                <tr>
+                    <td><strong>TotalAssist</strong></td>
+                    <td><a href="tel:1-866-512-3861">1-866-512-3861</a> · <a href="https://totalassist.org/">totalassist.org</a></td>
+                    <td>Casi 150 fondos para copagos, primas y costos de tratamiento, más gestores de casos gratis para apelaciones de seguro y acceso</td>
+                </tr>
+                <tr>
+                    <td><strong>American Kidney Fund</strong></td>
+                    <td><a href="https://www.kidneyfund.org/">kidneyfund.org</a></td>
+                    <td>Ayudas económicas para pacientes de diálisis y trasplante</td>
+                </tr>
+                <tr>
+                    <td><strong>American Transplant Foundation</strong></td>
+                    <td><a href="https://www.americantransplantfoundation.org/">americantransplantfoundation.org</a></td>
+                    <td>Ayudas para medicamentos y mentoría para pacientes de trasplante</td>
+                </tr>
+                <tr>
+                    <td><strong>NORD RareCare</strong></td>
+                    <td><a href="https://rarediseases.org/">rarediseases.org</a></td>
+                    <td>Ayuda con medicamentos, primas de seguro y copagos</td>
+                </tr>
+                <tr>
+                    <td><strong>Accessia Health</strong></td>
+                    <td><a href="https://www.accessiahealth.org/">accessiahealth.org</a></td>
+                    <td>Costos de medicamentos, ayuda con el seguro y consejos legales</td>
+                </tr>
+            </table>
+
+            <!-- Additional Resources -->
+            <h2>Recursos adicionales</h2>
+            <ul>
+                <li><a href="https://medicineassistancetool.org/">PhRMA Medicine Assistance Tool (MAT)</a> &mdash; Buscador de programas de asistencia al paciente de las compañías farmacéuticas</li>
+                <li><a href="https://www.medicare.gov">Medicare.gov</a> &mdash; Compare planes de medicamentos y vea si califica para Ayuda Adicional (Extra Help)</li>
+                <li><a href="https://costplusdrugs.com/">Cost Plus Drugs</a> &mdash; Farmacia en línea de bajo costo con precios transparentes</li>
+                <li><a href="https://rxoutreach.org/">Rx Outreach</a> &mdash; Farmacia sin fines de lucro con medicamentos de bajo costo</li>
+                <li><a href="https://totalassist.org/">TotalAssist</a> &mdash; Casi 150 fondos para copagos y costos de tratamiento</li>
+                <li><a href="https://donatelife.net/">Donate Life America</a> &mdash; Recursos locales de trasplante, eventos y grupos de apoyo</li>
+            </ul>
+
+            <!-- Contact Information -->
+            <h2>Contacto y apoyo</h2>
+            <h3>TRIO (Transplant Recipients International Organization)</h3>
+            <p>
+                El grupo más grande para pacientes de trasplante, donantes y familias. Ofrece grupos locales, mentoría y recursos educativos.<br>
+                Sitio web: <a href="https://www.trioweb.org/">trioweb.org</a>
+            </p>
+
+            <h3>Creado por Lorrinda Gray-Davis</h3>
+            <p>
+                Receptora de un trasplante de hígado y presidenta de TRIO.<br>
+                Sitio web: <a href="https://www.lorrindagraydavis.com">lorrindagraydavis.com</a>
+            </p>
+
+            <div style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 12px; padding: 20px; text-align: center; margin-top: 24px;">
+                <p style="color: white; font-weight: 700; font-size: 1.125rem; margin: 0 0 4px;">
+                    ¿Crisis de salud mental? Llame o envíe un mensaje de texto al <a href="tel:988" style="color: white;">988</a> (para atención en español, oprima el 2)
+                </p>
+                <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">
+                    Línea de Prevención del Suicidio y Crisis 988 &mdash; 24/7, confidencial y también en español
+                </p>
+            </div>
+
+            <p style="color: #64748b; font-size: 0.8125rem; text-align: center; margin-top: 24px;">
+                Esta herramienta es solo para fines educativos y no es consejo médico ni legal. No guardamos su información personal.
+            </p>
+        </div>
+    </noscript>
+`;
+}
+
+/**
  * Merge a page definition with its Spanish metadata for the ?lang=es variant.
  */
 function spanishPage(page) {
-  const es = SPANISH_META[page.route] || {};
+  const es = page.es || SPANISH_META[page.route] || {};
   return {
     ...page,
     title: es.title || page.title,
@@ -427,7 +738,8 @@ function spanishPage(page) {
     ogTitle: (es.title || page.title).split(' | ')[0],
     ogDescription: es.description || page.description,
     aiSummary: undefined,
-    bodyHtml: page.route === '/' ? spanishHomeBody() : undefined,
+    bodyHtml: page.route === '/' ? spanishHomeBody() : es.bodyHtml,
+    noscriptHtml: page.route === '/' ? spanishHomeNoscript() : undefined,
   };
 }
 
@@ -510,7 +822,8 @@ function prerenderPages() {
 
       // Spanish variant (?lang=es), plus an English twin so the
       // "lang=:lang -> index-:lang.html" redirect resolves for both values.
-      if (SPANISH_ROUTES.has(page.route)) {
+      // Covers the fixed SPANISH_ROUTES and every /medications/:id page.
+      if (hasSpanishVariant(page.route)) {
         const esHtml = generatePageHTML(spanishPage(page), mainScriptPath, stylesheetTags, 'es');
         fs.writeFileSync(path.join(pageDir, 'index-es.html'), esHtml, 'utf8');
         fs.writeFileSync(path.join(pageDir, 'index-en.html'), html, 'utf8');

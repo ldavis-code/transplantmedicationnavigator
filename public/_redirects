@@ -37,6 +37,9 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /application-help  lang=:lang  /application-help/index-:lang.html  200!
 /faq  lang=:lang  /faq/index-:lang.html  200!
 /medications  lang=:lang  /medications/index-:lang.html  200!
+# Per-medication pages (/medications/:id) — must come after the exact
+# /medications rule above so the search page keeps its own variants.
+/medications/*  lang=:lang  /medications/:splat/index-:lang.html  200!
 /evidence  lang=:lang  /evidence/index-:lang.html  200!
 /my-medications  lang=:lang  /my-medications/index-:lang.html  200!
 /savings-tracker  lang=:lang  /savings-tracker/index-:lang.html  200!
@@ -50,6 +53,13 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /about  lang=:lang  /about/index-:lang.html  200!
 /feedback  lang=:lang  /feedback/index-:lang.html  200!
 /education/appeals  lang=:lang  /education/appeals/index-:lang.html  200!
+
+# TrumpRx guide: the Spanish version is its own static page at /trumprx-es
+# (public/trumprx-es.html), so ?lang=es redirects there instead of rewriting
+# to an index-es.html twin. Forced for the same reason as the rules above:
+# Netlify's pretty-URL handling resolves /trumprx to trumprx.html and would
+# skip a non-forced rule.
+/trumprx  lang=es  /trumprx-es  302!
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions

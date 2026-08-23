@@ -52,6 +52,12 @@ const SPANISH_PATHS = new Set([
     '/about', '/feedback', '/education/appeals',
 ]);
 
+// The per-medication pages (/medications/:id) are Spanish-capable too:
+// prerendered index-es.html variants exist for every one of them
+// (scripts/prerender-seo.js), so they get the same alternate treatment.
+const hasSpanishVariant = (path) =>
+    SPANISH_PATHS.has(path) || path.startsWith('/medications/');
+
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
 
@@ -61,7 +67,7 @@ function generateSitemap() {
         <xhtml:link rel="alternate" hreflang="es" href="${SITE_URL}${path}?lang=es" />
         <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${path}" />`;
     const urls = allRoutes.flatMap(route => {
-        const hasEs = SPANISH_PATHS.has(route.path);
+        const hasEs = hasSpanishVariant(route.path);
         const entries = [`    <url>
         <loc>${SITE_URL}${route.path}</loc>${hasEs ? alternates(route.path) : ''}
         <lastmod>${today}</lastmod>
