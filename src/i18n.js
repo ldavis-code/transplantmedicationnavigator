@@ -66,13 +66,19 @@ function detectInitialLanguage() {
 
 // Fetch locale bundles on demand. Idempotent: repeated calls reuse the same
 // promise, and the chunks are served immutable so the network cost is
-// one-time.
+// one-time. A FAILED load is not cached — a transient failure (offline
+// moment, chunk replaced by a fresh deploy) would otherwise permanently
+// break language switching for the rest of the visit.
 const localeLoads = {};
 function loadLocale(lng) {
     if (!localeLoads[lng]) {
         localeLoads[lng] = (lng === 'es' ? import('./locales/es.json') : import('./locales/en.json'))
             .then((mod) => {
                 i18n.addResourceBundle(lng, 'translation', mod.default);
+            })
+            .catch((err) => {
+                delete localeLoads[lng];
+                throw err;
             });
     }
     return localeLoads[lng];

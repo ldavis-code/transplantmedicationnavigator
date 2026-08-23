@@ -306,13 +306,15 @@
     <link href="/fonts/fonts.css" rel="stylesheet" />
 </head>
 <body class="bg-slate-50">
-    <!-- Skip to main content for accessibility - appears on Tab focus -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] bg-emerald-700 text-white px-6 py-3 rounded-lg text-lg font-bold shadow-xl focus:outline-none focus:ring-4 focus:ring-white">
-        Skip to main content
-    </a>
-
     <!-- React root - contains static SEO content that gets replaced when JS loads -->
     <div id="root">
+        <!-- Skip link lives INSIDE #root: React replaces the root's children
+             on mount, so this pre-hydration copy disappears when the app
+             renders its own (localized) skip link — keeping exactly one on
+             the page at all times instead of two. -->
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] bg-emerald-700 text-white px-6 py-3 rounded-lg text-lg font-bold shadow-xl focus:outline-none focus:ring-4 focus:ring-white">
+            Skip to main content
+        </a>
         <!-- Verified & Up to Date Banner (mirrors the live app's TotalAssist banner) -->
         <div style="background: linear-gradient(135deg, #047857 0%, #059669 40%, #10B981 100%); color: white; padding: 12px 24px; text-align: center;">
             <a href="/education" style="color: white; text-decoration: none; font-size: 0.9375rem;">

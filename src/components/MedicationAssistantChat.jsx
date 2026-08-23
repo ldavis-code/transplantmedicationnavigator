@@ -635,7 +635,7 @@ const MedicationAssistantChat = () => {
                   <button
                     onClick={() => handleMedicationRemove(med.id)}
                     className="hover:bg-emerald-200 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
-                    aria-label={t('widgets.chat.removeMedAria', { name: med.brand_name })}
+                    aria-label={t('widgets.chat.removeMedAria', { name: localizeMedName(med.brand_name) })}
                   >
                     <X size={16} aria-hidden="true" />
                   </button>

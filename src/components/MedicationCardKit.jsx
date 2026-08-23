@@ -559,7 +559,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                     <ReadAloudButton contentRef={contentRef} label={t('medications.card.header.readAloud')} />
-                    <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.card.header.removeAria', { name: med.brandName })} title={t('medications.card.header.removeTitle')}><Trash2 size={20} /></button>
+                    <button onClick={onRemove} className="text-slate-600 hover:text-red-500 transition p-2 no-print min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label={t('medications.card.header.removeAria', { name: localizeMedName(med.brandName) })} title={t('medications.card.header.removeTitle')}><Trash2 size={20} /></button>
                 </div>
             </header>
 
@@ -622,7 +622,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
             </div>
 
             {/* Per-card tab navigation */}
-            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={t('medications.card.tabs.aria', { name: med.brandName })}>
+            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={t('medications.card.tabs.aria', { name: localizeMedName(med.brandName) })}>
                 {[
                     { id: 'ASSISTANCE', label: t('medications.card.tabs.assistance'), icon: Heart },
                     { id: 'PRICE', label: t('medications.card.tabs.price'), icon: DollarSign },
@@ -659,7 +659,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             <Trans i18nKey="medications.card.overview.tip" />
                         </div>
                         <div className="flex gap-4 mt-4 no-print">
-                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}&source=medication-card&lang=${getUiLang()}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={t('medications.card.overview.drugFactsAria', { name: med.brandName })}>{t('medications.card.overview.drugFactsLink')}<ExternalLink size={14} aria-hidden="true" /></a>
+                            <a href={`/out/pap/drugs-com-search?q=${encodeURIComponent(med.brandName.split('/')[0])}&source=medication-card&lang=${getUiLang()}`} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline flex items-center gap-1" aria-label={t('medications.card.overview.drugFactsAria', { name: localizeMedName(med.brandName) })}>{t('medications.card.overview.drugFactsLink')}<ExternalLink size={14} aria-hidden="true" /></a>
                         </div>
 
                         {/* Pharmacies Section */}
@@ -776,7 +776,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0 mt-1.5"></span>
                                             <div>
                                                 <h3 className="font-bold text-emerald-800 flex items-center gap-2">
-                                                    {copayProgram?.name || t('medications.card.fallbacks.brandCopayCard', { name: med.brandName })}
+                                                    {copayProgram?.name || t('medications.card.fallbacks.brandCopayCard', { name: localizeMedName(med.brandName) })}
                                                 </h3>
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
@@ -794,7 +794,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <div className="text-xs text-slate-500">{t('medications.card.assistance.perMonth')}</div>
                                         </div>
                                     </div>
-                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.getCardAria', { name: med.brandName })}>
+                                    <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-bold transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.getCardAria', { name: localizeMedName(med.brandName) })}>
                                         {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
                                     </a>
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
@@ -833,7 +833,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         <div className="text-xs text-slate-500">{t('medications.card.assistance.ifEligible')}</div>
                                     </div>
                                 </div>
-                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.applyAria', { name: med.brandName })}>
+                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId, source: 'medication-card' }); }} className="mt-4 w-full block text-center bg-white border-2 border-amber-500 text-amber-700 hover:bg-amber-50 py-2 rounded-lg text-sm font-medium transition no-print flex items-center justify-center gap-1" aria-label={t('medications.card.assistance.applyAria', { name: localizeMedName(med.brandName) })}>
                                     {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
                                 </a>
                                 {papUrl && (
@@ -876,10 +876,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             {t('medications.card.assistance.partDTitle')}
                                         </h3>
                                         <p className="text-sm text-slate-600 mt-2">
-                                            {t('medications.card.assistance.partDText', { name: med.brandName })}
+                                            {t('medications.card.assistance.partDText', { name: localizeMedName(med.brandName) })}
                                             {(medicarePartD.notes || med.medicare2026Note) && <span className="block mt-2 text-blue-700 font-medium">{medicarePartD.notes || med.medicare2026Note}</span>}
                                         </p>
-                                        <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 font-medium text-sm" aria-label={t('medications.card.assistance.partDAria', { name: med.brandName })}>
+                                        <a href={medicarePartD.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 font-medium text-sm" aria-label={t('medications.card.assistance.partDAria', { name: localizeMedName(med.brandName) })}>
                                             {t('medications.card.assistance.viewDetails')}<ExternalLink size={14} aria-hidden="true" />
                                         </a>
                                     </div>
@@ -1012,7 +1012,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         {/* Unified Price Estimates Table */}
                         <div className="overflow-x-auto rounded-lg border border-slate-200">
                             <table className="w-full text-sm text-left min-w-[500px]">
-                                <caption className="sr-only">{t('medications.card.price.caption', { name: med.brandName })}</caption>
+                                <caption className="sr-only">{t('medications.card.price.caption', { name: localizeMedName(med.brandName) })}</caption>
                                 <thead className="bg-slate-100 text-slate-700 font-bold">
                                     <tr>
                                         <th scope="col" className="p-3">{t('medications.card.price.thPharmacyTool')}</th>
@@ -1036,7 +1036,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <div className="text-xs text-slate-500 mt-0.5">{t('medications.card.price.manufacturerProgram')}</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewCopayAria', { name: med.brandName })}>
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-emerald-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewCopayAria', { name: localizeMedName(med.brandName) })}>
                                                 {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
                                             </button>
                                         </td>
@@ -1058,7 +1058,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <div className="text-xs text-slate-500 mt-0.5">{t('medications.card.price.incomeRules')}</div>
                                         </td>
                                         <td className="p-3 no-print">
-                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewPapAria', { name: med.brandName })}>
+                                            <button onClick={() => setActiveTab('ASSISTANCE')} className="text-orange-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.viewPapAria', { name: localizeMedName(med.brandName) })}>
                                                 {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
                                             </button>
                                         </td>
@@ -1092,7 +1092,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={goodRxUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveGoodRxAria', { name: med.genericName })}>
+                                                <a href={goodRxUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveGoodRxAria', { name: localizeMedName(med.genericName) })}>
                                                     {t('medications.card.price.checkLive')}<ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('goodrx', 'GoodRx')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">
@@ -1130,7 +1130,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3 no-print">
                                             <div className="flex flex-col gap-1">
-                                                <a href={singleCareUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveSingleCareAria', { name: med.genericName })}>
+                                                <a href={singleCareUrl(med)} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline font-medium flex items-center gap-1" aria-label={t('medications.card.price.checkLiveSingleCareAria', { name: localizeMedName(med.genericName) })}>
                                                     {t('medications.card.price.checkLive')}<ExternalLink size={14} aria-hidden="true" />
                                                 </a>
                                                 <button onClick={() => openReportModal('singlecare', 'SingleCare')} className="text-slate-500 hover:underline text-sm flex items-center gap-1 min-h-[44px] px-2">

@@ -177,7 +177,7 @@ const Home = () => {
                                     className="w-full text-left px-5 py-3 hover:bg-emerald-50 focus:bg-emerald-50 focus:outline-none transition flex items-baseline justify-between gap-3"
                                     role="option"
                                     aria-selected="false"
-                                    aria-label={t('home.steps.resultAria', { name: med.brandName })}
+                                    aria-label={t('home.steps.resultAria', { name: localizeMedName(med.brandName) })}
                                 >
                                     <span className="font-bold text-slate-900">{localizeMedName(med.brandName)}</span>
                                     <span className="text-sm text-slate-500">{localizeMedName(med.genericName)}</span>

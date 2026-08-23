@@ -887,7 +887,7 @@ const Wizard = () => {
                                         <button
                                             onClick={() => handleMultiSelect('medications', id)}
                                             className="text-slate-400 hover:text-red-500 transition"
-                                            aria-label={t('wizard.meds.removeAria', { name: med?.brandName || id })}
+                                            aria-label={t('wizard.meds.removeAria', { name: localizeMedName(med?.brandName) || id })}
                                         >
                                             <X size={14} />
                                         </button>
