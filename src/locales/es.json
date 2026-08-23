@@ -1391,6 +1391,12 @@
       "title2": "Nosotros le ayudamos a conseguirla.",
       "subtitle": "Cuánto debería costar, qué programas son realmente para usted y qué hacer cuando su plan cambia las reglas."
     },
+    "flow": {
+      "ariaLabel": "Cómo funciona, en tres pasos",
+      "step1": "Busque o importe sus medicamentos",
+      "step2": "Elija su seguro",
+      "step3": "Vea sus opciones"
+    },
     "steps": {
       "medsLabel": "1 · Sus medicamentos",
       "searchAriaLabel": "Escriba el nombre de su medicamento para buscar",
@@ -1406,6 +1412,8 @@
       "examplesAriaLabel": "Medicamentos comunes de trasplante",
       "tagGeneric": "genérico",
       "tagBrand": "marca",
+      "browseAll": "Vea la lista completa de {{count}} medicamentos",
+      "browseAllAria": "Vea la lista completa de {{count}} medicamentos",
       "selectedPre": "Su medicamento: ",
       "clearSelected": "Quitar el medicamento elegido",
       "seeOptions": "Ver mis opciones",
@@ -1417,7 +1425,14 @@
       "insMedicaid": "Medicaid",
       "insUninsured": "Sin seguro",
       "multiplePre": "¿Toma más de uno?",
-      "multipleLink": "Responda 5 preguntas y los revisamos todos a la vez"
+      "multipleLink": "Responda 5 preguntas y los revisamos todos a la vez",
+      "previewSummary": "Vea las 5 preguntas primero",
+      "previewIntro": "Rápido y anónimo. Unos 2 minutos, sin nombre y sin cuenta.",
+      "previewQ1": "Sobre usted: antes o después del trasplante",
+      "previewQ2": "Su trasplante: qué órgano",
+      "previewQ3": "Sus medicamentos: elíjalos de una lista o impórtelos",
+      "previewQ4": "Su cobertura: qué seguro tiene",
+      "previewQ5": "Sus costos: qué tan difíciles son de manejar"
     },
     "trust": "{{count}} medicamentos de trasplante · Gratis, sin cuenta · Sus respuestas se quedan en su dispositivo · Creado por una receptora de un trasplante de hígado",
     "explainer": {
@@ -1448,7 +1463,7 @@
       },
       "grants": {
         "title": "Ayudas y fundaciones",
-        "text": "Programas verificados, enlaces directos, sin estafas. Actualizado en julio de 2026.",
+        "text": "{{programs}} programas de asistencia y fundaciones, más {{copayCards}} tarjetas de copago. Verificados, con enlaces directos y sin estafas. Actualizado en julio de 2026.",
         "ariaLabel": "Explorar ayudas económicas y programas de fundaciones",
         "link": "Explorar programas"
       }
