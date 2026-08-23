@@ -58,7 +58,8 @@ function useStructuredData(schemas) {
 }
 
 const MedicationDetail = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isSpanish = (i18n.resolvedLanguage || i18n.language || '').startsWith('es');
     const { slug } = useParams();
     const med = MEDICATIONS_DATA.find((m) => m.id === slug);
 
@@ -74,10 +75,15 @@ const MedicationDetail = () => {
     // Built with t() so document.title (read aloud by the RouteAnnouncer)
     // follows the active language.
     useMetaTags(med ? {
-        title: t('medications.detail.meta.title', { name: nameWithGeneric }),
-        description: t('medications.detail.meta.description', { name: nameWithGeneric }),
+        // localizeMedName so the hydrated title matches the prerendered
+        // Spanish head ("(genérico)", not "(generic)"); no-op in English.
+        title: t('medications.detail.meta.title', { name: localizeMedName(nameWithGeneric) }),
+        description: t('medications.detail.meta.description', { name: localizeMedName(nameWithGeneric) }),
         canonical: `${BASE_URL}/medications/${med.id}`,
         breadcrumbName: med.brandName,
+        // Fully translated via t(): declare the ?lang=es variant so the
+        // canonical and hreflang alternates track the active language.
+        langAlternates: true,
     } : {
         title: t('medications.detail.meta.notFoundTitle'),
         description: t('medications.detail.meta.notFoundDescription'),
@@ -174,7 +180,7 @@ const MedicationDetail = () => {
                     {t('medications.detail.heading', { name: brandDisplay })}
                 </h1>
                 <p className="text-lg text-slate-600 mt-3">
-                    {brandDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{aOrAn(med.category)} {med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
+                    {brandDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
                 </p>
                 {price && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>

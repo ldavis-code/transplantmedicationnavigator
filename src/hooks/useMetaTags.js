@@ -18,6 +18,12 @@ const BASE_URL = 'https://transplantmedicationnavigator.com';
  * @param {string} [config.twitterImage] - Twitter card image URL
  * @param {string} [config.breadcrumbName] - Name for breadcrumb (if different from title)
  * @param {boolean} [config.noindex] - If true, add noindex meta tag to prevent search engine indexing
+ * @param {boolean} [config.langAlternates] - Declare this page as having a Spanish
+ *   variant at canonical?lang=es even without config.es (pages that localize
+ *   through t() directly, like MedicationDetail). Pages with config.es get this
+ *   automatically. Emits hreflang alternate links and, while Spanish is active,
+ *   keeps the canonical (and og:url default) on the ?lang=es URL — without this,
+ *   hydration would revert the prerendered Spanish head to the English canonical.
  * @param {Object} [config.es] - Spanish overrides (title, description, breadcrumbName, ...).
  *   Applied when the active language is Spanish; og/twitter fields fall back to the
  *   Spanish title/description so English social tags don't leak through. This keeps
@@ -102,13 +108,38 @@ export function useMetaTags(config) {
       updateMetaTag('meta[name="robots"]', 'content', 'noindex, nofollow');
     }
 
+    // Pages with a Spanish variant: each language version is its own
+    // canonical (matching the prerendered heads), and both declare the
+    // hreflang alternates. Everything else keeps the plain canonical.
+    const hasEsVariant = !noindex && !!(config.es || config.langAlternates);
+    const localizedCanonical = hasEsVariant && isSpanish && canonical
+      ? `${canonical}?lang=es`
+      : canonical;
+
     // Update canonical URL
-    updateLinkTag('canonical', canonical);
+    updateLinkTag('canonical', localizedCanonical);
+
+    // Replace any hreflang alternates (ours or the prerendered page's) so
+    // client-side navigation never leaves a stale set behind.
+    document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+    if (hasEsVariant && canonical) {
+      for (const [hreflang, href] of [
+        ['en', canonical],
+        ['es', `${canonical}?lang=es`],
+        ['x-default', canonical],
+      ]) {
+        const el = document.createElement('link');
+        el.setAttribute('rel', 'alternate');
+        el.setAttribute('hreflang', hreflang);
+        el.setAttribute('href', href);
+        document.head.appendChild(el);
+      }
+    }
 
     // Update Open Graph tags
     updateMetaTag('meta[property="og:title"]', 'content', ogTitle || title);
     updateMetaTag('meta[property="og:description"]', 'content', ogDescription || description);
-    updateMetaTag('meta[property="og:url"]', 'content', ogUrl || canonical);
+    updateMetaTag('meta[property="og:url"]', 'content', ogUrl || localizedCanonical);
     updateMetaTag('meta[property="og:image"]', 'content', ogImage);
 
     // Update Twitter Card tags

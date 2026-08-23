@@ -85,6 +85,18 @@
   status = 200
   force = true
 
+# TrumpRx guide: the Spanish version is its own static page at /trumprx-es,
+# so ?lang=es redirects there instead of rewriting to an index-es.html twin.
+# Forced because Netlify's pretty-URL handling resolves /trumprx to
+# trumprx.html and would skip a non-forced rule. Must come before the plain
+# /trumprx rule below.
+[[redirects]]
+  from = "/trumprx"
+  to = "/trumprx-es"
+  status = 302
+  force = true
+  query = { lang = "es" }
+
 # TrumpRx resource page - serve static HTML
 [[redirects]]
   from = "/trumprx"
@@ -141,6 +153,15 @@
 [[redirects]]
   from = "/medications"
   to = "/medications/index-:lang.html"
+  status = 200
+  force = true
+  query = { lang = ":lang" }
+
+# Per-medication pages (/medications/:id) — must come after the exact
+# /medications rule above so the search page keeps its own variants.
+[[redirects]]
+  from = "/medications/*"
+  to = "/medications/:splat/index-:lang.html"
   status = 200
   force = true
   query = { lang = ":lang" }
