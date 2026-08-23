@@ -649,6 +649,12 @@
     .bottom-cta .stats-row { gap: 20px; }
     .hero-meta { flex-direction: column; gap: 6px; }
   }
+
+  /* Print: many patients bring paper copies to pharmacy or social-work
+     appointments. The button hides itself on paper. */
+  .print-page-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 8px 16px; background: rgba(255,255,255,0.14); color: white; border: 1px solid rgba(255,255,255,0.45); border-radius: 8px; font: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+  .print-page-btn:hover { background: rgba(255,255,255,0.24); }
+  @media print { .print-page-btn, .breadcrumb { display: none !important; } }
 </style>
 </head>
 <body>
@@ -661,6 +667,7 @@
     <div class="breadcrumb">
       <a href="/es/">Inicio</a> / <a href="/es/education">Recursos</a> / Guía de TrumpRx.gov &nbsp;·&nbsp; <a href="/trumprx" lang="en" style="text-decoration:underline;">View this page in English</a>
     </div>
+    <button type="button" class="print-page-btn" data-print-page>&#128424; Imprimir esta guía</button>
     <div class="hero-badge">
       <span class="pulse"></span>
       Nuevo recurso de ahorro, febrero de 2026
@@ -1236,5 +1243,6 @@
 
 </div>
 
+<script src="/js/print-page.js" defer></script>
 </body>
 </html>
