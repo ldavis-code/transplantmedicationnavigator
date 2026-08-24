@@ -1348,8 +1348,8 @@
           "ariaLabel": "Comenzar el cuestionario Mi Camino de medicamentos"
         },
         "education": {
-          "label": "Educación",
-          "ariaLabel": "Explorar educación y guías de cobertura"
+          "label": "Recursos",
+          "ariaLabel": "Explorar recursos, educación y guías de cobertura"
         },
         "applicationHelp": {
           "label": "Cómo solicitar",
