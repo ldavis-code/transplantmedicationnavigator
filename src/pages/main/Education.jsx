@@ -312,14 +312,19 @@ const Education = () => {
 
             <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label={t('education.tabs.ariaLabel')}>
                 <div className="flex flex-wrap">
+                    {/* Ordered by need, not name: emergency first, then the
+                        money-literacy arc (brand vs. generic -> deductible
+                        trap -> its companion OOP max -> alternative funding
+                        -> insurance), mental health, and the directory as
+                        the "where to go next" endpoint. */}
                     <TabButton id="EMERGENCY" label={t('education.tabs.emergency')} icon={Clock} />
                     <TabButton id="GENERICS" label={t('education.tabs.generics')} icon={Pill} />
                     <TabButton id="DEDUCTIBLE_TRAP" label={t('education.tabs.deductibleTrap')} icon={AlertTriangle} />
+                    <TabButton id="OOP" label={t('education.tabs.oop')} icon={DollarSign} />
                     <TabButton id="DIVERSION" label={t('education.tabs.diversion')} icon={AlertOctagon} />
-                    <TabButton id="DIRECTORY" label={t('education.tabs.directory')} icon={Search} />
                     <TabButton id="INSURANCE" label={t('education.tabs.insurance')} icon={Shield} />
                     <TabButton id="MENTAL" label={t('education.tabs.mental')} icon={Heart} />
-                    <TabButton id="OOP" label={t('education.tabs.oop')} icon={DollarSign} />
+                    <TabButton id="DIRECTORY" label={t('education.tabs.directory')} icon={Search} />
                 </div>
             </nav>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
