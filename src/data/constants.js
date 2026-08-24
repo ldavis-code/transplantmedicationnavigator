@@ -1,6 +1,7 @@
-// Last updated date - Update this when content changes
-// Format: "Month Day, Year" (e.g., "November 24, 2025")
-export const LAST_UPDATED = "July 1, 2026";
+// Last updated date - Update this when content changes (ISO date; the
+// footer formats it per language so the Spanish page never shows an
+// English-formatted date like "July 1, 2026")
+export const LAST_UPDATED_ISO = "2026-07-01";
 
 // Date the full set of assistance-program links was last checked for accuracy.
 // Maintained by scripts/check-links.js, it rewrites these lines after a clean run.

@@ -209,7 +209,7 @@
         "inNetworkDef": "Una farmacia que trabaja con su seguro. Aquí usted paga menos. Piense en ella como un socio preferido.",
         "outNetworkTerm": "Farmacia fuera de la red",
         "outNetworkDef": "Una farmacia que no tiene acuerdo con su seguro. Aquí puede pagar más o no tener cobertura.",
-        "pbmTerm": "PBM (administrador de beneficios de farmacia)",
+        "pbmTerm": "PBM (administrador de beneficios farmacéuticos)",
         "pbmDef": "La compañía que administra la cobertura de medicamentos recetados de su seguro. Ellos deciden qué medicinas se cubren y cuánto cuestan.",
         "papPre": "Programa de Asistencia al Paciente (",
         "papTerm": "PAP",
@@ -1412,7 +1412,7 @@
       "or": "o",
       "mychartAriaLabel": "Importe su lista de medicamentos desde MyChart",
       "mychartButton": "Importar mi lista desde MyChart",
-      "mychartFootnote": "Incluido en el Epic Connection Hub. Iniciará sesión en el portal de su propio hospital — nunca guardamos sus credenciales. Importa su lista real desde más de 400 sistemas de salud con Epic, incluso si usted toma la marca o el genérico. Sus datos se quedan en su dispositivo.",
+      "mychartFootnote": "Incluido en el Epic Connection Hub. Iniciará sesión en el portal de su propio hospital — nunca guardamos sus credenciales. Importa su lista real desde más de 400 sistemas de salud con Epic, incluso si usted toma la versión de marca o la genérica. Sus datos se quedan en su dispositivo.",
       "examplesAriaLabel": "Medicamentos comunes de trasplante",
       "tagGeneric": "genérico",
       "tagBrand": "marca",
@@ -1436,12 +1436,12 @@
       "previewQ2": "Su trasplante: qué órgano",
       "previewQ3": "Sus medicamentos: elíjalos de una lista o impórtelos",
       "previewQ4": "Su cobertura: qué seguro tiene",
-      "previewQ5": "Sus costos: qué tan difíciles son de manejar"
+      "previewQ5": "Sus costos: qué tan difícil es manejarlos"
     },
     "trust": "{{count}} medicamentos de trasplante · Gratis, sin cuenta · Sus respuestas se quedan en su dispositivo · Creado por una receptora de un trasplante de hígado",
     "explainer": {
       "title": "¿No sabe si toma la marca o el genérico?",
-      "intro": "Muchos pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso decide qué opciones son suyas.",
+      "intro": "Muchos pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso determina qué opciones son suyas.",
       "genericTitle": "Su etiqueta dice “tacrolimus”",
       "genericText": "Nombre del medicamento en minúsculas, a menudo con un fabricante como Sandoz o Accord. Este es el genérico.",
       "genericAction": "Compare precios en efectivo. No existe tarjeta de copago.",
@@ -1449,13 +1449,13 @@
       "brandText": "Nombre de marca con mayúscula. La misma medicina, distinto precio, distintos programas.",
       "brandAction": "Tarjeta de copago o asistencia del fabricante.",
       "neverTitle": "Nunca le decimos que cambie su medicamento.",
-      "neverText": "Esa es una decisión de su equipo de trasplante — incluido cambiar entre marca y genérico, o entre fabricantes de genéricos. Le mostramos cuánto debería costarle la medicina que le recetaron."
+      "neverText": "Esa es una decisión de su equipo de trasplante — incluido el cambio entre marca y genérico, o entre fabricantes de genéricos. Le mostramos cuánto debería costarle la medicina que le recetaron."
     },
     "cards": {
       "ariaLabel": "Guías y programas",
       "learn": {
         "title": "Aprenda el proceso",
-        "text": "Llene las solicitudes de asistencia por su cuenta, gratis. Listas de verificación y guiones para llamar.",
+        "text": "Llene las solicitudes de asistencia por su cuenta, gratis. Listas de verificación y guiones para llamadas.",
         "ariaLabel": "Ver la guía de solicitud",
         "link": "Ver la guía"
       },
@@ -1474,7 +1474,7 @@
     },
     "story": {
       "ariaLabel": "Historia real de ahorro de un paciente",
-      "badge": "Si toma una medicina de marca con seguro del trabajo",
+      "badge": "Si toma una medicina de marca con seguro médico del trabajo",
       "quotePre": "“Mi receta costaba ",
       "price1": "$624",
       "quoteMid1": ". Con el seguro bajó a ",
@@ -1487,15 +1487,15 @@
     "evidence": {
       "ariaLabel": "Lo que muestra la investigación",
       "stat": "1 de cada 4",
-      "text": "<strong>candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos — incluso antes de entrar en la lista.</strong> Dos estudios nacionales revisados por pares documentan lo que esta herramienta existe para arreglar.",
+      "text": "<strong>candidatos a trasplante de hígado gasta más del 10% de sus ingresos en costos médicos — incluso antes de entrar en la lista.</strong> Dos estudios nacionales revisados por pares documentan el problema que esta herramienta busca resolver.",
       "link": "Vea la evidencia"
     },
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
       "name": "Lorrinda Gray-Davis",
       "role": "Receptora de un trasplante de hígado · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
-      "quote": "“Mi administrador de beneficios de farmacia movió mi micofenolato — un genérico — al Nivel 3. Pasó de menos de $20 a $350. Nada de mi salud había cambiado. Tuve que pelearlo yo misma. La mayoría de los pacientes nunca se entera de que puede hacerlo.”",
-      "bio": "Lorrinda creó esto desde su propia experiencia en el mostrador de la farmacia, con investigación sobre los costos de los pacientes de trasplante publicada en revistas revisadas por pares.",
+      "quote": "“Mi administrador de beneficios farmacéuticos (PBM) movió mi micofenolato — un genérico — al Nivel 3. Pasó de menos de $20 a $350. Nada de mi salud había cambiado. Tuve que pelearlo yo misma. La mayoría de los pacientes nunca se enteran de que pueden hacerlo.”",
+      "bio": "Lorrinda creó esto desde su propia experiencia en el mostrador de la farmacia. Su investigación sobre los costos que enfrentan los pacientes de trasplante está publicada en revistas revisadas por pares.",
       "link": "Lea su historia"
     },
     "hotline": {
