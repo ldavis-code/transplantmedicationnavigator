@@ -1037,6 +1037,28 @@ function prerenderPages() {
     errors++;
   }
 
+  // Assertion: every medication in medications.json must have a prerendered
+  // page ON DISK in both languages (dist/medications/<id>/index.html and
+  // dist/es/medications/<id>/index.html). The routes are enumerated from
+  // MEDICATIONS itself, so a mismatch means a write silently failed or the
+  // layout changed — either way a missed page would ship as a soft-404
+  // shell. Count real files rather than trusting the loop, the same way
+  // the home-page markers fail the build on drifted copy.
+  const countMedPages = (dir) => (fs.existsSync(dir)
+    ? fs.readdirSync(dir, { withFileTypes: true })
+        .filter((e) => e.isDirectory() && fs.existsSync(path.join(dir, e.name, 'index.html')))
+        .length
+    : 0);
+  const medPagesOnDisk = countMedPages(path.join(distDir, 'medications'))
+    + countMedPages(path.join(distDir, 'es', 'medications'));
+  const medPagesExpected = MEDICATIONS.length * 2;
+  if (medPagesOnDisk !== medPagesExpected) {
+    console.error(`❌ Medication page count mismatch: ${medPagesOnDisk} on disk vs ${medPagesExpected} expected (${MEDICATIONS.length} medications × 2 languages).`);
+    errors++;
+  } else {
+    console.log(`  ✅ Medication page count verified: ${medPagesOnDisk} files = ${MEDICATIONS.length} medications × 2 languages`);
+  }
+
   console.log(`\n📊 Summary:`);
   console.log(`   Created: ${created} pages`);
   if (errors > 0) {
