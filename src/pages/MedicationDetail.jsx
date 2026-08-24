@@ -121,15 +121,22 @@ const MedicationDetail = () => {
         },
     ].filter(Boolean) : [];
 
+    // Deliberately not schema.org/Drug: Drug is a subtype of Product, so
+    // Google's Product snippets validator flags it as a critical error unless
+    // it carries offers/review/aggregateRating — none of which apply to an
+    // informational page that sells nothing.
     const structured = med ? [
         {
             '@context': 'https://schema.org',
-            '@type': 'Drug',
-            name: med.brandName,
-            alternateName: med.genericName,
+            '@type': 'MedicalWebPage',
+            name: `${med.brandName} (${med.genericName})`,
             description: `${med.brandName} (${med.genericName}) is ${aOrAn(med.category)} ${med.category?.toLowerCase() || 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
-            drugClass: med.category,
             url: `${BASE_URL}/medications/${med.id}`,
+            about: {
+                '@type': 'MedicalEntity',
+                name: med.brandName,
+                alternateName: med.genericName,
+            },
         },
         faqs.length ? {
             '@context': 'https://schema.org',
