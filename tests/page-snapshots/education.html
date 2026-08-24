@@ -205,7 +205,7 @@
 </a>
 <nav class="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label="Education topics">
 <div class="flex flex-wrap">
-<button role="tab" aria-selected="false" aria-controls="EMERGENCY-panel" aria-label="Out of Meds?" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
+<button role="tab" aria-selected="true" aria-controls="EMERGENCY-panel" aria-label="Out of Meds?" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-emerald-600 text-emerald-800 bg-emerald-50">
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock" aria-hidden="true">
 <circle cx="12" cy="12" r="10">
 </circle>
@@ -223,7 +223,7 @@
 </svg>
 <span class="hidden sm:inline">Generics vs. Brand</span>
 </button>
-<button role="tab" aria-selected="true" aria-controls="DEDUCTIBLE_TRAP-panel" aria-label="Deductible Trap" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-emerald-600 text-emerald-800 bg-emerald-50">
+<button role="tab" aria-selected="false" aria-controls="DEDUCTIBLE_TRAP-panel" aria-label="Deductible Trap" class="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 border-transparent text-slate-800 hover:text-emerald-700 hover:bg-slate-100">
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle" aria-hidden="true">
 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
 </path>
@@ -279,209 +279,104 @@
 </button>
 </div>
 </nav>
-<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id="DEDUCTIBLE_TRAP-panel" aria-labelledby="DEDUCTIBLE_TRAP-tab">
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id="EMERGENCY-panel" aria-labelledby="EMERGENCY-tab">
 <div class="max-w-4xl mx-auto space-y-8">
-<div class="text-center mb-8">
-<h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The Deductible Trap</h1>
-<p class="text-xl text-slate-600">Why Prescription Discount Cards Can Cost Transplant Patients More</p>
+<div class="prose prose-slate max-w-none">
+<h2 class="text-2xl font-bold text-slate-900">Out of medication, or about to be?</h2>
+<p class="text-lg text-slate-700">Anti-rejection medicine is not something you can safely skip. If cost or a refill problem means you are running low, act today. Here is how to get a bridge supply while you sort out the cost.</p>
 </div>
-<div class="bg-gradient-to-br from-red-50 to-orange-50 border-4 border-red-300 rounded-2xl p-8 shadow-lg">
-<div class="flex items-start gap-4 mb-4">
-<div class="bg-red-600 text-white p-3 rounded-full flex-shrink-0" aria-hidden="true">
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle">
+<div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-lg" role="alert">
+<p class="text-rose-900 font-bold flex items-center gap-2 mb-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle" aria-hidden="true">
 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
 </path>
 <path d="M12 9v4">
 </path>
 <path d="M12 17h.01">
 </path>
-</svg>
-</div>
-<div>
-<h2 class="text-2xl font-bold text-red-900 mb-2">⚠️ Important Warning for Transplant Patients</h2>
-<p class="text-lg font-bold text-red-800">Using discount cards like GoodRx or SingleCare can cost you THOUSANDS of extra dollars each year.</p>
-</div>
-</div>
-<div class="bg-white/80 p-6 rounded-xl border-2 border-red-200 mt-4">
-<h3 class="font-bold text-red-900 text-xl mb-3">Watch out for the "deductible trap." Here's what happens:</h3>
-<p class="text-red-900 text-lg leading-relaxed mb-4">If you use a discount card, <span class="font-bold bg-yellow-200 px-2 py-1 rounded">the money you pay does NOT count toward your deductible or your yearly out-of-pocket limit</span>.</p>
-<p class="text-slate-800 leading-relaxed mb-3">So insurance never starts paying in full. You keep paying out of pocket — for these medicines and for the rest of your care — all year long.</p>
-<p class="text-slate-700 font-medium">What to do: Call the customer service number on your insurance card and ask: 'Have I met my deductible and my yearly out-of-pocket limit? Is it better for me to use insurance or a discount card for this medication?'</p>
-</div>
-<div class="bg-white/80 p-5 rounded-xl border-2 border-red-200 mt-4 flex items-start gap-3">
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600 flex-shrink-0 mt-1" aria-hidden="true">
-<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
-</path>
-<path d="M12 9v4">
-</path>
-<path d="M12 17h.01">
-</path>
-</svg>
-<p class="text-red-900 leading-relaxed">
-<strong>This applies to TrumpRx.gov too.</strong> TrumpRx prices are cash prices outside your insurance — that spending does not count toward your deductible or out-of-pocket maximum either, and many TrumpRx coupons cannot be combined with insurance at all. Cash price is cash price, whoever is offering it. <a href="/trumprx" class="font-semibold underline text-red-800 hover:text-red-950">Read our TrumpRx guide for transplant patients →</a>
+</svg> If this is a medical emergency, call 911.</p>
+<p class="text-rose-800 text-sm">Signs of rejection, fever, pain over the transplant, less urine, sudden weight gain, or feeling very unwell, need your transplant team right away. Do not wait. <strong>Never change or stop your doses on your own.</strong>
 </p>
 </div>
-</div>
-<section class="bg-slate-50 p-8 rounded-xl border border-slate-200" aria-labelledby="real-example">
-<h2 id="real-example" class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600" aria-hidden="true">
-<line x1="12" x2="12" y1="2" y2="22">
-</line>
-<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6">
-</path>
-</svg>Real-World Example</h2>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="bg-white p-6 rounded-xl border-2 border-emerald-200">
-<div class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full inline-block mb-3">✅ The Right Way</div>
-<h3 class="font-bold text-lg text-slate-900 mb-4">Using Insurance</h3>
-<ul class="space-y-3 text-slate-700">
-<li class="flex items-start gap-2">
-<span class="font-bold text-slate-900">Month 1-3:</span>
-<span>Pay $2,100 out-of-pocket. Every dollar counts toward your deductible and your yearly out-of-pocket limit — you reach the limit.</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="font-bold text-slate-900">Month 4-12:</span>
-<span>Insurance pays 100% of your medicines, labs, and clinic visits = $0 out-of-pocket</span>
-</li>
-<li class="pt-3 border-t-2 border-emerald-200">
-<span class="font-bold text-emerald-700 text-xl">Total Annual Cost: $2,100</span>
-</li>
-</ul>
-</div>
-<div class="bg-white p-6 rounded-xl border-2 border-red-200">
-<div class="bg-red-100 text-red-800 font-bold px-3 py-1 rounded-full inline-block mb-3">❌ The Discount Card Trap</div>
-<h3 class="font-bold text-lg text-slate-900 mb-4">Using GoodRx/SingleCare</h3>
-<ul class="space-y-3 text-slate-700">
-<li class="flex items-start gap-2">
-<span class="font-bold text-slate-900">Month 1-12:</span>
-<span>Pay the discount price (~$200/month = $2,400), but NONE of it counts toward your deductible or yearly limit</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="font-bold text-slate-900">Result:</span>
-<span>You never reach your yearly limit, so insurance never starts paying in full.</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="font-bold text-slate-900">The rest:</span>
-<span>You keep paying out of pocket for labs, clinic visits, and your other medicines all year — often $3,000–$8,000 more.</span>
-</li>
-<li class="pt-3 border-t-2 border-red-200">
-<span class="font-bold text-red-700 text-xl">Total Annual Cost: $2,400 + often $3,000–$8,000 more for the rest of your care</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
-<p class="text-yellow-900 font-bold text-lg">The discount price looks like a small saving each month. But nothing counts toward your yearly limit, so insurance never starts paying in full — and that is how the trap can add up to thousands over a year.</p>
-</div>
-</section>
-<section class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200" aria-labelledby="when-to-use">
-<h2 id="when-to-use" class="text-2xl font-bold text-slate-900 mb-6">When Should Transplant Patients Use Discount Cards?</h2>
 <div class="space-y-4">
-<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-<h3 class="font-bold text-emerald-700 mb-2 flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle" aria-hidden="true">
-<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
+<div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100 flex items-start gap-4">
+<div class="bg-emerald-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
+<div>
+<h3 class="font-bold text-emerald-900 mb-1 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
 </path>
-<path d="m9 11 3 3L22 4">
-</path>
-</svg>Scenario 1: Drug NOT Covered by Insurance</h3>
-<p class="text-slate-700 text-sm">For a medicine NOT on your insurance's list and no cheaper generic option is available.</p>
-</div>
-<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-<h3 class="font-bold text-emerald-700 mb-2 flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle" aria-hidden="true">
-<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
-</path>
-<path d="m9 11 3 3L22 4">
-</path>
-</svg>Scenario 2: One-Time, Low-Cost Medications</h3>
-<p class="text-slate-700 text-sm">For short-term medicines not related to your transplant (like a round of antibiotics) where the discount price is less than your copay.</p>
-</div>
-<div class="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
-<h3 class="font-bold text-emerald-700 mb-2 flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle" aria-hidden="true">
-<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
-</path>
-<path d="m9 11 3 3L22 4">
-</path>
-</svg>Scenario 3: Extremely High Deductible</h3>
-<p class="text-slate-700 text-sm">If you have a very high deductible AND the cash price is much lower, but even then, think hard about the cost of not reaching your yearly limit.</p>
+</svg> Call your transplant team first, today</h3>
+<p class="text-slate-700 text-sm">This is the most important step. Your transplant center handles this all the time. Ask for the <strong>transplant pharmacist</strong> or <strong>social worker</strong>. They can often send an emergency prescription, give you samples, or start a fast assistance request the same day. Tell them plainly: "I am about to run out and I cannot afford the refill."</p>
 </div>
 </div>
-<div class="mt-6 bg-red-100 border-2 border-red-300 rounded-lg p-6">
-<h3 class="font-bold text-red-900 text-lg mb-3 flex items-center gap-2">🛑 NEVER Use Discount Cards For:</h3>
-<p class="text-red-900 font-bold text-lg">Your daily anti-rejection medicines like Tacrolimus, Mycophenolate, or Cyclosporine.</p>
-<p class="text-red-800 mt-2">These are the medicines that will help you reach your yearly limit fast.</p>
-</div>
-</section>
-<section class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm" aria-labelledby="better-alternatives">
-<h2 id="better-alternatives" class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600" aria-hidden="true">
-<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+<div class="bg-blue-50 p-5 rounded-xl border border-blue-100 flex items-start gap-4">
+<div class="bg-blue-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
+<div>
+<h3 class="font-bold text-blue-900 mb-1 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pill" aria-hidden="true">
+<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z">
 </path>
-<path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66">
+<path d="m8.5 8.5 7 7">
 </path>
-<path d="m18 15-2-2">
-</path>
-<path d="m15 18-2-2">
-</path>
-</svg>Better Alternatives</h2>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200">
-<h3 class="font-bold text-emerald-900 text-lg mb-3">Patient Assistance Programs (PAPs)</h3>
-<p class="text-slate-700 text-sm mb-4">Free or low-cost medicines straight from drug makers.</p>
-<p class="text-emerald-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
-</div>
-<div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
-<h3 class="font-bold text-blue-900 text-lg mb-3">Co-pay Foundations</h3>
-<p class="text-slate-700 text-sm mb-4">Groups that help pay for your copays and deductibles.</p>
-<p class="text-blue-800 font-bold text-sm">✅ Counts toward your yearly limit</p>
-</div>
-<div class="bg-purple-50 p-6 rounded-xl border border-purple-200">
-<h3 class="font-bold text-purple-900 text-lg mb-3">Drug Maker Copay Cards</h3>
-<p class="text-slate-700 text-sm mb-4">Help from drug makers for brand-name medicines (not for Medicare patients).</p>
-<p class="text-amber-800 font-bold text-sm">⚠️ May not count toward your yearly limit</p>
-<p class="text-slate-600 text-sm mt-2">Many plans use "copay accumulators" that keep the card's money from counting. Before you use one, ask your plan: "Will my copay card count toward what I owe?"</p>
+</svg> Ask your pharmacy for an emergency supply</h3>
+<p class="text-slate-700 text-sm">Many states let a pharmacist give a few days of a regular medicine in an emergency so you do not miss doses. Ask: <em>"Can you do an emergency fill while I sort out the cost or the refill?"</em> Bring your pill bottle or the medicine name and dose.</p>
 </div>
 </div>
-</section>
-<section class="bg-gradient-to-r from-amber-50 to-yellow-50 p-8 rounded-xl border-2 border-amber-300" aria-labelledby="key-takeaways">
-<h2 id="key-takeaways" class="text-2xl font-bold text-slate-900 mb-6">Key Takeaways</h2>
-<ul class="space-y-4">
-<li class="flex items-start gap-3">
-<div class="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">1</div>
-<p class="text-slate-800 pt-1">
-<span class="font-bold">Your goal every year is to hit your yearly spending limit (the most you pay each year).</span> Once you reach it, insurance pays 100% for the rest of the year.</p>
-</li>
-<li class="flex items-start gap-3">
-<div class="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">2</div>
-<p class="text-slate-800 pt-1">
-<span class="font-bold">Discount cards stop your payments from counting toward this goal.</span> They may save you a few dollars per medicine, but cost you thousands over the year.</p>
-</li>
-<li class="flex items-start gap-3">
-<div class="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
-<p class="text-slate-800 pt-1">
-<span class="font-bold">Always use PAPs and co-pay foundations first.</span> These programs help you pay for medicines AND help you reach your yearly limit faster.</p>
-</li>
-<li class="flex items-start gap-3">
-<div class="bg-amber-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">4</div>
-<p class="text-slate-800 pt-1">
-<span class="font-bold">Talk to your transplant team.</span> They can connect you with people who know these programs and can help you through the system.</p>
-</li>
-</ul>
-</section>
-<aside class="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note">
-<h3 class="font-bold text-emerald-900 mb-3 flex items-center gap-2 text-lg">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true">
+<div class="bg-purple-50 p-5 rounded-xl border border-purple-100 flex items-start gap-4">
+<div class="bg-purple-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
+<div>
+<h3 class="font-bold text-purple-900 mb-1 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock" aria-hidden="true">
 <circle cx="12" cy="12" r="10">
 </circle>
-<path d="M12 16v-4">
+<polyline points="12 6 12 12 16 14">
+</polyline>
+</svg> Ask the drug maker about a bridge supply</h3>
+<p class="text-slate-700 text-sm">Some manufacturers give a free short-term "bridge" or "quick start" supply while your Patient Assistance Program application is reviewed, so you are covered during the wait. Your transplant team can request this, or call the drug maker's patient support line.</p>
+<a class="text-purple-700 font-semibold text-sm underline mt-1 inline-block" href="/medications" data-discover="true">Find your medication and its manufacturer →</a>
+</div>
+</div>
+<div class="bg-amber-50 p-5 rounded-xl border border-amber-100 flex items-start gap-4">
+<div class="bg-amber-700 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">4</div>
+<div>
+<h3 class="font-bold text-amber-900 mb-1 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart" aria-hidden="true">
+<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
 </path>
-<path d="M12 8h.01">
-</path>
-</svg>Questions?</h3>
-<p class="text-emerald-900 leading-relaxed">Not sure if a discount card is right for you? Ask your transplant center's financial coordinator (the person who helps with money questions) or social worker. They can look at your insurance plan and help you choose.</p>
-</aside>
+</svg> Check foundations for urgent help</h3>
+<p class="text-slate-700 text-sm">Some copay foundations review urgent cases faster. It is worth a call when you are in a pinch. See the trusted groups in our directory.</p>
+<a class="text-amber-800 font-semibold text-sm underline mt-1 inline-block" href="/education?topic=DIRECTORY" data-discover="true">Open the resource directory →</a>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+<h3 class="text-lg font-bold text-slate-900 mb-3">Have this ready when you call</h3>
+<p class="text-slate-600 text-sm mb-3">It makes every call faster:</p>
+<ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+<li class="flex items-start gap-2">
+<span class="text-emerald-600 font-bold">✓</span>
+<span>Your medicine names and doses</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-emerald-600 font-bold">✓</span>
+<span>Your pharmacy's name and phone</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-emerald-600 font-bold">✓</span>
+<span>Your insurance card (if you have one)</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-emerald-600 font-bold">✓</span>
+<span>Your transplant center's phone number</span>
+</li>
+</ul>
+</div>
+<div class="bg-rose-50 border border-rose-200 p-5 rounded-xl text-center">
+<p class="text-rose-900 font-semibold mb-1">Do not just stop taking your medicine.</p>
+<p class="text-rose-800 text-sm">Missing anti-rejection doses can put your transplant at risk. If you truly cannot get a full supply, ask your transplant team whether a safe short-term plan is possible, but let them make that call, not you.</p>
+<a class="inline-block mt-3 bg-rose-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-rose-700 transition text-sm" href="/application-help" data-discover="true">Get help applying for longer-term assistance</a>
+</div>
 </div>
 </div>
 </article>
