@@ -37,9 +37,9 @@
       "emergency": "Out of Meds?",
       "generics": "Generics vs. Brand",
       "deductibleTrap": "Deductible Trap",
-      "diversion": "Diversion Programs",
+      "diversion": "Alternative Funding",
       "directory": "Directory",
-      "insurance": "Insurance(s)",
+      "insurance": "Insurance",
       "mental": "Mental Health",
       "oop": "Out-of-Pocket Max"
     },
@@ -461,7 +461,7 @@
     },
     "diversion": {
       "title": "When Insurance Sends You Elsewhere",
-      "subtitle": "Some plans try to avoid paying for your drugs. Learn how to spot this and what to do.",
+      "subtitle": "\"Alternative funding programs\" are companies your insurance plan hires to push your costly drugs onto charity and free-drug programs — so the plan avoids paying. Learn how to spot this and what to do.",
       "warning": {
         "title": "Warning: Your Plan May Send You Away",
         "lead": "Some plans don't want to pay for costly drugs. They may make you get free drugs from drug makers first.",
@@ -1411,7 +1411,7 @@
       "noResultsLink": "Try the full medication search",
       "or": "or",
       "mychartAriaLabel": "Import your medication list from MyChart",
-      "mychartButton": "Bring my list from MyChart",
+      "mychartButton": "Import my list from MyChart",
       "mychartFootnote": "Listed in the Epic Connection Hub. You'll sign in on your hospital's own portal — we never store your login. Imports your real list from 400+ Epic health systems, including whether you're on the brand or the generic. Your data stays on your device.",
       "examplesAriaLabel": "Common transplant medications",
       "tagGeneric": "generic",
@@ -1424,7 +1424,7 @@
       "seeOptionsHint": "Pick a medication in step 1 first.",
       "insuranceLabel": "2 · Your insurance",
       "insuranceAriaLabel": "Choose your insurance type",
-      "insCommercial": "Job / marketplace",
+      "insCommercial": "Through work / Marketplace",
       "insMedicare": "Medicare",
       "insMedicaid": "Medicaid",
       "insUninsured": "No insurance",
@@ -1441,7 +1441,7 @@
     "trust": "{{count}} transplant medications · Free, no account · Your answers stay on your device · Built by a liver transplant recipient",
     "explainer": {
       "title": "Not sure whether you're on the brand or the generic?",
-      "intro": "Most transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",
+      "intro": "Many transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",
       "genericTitle": "Your label says “tacrolimus”",
       "genericText": "Lowercase drug name, often with a manufacturer like Sandoz or Accord. This is the generic.",
       "genericAction": "Compare cash prices. No copay card exists.",
