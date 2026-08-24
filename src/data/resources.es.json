@@ -36,6 +36,12 @@
     "category": "Discount Program"
   },
   {
+    "name": "TrumpRx.gov",
+    "url": "/trumprx-es",
+    "description": "El sitio de descuentos de medicamentos del gobierno. Precios en efectivo para más de 800 medicamentos de marca y genéricos, incluidos algunos medicamentos de trasplante. Los precios en efectivo no cuentan para su deducible — empiece con nuestra guía para trasplante.",
+    "category": "Discount Program"
+  },
+  {
     "name": "HealthWell Foundation",
     "url": "https://www.healthwellfoundation.org/",
     "description": "Ayuda a pacientes que no tienen suficiente cobertura de seguro. Paga copagos, costos de viaje y primas de seguro.",

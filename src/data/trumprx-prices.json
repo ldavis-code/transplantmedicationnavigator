@@ -1,8 +1,34 @@
 {
-  "lastUpdated": "2026-04-07",
+  "lastUpdated": "2026-08-24",
   "source": "TrumpRx.gov",
-  "note": "TrumpRx prices are fixed cash prices (not ranges). Cash-pay only, does NOT count toward deductible or out-of-pocket max. Some drugs exclude Medicare/Medicaid patients.",
+  "note": "TrumpRx prices are cash prices. Cash-pay only, does NOT count toward deductible or out-of-pocket max. Some drugs exclude Medicare/Medicaid patients. Generic prices are the lowest listed price and vary by strength and quantity.",
   "medications": {
+    "mycophenolate": {
+      "trumprxPrice": 11.30,
+      "originalPrice": 190.80,
+      "discount": "~94% off",
+      "note": "Generic mycophenolate mofetil (CellCept), lowest listed price. Mycophenolic acid (Myfortic) is a different product — check which one you take",
+      "medicareRestriction": true
+    },
+    "sirolimus": {
+      "trumprxPrice": 26.69,
+      "originalPrice": 207.60,
+      "discount": "~87% off",
+      "note": "Generic tablets, lowest listed price; oral solution from $42.08. Don't switch forms without your transplant team",
+      "medicareRestriction": true
+    },
+    "cyclosporine": {
+      "trumprxPrice": 12.50,
+      "originalPrice": 33,
+      "discount": "~62% off",
+      "note": "Modified (Neoral/Gengraf generic) from $12.50; non-modified (Sandimmune) from $35.48 — the two are NOT interchangeable",
+      "medicareRestriction": true
+    },
+    "everolimus": {
+      "trumprxPrice": 38.43,
+      "note": "Generic tablets (Zortress), lowest listed price — varies by strength and quantity",
+      "medicareRestriction": true
+    },
     "semaglutide": {
       "trumprxPrice": 149,
       "trumprxPriceMax": 199,

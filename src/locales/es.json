@@ -20,11 +20,11 @@
     "totalAssist": {
       "badge": "Nuevo · Ya disponible",
       "title": "Llegó TotalAssist, el programa caritativo de asistencia al paciente más grande del país",
-      "p1": "<strong>TotalAssist</strong> reúne décadas de experiencia en asistencia al paciente en un solo programa. A lo largo de los últimos 50 años, su equipo ha ayudado a 3.8 millones de pacientes y ha otorgado más de $7 mil millones en asistencia financiera.",
-      "p2": "Desde el <strong>1 de julio de 2026</strong>, TotalAssist reúne toda la asistencia financiera en un solo lugar. Tiene casi 150 fondos para distintas enfermedades, sin listas de espera y, en la mayoría de los casos, le dicen al instante si califica. Las ayudas pueden cubrir copagos, coseguro, deducibles, primas del seguro, consultas médicas y otros costos del tratamiento. El límite de ingresos es alto: hasta el 500% del Nivel Federal de Pobreza (es decir, 5 veces esa cifra — muchas familias de ingresos medios califican). Además, pueden devolverle gastos que usted ya pagó en los últimos 6 meses.",
+      "p1": "<strong>TotalAssist</strong> reúne décadas de experiencia en asistencia al paciente en un solo programa. Con más de 50 años de experiencia combinada, su equipo ha ayudado a 3.8 millones de pacientes y ha otorgado más de $7 mil millones en asistencia financiera.",
+      "p2": "Desde el <strong>1 de julio de 2026</strong>, TotalAssist reúne toda la asistencia financiera en un solo lugar. Tiene casi 150 fondos para distintas enfermedades, sin listas de espera y, en la mayoría de los casos, le dicen al instante si califica. Las ayudas pueden cubrir copagos, coseguro, deducibles, primas del seguro, consultas médicas y otros costos del tratamiento. La mayoría de los fondos usan un límite de ingresos del 500% del Nivel Federal de Pobreza, ajustado según el tamaño de su hogar y el costo de vida donde vive — así que muchas familias de ingresos medios califican. Según la fecha de su diagnóstico, también pueden devolverle gastos que usted ya pagó en los últimos 6 meses.",
       "applyPre": "Solicite en línea o llame al ",
       "phone": "866-512-3861",
-      "applyPost": " (lun–vie, 8:30am–5:30pm hora del Este; oprima el 2 para español).",
+      "applyPost": " (lun–vie, 8:30am–5:30pm hora del Este; al llamar, pregunte si hay atención en español).",
       "learnMore": "Conozca más sobre TotalAssist"
     },
     "gotDenied": {
@@ -395,7 +395,11 @@
         "boxP1Highlight": "el dinero que paga NO cuenta para su deducible ni para su límite anual de gastos de bolsillo",
         "boxP1Post": ".",
         "boxP2": "Por eso el seguro nunca llega a pagar el 100%. Usted sigue pagando de su bolsillo, por estas medicinas y por el resto de su atención, todo el año.",
-        "boxP3": "Qué hacer: llame al número de servicio al cliente de su tarjeta del seguro y pregunte: '¿Ya alcancé mi deducible y mi límite anual de gastos de bolsillo? ¿Me conviene usar el seguro o una tarjeta de descuento para este medicamento?'"
+        "boxP3": "Qué hacer: llame al número de servicio al cliente de su tarjeta del seguro y pregunte: '¿Ya alcancé mi deducible y mi límite anual de gastos de bolsillo? ¿Me conviene usar el seguro o una tarjeta de descuento para este medicamento?'",
+        "trumpRxBold": "Esto también aplica a TrumpRx.gov.",
+        "trumpRxText": "Los precios de TrumpRx son precios en efectivo fuera de su seguro: ese gasto tampoco cuenta para su deducible ni para su máximo de gastos de bolsillo, y muchos cupones de TrumpRx no se pueden combinar con el seguro. Precio en efectivo es precio en efectivo, no importa quién lo ofrezca.",
+        "trumpRxLink": "Lea nuestra guía de TrumpRx para pacientes de trasplante →",
+        "trumpRxHref": "/trumprx-es"
       },
       "example": {
         "title": "Ejemplo de la vida real",
@@ -2331,7 +2335,7 @@
         "thPharmacy": "Farmacia",
         "thDescription": "Descripción",
         "costPlusDesc": "Farmacia en línea con modelo de precio de costo más un margen fijo; a menudo es la más barata para genéricos",
-        "trumpRxDesc": "Precios en efectivo negociados por el gobierno en 43 medicamentos de marca; solo pago en efectivo, algunos excluyen Medicare/Medicaid. ",
+        "trumpRxDesc": "Precios en efectivo negociados por el gobierno en más de 800 medicamentos de marca y genéricos; solo pago en efectivo, no cuenta para su deducible, algunos excluyen Medicare/Medicaid. ",
         "trumpRxGuideLink": "Vea nuestra guía para trasplante",
         "walmartDesc": "Precios bajos constantes; lista de genéricos de $4 disponible",
         "costcoDesc": "Margen bajo; no se necesita membresía para la farmacia",

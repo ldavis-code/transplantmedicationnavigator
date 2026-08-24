@@ -918,6 +918,14 @@ const Education = () => {
                                 <p className="text-slate-800 leading-relaxed mb-3">{t('education.deductibleTrap.warning.boxP2')}</p>
                                 <p className="text-slate-700 font-medium">{t('education.deductibleTrap.warning.boxP3')}</p>
                             </div>
+                            <div className="bg-white/80 p-5 rounded-xl border-2 border-red-200 mt-4 flex items-start gap-3">
+                                <AlertTriangle className="text-red-600 flex-shrink-0 mt-1" size={22} aria-hidden="true" />
+                                <p className="text-red-900 leading-relaxed">
+                                    <strong>{t('education.deductibleTrap.warning.trumpRxBold')}</strong>{' '}
+                                    {t('education.deductibleTrap.warning.trumpRxText')}{' '}
+                                    <a href={t('education.deductibleTrap.warning.trumpRxHref')} className="font-semibold underline text-red-800 hover:text-red-950">{t('education.deductibleTrap.warning.trumpRxLink')}</a>
+                                </p>
+                            </div>
                         </div>
 
                         <section className="bg-slate-50 p-8 rounded-xl border border-slate-200" aria-labelledby="real-example">
