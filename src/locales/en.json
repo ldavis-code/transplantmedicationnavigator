@@ -1348,8 +1348,8 @@
           "ariaLabel": "Start medication path wizard"
         },
         "education": {
-          "label": "Education",
-          "ariaLabel": "Browse education and coverage guides"
+          "label": "Resources",
+          "ariaLabel": "Browse resources, education, and coverage guides"
         },
         "applicationHelp": {
           "label": "How to apply",

@@ -207,7 +207,12 @@ const Education = () => {
             const topic = (params.get('topic') || window.location.hash.replace('#', '')).toUpperCase();
             if (valid.includes(topic)) return topic;
         } catch (e) { /* ignore */ }
-        return 'DEDUCTIBLE_TRAP';
+        // Default to the emergency tab: a patient arriving without a deep
+        // link sees "Out of Meds?" first — the visitor in crisis should
+        // never have to hunt. It is also the first tab in the row, so the
+        // page opens with the leftmost tab active. Deep links
+        // (?topic=deductible_trap etc.) still land on their own tab.
+        return 'EMERGENCY';
     });
     const [selectedState, setSelectedState] = useState("");
     const [appealName, setAppealName] = useState("");
