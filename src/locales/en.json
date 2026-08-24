@@ -1493,9 +1493,9 @@
     "founder": {
       "photoAlt": "Lorrinda Gray-Davis, founder of Transplant Medication Navigator",
       "name": "Lorrinda Gray-Davis",
-      "role": "Liver transplant recipient · President, TRIO · Vice Chair, OPTN Patient Affairs Committee",
+      "role": "Liver transplant recipient · Vice Chair, OPTN Patient Affairs Committee",
       "quote": "“My pharmacy benefit manager moved my mycophenolate — a generic — to Tier 3. It went from under $20 to $350. Nothing about my health had changed. I had to fight it myself. Most patients never find out they can.”",
-      "bio": "Lorrinda built this from her own experience at the pharmacy counter, and leads a peer support program that has supported more than 550 patients and caregivers, with results published in peer-reviewed journals.",
+      "bio": "Lorrinda built this from her own experience at the pharmacy counter, with research on transplant patients' costs published in peer-reviewed journals.",
       "link": "Read her story"
     },
     "hotline": {
@@ -1516,11 +1516,8 @@
     "name": "Lorrinda Gray-Davis",
     "role": "Liver cancer survivor, liver transplant recipient, and President of Transplant Recipients International Organization (TRIO)",
     "bio1": "In 2017, Lorrinda was diagnosed with end-stage liver disease and inoperable liver cancer. She received her liver transplant in 2018 — and built Transplant Medication Navigator because she knows what it's like to face a pharmacy counter and a price you can't pay.",
-    "bio2": "Since March 2020, she has led a peer support program for transplant patients and caregivers. The program has supported more than 550 patients and caregivers, and 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.",
     "bio3": "She serves as President of Transplant Recipients International Organization (TRIO) and Vice Chair of the OPTN Patient Affairs Committee, and advises HRSA on national transplant safety standards.",
     "stat1Label": "Transplant Recipient Since",
-    "stat2Label": "Patients & Caregivers Supported",
-    "stat3Label": "Patients Reached Transplant While Participating",
     "stat4Label": "Published Research Papers & Presentations",
     "credsTitle": "Leadership & Recognition",
     "credentials": [

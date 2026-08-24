@@ -355,16 +355,16 @@ export const seoMetadata = {
 
   about: {
     title: "About Lorrinda Gray-Davis & Our Story | Transplant Medication Navigator™",
-    description: 'Created by Lorrinda Gray-Davis, liver transplant recipient and President of TRIO. Read the story and peer-reviewed research behind this free medication assistance guide for transplant patients.',
+    description: 'Created by Lorrinda Gray-Davis, liver transplant recipient. Read the story and peer-reviewed research behind this free medication assistance guide for transplant patients.',
     canonical: `${BASE_URL}/about`,
     ogTitle: 'About Transplant Medication Navigator™',
-    ogDescription: 'Created by a liver transplant recipient who leads a peer support program with results published in peer-reviewed journals. Read the full story.',
+    ogDescription: 'Created by a liver transplant recipient, with research published in peer-reviewed journals. Read the full story.',
     twitterTitle: 'About Transplant Medication Navigator™',
     twitterDescription: 'Created by a liver transplant recipient. Read the story and research behind this free medication assistance guide.',
     breadcrumbName: 'About',
     es: {
       title: 'Sobre Lorrinda Gray-Davis y nuestra historia | Transplant Medication Navigator™',
-      description: 'Creado por Lorrinda Gray-Davis, receptora de un trasplante de hígado y presidenta de TRIO. Conozca la historia y la investigación revisada por pares detrás de esta guía gratuita.',
+      description: 'Creado por Lorrinda Gray-Davis, receptora de un trasplante de hígado. Conozca la historia y la investigación revisada por pares detrás de esta guía gratuita.',
       breadcrumbName: 'Sobre nosotros',
     },
   },
