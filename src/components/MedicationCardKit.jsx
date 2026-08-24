@@ -1199,10 +1199,12 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             <div className="text-teal-700 font-bold">
                                                 ${trumpRxData.trumprxPrice}{trumpRxData.trumprxPriceMax ? ` - $${trumpRxData.trumprxPriceMax}` : ''}{t('medications.card.perMo')}
                                             </div>
+                                            {(trumpRxData.originalPrice || trumpRxData.discount) && (
                                             <div className="text-xs text-slate-500 mt-0.5">
-                                                <span className="line-through">${trumpRxData.originalPrice}</span>
+                                                {trumpRxData.originalPrice && <span className="line-through">${trumpRxData.originalPrice}</span>}
                                                 {' '}<span className="text-teal-600 font-semibold">{trumpRxData.discount}</span>
                                             </div>
+                                            )}
                                             {trumpRxData.note && (
                                                 <div className="text-xs text-slate-500 mt-1 italic">{trumpRxData.note}</div>
                                             )}
