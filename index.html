@@ -322,19 +322,21 @@
             </a>
         </div>
 
-        <!-- Static HTML for SEO - This content is indexed by search engines and visible before JavaScript loads -->
+        <!-- Static HTML for SEO and no-JS visitors. The content between the
+             home-static-body markers is a dev-only placeholder: at build
+             time scripts/prerender-seo.js REPLACES it with a full static
+             body generated from src/locales/en.json and the data files —
+             the same sources the live page renders — so the fallback can
+             never drift from the app again (it used to be a hand-written
+             second copy that did). Edit the locale/data files, not this. -->
         <main id="main-content" style="max-width: 900px; margin: 0 auto; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;">
-
-            <!-- Hero -->
-            <header style="text-align: center; margin-bottom: 48px;">
+            <!-- home-static-body -->
+            <header style="text-align: center; margin-bottom: 32px;">
                 <h1 style="font-size: 2.5rem; font-weight: 800; color: #064e3b; margin-bottom: 16px; line-height: 1.25;">
                     Your transplant team decides your medicine.<br />We help you get it.
                 </h1>
-                <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 16px; max-width: 620px; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 24px; max-width: 620px; margin-left: auto; margin-right: auto;">
                     What it should cost, which programs are actually yours, and what to do when your plan changes the rules.
-                </p>
-                <p style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 32px;">
-                    One patient went from $624/month to $10 with a copay card. Find out what you could save.
                 </p>
                 <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
                     <a href="/medications" style="display: inline-block; padding: 16px 32px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">
@@ -347,371 +349,33 @@
                 <p lang="es" style="font-size: 0.875rem; color: #475569; margin-top: 16px;">
                     Este sitio está disponible en español: <a href="/es" style="color: #047857; font-weight: 600;">transplantmedicationnavigator.com/es</a>
                 </p>
-                <!-- Stats (numbers are refreshed from the data files at build time by prerender-seo.js) -->
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 600px; margin: 32px auto 0;">
-                    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
-                        <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="medications">219</span></p>
-                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Medications</p>
-                    </div>
-                    <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; text-align: center;">
-                        <p style="font-size: 1.75rem; font-weight: 800; color: #b45309; margin: 0;"><span data-stat="assistancePrograms">47</span></p>
-                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Assistance Programs</p>
-                    </div>
-                    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
-                        <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="copayCards">53</span></p>
-                        <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">Copay Cards</p>
-                    </div>
-                </div>
             </header>
+            <!-- /home-static-body -->
 
-            <!-- Features -->
-            <section style="display: grid; gap: 24px; margin-bottom: 32px;">
-                <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9;">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Learn the Process</h2>
-                    <p style="color: #475569;">Understand how to fill out Patient Assistance Program (PAP) applications yourself, without paying anyone.</p>
-                </div>
-                <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9;">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Coverage Education</h2>
-                    <p style="color: #475569;">Understand Insurance, Medicare (including Part B-ID for kidney), Medicaid, and IHS benefits.</p>
-                </div>
-                <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9;">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Resources &amp; Directory</h2>
-                    <p style="color: #475569;">Direct, safe links to manufacturer programs, foundations, and government sites. No scams.</p>
-                </div>
-            </section>
-
-            <!-- TrumpRx What's New -->
-            <section style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; margin-bottom: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
-                <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 12px;">New Savings Option: TrumpRx.gov</h2>
-                <p style="color: #475569; line-height: 1.7; margin-bottom: 16px;">
-                    <strong>TrumpRx.gov</strong>, the government's drug-discount portal launched February 5, 2026, has grown to 800+ brand-name and generic drugs — and now lists cash prices on four transplant immunosuppressants: mycophenolate mofetil (from $11.30), sirolimus (from $26.69), cyclosporine (from $12.50), and everolimus (from $38.43). Oral tacrolimus and belatacept are still not listed, and TrumpRx spending does not count toward your deductible or out-of-pocket maximum.
-                </p>
-                <p style="background: #FEE2E2; border: 1px solid #FECACA; border-radius: 8px; padding: 12px 16px; color: #991B1B; font-size: 0.875rem; margin-bottom: 16px;">
-                    <strong>Medicare &amp; Medicaid Patients:</strong> Some TrumpRx discounts are not available if you are enrolled in a government insurance program. Always check your current plan's copay first.
-                </p>
-                <a href="/trumprx" style="display: inline-block; padding: 12px 24px; background: #0D9488; color: white; font-weight: 600; border-radius: 10px; text-decoration: none;">
-                    Read Our Full TrumpRx Guide &rarr;
-                </a>
-            </section>
-
-            <!-- Founder -->
-            <section style="background: linear-gradient(to bottom right, #f8fafc, #ecfdf5); border: 2px solid #a7f3d0; border-radius: 16px; padding: 32px; margin-bottom: 32px;">
-                <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 16px;">
-                    Created by Someone Who's Been There
-                </h2>
-                <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Lorrinda Gray-Davis</h3>
-                <p style="color: #047857; font-weight: 500; font-size: 0.875rem; margin-bottom: 12px;">
-                    Liver transplant recipient &middot; President of TRIO &middot; Vice Chair, OPTN Patient Affairs Committee
-                </p>
-                <p style="color: #334155; line-height: 1.7; margin-bottom: 20px;">
-                    Lorrinda built this tool from lived experience. She leads a peer support program for transplant patients and caregivers that has supported more than 550 people &mdash; 183 patients reached transplant while participating, with results published in peer-reviewed medical journals.
-                </p>
-                <!-- Impact Stats -->
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
-                    <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #d1fae5;">
-                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">2018</p>
-                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Liver Transplant Recipient Since</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #d1fae5;">
-                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">183</p>
-                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Patients Reached Transplant While Participating</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #d1fae5;">
-                        <p style="font-size: 1.5rem; font-weight: 800; color: #047857;">550+</p>
-                        <p style="font-size: 0.75rem; color: #475569; font-weight: 500;">Patients &amp; Caregivers Supported</p>
-                    </div>
-                </div>
-                <!-- Credentials -->
-                <p style="font-weight: 700; color: #0f172a; font-size: 0.875rem; margin-bottom: 8px;">Leadership &amp; Recognition</p>
-                <p style="color: #334155; font-size: 0.8125rem; line-height: 2;">
-                    Vice Chair, OPTN Patient Affairs Committee · President, TRIO (1,500+ members) · Harrison Fellow, Fatty Liver Foundation · AASLD Patient Advisory Group · HRSA Commendation Letter · Co-First Author, Hepatology Communications
-                </p>
-                <p style="text-align: center; margin-top: 16px;">
-                    <a href="https://www.lorrindagraydavis.com" target="_blank" rel="noopener noreferrer" style="color: #059669; font-weight: 600; text-decoration: underline;">Learn more about Lorrinda</a>
-                </p>
-            </section>
-
-            <!-- Mission -->
-            <section style="background: #064e3b; color: white; border-radius: 24px; padding: 40px; margin-bottom: 32px;">
-                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 16px;">Our Mission</h2>
-                <p style="font-size: 1.125rem; line-height: 1.7; color: #d1fae5;">
-                    We help you get the medicine you need.
-                    We show you how to find help paying for your medicine. We give you clear, honest information. We help you take control so you can focus on staying healthy.
-                </p>
-            </section>
-
-            <!-- Crisis Support -->
-            <section style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 32px;">
-                <p style="color: white; font-weight: 700; font-size: 1.125rem; margin-bottom: 8px;">
-                    Mental Health Crisis? Call or Text <a href="tel:988" style="color: white; text-decoration: underline;">988</a>
-                </p>
-                <p style="color: #bfdbfe; font-size: 0.875rem;">
-                    24/7 Suicide &amp; Crisis Lifeline - You are not alone
-                </p>
-            </section>
-
-            <!-- Privacy -->
-            <section style="background: #f1f5f9; border-radius: 12px; padding: 24px; text-align: center;">
-                <h3 style="font-weight: 700; color: #1e293b; margin-bottom: 8px;">We Keep Your Info Safe</h3>
-                <p style="color: #475569; font-size: 0.875rem;">
-                    We do not save your info. We do not ask for your social security number. We do not sell your info. This tool is only here to teach you about your options.
-                </p>
-            </section>
-
-            <!-- Loading indicator -->
+            <!-- Loading indicator (stays the <main>'s last child: the
+                 noscript CSS hides it when JavaScript is off) -->
             <p style="text-align: center; color: #64748b; margin-top: 32px; font-size: 0.875rem;">
                 Loading interactive features...
             </p>
         </main>
     </div>
 
-    <!-- Noscript fallback - displays core content when JavaScript is disabled -->
+    <!-- home-noscript -->
+    <!-- Dev-only floor: at build time scripts/prerender-seo.js REPLACES
+         everything between the home-noscript markers with medication, PAP,
+         and foundation tables generated from the data files (same sources
+         the app renders). Edit those files, not this block. -->
     <noscript>
         <style>
             #root > main > p:last-child { display: none; }
-            .noscript-section { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
-            .noscript-section h2 { color: #059669; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #d1fae5; padding-bottom: 8px; margin-top: 32px; margin-bottom: 16px; }
-            .noscript-section h3 { color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-top: 20px; margin-bottom: 8px; }
-            .noscript-section p, .noscript-section li { color: #334155; line-height: 1.7; }
-            .noscript-section a { color: #059669; text-decoration: underline; }
-            .noscript-section ul { list-style: disc; padding-left: 20px; margin: 8px 0; }
-            .noscript-section table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-            .noscript-section th, .noscript-section td { border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; }
-            .noscript-section th { background: #f0fdf4; color: #059669; font-weight: 700; }
-            .noscript-section tr:nth-child(even) { background: #f8fafc; }
             .noscript-notice { max-width: 900px; margin: 0 auto; padding: 16px 20px; text-align: center; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; }
         </style>
-
         <div class="noscript-notice">
             <p style="color: #92400e; font-weight: 700; margin: 0 0 4px;">JavaScript is disabled</p>
-            <p style="color: #78350f; margin: 0; font-size: 0.875rem;">The interactive medication search and quiz require JavaScript. The core content below is still available.</p>
-        </div>
-
-        <div class="noscript-section">
-
-            <!-- Core Transplant Medications -->
-            <h2>Common Transplant Medications</h2>
-            <table>
-                <tr>
-                    <th>Medication (Generic)</th>
-                    <th>Brand Name(s)</th>
-                    <th>Manufacturer</th>
-                    <th>Patient Assistance</th>
-                </tr>
-                <tr>
-                    <td>Tacrolimus</td>
-                    <td>Prograf / Astagraf XL</td>
-                    <td>Astellas</td>
-                    <td><a href="https://www.astellaspharmasupportsolutions.com/">Astellas Support</a></td>
-                </tr>
-                <tr>
-                    <td>Tacrolimus Extended-Release</td>
-                    <td>Envarsus XR</td>
-                    <td>Veloxis</td>
-                    <td><a href="https://www.envarsusxr.com/savings-support">Envarsus XR Support</a></td>
-                </tr>
-                <tr>
-                    <td>Cyclosporine</td>
-                    <td>Neoral / Sandimmune</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Cyclosporine (modified)</td>
-                    <td>Gengraf</td>
-                    <td>AbbVie</td>
-                    <td><a href="https://www.abbvie.com/patients/patient-support/patient-assistance.html">myAbbVie Assist</a></td>
-                </tr>
-                <tr>
-                    <td>Mycophenolate Mofetil</td>
-                    <td>CellCept</td>
-                    <td>Genentech</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
-                </tr>
-                <tr>
-                    <td>Mycophenolic Acid</td>
-                    <td>Myfortic</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Azathioprine</td>
-                    <td>Imuran</td>
-                    <td>Generic</td>
-                    <td>Low-cost generic available</td>
-                </tr>
-                <tr>
-                    <td>Sirolimus</td>
-                    <td>Rapamune</td>
-                    <td>Pfizer</td>
-                    <td><a href="https://www.pfizerrxpathways.com/">Pfizer RxPathways</a></td>
-                </tr>
-                <tr>
-                    <td>Everolimus</td>
-                    <td>Zortress</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Belatacept</td>
-                    <td>Nulojix</td>
-                    <td>Bristol Myers Squibb</td>
-                    <td><a href="https://www.bmspaf.org/">BMS Patient Assistance</a></td>
-                </tr>
-                <tr>
-                    <td>Prednisone</td>
-                    <td>Deltasone (generic widely available)</td>
-                    <td>Generic</td>
-                    <td>Low-cost generic available</td>
-                </tr>
-                <tr>
-                    <td>Valganciclovir</td>
-                    <td>Valcyte</td>
-                    <td>Genentech</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
-                </tr>
-            </table>
-
-            <!-- Patient Assistance Programs (PAPs) - Free Medications -->
-            <h2>Patient Assistance Programs (Free Medications)</h2>
-            <p>These programs provide <strong>free medications</strong> to patients who are uninsured or on Medicare and meet income requirements.</p>
-            <table>
-                <tr>
-                    <th>Program</th>
-                    <th>Phone</th>
-                    <th>Covers</th>
-                    <th>Website</th>
-                </tr>
-                <tr>
-                    <td><strong>Astellas Patient Assistance</strong></td>
-                    <td><a href="tel:1-800-477-6472">1-800-477-6472</a></td>
-                    <td>Tacrolimus (Prograf), Cresemba</td>
-                    <td><a href="https://www.astellaspharmasupportsolutions.com/">astellaspharmasupportsolutions.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Novartis Patient Assistance Foundation</strong></td>
-                    <td><a href="tel:1-800-277-2254">1-800-277-2254</a></td>
-                    <td>Cyclosporine, Myfortic, Zortress, Simulect, Entresto</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">novartis.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Genentech Patient Foundation</strong></td>
-                    <td><a href="tel:1-866-422-2377">1-866-422-2377</a></td>
-                    <td>CellCept, Valcyte, Rituxan</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">genentech-access.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>BMS Patient Assistance Foundation</strong></td>
-                    <td><a href="tel:1-800-736-0003">1-800-736-0003</a></td>
-                    <td>Nulojix (Belatacept), Eliquis</td>
-                    <td><a href="https://www.bmspaf.org/">bmspaf.org</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Pfizer RxPathways</strong></td>
-                    <td><a href="tel:1-844-989-7284">1-844-989-7284</a></td>
-                    <td>Rapamune (Sirolimus), Diflucan, Vfend</td>
-                    <td><a href="https://www.pfizerrxpathways.com/">pfizerrxpathways.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Sanofi Patient Connection</strong></td>
-                    <td><a href="tel:1-888-847-4877">1-888-847-4877</a></td>
-                    <td>Thymoglobulin, Renvela</td>
-                    <td><a href="https://www.sanofipatientconnection.com/">sanofipatientconnection.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Gilead Advancing Access</strong></td>
-                    <td><a href="tel:1-800-226-2056">1-800-226-2056</a></td>
-                    <td>Vemlidy, Epclusa, Harvoni</td>
-                    <td><a href="https://www.gileadadvancingaccess.com/">gileadadvancingaccess.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Merck Patient Assistance</strong></td>
-                    <td><a href="tel:1-800-727-5400">1-800-727-5400</a></td>
-                    <td>Prevymis, Noxafil, Januvia</td>
-                    <td><a href="https://www.merckhelps.com/">merckhelps.com</a></td>
-                </tr>
-            </table>
-
-            <!-- Copay Foundations -->
-            <h2>Copay Foundations &amp; Financial Help</h2>
-            <p>These foundations help patients pay copays, premiums, and other medication costs. Many help Medicare patients.</p>
-            <table>
-                <tr>
-                    <th>Organization</th>
-                    <th>Phone / Website</th>
-                    <th>How They Help</th>
-                </tr>
-                <tr>
-                    <td><strong>HealthWell Foundation</strong></td>
-                    <td><a href="https://www.healthwellfoundation.org/">healthwellfoundation.org</a></td>
-                    <td>Copays, travel costs, and insurance premiums</td>
-                </tr>
-                <tr>
-                    <td><strong>TotalAssist</strong></td>
-                    <td><a href="tel:1-866-512-3861">1-866-512-3861</a> · <a href="https://totalassist.org/">totalassist.org</a></td>
-                    <td>Nearly 150 funds for copays, premiums, and treatment costs, plus free case managers for insurance appeals and access</td>
-                </tr>
-                <tr>
-                    <td><strong>American Kidney Fund</strong></td>
-                    <td><a href="https://www.kidneyfund.org/">kidneyfund.org</a></td>
-                    <td>Financial grants for dialysis and transplant patients</td>
-                </tr>
-                <tr>
-                    <td><strong>American Transplant Foundation</strong></td>
-                    <td><a href="https://www.americantransplantfoundation.org/">americantransplantfoundation.org</a></td>
-                    <td>Grants for medications, mentoring for transplant patients</td>
-                </tr>
-                <tr>
-                    <td><strong>NORD RareCare</strong></td>
-                    <td><a href="https://rarediseases.org/">rarediseases.org</a></td>
-                    <td>Help with medications, insurance premiums, and copays</td>
-                </tr>
-                <tr>
-                    <td><strong>Accessia Health</strong></td>
-                    <td><a href="https://www.accessiahealth.org/">accessiahealth.org</a></td>
-                    <td>Medication costs, insurance help, and legal advice</td>
-                </tr>
-            </table>
-
-            <!-- Additional Resources -->
-            <h2>Additional Resources</h2>
-            <ul>
-                <li><a href="https://medicineassistancetool.org/">PhRMA Medicine Assistance Tool (MAT)</a> &mdash; Search tool to find patient assistance programs from drug companies</li>
-                <li><a href="https://www.medicare.gov">Medicare.gov</a> &mdash; Compare drug plans and check if you qualify for Extra Help</li>
-                <li><a href="https://costplusdrugs.com/">Cost Plus Drugs</a> &mdash; Low-cost online pharmacy with transparent pricing</li>
-                <li><a href="https://rxoutreach.org/">Rx Outreach</a> &mdash; Nonprofit pharmacy with low-cost medications</li>
-                <li><a href="https://totalassist.org/">TotalAssist</a> &mdash; Nearly 150 funds for copays and treatment costs</li>
-                <li><a href="https://donatelife.net/">Donate Life America</a> &mdash; Local transplant resources, events, and support groups</li>
-            </ul>
-
-            <!-- Contact Information -->
-            <h2>Contact &amp; Support</h2>
-            <h3>TRIO (Transplant Recipients International Organization)</h3>
-            <p>
-                The largest group for transplant patients, donors, and families. Offers local chapters, mentoring, and learning resources.<br>
-                Website: <a href="https://www.trioweb.org/">trioweb.org</a>
-            </p>
-
-            <h3>Created by Lorrinda Gray-Davis</h3>
-            <p>
-                Liver transplant recipient and President of TRIO.<br>
-                Website: <a href="https://www.lorrindagraydavis.com">lorrindagraydavis.com</a>
-            </p>
-
-            <div style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 12px; padding: 20px; text-align: center; margin-top: 24px;">
-                <p style="color: white; font-weight: 700; font-size: 1.125rem; margin: 0 0 4px;">
-                    Mental Health Crisis? Call or Text <a href="tel:988" style="color: white;">988</a>
-                </p>
-                <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">
-                    24/7 Suicide &amp; Crisis Lifeline &mdash; You are not alone
-                </p>
-            </div>
-
-            <p style="color: #64748b; font-size: 0.8125rem; text-align: center; margin-top: 24px;">
-                This tool is for educational purposes only and is not medical or legal advice. We do not save your personal information.
-            </p>
+            <p style="color: #78350f; margin: 0; font-size: 0.875rem;">The interactive medication search and quiz require JavaScript. For help by phone, TotalAssist: <a href="tel:18665123861" style="color: #78350f;">866-512-3861</a>. Mental health crisis? Call or text <a href="tel:988" style="color: #78350f;">988</a>.</p>
         </div>
     </noscript>
+    <!-- /home-noscript -->
 
     <!-- Service-worker cache reset + IE detection (external so CSP can block inline scripts) -->
     <script src="/boot.js"></script>

@@ -274,6 +274,17 @@ const MEDICATIONS = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'data', 'medications.json'), 'utf8')
 );
 HOME_STATS.medications = MEDICATIONS.length;
+const MED_BY_ID = Object.fromEntries(MEDICATIONS.map((m) => [m.id, m]));
+
+// Resource directory entries feed the homepage <noscript> foundation table
+// and resource list (see homeNoscript below) — the same files the Education
+// page's directory renders, so the two cannot disagree.
+const RESOURCES_EN = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'resources.json'), 'utf8')
+);
+const RESOURCES_ES = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'resources.es.json'), 'utf8')
+);
 
 // Static no-JS bodies for the content/list pages (the data files load
 // above, after the pages array is declared, so attach them here).
@@ -536,41 +547,66 @@ ${page.noscriptHtml || ''}
 }
 
 /**
- * Static Spanish homepage body for dist/es/index.html, built from the same
- * locale strings the app renders (src/locales/es.json) plus the computed
- * stat tiles, so crawlers and no-JS visitors get real Spanish content.
+ * Static homepage body — ONE builder for both languages, built from the
+ * same locale strings the app renders (src/locales/en.json / es.json) plus
+ * the computed stat tiles, so crawlers and no-JS visitors get real content
+ * that cannot drift from the hydrated page. English replaces the trimmed
+ * placeholder between the home-static-body markers in dist/index.html;
+ * Spanish becomes the body of dist/es/index.html. If a locale key is
+ * renamed this throws, the caller's catch logs it, and the errors counter
+ * fails the build — drift now breaks the build instead of shipping.
  */
-function spanishHomeBody() {
-  // Built from the CURRENT home locale structure (task-first redesign,
-  // Aug 2026). If a key is renamed in es.json this throws, the caller's
-  // catch logs it, and the errors counter fails the build — a missing
-  // dist/es/index.html turns the sitemap-listed /es/ into a hard 404.
-  const h = ES_LOCALE.home;
-  const trustLine = h.trust.replace('{{count}}', HOME_STATS.medications);
+function homeBody(isEs) {
+  const h = (isEs ? ES_LOCALE : EN_LOCALE).home;
+  const pre = isEs ? '/es' : '';
+  const trustLine = fill(h.trust, { count: HOME_STATS.medications });
+  const browseAll = fill(h.steps.browseAll, { count: HOME_STATS.medications });
+  const statLabels = isEs
+    ? ['Medicamentos', 'Programas de asistencia', 'Tarjetas de copago']
+    : ['Medications', 'Assistance Programs', 'Copay Cards'];
   return `<div style="text-align: center;">
       <h1 style="font-size: 2rem; font-weight: 800; color: #064e3b; margin: 24px 0 16px; line-height: 1.25;">
         ${h.hero.title1}<br />${h.hero.title2}
       </h1>
       <p style="font-size: 1.125rem; color: #64748b; max-width: 620px; margin: 0 auto 24px;">${h.hero.subtitle}</p>
       <p style="margin-bottom: 12px;">
-        <a href="/es/medications" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.steps.searchPlaceholder.replace(/\.\.\.$/, '')}</a>
+        <a href="${pre}/medications" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${browseAll}</a>
       </p>
       <p style="color: #475569; margin-bottom: 24px;">
-        ${h.steps.multiplePre} <a href="/es/wizard" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
+        ${h.steps.multiplePre} <a href="${pre}/wizard" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
       </p>
-      <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 32px;">${trustLine}</p>
+      <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">${trustLine}</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 600px; margin: 0 auto 32px;">
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
+          <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="medications">${HOME_STATS.medications}</span></p>
+          <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">${statLabels[0]}</p>
+        </div>
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; text-align: center;">
+          <p style="font-size: 1.75rem; font-weight: 800; color: #b45309; margin: 0;"><span data-stat="assistancePrograms">${HOME_STATS.assistancePrograms}</span></p>
+          <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">${statLabels[1]}</p>
+        </div>
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
+          <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="copayCards">${HOME_STATS.copayCards}</span></p>
+          <p style="font-size: 0.8125rem; color: #475569; font-weight: 500; margin: 4px 0 0;">${statLabels[2]}</p>
+        </div>
+      </div>
+      <section style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 24px; text-align: left;" aria-label="${h.story.ariaLabel}">
+        <p style="color: #b45309; font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 8px;">${h.story.badge}</p>
+        <p style="color: #0f172a; font-size: 1.0625rem; line-height: 1.7; margin: 0 0 8px;">${h.story.quotePre}<strong>${h.story.price1}</strong>${h.story.quoteMid1}<strong>${h.story.price2}</strong>${h.story.quoteMid2}<strong style="color: #047857;">${h.story.price3}</strong>${h.story.quotePost}</p>
+        <p style="color: #64748b; font-size: 0.8125rem; margin: 0;">${h.story.attribution}</p>
+      </section>
       <section style="text-align: left; max-width: 640px; margin: 0 auto 24px;">
         <h2 style="font-size: 1.375rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">${h.explainer.title}</h2>
         <p style="color: #475569; margin-bottom: 16px;">${h.explainer.intro}</p>
         <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 12px;">
           <h3 style="font-size: 1.0625rem; font-weight: 700; color: #0f172a; margin: 0 0 6px;">${h.explainer.genericTitle}</h3>
           <p style="color: #475569; font-size: 0.9375rem; margin: 0 0 8px;">${h.explainer.genericText}</p>
-          <p style="color: #065f46; font-weight: 700; font-size: 0.9375rem; margin: 0;">→ ${h.explainer.genericAction}</p>
+          <p style="color: #065f46; font-weight: 700; font-size: 0.9375rem; margin: 0;">&rarr; ${h.explainer.genericAction}</p>
         </div>
         <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 12px;">
           <h3 style="font-size: 1.0625rem; font-weight: 700; color: #0f172a; margin: 0 0 6px;">${h.explainer.brandTitle}</h3>
           <p style="color: #475569; font-size: 0.9375rem; margin: 0 0 8px;">${h.explainer.brandText}</p>
-          <p style="color: #b45309; font-weight: 700; font-size: 0.9375rem; margin: 0;">→ ${h.explainer.brandAction}</p>
+          <p style="color: #b45309; font-weight: 700; font-size: 0.9375rem; margin: 0;">&rarr; ${h.explainer.brandAction}</p>
         </div>
         <p style="color: #334155; margin: 16px 0 0;"><strong>${h.explainer.neverTitle}</strong> ${h.explainer.neverText}</p>
       </section>
@@ -578,29 +614,145 @@ function spanishHomeBody() {
         <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${h.founder.name}</h2>
         <p style="color: #047857; font-size: 0.875rem; margin-bottom: 10px;">${h.founder.role}</p>
         <p style="color: #334155; font-style: italic; line-height: 1.7; margin: 0 0 10px;">${h.founder.quote}</p>
-        <p style="color: #334155; line-height: 1.7; margin: 0;">${h.founder.bio}</p>
+        <p style="color: #334155; line-height: 1.7; margin: 0 0 10px;">${h.founder.bio}</p>
+        <p style="margin: 0;"><a href="${pre}/about" style="color: #047857; font-weight: 600;">${h.founder.link}</a></p>
       </section>
       <section style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; padding: 20px; text-align: left;">
-        <p style="color: #0f172a; font-weight: 700; font-size: 1.0625rem; margin: 0 0 4px;">
-          ${h.hotline.title} Llame o envíe un mensaje de texto al <a href="tel:988" style="color: #be123c;">988</a> (para atención en español, oprima el 2)
-        </p>
-        <p style="color: #64748b; font-size: 0.875rem; margin: 0;">${h.hotline.lifeline} — 24/7, confidencial y también en español</p>
+        <p style="color: #0f172a; font-weight: 700; font-size: 1.0625rem; margin: 0 0 4px;">${h.hotline.title}</p>
+        <p style="color: #334155; margin: 0 0 8px;">${h.hotline.intro}</p>
+        <p style="color: #334155; margin: 0 0 4px;"><strong>${h.hotline.callTitle}:</strong> ${h.hotline.callText}</p>
+        <p style="color: #64748b; font-size: 0.875rem; margin: 0;">${h.hotline.lifeline} &mdash; ${h.hotline.availability}</p>
       </section>
     </div>`;
 }
 
-/**
- * Static Spanish <noscript> fallback for dist/es/index.html. The English
- * homepage (index.html) ships a hand-written noscript block with the core
- * medication, PAP, and copay-foundation tables; this is its Spanish
- * counterpart so no-JS Spanish visitors (older phones, locked-down hospital
- * browsers, slow connections) get the same substance. Program names, phone
- * numbers, and URLs are identical to the English block — only prose is
- * translated. Keep the two blocks' row sets in sync when editing either.
- */
-function spanishHomeNoscript() {
+// The homepage <noscript> tables are built from the same data files the app
+// renders — medications.json, programs.json, resources.json (+ .es) — so a
+// program renamed, a phone corrected, or a resource added (e.g. TrumpRx in
+// the directory) flows into the no-JS fallback on the next build instead of
+// silently drifting. The ROW SELECTION below is editorial and stays a fixed
+// id list; every id must exist in its data file or the build fails.
+const NOSCRIPT_MED_IDS = [
+  'tacrolimus', 'prograf', 'mycophenolate', 'myfortic', 'cyclosporine',
+  'gengraf', 'sirolimus', 'everolimus', 'belatacept', 'imuran',
+  'prednisone', 'valcyte',
+];
+const NOSCRIPT_PAP_IDS = [
+  'astellas-pap', 'novartis-pap', 'genentech-pap', 'bms-pap',
+  'pfizer-pap', 'sanofi-pap', 'gilead-pap', 'merck-pap',
+];
+// Spanish display names for generic drug names in the noscript med table.
+// Brand names stay in English (they must match the bottle).
+const ES_GENERIC_NAMES = {
+  'Cyclosporine': 'Ciclosporina',
+  'Cyclosporine (modified)': 'Ciclosporina (modificada)',
+  'Mycophenolate Mofetil': 'Micofenolato de mofetilo',
+  'Mycophenolic Acid': 'Ácido micofenólico',
+  'Azathioprine': 'Azatioprina',
+  'Prednisone': 'Prednisona',
+};
+
+function homeNoscript(isEs) {
+  const RESOURCES = isEs ? RESOURCES_ES : RESOURCES_EN;
+  const LOCALE = isEs ? ES_LOCALE : EN_LOCALE;
+  const pap = PROGRAMS.papPrograms;
+  const medName = (id) => (MED_BY_ID[id] && MED_BY_ID[id].brandName) || (id.charAt(0).toUpperCase() + id.slice(1));
+
+  const medRows = NOSCRIPT_MED_IDS.map((id) => {
+    const m = MED_BY_ID[id];
+    if (!m) throw new Error(`noscript med id "${id}" missing from medications.json`);
+    const generic = m.genericName || m.brandName;
+    const genericShown = isEs ? (ES_GENERIC_NAMES[generic] || generic) : generic;
+    const program = m.papProgramId ? pap[m.papProgramId] : null;
+    if (m.papProgramId && !program) throw new Error(`noscript med "${id}" points at missing PAP "${m.papProgramId}"`);
+    const assist = program
+      ? `<a href="${program.url}">${program.name}</a>`
+      : (isEs ? 'Genérico de bajo costo disponible' : 'Low-cost generic available');
+    return `                <tr>
+                    <td>${genericShown}</td>
+                    <td>${m.brandName}</td>
+                    <td>${m.manufacturer}</td>
+                    <td>${assist}</td>
+                </tr>`;
+  }).join('\n');
+
+  const papRows = NOSCRIPT_PAP_IDS.map((id) => {
+    const program = pap[id];
+    if (!program) throw new Error(`noscript PAP id "${id}" missing from programs.json`);
+    const covers = (program.medications || []).slice(0, 3).map(medName).join(', ');
+    const host = new URL(program.url).host.replace(/^www\./, '');
+    return `                <tr>
+                    <td><strong>${program.name}</strong></td>
+                    <td><a href="tel:${program.phone.replace(/[^\d+]/g, '')}">${program.phone}</a></td>
+                    <td>${covers}</td>
+                    <td><a href="${program.url}">${host}</a></td>
+                </tr>`;
+  }).join('\n');
+
+  // Phones shown next to directory resources come from the locale strings
+  // the app renders for that program (only TotalAssist has one today).
+  const resourcePhones = { TotalAssist: LOCALE.education.totalAssist.phone };
+  const foundationRows = RESOURCES.filter((r) => r.category === 'Foundation').map((r) => {
+    const phone = resourcePhones[r.name];
+    const contact = phone
+      ? `<a href="tel:${phone.replace(/[^\d+]/g, '')}">${phone}</a> &middot; <a href="${r.url}">${r.name}</a>`
+      : `<a href="${r.url}">${r.name}</a>`;
+    return `                <tr>
+                    <td><strong>${r.name}</strong></td>
+                    <td>${contact}</td>
+                    <td>${r.description}</td>
+                </tr>`;
+  }).join('\n');
+
+  const otherResources = RESOURCES.filter((r) => r.category !== 'Foundation').map((r) =>
+    `                <li><a href="${r.url}">${r.name}</a> &mdash; ${r.description}</li>`
+  ).join('\n');
+
+  const T = isEs ? {
+    noticeTitle: 'JavaScript está desactivado',
+    noticeText: 'La búsqueda interactiva de medicamentos y el cuestionario necesitan JavaScript. El contenido principal sigue disponible abajo.',
+    medsTitle: 'Medicamentos de trasplante comunes',
+    medsTh: ['Medicamento (genérico)', 'Marca(s)', 'Fabricante', 'Asistencia al paciente'],
+    papTitle: 'Programas de Asistencia al Paciente (medicamentos gratis)',
+    papIntro: 'Estos programas dan <strong>medicamentos gratis</strong> a pacientes sin seguro o con Medicare que cumplen los requisitos de ingresos.',
+    papTh: ['Programa', 'Teléfono', 'Cubre', 'Sitio web'],
+    fndTitle: 'Fundaciones de copago y ayuda financiera',
+    fndIntro: 'Estas fundaciones ayudan a pagar copagos, primas y otros costos de los medicamentos. Muchas ayudan a pacientes con Medicare.',
+    fndTh: ['Organización', 'Teléfono / Sitio web', 'Cómo ayudan'],
+    moreTitle: 'Más recursos',
+    contactTitle: 'Contacto y apoyo',
+    trioText: 'El grupo más grande para pacientes de trasplante, donantes y familias. Ofrece capítulos locales, mentores y recursos de aprendizaje.<br>Sitio web: <a href="https://www.trioweb.org/">trioweb.org</a>',
+    founderTitle: 'Creado por Lorrinda Gray-Davis',
+    founderText: 'Receptora de un trasplante de hígado y presidenta de TRIO.<br>Sitio web: <a href="https://www.lorrindagraydavis.com">lorrindagraydavis.com</a>',
+    crisisTitle: '¿Crisis de salud mental? Llame o envíe un texto al',
+    crisisSub: 'Línea de Prevención del Suicidio y Crisis, 24/7 &mdash; No está solo',
+    disclaimer: 'Esta herramienta es solo para fines educativos y no es consejo médico ni legal. No guardamos su información personal.',
+  } : {
+    noticeTitle: 'JavaScript is disabled',
+    noticeText: 'The interactive medication search and quiz require JavaScript. The core content below is still available.',
+    medsTitle: 'Common Transplant Medications',
+    medsTh: ['Medication (Generic)', 'Brand Name(s)', 'Manufacturer', 'Patient Assistance'],
+    papTitle: 'Patient Assistance Programs (Free Medications)',
+    papIntro: 'These programs provide <strong>free medications</strong> to patients who are uninsured or on Medicare and meet income requirements.',
+    papTh: ['Program', 'Phone', 'Covers', 'Website'],
+    fndTitle: 'Copay Foundations &amp; Financial Help',
+    fndIntro: 'These foundations help patients pay copays, premiums, and other medication costs. Many help Medicare patients.',
+    fndTh: ['Organization', 'Phone / Website', 'How They Help'],
+    moreTitle: 'Additional Resources',
+    contactTitle: 'Contact &amp; Support',
+    trioText: 'The largest group for transplant patients, donors, and families. Offers local chapters, mentoring, and learning resources.<br>Website: <a href="https://www.trioweb.org/">trioweb.org</a>',
+    founderTitle: 'Created by Lorrinda Gray-Davis',
+    founderText: 'Liver transplant recipient and President of TRIO.<br>Website: <a href="https://www.lorrindagraydavis.com">lorrindagraydavis.com</a>',
+    crisisTitle: 'Mental Health Crisis? Call or Text',
+    crisisSub: '24/7 Suicide &amp; Crisis Lifeline &mdash; You are not alone',
+    disclaimer: 'This tool is for educational purposes only and is not medical or legal advice. We do not save your personal information.',
+  };
+  const th = (cols) => cols.map((c) => `<th>${c}</th>`).join('\n                    ');
+
   return `
-    <!-- Noscript fallback - displays core content when JavaScript is disabled -->
+    <!-- Noscript fallback — GENERATED at build time by scripts/prerender-seo.js
+         from medications.json, programs.json, resources.json and the locale
+         files. Do not hand-edit in dist; change the data files instead. -->
     <noscript>
         <style>
             #root > main > p:last-child { display: none; }
@@ -618,233 +770,57 @@ function spanishHomeNoscript() {
         </style>
 
         <div class="noscript-notice">
-            <p style="color: #92400e; font-weight: 700; margin: 0 0 4px;">JavaScript está desactivado</p>
-            <p style="color: #78350f; margin: 0; font-size: 0.875rem;">La búsqueda interactiva de medicamentos y el cuestionario necesitan JavaScript. El contenido principal sigue disponible abajo.</p>
+            <p style="color: #92400e; font-weight: 700; margin: 0 0 4px;">${T.noticeTitle}</p>
+            <p style="color: #78350f; margin: 0; font-size: 0.875rem;">${T.noticeText}</p>
         </div>
 
         <div class="noscript-section">
-
-            <!-- Core Transplant Medications -->
-            <h2>Medicamentos de trasplante comunes</h2>
+            <h2>${T.medsTitle}</h2>
             <table>
                 <tr>
-                    <th>Medicamento (genérico)</th>
-                    <th>Marca(s)</th>
-                    <th>Fabricante</th>
-                    <th>Asistencia al paciente</th>
+                    ${th(T.medsTh)}
                 </tr>
-                <tr>
-                    <td>Tacrolimus</td>
-                    <td>Prograf / Astagraf XL</td>
-                    <td>Astellas</td>
-                    <td><a href="https://www.astellaspharmasupportsolutions.com/">Astellas Support</a></td>
-                </tr>
-                <tr>
-                    <td>Tacrolimus de liberación prolongada</td>
-                    <td>Envarsus XR</td>
-                    <td>Veloxis</td>
-                    <td><a href="https://www.envarsusxr.com/savings-support">Envarsus XR Support</a></td>
-                </tr>
-                <tr>
-                    <td>Ciclosporina</td>
-                    <td>Neoral / Sandimmune</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Ciclosporina (modificada)</td>
-                    <td>Gengraf</td>
-                    <td>AbbVie</td>
-                    <td><a href="https://www.abbvie.com/patients/patient-support/patient-assistance.html">myAbbVie Assist</a></td>
-                </tr>
-                <tr>
-                    <td>Micofenolato de mofetilo</td>
-                    <td>CellCept</td>
-                    <td>Genentech</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
-                </tr>
-                <tr>
-                    <td>Ácido micofenólico</td>
-                    <td>Myfortic</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Azatioprina</td>
-                    <td>Imuran</td>
-                    <td>Genérico</td>
-                    <td>Hay genérico de bajo costo</td>
-                </tr>
-                <tr>
-                    <td>Sirolimus</td>
-                    <td>Rapamune</td>
-                    <td>Pfizer</td>
-                    <td><a href="https://www.pfizerrxpathways.com/">Pfizer RxPathways</a></td>
-                </tr>
-                <tr>
-                    <td>Everolimus</td>
-                    <td>Zortress</td>
-                    <td>Novartis</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">Novartis PAF</a></td>
-                </tr>
-                <tr>
-                    <td>Belatacept</td>
-                    <td>Nulojix</td>
-                    <td>Bristol Myers Squibb</td>
-                    <td><a href="https://www.bmspaf.org/">BMS Patient Assistance</a></td>
-                </tr>
-                <tr>
-                    <td>Prednisona</td>
-                    <td>Deltasone (genérico ampliamente disponible)</td>
-                    <td>Genérico</td>
-                    <td>Hay genérico de bajo costo</td>
-                </tr>
-                <tr>
-                    <td>Valganciclovir</td>
-                    <td>Valcyte</td>
-                    <td>Genentech</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">Genentech Access</a></td>
-                </tr>
+${medRows}
             </table>
 
-            <!-- Patient Assistance Programs (PAPs) - Free Medications -->
-            <h2>Programas de Asistencia al Paciente (medicamentos gratis)</h2>
-            <p>Estos programas dan <strong>medicamentos gratis</strong> a pacientes sin seguro o con Medicare que cumplen con los límites de ingresos.</p>
+            <h2>${T.papTitle}</h2>
+            <p>${T.papIntro}</p>
             <table>
                 <tr>
-                    <th>Programa</th>
-                    <th>Teléfono</th>
-                    <th>Cubre</th>
-                    <th>Sitio web</th>
+                    ${th(T.papTh)}
                 </tr>
-                <tr>
-                    <td><strong>Astellas Patient Assistance</strong></td>
-                    <td><a href="tel:1-800-477-6472">1-800-477-6472</a></td>
-                    <td>Tacrolimus (Prograf), Cresemba</td>
-                    <td><a href="https://www.astellaspharmasupportsolutions.com/">astellaspharmasupportsolutions.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Novartis Patient Assistance Foundation</strong></td>
-                    <td><a href="tel:1-800-277-2254">1-800-277-2254</a></td>
-                    <td>Ciclosporina, Myfortic, Zortress, Simulect, Entresto</td>
-                    <td><a href="https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance">novartis.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Genentech Patient Foundation</strong></td>
-                    <td><a href="tel:1-866-422-2377">1-866-422-2377</a></td>
-                    <td>CellCept, Valcyte, Rituxan</td>
-                    <td><a href="https://www.genentech-access.com/patient.html">genentech-access.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>BMS Patient Assistance Foundation</strong></td>
-                    <td><a href="tel:1-800-736-0003">1-800-736-0003</a></td>
-                    <td>Nulojix (Belatacept), Eliquis</td>
-                    <td><a href="https://www.bmspaf.org/">bmspaf.org</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Pfizer RxPathways</strong></td>
-                    <td><a href="tel:1-844-989-7284">1-844-989-7284</a></td>
-                    <td>Rapamune (Sirolimus), Diflucan, Vfend</td>
-                    <td><a href="https://www.pfizerrxpathways.com/">pfizerrxpathways.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Sanofi Patient Connection</strong></td>
-                    <td><a href="tel:1-888-847-4877">1-888-847-4877</a></td>
-                    <td>Thymoglobulin, Renvela</td>
-                    <td><a href="https://www.sanofipatientconnection.com/">sanofipatientconnection.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Gilead Advancing Access</strong></td>
-                    <td><a href="tel:1-800-226-2056">1-800-226-2056</a></td>
-                    <td>Vemlidy, Epclusa, Harvoni</td>
-                    <td><a href="https://www.gileadadvancingaccess.com/">gileadadvancingaccess.com</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Merck Patient Assistance</strong></td>
-                    <td><a href="tel:1-800-727-5400">1-800-727-5400</a></td>
-                    <td>Prevymis, Noxafil, Januvia</td>
-                    <td><a href="https://www.merckhelps.com/">merckhelps.com</a></td>
-                </tr>
+${papRows}
             </table>
 
-            <!-- Copay Foundations -->
-            <h2>Fundaciones de copago y ayuda económica</h2>
-            <p>Estas fundaciones ayudan a pagar copagos, primas y otros costos de medicamentos. Muchas ayudan a pacientes con Medicare.</p>
+            <h2>${T.fndTitle}</h2>
+            <p>${T.fndIntro}</p>
             <table>
                 <tr>
-                    <th>Organización</th>
-                    <th>Teléfono / Sitio web</th>
-                    <th>Cómo ayudan</th>
+                    ${th(T.fndTh)}
                 </tr>
-                <tr>
-                    <td><strong>HealthWell Foundation</strong></td>
-                    <td><a href="https://www.healthwellfoundation.org/">healthwellfoundation.org</a></td>
-                    <td>Copagos, costos de viaje y primas de seguro</td>
-                </tr>
-                <tr>
-                    <td><strong>TotalAssist</strong></td>
-                    <td><a href="tel:1-866-512-3861">1-866-512-3861</a> · <a href="https://totalassist.org/">totalassist.org</a></td>
-                    <td>Casi 150 fondos para copagos, primas y costos de tratamiento, más gestores de casos gratis para apelaciones de seguro y acceso</td>
-                </tr>
-                <tr>
-                    <td><strong>American Kidney Fund</strong></td>
-                    <td><a href="https://www.kidneyfund.org/">kidneyfund.org</a></td>
-                    <td>Ayudas económicas para pacientes de diálisis y trasplante</td>
-                </tr>
-                <tr>
-                    <td><strong>American Transplant Foundation</strong></td>
-                    <td><a href="https://www.americantransplantfoundation.org/">americantransplantfoundation.org</a></td>
-                    <td>Ayudas para medicamentos y mentoría para pacientes de trasplante</td>
-                </tr>
-                <tr>
-                    <td><strong>NORD RareCare</strong></td>
-                    <td><a href="https://rarediseases.org/">rarediseases.org</a></td>
-                    <td>Ayuda con medicamentos, primas de seguro y copagos</td>
-                </tr>
-                <tr>
-                    <td><strong>Accessia Health</strong></td>
-                    <td><a href="https://www.accessiahealth.org/">accessiahealth.org</a></td>
-                    <td>Costos de medicamentos, ayuda con el seguro y consejos legales</td>
-                </tr>
+${foundationRows}
             </table>
 
-            <!-- Additional Resources -->
-            <h2>Recursos adicionales</h2>
+            <h2>${T.moreTitle}</h2>
             <ul>
-                <li><a href="https://medicineassistancetool.org/">PhRMA Medicine Assistance Tool (MAT)</a> &mdash; Buscador de programas de asistencia al paciente de las compañías farmacéuticas</li>
-                <li><a href="https://www.medicare.gov">Medicare.gov</a> &mdash; Compare planes de medicamentos y vea si califica para Ayuda Adicional (Extra Help)</li>
-                <li><a href="https://costplusdrugs.com/">Cost Plus Drugs</a> &mdash; Farmacia en línea de bajo costo con precios transparentes</li>
-                <li><a href="https://rxoutreach.org/">Rx Outreach</a> &mdash; Farmacia sin fines de lucro con medicamentos de bajo costo</li>
-                <li><a href="https://totalassist.org/">TotalAssist</a> &mdash; Casi 150 fondos para copagos y costos de tratamiento</li>
-                <li><a href="https://donatelife.net/">Donate Life America</a> &mdash; Recursos locales de trasplante, eventos y grupos de apoyo</li>
+${otherResources}
             </ul>
 
-            <!-- Contact Information -->
-            <h2>Contacto y apoyo</h2>
+            <h2>${T.contactTitle}</h2>
             <h3>TRIO (Transplant Recipients International Organization)</h3>
-            <p>
-                El grupo más grande para pacientes de trasplante, donantes y familias. Ofrece grupos locales, mentoría y recursos educativos.<br>
-                Sitio web: <a href="https://www.trioweb.org/">trioweb.org</a>
-            </p>
+            <p>${T.trioText}</p>
 
-            <h3>Creado por Lorrinda Gray-Davis</h3>
-            <p>
-                Receptora de un trasplante de hígado y presidenta de TRIO.<br>
-                Sitio web: <a href="https://www.lorrindagraydavis.com">lorrindagraydavis.com</a>
-            </p>
+            <h3>${T.founderTitle}</h3>
+            <p>${T.founderText}</p>
 
             <div style="background: linear-gradient(to right, #2563eb, #1d4ed8); border-radius: 12px; padding: 20px; text-align: center; margin-top: 24px;">
                 <p style="color: white; font-weight: 700; font-size: 1.125rem; margin: 0 0 4px;">
-                    ¿Crisis de salud mental? Llame o envíe un mensaje de texto al <a href="tel:988" style="color: white;">988</a> (para atención en español, oprima el 2)
+                    ${T.crisisTitle} <a href="tel:988" style="color: white;">988</a>
                 </p>
-                <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">
-                    Línea de Prevención del Suicidio y Crisis 988 &mdash; 24/7, confidencial y también en español
-                </p>
+                <p style="color: #bfdbfe; font-size: 0.875rem; margin: 0;">${T.crisisSub}</p>
             </div>
 
-            <p style="color: #64748b; font-size: 0.8125rem; text-align: center; margin-top: 24px;">
-                Esta herramienta es solo para fines educativos y no es consejo médico ni legal. No guardamos su información personal.
-            </p>
+            <p style="color: #64748b; font-size: 0.8125rem; text-align: center; margin-top: 24px;">${T.disclaimer}</p>
         </div>
     </noscript>
 `;
@@ -865,8 +841,8 @@ function spanishPage(page) {
     ogTitle: (es.title || page.title).split(' | ')[0],
     ogDescription: es.description || page.description,
     aiSummary: undefined,
-    bodyHtml: page.route === '/' ? spanishHomeBody() : es.bodyHtml,
-    noscriptHtml: page.route === '/' ? spanishHomeNoscript() : undefined,
+    bodyHtml: page.route === '/' ? homeBody(true) : es.bodyHtml,
+    noscriptHtml: page.route === '/' ? homeNoscript(true) : undefined,
   };
 }
 
@@ -964,13 +940,32 @@ function prerenderPages() {
     }
   }
 
-  // Homepage: refresh the static stat tiles in dist/index.html from the data
-  // files (they are hand-written in index.html and would otherwise go stale),
-  // then emit the Spanish homepage at dist/es/index.html.
+  // Homepage: replace the trimmed placeholders in dist/index.html with the
+  // full static body and <noscript> tables GENERATED from the locale and
+  // data files (homeBody/homeNoscript — the same sources the app renders),
+  // then emit the Spanish homepage at dist/es/index.html from the same
+  // builders. Missing markers throw, which fails the build: the fallback
+  // can no longer drift from the live page.
   try {
     const homePath = path.join(distDir, 'index.html');
     if (fs.existsSync(homePath)) {
       let homeHtml = fs.readFileSync(homePath, 'utf8');
+      const replaceBetween = (html, start, end, content, label) => {
+        const i = html.indexOf(start);
+        const j = html.indexOf(end);
+        if (i === -1 || j === -1 || j < i) {
+          throw new Error(`${label} markers (${start} ... ${end}) missing from index.html`);
+        }
+        return `${html.slice(0, i + start.length)}\n${content}\n            ${html.slice(j)}`;
+      };
+      homeHtml = replaceBetween(
+        homeHtml, '<!-- home-static-body -->', '<!-- /home-static-body -->',
+        homeBody(false), 'home body'
+      );
+      homeHtml = replaceBetween(
+        homeHtml, '<!-- home-noscript -->', '<!-- /home-noscript -->',
+        homeNoscript(false), 'home noscript'
+      );
       for (const [key, value] of Object.entries(HOME_STATS)) {
         homeHtml = homeHtml.replace(
           new RegExp(`(<span data-stat="${key}">)[^<]*(</span>)`, 'g'),
@@ -986,7 +981,7 @@ function prerenderPages() {
       );
       fs.mkdirSync(path.join(distDir, 'es'), { recursive: true });
       fs.writeFileSync(path.join(distDir, 'es', 'index.html'), esHome, 'utf8');
-      console.log('  ✅ / stats refreshed; /es/ -> es/index.html');
+      console.log('  ✅ / static body + noscript generated; /es/ -> es/index.html');
       created += 1;
     }
   } catch (error) {
