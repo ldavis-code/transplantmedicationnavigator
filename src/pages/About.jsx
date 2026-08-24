@@ -68,9 +68,6 @@ const About = () => {
                         <p className="text-slate-700 leading-relaxed mb-3">
                             {t('about.bio1')}
                         </p>
-                        <p className="text-slate-700 leading-relaxed mb-3">
-                            {t('about.bio2')}
-                        </p>
                         <p className="text-slate-700 leading-relaxed">
                             {t('about.bio3')}
                         </p>
@@ -78,18 +75,10 @@ const About = () => {
                 </div>
 
                 {/* Impact Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                <div className="grid grid-cols-2 gap-3 mb-8">
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
                         <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">2018</p>
                         <p className="text-xs md:text-sm text-slate-600 font-medium">{t('about.stat1Label')}</p>
-                    </div>
-                    <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">550+</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">{t('about.stat2Label')}</p>
-                    </div>
-                    <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
-                        <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">183</p>
-                        <p className="text-xs md:text-sm text-slate-600 font-medium">{t('about.stat3Label')}</p>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4 text-center border border-emerald-100">
                         <p className="text-2xl md:text-3xl font-extrabold text-emerald-700">7</p>
