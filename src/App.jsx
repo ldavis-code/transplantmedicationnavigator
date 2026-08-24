@@ -140,11 +140,14 @@ const ScrollToTop = () => {
 // navigation to the unprefixed (English) page.
 //
 // Outside /es/: honor an explicit ?lang=en (legacy links; also how an old
-// cached app shell switches). When Spanish is active on an English URL —
-// a legacy ?lang=es link served by an out-of-date service worker shell, or
-// the saved preference on a plain link — move to the real /es/ page with a
-// full navigation, so the reader gets the prerendered Spanish page and an
-// address that stays Spanish when shared.
+// cached app shell switches). Move to the real /es/ page only when Spanish
+// was EXPLICITLY asked for: a legacy ?lang=es link, an /es path served by
+// a stale shell (SpanishPathRedirect switches the language before landing
+// here), or an installed-app launch whose saved preference is Spanish —
+// the only ways detectInitialLanguage resolves 'es' outside /es/. A plain
+// English URL never redirects on the saved preference alone: the address
+// bar wins, so a shared /education link stays English whatever this
+// browser last viewed.
 const LanguageUrlSync = () => {
     const location = useLocation(); // basename-stripped inside /es/
     const navigate = useNavigate();

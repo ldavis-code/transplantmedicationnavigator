@@ -13,13 +13,20 @@
  * hardcoded copy exactly (verified by `npm run snapshot:verify` — see
  * tests/page-snapshots/).
  *
- * Language selection:
+ * Language selection — the URL always wins over the saved preference:
  *   1. the /es/ path prefix (Spanish pages live at /es/<route>, served
- *      statically by Netlify; also saves the choice)
+ *      statically by Netlify; also saves the choice). Its ABSENCE is just
+ *      as explicit: a plain /<route> IS the English page, whatever the
+ *      saved preference says. A coordinator who last browsed Spanish must
+ *      be able to send /education to an English-speaking patient and have
+ *      it stay English.
  *   2. ?lang=es|en URL parameter (legacy shareable links; the server 301s
  *      ?lang=es to /es/, so this mostly covers ?lang=en and old cached
  *      app shells; also saves the choice)
- *   3. previously saved choice in localStorage
+ *   3. previously saved choice in localStorage — ONLY when launched as an
+ *      installed app (standalone display mode): a PWA launch starts at
+ *      manifest start_url "/" with no address bar and no shared link, so
+ *      it is the one entry with no URL intent to honor.
  *   4. default: English
  * The choice is applied to <html lang> so screen readers and the
  * read-aloud feature use the right voice.
@@ -44,6 +51,20 @@ export function isSpanishPath(pathname) {
     return pathname === '/es' || pathname.startsWith('/es/');
 }
 
+// True when running as an installed app (home-screen PWA). That launch
+// starts at manifest start_url "/" with no address bar: the only page load
+// where the URL carries no language intent, so the only one where the
+// saved preference may pick the language.
+export function isStandaloneDisplay() {
+    if (typeof window === 'undefined') return false;
+    try {
+        return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+            || window.navigator.standalone === true; // iOS Safari
+    } catch {
+        return false;
+    }
+}
+
 function detectInitialLanguage() {
     if (typeof window === 'undefined') return 'en';
     try {
@@ -58,8 +79,15 @@ function detectInitialLanguage() {
             localStorage.setItem(STORAGE_KEY, param);
             return param;
         }
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (SUPPORTED.includes(saved)) return saved;
+        // A plain /<route> is explicitly the English page — an address a
+        // coordinator can share with an English-speaking patient no matter
+        // which language this browser last viewed. The saved preference
+        // only decides in an installed-app launch, where there is no URL
+        // for anyone to have chosen.
+        if (isStandaloneDisplay()) {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (SUPPORTED.includes(saved)) return saved;
+        }
     } catch {
         // localStorage unavailable (private mode) — fall through to default;
         // the /es path check cannot throw, only the storage writes can, so
