@@ -99,7 +99,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import { TenantProvider } from './context/TenantContext.jsx';
 import { Map, Search, Menu, X, ShieldAlert, HeartHandshake, Shield, Check, ClipboardList, MessageCircle, Send, Clock, Loader2, Eye, EyeOff } from 'lucide-react';
 // --- CONSTANTS & DATA ---
-import { LAST_UPDATED, TransplantStatus } from './data/constants.js';
+import { LAST_UPDATED_ISO, TransplantStatus } from './data/constants.js';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
 import QUICK_ACTIONS_DATA from './data/quick-actions.json';
 // Shared with the wizard route: powers the chat widget's med suggestions here
@@ -730,7 +730,7 @@ const Layout = ({ children }) => {
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
-                        {t('layout.footer.lastUpdated', { date: LAST_UPDATED })}
+                        {t('layout.footer.lastUpdated', { date: new Date(LAST_UPDATED_ISO + 'T00:00:00').toLocaleDateString(i18n.resolvedLanguage?.startsWith('es') ? 'es' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) })}
                     </p>
                     <p>{t('layout.footer.copyright')}</p>
                     <p className="mt-4 text-slate-300 text-sm">{t('layout.footer.createdBy')}</p>
