@@ -63,6 +63,21 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE medications SET pap_url = NULL, pap_program_id = NULL WHERE id = 'envarsus-xr' AND (pap_url IS NOT NULL OR pap_program_id IS NOT NULL)`,
     ],
   },
+  {
+    // The 'mycophenolate' row WAS CellCept (brand, Genentech, brand PAP)
+    // while the homepage chip, Epic import, and its own price estimates all
+    // treated the id as the generic — so the "Mycophenolate generic" chip
+    // delivered CellCept and routed to a brand PAP, in both languages. Make
+    // the id the generic and add 'cellcept' for the brand, mirroring the
+    // tacrolimus/Prograf pair. Pairs with the medications.json change (the
+    // runtime merges DB over JSON). The UPDATE keys on the stale brand_name,
+    // so a re-run is a no-op; the INSERT is ON CONFLICT DO NOTHING.
+    id: '047_split_mycophenolate_generic',
+    statements: [
+      (sql) => sql`UPDATE medications SET brand_name = 'Mycophenolate Mofetil (generic)', manufacturer = 'Generic', pap_url = NULL, pap_program_id = NULL, copay_url = NULL, copay_program_id = NULL, cost_tier = 'low', typical_copay_tier = '1' WHERE id = 'mycophenolate' AND brand_name = 'CellCept'`,
+      (sql) => sql`INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufacturer, stage, common_organs, pap_url, pap_program_id, copay_url, copay_program_id, cost_tier, generic_available, typical_copay_tier) VALUES ('cellcept', 'CellCept', 'Mycophenolate Mofetil', NULL, 'Immunosuppressant', 'Genentech', 'Post-transplant', ARRAY['Kidney','Liver','Heart','Lung','Pancreas'], 'https://www.genentech-access.com/patient.html', 'genentech-pap', 'https://www.genentech-access.com/patient.html', 'genentech-copay', 'medium', TRUE, '2') ON CONFLICT (id) DO NOTHING`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;

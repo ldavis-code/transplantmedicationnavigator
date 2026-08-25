@@ -10,7 +10,8 @@ export const ORGAN_MEDICATIONS = {
             { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Mainstay of maintenance therapy. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
             { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with a CNI.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'Mycophenolate (generic)', class: 'Antimetabolite', notes: 'Used in combination with a CNI. Generic, lowest cost via discount cards (no copay card).' },
+            { id: 'cellcept', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'imuran', name: 'Azathioprine', brand: 'Imuran', class: 'Antimetabolite', notes: 'Alternative antimetabolite.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
@@ -22,7 +23,8 @@ export const ORGAN_MEDICATIONS = {
             { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
             { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'cyclosporine', name: 'Cyclosporine', brand: 'Neoral', class: 'Calcineurin Inhibitor', notes: 'Alternative to tacrolimus.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'Mycophenolate (generic)', class: 'Antimetabolite', notes: 'Commonly used in combination with a CNI. Generic, lowest cost via discount cards (no copay card).' },
+            { id: 'cellcept', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'myfortic', name: 'Mycophenolic Acid', brand: 'Myfortic', class: 'Antimetabolite', notes: 'Alternative to mycophenolate mofetil.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Many centers aim for steroid-free regimens to reduce long-term side effects.' },
             { id: 'belatacept', name: 'Belatacept', brand: 'Nulojix', class: 'Biologic', notes: 'An alternative to CNIs for certain patients.' }
@@ -34,7 +36,8 @@ export const ORGAN_MEDICATIONS = {
         medications: [
             { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Most commonly used CNI in liver transplant. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
             { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Often used in combination with a CNI.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'Mycophenolate (generic)', class: 'Antimetabolite', notes: 'Often used in combination with a CNI. Generic, lowest cost via discount cards (no copay card).' },
+            { id: 'cellcept', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Typically tapered and discontinued within the first few months post-transplant.' }
         ]
     },
@@ -44,7 +47,8 @@ export const ORGAN_MEDICATIONS = {
         medications: [
             { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Preferred CNI for lung transplant. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
             { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'Mycophenolate (generic)', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus. Generic, lowest cost via discount cards (no copay card).' },
+            { id: 'cellcept', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Maintained at a low dose long-term.' }
         ]
     },
@@ -54,7 +58,8 @@ export const ORGAN_MEDICATIONS = {
         medications: [
             { id: 'tacrolimus', name: 'Tacrolimus', brand: 'Tacrolimus (generic)', class: 'Calcineurin Inhibitor', notes: 'Standard of care. Generic, lowest cost via Cost Plus Drugs / discount cards (no copay card).' },
             { id: 'prograf', name: 'Tacrolimus', brand: 'Prograf', class: 'Calcineurin Inhibitor', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
-            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus.' },
+            { id: 'mycophenolate', name: 'Mycophenolate Mofetil', brand: 'Mycophenolate (generic)', class: 'Antimetabolite', notes: 'Used in combination with tacrolimus. Generic, lowest cost via discount cards (no copay card).' },
+            { id: 'cellcept', name: 'Mycophenolate Mofetil', brand: 'CellCept', class: 'Antimetabolite', notes: 'Brand-name version, may qualify for a manufacturer copay card.' },
             { id: 'prednisone', name: 'Prednisone', brand: 'Prednisone', class: 'Corticosteroid', notes: 'Often tapered to a low dose or discontinued over time.' }
         ]
     }

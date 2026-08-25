@@ -137,9 +137,32 @@
   },
   {
     "id": "mycophenolate",
-    "brandName": "CellCept",
+    "brandName": "Mycophenolate Mofetil (generic)",
     "genericName": "Mycophenolate Mofetil",
     "rxcui": "68149",
+    "category": "Immunosuppressant",
+    "manufacturer": "Generic",
+    "stage": "Post-transplant",
+    "commonOrgans": [
+      "Kidney",
+      "Liver",
+      "Heart",
+      "Lung",
+      "Pancreas"
+    ],
+    "papUrl": null,
+    "cost_tier": "low",
+    "generic_available": true,
+    "typical_copay_tier": 1,
+    "papProgramId": null,
+    "copayUrl": null,
+    "copayProgramId": null
+  },
+  {
+    "id": "cellcept",
+    "brandName": "CellCept",
+    "genericName": "Mycophenolate Mofetil",
+    "rxcui": null,
     "category": "Immunosuppressant",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
