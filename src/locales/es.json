@@ -1484,6 +1484,13 @@
       "quotePost": ".”",
       "attribution": "Paciente real · trasplante de hígado · 2025 · Los ahorros varían según el medicamento y el seguro"
     },
+    "testimonial": {
+      "ariaLabel": "Testimonio de un paciente",
+      "quote": "\u201cEl Transplant Medication Navigator me ha ahorrado dinero y me ha dado tranquilidad. Cuando mi hepatólogo de trasplante cambió uno de mis medicamentos inmunosupresores, pude usar el Navigator allí mismo, durante mi consulta, para ver cuánto podría costar el nuevo medicamento. Pone información valiosa en las manos de los receptores de trasplante justo cuando más la necesitamos.\u201d",
+      "name": "Mike Birdsong",
+      "role": "Receptor de trasplante de hígado",
+      "disclaimer": "Compartido con su permiso. Los ahorros varían según el medicamento y el seguro."
+    },
     "evidence": {
       "ariaLabel": "Lo que muestra la investigación",
       "stat": "1 de cada 4",
@@ -1494,7 +1501,6 @@
       "photoAlt": "Lorrinda Gray-Davis, fundadora de Transplant Medication Navigator",
       "name": "Lorrinda Gray-Davis",
       "role": "Receptora de un trasplante de hígado · Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
-      "quote": "“Mi administrador de beneficios farmacéuticos (PBM) movió mi micofenolato — un genérico — al Nivel 3. Pasó de menos de $20 a $350. Nada de mi salud había cambiado. Tuve que pelearlo yo misma. La mayoría de los pacientes nunca se enteran de que pueden hacerlo.”",
       "bio": "Lorrinda creó esto desde su propia experiencia en el mostrador de la farmacia. Su investigación sobre los costos que enfrentan los pacientes de trasplante está publicada en revistas revisadas por pares.",
       "link": "Lea su historia"
     },

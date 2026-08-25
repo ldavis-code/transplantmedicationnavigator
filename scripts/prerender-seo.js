@@ -621,10 +621,15 @@ function homeBody(isEs) {
         </div>
         <p style="color: #334155; margin: 16px 0 0;"><strong>${h.explainer.neverTitle}</strong> ${h.explainer.neverText}</p>
       </section>
+      <section style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: left;">
+        <p style="color: #1e293b; font-size: 1.0625rem; line-height: 1.7; margin: 0 0 14px;">${h.testimonial.quote}</p>
+        <p style="color: #0f172a; font-weight: 700; margin: 0;">${h.testimonial.name}</p>
+        <p style="color: #475569; font-size: 0.875rem; margin: 2px 0 0;">${h.testimonial.role}</p>
+        <p style="color: #64748b; font-size: 0.8125rem; margin: 8px 0 0;">${h.testimonial.disclaimer}</p>
+      </section>
       <section style="background: linear-gradient(to bottom right, #f8fafc, #ecfdf5); border: 2px solid #a7f3d0; border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: left;">
         <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${h.founder.name}</h2>
         <p style="color: #047857; font-size: 0.875rem; margin-bottom: 10px;">${h.founder.role}</p>
-        <p style="color: #334155; font-style: italic; line-height: 1.7; margin: 0 0 10px;">${h.founder.quote}</p>
         <p style="color: #334155; line-height: 1.7; margin: 0 0 10px;">${h.founder.bio}</p>
         <p style="margin: 0;"><a href="${pre}/about" style="color: #047857; font-weight: 600;">${h.founder.link}</a></p>
       </section>
