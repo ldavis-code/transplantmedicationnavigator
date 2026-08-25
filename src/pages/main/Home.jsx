@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle } from 'lucide-react';
+import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle, Quote } from 'lucide-react';
 import HOME_STATS from '../../data/home-stats.json';
 import { useChatQuiz } from '../../context/ChatQuizContext.jsx';
 import { useMedicationsList } from '../../context/MedicationsContext.jsx';
@@ -410,6 +410,28 @@ const Home = () => {
                 </blockquote>
             </section>
 
+            {/* Named patient testimonial. Deliberately a card rather than a
+                second centered pull-quote: it sits next to the savings story
+                above and would otherwise read as the same component twice.
+                The story it tells is the one no other section tells — the
+                Navigator open in the exam room, at the moment a medication
+                changed. Published with Mike's permission. */}
+            <section className="max-w-3xl mx-auto" aria-label={t('home.testimonial.ariaLabel')}>
+                <figure className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 md:p-8">
+                    <Quote size={28} className="text-emerald-600 mb-3" aria-hidden="true" />
+                    <blockquote>
+                        <p className="text-lg md:text-xl text-slate-800 leading-relaxed">
+                            {t('home.testimonial.quote')}
+                        </p>
+                    </blockquote>
+                    <figcaption className="mt-5 pt-4 border-t border-slate-100">
+                        <span className="block font-bold text-slate-900">{t('home.testimonial.name')}</span>
+                        <span className="block text-sm text-slate-600">{t('home.testimonial.role')}</span>
+                        <span className="block text-xs text-slate-500 mt-2">{t('home.testimonial.disclaimer')}</span>
+                    </figcaption>
+                </figure>
+            </section>
+
             {/* Evidence stat */}
             <section className="max-w-3xl mx-auto" aria-label={t('home.evidence.ariaLabel')}>
                 <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col sm:flex-row items-center gap-5">
@@ -435,9 +457,6 @@ const Home = () => {
                     <div className="flex-grow text-center md:text-left">
                         <h2 id="founder-heading" className="text-xl font-bold text-slate-900">{t('home.founder.name')}</h2>
                         <p className="text-slate-500 text-sm mb-4">{t('home.founder.role')}</p>
-                        <blockquote className="border-l-4 border-emerald-600 pl-4 text-left mb-4">
-                            <p className="text-slate-800 italic leading-relaxed">{t('home.founder.quote')}</p>
-                        </blockquote>
                         <p className="text-slate-700 leading-relaxed">
                             {t('home.founder.bio')}{' '}
                             <Link to="/about" className="text-emerald-700 font-semibold underline whitespace-nowrap">

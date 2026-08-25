@@ -24,7 +24,7 @@
   .tagline { margin-top: 8px; font-size: 13px; opacity: .92; font-weight: 500; }
   .headline { margin-top: 12px; font-size: 21px; font-weight: 800; line-height: 1.25; max-width: 90%; }
 
-  .body { padding: 20px 30px 12px; }
+  .body { padding: 20px 30px 6px; }
 
   /* Problem stat */
   .stat { display: flex; gap: 16px; align-items: center; background: var(--amber-bg); border: 1px solid var(--amber-bd);
@@ -57,6 +57,13 @@
   .founder .q { font-size: 12.5px; color: var(--ink); font-style: italic; line-height: 1.5; }
   .founder .who { font-size: 11.5px; color: var(--slate); margin-top: 6px; }
   .founder .who b { color: var(--emerald-dark); }
+  /* Patient testimonial: same block, quieter treatment so the founder's
+     note still reads as the closing voice. Tightened to keep the sheet on
+     one printed page — it is a leave-behind, and a 43px overflow costs a
+     whole second sheet of paper. */
+  .founder.patient { background: #fff; border: 1px solid #e2e8f0; padding: 10px 14px; margin-bottom: 6px; }
+  .founder.patient .q { font-size: 11.5px; font-style: normal; line-height: 1.45; }
+  .founder.patient .who { font-size: 10.5px; margin-top: 5px; }
 
   /* CTA footer */
   .cta { background: var(--ink); color: #fff; border-radius: 10px; padding: 16px 20px; display: flex;
@@ -105,6 +112,16 @@
         <div class="cap"><span class="ck">&#10003;</span><span><b>White-label admin dashboard</b> with engagement, savings, and pilot reporting, all aggregate and privacy-safe.</span></div>
         <div class="cap"><span class="ck">&#10003;</span><span><b>Discharge workflow</b> ready: branded URL or QR code for discharge packets.</span></div>
         <div class="cap"><span class="ck">&#10003;</span><span><b>Verified, maintained links</b> to every assistance program, checked automatically.</span></div>
+      </div>
+
+      <div class="founder patient">
+        <div>
+          <!-- Excerpt, marked with an ellipsis. The full quote runs on the
+               home page in both languages; the closing sentence is cut here
+               only to keep this leave-behind on one printed page. -->
+          <div class="q">"The Transplant Medication Navigator has saved me money and given me peace of mind. When my transplant hepatologist changed one of my immunosuppressant medications, I was able to use the Navigator right there during my visit to see what the new medication could cost&hellip;"</div>
+          <div class="who"><b>Mike Birdsong</b>, liver transplant recipient. Shared with permission; savings vary by medication and insurance.</div>
+        </div>
       </div>
 
       <div class="founder">
