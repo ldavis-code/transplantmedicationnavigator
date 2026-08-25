@@ -51,6 +51,18 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE events SET program_id = 'unlisted' WHERE program_id IS NULL AND program_type IS NOT NULL`,
     ],
   },
+  {
+    // Veloxis runs no PAP for Envarsus XR (verified by phone). Its pap_url
+    // pointed at the copay savings page, so the wizard and card offered a
+    // "free if eligible" program to exactly the patients a copay card can't
+    // serve. Pairs with the src/data/medications.json change — the runtime
+    // merges DB over JSON with `dbMed.papUrl || fallbackMed.papUrl`, so
+    // clearing one side alone leaves the bad link in place.
+    id: '046_envarsus_no_pap',
+    statements: [
+      (sql) => sql`UPDATE medications SET pap_url = NULL, pap_program_id = NULL WHERE id = 'envarsus-xr' AND (pap_url IS NOT NULL OR pap_program_id IS NOT NULL)`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
