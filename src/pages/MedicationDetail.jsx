@@ -18,6 +18,7 @@ import PROGRAMS_DATA from '../data/programs.json';
 import PRICE_ESTIMATES from '../data/price-estimates.json';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { localizeMedName } from '../utils/medNames.js';
+import { isGenericRecord, medPageName, medNameWithGeneric, brandNamesForGeneric } from '../utils/medIdentity.js';
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 
@@ -63,13 +64,17 @@ const MedicationDetail = () => {
     const { slug } = useParams();
     const med = MEDICATIONS_DATA.find((m) => m.id === slug);
 
-    // "Brand (Generic)" — but skip the parenthetical when the generic name is
-    // already part of the brand name (e.g. brand "Tacrolimus (generic)").
-    const nameWithGeneric = med
-        ? (med.genericName && !med.brandName.toLowerCase().includes(med.genericName.toLowerCase())
-            ? `${med.brandName} (${med.genericName})`
-            : med.brandName)
-        : '';
+    // A few records ARE the generic ("Tacrolimus (generic)", "Prednisone")
+    // rather than a brand that has one. medIdentity keeps the difference in
+    // one place: the page name loses the "(generic)" label, the intro drops
+    // the parenthetical that would repeat it, and the generic questions below
+    // ask whether this IS the generic instead of whether one exists.
+    const isGeneric = isGenericRecord(med);
+    const pageNameEn = medPageName(med);
+    const nameWithGeneric = medNameWithGeneric(med);
+    // Brands this generic stands in for ("Prograf"); empty for a generic we
+    // list no brand for, which the copy below has a variant for.
+    const genericBrands = brandNamesForGeneric(med, MEDICATIONS_DATA);
 
     // Not found — keep it out of the index and point back to search.
     // Built with t() so document.title (read aloud by the RouteAnnouncer)
@@ -80,7 +85,7 @@ const MedicationDetail = () => {
         title: t('medications.detail.meta.title', { name: localizeMedName(nameWithGeneric) }),
         description: t('medications.detail.meta.description', { name: localizeMedName(nameWithGeneric) }),
         canonical: `${BASE_URL}/medications/${med.id}`,
-        breadcrumbName: med.brandName,
+        breadcrumbName: pageNameEn,
         // Fully translated via t(): declare the /es/ variant so the
         // canonical and hreflang alternates track the active language.
         langAlternates: true,
@@ -91,32 +96,40 @@ const MedicationDetail = () => {
         noindex: true,
     });
 
-    const brandDisplay = med ? localizeMedName(med.brandName) : '';
+    // Display name for this page's subject: the brand for a brand record, the
+    // drug name for a generic one (localizeMedName only touches qualifiers).
+    const nameDisplay = localizeMedName(pageNameEn);
+    const brandsDisplay = genericBrands.map(localizeMedName).join(', ');
 
     const hasCopay = !!(med && (med.copayUrl || med.copayProgramId));
     const hasPap = !!(med && (med.papUrl || med.papProgramId));
     const copayLink = med && (med.copayUrl || findProgram(med.copayProgramId)?.url);
     const papLink = med && (med.papUrl || findProgram(med.papProgramId)?.url);
     const price = med && priceRange(med, t);
-    const genericDiffers = med && med.genericName && med.brandName &&
-        med.genericName.toLowerCase() !== med.brandName.toLowerCase();
+    const genericDiffers = nameWithGeneric !== pageNameEn;
 
     // FAQ content — also emitted as structured data below.
     const faqs = med ? [
         hasCopay && {
-            q: t('medications.detail.faq.copayQ', { name: brandDisplay }),
-            a: t('medications.detail.faq.copayA', { name: brandDisplay }),
+            q: t('medications.detail.faq.copayQ', { name: nameDisplay }),
+            a: t('medications.detail.faq.copayA', { name: nameDisplay }),
         },
         {
-            q: t('medications.detail.faq.freeQ', { name: brandDisplay }),
-            a: t('medications.detail.faq.freeA', { name: brandDisplay }),
+            q: t('medications.detail.faq.freeQ', { name: nameDisplay }),
+            a: t('medications.detail.faq.freeA', { name: nameDisplay }),
         },
-        med.generic_available && {
-            q: t('medications.detail.faq.genericQ', { name: brandDisplay }),
+        isGeneric ? {
+            // "Is there a generic for Tacrolimus (generic)?" answered itself.
+            q: t('medications.detail.faq.isGenericQ'),
+            a: brandsDisplay
+                ? t('medications.detail.faq.isGenericA', { generic: nameDisplay, brand: brandsDisplay })
+                : t('medications.detail.faq.isGenericNoBrandA', { generic: nameDisplay }),
+        } : med.generic_available && {
+            q: t('medications.detail.faq.genericQ', { name: nameDisplay }),
             a: t('medications.detail.faq.genericA', { generic: localizeMedName(med.genericName) }),
         },
         price && {
-            q: t('medications.detail.faq.costQ', { name: brandDisplay }),
+            q: t('medications.detail.faq.costQ', { name: nameDisplay }),
             a: t('medications.detail.faq.costA', { price }),
         },
     ].filter(Boolean) : [];
@@ -129,13 +142,17 @@ const MedicationDetail = () => {
         {
             '@context': 'https://schema.org',
             '@type': 'MedicalWebPage',
-            name: `${med.brandName} (${med.genericName})`,
-            description: `${med.brandName} (${med.genericName}) is ${aOrAn(med.category)} ${med.category?.toLowerCase() || 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
+            name: nameWithGeneric,
+            description: `${nameWithGeneric} is ${aOrAn(med.category)} ${med.category?.toLowerCase() || 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
             url: `${BASE_URL}/medications/${med.id}`,
             about: {
                 '@type': 'MedicalEntity',
-                name: med.brandName,
-                alternateName: med.genericName,
+                name: pageNameEn,
+                // For a generic record the alternate name is the brand it
+                // stands in for, not a repeat of its own name.
+                ...(isGeneric
+                    ? (genericBrands.length ? { alternateName: genericBrands } : {})
+                    : { alternateName: med.genericName }),
             },
         },
         faqs.length ? {
@@ -175,7 +192,7 @@ const MedicationDetail = () => {
                 <span className="mx-1.5" aria-hidden="true">/</span>
                 <Link to="/medications" className="hover:underline">{t('medications.detail.medications')}</Link>
                 <span className="mx-1.5" aria-hidden="true">/</span>
-                <span className="text-slate-700">{brandDisplay}</span>
+                <span className="text-slate-700">{nameDisplay}</span>
             </nav>
 
             {/* Header */}
@@ -184,10 +201,10 @@ const MedicationDetail = () => {
                     <Pill size={14} aria-hidden="true" /> {t(`medications.categories.${med.category}`, { defaultValue: med.category })}
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
-                    {t('medications.detail.heading', { name: brandDisplay })}
+                    {t('medications.detail.heading', { name: nameDisplay })}
                 </h1>
                 <p className="text-lg text-slate-600 mt-3">
-                    {brandDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
+                    {nameDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
                 </p>
                 {price && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>
@@ -196,7 +213,7 @@ const MedicationDetail = () => {
 
             {/* Ways to save */}
             <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">{t('medications.detail.waysTitle', { name: brandDisplay })}</h2>
+                <h2 className="text-xl font-bold text-slate-900">{t('medications.detail.waysTitle', { name: nameDisplay })}</h2>
 
                 {hasCopay && (
                     <div className="border border-emerald-200 bg-emerald-50 rounded-xl p-5">
@@ -208,7 +225,7 @@ const MedicationDetail = () => {
 
                 <div className="border border-amber-200 bg-amber-50 rounded-xl p-5">
                     <h3 className="flex items-center gap-2 font-bold text-amber-900 mb-1"><HeartHandshake size={18} aria-hidden="true" /> {t('medications.detail.papTitle')}</h3>
-                    <p className="text-slate-700 text-sm">{t('medications.detail.papText', { name: brandDisplay })}{hasPap ? '' : t('medications.detail.papAsk')}</p>
+                    <p className="text-slate-700 text-sm">{t('medications.detail.papText', { name: nameDisplay })}{hasPap ? '' : t('medications.detail.papAsk')}</p>
                     {hasPap && papLink && <a href={papLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-amber-800 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.papLink')}<ArrowRight size={14} aria-hidden="true" /></a>}
                 </div>
 
@@ -218,10 +235,19 @@ const MedicationDetail = () => {
                     <Link to="/application-help" className="inline-flex items-center gap-1 text-sky-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.grantsLink')}<ArrowRight size={14} aria-hidden="true" /></Link>
                 </div>
 
-                {med.generic_available && (
+                {/* On a generic's own page this card used to offer the
+                    patient the drug they are already taking. Same slot, but
+                    it now confirms what they have instead. */}
+                {(isGeneric || med.generic_available) && (
                     <div className="border border-slate-200 bg-white rounded-xl p-5">
-                        <h3 className="flex items-center gap-2 font-bold text-slate-900 mb-1"><Tag size={18} aria-hidden="true" /> {t('medications.detail.genericTitle')}</h3>
-                        <p className="text-slate-700 text-sm">{t('medications.detail.genericText', { generic: localizeMedName(med.genericName) })}</p>
+                        <h3 className="flex items-center gap-2 font-bold text-slate-900 mb-1"><Tag size={18} aria-hidden="true" /> {isGeneric ? t('medications.detail.isGenericTitle') : t('medications.detail.genericTitle')}</h3>
+                        <p className="text-slate-700 text-sm">
+                            {isGeneric
+                                ? (brandsDisplay
+                                    ? t('medications.detail.isGenericText', { generic: nameDisplay, brand: brandsDisplay })
+                                    : t('medications.detail.isGenericNoBrandText', { generic: nameDisplay }))
+                                : t('medications.detail.genericText', { generic: localizeMedName(med.genericName) })}
+                        </p>
                         <Link to="/education?topic=GENERICS" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline"><ShieldCheck size={14} aria-hidden="true" /> {t('medications.detail.genericLink')}</Link>
                     </div>
                 )}
@@ -229,13 +255,13 @@ const MedicationDetail = () => {
                 <div className="border border-slate-200 bg-white rounded-xl p-5">
                     <h3 className="flex items-center gap-2 font-bold text-slate-900 mb-1"><DollarSign size={18} aria-hidden="true" /> {t('medications.detail.discountTitle')}</h3>
                     <p className="text-slate-700 text-sm">{t('medications.detail.discountText')}</p>
-                    <Link to="/medications" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.discountLink', { name: brandDisplay })}<ArrowRight size={14} aria-hidden="true" /></Link>
+                    <Link to="/medications" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.discountLink', { name: nameDisplay })}<ArrowRight size={14} aria-hidden="true" /></Link>
                 </div>
             </section>
 
             {/* CTA */}
             <section className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl p-6 md:p-8 text-center">
-                <h2 className="text-2xl font-extrabold mb-2">{t('medications.detail.ctaTitle', { name: brandDisplay })}</h2>
+                <h2 className="text-2xl font-extrabold mb-2">{t('medications.detail.ctaTitle', { name: nameDisplay })}</h2>
                 <p className="text-emerald-50 mb-5">{t('medications.detail.ctaText')}</p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link to="/wizard" className="px-6 py-3 bg-white text-emerald-700 font-bold rounded-xl hover:bg-emerald-50 inline-flex items-center justify-center gap-2">{t('medications.detail.ctaQuiz')}<ArrowRight size={18} aria-hidden="true" /></Link>
@@ -246,7 +272,7 @@ const MedicationDetail = () => {
             {/* FAQ */}
             {faqs.length > 0 && (
                 <section>
-                    <h2 className="text-xl font-bold text-slate-900 mb-4">{t('medications.detail.faqTitle', { name: brandDisplay })}</h2>
+                    <h2 className="text-xl font-bold text-slate-900 mb-4">{t('medications.detail.faqTitle', { name: nameDisplay })}</h2>
                     <div className="space-y-3">
                         {faqs.map((f) => (
                             <div key={f.q} className="border border-slate-200 rounded-xl p-5">

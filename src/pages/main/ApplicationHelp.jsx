@@ -58,12 +58,29 @@ const ApplicationHelp = () => {
     // Determine if copay cards should be shown based on the local yes/no answer
     const showCopayCards = localCommercialInsurance === 'yes';
 
-    // Build quizAnswers override for MedicationCard display
-    const cardQuizAnswers = localCommercialInsurance === 'yes'
-        ? { ...quizAnswers, insurance_type: 'commercial' }
-        : localCommercialInsurance === 'no'
-            ? { ...quizAnswers, insurance_type: quizAnswers?.insurance_type || 'medicare' }
-            : quizAnswers || {};
+    // Build quizAnswers override for MedicationCard display.
+    // "No" to commercial insurance means exactly that — it does NOT mean
+    // Medicare. Medicaid, VA, IHS, and uninsured all answer "no" here, and
+    // the card's context banner prints whatever insurance_type says back to
+    // the patient as fact ("Coverage: Medicare"). So the "no" branch carries
+    // over only what the patient actually told us in the quiz and leaves the
+    // field unset otherwise; the banner then omits the coverage line rather
+    // than inventing one. Copay-card visibility is driven by the yes/no
+    // answer itself (showCopayCards), not by this field.
+    const cardQuizAnswers = (() => {
+        if (localCommercialInsurance === 'yes') {
+            return { ...quizAnswers, insurance_type: 'commercial' };
+        }
+        if (localCommercialInsurance === 'no') {
+            const { insurance_type, ...rest } = quizAnswers || {};
+            // "No" contradicts a stored commercial answer; any other coverage
+            // the patient named in the quiz still stands.
+            return insurance_type && insurance_type !== 'commercial'
+                ? { ...rest, insurance_type }
+                : rest;
+        }
+        return quizAnswers || {};
+    })();
 
     const [activeTab, setActiveTab] = useState(() => {
         // After returning from the Epic (MyChart) OAuth redirect we must land back

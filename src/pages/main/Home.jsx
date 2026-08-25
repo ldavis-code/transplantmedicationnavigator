@@ -154,7 +154,7 @@ const Home = () => {
                 {!isSpanish && (
                     <p lang="es" className="mt-5 text-sm text-slate-600">
                         Este sitio está disponible en español:{' '}{/* i18n-ok */}
-                        <a href="/es" className="font-semibold text-emerald-700 underline hover:text-emerald-800 whitespace-nowrap">
+                        <a href="/es" className="font-semibold text-emerald-700 underline hover:text-emerald-800 break-words">
                             transplantmedicationnavigator.com/es
                         </a>
                     </p>
