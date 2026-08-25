@@ -40,6 +40,17 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE events SET program_type = 'foundation' WHERE program_type IS NULL AND event_name = 'foundation_click'`,
     ],
   },
+  {
+    // Program clicks on a raw manufacturer URL carried no programId, and
+    // getEventsByProgram filters on program_id IS NOT NULL — so they vanished
+    // from the Programs dashboard rather than merely losing attribution.
+    // event.js now buckets them as 'unlisted'; this applies it to existing
+    // rows. Runs after 044, which sets the program_type this guard keys off.
+    id: '045_backfill_unlisted_program_id',
+    statements: [
+      (sql) => sql`UPDATE events SET program_id = 'unlisted' WHERE program_id IS NULL AND program_type IS NOT NULL`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
