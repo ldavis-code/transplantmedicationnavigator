@@ -536,6 +536,9 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
             <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">${isEs
               ? 'Si esta página no carga, todavía puede ver la <a href="/es/medications" style="color:#059669;">lista de medicamentos</a> y el <a href="/es/application-help" style="color:#059669;">directorio de programas de asistencia</a>.'
               : 'If this page doesn\'t load, you can still browse the <a href="/medications" style="color:#059669;">medication list</a> and the <a href="/application-help" style="color:#059669;">assistance program directory</a>.'}</p>
+            ${hasSpanishVariant(page.route) ? (isEs
+              ? `<p style="margin-bottom: 16px;"><a href="${page.route}" lang="en" style="color: #047857; font-weight: 600;">View this page in English</a></p>`
+              : `<p lang="es" style="margin-bottom: 16px;"><a href="${esPath(page.route)}" style="color: #047857; font-weight: 600;">Ver esta página en español</a></p>`) : ''}
             <a href="${isEs ? '/es/' : '/'}" style="color: #059669; text-decoration: underline;">${isEs ? 'Ir a la página principal' : 'Go to Homepage'}</a>
         </main>
     </div>
@@ -576,6 +579,9 @@ function homeBody(isEs) {
         ${h.steps.multiplePre} <a href="${pre}/wizard" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
       </p>
       <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">${trustLine}</p>
+      ${isEs ? '' : `<p lang="es" style="font-size: 0.875rem; color: #475569; margin-bottom: 24px;">
+        Este sitio está disponible en español: <a href="/es/" style="color: #047857; font-weight: 600;">transplantmedicationnavigator.com/es</a>
+      </p>`}
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 600px; margin: 0 auto 32px;">
         <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 16px; text-align: center;">
           <p style="font-size: 1.75rem; font-weight: 800; color: #047857; margin: 0;"><span data-stat="medications">${HOME_STATS.medications}</span></p>
