@@ -36,6 +36,18 @@ const ALLOWED_EVENT_NAMES = [
     'cost_burden'
 ];
 
+// Program type per program-click event name. The reporting dashboard groups
+// and filters by the program_type COLUMN (admin-api.js getEventsByProgram), so
+// an event that leaves it null is grouped under a blank type and vanishes the
+// moment someone filters by type. Client callers only pass programId, so the
+// type is derived here rather than at each call site — same mapping the /out/
+// redirect uses (out-redirect.js EVENT_NAMES), inverted.
+const EVENT_PROGRAM_TYPES = {
+    copay_card_click: 'copay',
+    foundation_click: 'foundation',
+    pap_click: 'pap'
+};
+
 // PHI fields that must NEVER be accepted (for security validation)
 const BLOCKED_PHI_FIELDS = [
     'name',
@@ -187,8 +199,12 @@ export async function handler(event) {
             }
         }
 
-        // Extract program info from meta if available
-        const programType = (sanitizedMeta && sanitizedMeta.programType) || null;
+        // Extract program info from meta, falling back to the type implied by
+        // the event name so client-tracked clicks land in the same columns the
+        // /out/ redirect writes.
+        const programType = (sanitizedMeta && sanitizedMeta.programType)
+            || EVENT_PROGRAM_TYPES[event_name]
+            || null;
         const programId = (sanitizedMeta && sanitizedMeta.programId) || null;
 
         // Fire-and-forget: Start the DB write but don't await it

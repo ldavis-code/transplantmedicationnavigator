@@ -27,6 +27,19 @@ const MIGRATIONS = [
       (sql) => sql`CREATE INDEX IF NOT EXISTS idx_events_lang ON events(lang)`,
     ],
   },
+  {
+    // Client-tracked program clicks landed with program_type NULL, so the
+    // reporting dashboard grouped them under a blank type and dropped them
+    // whenever someone filtered by type. event.js now derives the type from
+    // the event name; this repairs the rows written before that. The NULL
+    // guard makes each statement a no-op once applied.
+    id: '044_backfill_event_program_type',
+    statements: [
+      (sql) => sql`UPDATE events SET program_type = 'copay' WHERE program_type IS NULL AND event_name = 'copay_card_click'`,
+      (sql) => sql`UPDATE events SET program_type = 'pap' WHERE program_type IS NULL AND event_name = 'pap_click'`,
+      (sql) => sql`UPDATE events SET program_type = 'foundation' WHERE program_type IS NULL AND event_name = 'foundation_click'`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
