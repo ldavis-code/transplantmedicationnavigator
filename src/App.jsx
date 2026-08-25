@@ -590,23 +590,26 @@ const Layout = ({ children }) => {
                         </span>
                     </Link>
 
-                    {/* Desktop Nav — whitespace-nowrap keeps the longer
-                        Spanish labels on one line instead of wrapping and
-                        crowding the Simple View toggle; below xl everything
-                        moves into the menu so nothing overlaps. The nav
-                        itself may shrink and scroll (min-w-0/overflow-x-auto)
-                        so the language toggle after it is NEVER clipped —
-                        between xl and 2xl the container caps at 1280px and
-                        the full label set can overflow, which used to cut
-                        off "Español" at ~1500px viewports. */}
-                    <div className="hidden xl:flex items-center min-w-0">
-                    <nav className="flex items-center gap-1 2xl:gap-1.5 min-w-0 overflow-x-auto" aria-label={t('layout.nav.mainAriaLabel')}>
+                    {/* Desktop nav — the page links only. They collapse into
+                        the menu below 2xl, and in larger-text mode at every
+                        width: that mode sets a 20px root font size, which
+                        widens the label set past the container (Spanish worst
+                        case needs ~1570px), and a nav that overflows drags
+                        the controls after it off the right edge. Keeping the
+                        controls outside this element means the language
+                        switch and the larger-text toggle are never the thing
+                        that gets clipped; min-w-0/overflow-x-auto is the
+                        belt-and-braces for label sets we haven't measured. */}
+                    <nav
+                        className={`${isSimpleView ? 'hidden' : 'hidden 2xl:flex'} items-center gap-1 min-w-0 overflow-x-auto`}
+                        aria-label={t('layout.nav.mainAriaLabel')}
+                    >
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 to={link.path}
                                 aria-label={link.ariaLabel}
-                                className={`text-sm 2xl:text-base font-medium transition-colors px-2 2xl:px-3 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap ${
+                                className={`text-sm font-medium transition-colors px-2 py-2 rounded-lg min-h-[44px] flex items-center whitespace-nowrap ${
                                     location.pathname === link.path
                                         ? 'text-emerald-700 font-bold bg-emerald-50 border-b-2 border-emerald-600'
                                         : 'text-slate-700 hover:text-emerald-700 hover:bg-emerald-50'
@@ -615,10 +618,22 @@ const Layout = ({ children }) => {
                                 {link.label}
                             </Link>
                         ))}
+                    </nav>
+
+                    {/* Controls that stay in the bar at every width: the
+                        larger-text toggle, the language switch (buried below
+                        the hero or behind the menu, a Spanish speaker who
+                        scrolls first would never find it), and the menu
+                        button whenever the links are collapsed. The toggle
+                        names the state it is in — "Larger text: on" — rather
+                        than the way out of it, so nobody has to recognize a
+                        mode they never chose to know they're in it. Below md
+                        the bar has no room for it and it lives in the menu. */}
+                    <div className="flex items-center gap-1 flex-shrink-0">
                         <button
                             onClick={toggleSimpleView}
                             aria-pressed={isSimpleView}
-                            className={`ml-1 2xl:ml-2 px-2 2xl:px-3 py-2 rounded-lg text-sm 2xl:text-base font-medium min-h-[44px] flex items-center gap-2 border-2 transition-colors whitespace-nowrap ${
+                            className={`hidden md:flex px-2 sm:px-3 py-2 rounded-lg text-sm font-medium min-h-[44px] items-center gap-2 border-2 transition-colors whitespace-nowrap ${
                                 isSimpleView
                                     ? 'bg-emerald-700 text-white border-emerald-700'
                                     : 'bg-white text-slate-700 border-slate-300 hover:border-emerald-600 hover:text-emerald-700'
@@ -627,19 +642,9 @@ const Layout = ({ children }) => {
                             {isSimpleView ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                             {isSimpleView ? t('layout.nav.simpleViewExit') : t('layout.nav.simpleView')}
                         </button>
-                    </nav>
-                    {/* Outside the scrollable nav so it always stays visible */}
-                    <div className="flex-shrink-0 ml-1 2xl:ml-1.5">
-                        <LanguageToggle compact />
-                    </div>
-                    </div>
-
-                    {/* Mobile/tablet: language switch stays visible in the top
-                        bar so it isn't buried below the hero or behind the menu. */}
-                    <div className="xl:hidden flex items-center gap-1">
                         <LanguageToggle compact />
                         <button
-                            className="p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            className={`${isSimpleView ? '' : '2xl:hidden'} p-2 text-slate-700 min-h-[44px] min-w-[44px] flex items-center justify-center`}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label={isMobileMenuOpen ? t('layout.nav.closeMenu') : t('layout.nav.openMenu')}
                             aria-expanded={isMobileMenuOpen}
@@ -649,9 +654,11 @@ const Layout = ({ children }) => {
                     </div>
                 </div>
 
-                {/* Mobile Nav */}
+                {/* Collapsed menu — carries the page links at every width
+                    where the top bar doesn't show them, and the larger-text
+                    toggle for the narrow widths where the bar has no room. */}
                 {isMobileMenuOpen && (
-                    <nav className="xl:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full" aria-label={t('layout.nav.mobileAriaLabel')}>
+                    <nav className={`${isSimpleView ? '' : '2xl:hidden'} bg-white border-b border-slate-100 shadow-lg absolute w-full`} aria-label={t('layout.nav.mobileAriaLabel')}>
                         <div className="flex flex-col p-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link
@@ -671,7 +678,7 @@ const Layout = ({ children }) => {
                             <button
                                 onClick={toggleSimpleView}
                                 aria-pressed={isSimpleView}
-                                className={`px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center gap-2 border-2 transition-colors ${
+                                className={`md:hidden px-4 py-3 rounded-lg text-lg font-medium min-h-[48px] flex items-center gap-2 border-2 transition-colors ${
                                     isSimpleView
                                         ? 'bg-emerald-700 text-white border-emerald-700'
                                         : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100'
@@ -689,10 +696,10 @@ const Layout = ({ children }) => {
                 never a redirect (see SpanishOfferBar). */}
             <SpanishOfferBar />
 
-            {/* One-time Simple View offer: shown until dismissed or accepted,
-                remembered per device. Simple View is a real accessibility
-                asset (larger type, boxed nav) that the nav toggle alone
-                doesn't surface to the people who need it. */}
+            {/* One-time larger-text offer: shown until dismissed or accepted,
+                remembered per device. Larger text is a real accessibility
+                asset (bigger type, higher contrast) that the header toggle
+                alone doesn't surface to the people who need it. */}
             {showSimplePrompt && !isSimpleView && (
                 <div className="bg-sky-50 border-b border-sky-200 px-4 py-2.5 no-print" role="region" aria-label={t('layout.nav.simplePrompt.ariaLabel')}>
                     <div className="container mx-auto flex items-center justify-center gap-x-4 gap-y-1 text-sm flex-wrap">

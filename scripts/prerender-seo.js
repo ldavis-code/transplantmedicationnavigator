@@ -11,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { seoMetadata } from '../src/data/seo-metadata.js';
+import { isGenericRecord, medPageName, medNameWithGeneric } from '../src/utils/medIdentity.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -396,34 +397,38 @@ function programsDirectoryBody(isEs) {
 }
 
 const medicationPages = MEDICATIONS.map((m) => {
-  const brand = esc(m.brandName);
-  const generic = esc(m.genericName);
+  // Names via src/utils/medIdentity.js — the same helpers the page component
+  // uses, so a record that IS the generic ("Tacrolimus (generic)") is named
+  // once here too instead of prerendering "Tacrolimus (generic) (Tacrolimus)"
+  // into the title and body crawlers read.
+  const isGeneric = isGenericRecord(m);
+  const brand = esc(medPageName(m));
   const cat = esc((m.category || 'medication').toLowerCase());
-  // "Brand (Generic)" unless the generic is already part of the brand name.
-  const nameWithGeneric = (m.genericName && !m.brandName.toLowerCase().includes(m.genericName.toLowerCase()))
-    ? `${brand} (${generic})` : brand;
+  const nameWithGeneric = esc(medNameWithGeneric(m));
   const hasCopay = !!(m.copayUrl || m.copayProgramId);
   const ways = [
     hasCopay ? 'a manufacturer copay card (for commercial insurance)' : null,
     'patient assistance programs that can provide it for free if you qualify',
     'foundation grants',
-    m.generic_available ? 'a lower-cost generic version' : null,
+    isGeneric
+      ? 'the generic price — this is the generic, which usually costs far less than the brand'
+      : (m.generic_available ? 'a lower-cost generic version' : null),
     'discount cards and cash-price comparison (GoodRx, Cost Plus Drugs, and more)',
   ].filter(Boolean);
 
   // Spanish variant: names localized the way the app displays them, the
   // intro assembled from the same locale strings the component renders,
   // and the category translated via medications.categories.
-  const brandEs = esc(localizeMedNameEs(m.brandName));
-  const genericEs = esc(localizeMedNameEs(m.genericName));
-  const nameWithGenericEs = (m.genericName && !m.brandName.toLowerCase().includes(m.genericName.toLowerCase()))
-    ? `${brandEs} (${genericEs})` : brandEs;
+  const brandEs = esc(localizeMedNameEs(medPageName(m)));
+  const nameWithGenericEs = esc(localizeMedNameEs(medNameWithGeneric(m)));
   const catEs = esc((ES_CATEGORIES[m.category] || m.category || 'medicamento').toLowerCase());
   const waysEs = [
     hasCopay ? 'Una tarjeta de copago del fabricante (para seguro comercial)' : null,
     'Programas de Asistencia al Paciente que pueden darlo gratis si usted califica',
     'Ayudas económicas de fundaciones',
-    m.generic_available ? 'Una versión genérica de menor costo' : null,
+    isGeneric
+      ? 'El precio del genérico: este es el genérico, que normalmente cuesta mucho menos que la marca'
+      : (m.generic_available ? 'Una versión genérica de menor costo' : null),
     'Tarjetas de descuento y comparación de precios en efectivo (GoodRx, Cost Plus Drugs y más)',
   ].filter(Boolean);
 
@@ -434,7 +439,7 @@ const medicationPages = MEDICATIONS.map((m) => {
     ogTitle: `How to Afford ${brand}: Copay Cards & Patient Assistance`,
     ogDescription: `Ways to save on ${nameWithGeneric}: copay cards, free-medication programs, foundation grants, and price comparison.`,
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">How to Afford ${brand}</h1>
-      <p style="color:#475569;margin-bottom:16px;">${brand} (${generic}) is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} used by transplant patients. Here are the ways to lower what you pay:</p>
+      <p style="color:#475569;margin-bottom:16px;">${nameWithGeneric} is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} used by transplant patients. Here are the ways to lower what you pay:</p>
       <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
         ${ways.map((w) => `<li>${esc(w[0].toUpperCase() + w.slice(1))}</li>`).join('')}
       </ul>
