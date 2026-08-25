@@ -51,11 +51,22 @@ export function trackServerEvent(eventName, meta) {
     };
     if (meta) body.meta = meta;
 
-    // Fire and forget, don't await, don't block UI
+    // Fire and forget, don't await, don't block UI.
+    //
+    // keepalive lets the request outlive the page that started it. No
+    // current call site needs that — every tracked outbound link opens in a
+    // new tab, and /out/ links are logged server-side by out-redirect.js —
+    // so this is insurance for the first same-tab tracked navigation, not a
+    // fix for a loss we've measured. Costs nothing: the browser cap on
+    // keepalive bodies is 64 KB and these are a few hundred bytes.
+    //
+    // Deliberately still fetch, not navigator.sendBeacon: the endpoint's
+    // events are JSON and sendBeacon can't set a Content-Type header.
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+      keepalive: true,
     }).catch(() => {
       // Silently ignore, analytics must never break the app
     });

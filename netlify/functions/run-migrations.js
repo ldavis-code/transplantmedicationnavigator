@@ -27,6 +27,42 @@ const MIGRATIONS = [
       (sql) => sql`CREATE INDEX IF NOT EXISTS idx_events_lang ON events(lang)`,
     ],
   },
+  {
+    // Client-tracked program clicks landed with program_type NULL, so the
+    // reporting dashboard grouped them under a blank type and dropped them
+    // whenever someone filtered by type. event.js now derives the type from
+    // the event name; this repairs the rows written before that. The NULL
+    // guard makes each statement a no-op once applied.
+    id: '044_backfill_event_program_type',
+    statements: [
+      (sql) => sql`UPDATE events SET program_type = 'copay' WHERE program_type IS NULL AND event_name = 'copay_card_click'`,
+      (sql) => sql`UPDATE events SET program_type = 'pap' WHERE program_type IS NULL AND event_name = 'pap_click'`,
+      (sql) => sql`UPDATE events SET program_type = 'foundation' WHERE program_type IS NULL AND event_name = 'foundation_click'`,
+    ],
+  },
+  {
+    // Program clicks on a raw manufacturer URL carried no programId, and
+    // getEventsByProgram filters on program_id IS NOT NULL — so they vanished
+    // from the Programs dashboard rather than merely losing attribution.
+    // event.js now buckets them as 'unlisted'; this applies it to existing
+    // rows. Runs after 044, which sets the program_type this guard keys off.
+    id: '045_backfill_unlisted_program_id',
+    statements: [
+      (sql) => sql`UPDATE events SET program_id = 'unlisted' WHERE program_id IS NULL AND program_type IS NOT NULL`,
+    ],
+  },
+  {
+    // Veloxis runs no PAP for Envarsus XR (verified by phone). Its pap_url
+    // pointed at the copay savings page, so the wizard and card offered a
+    // "free if eligible" program to exactly the patients a copay card can't
+    // serve. Pairs with the src/data/medications.json change — the runtime
+    // merges DB over JSON with `dbMed.papUrl || fallbackMed.papUrl`, so
+    // clearing one side alone leaves the bad link in place.
+    id: '046_envarsus_no_pap',
+    statements: [
+      (sql) => sql`UPDATE medications SET pap_url = NULL, pap_program_id = NULL WHERE id = 'envarsus-xr' AND (pap_url IS NOT NULL OR pap_program_id IS NOT NULL)`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;

@@ -36,6 +36,27 @@ const ALLOWED_EVENT_NAMES = [
     'cost_burden'
 ];
 
+// Program type per program-click event name. The reporting dashboard groups
+// and filters by the program_type COLUMN (admin-api.js getEventsByProgram), so
+// an event that leaves it null is grouped under a blank type and vanishes the
+// moment someone filters by type. Client callers only pass programId, so the
+// type is derived here rather than at each call site — same mapping the /out/
+// redirect uses (out-redirect.js EVENT_NAMES), inverted.
+const EVENT_PROGRAM_TYPES = {
+    copay_card_click: 'copay',
+    foundation_click: 'foundation',
+    pap_click: 'pap'
+};
+
+// Program clicks whose link isn't one of the catalogued programs — a
+// medication carrying a raw manufacturer URL with no programId — are bucketed
+// under this id rather than stored as NULL. getEventsByProgram filters on
+// program_id IS NOT NULL, so a null there doesn't just lose the attribution,
+// it drops the click off the Programs dashboard entirely. One visible bucket
+// per type beats a silent hole: it says "these clicks happened and we can't
+// say to which program", which is a prompt to fill the data gap.
+const UNLISTED_PROGRAM_ID = 'unlisted';
+
 // PHI fields that must NEVER be accepted (for security validation)
 const BLOCKED_PHI_FIELDS = [
     'name',
@@ -187,9 +208,16 @@ export async function handler(event) {
             }
         }
 
-        // Extract program info from meta if available
-        const programType = (sanitizedMeta && sanitizedMeta.programType) || null;
-        const programId = (sanitizedMeta && sanitizedMeta.programId) || null;
+        // Extract program info from meta, falling back to the type implied by
+        // the event name so client-tracked clicks land in the same columns the
+        // /out/ redirect writes.
+        const programType = (sanitizedMeta && sanitizedMeta.programType)
+            || EVENT_PROGRAM_TYPES[event_name]
+            || null;
+        // Only program-click events get the sentinel — a page_view must never
+        // acquire a program_id and start showing up in program reporting.
+        const programId = (sanitizedMeta && sanitizedMeta.programId)
+            || (programType ? UNLISTED_PROGRAM_ID : null);
 
         // Fire-and-forget: Start the DB write but don't await it
         // This makes analytics non-blocking under high load
