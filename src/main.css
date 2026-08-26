@@ -890,8 +890,16 @@ html.simple-view .text-slate-900 {
 /* High contrast links. Card-style links (rounded-xl/2xl blocks like the
    home banner and MyChart card) are excluded: underlining every child span
    — badges, decorative "•" separators — makes non-interactive text read as
-   separate links. Their borders and hover states already signal clickability. */
-html.simple-view a:not([role="button"]):not([class*="bg-emerald"]):not([class*="rounded-xl"]):not([class*="rounded-2xl"]) {
+   separate links. Their borders and hover states already signal clickability.
+
+   text-white is excluded for a different reason: a white-text link is
+   sitting on a filled background, so repainting it emerald-on-colour both
+   wrecks the contrast the fill was chosen for and makes a button read as a
+   stray underlined link. That is what turned the indigo "Need Help Filling
+   Out the Forms?" button into green underlined text on purple. Keying on
+   text-white rather than listing every non-emerald background colour keeps
+   the next button someone adds from regressing the same way. */
+html.simple-view a:not([role="button"]):not([class*="bg-emerald"]):not([class*="rounded-xl"]):not([class*="rounded-2xl"]):not([class*="text-white"]) {
     color: #047857 !important;
     text-decoration: underline !important;
     text-decoration-thickness: 2px !important;

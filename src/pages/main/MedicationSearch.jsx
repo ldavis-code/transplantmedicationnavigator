@@ -16,7 +16,6 @@ import { MedicationCard, ExternalMedCard } from '../../components/MedicationCard
 
 const MedicationSearch = () => {
     const { t } = useTranslation();
-    useMetaTags(seoMetadata.medications);
     const MEDICATIONS = useMedicationsList();
     const {
         answers: quizAnswers,
@@ -40,6 +39,22 @@ const MedicationSearch = () => {
     const [isSearching, setIsSearching] = useState(false);
     // Skip straight to medication cards when arriving with medication IDs in the URL
     const [showSavings, setShowSavings] = useState(!!searchParams.get('ids'));
+
+    // Two views share this route. Once the visitor is looking at their savings,
+    // the tab and the screen-reader announcement should say so instead of still
+    // advertising the search they came from. t() already resolves to the active
+    // language, so the same string serves both the default and the Spanish
+    // override; the canonical stays on /medications either way.
+    const metaConfig = useMemo(() => {
+        if (!showSavings) return seoMetadata.medications;
+        const title = `${t('medications.verify.savingsButton')} | Transplant Medication Navigator\u2122`;
+        return {
+            ...seoMetadata.medications,
+            title,
+            es: { ...seoMetadata.medications.es, title },
+        };
+    }, [showSavings, t]);
+    useMetaTags(metaConfig);
 
     // Fuse.js instance for fuzzy search (typo-tolerant)
     const fuse = useMemo(() => new Fuse(MEDICATIONS, {

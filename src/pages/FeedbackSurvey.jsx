@@ -17,7 +17,8 @@ import {
   MessageSquare,
   Shield,
   ArrowRight,
-  Home
+  Home,
+  LifeBuoy
 } from 'lucide-react';
 
 // Q1 options - Did you find a program that helped? (labels come from i18n: feedback.q1.<value>)
@@ -39,6 +40,12 @@ const SAVINGS_OPTIONS = [
   { value: '1000+', label: '$1,000+' },
   { value: 'unsure', labelKey: 'feedback.q2.unsure' },
 ];
+
+// Answers that mean the patient went without their medication. The
+// confirmation screen carries the emergency guide for these rather than
+// closing on a thank-you — same rule as the results-page widget.
+const WENT_WITHOUT = ['skipped_rationed', 'not_filled'];
+const EMERGENCY_ROUTE = '/education?topic=EMERGENCY';
 
 // Q3 options - What would you have done without this tool? (labels: feedback.q3.<value>)
 const WITHOUT_TOOL_OPTIONS = [
@@ -199,6 +206,25 @@ export default function FeedbackSurvey() {
             <p className="text-lg text-slate-600 mb-8">
               {t('feedback.submitted.text')}
             </p>
+            {WENT_WITHOUT.includes(responses.without_tool) && (
+              <div className="text-left bg-rose-50 border-2 border-rose-200 rounded-xl p-5 mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-rose-100 rounded-full flex-shrink-0" aria-hidden="true">
+                    <LifeBuoy className="w-5 h-5 text-rose-700" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900">{t('feedback.rescue.stillTitle')}</p>
+                    <p className="text-slate-700 text-sm mt-1 mb-3">{t('feedback.rescue.stillText')}</p>
+                    <Link
+                      to={EMERGENCY_ROUTE}
+                      className="inline-flex items-center gap-2 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg transition min-h-[48px]"
+                    >
+                      {t('feedback.rescue.cta')} <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
             <Link
               to="/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 font-medium rounded-xl hover:bg-emerald-200 transition-colors"

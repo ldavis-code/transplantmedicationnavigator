@@ -2774,6 +2774,16 @@
       "subtitle": "Estimate your monthly savings from the program you found.",
       "unsure": "Not sure yet"
     },
+    "rescue": {
+      "title": "Let's get you covered today",
+      "intro": "Anti-rejection medicine is not safe to skip or stretch. Your transplant center handles this all the time, and there are options that work the same day.",
+      "step1": "<strong>Call your transplant team today.</strong> Ask for the transplant pharmacist or social worker. Tell them plainly that you are about to run out and cannot afford the refill.",
+      "step2": "<strong>Ask your pharmacy for an emergency fill</strong> while you sort out the cost. Bring your pill bottle or the medicine name and dose.",
+      "cta": "See how to get medication today",
+      "continue": "Not now, finish the question",
+      "stillTitle": "Still need medication today?",
+      "stillText": "Do not skip or stretch doses while you wait. Here is how to get a bridge supply."
+    },
     "q3": {
       "title": "What would you have done without this tool?",
       "paid_full": "Paid full price",

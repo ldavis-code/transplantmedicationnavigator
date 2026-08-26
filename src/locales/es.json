@@ -2775,6 +2775,16 @@
       "subtitle": "Calcule su ahorro mensual con el programa que encontró.",
       "unsure": "Todavía no lo sé"
     },
+    "rescue": {
+      "title": "Vamos a conseguirle el medicamento hoy",
+      "intro": "El medicamento antirrechazo no es algo que pueda saltarse ni estirar sin peligro. Su centro de trasplante resuelve esto todo el tiempo, y hay opciones que funcionan el mismo día.",
+      "step1": "<strong>Llame hoy mismo a su equipo de trasplante.</strong> Pida hablar con el farmacéutico de trasplante o con el trabajador social. Dígales claramente que está por quedarse sin medicamento y que no puede pagar el resurtido (refill).",
+      "step2": "<strong>Pida a su farmacia un suministro de emergencia</strong> mientras resuelve el costo. Lleve su frasco de pastillas o el nombre y la dosis del medicamento.",
+      "cta": "Vea cómo conseguir el medicamento hoy",
+      "continue": "Ahora no, terminar la pregunta",
+      "stillTitle": "¿Todavía necesita el medicamento hoy?",
+      "stillText": "No se salte ni estire las dosis mientras espera. Aquí le decimos cómo conseguir un suministro puente."
+    },
     "q3": {
       "title": "¿Qué habría hecho sin esta herramienta?",
       "paid_full": "Pagar el precio completo",
