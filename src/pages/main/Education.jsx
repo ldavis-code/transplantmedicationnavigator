@@ -728,7 +728,21 @@ const Education = () => {
                                             <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 text-slate-400 flex-shrink-0 mt-1" aria-hidden="true" />
                                         </div>
                                         <span className={`text-xs px-2 py-1 rounded-full font-bold mb-3 inline-block ${res.category === 'Foundation' ? 'bg-rose-50 text-rose-700' : res.category === 'Government' ? 'bg-purple-50 text-purple-700' : res.category === 'Support Group' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'}`}>{t(`education.directory.categories.${res.category}`, { defaultValue: res.category })}</span>
+                                        {/* A resource that has stopped taking applications stays listed —
+                                            it still helps in other ways, and a patient who has been told to
+                                            apply here needs to learn the pause from us rather than from a
+                                            dead form. Said before the description, so nobody reads "gives
+                                            grants" and applies. */}
+                                        {res.status === 'paused' && (
+                                            <span className="text-xs px-2 py-1 rounded-full font-bold mb-3 ml-2 inline-flex items-center gap-1 bg-amber-100 text-amber-800">
+                                                <Clock size={12} aria-hidden="true" />
+                                                {t('education.directory.statusPaused')}
+                                            </span>
+                                        )}
                                         <p className="text-slate-600 text-sm leading-relaxed">{res.description}</p>
+                                        {res.status === 'paused' && (
+                                            <p className="text-amber-800 text-sm leading-relaxed mt-2">{t('education.directory.statusPausedNote')}</p>
+                                        )}
                                     </a>
                                 ))}
                             </div>
