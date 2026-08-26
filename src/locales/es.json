@@ -2267,6 +2267,19 @@
       "submit": "Enviar reporte"
     },
     "card": {
+      "cash": {
+        "badge": "PRECIO EN EFECTIVO MÁS BAJO",
+        "source": {
+          "costplus": "Mark Cuban Cost Plus Drugs",
+          "goodrx": "Precio con descuento de GoodRx",
+          "singlecare": "Precio con descuento de SingleCare"
+        },
+        "text": "Ninguna tarjeta de copago del fabricante le aplica, pero el precio en efectivo muchas veces es más bajo que un copago. No necesita seguro para usarlo.",
+        "compare": "Compare los precios de todas las farmacias",
+        "sourceTypical": "Precio en efectivo típico para este tipo de medicamento",
+        "estimateTypical": "Es un rango típico para esta clase de medicamento, no un precio para este medicamento. Compare los precios actuales antes de comprar.",
+        "estimate": "Solo es un estimado; el precio de su farmacia puede ser diferente."
+      },
       "perMo": "/mes",
       "trumpRxGuideHref": "/trumprx-es",
       "context": {
@@ -2363,7 +2376,7 @@
         "getCard": "Obtener tarjeta ",
         "linkVerified": "Enlace verificado {{date}}",
         "incomeBased": "Según ingresos",
-        "papFor": "Para Medicare, Medicaid o sin seguro • Límite de ingresos: hasta 4 veces el nivel federal de pobreza (FPL)",
+        "papFor": "Para Medicare, Medicaid o sin seguro \u2022 Ingresos de hasta {{multiple}} veces el nivel federal de pobreza \u2014 unos {{amount}} para una persona",
         "free": "GRATIS",
         "ifEligible": "si es elegible",
         "applyAria": "Solicitar asistencia al paciente para {{name}} (se abre en una pestaña nueva)",

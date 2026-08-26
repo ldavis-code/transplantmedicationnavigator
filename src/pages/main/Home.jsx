@@ -18,10 +18,14 @@ const STAT_MEDICATIONS = HOME_STATS.medications;
 
 // Quick-pick chips: the three medications almost every transplant patient
 // recognizes, one per situation the brand/generic explainer below describes.
+// esLabel is the Spanish drug name, used only where the label is a generic
+// name: a generic drug name is a word, and the rest of the Spanish site
+// already writes "micofenolato". Brand names never localize — Prograf is
+// what the bottle says in any language.
 const EXAMPLE_MEDS = [
-    { id: 'tacrolimus', label: 'Tacrolimus', tagKey: 'home.steps.tagGeneric' },
+    { id: 'tacrolimus', label: 'Tacrolimus', esLabel: 'Tacrolimus', tagKey: 'home.steps.tagGeneric' },
     { id: 'prograf', label: 'Prograf', tagKey: 'home.steps.tagBrand' },
-    { id: 'mycophenolate', label: 'Mycophenolate', tagKey: 'home.steps.tagGeneric' },
+    { id: 'mycophenolate', label: 'Mycophenolate', esLabel: 'Micofenolato', tagKey: 'home.steps.tagGeneric' },
 ];
 
 const INSURANCE_OPTIONS = [
@@ -237,7 +241,7 @@ const Home = () => {
                             onClick={() => chooseExample(ex.id)}
                             className="px-4 py-2 bg-white border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 rounded-full text-sm font-semibold text-slate-800 shadow-sm transition"
                         >
-                            {ex.label} <span className="font-normal text-slate-500">{t(ex.tagKey)}</span>
+                            {(isSpanish && ex.esLabel) || ex.label} <span className="font-normal text-slate-500">{t(ex.tagKey)}</span>
                         </button>
                     ))}
                 </div>
