@@ -8,6 +8,7 @@ import { useMedicationsList } from '../../context/MedicationsContext.jsx';
 import { localizeMedName } from '../../utils/medNames.js';
 import { trackServerEvent } from '../../lib/trackServerEvent.js';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
+import ShareButton from '../../components/ShareButton.jsx';
 import { seoMetadata } from '../../data/seo-metadata.js';
 
 // Home-page counts are generated from the data files at build time
@@ -433,6 +434,14 @@ const Home = () => {
                         <span className="block text-sm text-slate-600">{t('home.testimonial.role')}</span>
                         <span className="block text-xs text-slate-500 mt-2">{t('home.testimonial.disclaimer')}</span>
                     </figcaption>
+                    {/* Placed on the testimonial deliberately: the moment a
+                        reader is most likely to think of someone who needs
+                        this is straight after reading that it helped a real
+                        patient. */}
+                    <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center gap-3">
+                        <p className="text-sm text-slate-700 flex-grow">{t('share.prompt')}</p>
+                        <ShareButton source="home-testimonial" className="flex-shrink-0" />
+                    </div>
                 </figure>
             </section>
 

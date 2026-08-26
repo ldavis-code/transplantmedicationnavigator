@@ -3191,6 +3191,14 @@
     "adherenceExpensiveNote": "Las tarjetas de copago y los programas de asistencia para sus medicamentos también aparecen junto a cada uno más arriba. Si está a punto de quedarse sin medicamento, llame hoy al farmacéutico o al trabajador social de su equipo de trasplante.",
     "adherenceOtherText": "Saltarse dosis puede poner en riesgo su trasplante. Si el costo es una barrera, revise los programas de asistencia junto a sus medicamentos más arriba o hable con su equipo de trasplante."
   },
+  "share": {
+    "prompt": "\u00bfConoce a otro paciente de trasplante que est\u00e9 pagando de m\u00e1s?",
+    "button": "Env\u00edele esto a alguien",
+    "copied": "Enlace copiado",
+    "copiedAnnounce": "Se copiaron el enlace y el mensaje.",
+    "title": "Transplant Medication Navigator",
+    "message": "Ayuda gratis para pagar los medicamentos de trasplante: tarjetas de copago, programas de asistencia y cu\u00e1nto deber\u00eda costar de verdad su receta. No necesita crear una cuenta."
+  },
   "widgets": {
     "readAloud": {
       "label": "Leer en voz alta",
