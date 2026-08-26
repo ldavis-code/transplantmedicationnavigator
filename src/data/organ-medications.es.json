@@ -82,7 +82,8 @@
         "tacrolimus": "Base del tratamiento de mantenimiento. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "cyclosporine": "Alternativa a tacrolimus.",
-        "mycophenolate": "Se usa en combinación con un inhibidor de calcineurina (CNI).",
+        "mycophenolate": "Se usa en combinación con un inhibidor de calcineurina (CNI). Es genérico; el costo más bajo se consigue con tarjetas de descuento (no hay tarjeta de copago).",
+        "cellcept": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "imuran": "Antimetabolito alternativo.",
         "prednisone": "Con frecuencia se reduce a una dosis baja o se suspende con el tiempo."
       }
@@ -94,7 +95,8 @@
         "tacrolimus": "Es el tratamiento estándar. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "cyclosporine": "Alternativa a tacrolimus.",
-        "mycophenolate": "Se usa comúnmente en combinación con un inhibidor de calcineurina (CNI).",
+        "mycophenolate": "Se usa comúnmente en combinación con un inhibidor de calcineurina (CNI). Es genérico; el costo más bajo se consigue con tarjetas de descuento (no hay tarjeta de copago).",
+        "cellcept": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "myfortic": "Alternativa a mycophenolate mofetil.",
         "prednisone": "Muchos centros buscan regímenes sin esteroides para reducir los efectos secundarios a largo plazo.",
         "belatacept": "Una alternativa a los inhibidores de calcineurina (CNI) para ciertos pacientes."
@@ -106,7 +108,8 @@
       "notes": {
         "tacrolimus": "Es el inhibidor de calcineurina (CNI) más usado en el trasplante de hígado. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
-        "mycophenolate": "Se usa con frecuencia en combinación con un inhibidor de calcineurina (CNI).",
+        "mycophenolate": "Se usa con frecuencia en combinación con un inhibidor de calcineurina (CNI). Es genérico; el costo más bajo se consigue con tarjetas de descuento (no hay tarjeta de copago).",
+        "cellcept": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "prednisone": "Por lo general se reduce poco a poco y se suspende durante los primeros meses después del trasplante."
       }
     },
@@ -116,7 +119,8 @@
       "notes": {
         "tacrolimus": "Es el inhibidor de calcineurina (CNI) preferido para el trasplante de pulmón. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
-        "mycophenolate": "Se usa en combinación con tacrolimus.",
+        "mycophenolate": "Se usa en combinación con tacrolimus. Es genérico; el costo más bajo se consigue con tarjetas de descuento (no hay tarjeta de copago).",
+        "cellcept": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "prednisone": "Se mantiene en una dosis baja a largo plazo."
       }
     },
@@ -126,7 +130,8 @@
       "notes": {
         "tacrolimus": "Es el tratamiento estándar. Es genérico; el costo más bajo se consigue a través de Cost Plus Drugs o tarjetas de descuento (no hay tarjeta de copago).",
         "prograf": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
-        "mycophenolate": "Se usa en combinación con tacrolimus.",
+        "mycophenolate": "Se usa en combinación con tacrolimus. Es genérico; el costo más bajo se consigue con tarjetas de descuento (no hay tarjeta de copago).",
+        "cellcept": "Versión de marca; puede calificar para una tarjeta de copago del fabricante.",
         "prednisone": "Con frecuencia se reduce a una dosis baja o se suspende con el tiempo."
       }
     }
