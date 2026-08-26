@@ -439,7 +439,7 @@ const medicationPages = MEDICATIONS.map((m) => {
     ogTitle: `How to Afford ${brand}: Copay Cards & Patient Assistance`,
     ogDescription: `Ways to save on ${nameWithGeneric}: copay cards, free-medication programs, foundation grants, and price comparison.`,
     bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">How to Afford ${brand}</h1>
-      <p style="color:#475569;margin-bottom:16px;">${nameWithGeneric} is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} used by transplant patients. Here are the ways to lower what you pay:</p>
+      <p style="color:#475569;margin-bottom:16px;">${nameWithGeneric} is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} medication used by transplant patients. Here are the ways to lower what you pay:</p>
       <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
         ${ways.map((w) => `<li>${esc(w[0].toUpperCase() + w.slice(1))}</li>`).join('')}
       </ul>
@@ -650,7 +650,7 @@ function homeBody(isEs) {
 // id list; every id must exist in its data file or the build fails.
 const NOSCRIPT_MED_IDS = [
   'tacrolimus', 'prograf', 'mycophenolate', 'myfortic', 'cyclosporine',
-  'gengraf', 'sirolimus', 'everolimus', 'belatacept', 'imuran',
+  'envarsus-xr', 'sirolimus', 'everolimus', 'belatacept', 'imuran',
   'prednisone', 'valcyte',
 ];
 const NOSCRIPT_PAP_IDS = [

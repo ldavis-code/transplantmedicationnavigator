@@ -2518,7 +2518,7 @@
       "medications": "Medications",
       "heading": "How to Afford {{name}}",
       "introIs": " is ",
-      "introUsedBy": " used by transplant patients",
+      "introUsedBy": " medication used by transplant patients",
       "introTail": ". Here are the ways to lower what you pay, from copay cards to programs that provide it for free.",
       "estPricePre": "Estimated discount cash price: ",
       "estPricePost": " (varies by pharmacy; your price may be lower with insurance or assistance).",
@@ -2630,7 +2630,23 @@
       "Pulmonary Fibrosis": "Pulmonary Fibrosis",
       "Cystic Fibrosis": "Cystic Fibrosis",
       "Inhaled Antibiotic": "Inhaled Antibiotic",
-      "Mucolytic": "Mucolytic"
+      "Mucolytic": "Mucolytic",
+      "Anemia": "Anemia",
+      "Anticoagulation": "Anticoagulation",
+      "Antifungals": "Antifungals",
+      "Antivirals": "Antivirals",
+      "Blood Pressure": "Blood Pressure",
+      "Blood Support": "Blood Support",
+      "Cholesterol": "Cholesterol",
+      "Diuretics": "Diuretics",
+      "GI / Acid Suppression": "GI / Acid Suppression",
+      "Hepatitis B/C": "Hepatitis B/C",
+      "Immunosuppressants": "Immunosuppressants",
+      "Induction Agents": "Induction Agents",
+      "Infection Prevention": "Infection Prevention",
+      "Mental Health": "Mental Health",
+      "Pain Management": "Pain Management",
+      "Steroids": "Steroids"
     }
   },
   "savings": {

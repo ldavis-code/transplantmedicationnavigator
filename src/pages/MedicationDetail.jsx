@@ -143,7 +143,7 @@ const MedicationDetail = () => {
             '@context': 'https://schema.org',
             '@type': 'MedicalWebPage',
             name: nameWithGeneric,
-            description: `${nameWithGeneric} is ${aOrAn(med.category)} ${med.category?.toLowerCase() || 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
+            description: `${nameWithGeneric} is ${aOrAn(med.category)} ${med.category ? med.category.toLowerCase() + ' medication' : 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
             url: `${BASE_URL}/medications/${med.id}`,
             about: {
                 '@type': 'MedicalEntity',
