@@ -3190,6 +3190,14 @@
     "adherenceExpensiveNote": "The copay cards and assistance programs for your medications are also listed with each one above. If you are about to run out, call your transplant team's pharmacist or social worker today.",
     "adherenceOtherText": "Missing doses can put your transplant at risk. If cost is a barrier, check the assistance programs listed with your medications above or talk to your transplant team."
   },
+  "share": {
+    "prompt": "Know another transplant patient who is paying too much?",
+    "button": "Send this to someone",
+    "copied": "Link copied",
+    "copiedAnnounce": "Link and message copied to your clipboard.",
+    "title": "Transplant Medication Navigator",
+    "message": "Free help paying for transplant medications: copay cards, assistance programs, and what your prescription should really cost. No account needed."
+  },
   "widgets": {
     "readAloud": {
       "label": "Read Aloud",
