@@ -20,6 +20,7 @@ import { submitPriceReport, fetchAllPriceStats } from '../lib/priceReportsApi.js
 import { costPlusUrl, goodRxUrl, singleCareUrl } from '../components/PricingLinks.jsx';
 import { trackServerEvent, getUiLang } from '../lib/trackServerEvent.js';
 import { isEpicGenericMed } from '../utils/medDisplay.js';
+import { PAP_FPL_MULTIPLE, fplDollars } from '../data/constants.js';
 
 const getPriceEstimate = (medicationId, category, source) => {
     // Check for medication-specific override first
@@ -402,6 +403,25 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     const trumpRxData = TRUMPRX_PRICES_DATA.medications[med.id] || null;
     const isTrumpRxAvailable = !!trumpRxData;
 
+    // Cheapest cash source we can name for this medication, preferring Cost
+    // Plus (usually lowest, generics only) and falling back through the
+    // discount cards. Each is gated on the same availability flags the Price
+    // tab uses, so we never headline a price at a pharmacy that doesn't carry
+    // the drug.
+    const cashPriceSource = isCostPlusAvailable ? 'costplus'
+        : isGoodRxAvailable ? 'goodrx'
+        : isSingleCareAvailable ? 'singlecare'
+        : null;
+
+    // Whether that price is this drug's own figure or a category average.
+    // Only 27 of the medications carry a specific override, so the headline
+    // still shows for the rest — but it must not put a pharmacy's name next
+    // to a number we didn't get for this drug. Naming "Cost Plus $15-45" on
+    // brand CellCept would read as a price you can go and pay for the brand,
+    // when what Cost Plus stocks is the generic.
+    const hasSpecificCashPrice = !!(cashPriceSource
+        && PRICE_ESTIMATES_DATA.medicationOverrides[med.id]?.[cashPriceSource]);
+
     // Lead with the drug (generic) name when (a) the record bundles several
     // brands (e.g. "Neoral / Sandimmune / Gengraf"), or (b) the patient's import
     // shows they take the GENERIC, so we show "Alprazolam", not the brand "Xanax".
@@ -749,6 +769,55 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-4">
+                        {/* Cash-price headline. Only one of the four insurance paths —
+                            brand plus commercial insurance — used to open with a number,
+                            because only that path has a copay card. Generic-plus-
+                            commercial, Medicare, and uninsured opened on Foundations &
+                            Grants and a deductible warning, while the answer that
+                            actually applies to them (a Cost Plus or discount-card cash
+                            price) sat one tab over. When there is no copay card to
+                            recommend, lead with the cash price instead of leading with
+                            nothing. */}
+                        {!(showCopayCards && hasCopayProgram) && cashPriceSource && (activeFilter === 'all' || activeFilter === 'under50') && (
+                            <section className="border-2 border-teal-400 rounded-xl overflow-hidden bg-gradient-to-r from-teal-50 to-cyan-50 shadow-md">
+                                <div className="bg-teal-600 px-4 py-1.5">
+                                    <span className="text-white text-xs font-bold flex items-center gap-1">
+                                        <DollarSign size={12} aria-hidden="true" />
+                                        {t('medications.card.cash.badge')}
+                                    </span>
+                                </div>
+                                <div className="p-5">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div>
+                                            <h3 className="font-bold text-teal-900">
+                                                {hasSpecificCashPrice
+                                                    ? t(`medications.card.cash.source.${cashPriceSource}`)
+                                                    : t('medications.card.cash.sourceTypical')}
+                                            </h3>
+                                            <p className="text-sm text-slate-700 mt-2">
+                                                {t('medications.card.cash.text')}
+                                            </p>
+                                        </div>
+                                        <div className="text-right flex-shrink-0">
+                                            <div className="text-teal-800 font-bold text-lg whitespace-nowrap">
+                                                {getPriceEstimate(med.id, med.category, cashPriceSource)}
+                                            </div>
+                                            <div className="text-xs text-slate-500">{t('medications.card.assistance.perMonth')}</div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setActiveTab('PRICE')}
+                                        className="mt-4 w-full inline-flex items-center justify-center gap-1 bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-lg text-sm font-bold transition min-h-[44px]"
+                                    >
+                                        {t('medications.card.cash.compare')}<ArrowRight size={14} aria-hidden="true" />
+                                    </button>
+                                    <p className="mt-2 text-xs text-slate-500 text-center">
+                                        {hasSpecificCashPrice ? t('medications.card.cash.estimate') : t('medications.card.cash.estimateTypical')}
+                                    </p>
+                                </div>
+                            </section>
+                        )}
+
                         {/* Generic notice - copay cards are brand-only; steer to cash options */}
                         {takesGeneric && (
                             <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
@@ -824,7 +893,10 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                 </span>
                                             </div>
                                             <p className="text-sm text-slate-600 mt-2">
-                                                {t('medications.card.assistance.papFor')}
+                                                {t('medications.card.assistance.papFor', {
+                                                    multiple: PAP_FPL_MULTIPLE,
+                                                    amount: fplDollars(1, PAP_FPL_MULTIPLE),
+                                                })}
                                             </p>
                                         </div>
                                     </div>
@@ -920,10 +992,15 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 
                         {/* Footer Notes */}
                         <div className="text-xs text-slate-500 space-y-1 pt-2">
-                            <p className="flex items-center gap-1">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                                {t('medications.card.assistance.copayCommercialOnly')}
-                            </p>
+                            {/* Only worth saying where a copay card is actually in
+                                play. On a generic, where none exists, it read as an
+                                orphan rule about something the card never offered. */}
+                            {hasCopayProgram && (
+                                <p className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                                    {t('medications.card.assistance.copayCommercialOnly')}
+                                </p>
+                            )}
                             <p className="flex items-center gap-1">
                                 <Info size={12} aria-hidden="true" />
                                 {t('medications.card.assistance.pricesNote')}

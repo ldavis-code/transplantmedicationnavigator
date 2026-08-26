@@ -2267,6 +2267,19 @@
       "submit": "Submit Report"
     },
     "card": {
+      "cash": {
+        "badge": "LOWEST CASH PRICE",
+        "source": {
+          "costplus": "Mark Cuban Cost Plus Drugs",
+          "goodrx": "GoodRx discount price",
+          "singlecare": "SingleCare discount price"
+        },
+        "text": "No manufacturer copay card applies to you, but the cash price is often lower than a copay. You do not need insurance to use it.",
+        "compare": "Compare all pharmacy prices",
+        "sourceTypical": "Typical cash price for this type of medication",
+        "estimateTypical": "A typical range for this drug class, not a quote for this medication. Compare live prices before you buy.",
+        "estimate": "Estimate only — your pharmacy's price may differ."
+      },
       "perMo": "/mo",
       "trumpRxGuideHref": "/trumprx",
       "context": {
@@ -2363,7 +2376,7 @@
         "getCard": "Get Card ",
         "linkVerified": "Link verified {{date}}",
         "incomeBased": "Income-Based",
-        "papFor": "For Medicare, Medicaid, or no insurance • Income ≤400% FPL",
+        "papFor": "For Medicare, Medicaid, or no insurance \u2022 Income up to {{multiple}}\u00d7 the federal poverty level \u2014 about {{amount}} for one person",
         "free": "FREE",
         "ifEligible": "if eligible",
         "applyAria": "Apply for Patient Assistance for {{name}} (opens in new tab)",

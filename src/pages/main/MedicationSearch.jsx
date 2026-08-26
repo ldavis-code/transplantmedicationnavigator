@@ -10,6 +10,7 @@ import { Search, BookOpen, ShieldCheck, ArrowRight, Heart, Award, X, HeartHandsh
 import { localizeMedName } from '../../utils/medNames.js';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
 import { seoMetadata } from '../../data/seo-metadata.js';
+import { fplDollars } from '../../data/constants.js';
 import { trackMedicationSearch, trackMedicationAddToList } from '../../lib/medicationTrackingApi.js';
 import { trackServerEvent } from '../../lib/trackServerEvent.js';
 import { MedicationCard, ExternalMedCard } from '../../components/MedicationCardKit.jsx';
@@ -557,10 +558,11 @@ const MedicationSearch = () => {
                                     <div className="flex-1 min-w-0">
                                         <p className="font-bold text-amber-900 mb-2">{t('medications.verify.fpl.title')}</p>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-amber-900 mb-3">
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 1, count: 1 })}</span> $15,960</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 2, count: 2 })}</span> $21,640</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 3, count: 3 })}</span> $27,320</div>
-                                            <div><span className="font-semibold">{t('medications.verify.fpl.familyOf', { size: 4, count: 4 })}</span> $33,000</div>
+                                            {[1, 2, 3, 4].map((size) => (
+                                                <div key={size}>
+                                                    <span className="font-semibold">{t('medications.verify.fpl.familyOf', { size, count: size })}</span> {fplDollars(size)}
+                                                </div>
+                                            ))}
                                         </div>
                                         <p className="text-sm text-amber-800">
                                             <span className="font-bold">{t('medications.verify.fpl.dontDisqualify')}</span>{t('medications.verify.fpl.papRange')}

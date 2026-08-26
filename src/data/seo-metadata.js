@@ -17,7 +17,11 @@ export const seoMetadata = {
     twitterDescription: 'Find FREE medications through Patient Assistance Programs. Compare prices, find copay foundations & grants for transplant patients.',
     breadcrumbName: 'Home',
     es: {
-      title: 'Transplant Medication Navigator™',
+      // Every other Spanish page carries a descriptive Spanish title; the home
+      // page was the one left on the bare brand name, so the /es/ search
+      // result had no Spanish words in its headline while its description
+      // was fully Spanish.
+      title: 'Ayuda gratis para pagar sus medicamentos de trasplante | Transplant Medication Navigator™',
       description: 'Consiga medicamentos de trasplante GRATIS con los Programas de Asistencia al Paciente. Encuentre ayuda para pagar tacrolimus, micofenolato e inmunosupresores. Compare precios y encuentre fundaciones de copago y ayudas para pacientes de trasplante de riñón, hígado y corazón.',
       breadcrumbName: 'Inicio',
     },
