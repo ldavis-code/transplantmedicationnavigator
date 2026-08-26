@@ -1099,7 +1099,7 @@
       "whatArePaps": {
         "title": "What are Patient Assistance Programs?",
         "p1": "Patient Assistance Programs (PAPs) are programs created by drug companies and medical supply makers to help patients access affordable medications. These programs provide prescription medications at no cost or low cost for individuals who need help affording their medications.",
-        "p2": "<strong>Important:</strong> Patient Assistance Programs are for everyone who needs affordable medications - not just those without insurance. Many insured patients use these programs to reduce their medication costs."
+        "p2": "<strong>Important:</strong> Patient Assistance Programs are not only for people without insurance. Most are for patients on Medicare, Medicaid, or with no coverage, and they go by income rather than by whether you are insured. Programs vary, so check each one \u2014 if you have commercial or employer insurance, a copay card is usually your route instead."
       },
       "cards": {
         "pap": {
@@ -2376,6 +2376,9 @@
         "getCard": "Get Card ",
         "linkVerified": "Link verified {{date}}",
         "incomeBased": "Income-Based",
+        "papNotEligible": "Not for your insurance",
+        "papUseCopayInstead": "This program is for people on Medicare, Medicaid, or without insurance. With commercial or employer insurance, the copay card above is your route.",
+        "papNotEligibleText": "This program is for people on Medicare, Medicaid, or without insurance. Programs vary, so it is still worth asking your transplant team what applies to you.",
         "papFor": "For Medicare, Medicaid, or no insurance \u2022 Income up to {{multiple}}\u00d7 the federal poverty level \u2014 about {{amount}} for one person",
         "free": "FREE",
         "ifEligible": "if eligible",

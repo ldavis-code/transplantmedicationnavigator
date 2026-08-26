@@ -10,6 +10,7 @@ import ReadAloudButton from '../components/ReadAloudButton.jsx';
 import { BookOpen, ArrowRight, Heart, X, CheckCircle, DollarSign, Shield, AlertTriangle, AlertCircle, Printer, ExternalLink, Building, Trash2, Globe, Info, Check, FileText, Pill, HelpCircle, Users, TrendingUp, Clock, Loader2, Star, Filter } from 'lucide-react';
 import { LINKS_LAST_VERIFIED } from '../data/constants.js';
 import PROGRAMS_ES from '../data/programs.es.json';
+import PROGRAM_ELIGIBILITY from '../data/program-eligibility.json';
 import COST_PLUS_EXCLUSIONS_DATA from '../data/cost-plus-exclusions.json';
 import GOODRX_EXCLUSIONS_DATA from '../data/goodrx-exclusions.json';
 import SINGLECARE_EXCLUSIONS_DATA from '../data/singlecare-exclusions.json';
@@ -449,6 +450,26 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     if (copayProgram && esCopayName) copayProgram = { ...copayProgram, name: esCopayName };
     const esPapName = esProgramName('papPrograms', papProgramId);
     if (papProgram && esPapName) papProgram = { ...papProgram, name: esPapName };
+
+    // Commercial insurance is served by copay cards; everyone else by patient
+    // assistance programs. The wizard already filters programs on these flags
+    // (WizardProgramMatches ELIGIBILITY_KEY), but this card showed every PAP
+    // at equal weight — so a commercial patient read a program presented as an
+    // option that its own eligibility line rules them out of.
+    //
+    // Marked rather than hidden, and only when THIS program says so: patient
+    // assistance programs vary, a couple do accept commercial coverage, and
+    // some carry no eligibility block at all. Those keep full weight. Insurance
+    // we don't know about changes nothing either — an unanswered quiz must not
+    // grey out a program the patient may well qualify for.
+    const eligibilityKey = ['commercial', 'medicare', 'medicaid', 'uninsured']
+        .includes(quizAnswers?.insurance_type) ? quizAnswers.insurance_type : null;
+    // Eligibility comes from the generated lookup keyed by program id, not
+    // from papProgram: nothing upstream carries it. medications.js selects
+    // straight from the medications table with no join to programs, so
+    // med.papProgram is only ever the {url, name} fallback built above.
+    const papNotForThisInsurance = !!(eligibilityKey && papProgramId
+        && PROGRAM_ELIGIBILITY.papPrograms?.[papProgramId]?.[eligibilityKey] === false);
     const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
     // Manufacturer Patient Assistance Programs are brand-specific. If the patient
     // takes the GENERIC, the brand's PAP (and copay) don't apply, hide both, so a
@@ -878,12 +899,38 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             hasPapProgram is already false for generics (manufacturer PAPs
                             are brand-specific); Foundations & Grants below still apply. */}
                         {hasPapProgram && (activeFilter === 'all' || activeFilter === 'free') && (
-                            <section className="border border-amber-200 rounded-xl p-5 bg-gradient-to-r from-amber-50/50 to-orange-50/50">
-                                <div className="flex items-start justify-between gap-4">
+                            <section className={`rounded-xl p-5 ${
+                                papNotForThisInsurance
+                                    ? 'border border-slate-200 bg-slate-50'
+                                    : 'border border-amber-200 bg-gradient-to-r from-amber-50/50 to-orange-50/50'
+                            }`}>
+                                {/* Says plainly that this one isn't the patient's
+                                    route, and where their route is, instead of
+                                    leaving them to infer it from an eligibility
+                                    line further down. */}
+                                {papNotForThisInsurance && (
+                                    <div className="mb-3 pb-3 border-b border-slate-200">
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-700">
+                                            <Info size={12} aria-hidden="true" />
+                                            {t('medications.card.assistance.papNotEligible')}
+                                        </span>
+                                        <p className="text-sm text-slate-600 mt-2">
+                                            {/* Point at the copay card only when the
+                                                patient can actually use one — it is
+                                                commercial-only, so the same gate the
+                                                copay section itself uses. Medicaid and
+                                                Medicare patients get the neutral note. */}
+                                            {showCopayCards && hasCopayProgram
+                                                ? t('medications.card.assistance.papUseCopayInstead')
+                                                : t('medications.card.assistance.papNotEligibleText')}
+                                        </p>
+                                    </div>
+                                )}
+                                <div className={`flex items-start justify-between gap-4 ${papNotForThisInsurance ? 'opacity-60' : ''}`}>
                                     <div className="flex items-start gap-3">
-                                        <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0 mt-1.5"></span>
+                                        <span className={`w-3 h-3 rounded-full flex-shrink-0 mt-1.5 ${papNotForThisInsurance ? 'bg-slate-400' : 'bg-amber-500'}`}></span>
                                         <div>
-                                            <h3 className="font-bold text-amber-800 flex items-center gap-2">
+                                            <h3 className={`font-bold flex items-center gap-2 ${papNotForThisInsurance ? 'text-slate-700' : 'text-amber-800'}`}>
                                                 {papProgram?.name || t('medications.card.fallbacks.manufacturerPap', { manufacturer: med.manufacturer })}
                                             </h3>
                                             <div className="flex items-center gap-2 mt-1">

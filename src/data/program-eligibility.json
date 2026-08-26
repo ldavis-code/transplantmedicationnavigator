@@ -1,0 +1,512 @@
+{
+  "papPrograms": {
+    "astellas-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "novartis-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "genentech-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "bms-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "pfizer-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "sanofi-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "gilead-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "merck-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "abbvie-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "lilly-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "boehringer-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "astrazeneca-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "janssen-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "novo-nordisk-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "takeda-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "gsk-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "alexion-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "madrigal-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "united-therapeutics-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "amgen-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "akebia-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "bausch-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "organon-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "sunovion-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "teva-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "grifols-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "vifor-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "american-regent-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "bayer-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "regeneron-pap": {
+      "commercial": false,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "drugs-com-search": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": true,
+      "uninsured": true
+    },
+    "trumprx-gov": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": true
+    }
+  },
+  "copayPrograms": {
+    "astellas-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "novartis-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "zortress-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "genentech-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "bms-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "nulojix-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "pfizer-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "sanofi-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "gilead-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "merck-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "jardiance-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "farxiga-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "entresto-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "xarelto-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "eliquis-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "dupixent-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "simulect-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "thymoglobulin-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "januvia-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "ozempic-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "trulicity-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "opsumit-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "adempas-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "uptravi-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "tyvaso-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "spiriva-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "breo-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "nucala-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "fasenra-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "tezspire-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "xolair-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "anoro-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "dulera-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "envarsus-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "mavyret-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "creon-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "auryxia-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "rezdiffra-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "symbicort-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "advair-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "lantus-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "humalog-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "novolog-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "lyrica-copay": {
+      "commercial": true,
+      "medicare": false,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "goodrx-search": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": true,
+      "uninsured": true
+    },
+    "singlecare-search": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": true,
+      "uninsured": true
+    },
+    "costplus-search": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": true,
+      "uninsured": true
+    }
+  },
+  "foundationPrograms": {
+    "healthwell": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "totalassist": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": false
+    },
+    "american-kidney-fund": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": true,
+      "uninsured": true
+    },
+    "nord": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": true
+    },
+    "accessia-health": {
+      "commercial": true,
+      "medicare": true,
+      "medicaid": false,
+      "uninsured": false
+    }
+  }
+}
