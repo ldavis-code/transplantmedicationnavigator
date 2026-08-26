@@ -248,7 +248,9 @@
       "visitAria": "Visit {{name}} (opens in new tab)",
       "emptyTitle": "No resources available",
       "emptyText": "We're working on adding trusted resources. Check back soon for helpful links and organizations.",
-      "categories": {
+      "statusPaused": "Applications are temporarily paused",
+        "statusPausedNote": "This foundation is not taking new applications right now. Check back, or ask your transplant social worker about other grants.",
+        "categories": {
         "Foundation": "Foundation",
         "Low-Cost Pharmacy": "Low-Cost Pharmacy",
         "Support Group": "Support Group",

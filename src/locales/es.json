@@ -248,7 +248,9 @@
       "visitAria": "Visitar {{name}} (se abre en una pestaña nueva)",
       "emptyTitle": "No hay recursos disponibles",
       "emptyText": "Estamos trabajando para agregar recursos de confianza. Vuelva pronto para ver enlaces y organizaciones útiles.",
-      "categories": {
+      "statusPaused": "Las solicitudes están pausadas por ahora",
+        "statusPausedNote": "Esta fundación no acepta solicitudes nuevas por ahora. Vuelva a revisar más adelante o pregunte a su trabajador social de trasplante por otras ayudas.",
+        "categories": {
         "Foundation": "Fundación",
         "Low-Cost Pharmacy": "Farmacia de bajo costo",
         "Support Group": "Grupo de apoyo",

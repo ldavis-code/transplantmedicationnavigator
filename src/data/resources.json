@@ -9,7 +9,8 @@
     "name": "American Transplant Foundation",
     "url": "https://www.americantransplantfoundation.org/",
     "description": "Gives grants to help patients pay for medicines. Also links transplant patients with mentors who've been through the same thing.",
-    "category": "Foundation"
+    "category": "Foundation",
+    "status": "paused"
   },
   {
     "name": "Cost Plus Drugs",
@@ -100,5 +101,11 @@
     "url": "https://www.trioweb.org/",
     "description": "The largest group for transplant patients, donors, and their families. Offers local chapters, mentoring, and learning resources.",
     "category": "Support Group"
+  },
+  {
+    "name": "Good Days",
+    "url": "https://mygooddays.org/patients/",
+    "description": "Helps pay copays, travel costs, and insurance premiums. Each fund covers one disease, so check the list first: there is no transplant fund, but funds like chronic kidney disease, hepatitis C, and CMV retinitis fit many transplant patients.",
+    "category": "Foundation"
   }
 ]

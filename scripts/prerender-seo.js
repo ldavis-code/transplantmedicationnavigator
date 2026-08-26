@@ -97,17 +97,18 @@ const hasSpanishVariant = (route) => SPANISH_ROUTES.has(route) || route.startsWi
 // Path-based Spanish URL for a route: /es/<route> (the homepage is /es/).
 const esPath = (route) => (route === '/' ? '/es/' : `/es${route}`);
 
-// Home-page stat tiles, computed from the data files so the static fallback
-// can never drift from the app (same formula as Home in src/App.jsx).
+// Home-page stat tiles. Read from the file scripts/generate-home-stats.js
+// writes at the start of the build — the same module Home.jsx imports — so
+// the static fallback cannot drift from the app. Recomputing the formulas
+// here is what made the no-JS homepage claim 220 medications while every
+// other surface said 259.
 const PROGRAMS = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'data', 'programs.json'), 'utf8')
 );
 const countGroup = (group) => (group ? Object.keys(group).length : 0);
-const HOME_STATS = {
-  medications: null, // filled in after MEDICATIONS loads below
-  assistancePrograms: countGroup(PROGRAMS.papPrograms) + countGroup(PROGRAMS.foundationPrograms),
-  copayCards: countGroup(PROGRAMS.copayPrograms),
-};
+const HOME_STATS = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, 'src', 'data', 'home-stats.json'), 'utf8')
+);
 
 const pages = [
   {
@@ -274,7 +275,6 @@ const pages = [
 const MEDICATIONS = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'data', 'medications.json'), 'utf8')
 );
-HOME_STATS.medications = MEDICATIONS.length;
 const MED_BY_ID = Object.fromEntries(MEDICATIONS.map((m) => [m.id, m]));
 
 // Resource directory entries feed the homepage <noscript> foundation table
@@ -708,6 +708,13 @@ function homeNoscript(isEs) {
   // Phones shown next to directory resources come from the locale strings
   // the app renders for that program (only TotalAssist has one today).
   const resourcePhones = { TotalAssist: LOCALE.education.totalAssist.phone };
+  // A paused resource carries the same warning here as on the directory card;
+  // the no-JS reader is the one who can least afford to fill in a form that
+  // is not being read.
+  const pausedNote = (r) =>
+    (r.status === 'paused'
+      ? ` <strong>${LOCALE.education.directory.statusPaused}.</strong> ${LOCALE.education.directory.statusPausedNote}`
+      : '');
   const foundationRows = RESOURCES.filter((r) => r.category === 'Foundation').map((r) => {
     const phone = resourcePhones[r.name];
     const contact = phone
@@ -716,12 +723,12 @@ function homeNoscript(isEs) {
     return `                <tr>
                     <td><strong>${r.name}</strong></td>
                     <td>${contact}</td>
-                    <td>${r.description}</td>
+                    <td>${r.description}${pausedNote(r)}</td>
                 </tr>`;
   }).join('\n');
 
   const otherResources = RESOURCES.filter((r) => r.category !== 'Foundation').map((r) =>
-    `                <li><a href="${r.url}">${r.name}</a> &mdash; ${r.description}</li>`
+    `                <li><a href="${r.url}">${r.name}</a> &mdash; ${r.description}${pausedNote(r)}</li>`
   ).join('\n');
 
   const T = isEs ? {
