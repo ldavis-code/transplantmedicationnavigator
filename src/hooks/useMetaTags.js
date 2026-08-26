@@ -114,10 +114,16 @@ export function useMetaTags(config) {
     // The Spanish URL is the /es/ path prefix: /medications/x -> /es/medications/x,
     // and the homepage BASE_URL/ -> BASE_URL/es/.
     const hasEsVariant = !noindex && !!(config.es || config.langAlternates);
-    const esCanonical = canonical && canonical.replace(BASE_URL, `${BASE_URL}/es`);
-    const localizedCanonical = hasEsVariant && isSpanish && canonical
+    // Canonicals carry a trailing slash — pages are served as
+    // <route>/index.html and the slash-less form 301s, so a slash-less
+    // canonical would point at a redirect. Matches the prerendered heads
+    // (scripts/prerender-seo.js) so hydration never rewrites them.
+    const withSlash = (url) => (url && !url.endsWith('/') ? `${url}/` : url);
+    const slashedCanonical = withSlash(canonical);
+    const esCanonical = slashedCanonical && withSlash(slashedCanonical.replace(BASE_URL, `${BASE_URL}/es`));
+    const localizedCanonical = hasEsVariant && isSpanish && slashedCanonical
       ? esCanonical
-      : canonical;
+      : slashedCanonical;
 
     // Update canonical URL
     updateLinkTag('canonical', localizedCanonical);
@@ -125,11 +131,11 @@ export function useMetaTags(config) {
     // Replace any hreflang alternates (ours or the prerendered page's) so
     // client-side navigation never leaves a stale set behind.
     document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
-    if (hasEsVariant && canonical) {
+    if (hasEsVariant && slashedCanonical) {
       for (const [hreflang, href] of [
-        ['en', canonical],
+        ['en', slashedCanonical],
         ['es', esCanonical],
-        ['x-default', canonical],
+        ['x-default', slashedCanonical],
       ]) {
         const el = document.createElement('link');
         el.setAttribute('rel', 'alternate');
@@ -173,7 +179,7 @@ export function useMetaTags(config) {
             '@type': 'ListItem',
             'position': 2,
             'name': pageName,
-            'item': canonical
+            'item': slashedCanonical
           }
         ]
       };
