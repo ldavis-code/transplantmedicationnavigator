@@ -1444,11 +1444,11 @@
     "explainer": {
       "title": "Not sure whether you're on the brand or the generic?",
       "intro": "Many transplant patients are on generics and were never told. Your bottle holds the answer, and it decides which options are yours.",
-      "genericTitle": "Your label says “tacrolimus”",
-      "genericText": "Lowercase drug name, often with a manufacturer like Sandoz or Accord. This is the generic.",
+      "genericTitle": "Your label says “Tacrolimus”",
+      "genericText": "Tacrolimus is the drug's own name, so this is the generic. The bottle often names a maker like Sandoz or Accord.",
       "genericAction": "Compare cash prices. No copay card exists.",
       "brandTitle": "Your label says “Prograf”",
-      "brandText": "Capitalized brand name. Same medicine, different price, different programs.",
+      "brandText": "Prograf is a brand name. Same medicine, different price, different programs.",
       "brandAction": "Copay card or manufacturer assistance.",
       "neverTitle": "We never tell you to change your medication.",
       "neverText": "That's your transplant team's decision — including switching between brand and generic, or between generic manufacturers. We show you what the medicine they prescribed should cost you."
