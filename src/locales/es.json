@@ -1444,11 +1444,11 @@
     "explainer": {
       "title": "¿No sabe si toma la marca o el genérico?",
       "intro": "Muchos pacientes de trasplante toman genéricos y nunca se lo dijeron. Su frasco tiene la respuesta, y eso determina qué opciones son suyas.",
-      "genericTitle": "Su etiqueta dice “tacrolimus”",
-      "genericText": "Nombre del medicamento en minúsculas, a menudo con un fabricante como Sandoz o Accord. Este es el genérico.",
+      "genericTitle": "Su etiqueta dice “Tacrolimus”",
+      "genericText": "Tacrolimus es el nombre propio del medicamento, así que este es el genérico. El frasco suele indicar un fabricante como Sandoz o Accord.",
       "genericAction": "Compare precios en efectivo. No existe tarjeta de copago.",
       "brandTitle": "Su etiqueta dice “Prograf”",
-      "brandText": "Nombre de marca con mayúscula. La misma medicina, distinto precio, distintos programas.",
+      "brandText": "Prograf es un nombre de marca. La misma medicina, distinto precio, distintos programas.",
       "brandAction": "Tarjeta de copago o asistencia del fabricante.",
       "neverTitle": "Nunca le decimos que cambie su medicamento.",
       "neverText": "Esa es una decisión de su equipo de trasplante — incluido el cambio entre marca y genérico, o entre fabricantes de genéricos. Le mostramos cuánto debería costarle la medicina que le recetaron."
