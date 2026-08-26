@@ -61,25 +61,32 @@ const hasSpanishVariant = (path) =>
 // Path-based Spanish URL for a route: /es/<route> (the homepage is /es/).
 const esPath = (path) => (path === '/' ? '/es/' : `/es${path}`);
 
+// Every URL is emitted with a trailing slash: the pages are prerendered as
+// <route>/index.html, so Netlify 301s the slash-less form to the slashed one.
+// A sitemap full of redirecting URLs shows up in Search Console as "Page
+// with redirect" — list the URL that actually answers 200 instead.
+const withSlash = (url) => (url.endsWith('/') ? url : `${url}/`);
+const fullUrl = (path) => withSlash(`${SITE_URL}${path}`);
+
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
 
     const allRoutes = [...routes, ...medicationRoutes];
     const alternates = (path) => `
-        <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${path}" />
-        <xhtml:link rel="alternate" hreflang="es" href="${SITE_URL}${esPath(path)}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${path}" />`;
+        <xhtml:link rel="alternate" hreflang="en" href="${fullUrl(path)}" />
+        <xhtml:link rel="alternate" hreflang="es" href="${fullUrl(esPath(path))}" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl(path)}" />`;
     const urls = allRoutes.flatMap(route => {
         const hasEs = hasSpanishVariant(route.path);
         const entries = [`    <url>
-        <loc>${SITE_URL}${route.path}</loc>${hasEs ? alternates(route.path) : ''}
+        <loc>${fullUrl(route.path)}</loc>${hasEs ? alternates(route.path) : ''}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>
     </url>`];
         if (hasEs) {
             entries.push(`    <url>
-        <loc>${SITE_URL}${esPath(route.path)}</loc>${alternates(route.path)}
+        <loc>${fullUrl(esPath(route.path))}</loc>${alternates(route.path)}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>

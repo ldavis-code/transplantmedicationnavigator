@@ -462,11 +462,15 @@ const medicationPages = MEDICATIONS.map((m) => {
  * This version includes the main SPA script so React can take over after initial render
  */
 function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
-  const canonical = `${BASE_URL}${page.route}`;
+  // Canonical/hreflang/og URLs carry a trailing slash: the pages are served
+  // as <route>/index.html, so the slash-less form 301s and a canonical must
+  // never point at a redirect (same rule as scripts/generate-sitemap.js).
+  const withSlash = (url) => (url.endsWith('/') ? url : `${url}/`);
+  const canonical = withSlash(`${BASE_URL}${page.route}`);
   const isEs = lang === 'es';
   // The Spanish version of a page lives at the /es/ path prefix;
   // it is its own canonical so both language versions can be indexed.
-  const pageUrl = isEs ? `${BASE_URL}${esPath(page.route)}` : canonical;
+  const pageUrl = isEs ? withSlash(`${BASE_URL}${esPath(page.route)}`) : canonical;
   const pageTitle = page.title.split(' | ')[0];
   const aiSummaryTag = page.aiSummary
     ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
@@ -476,7 +480,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     ? `
     <!-- Language alternates -->
     <link rel="alternate" hreflang="en" href="${canonical}" />
-    <link rel="alternate" hreflang="es" href="${BASE_URL}${esPath(page.route)}" />
+    <link rel="alternate" hreflang="es" href="${withSlash(`${BASE_URL}${esPath(page.route)}`)}" />
     <link rel="alternate" hreflang="x-default" href="${canonical}" />`
     : '';
 
