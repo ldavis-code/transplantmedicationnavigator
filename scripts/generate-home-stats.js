@@ -17,9 +17,6 @@
  * entry-bundle code — do not change one without the other's history in
  * mind (see git blame for src/pages/main/Home.jsx).
  *
- * The medication total is the one count that is NOT derived here — see
- * DB_MEDICATION_COUNT below.
- *
  * The hand-written static pages under public/ quote the same three numbers
  * (the TrumpRx comparison page's whole argument is "we checked, and here are
  * the real numbers" — it cannot disagree with the homepage by a drug). They
@@ -41,33 +38,46 @@ const programs = JSON.parse(readFileSync(join(dataDir, 'programs.json'), 'utf8')
 
 const countGroup = (group) => (group ? Object.keys(group).length : 0);
 
-// The medication catalogue lives in Neon, not in this repo: MedicationsContext
-// fetches /.netlify/functions/medications and only falls back to the bundled
-// medications.json when that request fails. So the bundled file is an offline
-// fallback that trails the live table — counting its rows told visitors the
-// site covered 220 drugs while it was actually serving 259. This number is
-// therefore pinned to the table, not derived. Refresh it whenever medications
-// are added, from the Neon SQL editor or the public endpoint:
-//
-//   SELECT count(*) FROM medications;
-//   curl -s https://transplantmedicationnavigator.com/.netlify/functions/medications | jq .count
-//
-const DB_MEDICATION_COUNT = 259; // verified 2026-08-26
-
-// Guard against the pin going stale downward: the bundled fallback is a subset
-// of the table, so more rows here than the pin means the pin was never updated
-// after a sync. A wrong count on the homepage is exactly what this script
-// exists to prevent, so that is a build error, not a warning.
-if (medications.length > DB_MEDICATION_COUNT) {
-    console.error(
-        `stats: medications.json has ${medications.length} rows but DB_MEDICATION_COUNT is ${DB_MEDICATION_COUNT}. ` +
-        'Re-count the Neon medications table and update the constant in scripts/generate-home-stats.js.'
-    );
-    process.exit(1);
+// The medication count is derived from medications.json again — the file is
+// synced from the Neon table (scripts/sync-medications-json.js, which needs
+// no credentials with --api), so counting its rows counts the real catalogue.
+// The check below is what keeps that true: the catalogue lives in Neon and
+// this file trails it between syncs, which is how the homepage said 220
+// while the site served 259. If the live API reports medications this file
+// doesn't have, the count on every stat surface would be a lie, so that is
+// a build error with a one-command remedy — not a warning nobody reads.
+// A network failure skips the check (offline dev must still build).
+const API_URL = 'https://transplantmedicationnavigator.com/.netlify/functions/medications';
+try {
+    const response = await fetch(API_URL, { signal: AbortSignal.timeout(15000) });
+    if (response.ok) {
+        const body = await response.json();
+        const localIds = new Set(medications.map((m) => m.id));
+        const missing = (body.medications || []).filter((m) => !localIds.has(m.id));
+        // Ids the sync's dedupe deliberately collapsed into another record
+        // (same brand + generic) are not missing — the medication is here.
+        const localKeys = new Set(medications.map((m) =>
+            `${(m.brandName || '').toLowerCase().trim()}|${(m.genericName || '').toLowerCase().trim()}`));
+        const trulyMissing = missing.filter((m) =>
+            !localKeys.has(`${(m.brandName || '').toLowerCase().trim()}|${(m.genericName || '').toLowerCase().trim()}`));
+        if (trulyMissing.length > 0) {
+            console.error(
+                `stats: the live medications API has ${trulyMissing.length} medication(s) missing from ` +
+                `src/data/medications.json (${trulyMissing.slice(0, 5).map((m) => m.id).join(', ')}${trulyMissing.length > 5 ? ', …' : ''}).\n` +
+                'The homepage count would under-report the catalogue. Run:  npm run sync:medications -- --api'
+            );
+            process.exit(1);
+        }
+        console.log(`stats: medications.json is in sync with the live API (${medications.length} local, ${body.count} in DB)`);
+    } else {
+        console.warn(`stats: freshness check skipped — API returned HTTP ${response.status}`);
+    }
+} catch (err) {
+    console.warn(`stats: freshness check skipped — API unreachable (${err.message})`);
 }
 
 const stats = {
-    medications: DB_MEDICATION_COUNT,
+    medications: medications.length,
     copayCards: countGroup(programs.copayPrograms),
     assistancePrograms: countGroup(programs.papPrograms) + countGroup(programs.foundationPrograms),
 };

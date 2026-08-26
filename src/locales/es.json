@@ -2631,7 +2631,22 @@
       "Pulmonary Fibrosis": "Fibrosis pulmonar",
       "Cystic Fibrosis": "Fibrosis quística",
       "Inhaled Antibiotic": "Antibiótico inhalado",
-      "Mucolytic": "Mucolítico"
+      "Mucolytic": "Mucolítico",
+      "Anemia": "Anemia",
+      "Anticoagulation": "Anticoagulación",
+      "Antifungals": "Antifúngicos",
+      "Antivirals": "Antivirales",
+      "Blood Pressure": "Presión arterial",
+      "Blood Support": "Apoyo para la sangre",
+      "Cholesterol": "Colesterol",
+      "Diuretics": "Diuréticos",
+      "GI / Acid Suppression": "Digestivo / Supresión de ácido",
+      "Hepatitis B/C": "Hepatitis B/C",
+      "Induction Agents": "Agentes de inducción",
+      "Infection Prevention": "Prevención de infecciones",
+      "Mental Health": "Salud mental",
+      "Pain Management": "Manejo del dolor",
+      "Steroids": "Esteroides"
     }
   },
   "savings": {
