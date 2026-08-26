@@ -1099,7 +1099,7 @@
       "whatArePaps": {
         "title": "¿Qué son los Programas de Asistencia al Paciente?",
         "p1": "Los Programas de Asistencia al Paciente (PAP) los crean las compañías que fabrican los medicamentos. Ofrecen medicamentos recetados gratis o a bajo costo a las personas que necesitan ayuda para pagarlos.",
-        "p2": "<strong>Importante:</strong> Los Programas de Asistencia al Paciente son para todas las personas que necesitan medicamentos a precios accesibles, no solo para quienes no tienen seguro. Muchos pacientes con seguro usan estos programas para reducir el costo de sus medicamentos."
+        "p2": "<strong>Importante:</strong> Los Programas de Asistencia al Paciente no son solo para quienes no tienen seguro. La mayor\u00eda son para pacientes con Medicare, Medicaid o sin cobertura, y se basan en los ingresos m\u00e1s que en si usted tiene seguro. Los programas var\u00edan, as\u00ed que revise cada uno: si tiene seguro comercial o del trabajo, por lo general su opci\u00f3n es una tarjeta de copago."
       },
       "cards": {
         "pap": {
@@ -2376,6 +2376,9 @@
         "getCard": "Obtener tarjeta ",
         "linkVerified": "Enlace verificado {{date}}",
         "incomeBased": "Según ingresos",
+        "papNotEligible": "No es para su seguro",
+        "papUseCopayInstead": "Este programa es para personas con Medicare, Medicaid o sin seguro. Con seguro comercial o del trabajo, su opci\u00f3n es la tarjeta de copago de arriba.",
+        "papNotEligibleText": "Este programa es para personas con Medicare, Medicaid o sin seguro. Los programas var\u00edan, as\u00ed que vale la pena preguntarle a su equipo de trasplante qu\u00e9 le aplica a usted.",
         "papFor": "Para Medicare, Medicaid o sin seguro \u2022 Ingresos de hasta {{multiple}} veces el nivel federal de pobreza \u2014 unos {{amount}} para una persona",
         "free": "GRATIS",
         "ifEligible": "si es elegible",
