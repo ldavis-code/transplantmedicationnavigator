@@ -49,6 +49,8 @@ export function TenantProvider({ children }) {
             secondaryColor: data.secondary_color || DEFAULT_ORG.secondaryColor,
             contactEmail: data.contact_email,
             websiteUrl: data.website_url,
+            escalationPhone: data.escalation_phone || null,
+            escalationContact: data.escalation_contact || null,
             features: data.features || DEFAULT_ORG.features,
             plan: data.plan || 'free',
           });

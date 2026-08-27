@@ -11,6 +11,8 @@ export const DEFAULT_ORG = {
   logoUrl: null,
   primaryColor: '#1e40af',
   secondaryColor: '#3b82f6',
+  escalationPhone: null,
+  escalationContact: null,
   features: {
     price_reports: true,
     surveys: true,

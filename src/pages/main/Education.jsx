@@ -13,6 +13,7 @@ import STATES_DATA from '../../data/states.json';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
 import { seoMetadata } from '../../data/seo-metadata.js';
 import { trackServerEvent } from '../../lib/trackServerEvent.js';
+import { useTenant } from '../../context/TenantContext.jsx';
 
 const DIRECTORY_RESOURCES = DIRECTORY_RESOURCES_DATA;
 const STATES = STATES_DATA;
@@ -194,6 +195,10 @@ const InsuranceChangeSimulator = () => {
 // Education Page
 const Education = () => {
     const { t, i18n } = useTranslation();
+    // White-label centers can configure a same-day escalation contact that
+    // leads the emergency steps; on the public site org is the default and
+    // the block stays hidden.
+    const { org } = useTenant();
     useMetaTags(seoMetadata.education);
     // Resource descriptions live in the data layer with one file per language
     const directoryResources = i18n.resolvedLanguage === 'es' ? DIRECTORY_RESOURCES_ES : DIRECTORY_RESOURCES;
@@ -347,6 +352,25 @@ const Education = () => {
                             <p className="text-rose-800 text-sm"><Trans i18nKey="education.emergency.call911Text" /></p>
                         </div>
 
+                        {/* Center-configured same-day escalation contact: leads
+                            the steps so an enrolled center's patient calls
+                            their own team's urgent line before anything else. */}
+                        {org?.escalationPhone && (
+                            <div className="bg-emerald-700 text-white p-5 rounded-xl shadow-md">
+                                <h3 className="font-bold text-lg mb-1 flex items-center gap-2">
+                                    <Phone size={18} aria-hidden="true" /> {t('education.emergency.orgEscalation.title', { name: org.name })}
+                                </h3>
+                                <p className="text-emerald-50 text-sm mb-3">{t('education.emergency.orgEscalation.text')}</p>
+                                {org.escalationContact && <p className="text-emerald-50 text-sm mb-3 font-medium">{org.escalationContact}</p>}
+                                <a
+                                    href={`tel:${org.escalationPhone.replace(/[^\d+]/g, '')}`}
+                                    className="inline-flex items-center gap-2 bg-white text-emerald-800 font-bold px-5 py-2.5 rounded-lg hover:bg-emerald-50 transition min-h-[44px]"
+                                >
+                                    {t('education.emergency.orgEscalation.callPre')}{org.escalationPhone}
+                                </a>
+                            </div>
+                        )}
+
                         <div className="space-y-4">
                             <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-100 flex items-start gap-4">
                                 <div className="bg-emerald-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
@@ -361,6 +385,7 @@ const Education = () => {
                                 <div>
                                     <h3 className="font-bold text-blue-900 mb-1 flex items-center gap-2"><Pill size={16} aria-hidden="true" /> {t('education.emergency.step2Title')}</h3>
                                     <p className="text-slate-700 text-sm">{t('education.emergency.step2Pre')}<em>{t('education.emergency.step2Quote')}</em>{t('education.emergency.step2Post')}</p>
+                                    <p className="text-blue-900 text-sm mt-2">{t('education.emergency.step2Note')}</p>
                                 </div>
                             </div>
 
