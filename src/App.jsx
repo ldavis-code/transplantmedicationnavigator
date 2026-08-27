@@ -931,10 +931,14 @@ const AppRoutes = () => {
     }
 
     return (
-        <>
+        // TenantProvider so patient pages can read the center's config (the
+        // emergency page shows a center's same-day escalation contact when
+        // one is set). On the public site the slug resolves to 'public' and
+        // the provider does no network work.
+        <TenantProvider>
             <DisclaimerModal />
             <MainSiteRoutes />
-        </>
+        </TenantProvider>
     );
 };
 

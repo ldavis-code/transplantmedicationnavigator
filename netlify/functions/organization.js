@@ -54,7 +54,7 @@ export async function handler(event) {
       }
 
       try {
-        const { orgId, name, logoUrl, primaryColor, secondaryColor, contactEmail, websiteUrl } = JSON.parse(event.body);
+        const { orgId, name, logoUrl, primaryColor, secondaryColor, contactEmail, websiteUrl, escalationPhone, escalationContact } = JSON.parse(event.body);
         const targetOrgId = orgId || auth.orgId;
         if (!targetOrgId) {
           return { statusCode: 400, headers, body: JSON.stringify({ error: 'orgId required' }) };
@@ -67,7 +67,9 @@ export async function handler(event) {
             primary_color = COALESCE(${primaryColor || null}, primary_color),
             secondary_color = COALESCE(${secondaryColor || null}, secondary_color),
             contact_email = ${contactEmail || null},
-            website_url = ${websiteUrl || null}
+            website_url = ${websiteUrl || null},
+            escalation_phone = ${escalationPhone || null},
+            escalation_contact = ${escalationContact || null}
           WHERE id = ${targetOrgId}
         `;
 
@@ -104,7 +106,8 @@ export async function handler(event) {
     if (id) {
       const result = await sql`
         SELECT id, slug, name, logo_url, primary_color, secondary_color,
-               contact_email, website_url, features, plan, is_active
+               contact_email, website_url, escalation_phone, escalation_contact,
+               features, plan, is_active
         FROM organizations
         WHERE id = ${parseInt(id)} AND is_active = true
       `;
@@ -112,7 +115,8 @@ export async function handler(event) {
     } else {
       const result = await sql`
         SELECT id, slug, name, logo_url, primary_color, secondary_color,
-               contact_email, website_url, features, plan, is_active
+               contact_email, website_url, escalation_phone, escalation_contact,
+               features, plan, is_active
         FROM organizations
         WHERE slug = ${slug.toLowerCase()} AND is_active = true
       `;

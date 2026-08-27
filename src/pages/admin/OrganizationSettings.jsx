@@ -13,6 +13,7 @@ import {
   Mail,
   Globe,
   Image,
+  Phone,
   CheckCircle,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -30,6 +31,8 @@ export default function OrganizationSettings() {
     secondaryColor: '#3b82f6',
     contactEmail: '',
     websiteUrl: '',
+    escalationPhone: '',
+    escalationContact: '',
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -45,6 +48,8 @@ export default function OrganizationSettings() {
         secondaryColor: org.secondaryColor || '#3b82f6',
         contactEmail: org.contactEmail || '',
         websiteUrl: org.websiteUrl || '',
+        escalationPhone: org.escalationPhone || '',
+        escalationContact: org.escalationContact || '',
       });
     }
   }, [org]);
@@ -291,6 +296,49 @@ export default function OrganizationSettings() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="https://www.hospital.org"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Same-Day Escalation Contact */}
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+              <Phone className="h-5 w-5 text-gray-400" />
+              Same-Day Escalation Contact
+            </h2>
+            <p className="text-sm text-gray-500 mb-4">
+              Shown to your patients as the first step on the emergency
+              medication page ("Out of medication?"). Leave the phone number
+              blank to hide the step.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Urgent Medication Line (phone)
+                </label>
+                <input
+                  type="tel"
+                  name="escalationPhone"
+                  value={formData.escalationPhone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Who Answers &amp; When
+                </label>
+                <input
+                  type="text"
+                  name="escalationContact"
+                  value={formData.escalationContact}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Transplant pharmacy — Mon-Fri 8am-6pm, ask for the on-call coordinator"
                 />
               </div>
             </div>
