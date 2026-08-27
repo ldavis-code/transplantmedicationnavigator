@@ -1319,8 +1319,7 @@
     },
     "banner": {
       "urgentText": "Out of medication, or down to your last few days?",
-      "urgentLink": "Get help today",
-      "urgentAriaLabel": "Out of medication? See emergency steps now"
+      "urgentLink": "Get help today"
     },
     "skipLink": "Skip to main content",
     "nav": {
@@ -1347,7 +1346,7 @@
         },
         "wizard": {
           "label": "My Path",
-          "ariaLabel": "Start medication path wizard"
+          "ariaLabel": "My Path: start the medication path quiz"
         },
         "education": {
           "label": "Resources",
@@ -1359,7 +1358,7 @@
         },
         "faq": {
           "label": "FAQ",
-          "ariaLabel": "View frequently asked questions"
+          "ariaLabel": "FAQ: view frequently asked questions"
         },
         "feedback": {
           "label": "Feedback",
@@ -1395,7 +1394,7 @@
     "hero": {
       "title1": "Your transplant team decides your medicine.",
       "title2": "We help you get it.",
-      "subtitle": "What it should cost, which programs are actually yours, and what to do when your plan changes the rules."
+      "subtitle": "What it should cost, which programs may be open to you, and what to do when your plan changes the rules."
     },
     "flow": {
       "ariaLabel": "How it works, in three steps",
@@ -1408,18 +1407,16 @@
       "searchAriaLabel": "Type your medication name to search",
       "searchPlaceholder": "Type a medication...",
       "resultsAriaLabel": "Matching medications",
-      "resultAria": "See prices and programs for {{name}}",
       "noResults": "We don't have that one yet.",
       "noResultsLink": "Try the full medication search",
       "or": "or",
-      "mychartAriaLabel": "Import your medication list from MyChart",
       "mychartButton": "Import my list from MyChart",
       "mychartFootnote": "Listed in the Epic Connection Hub. You'll sign in on your hospital's own portal — we never store your login. Imports your real list from 400+ Epic health systems, including whether you're on the brand or the generic. Your data stays on your device.",
       "examplesAriaLabel": "Common transplant medications",
       "tagGeneric": "generic",
       "tagBrand": "brand",
       "browseAll": "Browse all {{count}} medications",
-      "browseAllAria": "Browse the full list of {{count}} medications",
+      "browseAllAria": "Browse all {{count}} medications (full list)",
       "selectedPre": "Your medication: ",
       "clearSelected": "Clear selected medication",
       "seeOptions": "See my options",
@@ -1458,7 +1455,7 @@
       "learn": {
         "title": "Learn the process",
         "text": "Fill out assistance applications yourself, free. Checklists and phone scripts.",
-        "ariaLabel": "View the application guide",
+        "ariaLabel": "View the guide: how to apply",
         "link": "View the guide"
       },
       "coverage": {
@@ -1470,7 +1467,7 @@
       "grants": {
         "title": "Grants & foundations",
         "text": "{{programs}} assistance programs and foundations, plus {{copayCards}} copay cards. Verified, direct links, no scams. Updated July 2026.",
-        "ariaLabel": "Browse grants and foundation programs",
+        "ariaLabel": "Browse programs: grants and foundations",
         "link": "Browse programs"
       }
     },
@@ -1812,7 +1809,7 @@
         "uninsuredCallout": "Without insurance, the manufacturer programs above are your best route. They can provide medication completely free if you qualify.",
         "foundationIncome": "Copay help, typically income up to {{income}}. Funds open and close — check back if closed.",
         "foundationIncomeGeneric": "Copay help — eligibility is based on need. Funds open and close — check back if closed.",
-        "foundationAria": "Open {{program}} (opens in a new tab)",
+        "foundationAria": "Apply to {{program}} (opens in a new tab)",
         "othersTitle": "Your other medications ({{count}})",
         "othersTitleAll": "Your selected medications ({{count}})",
         "othersNote": "These are generics or have no manufacturer program — that's normal, and generics usually cost much less. Compare their cash prices with the link below.",
@@ -2185,13 +2182,11 @@
       "resultsAria": "Search results",
       "helpBanner": "Help is here, let's find it together. Enter your medications and we'll search for savings, patient assistance programs, grants, and affordable pharmacy options.",
       "resultsHeading": "Search Results",
-      "addAria": "Add {{name}} to list",
       "alreadyAddedAria": "Already added",
       "added": "Added",
       "add": "Add",
       "noMatches": "No matches in our transplant database",
       "noMatchesHint": "Try a different spelling, or use the option below to add it as a custom medication.",
-      "addCustomAria": "Add custom medication {{term}} to list",
       "addCustomLabel": "Add \"{{term}}\" to list",
       "checkExternal": "Check price on external sites",
       "addCustom": "Add Custom",
@@ -2216,7 +2211,6 @@
       },
       "savingsButton": "My Medication Savings",
       "selectInsuranceFirst": "Please select your insurance type above to continue",
-      "backAria": "Go back to medication list",
       "back": "Back to Medications",
       "options": {
         "title": "Your Options",
@@ -2242,7 +2236,7 @@
       "help": {
         "title": "Need Help Applying for Assistance?",
         "text": "Learn how to fill out Patient Assistance Program applications step-by-step.",
-        "aria": "View application guide for step-by-step help",
+        "aria": "Grants & Foundations: step-by-step application guide",
         "button": "Grants & Foundations"
       }
     },
@@ -2324,6 +2318,13 @@
         "withCopayCard": "With Copay Card",
         "annual": "Annual Savings"
       },
+      "nextStep": {
+        "label": "Best next step",
+        "copay": "Ask for this medication's copay card. Most patients with commercial insurance pay $0-$10 a month.",
+        "pap": "Apply to the manufacturer's Patient Assistance Program. It may provide this medication at no cost if you qualify.",
+        "cash": "Compare cash prices. This is often the lowest cost without using insurance.",
+        "foundation": "Look into foundation grants for help with medication costs."
+      },
       "filters": {
         "label": "Filter:",
         "all": "All Options",
@@ -2353,7 +2354,7 @@
         "recipients": " recipients.",
         "stageLabel": "Stage: ",
         "tip": "<strong>Tip:</strong> Always verify with your doctor if you can switch between Brand and Generic versions.",
-        "drugFactsAria": "Read full drug facts for {{name}} on Drugs.com (opens in new tab)",
+        "drugFactsAria": "Read full drug facts on Drugs.com for {{name}} (opens in new tab)",
         "drugFactsLink": "Read full drug facts on Drugs.com ",
         "pharmaciesTitle": "Pharmacies (Where to fill your prescription)",
         "thPharmacy": "Pharmacy",
@@ -2380,7 +2381,7 @@
         "eligible": "You're Eligible",
         "copayFor": "For commercial/employer insurance • Manufacturer program",
         "perMonth": "/month",
-        "getCardAria": "Get Copay Card for {{name}} (opens in new tab)",
+        "getCardAria": "Get Card: copay card for {{name}} (opens in new tab)",
         "getCard": "Get Card ",
         "linkVerified": "Link verified {{date}}",
         "incomeBased": "Income-Based",
@@ -2399,13 +2400,13 @@
         "fundFinderLink": "Check TotalAssist Funds ",
         "partDTitle": "Medicare Part D Information",
         "partDText": "Learn about Medicare Part D coverage changes and savings options for {{name}}.",
-        "partDAria": "View Medicare Part D information for {{name}} (opens in new tab)",
+        "partDAria": "View Details: Medicare Part D information for {{name}} (opens in new tab)",
         "viewDetails": "View Details ",
         "copayCommercialOnly": "Copay cards are for commercial/employer insurance only",
         "pricesNote": "Prices are for a 30 day supply. Your price may be different. Call the pharmacy for exact pricing.",
         "formsTitle": "Need Help Filling Out the Forms?",
         "formsText": "Our guide shows you step-by-step how to fill out the forms. We have checklists and examples to help you.",
-        "viewGuideAria": "View complete application guide",
+        "viewGuideAria": "View Grants & Foundations: complete application guide",
         "viewGrants": "View Grants & Foundations"
       },
       "warning": {
@@ -2440,10 +2441,10 @@
         "copayForShort": "For commercial/employer insurance",
         "copayRange": "$0 - $10/month",
         "manufacturerProgram": "Manufacturer program",
-        "viewCopayAria": "View Copay Card details for {{name}}",
+        "viewCopayAria": "Get Card: view copay card details for {{name}}",
         "papForShort": "For Medicare, Medicaid, or no insurance",
         "incomeRules": "You must meet income rules",
-        "viewPapAria": "View Patient Assistance details for {{name}}",
+        "viewPapAria": "Apply: view Patient Assistance details for {{name}}",
         "goodRxDesc": "Free coupons at 70,000+ pharmacies",
         "singleCareDesc": "Free card at 35,000+ pharmacies",
         "costPlusDesc": "Online pharmacy with low prices",
@@ -2456,7 +2457,7 @@
         "reportPrice": "Report Price",
         "trumpRxDesc": "Government discounted cash price",
         "trumpRxExclude": "May exclude Medicare/Medicaid",
-        "ourGuideAria": "View TrumpRx guide for transplant patients",
+        "ourGuideAria": "Our Guide: TrumpRx for transplant patients",
         "ourGuide": "Our Guide ",
         "visitTrumpRxAria": "Visit TrumpRx.gov (opens in new tab)",
         "footerNote": "These prices are for a 30-day supply. Your price may be different. Call the pharmacy to get your exact price. (Last updated: July 2026)",
@@ -2502,7 +2503,7 @@
       "checkCostPlusAria": "Check {{name}} price on Cost Plus Drugs (opens in new tab)",
       "checkGoodRxAria": "Check {{name}} price on GoodRx (opens in new tab)",
       "checkSingleCareAria": "Check {{name}} price on SingleCare (opens in new tab)",
-      "searchDrugsAria": "Search for {{name}} assistance programs on Drugs.com (opens in new tab)",
+      "searchDrugsAria": "Search \"{{name}}\" on Drugs.com for Assistance Programs (opens in new tab)",
       "searchDrugsLink": "Search \"{{name}}\" on Drugs.com for Assistance Programs "
     },
     "detail": {
@@ -3366,6 +3367,657 @@
       "switchToChat": "Switch to Chat mode to ask questions",
       "disclaimer": "AI assistant: educational information only, not medical advice. It can make mistakes — confirm details with your transplant team. Please don’t include your name or contact info."
     }
+  },
+  "survey": {
+    "landing": {
+      "title": "Share Your Journey",
+      "subtitle": "Your experience can change the system",
+      "transplantTitle": "Transplant Journey Survey",
+      "transplantText": "For transplant patients dealing with anti-rejection drugs, pharmacies, and insurance.",
+      "transplantMeta": "8 topic areas - complete only the ones relevant to you",
+      "transplantStart": "Start Transplant Survey",
+      "generalTitle": "General Medication Survey",
+      "generalText": "For anyone who has trouble getting or paying for medicine.",
+      "generalMeta": "5 topic areas - takes about 5 minutes",
+      "generalStart": "Start General Survey",
+      "whyTitle": "Why We're Asking",
+      "whyQuote": "\"When you share your story, you help other patients. Together, we are building a guide that we wish we had. Your voice helps us fix a broken system.\"",
+      "whyAttribution": "— Lorrinda, TRIO President & Liver Transplant Recipient",
+      "privacyLabel": "Privacy:",
+      "privacyText": "No names, dates, or medical records collected"
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "na": "N/A",
+      "intro": "Choose the topics that matter most to you. Each section can be submitted independently.",
+      "completedCount": "{{completed}} of {{total}} sections completed",
+      "thankYou": "- Thank you for sharing your experience!",
+      "submitted": "✓ Submitted",
+      "questionCount": "{{count}} questions",
+      "answeredCount": "({{count}} answered)",
+      "backToTopicsAria": "Back to topics",
+      "backToTopics": "← Back to Topics",
+      "update": "Update Responses ✓",
+      "submitSection": "Submit This Section ✓",
+      "privacyTitle": "Your privacy is protected:",
+      "privacyLine1": "No names, dates, or medical record numbers are collected.",
+      "privacyLine2": "All responses are anonymous and help us advocate for better medication access.",
+      "poweredBy": "Powered by TransplantMedicationNavigator.com, By patients, for patients"
+    },
+    "transplant": {
+      "title": "Transplant Medication Journey Survey",
+      "sections": {
+        "discharge": {
+          "title": "Leaving the Hospital",
+          "description": "What happened when you went home after your transplant",
+          "q": {
+            "meds_in_hand_at_discharge": {
+              "label": "Did you leave the hospital with all your medicines?"
+            },
+            "discharge_med_education": {
+              "label": "How well did the hospital teach you about your medicines?",
+              "options": [
+                "Great - I felt ready",
+                "Good - I had most info I needed",
+                "OK - There were gaps",
+                "Poor - I felt unprepared",
+                "None - I figured it out myself"
+              ]
+            },
+            "knew_costs_before_discharge": {
+              "label": "Did you know what your medicines would cost before you left?"
+            },
+            "social_worker_met": {
+              "label": "Did a social worker talk to you about medicine costs?"
+            },
+            "first_refill_gap": {
+              "label": "Did you run out of medicine before your first refill?"
+            }
+          }
+        },
+        "immunosuppressants": {
+          "title": "Anti-Rejection Drugs",
+          "description": "Problems with your anti-rejection medicines",
+          "q": {
+            "generic_switch_forced": {
+              "label": "Were you ever switched to a different brand without being asked?"
+            },
+            "generic_switch_problems": {
+              "label": "If switched, did you have problems with blood levels or side effects?"
+            },
+            "trough_timing_issues": {
+              "label": "Have you had trouble timing your blood tests with your medicine?"
+            },
+            "dose_change_delay": {
+              "label": "After your dose changed, how long until you got the new prescription?",
+              "options": [
+                "Same day",
+                "1-2 days",
+                "3-5 days",
+                "More than 5 days",
+                "Had to use old dose while waiting"
+              ]
+            },
+            "ever_missed_immunosuppressant": {
+              "label": "Have you ever missed a dose because you could not get your medicine (not because you forgot)?"
+            },
+            "missed_reason": {
+              "label": "If yes, what was the main reason?",
+              "options": [
+                "Cost",
+                "Pharmacy delay",
+                "Insurance approval needed",
+                "Out of stock",
+                "Shipping issue",
+                "Insurance said no",
+                "Does not apply"
+              ]
+            }
+          }
+        },
+        "specialty": {
+          "title": "Specialty Pharmacy",
+          "description": "Your experience with mail-order or specialty pharmacies",
+          "q": {
+            "uses_specialty_pharmacy": {
+              "label": "Do you get any transplant drugs from a specialty pharmacy?"
+            },
+            "specialty_choice": {
+              "label": "Did you get to pick your specialty pharmacy?",
+              "options": [
+                "Yes, I chose",
+                "No, insurance picked it",
+                "No, transplant center picked it",
+                "Not sure",
+                "I do not use one"
+              ]
+            },
+            "specialty_shipping_issues": {
+              "label": "Have you had problems with shipping delays or drugs arriving too hot or cold?"
+            },
+            "specialty_refill_calls": {
+              "label": "How many calls does it take to refill your medicine?",
+              "options": [
+                "None - it is automatic",
+                "1 call",
+                "2-3 calls",
+                "4+ calls",
+                "I do not use one"
+              ]
+            },
+            "specialty_coordinator_helpful": {
+              "label": "If you have a pharmacy helper, how helpful are they?",
+              "options": [
+                "Very helpful",
+                "Somewhat helpful",
+                "Not helpful",
+                "Never talked to one",
+                "I do not have one"
+              ]
+            }
+          }
+        },
+        "insurance": {
+          "title": "Insurance & Coverage",
+          "description": "Insurance problems after your transplant",
+          "q": {
+            "insurance_changed_post_tx": {
+              "label": "Has your insurance changed since your transplant?"
+            },
+            "coverage_gap_experienced": {
+              "label": "Have you had a time with no insurance after your transplant?"
+            },
+            "medicare_36_month_aware": {
+              "label": "Did you know that Medicare used to stop covering anti-rejection drugs after 36 months?",
+              "options": [
+                "Yes, it affected me",
+                "Yes, but did not affect me",
+                "No, I did not know",
+                "I am not on Medicare"
+              ]
+            },
+            "prior_auth_immunosuppressants": {
+              "label": "Has your insurance ever made you get approval before filling your anti-rejection drugs?"
+            },
+            "step_therapy_post_tx": {
+              "label": "Has insurance ever made you try a different drug than what your doctor wanted?"
+            },
+            "annual_oop_range": {
+              "label": "About how much do you pay each year for transplant drugs (out of your pocket)?",
+              "options": [
+                "Under $500",
+                "$500-$1,000",
+                "$1,000-$2,500",
+                "$2,500-$5,000",
+                "$5,000-$10,000",
+                "Over $10,000"
+              ]
+            }
+          }
+        },
+        "center": {
+          "title": "Transplant Center Help",
+          "description": "Help you get from your transplant team",
+          "q": {
+            "center_has_pharmacy": {
+              "label": "Does your transplant center have its own pharmacy?",
+              "options": [
+                "Yes, and I use it",
+                "Yes, but I do not use it",
+                "No",
+                "Not sure"
+              ]
+            },
+            "coordinator_helps_with_meds": {
+              "label": "Does your transplant coordinator help you get your medicine?",
+              "options": [
+                "Yes, a lot",
+                "Sometimes",
+                "Rarely",
+                "Never",
+                "I do not have a coordinator"
+              ]
+            },
+            "center_told_about_assistance": {
+              "label": "Did your transplant center tell you about programs that help pay for drugs?"
+            },
+            "center_helped_apply": {
+              "label": "Did someone at your center help you apply for help programs?"
+            },
+            "knows_who_to_call": {
+              "label": "Do you know who to call at your center if you have a medicine problem?",
+              "options": [
+                "Yes, a specific person",
+                "Yes, a general number",
+                "Not sure who to call",
+                "No one to call"
+              ]
+            }
+          }
+        },
+        "pap": {
+          "title": "Help Programs",
+          "description": "Programs that help pay for your medicine",
+          "q": {
+            "uses_pap": {
+              "label": "Do you use any programs that help pay for your transplant drugs?"
+            },
+            "pap_types_used": {
+              "label": "Which types have you used? (Pick all that apply)",
+              "options": [
+                "Drug company copay card",
+                "Foundation grant",
+                "State program",
+                "Hospital charity",
+                "Pharmacy discount card",
+                "None"
+              ]
+            },
+            "pap_found_how": {
+              "label": "How did you first hear about help programs?",
+              "options": [
+                "Transplant center",
+                "Social worker",
+                "Support group",
+                "Found online",
+                "Pharmacy",
+                "Just found out now"
+              ]
+            },
+            "pap_gap_experienced": {
+              "label": "Have you ever run out of help because a program ended before you could renew?"
+            },
+            "pap_application_burden": {
+              "label": "How hard is it to apply for and keep your help programs?",
+              "options": [
+                "Easy",
+                "Some work",
+                "Hard - takes a lot of time",
+                "Very hard - almost gave up",
+                "Have not applied"
+              ]
+            }
+          }
+        },
+        "communication": {
+          "title": "Communication",
+          "description": "How well people keep you informed",
+          "q": {
+            "pharmacy_center_communicate": {
+              "label": "Do your pharmacy and transplant center talk to each other well?",
+              "options": [
+                "Yes, very well",
+                "Usually",
+                "Sometimes",
+                "Rarely",
+                "I have to be the go-between"
+              ]
+            },
+            "notified_of_changes": {
+              "label": "Do you get warned ahead of time when your drug costs or coverage will change?",
+              "options": [
+                "Always",
+                "Usually",
+                "Sometimes",
+                "Rarely",
+                "Never"
+              ]
+            },
+            "understood_all_meds": {
+              "label": "Do you know what each of your medicines does?",
+              "options": [
+                "Yes, completely",
+                "Mostly",
+                "Somewhat",
+                "Not really",
+                "No"
+              ]
+            },
+            "feels_like_burden": {
+              "label": "How often does managing your medicines feel like a second job?",
+              "options": [
+                "Never",
+                "Sometimes",
+                "Often",
+                "Always"
+              ]
+            }
+          }
+        },
+        "about": {
+          "title": "About You",
+          "description": "Optional - helps us understand who is taking this survey",
+          "q": {
+            "organ_type": {
+              "label": "What kind of transplant did you get?",
+              "options": [
+                "Kidney",
+                "Liver",
+                "Heart",
+                "Lung",
+                "Pancreas",
+                "More than one organ",
+                "Other",
+                "Prefer not to say"
+              ]
+            },
+            "years_post_transplant": {
+              "label": "How long ago was your transplant?",
+              "options": [
+                "Less than 1 year",
+                "1-2 years",
+                "3-5 years",
+                "5-10 years",
+                "10+ years",
+                "Still waiting"
+              ]
+            },
+            "num_medications": {
+              "label": "About how many medicines do you take each day?",
+              "options": [
+                "1-5",
+                "6-10",
+                "11-15",
+                "16-20",
+                "More than 20"
+              ]
+            },
+            "insurance_type": {
+              "label": "What is your main insurance?",
+              "options": [
+                "From my job",
+                "Marketplace (ACA)",
+                "Medicare only",
+                "Medicaid only",
+                "Medicare + Medicaid",
+                "Medicare + extra plan",
+                "VA",
+                "No insurance",
+                "Other"
+              ]
+            },
+            "region": {
+              "label": "Where do you live?",
+              "options": [
+                "Northeast",
+                "Southeast",
+                "Midwest",
+                "Southwest",
+                "West Coast",
+                "Outside US"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "general": {
+      "title": "General Medication Survey",
+      "sections": {
+        "affordability": {
+          "title": "Paying for Medicine",
+          "description": "How drug costs affect you",
+          "q": {
+            "cost_barrier": {
+              "label": "Have you ever skipped a prescription because it cost too much?"
+            },
+            "cost_frequency": {
+              "label": "How often does cost affect your medicine choices?",
+              "options": [
+                "Never",
+                "Rarely",
+                "Sometimes",
+                "Often",
+                "Always"
+              ]
+            },
+            "rationing": {
+              "label": "Have you ever skipped doses or split pills to make medicine last longer?"
+            },
+            "monthly_spend": {
+              "label": "About how much do you spend on medicine each month?",
+              "options": [
+                "Under $50",
+                "$50-$100",
+                "$100-$250",
+                "$250-$500",
+                "$500-$1,000",
+                "Over $1,000"
+              ]
+            },
+            "financial_stress": {
+              "label": "How much stress do your medicine costs cause?",
+              "options": [
+                "None",
+                "A little",
+                "Some",
+                "A lot",
+                "Very high"
+              ]
+            }
+          }
+        },
+        "pharmacy": {
+          "title": "Pharmacy",
+          "description": "Getting your prescriptions filled",
+          "q": {
+            "pharmacy_type": {
+              "label": "Where do you usually get your prescriptions?",
+              "options": [
+                "Local pharmacy",
+                "Chain pharmacy (CVS, Walgreens)",
+                "Mail order",
+                "Specialty pharmacy",
+                "Hospital pharmacy",
+                "Different places"
+              ]
+            },
+            "stockout_frequency": {
+              "label": "How often is your medicine out of stock when you need it?",
+              "options": [
+                "Never",
+                "Rarely",
+                "Sometimes",
+                "Often",
+                "Very often"
+              ]
+            },
+            "refill_difficulty": {
+              "label": "How hard is it to refill your medicine?",
+              "options": [
+                "Very easy",
+                "Easy",
+                "OK",
+                "Hard",
+                "Very hard"
+              ]
+            },
+            "pharmacist_helpful": {
+              "label": "Is your pharmacist helpful when you have questions?",
+              "options": [
+                "Very helpful",
+                "Somewhat helpful",
+                "OK",
+                "Not helpful",
+                "Never talked to one"
+              ]
+            },
+            "auto_refill": {
+              "label": "Do you use automatic refills?"
+            }
+          }
+        },
+        "insurance": {
+          "title": "Insurance",
+          "description": "How insurance affects your medicine",
+          "q": {
+            "has_insurance": {
+              "label": "Do you have insurance that covers medicine?"
+            },
+            "insurance_type": {
+              "label": "What kind of insurance do you have?",
+              "options": [
+                "From my job",
+                "Marketplace (ACA)",
+                "Medicare Part D",
+                "Medicaid",
+                "VA",
+                "No insurance",
+                "Other"
+              ]
+            },
+            "prior_auth_experienced": {
+              "label": "Has your insurance ever required approval before you could get a drug?"
+            },
+            "prior_auth_delayed": {
+              "label": "If yes, did this delay getting your medicine?"
+            },
+            "formulary_switch": {
+              "label": "Has your insurance ever made you switch to a different drug?"
+            },
+            "coverage_denial": {
+              "label": "Has your insurance ever said no to a drug you needed?"
+            }
+          }
+        },
+        "assistance": {
+          "title": "Help Programs",
+          "description": "Programs that help pay for medicine",
+          "q": {
+            "knows_about_pap": {
+              "label": "Did you know there are programs that help pay for medicine?"
+            },
+            "uses_assistance": {
+              "label": "Do you use any help programs now?"
+            },
+            "assistance_types": {
+              "label": "Which types have you used? (Pick all that apply)",
+              "options": [
+                "Drug company copay card",
+                "Free medicine program",
+                "GoodRx or similar discount",
+                "State program",
+                "Charity or foundation",
+                "None"
+              ]
+            },
+            "assistance_found_how": {
+              "label": "How did you first hear about help programs?",
+              "options": [
+                "Doctor",
+                "Pharmacist",
+                "Online search",
+                "Friend or family",
+                "Social worker",
+                "Just found out now"
+              ]
+            },
+            "assistance_difficulty": {
+              "label": "How hard was it to apply for help?",
+              "options": [
+                "Very easy",
+                "Easy",
+                "OK",
+                "Hard",
+                "Very hard",
+                "Have not applied"
+              ]
+            }
+          }
+        },
+        "management": {
+          "title": "Taking Your Medicine",
+          "description": "How you manage your daily medicines",
+          "q": {
+            "num_medications": {
+              "label": "How many prescription medicines do you take regularly?",
+              "options": [
+                "1-2",
+                "3-5",
+                "6-10",
+                "11-15",
+                "More than 15"
+              ]
+            },
+            "adherence_difficulty": {
+              "label": "How hard is it to take your medicines as your doctor says?",
+              "options": [
+                "Very easy",
+                "Easy",
+                "OK",
+                "Hard",
+                "Very hard"
+              ]
+            },
+            "missed_doses": {
+              "label": "How often do you miss doses?",
+              "options": [
+                "Never",
+                "Rarely",
+                "Sometimes",
+                "Often",
+                "Very often"
+              ]
+            },
+            "understands_meds": {
+              "label": "Do you know what each of your medicines does?",
+              "options": [
+                "Yes, completely",
+                "Mostly",
+                "Somewhat",
+                "Not really",
+                "No"
+              ]
+            },
+            "condition_type": {
+              "label": "What health issues do you have? (Pick all that apply)",
+              "options": [
+                "Diabetes",
+                "Heart disease",
+                "High blood pressure",
+                "Immune system problem",
+                "Mental health",
+                "Ongoing pain",
+                "Cancer",
+                "Other ongoing condition",
+                "Prefer not to say"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "pilot": {
+    "partnerProgram": "{{name}} Partner Program",
+    "welcomeGeneric": "Welcome, Partner Patients",
+    "welcomePartner": "Welcome, {{name}} Patients",
+    "heroGeneric": "Your healthcare provider has partnered with us to help you find medication assistance programs.",
+    "heroPartner": "{{name}} has partnered with Transplant Medication Navigator to help you find medication assistance programs.",
+    "getStarted": "Get Started",
+    "ctaSearchTitle": "Search Medications",
+    "ctaSearchText": "Find your medications and compare prices",
+    "ctaQuizTitle": "My Path Quiz",
+    "ctaQuizText": "Get personalized assistance recommendations",
+    "ctaGrantsTitle": "Find Grants & Foundations",
+    "ctaGrantsText": "Explore financial assistance programs",
+    "whatTitle": "What You Can Do Here",
+    "what1": "Search for your transplant medications and compare prices",
+    "what2": "Find Patient Assistance Programs (PAPs) that may provide medication at no cost if you qualify",
+    "what3": "Discover copay cards and manufacturer savings programs",
+    "what4": "Access foundation grants for financial assistance",
+    "what5": "Learn about insurance navigation and specialty pharmacies",
+    "trustFreeTitle": "Free Education",
+    "trustFreeText": "Educational resources at no cost",
+    "trustLoginTitle": "No Login",
+    "trustLoginText": "No account required",
+    "trustPrivacyTitle": "Privacy-Safe",
+    "trustPrivacyText": "No personal data collected",
+    "safetyLabel": "Important:",
+    "safetyText": "Legitimate Patient Assistance Programs never charge you to apply. If a site claims to be a PAP but charges fees, it's a scam. Report it.",
+    "aboutText": "Transplant Medication Navigator™ was built by a transplant recipient to help patients find medication assistance with free educational resources.",
+    "aboutLink": "Learn more about us"
   },
   "common": {
     "closeDialog": "Close dialog",

@@ -32,14 +32,10 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 const SPANISH_ROUTES = new Set([
   '/', '/wizard', '/education', '/application-help', '/faq',
   '/medications', '/evidence', '/my-medications', '/savings-tracker',
+  '/survey', '/survey/transplant', '/survey/general', '/pilot',
   '/terms-and-conditions', '/privacy', '/accessibility',
   '/about', '/feedback', '/education/appeals',
 ]);
-// NOTE: /survey, /survey/transplant, /survey/general and /pilot are NOT
-// listed: those pages render hard-coded English (no t() calls), so an /es/
-// variant would serve English content under a Spanish address with a
-// misleading hreflang pair. Re-add them here and in
-// scripts/generate-sitemap.js once the pages are actually translated.
 
 // Spanish titles/descriptions come from the same source the app uses
 // (seoMetadata imported at the top of the file).

@@ -205,8 +205,11 @@ export const seoMetadata = {
     twitterTitle: 'Partner Pilot Program',
     twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
     breadcrumbName: 'Pilot Program',
-    // No es: block — the page renders hard-coded English, so it must not
-    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
+    es: {
+      title: 'Programa piloto para socios | Transplant Medication Navigator™',
+      description: 'Bienvenido al programa piloto. Encuentre programas de asistencia para medicamentos, busque medicamentos de trasplante y acceda a recursos económicos verificados.',
+      breadcrumbName: 'Programa piloto',
+    },
   },
 
   termsAndConditions: {
@@ -250,8 +253,11 @@ export const seoMetadata = {
     twitterTitle: 'Share Your Journey',
     twitterDescription: 'Share your medication experience to help improve access for all patients. Anonymous surveys available.',
     breadcrumbName: 'Survey',
-    // No es: block — the page renders hard-coded English, so it must not
-    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
+    es: {
+      title: 'Comparta su experiencia | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia con los medicamentos para ayudar a mejorar el acceso para todos los pacientes. Encuestas anónimas para receptores de trasplante y personas con condiciones crónicas.',
+      breadcrumbName: 'Encuesta',
+    },
   },
 
   surveyTransplant: {
@@ -263,8 +269,11 @@ export const seoMetadata = {
     twitterTitle: 'Transplant Medication Survey',
     twitterDescription: 'Share your transplant medication journey to help improve access for all patients.',
     breadcrumbName: 'Transplant Survey',
-    // No es: block — the page renders hard-coded English, so it must not
-    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
+    es: {
+      title: 'Encuesta de medicamentos de trasplante | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia con los medicamentos de trasplante. Ayúdenos a entender los retos con las medicinas antirrechazo, las farmacias, el seguro y los programas de asistencia.',
+      breadcrumbName: 'Encuesta de trasplante',
+    },
   },
 
   surveyGeneral: {
@@ -276,8 +285,11 @@ export const seoMetadata = {
     twitterTitle: 'General Medication Survey',
     twitterDescription: 'Share your experience managing medications for chronic conditions.',
     breadcrumbName: 'General Survey',
-    // No es: block — the page renders hard-coded English, so it must not
-    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
+    es: {
+      title: 'Encuesta general sobre medicamentos | Transplant Medication Navigator™',
+      description: 'Comparta su experiencia manejando medicamentos para condiciones crónicas. Ayúdenos a abogar por un mejor acceso y precios más justos.',
+      breadcrumbName: 'Encuesta general',
+    },
   },
 
   myMedications: {

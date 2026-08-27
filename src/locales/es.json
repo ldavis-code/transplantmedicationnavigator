@@ -1319,8 +1319,7 @@
     },
     "banner": {
       "urgentText": "¿Se quedó sin medicamento, o le quedan solo unos días?",
-      "urgentLink": "Reciba ayuda hoy",
-      "urgentAriaLabel": "¿Sin medicamento? Vea los pasos de emergencia ahora"
+      "urgentLink": "Reciba ayuda hoy"
     },
     "skipLink": "Saltar al contenido principal",
     "nav": {
@@ -1355,7 +1354,7 @@
         },
         "applicationHelp": {
           "label": "Cómo solicitar",
-          "ariaLabel": "Aprenda a solicitar ayuda para pagar sus medicamentos"
+          "ariaLabel": "Cómo solicitar ayuda para pagar sus medicamentos"
         },
         "faq": {
           "label": "Preguntas",
@@ -1395,7 +1394,7 @@
     "hero": {
       "title1": "Su equipo de trasplante decide su medicina.",
       "title2": "Nosotros le ayudamos a conseguirla.",
-      "subtitle": "Cuánto debería costar, qué programas son realmente para usted y qué hacer cuando su plan cambia las reglas."
+      "subtitle": "Cuánto debería costar, qué programas podrían estar disponibles para usted y qué hacer cuando su plan cambia las reglas."
     },
     "flow": {
       "ariaLabel": "Cómo funciona, en tres pasos",
@@ -1408,11 +1407,9 @@
       "searchAriaLabel": "Escriba el nombre de su medicamento para buscar",
       "searchPlaceholder": "Escriba un medicamento...",
       "resultsAriaLabel": "Medicamentos que coinciden",
-      "resultAria": "Vea precios y programas para {{name}}",
       "noResults": "Todavía no tenemos ese.",
       "noResultsLink": "Pruebe la búsqueda completa de medicamentos",
       "or": "o",
-      "mychartAriaLabel": "Importe su lista de medicamentos desde MyChart",
       "mychartButton": "Importar mi lista desde MyChart",
       "mychartFootnote": "Incluido en el Epic Connection Hub. Iniciará sesión en el portal de su propio hospital — nunca guardamos sus credenciales. Importa su lista real desde más de 400 sistemas de salud con Epic, incluso si usted toma la versión de marca o la genérica. Sus datos se quedan en su dispositivo.",
       "examplesAriaLabel": "Medicamentos comunes de trasplante",
@@ -1464,13 +1461,13 @@
       "coverage": {
         "title": "Educación sobre cobertura",
         "text": "Medicare Parte B-ID, Parte D, Medicaid, VA y los beneficios de IHS, explicados.",
-        "ariaLabel": "Aprenda sobre las opciones de cobertura",
+        "ariaLabel": "Aprenda sobre la cobertura y sus opciones",
         "link": "Aprenda sobre la cobertura"
       },
       "grants": {
         "title": "Ayudas y fundaciones",
         "text": "{{programs}} programas de asistencia y fundaciones, más {{copayCards}} tarjetas de copago. Verificados, con enlaces directos y sin estafas. Actualizado en julio de 2026.",
-        "ariaLabel": "Explorar ayudas económicas y programas de fundaciones",
+        "ariaLabel": "Explorar programas de ayudas económicas y fundaciones",
         "link": "Explorar programas"
       }
     },
@@ -1650,7 +1647,7 @@
     },
     "nav": {
       "back": "Atrás",
-      "backAria": "Volver a la sección anterior",
+      "backAria": "Atrás: volver a la sección anterior",
       "nextSection": "Siguiente sección",
       "nextAria": "Continuar a la siguiente sección"
     },
@@ -1777,7 +1774,7 @@
       "crisisDesc": "Necesito ayuda ahora mismo para seguir tomando mis medicamentos"
     },
     "results": {
-      "backAria": "Volver al paso anterior",
+      "backAria": "Atrás: volver al paso anterior",
       "title": "Su estrategia de medicamentos",
       "subtitle": "Según sus respuestas, así puede manejar sus costos.",
       "printAria": "Imprimir su plan de medicamentos",
@@ -1812,7 +1809,7 @@
         "uninsuredCallout": "Sin seguro, los programas del fabricante de arriba son su mejor ruta. Pueden darle el medicamento completamente gratis si usted califica.",
         "foundationIncome": "Ayuda con copagos, normalmente con ingresos de hasta {{income}}. Los fondos abren y cierran; vuelva a revisar si está cerrado.",
         "foundationIncomeGeneric": "Ayuda con copagos; los requisitos se basan en la necesidad. Los fondos abren y cierran; vuelva a revisar si está cerrado.",
-        "foundationAria": "Abrir {{program}} (se abre en una pestaña nueva)",
+        "foundationAria": "Solicitar en {{program}} (se abre en una pestaña nueva)",
         "othersTitle": "Sus otros medicamentos ({{count}})",
         "othersTitleAll": "Sus medicamentos seleccionados ({{count}})",
         "othersNote": "Estos son genéricos o no tienen programa del fabricante; es normal, y los genéricos suelen costar mucho menos. Compare sus precios en efectivo con el enlace de abajo.",
@@ -2185,13 +2182,11 @@
       "resultsAria": "Resultados de la búsqueda",
       "helpBanner": "La ayuda está aquí; encontrémosla juntos. Escriba sus medicamentos y buscaremos ahorros, programas de asistencia al paciente, ayudas económicas y opciones de farmacias con buenos precios.",
       "resultsHeading": "Resultados de la búsqueda",
-      "addAria": "Agregar {{name}} a la lista",
       "alreadyAddedAria": "Ya agregado",
       "added": "Agregado",
       "add": "Agregar",
       "noMatches": "No hay resultados en nuestra base de datos de trasplante",
       "noMatchesHint": "Pruebe con otra forma de escribirlo o use la opción a continuación para agregarlo como medicamento personalizado.",
-      "addCustomAria": "Agregar el medicamento personalizado {{term}} a la lista",
       "addCustomLabel": "Agregar \"{{term}}\" a la lista",
       "checkExternal": "Consultar el precio en sitios externos",
       "addCustom": "Agregar personalizado",
@@ -2212,11 +2207,10 @@
       "removeAria": "Quitar {{name}}",
       "ready": {
         "title": "¿Listo para encontrar ahorros?",
-        "text": "Haga clic en el botón <strong>\"Mis ahorros en medicamentos\"</strong> a continuación para ver dónde puede ahorrar dinero en cada medicamento. Le mostraremos tarjetas de copago, programas de asistencia al paciente, farmacias de descuento y más."
+        "text": "Haga clic en el botón <strong>\"Opciones para ahorrar en sus medicamentos\"</strong> a continuación para ver dónde puede ahorrar dinero en cada medicamento. Le mostraremos tarjetas de copago, programas de asistencia al paciente, farmacias de descuento y más."
       },
-      "savingsButton": "Mis ahorros en medicamentos",
+      "savingsButton": "Opciones para ahorrar en sus medicamentos",
       "selectInsuranceFirst": "Por favor seleccione arriba su tipo de seguro para continuar",
-      "backAria": "Volver a la lista de medicamentos",
       "back": "Volver a los medicamentos",
       "options": {
         "title": "Sus opciones",
@@ -2242,7 +2236,7 @@
       "help": {
         "title": "¿Necesita ayuda para solicitar asistencia?",
         "text": "Aprenda paso a paso cómo llenar las solicitudes de los Programas de Asistencia al Paciente.",
-        "aria": "Ver la guía de solicitudes para recibir ayuda paso a paso",
+        "aria": "Ayudas económicas y fundaciones: guía de solicitudes paso a paso",
         "button": "Ayudas económicas y fundaciones"
       }
     },
@@ -2324,6 +2318,13 @@
         "withCopayCard": "Con tarjeta de copago",
         "annual": "Ahorro anual"
       },
+      "nextStep": {
+        "label": "Siguiente paso",
+        "copay": "Pida la tarjeta de copago de este medicamento. La mayoría de los pacientes con seguro comercial paga de $0 a $10 al mes.",
+        "pap": "Solicite el Programa de Asistencia al Paciente del fabricante. Puede darle este medicamento sin costo si usted califica.",
+        "cash": "Compare los precios en efectivo. Muchas veces es el costo más bajo sin usar el seguro.",
+        "foundation": "Busque ayudas económicas de fundaciones para el costo de sus medicamentos."
+      },
       "filters": {
         "label": "Filtrar:",
         "all": "Todas las opciones",
@@ -2353,7 +2354,7 @@
         "recipients": ".",
         "stageLabel": "Etapa: ",
         "tip": "<strong>Consejo:</strong> Siempre verifique con su médico si puede cambiar entre la versión de marca y la genérica.",
-        "drugFactsAria": "Leer toda la información del medicamento {{name}} en Drugs.com (se abre en una pestaña nueva)",
+        "drugFactsAria": "Leer toda la información del medicamento en Drugs.com: {{name}} (se abre en una pestaña nueva)",
         "drugFactsLink": "Leer toda la información del medicamento en Drugs.com ",
         "pharmaciesTitle": "Farmacias (dónde surtir o despachar su receta)",
         "thPharmacy": "Farmacia",
@@ -2380,7 +2381,7 @@
         "eligible": "Usted es elegible",
         "copayFor": "Para seguro comercial/del empleador • Programa del fabricante",
         "perMonth": "/mes",
-        "getCardAria": "Obtener la tarjeta de copago para {{name}} (se abre en una pestaña nueva)",
+        "getCardAria": "Obtener tarjeta de copago para {{name}} (se abre en una pestaña nueva)",
         "getCard": "Obtener tarjeta ",
         "linkVerified": "Enlace verificado {{date}}",
         "incomeBased": "Según ingresos",
@@ -2399,13 +2400,13 @@
         "fundFinderLink": "Consultar los fondos de TotalAssist ",
         "partDTitle": "Información de Medicare Parte D",
         "partDText": "Conozca los cambios de cobertura de Medicare Parte D y las opciones de ahorro para {{name}}.",
-        "partDAria": "Ver la información de Medicare Parte D para {{name}} (se abre en una pestaña nueva)",
+        "partDAria": "Ver detalles de Medicare Parte D para {{name}} (se abre en una pestaña nueva)",
         "viewDetails": "Ver detalles ",
         "copayCommercialOnly": "Las tarjetas de copago son solo para seguro comercial/del empleador",
         "pricesNote": "Los precios son para un suministro de 30 días. Su precio puede ser diferente. Llame a la farmacia para saber el precio exacto.",
         "formsTitle": "¿Necesita ayuda para llenar los formularios?",
         "formsText": "Nuestra guía le muestra paso a paso cómo llenar los formularios. Tenemos listas de verificación y ejemplos para ayudarle.",
-        "viewGuideAria": "Ver la guía completa de solicitudes",
+        "viewGuideAria": "Ver ayudas económicas y fundaciones: guía completa de solicitudes",
         "viewGrants": "Ver ayudas económicas y fundaciones"
       },
       "warning": {
@@ -2440,23 +2441,23 @@
         "copayForShort": "Para seguro comercial/del empleador",
         "copayRange": "$0 - $10/mes",
         "manufacturerProgram": "Programa del fabricante",
-        "viewCopayAria": "Ver los detalles de la tarjeta de copago para {{name}}",
+        "viewCopayAria": "Obtener tarjeta: ver los detalles de la tarjeta de copago para {{name}}",
         "papForShort": "Para Medicare, Medicaid o sin seguro",
         "incomeRules": "Debe cumplir con las reglas de ingresos",
-        "viewPapAria": "Ver los detalles de asistencia al paciente para {{name}}",
+        "viewPapAria": "Solicitar: ver los detalles de asistencia al paciente para {{name}}",
         "goodRxDesc": "Cupones gratis en más de 70,000 farmacias",
         "singleCareDesc": "Tarjeta gratis en más de 35,000 farmacias",
         "costPlusDesc": "Farmacia en línea con precios bajos",
         "community": "Comunidad: ${{min}}-${{max}} ({{num}} reportes)",
         "estUpdated": "Est. actualizado en julio de 2026",
-        "checkLiveGoodRxAria": "Consultar el precio actual en GoodRx para {{name}} (se abre en una pestaña nueva)",
-        "checkLiveSingleCareAria": "Consultar el precio actual en SingleCare para {{name}} (se abre en una pestaña nueva)",
-        "checkLiveCostPlusAria": "Consultar el precio actual en Cost Plus Drugs (se abre en una pestaña nueva)",
+        "checkLiveGoodRxAria": "Ver precio actual en GoodRx para {{name}} (se abre en una pestaña nueva)",
+        "checkLiveSingleCareAria": "Ver precio actual en SingleCare para {{name}} (se abre en una pestaña nueva)",
+        "checkLiveCostPlusAria": "Ver precio actual en Cost Plus Drugs (se abre en una pestaña nueva)",
         "checkLive": "Ver precio actual ",
         "reportPrice": "Reportar precio",
         "trumpRxDesc": "Precio en efectivo con descuento del gobierno",
         "trumpRxExclude": "Puede excluir Medicare/Medicaid",
-        "ourGuideAria": "Ver la guía de TrumpRx para pacientes de trasplante",
+        "ourGuideAria": "Nuestra guía de TrumpRx para pacientes de trasplante",
         "ourGuide": "Nuestra guía ",
         "visitTrumpRxAria": "Visitar TrumpRx.gov (se abre en una pestaña nueva)",
         "footerNote": "Estos precios son para un suministro de 30 días. Su precio puede ser diferente. Llame a la farmacia para saber su precio exacto. (Última actualización: julio de 2026)",
@@ -2502,7 +2503,7 @@
       "checkCostPlusAria": "Consultar el precio de {{name}} en Cost Plus Drugs (se abre en una pestaña nueva)",
       "checkGoodRxAria": "Consultar el precio de {{name}} en GoodRx (se abre en una pestaña nueva)",
       "checkSingleCareAria": "Consultar el precio de {{name}} en SingleCare (se abre en una pestaña nueva)",
-      "searchDrugsAria": "Buscar programas de asistencia para {{name}} en Drugs.com (se abre en una pestaña nueva)",
+      "searchDrugsAria": "Buscar \"{{name}}\" en Drugs.com para encontrar programas de asistencia (se abre en una pestaña nueva)",
       "searchDrugsLink": "Buscar \"{{name}}\" en Drugs.com para encontrar programas de asistencia "
     },
     "detail": {
@@ -3546,6 +3547,657 @@
         }
       }
     }
+  },
+  "survey": {
+    "landing": {
+      "title": "Comparta su experiencia",
+      "subtitle": "Su experiencia puede cambiar el sistema",
+      "transplantTitle": "Encuesta sobre su vida con el trasplante",
+      "transplantText": "Para pacientes de trasplante que lidian con medicinas antirrechazo, farmacias y seguros.",
+      "transplantMeta": "8 áreas de temas - complete solo las que apliquen a usted",
+      "transplantStart": "Comenzar la encuesta de trasplante",
+      "generalTitle": "Encuesta general sobre medicamentos",
+      "generalText": "Para cualquier persona que tenga problemas para conseguir o pagar sus medicinas.",
+      "generalMeta": "5 áreas de temas - toma unos 5 minutos",
+      "generalStart": "Comenzar la encuesta general",
+      "whyTitle": "Por qué preguntamos",
+      "whyQuote": "\"Cuando comparte su historia, ayuda a otros pacientes. Juntos estamos creando la guía que nos hubiera gustado tener. Su voz nos ayuda a arreglar un sistema que no funciona.\"",
+      "whyAttribution": "— Lorrinda, presidenta de TRIO y receptora de un trasplante de hígado",
+      "privacyLabel": "Privacidad:",
+      "privacyText": "No se recogen nombres, fechas ni expedientes médicos"
+    },
+    "common": {
+      "yes": "Sí",
+      "no": "No",
+      "na": "No aplica",
+      "intro": "Elija los temas que más le importan. Puede enviar cada sección por separado.",
+      "completedCount": "{{completed}} de {{total}} secciones completadas",
+      "thankYou": "- ¡Gracias por compartir su experiencia!",
+      "submitted": "✓ Enviada",
+      "questionCount": "{{count}} preguntas",
+      "answeredCount": "({{count}} respondidas)",
+      "backToTopicsAria": "Volver a los temas",
+      "backToTopics": "← Volver a los temas",
+      "update": "Actualizar respuestas ✓",
+      "submitSection": "Enviar esta sección ✓",
+      "privacyTitle": "Su privacidad está protegida:",
+      "privacyLine1": "No se recogen nombres, fechas ni números de expediente médico.",
+      "privacyLine2": "Todas las respuestas son anónimas y nos ayudan a abogar por un mejor acceso a los medicamentos.",
+      "poweredBy": "Con el apoyo de TransplantMedicationNavigator.com. Por pacientes, para pacientes."
+    },
+    "transplant": {
+      "title": "Encuesta sobre su experiencia con medicamentos de trasplante",
+      "sections": {
+        "discharge": {
+          "title": "Al salir del hospital",
+          "description": "Qué pasó cuando volvió a casa después de su trasplante",
+          "q": {
+            "meds_in_hand_at_discharge": {
+              "label": "¿Salió del hospital con todas sus medicinas?"
+            },
+            "discharge_med_education": {
+              "label": "¿Qué tan bien le enseñó el hospital sobre sus medicinas?",
+              "options": [
+                "Muy bien - me sentí listo(a)",
+                "Bien - tenía casi toda la información",
+                "Regular - hubo vacíos",
+                "Mal - no me sentí preparado(a)",
+                "Nada - lo aprendí por mi cuenta"
+              ]
+            },
+            "knew_costs_before_discharge": {
+              "label": "¿Sabía cuánto costarían sus medicinas antes de salir?"
+            },
+            "social_worker_met": {
+              "label": "¿Un trabajador social habló con usted sobre el costo de las medicinas?"
+            },
+            "first_refill_gap": {
+              "label": "¿Se quedó sin medicina antes de su primera renovación?"
+            }
+          }
+        },
+        "immunosuppressants": {
+          "title": "Medicinas antirrechazo",
+          "description": "Problemas con sus medicinas antirrechazo",
+          "q": {
+            "generic_switch_forced": {
+              "label": "¿Alguna vez le cambiaron a otra marca sin preguntarle?"
+            },
+            "generic_switch_problems": {
+              "label": "Si le cambiaron, ¿tuvo problemas con sus niveles en sangre o efectos secundarios?"
+            },
+            "trough_timing_issues": {
+              "label": "¿Ha tenido problemas para coordinar sus análisis de sangre con su medicina?"
+            },
+            "dose_change_delay": {
+              "label": "Después de un cambio de dosis, ¿cuánto tardó en recibir la nueva receta?",
+              "options": [
+                "El mismo día",
+                "1-2 días",
+                "3-5 días",
+                "Más de 5 días",
+                "Tuve que usar la dosis anterior mientras esperaba"
+              ]
+            },
+            "ever_missed_immunosuppressant": {
+              "label": "¿Alguna vez perdió una dosis porque no pudo conseguir su medicina (no porque se le olvidó)?"
+            },
+            "missed_reason": {
+              "label": "Si respondió sí, ¿cuál fue la razón principal?",
+              "options": [
+                "El costo",
+                "Demora de la farmacia",
+                "El seguro pedía aprobación",
+                "No había en existencia",
+                "Problema de envío",
+                "El seguro dijo que no",
+                "No aplica"
+              ]
+            }
+          }
+        },
+        "specialty": {
+          "title": "Farmacia especializada",
+          "description": "Su experiencia con farmacias especializadas o de envío por correo",
+          "q": {
+            "uses_specialty_pharmacy": {
+              "label": "¿Recibe alguna medicina de trasplante de una farmacia especializada?"
+            },
+            "specialty_choice": {
+              "label": "¿Pudo elegir su farmacia especializada?",
+              "options": [
+                "Sí, yo la elegí",
+                "No, la eligió el seguro",
+                "No, la eligió el centro de trasplante",
+                "No estoy seguro(a)",
+                "No uso una"
+              ]
+            },
+            "specialty_shipping_issues": {
+              "label": "¿Ha tenido problemas con demoras de envío o medicinas que llegan muy calientes o muy frías?"
+            },
+            "specialty_refill_calls": {
+              "label": "¿Cuántas llamadas necesita para renovar su medicina?",
+              "options": [
+                "Ninguna - es automático",
+                "1 llamada",
+                "2-3 llamadas",
+                "4 o más llamadas",
+                "No uso una"
+              ]
+            },
+            "specialty_coordinator_helpful": {
+              "label": "Si tiene un asistente de farmacia, ¿qué tan útil es?",
+              "options": [
+                "Muy útil",
+                "Algo útil",
+                "No es útil",
+                "Nunca he hablado con uno",
+                "No tengo uno"
+              ]
+            }
+          }
+        },
+        "insurance": {
+          "title": "Seguro y cobertura",
+          "description": "Problemas con el seguro después de su trasplante",
+          "q": {
+            "insurance_changed_post_tx": {
+              "label": "¿Ha cambiado su seguro desde su trasplante?"
+            },
+            "coverage_gap_experienced": {
+              "label": "¿Ha pasado un tiempo sin seguro después de su trasplante?"
+            },
+            "medicare_36_month_aware": {
+              "label": "¿Sabía que antes Medicare dejaba de cubrir las medicinas antirrechazo después de 36 meses?",
+              "options": [
+                "Sí, me afectó",
+                "Sí, pero no me afectó",
+                "No, no lo sabía",
+                "No tengo Medicare"
+              ]
+            },
+            "prior_auth_immunosuppressants": {
+              "label": "¿Su seguro le ha pedido aprobación previa para surtir sus medicinas antirrechazo?"
+            },
+            "step_therapy_post_tx": {
+              "label": "¿El seguro le ha hecho probar una medicina distinta a la que quería su médico?"
+            },
+            "annual_oop_range": {
+              "label": "¿Cuánto paga al año de su bolsillo por las medicinas de trasplante, más o menos?",
+              "options": [
+                "Menos de $500",
+                "$500-$1,000",
+                "$1,000-$2,500",
+                "$2,500-$5,000",
+                "$5,000-$10,000",
+                "Más de $10,000"
+              ]
+            }
+          }
+        },
+        "center": {
+          "title": "Ayuda del centro de trasplante",
+          "description": "La ayuda que recibe de su equipo de trasplante",
+          "q": {
+            "center_has_pharmacy": {
+              "label": "¿Su centro de trasplante tiene su propia farmacia?",
+              "options": [
+                "Sí, y la uso",
+                "Sí, pero no la uso",
+                "No",
+                "No estoy seguro(a)"
+              ]
+            },
+            "coordinator_helps_with_meds": {
+              "label": "¿Su coordinador de trasplante le ayuda a conseguir su medicina?",
+              "options": [
+                "Sí, mucho",
+                "A veces",
+                "Casi nunca",
+                "Nunca",
+                "No tengo coordinador"
+              ]
+            },
+            "center_told_about_assistance": {
+              "label": "¿Su centro de trasplante le habló de programas que ayudan a pagar las medicinas?"
+            },
+            "center_helped_apply": {
+              "label": "¿Alguien de su centro le ayudó a solicitar programas de ayuda?"
+            },
+            "knows_who_to_call": {
+              "label": "¿Sabe a quién llamar en su centro si tiene un problema con una medicina?",
+              "options": [
+                "Sí, a una persona específica",
+                "Sí, a un número general",
+                "No sé a quién llamar",
+                "No tengo a quién llamar"
+              ]
+            }
+          }
+        },
+        "pap": {
+          "title": "Programas de ayuda",
+          "description": "Programas que ayudan a pagar su medicina",
+          "q": {
+            "uses_pap": {
+              "label": "¿Usa algún programa que ayude a pagar sus medicinas de trasplante?"
+            },
+            "pap_types_used": {
+              "label": "¿Qué tipos ha usado? (Marque todos los que apliquen)",
+              "options": [
+                "Tarjeta de copago del fabricante",
+                "Ayuda de una fundación",
+                "Programa estatal",
+                "Caridad del hospital",
+                "Tarjeta de descuento de farmacia",
+                "Ninguno"
+              ]
+            },
+            "pap_found_how": {
+              "label": "¿Cómo supo por primera vez de los programas de ayuda?",
+              "options": [
+                "Centro de trasplante",
+                "Trabajador social",
+                "Grupo de apoyo",
+                "Lo encontré en internet",
+                "Farmacia",
+                "Me acabo de enterar"
+              ]
+            },
+            "pap_gap_experienced": {
+              "label": "¿Alguna vez se quedó sin ayuda porque un programa terminó antes de poder renovarlo?"
+            },
+            "pap_application_burden": {
+              "label": "¿Qué tan difícil es solicitar y mantener sus programas de ayuda?",
+              "options": [
+                "Fácil",
+                "Algo de trabajo",
+                "Difícil - toma mucho tiempo",
+                "Muy difícil - casi me rindo",
+                "No he solicitado"
+              ]
+            }
+          }
+        },
+        "communication": {
+          "title": "Comunicación",
+          "description": "Qué tan bien le mantienen informado(a)",
+          "q": {
+            "pharmacy_center_communicate": {
+              "label": "¿Su farmacia y su centro de trasplante se comunican bien entre sí?",
+              "options": [
+                "Sí, muy bien",
+                "Casi siempre",
+                "A veces",
+                "Casi nunca",
+                "Yo tengo que ser el intermediario"
+              ]
+            },
+            "notified_of_changes": {
+              "label": "¿Le avisan con tiempo cuando van a cambiar los costos o la cobertura de su medicina?",
+              "options": [
+                "Siempre",
+                "Casi siempre",
+                "A veces",
+                "Casi nunca",
+                "Nunca"
+              ]
+            },
+            "understood_all_meds": {
+              "label": "¿Sabe para qué sirve cada una de sus medicinas?",
+              "options": [
+                "Sí, completamente",
+                "En su mayoría",
+                "Más o menos",
+                "No mucho",
+                "No"
+              ]
+            },
+            "feels_like_burden": {
+              "label": "¿Con qué frecuencia manejar sus medicinas se siente como un segundo trabajo?",
+              "options": [
+                "Nunca",
+                "A veces",
+                "Con frecuencia",
+                "Siempre"
+              ]
+            }
+          }
+        },
+        "about": {
+          "title": "Sobre usted",
+          "description": "Opcional - nos ayuda a entender quién responde esta encuesta",
+          "q": {
+            "organ_type": {
+              "label": "¿Qué tipo de trasplante recibió?",
+              "options": [
+                "Riñón",
+                "Hígado",
+                "Corazón",
+                "Pulmón",
+                "Páncreas",
+                "Más de un órgano",
+                "Otro",
+                "Prefiero no decir"
+              ]
+            },
+            "years_post_transplant": {
+              "label": "¿Hace cuánto fue su trasplante?",
+              "options": [
+                "Menos de 1 año",
+                "1-2 años",
+                "3-5 años",
+                "5-10 años",
+                "Más de 10 años",
+                "Todavía estoy en espera"
+              ]
+            },
+            "num_medications": {
+              "label": "¿Cuántas medicinas toma al día, más o menos?",
+              "options": [
+                "1-5",
+                "6-10",
+                "11-15",
+                "16-20",
+                "Más de 20"
+              ]
+            },
+            "insurance_type": {
+              "label": "¿Cuál es su seguro principal?",
+              "options": [
+                "De mi trabajo",
+                "Mercado de seguros (ACA)",
+                "Solo Medicare",
+                "Solo Medicaid",
+                "Medicare + Medicaid",
+                "Medicare + plan adicional",
+                "VA",
+                "Sin seguro",
+                "Otro"
+              ]
+            },
+            "region": {
+              "label": "¿Dónde vive?",
+              "options": [
+                "Noreste",
+                "Sureste",
+                "Medio Oeste",
+                "Suroeste",
+                "Costa Oeste",
+                "Fuera de EE. UU."
+              ]
+            }
+          }
+        }
+      }
+    },
+    "general": {
+      "title": "Encuesta general sobre medicamentos",
+      "sections": {
+        "affordability": {
+          "title": "Pagar la medicina",
+          "description": "Cómo le afectan los costos de las medicinas",
+          "q": {
+            "cost_barrier": {
+              "label": "¿Alguna vez dejó de surtir una receta porque costaba demasiado?"
+            },
+            "cost_frequency": {
+              "label": "¿Con qué frecuencia el costo afecta sus decisiones sobre medicinas?",
+              "options": [
+                "Nunca",
+                "Casi nunca",
+                "A veces",
+                "Con frecuencia",
+                "Siempre"
+              ]
+            },
+            "rationing": {
+              "label": "¿Alguna vez saltó dosis o partió pastillas para que la medicina durara más?"
+            },
+            "monthly_spend": {
+              "label": "¿Cuánto gasta en medicinas al mes, más o menos?",
+              "options": [
+                "Menos de $50",
+                "$50-$100",
+                "$100-$250",
+                "$250-$500",
+                "$500-$1,000",
+                "Más de $1,000"
+              ]
+            },
+            "financial_stress": {
+              "label": "¿Cuánto estrés le causan los costos de sus medicinas?",
+              "options": [
+                "Nada",
+                "Un poco",
+                "Algo",
+                "Mucho",
+                "Muchísimo"
+              ]
+            }
+          }
+        },
+        "pharmacy": {
+          "title": "Farmacia",
+          "description": "Cómo surte sus recetas",
+          "q": {
+            "pharmacy_type": {
+              "label": "¿Dónde surte sus recetas normalmente?",
+              "options": [
+                "Farmacia local",
+                "Farmacia de cadena (CVS, Walgreens)",
+                "Por correo",
+                "Farmacia especializada",
+                "Farmacia del hospital",
+                "En distintos lugares"
+              ]
+            },
+            "stockout_frequency": {
+              "label": "¿Con qué frecuencia falta su medicina en la farmacia cuando la necesita?",
+              "options": [
+                "Nunca",
+                "Casi nunca",
+                "A veces",
+                "Con frecuencia",
+                "Muy seguido"
+              ]
+            },
+            "refill_difficulty": {
+              "label": "¿Qué tan difícil es renovar su medicina?",
+              "options": [
+                "Muy fácil",
+                "Fácil",
+                "Regular",
+                "Difícil",
+                "Muy difícil"
+              ]
+            },
+            "pharmacist_helpful": {
+              "label": "¿Su farmacéutico le ayuda cuando tiene preguntas?",
+              "options": [
+                "Me ayuda mucho",
+                "Me ayuda algo",
+                "Regular",
+                "No me ayuda",
+                "Nunca he hablado con uno"
+              ]
+            },
+            "auto_refill": {
+              "label": "¿Usa renovaciones automáticas?"
+            }
+          }
+        },
+        "insurance": {
+          "title": "Seguro",
+          "description": "Cómo el seguro afecta su medicina",
+          "q": {
+            "has_insurance": {
+              "label": "¿Tiene seguro que cubra medicinas?"
+            },
+            "insurance_type": {
+              "label": "¿Qué tipo de seguro tiene?",
+              "options": [
+                "De mi trabajo",
+                "Mercado de seguros (ACA)",
+                "Medicare Parte D",
+                "Medicaid",
+                "VA",
+                "Sin seguro",
+                "Otro"
+              ]
+            },
+            "prior_auth_experienced": {
+              "label": "¿Su seguro le ha pedido aprobación antes de poder recibir una medicina?"
+            },
+            "prior_auth_delayed": {
+              "label": "Si respondió sí, ¿esto retrasó su medicina?"
+            },
+            "formulary_switch": {
+              "label": "¿Su seguro le ha hecho cambiar a otra medicina?"
+            },
+            "coverage_denial": {
+              "label": "¿Su seguro le ha negado una medicina que necesitaba?"
+            }
+          }
+        },
+        "assistance": {
+          "title": "Programas de ayuda",
+          "description": "Programas que ayudan a pagar la medicina",
+          "q": {
+            "knows_about_pap": {
+              "label": "¿Sabía que hay programas que ayudan a pagar las medicinas?"
+            },
+            "uses_assistance": {
+              "label": "¿Usa algún programa de ayuda ahora?"
+            },
+            "assistance_types": {
+              "label": "¿Qué tipos ha usado? (Marque todos los que apliquen)",
+              "options": [
+                "Tarjeta de copago del fabricante",
+                "Programa de medicina gratuita",
+                "GoodRx u otro descuento similar",
+                "Programa estatal",
+                "Caridad o fundación",
+                "Ninguno"
+              ]
+            },
+            "assistance_found_how": {
+              "label": "¿Cómo supo por primera vez de los programas de ayuda?",
+              "options": [
+                "Médico",
+                "Farmacéutico",
+                "Búsqueda en internet",
+                "Amigo o familiar",
+                "Trabajador social",
+                "Me acabo de enterar"
+              ]
+            },
+            "assistance_difficulty": {
+              "label": "¿Qué tan difícil fue solicitar la ayuda?",
+              "options": [
+                "Muy fácil",
+                "Fácil",
+                "Regular",
+                "Difícil",
+                "Muy difícil",
+                "No he solicitado"
+              ]
+            }
+          }
+        },
+        "management": {
+          "title": "Tomar su medicina",
+          "description": "Cómo maneja sus medicinas diarias",
+          "q": {
+            "num_medications": {
+              "label": "¿Cuántas medicinas recetadas toma con regularidad?",
+              "options": [
+                "1-2",
+                "3-5",
+                "6-10",
+                "11-15",
+                "Más de 15"
+              ]
+            },
+            "adherence_difficulty": {
+              "label": "¿Qué tan difícil es tomar sus medicinas como dice su médico?",
+              "options": [
+                "Muy fácil",
+                "Fácil",
+                "Regular",
+                "Difícil",
+                "Muy difícil"
+              ]
+            },
+            "missed_doses": {
+              "label": "¿Con qué frecuencia pierde dosis?",
+              "options": [
+                "Nunca",
+                "Casi nunca",
+                "A veces",
+                "Con frecuencia",
+                "Muy seguido"
+              ]
+            },
+            "understands_meds": {
+              "label": "¿Sabe para qué sirve cada una de sus medicinas?",
+              "options": [
+                "Sí, completamente",
+                "En su mayoría",
+                "Más o menos",
+                "No mucho",
+                "No"
+              ]
+            },
+            "condition_type": {
+              "label": "¿Qué problemas de salud tiene? (Marque todos los que apliquen)",
+              "options": [
+                "Diabetes",
+                "Enfermedad del corazón",
+                "Presión alta",
+                "Problema del sistema inmunitario",
+                "Salud mental",
+                "Dolor continuo",
+                "Cáncer",
+                "Otra condición continua",
+                "Prefiero no decir"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "pilot": {
+    "partnerProgram": "Programa asociado de {{name}}",
+    "welcomeGeneric": "Bienvenidos, pacientes de programas asociados",
+    "welcomePartner": "Bienvenidos, pacientes de {{name}}",
+    "heroGeneric": "Su proveedor de salud se ha asociado con nosotros para ayudarle a encontrar programas de asistencia para medicamentos.",
+    "heroPartner": "{{name}} se ha asociado con Transplant Medication Navigator para ayudarle a encontrar programas de asistencia para medicamentos.",
+    "getStarted": "Comience aquí",
+    "ctaSearchTitle": "Buscar medicamentos",
+    "ctaSearchText": "Encuentre sus medicamentos y compare precios",
+    "ctaQuizTitle": "Cuestionario Mi Camino",
+    "ctaQuizText": "Reciba recomendaciones de asistencia personalizadas",
+    "ctaGrantsTitle": "Ayudas económicas y fundaciones",
+    "ctaGrantsText": "Explore programas de asistencia económica",
+    "whatTitle": "Qué puede hacer aquí",
+    "what1": "Buscar sus medicamentos de trasplante y comparar precios",
+    "what2": "Encontrar Programas de Asistencia al Paciente (PAP) que pueden darle el medicamento sin costo si usted califica",
+    "what3": "Descubrir tarjetas de copago y programas de ahorro del fabricante",
+    "what4": "Acceder a ayudas económicas de fundaciones",
+    "what5": "Aprender sobre cómo navegar el seguro y las farmacias especializadas",
+    "trustFreeTitle": "Educación gratuita",
+    "trustFreeText": "Recursos educativos sin costo",
+    "trustLoginTitle": "Sin cuenta",
+    "trustLoginText": "No necesita crear una cuenta",
+    "trustPrivacyTitle": "Privacidad protegida",
+    "trustPrivacyText": "No se recogen datos personales",
+    "safetyLabel": "Importante:",
+    "safetyText": "Los Programas de Asistencia al Paciente legítimos nunca cobran por solicitar. Si un sitio dice ser un PAP pero cobra cuotas, es una estafa. Repórtelo.",
+    "aboutText": "Transplant Medication Navigator™ fue creado por una receptora de trasplante para ayudar a los pacientes a encontrar asistencia para medicamentos con recursos educativos gratuitos.",
+    "aboutLink": "Conozca más sobre nosotros"
   },
   "common": {
     "closeDialog": "Cerrar el diálogo",

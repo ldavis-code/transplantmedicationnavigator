@@ -265,7 +265,7 @@ const MedicationSearch = () => {
                                     {searchResult.internal.map(med => {
                                         const isAlreadyIn = myListIds.includes(med.id);
                                         return (
-                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn} aria-label={t('medications.search.addAria', { name: localizeMedName(med.brandName) })}>
+                                            <button key={med.id} onClick={() => addInternalToList(med.id)} disabled={isAlreadyIn} className="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex justify-between items-center group transition disabled:opacity-50 disabled:cursor-not-allowed" role="option" aria-selected={isAlreadyIn}>
                                                 <div>
                                                     <span className="font-bold text-slate-900 block">{localizeMedName(med.brandName)}</span>
                                                     <span className="text-sm text-slate-600">{localizeMedName(med.genericName)}</span>
@@ -290,7 +290,7 @@ const MedicationSearch = () => {
                             )}
                             {searchResult.showExternalOption && (
                                 <div className="border-t border-slate-100 pt-2 mt-1">
-                                    <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center group transition" aria-label={t('medications.search.addCustomAria', { term: searchTerm })}>
+                                    <button onClick={addCustomToList} className="w-full text-left p-3 rounded-lg hover:bg-indigo-50 flex justify-between items-center group transition">
                                         <div>
                                             <span className="font-bold text-indigo-900 block">{t('medications.search.addCustomLabel', { term: searchTerm })}</span>
                                             <span className="text-xs text-indigo-600">{t('medications.search.checkExternal')}</span>
@@ -484,11 +484,13 @@ const MedicationSearch = () => {
                     <button
                         onClick={() => setShowSavings(false)}
                         className="text-slate-700 flex items-center gap-1 text-sm hover:text-emerald-600 min-h-[44px]"
-                        aria-label={t('medications.verify.backAria')}
                     >
                         <ChevronLeft size={16} aria-hidden="true" /> {t('medications.verify.back')}
                     </button>
-                    <h2 className="text-lg font-bold text-emerald-700">{t('medications.verify.savingsButton')}</h2>
+                    {/* The results view hides the search section, so this is
+                        the page's one H1 (the a11y review found the Spanish
+                        results with no H1 at all). */}
+                    <h1 className="text-lg font-bold text-emerald-700">{t('medications.verify.savingsButton')}</h1>
                 </div>
             )}
 
