@@ -112,6 +112,18 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE medications SET "condition" = 'high-blood-pressure' WHERE id = 'chlorthalidone' AND "condition" IS DISTINCT FROM 'high-blood-pressure'`,
     ],
   },
+  {
+    // Same-day escalation contact for enterprise centers: the emergency
+    // guidance page leads with a center-branded "call your center now"
+    // step when an organization has configured one (PR #832). Both columns
+    // optional; NULL hides the step, so the public site and unconfigured
+    // tenants are unchanged. Editable in the admin Organization Settings.
+    id: '049_org_escalation_contact',
+    statements: [
+      (sql) => sql`ALTER TABLE organizations ADD COLUMN IF NOT EXISTS escalation_phone TEXT`,
+      (sql) => sql`ALTER TABLE organizations ADD COLUMN IF NOT EXISTS escalation_contact TEXT`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
