@@ -5,6 +5,7 @@
     "genericName": "Intravenous Immunoglobulin (IVIG)",
     "rxcui": null,
     "category": "Acute Rejection",
+    "condition": "rejection-treatment",
     "manufacturer": "Various",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -28,6 +29,7 @@
     "genericName": "Darbepoetin Alfa",
     "rxcui": null,
     "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "Amgen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -50,6 +52,7 @@
     "genericName": "Epoetin Alfa",
     "rxcui": null,
     "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "Janssen / Amgen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -72,6 +75,7 @@
     "genericName": "Ferric Carboxymaltose",
     "rxcui": null,
     "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "American Regent",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -94,6 +98,7 @@
     "genericName": "Ferumoxytol",
     "rxcui": null,
     "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "AMAG",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -116,6 +121,7 @@
     "genericName": "Iron Sucrose",
     "rxcui": null,
     "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "American Regent",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -137,7 +143,8 @@
     "brandName": "Mircera",
     "genericName": "Methoxy Polyethylene Glycol-Epoetin Beta",
     "rxcui": null,
-    "category": "Anemia (ESRD)",
+    "category": "Anemia",
+    "condition": "anemia",
     "manufacturer": "Vifor Pharma",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -158,6 +165,7 @@
     "genericName": "Amiodarone",
     "rxcui": "703",
     "category": "Antiarrhythmic",
+    "condition": "heart-rhythm",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -178,6 +186,7 @@
     "genericName": "Flecainide",
     "rxcui": null,
     "category": "Antiarrhythmic",
+    "condition": "heart-rhythm",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -198,6 +207,7 @@
     "genericName": "Amoxicillin",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -222,6 +232,7 @@
     "genericName": "Azithromycin",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -245,6 +256,7 @@
     "genericName": "Cephalexin",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -266,6 +278,7 @@
     "genericName": "Ciprofloxacin",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -288,6 +301,7 @@
     "genericName": "Doxycycline",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -310,6 +324,7 @@
     "genericName": "Levofloxacin",
     "rxcui": null,
     "category": "Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -332,6 +347,7 @@
     "genericName": "Eculizumab",
     "rxcui": null,
     "category": "Antibody-Mediated Rejection",
+    "condition": "rejection-treatment",
     "manufacturer": "Alexion",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -352,6 +368,7 @@
     "genericName": "Ravulizumab",
     "rxcui": null,
     "category": "Antibody-Mediated Rejection",
+    "condition": "rejection-treatment",
     "manufacturer": "Alexion",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -372,6 +389,7 @@
     "genericName": "Apixaban",
     "rxcui": null,
     "category": "Anticoagulant",
+    "condition": "blood-clots",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -392,6 +410,7 @@
     "genericName": "Clopidogrel",
     "rxcui": null,
     "category": "Anticoagulant",
+    "condition": "blood-clots",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -412,6 +431,7 @@
     "genericName": "Rivaroxaban",
     "rxcui": null,
     "category": "Anticoagulant",
+    "condition": "blood-clots",
     "manufacturer": "Janssen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -432,6 +452,7 @@
     "genericName": "Warfarin",
     "rxcui": null,
     "category": "Anticoagulant",
+    "condition": "blood-clots",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -452,6 +473,7 @@
     "genericName": "Ondansetron",
     "rxcui": null,
     "category": "Antiemetic",
+    "condition": "digestive",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -476,6 +498,7 @@
     "genericName": "Fluconazole",
     "rxcui": "4450",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -501,6 +524,7 @@
     "genericName": "Isavuconazonium",
     "rxcui": "1656657",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Astellas",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -526,6 +550,7 @@
     "genericName": "Itraconazole",
     "rxcui": "202826",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Janssen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -551,6 +576,7 @@
     "genericName": "Itraconazole (SUBA)",
     "rxcui": "2106643",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Mayne Pharma",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -576,6 +602,7 @@
     "genericName": "Nystatin",
     "rxcui": "7597",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -599,6 +626,7 @@
     "genericName": "Posaconazole",
     "rxcui": "282077",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Merck",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -624,6 +652,7 @@
     "genericName": "Voriconazole",
     "rxcui": "121243",
     "category": "Anti-fungal",
+    "condition": "infection",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -649,6 +678,7 @@
     "genericName": "Cetirizine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -670,6 +700,7 @@
     "genericName": "Desloratadine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -691,6 +722,7 @@
     "genericName": "Fexofenadine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -712,6 +744,7 @@
     "genericName": "Hydroxyzine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -736,6 +769,7 @@
     "genericName": "Levocetirizine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -757,6 +791,7 @@
     "genericName": "Loratadine",
     "rxcui": null,
     "category": "Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -778,6 +813,7 @@
     "genericName": "Aspirin",
     "rxcui": "1191",
     "category": "Antiplatelet",
+    "condition": "blood-clots",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -801,6 +837,7 @@
     "genericName": "Quetiapine",
     "rxcui": null,
     "category": "Antipsychotic",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -823,6 +860,7 @@
     "genericName": "Acyclovir",
     "rxcui": "281",
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -848,6 +886,7 @@
     "genericName": "Ganciclovir",
     "rxcui": "4629",
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -873,6 +912,7 @@
     "genericName": "Letermovir",
     "rxcui": "1943541",
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Merck",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -898,6 +938,7 @@
     "genericName": "Maribavir",
     "rxcui": null,
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Takeda",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -923,6 +964,7 @@
     "genericName": "Valacyclovir",
     "rxcui": "10998",
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -948,6 +990,7 @@
     "genericName": "Valganciclovir",
     "rxcui": "284635",
     "category": "Anti-viral",
+    "condition": "infection",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -973,6 +1016,7 @@
     "genericName": "Benralizumab",
     "rxcui": null,
     "category": "Asthma Biologic",
+    "condition": "asthma-copd",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -993,6 +1037,7 @@
     "genericName": "Mepolizumab",
     "rxcui": null,
     "category": "Asthma Biologic",
+    "condition": "asthma-copd",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1013,6 +1058,7 @@
     "genericName": "Omalizumab",
     "rxcui": null,
     "category": "Asthma Biologic",
+    "condition": "asthma-copd",
     "manufacturer": "Genentech / Novartis",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1033,6 +1079,7 @@
     "genericName": "Tezepelumab",
     "rxcui": null,
     "category": "Asthma Biologic",
+    "condition": "asthma-copd",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1052,7 +1099,8 @@
     "brandName": "Dupixent",
     "genericName": "Dupilumab",
     "rxcui": null,
-    "category": "Asthma Biologic / Allergy",
+    "category": "Asthma Biologic",
+    "condition": "asthma-copd",
     "manufacturer": "Regeneron / Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1073,6 +1121,7 @@
     "genericName": "Nadolol",
     "rxcui": "7226",
     "category": "Beta Blocker",
+    "condition": "liver-disease",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1094,6 +1143,7 @@
     "genericName": "Amlodipine",
     "rxcui": "17767",
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1117,6 +1167,7 @@
     "genericName": "Atenolol",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1140,6 +1191,7 @@
     "genericName": "Bisoprolol",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1163,6 +1215,7 @@
     "genericName": "Diltiazem",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1186,6 +1239,7 @@
     "genericName": "Enalapril",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1209,6 +1263,7 @@
     "genericName": "Irbesartan",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1232,6 +1287,7 @@
     "genericName": "Lisinopril",
     "rxcui": "29046",
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1255,6 +1311,7 @@
     "genericName": "Losartan",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1278,6 +1335,7 @@
     "genericName": "Nifedipine",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1301,6 +1359,7 @@
     "genericName": "Olmesartan",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1324,6 +1383,7 @@
     "genericName": "Ramipril",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1347,6 +1407,7 @@
     "genericName": "Valsartan",
     "rxcui": null,
     "category": "Blood Pressure",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1370,6 +1431,7 @@
     "genericName": "Filgrastim",
     "rxcui": "227304",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Amgen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1395,6 +1457,7 @@
     "genericName": "Filgrastim-aafi",
     "rxcui": "2057201",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1420,6 +1483,7 @@
     "genericName": "Filgrastim-ayow",
     "rxcui": "2595946",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Amneal",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1445,6 +1509,7 @@
     "genericName": "Filgrastim-sndz",
     "rxcui": "1605067",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Sandoz",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1470,6 +1535,7 @@
     "genericName": "Filgrastim-txid",
     "rxcui": "2700371",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Sandoz",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1495,6 +1561,7 @@
     "genericName": "Tbo-filgrastim",
     "rxcui": "1442677",
     "category": "Blood Support",
+    "condition": "low-white-cells",
     "manufacturer": "Teva",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1520,6 +1587,7 @@
     "genericName": "Ipratropium/Albuterol",
     "rxcui": null,
     "category": "Bronchodilator",
+    "condition": "asthma-copd",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1540,6 +1608,7 @@
     "genericName": "Umeclidinium/Vilanterol",
     "rxcui": null,
     "category": "Bronchodilator",
+    "condition": "asthma-copd",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1560,6 +1629,7 @@
     "genericName": "Atorvastatin",
     "rxcui": "83367",
     "category": "Cholesterol",
+    "condition": "high-cholesterol",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1582,6 +1652,7 @@
     "genericName": "Lovastatin",
     "rxcui": null,
     "category": "Cholesterol",
+    "condition": "high-cholesterol",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1604,6 +1675,7 @@
     "genericName": "Pravastatin",
     "rxcui": "42463",
     "category": "Cholesterol",
+    "condition": "high-cholesterol",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1626,6 +1698,7 @@
     "genericName": "Rosuvastatin",
     "rxcui": null,
     "category": "Cholesterol",
+    "condition": "high-cholesterol",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1648,6 +1721,7 @@
     "genericName": "Simvastatin",
     "rxcui": null,
     "category": "Cholesterol",
+    "condition": "high-cholesterol",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1670,6 +1744,7 @@
     "genericName": "Elexacaftor/Tezacaftor/Ivacaftor",
     "rxcui": null,
     "category": "Cystic Fibrosis",
+    "condition": "cystic-fibrosis",
     "manufacturer": "Vertex",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -1690,6 +1765,7 @@
     "genericName": "Ivacaftor",
     "rxcui": "1243041",
     "category": "Cystic Fibrosis",
+    "condition": "cystic-fibrosis",
     "manufacturer": "Vertex",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -1710,6 +1786,7 @@
     "genericName": "Lumacaftor/Ivacaftor",
     "rxcui": null,
     "category": "Cystic Fibrosis",
+    "condition": "cystic-fibrosis",
     "manufacturer": "Vertex",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -1730,6 +1807,7 @@
     "genericName": "Tezacaftor/Ivacaftor",
     "rxcui": null,
     "category": "Cystic Fibrosis",
+    "condition": "cystic-fibrosis",
     "manufacturer": "Vertex",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -1750,6 +1828,7 @@
     "genericName": "Alogliptin",
     "rxcui": "1368007",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Takeda",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1773,6 +1852,7 @@
     "genericName": "Bexagliflozin",
     "rxcui": "2637860",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "TheracosBio",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1796,6 +1876,7 @@
     "genericName": "Canagliflozin",
     "rxcui": "1373464",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Janssen",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1819,6 +1900,7 @@
     "genericName": "Continuous Glucose Monitor",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Abbott",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1842,6 +1924,7 @@
     "genericName": "Continuous Glucose Monitor",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Medtronic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1865,6 +1948,7 @@
     "genericName": "Continuous Glucose Monitor",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Ascensia",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1888,6 +1972,7 @@
     "genericName": "Continuous Glucose Monitor",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Dexcom",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1911,6 +1996,7 @@
     "genericName": "Dapagliflozin",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1934,6 +2020,7 @@
     "genericName": "Dulaglutide",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1957,6 +2044,7 @@
     "genericName": "Empagliflozin",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -1980,6 +2068,7 @@
     "genericName": "Glimepiride",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2003,6 +2092,7 @@
     "genericName": "Glipizide",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2026,6 +2116,7 @@
     "genericName": "Glucagon (Nasal)",
     "rxcui": "2180667",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Amphastar",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2049,6 +2140,7 @@
     "genericName": "Glyburide",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2072,6 +2164,7 @@
     "genericName": "Insulin Aspart",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2095,6 +2188,7 @@
     "genericName": "Insulin Aspart",
     "rxcui": "1986350",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2118,6 +2212,7 @@
     "genericName": "Insulin Aspart Protamine/Insulin Aspart",
     "rxcui": "1372741",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2141,6 +2236,7 @@
     "genericName": "Insulin Degludec",
     "rxcui": "1670012",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2164,6 +2260,7 @@
     "genericName": "Insulin Glargine",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Sanofi / Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2187,6 +2284,7 @@
     "genericName": "Insulin Glargine U-300",
     "rxcui": "1604540",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2210,6 +2308,7 @@
     "genericName": "Insulin Glargine-aglr",
     "rxcui": "2589010",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2233,6 +2332,7 @@
     "genericName": "Insulin Glargine-yfgn",
     "rxcui": "2377130",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Biocon Biologics",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2256,6 +2356,7 @@
     "genericName": "Insulin Glargine/Lixisenatide",
     "rxcui": "1858996",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2279,6 +2380,7 @@
     "genericName": "Insulin Glulisine",
     "rxcui": "607583",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2302,6 +2404,7 @@
     "genericName": "Insulin Human (Inhalation)",
     "rxcui": "1543203",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "MannKind",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2325,6 +2428,7 @@
     "genericName": "Insulin Lispro",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2348,6 +2452,7 @@
     "genericName": "Insulin Lispro",
     "rxcui": "1992165",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2371,6 +2476,7 @@
     "genericName": "Insulin Lispro Protamine/Insulin Lispro",
     "rxcui": "752388",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2394,6 +2500,7 @@
     "genericName": "Insulin NPH",
     "rxcui": "92880",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2417,6 +2524,7 @@
     "genericName": "Insulin NPH/Regular",
     "rxcui": "1372744",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2440,6 +2548,7 @@
     "genericName": "Insulin Regular",
     "rxcui": "92881",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2463,6 +2572,7 @@
     "genericName": "Linagliptin",
     "rxcui": "1100703",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2486,6 +2596,7 @@
     "genericName": "Liraglutide",
     "rxcui": "1598264",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2509,6 +2620,7 @@
     "genericName": "Liraglutide",
     "rxcui": "897123",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2532,6 +2644,7 @@
     "genericName": "Metformin",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2555,6 +2668,7 @@
     "genericName": "Pioglitazone",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Takeda",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2578,6 +2692,7 @@
     "genericName": "Resmetirom",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Madrigal",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2598,6 +2713,7 @@
     "genericName": "Semaglutide",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2621,6 +2737,7 @@
     "genericName": "Semaglutide (Oral)",
     "rxcui": "2200645",
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Novo Nordisk",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2644,6 +2761,7 @@
     "genericName": "Sitagliptin",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Merck",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2667,6 +2785,7 @@
     "genericName": "Vitamin E",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2687,6 +2806,7 @@
     "genericName": "tirzepatide",
     "rxcui": null,
     "category": "Diabetes",
+    "condition": "diabetes",
     "manufacturer": "Lilly",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2709,6 +2829,7 @@
     "genericName": "Bumetanide",
     "rxcui": "1808",
     "category": "Diuretic",
+    "condition": "fluid-retention",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2730,6 +2851,7 @@
     "genericName": "Chlorthalidone",
     "rxcui": null,
     "category": "Diuretic",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2752,6 +2874,7 @@
     "genericName": "Eplerenone",
     "rxcui": "298869",
     "category": "Diuretic",
+    "condition": "fluid-retention",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2772,6 +2895,7 @@
     "genericName": "Furosemide",
     "rxcui": "4603",
     "category": "Diuretic",
+    "condition": "fluid-retention",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2794,6 +2918,7 @@
     "genericName": "Hydrochlorothiazide",
     "rxcui": null,
     "category": "Diuretic",
+    "condition": "high-blood-pressure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2816,6 +2941,7 @@
     "genericName": "Spironolactone",
     "rxcui": null,
     "category": "Diuretic",
+    "condition": "fluid-retention",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2838,6 +2964,7 @@
     "genericName": "Potassium Chloride",
     "rxcui": null,
     "category": "Electrolyte",
+    "condition": "electrolytes",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2862,6 +2989,7 @@
     "genericName": "Pancrelipase",
     "rxcui": null,
     "category": "Enzymes",
+    "condition": "pancreatic-insufficiency",
     "manufacturer": "AbbVie / Nestle",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2883,6 +3011,7 @@
     "genericName": "Esomeprazole",
     "rxcui": null,
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2906,6 +3035,7 @@
     "genericName": "Famotidine",
     "rxcui": null,
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2929,6 +3059,7 @@
     "genericName": "Lansoprazole",
     "rxcui": null,
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2952,6 +3083,7 @@
     "genericName": "Omeprazole",
     "rxcui": "7646",
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2975,6 +3107,7 @@
     "genericName": "Pantoprazole",
     "rxcui": "40790",
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -2998,6 +3131,7 @@
     "genericName": "Ranitidine",
     "rxcui": null,
     "category": "GI / Acid Suppression",
+    "condition": "acid-reflux",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3021,6 +3155,7 @@
     "genericName": "Dicyclomine",
     "rxcui": null,
     "category": "GI Support",
+    "condition": "digestive",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3045,6 +3180,7 @@
     "genericName": "Loperamide",
     "rxcui": null,
     "category": "GI Support",
+    "condition": "digestive",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3069,6 +3205,7 @@
     "genericName": "Polyethylene Glycol",
     "rxcui": null,
     "category": "GI Support",
+    "condition": "digestive",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3093,6 +3230,7 @@
     "genericName": "Allopurinol",
     "rxcui": null,
     "category": "Gout",
+    "condition": "gout",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3114,6 +3252,7 @@
     "genericName": "Colchicine",
     "rxcui": null,
     "category": "Gout",
+    "condition": "gout",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3135,6 +3274,7 @@
     "genericName": "Carvedilol",
     "rxcui": "20352",
     "category": "Heart Failure",
+    "condition": "heart-failure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3155,6 +3295,7 @@
     "genericName": "Digoxin",
     "rxcui": null,
     "category": "Heart Failure",
+    "condition": "heart-failure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3175,6 +3316,7 @@
     "genericName": "Metoprolol",
     "rxcui": "6918",
     "category": "Heart Failure",
+    "condition": "heart-failure",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3195,6 +3337,7 @@
     "genericName": "Sacubitril/Valsartan",
     "rxcui": null,
     "category": "Heart Failure",
+    "condition": "heart-failure",
     "manufacturer": "Novartis",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3215,6 +3358,7 @@
     "genericName": "Entecavir",
     "rxcui": "404879",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3235,6 +3379,7 @@
     "genericName": "Glecaprevir/Pibrentasvir",
     "rxcui": "1939261",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "AbbVie",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3255,6 +3400,7 @@
     "genericName": "Hepatitis B Immune Globulin",
     "rxcui": null,
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Saol / Grifols",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3275,6 +3421,7 @@
     "genericName": "Ledipasvir/Sofosbuvir",
     "rxcui": "1591944",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3295,6 +3442,7 @@
     "genericName": "Sofosbuvir/Velpatasvir",
     "rxcui": "1716964",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3315,6 +3463,7 @@
     "genericName": "Sofosbuvir/Velpatasvir/Voxilaprevir",
     "rxcui": "1939330",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3335,6 +3484,7 @@
     "genericName": "Tenofovir Alafenamide",
     "rxcui": null,
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3355,6 +3505,7 @@
     "genericName": "Tenofovir Disoproxil",
     "rxcui": "318473",
     "category": "Hepatitis B/C",
+    "condition": "hepatitis",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3375,6 +3526,7 @@
     "genericName": "Azathioprine",
     "rxcui": "1256",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3400,6 +3552,7 @@
     "genericName": "Belatacept",
     "rxcui": "1091444",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Bristol Myers Squibb",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3425,6 +3578,7 @@
     "genericName": "Cyclosporine",
     "rxcui": "3008",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3450,6 +3604,7 @@
     "genericName": "Everolimus",
     "rxcui": "141704",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3475,6 +3630,7 @@
     "genericName": "Mycophenolate Mofetil",
     "rxcui": "68149",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3500,6 +3656,7 @@
     "genericName": "Mycophenolate Mofetil",
     "rxcui": null,
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Genentech",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3524,6 +3681,7 @@
     "genericName": "Mycophenolic Acid",
     "rxcui": "327361",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Novartis",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3549,6 +3707,7 @@
     "genericName": "Sirolimus",
     "rxcui": "35302",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Pfizer",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3574,6 +3733,7 @@
     "genericName": "Tacrolimus",
     "rxcui": "42316",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3598,6 +3758,7 @@
     "genericName": "Tacrolimus",
     "rxcui": "196463",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Astellas",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3623,6 +3784,7 @@
     "genericName": "Tacrolimus Extended-Release",
     "rxcui": "1664435",
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Veloxis",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3648,6 +3810,7 @@
     "genericName": "Tacrolimus Extended-Release",
     "rxcui": null,
     "category": "Immunosuppressant",
+    "condition": "rejection-prevention",
     "manufacturer": "Astellas",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3673,6 +3836,7 @@
     "genericName": "Alemtuzumab",
     "rxcui": null,
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Sanofi",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3698,6 +3862,7 @@
     "genericName": "Anti-thymocyte globulin (Equine)",
     "rxcui": "1011",
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Pfizer",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3723,6 +3888,7 @@
     "genericName": "Anti-thymocyte globulin (Rabbit)",
     "rxcui": "89125",
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Sanofi",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3748,6 +3914,7 @@
     "genericName": "Basiliximab",
     "rxcui": "114169",
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Novartis",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3773,6 +3940,7 @@
     "genericName": "Rituximab",
     "rxcui": null,
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Genentech",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3798,6 +3966,7 @@
     "genericName": "alemtuzumab",
     "rxcui": null,
     "category": "Induction",
+    "condition": "rejection-prevention",
     "manufacturer": "Sanofi",
     "stage": "Peri-transplant",
     "commonOrgans": [
@@ -3818,6 +3987,7 @@
     "genericName": "Atovaquone",
     "rxcui": "114972",
     "category": "Infection Prevention",
+    "condition": "infection",
     "manufacturer": "GSK",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3843,6 +4013,7 @@
     "genericName": "Trimethoprim-Sulfamethoxazole",
     "rxcui": "10831",
     "category": "Infection Prevention",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -3868,6 +4039,7 @@
     "genericName": "Aztreonam Inhaled",
     "rxcui": "742627",
     "category": "Inhaled Antibiotic",
+    "condition": "infection",
     "manufacturer": "Gilead",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3888,6 +4060,7 @@
     "genericName": "Tobramycin Inhaled",
     "rxcui": "1248038",
     "category": "Inhaled Antibiotic",
+    "condition": "infection",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3908,6 +4081,7 @@
     "genericName": "Beclomethasone",
     "rxcui": null,
     "category": "Inhaled Corticosteroid",
+    "condition": "asthma-copd",
     "manufacturer": "Teva",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3928,6 +4102,7 @@
     "genericName": "Ciclesonide",
     "rxcui": null,
     "category": "Inhaled Corticosteroid",
+    "condition": "asthma-copd",
     "manufacturer": "Sunovion",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -3948,6 +4123,7 @@
     "genericName": "Calcitriol",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -3968,6 +4144,7 @@
     "genericName": "Calcium Acetate",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -3988,6 +4165,7 @@
     "genericName": "Cinacalcet",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Amgen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4008,6 +4186,7 @@
     "genericName": "Doxercalciferol",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Sanofi",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4028,6 +4207,7 @@
     "genericName": "Etelcalcetide",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Amgen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4048,6 +4228,7 @@
     "genericName": "Ferric Citrate",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Akebia",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4068,6 +4249,7 @@
     "genericName": "Paricalcitol",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "AbbVie",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4088,6 +4270,7 @@
     "genericName": "Patiromer",
     "rxcui": "1716210",
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Sanofi",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4108,6 +4291,7 @@
     "genericName": "Sevelamer",
     "rxcui": null,
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Sanofi",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4128,6 +4312,7 @@
     "genericName": "Sodium Zirconium Cyclosilicate",
     "rxcui": "2047634",
     "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4148,6 +4333,7 @@
     "genericName": "Zafirlukast",
     "rxcui": null,
     "category": "Leukotriene Modifier",
+    "condition": "asthma-copd",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4168,6 +4354,7 @@
     "genericName": "Zileuton",
     "rxcui": null,
     "category": "Leukotriene Modifier",
+    "condition": "asthma-copd",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4188,6 +4375,7 @@
     "genericName": "Lactulose",
     "rxcui": null,
     "category": "Liver Support",
+    "condition": "liver-disease",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4208,6 +4396,7 @@
     "genericName": "Propranolol",
     "rxcui": null,
     "category": "Liver Support",
+    "condition": "liver-disease",
     "manufacturer": "Generic",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4228,6 +4417,7 @@
     "genericName": "Rifaximin",
     "rxcui": "35619",
     "category": "Liver Support",
+    "condition": "liver-disease",
     "manufacturer": "Salix (Bausch Health)",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4248,6 +4438,7 @@
     "genericName": "Ursodiol",
     "rxcui": "10904",
     "category": "Liver Support",
+    "condition": "liver-disease",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4268,6 +4459,7 @@
     "genericName": "midodrine",
     "rxcui": null,
     "category": "Liver Support",
+    "condition": "liver-disease",
     "manufacturer": null,
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4288,6 +4480,7 @@
     "genericName": "Cromolyn Sodium",
     "rxcui": null,
     "category": "Mast Cell Stabilizer",
+    "condition": "asthma-copd",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4308,6 +4501,7 @@
     "genericName": "Alprazolam",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4331,6 +4525,7 @@
     "genericName": "Bupropion",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4354,6 +4549,7 @@
     "genericName": "Buspirone",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4377,6 +4573,7 @@
     "genericName": "Citalopram",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4400,6 +4597,7 @@
     "genericName": "Clonazepam",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4423,6 +4621,7 @@
     "genericName": "Duloxetine",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4446,6 +4645,7 @@
     "genericName": "Escitalopram",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4469,6 +4669,7 @@
     "genericName": "Fluoxetine",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4492,6 +4693,7 @@
     "genericName": "Gabapentin",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4515,6 +4717,7 @@
     "genericName": "Lorazepam",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4538,6 +4741,7 @@
     "genericName": "Pregabalin",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4561,6 +4765,7 @@
     "genericName": "Sertraline",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4584,6 +4789,7 @@
     "genericName": "Trazodone",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4607,6 +4813,7 @@
     "genericName": "Venlafaxine",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4630,6 +4837,7 @@
     "genericName": "Zolpidem",
     "rxcui": null,
     "category": "Mental Health",
+    "condition": "mental-health",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4653,6 +4861,7 @@
     "genericName": "Dornase Alfa",
     "rxcui": "3414",
     "category": "Mucolytic",
+    "condition": "cystic-fibrosis",
     "manufacturer": "Genentech",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4673,6 +4882,7 @@
     "genericName": "Ibuprofen",
     "rxcui": null,
     "category": "NSAID",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4694,6 +4904,7 @@
     "genericName": "Meloxicam",
     "rxcui": null,
     "category": "NSAID",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4715,6 +4926,7 @@
     "genericName": "Naproxen",
     "rxcui": null,
     "category": "NSAID",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4736,6 +4948,7 @@
     "genericName": "Azelastine Nasal",
     "rxcui": null,
     "category": "Nasal Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4756,6 +4969,7 @@
     "genericName": "Olopatadine Nasal",
     "rxcui": null,
     "category": "Nasal Antihistamine",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4776,6 +4990,7 @@
     "genericName": "Fluticasone Nasal",
     "rxcui": null,
     "category": "Nasal Corticosteroid",
+    "condition": "allergies",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4796,6 +5011,7 @@
     "genericName": "Mometasone Nasal",
     "rxcui": null,
     "category": "Nasal Corticosteroid",
+    "condition": "allergies",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4816,6 +5032,7 @@
     "genericName": "Triamcinolone Nasal",
     "rxcui": null,
     "category": "Nasal Corticosteroid",
+    "condition": "allergies",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4836,6 +5053,7 @@
     "genericName": "Tramadol",
     "rxcui": null,
     "category": "Pain Management",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4858,7 +5076,8 @@
     "brandName": "Norco / Vicodin",
     "genericName": "Hydrocodone/Acetaminophen",
     "rxcui": null,
-    "category": "Pain Relief",
+    "category": "Pain Management",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4882,7 +5101,8 @@
     "brandName": "OxyContin / Roxicodone",
     "genericName": "Oxycodone",
     "rxcui": null,
-    "category": "Pain Relief",
+    "category": "Pain Management",
+    "condition": "pain",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -4906,7 +5126,8 @@
     "brandName": "Renvela / Renagel",
     "genericName": "Sevelamer",
     "rxcui": null,
-    "category": "Phosphate Binder (ESRD)",
+    "category": "Kidney Support",
+    "condition": "kidney-disease",
     "manufacturer": "Sanofi",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4927,6 +5148,7 @@
     "genericName": "Nintedanib",
     "rxcui": "1599538",
     "category": "Pulmonary Fibrosis",
+    "condition": "pulmonary-fibrosis",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4947,6 +5169,7 @@
     "genericName": "Pirfenidone",
     "rxcui": "1373424",
     "category": "Pulmonary Fibrosis",
+    "condition": "pulmonary-fibrosis",
     "manufacturer": "Genentech",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4967,6 +5190,7 @@
     "genericName": "Ambrisentan",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Gilead",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -4988,6 +5212,7 @@
     "genericName": "Bosentan",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5009,6 +5234,7 @@
     "genericName": "Epoprostenol",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5030,6 +5256,7 @@
     "genericName": "Epoprostenol",
     "rxcui": "8814",
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5051,6 +5278,7 @@
     "genericName": "Iloprost",
     "rxcui": "54409",
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5072,6 +5300,7 @@
     "genericName": "Macitentan",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5093,6 +5322,7 @@
     "genericName": "Macitentan/Tadalafil",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5114,6 +5344,7 @@
     "genericName": "Riociguat",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Bayer",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5135,6 +5366,7 @@
     "genericName": "Selexipag",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Actelion/Janssen",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5156,6 +5388,7 @@
     "genericName": "Sildenafil",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Pfizer",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5177,6 +5410,7 @@
     "genericName": "Sotatercept",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "Merck",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5198,6 +5432,7 @@
     "genericName": "Tadalafil",
     "rxcui": "358263",
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "United Therapeutics",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5219,6 +5454,7 @@
     "genericName": "Treprostinil",
     "rxcui": null,
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "United Therapeutics",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5240,6 +5476,7 @@
     "genericName": "Treprostinil (Inhaled)",
     "rxcui": "38663",
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "United Therapeutics",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5261,6 +5498,7 @@
     "genericName": "Treprostinil (Oral)",
     "rxcui": "38663",
     "category": "Pulmonary Hypertension",
+    "condition": "pulmonary-hypertension",
     "manufacturer": "United Therapeutics",
     "stage": "Pre-transplant",
     "commonOrgans": [
@@ -5282,6 +5520,7 @@
     "genericName": "Albuterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5302,6 +5541,7 @@
     "genericName": "Budesonide",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5322,6 +5562,7 @@
     "genericName": "Budesonide/Formoterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "AstraZeneca",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5342,6 +5583,7 @@
     "genericName": "Fluticasone",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5362,6 +5604,7 @@
     "genericName": "Fluticasone/Salmeterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5382,6 +5625,7 @@
     "genericName": "Fluticasone/Vilanterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "GlaxoSmithKline",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5402,6 +5646,7 @@
     "genericName": "Ipratropium",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5422,6 +5667,7 @@
     "genericName": "Levalbuterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Sunovion",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5442,6 +5688,7 @@
     "genericName": "Mometasone",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5462,6 +5709,7 @@
     "genericName": "Mometasone/Formoterol",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Organon",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5482,6 +5730,7 @@
     "genericName": "Montelukast",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5502,6 +5751,7 @@
     "genericName": "Tiotropium",
     "rxcui": null,
     "category": "Respiratory",
+    "condition": "asthma-copd",
     "manufacturer": "Boehringer Ingelheim",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5522,6 +5772,7 @@
     "genericName": "Methylprednisolone",
     "rxcui": "6902",
     "category": "Steroid",
+    "condition": "rejection-prevention",
     "manufacturer": "Pfizer",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5547,6 +5798,7 @@
     "genericName": "Prednisone",
     "rxcui": "8640",
     "category": "Steroid",
+    "condition": "rejection-prevention",
     "manufacturer": "Generic",
     "stage": "Post-transplant",
     "commonOrgans": [
@@ -5571,6 +5823,7 @@
     "genericName": "Ferrous Sulfate",
     "rxcui": null,
     "category": "Supplement",
+    "condition": "anemia",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5595,6 +5848,7 @@
     "genericName": "Levothyroxine",
     "rxcui": null,
     "category": "Thyroid",
+    "condition": "thyroid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5619,6 +5873,7 @@
     "genericName": "Liothyronine",
     "rxcui": null,
     "category": "Thyroid",
+    "condition": "thyroid",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5641,6 +5896,7 @@
     "genericName": "Cholecalciferol",
     "rxcui": null,
     "category": "Vitamin",
+    "condition": "nutrition",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5665,6 +5921,7 @@
     "genericName": "Folic Acid",
     "rxcui": null,
     "category": "Vitamin",
+    "condition": "nutrition",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5687,6 +5944,7 @@
     "genericName": "Multivitamin",
     "rxcui": null,
     "category": "Vitamin",
+    "condition": "nutrition",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [
@@ -5711,6 +5969,7 @@
     "genericName": "Vitamin D",
     "rxcui": null,
     "category": "Vitamin",
+    "condition": "nutrition",
     "manufacturer": "Generic",
     "stage": "Both (Pre & Post)",
     "commonOrgans": [

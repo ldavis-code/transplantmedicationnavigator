@@ -32,6 +32,9 @@ function transformMedication(row) {
         genericName: row.generic_name,
         rxcui: row.rxcui,
         category: row.category,
+        // What the medication is for. `category` is its drug class; see
+        // src/data/conditions.json for why the two are separate fields.
+        condition: row.condition,
         manufacturer: row.manufacturer,
         stage: row.stage,
         commonOrgans: row.common_organs || [],
@@ -72,7 +75,7 @@ export async function handler(event) {
 
     try {
         const db = getDb();
-        const { id, category, search } = event.queryStringParameters || {};
+        const { id, category, condition, search } = event.queryStringParameters || {};
 
         // Fetch single medication by ID
         if (id) {
@@ -116,7 +119,25 @@ export async function handler(event) {
             };
         }
 
-        // Filter by category
+        // Filter by condition (what the medication treats)
+        if (condition) {
+            const results = await db`
+                SELECT * FROM medications
+                WHERE "condition" = ${condition}
+                ORDER BY generic_name
+            `;
+
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                    medications: results.map(transformMedication),
+                    count: results.length
+                })
+            };
+        }
+
+        // Filter by category (drug class)
         if (category) {
             const results = await db`
                 SELECT * FROM medications

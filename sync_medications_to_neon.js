@@ -49,6 +49,7 @@ async function syncMedication(medication) {
     genericName,
     rxcui,
     category,
+    condition,
     manufacturer,
     stage,
     commonOrgans,
@@ -72,6 +73,7 @@ async function syncMedication(medication) {
       generic_name,
       rxcui,
       category,
+      "condition",
       manufacturer,
       stage,
       common_organs,
@@ -91,6 +93,7 @@ async function syncMedication(medication) {
       ${genericName},
       ${rxcui || null},
       ${category},
+      ${condition || null},
       ${manufacturer || null},
       ${stage || null},
       ${commonOrgans || []},
@@ -110,6 +113,7 @@ async function syncMedication(medication) {
       generic_name = EXCLUDED.generic_name,
       rxcui = EXCLUDED.rxcui,
       category = EXCLUDED.category,
+      "condition" = EXCLUDED."condition",
       manufacturer = EXCLUDED.manufacturer,
       stage = EXCLUDED.stage,
       common_organs = EXCLUDED.common_organs,
@@ -132,6 +136,20 @@ async function syncAllMedications() {
   console.log('Loading medications from JSON file...');
   const medications = loadMedications();
   console.log(`Found ${medications.length} medications to sync`);
+
+  // `condition` is derived from src/data/conditions.json by
+  // scripts/apply-medication-conditions.js. Syncing a record that has not
+  // been through it would write NULL over the row's condition, and
+  // MedicationsContext merges DB over JSON — so the site would lose the
+  // classification for that medication until someone noticed.
+  const unclassified = medications.filter((m) => !m.condition);
+  if (unclassified.length > 0) {
+    console.error(`Error: ${unclassified.length} medication(s) have no condition:`);
+    console.error(`  ${unclassified.map((m) => m.id).slice(0, 10).join(', ')}`);
+    console.error('');
+    console.error('Run `npm run conditions:apply` and re-run this sync.');
+    process.exit(1);
+  }
 
   let synced = 0;
   let errors = 0;

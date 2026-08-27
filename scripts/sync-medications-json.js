@@ -49,6 +49,7 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const JSON_PATH = join(__dirname, '..', 'src', 'data', 'medications.json');
+const CONDITIONS_PATH = join(__dirname, '..', 'src', 'data', 'conditions.json');
 
 const DEFAULT_API = 'https://transplantmedicationnavigator.com/.netlify/functions/medications';
 const apiArg = process.argv.find(a => a === '--api' || a.startsWith('--api='));
@@ -71,6 +72,7 @@ const connect = async () => {
 // Fields whose curated JSON value survives a null in the DB row. Kept in sync
 // with the explicit fallbacks in MedicationsContext.jsx.
 const PRESERVE_WHEN_DB_NULL = [
+    'condition',
     'papUrl',
     'papProgramId',
     'copayUrl',
@@ -88,6 +90,7 @@ function transform(row) {
         genericName: row.generic_name,
         rxcui: row.rxcui ?? null,
         category: row.category,
+        condition: row.condition ?? null,
         manufacturer: row.manufacturer ?? null,
         stage: row.stage ?? null,
         commonOrgans: row.common_organs || [],
@@ -145,15 +148,17 @@ async function loadDbMeds() {
 // "(Kidney, Liver)"), so rows are normalized back to it here. Categories
 // with no established equivalent (Mental Health, Blood Pressure…) pass
 // through untouched.
-const CATEGORY_ALIASES = {
-    'Immunosuppressants': 'Immunosuppressant',
-    'Antivirals': 'Anti-viral',
-    'Antifungals': 'Anti-fungal',
-    'Steroids': 'Steroid',
-    'Diuretics': 'Diuretic',
-    'Induction Agents': 'Induction',
-    'Anticoagulation': 'Anticoagulant',
-};
+//
+// The category map lives in conditions.json alongside the condition taxonomy
+// it feeds — the same aliases decide which name survives and which condition
+// that name resolves to, so they cannot be maintained in two places. Migration
+// 048 applied them to the rows as well; this stays as the safety net for rows
+// added to the table afterwards.
+const TAXONOMY = JSON.parse(readFileSync(CONDITIONS_PATH, 'utf8'));
+const withoutComment = (obj) =>
+    Object.fromEntries(Object.entries(obj).filter(([key]) => key !== '_comment'));
+const CATEGORY_ALIASES = withoutComment(TAXONOMY.categoryAliases);
+const CONDITION_OVERRIDES = withoutComment(TAXONOMY.medicationOverrides);
 const STAGE_ALIASES = {
     post: 'Post-transplant',
     pre: 'Pre-transplant',
@@ -162,9 +167,19 @@ const STAGE_ALIASES = {
 };
 const capitalize = (w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : w);
 function normalize(med) {
+    const category = CATEGORY_ALIASES[med.category] || med.category;
+    // A row added straight to the table has no condition yet (nothing in the
+    // Neon SQL editor derives one). Resolving it here means a new medication
+    // reaches the JSON classified, instead of silently becoming the one record
+    // that no condition filter can find.
+    const condition = med.condition
+        || CONDITION_OVERRIDES[med.id]
+        || TAXONOMY.categoryToCondition[category]
+        || null;
     return {
         ...med,
-        category: CATEGORY_ALIASES[med.category] || med.category,
+        category,
+        condition,
         stage: STAGE_ALIASES[med.stage] || med.stage,
         commonOrgans: (med.commonOrgans || []).map(capitalize),
     };

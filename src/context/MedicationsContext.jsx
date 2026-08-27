@@ -73,6 +73,11 @@ export function MedicationsProvider({ children }) {
                                 ...fallbackMed,
                                 ...dbMed,
                                 // Explicit fallbacks for critical program fields
+                                // `condition` is here for the same reason: a
+                                // row added to the table without one would
+                                // otherwise blank out the classification the
+                                // bundled file already has.
+                                condition: dbMed.condition || fallbackMed.condition,
                                 copayUrl: dbMed.copayUrl || fallbackMed.copayUrl,
                                 copayProgramId: dbMed.copayProgramId || fallbackMed.copayProgramId,
                                 papUrl: dbMed.papUrl || fallbackMed.papUrl,

@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:readability && npm run check:i18n && node scripts/generate-home-stats.js && node scripts/generate-program-eligibility.js && node scripts/generate-sitemap.js && vite build && node scripts/inject-route-preloads.js --entry && node scripts/stamp-freshness.js && node scripts/prerender-seo.js && node scripts/inject-route-preloads.js --pages",
+    "build": "npm run check:readability && npm run check:i18n && npm run check:conditions && node scripts/generate-home-stats.js && node scripts/generate-program-eligibility.js && node scripts/generate-sitemap.js && vite build && node scripts/inject-route-preloads.js --entry && node scripts/stamp-freshness.js && node scripts/prerender-seo.js && node scripts/inject-route-preloads.js --pages",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
     "sync:medications": "node scripts/sync-medications-json.js",
+    "conditions:apply": "node scripts/apply-medication-conditions.js",
+    "check:conditions": "node scripts/apply-medication-conditions.js --check",
     "sync:endpoints": "node sync_endpoints_to_neon.js",
     "generate-icons": "node scripts/generate-icons.js",
     "generate:og": "node scripts/generate-og-images.js",

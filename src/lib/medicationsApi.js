@@ -125,6 +125,26 @@ export async function fetchMedicationsByCategory(category) {
 }
 
 /**
+ * Fetch medications by condition (what they treat, e.g. 'kidney-disease').
+ * Condition ids come from src/data/conditions.json.
+ */
+export async function fetchMedicationsByCondition(condition) {
+    try {
+        const response = await fetch(`${API_BASE}?condition=${encodeURIComponent(condition)}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.medications;
+    } catch (error) {
+        console.error('Error fetching medications by condition:', error);
+        throw error;
+    }
+}
+
+/**
  * Clear the medications cache
  * Useful when you know data has been updated
  */
