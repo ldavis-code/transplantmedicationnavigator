@@ -163,7 +163,6 @@ const Accessibility = () => {
                             <ul className="list-disc list-inside space-y-2 text-sm">
                                 <li><strong>{t('legal.a11y.limitsInfographicLabel')}</strong> {t('legal.a11y.limitsInfographicText')}</li>
                                 <li><strong>{t('legal.a11y.limitsThirdPartyLabel')}</strong> {t('legal.a11y.limitsThirdPartyText')}</li>
-                                <li><strong>{t('legal.a11y.limitsChatLabel')}</strong> {t('legal.a11y.limitsChatText')}</li>
                             </ul>
                         </div>
                     </div>

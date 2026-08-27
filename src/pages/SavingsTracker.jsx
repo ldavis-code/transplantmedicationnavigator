@@ -67,13 +67,11 @@ export default function SavingsTracker() {
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl" role="tablist" aria-label={t('savings.page.tablistAria')}>
+            <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl" aria-label={t('savings.page.tablistAria')} role="group">
                 <button
                     onClick={() => setActiveTab('calculator')}
-                    role="tab"
                     id="tab-calculator"
-                    aria-selected={activeTab === 'calculator'}
-                    aria-controls="tabpanel-calculator"
+                    aria-current={activeTab === 'calculator' ? 'true' : undefined}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
                         activeTab === 'calculator'
                             ? 'bg-white text-emerald-700 shadow-sm'
@@ -85,10 +83,8 @@ export default function SavingsTracker() {
                 </button>
                 <button
                     onClick={() => setActiveTab('tracker')}
-                    role="tab"
                     id="tab-tracker"
-                    aria-selected={activeTab === 'tracker'}
-                    aria-controls="tabpanel-tracker"
+                    aria-current={activeTab === 'tracker' ? 'true' : undefined}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors min-h-[44px] ${
                         activeTab === 'tracker'
                             ? 'bg-white text-emerald-700 shadow-sm'
@@ -109,9 +105,7 @@ export default function SavingsTracker() {
 
             {/* Calculator Tab */}
             <div
-                role="tabpanel"
                 id="tabpanel-calculator"
-                aria-labelledby="tab-calculator"
                 hidden={activeTab !== 'calculator'}
             >
             {activeTab === 'calculator' && (
@@ -123,9 +117,7 @@ export default function SavingsTracker() {
 
             {/* Tracker Tab */}
             <div
-                role="tabpanel"
                 id="tabpanel-tracker"
-                aria-labelledby="tab-tracker"
                 hidden={activeTab !== 'tracker'}
             >
             {activeTab === 'tracker' && (

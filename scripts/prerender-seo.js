@@ -32,10 +32,14 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 const SPANISH_ROUTES = new Set([
   '/', '/wizard', '/education', '/application-help', '/faq',
   '/medications', '/evidence', '/my-medications', '/savings-tracker',
-  '/survey', '/survey/transplant', '/survey/general', '/pilot',
   '/terms-and-conditions', '/privacy', '/accessibility',
   '/about', '/feedback', '/education/appeals',
 ]);
+// NOTE: /survey, /survey/transplant, /survey/general and /pilot are NOT
+// listed: those pages render hard-coded English (no t() calls), so an /es/
+// variant would serve English content under a Spanish address with a
+// misleading hreflang pair. Re-add them here and in
+// scripts/generate-sitemap.js once the pages are actually translated.
 
 // Spanish titles/descriptions come from the same source the app uses
 // (seoMetadata imported at the top of the file).
@@ -123,14 +127,14 @@ const pages = [
     title: 'My Path Quiz - Find Free Medication Help | Transplant Medication Navigator™',
     description: 'Take our free 2-minute quiz to find Patient Assistance Programs for your transplant medications. Get personalized recommendations for free tacrolimus, mycophenolate, and copay help based on your insurance and income.',
     ogTitle: 'Find Your Path to Free Transplant Medications',
-    ogDescription: 'Answer a few questions to get personalized recommendations for FREE medications through Patient Assistance Programs. Takes 2 minutes.',
+    ogDescription: 'Answer a few questions to get personalized recommendations for Patient Assistance Programs that may lower or cover your medication costs if you qualify. Takes 2 minutes.',
   },
   {
     route: '/medications',
     title: 'Search Transplant Medications & Prices | Transplant Medication Navigator™',
-    description: 'Compare transplant medication prices and find FREE assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
+    description: 'Compare transplant medication prices and find assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
     ogTitle: 'Search Transplant Medications - Compare Prices & Find Free Help',
-    ogDescription: 'Search transplant medications, compare retail prices, and find Patient Assistance Programs offering FREE medications.',
+    ogDescription: 'Search transplant medications, compare retail prices, and find Patient Assistance Programs that may lower or cover medication costs if you qualify.',
   },
   {
     route: '/education',

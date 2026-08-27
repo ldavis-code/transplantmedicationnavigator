@@ -663,7 +663,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
             </div>
 
             {/* Per-card tab navigation */}
-            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" role="tablist" aria-label={t('medications.card.tabs.aria', { name: localizeMedName(med.brandName) })}>
+            <nav className="flex overflow-x-auto gap-1 p-2 no-print bg-slate-100 border-b border-slate-200" aria-label={t('medications.card.tabs.aria', { name: localizeMedName(med.brandName) })}>
                 {[
                     { id: 'ASSISTANCE', label: t('medications.card.tabs.assistance'), icon: Heart },
                     { id: 'PRICE', label: t('medications.card.tabs.price'), icon: DollarSign },
@@ -673,9 +673,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        role="tab"
-                        aria-selected={activeTab === tab.id}
-                        aria-controls={`${med.id}-${tab.id}-panel`}
+                        aria-current={activeTab === tab.id ? 'true' : undefined}
                         className={`flex items-center gap-1.5 px-3 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition ${
                             activeTab === tab.id
                                 ? 'bg-emerald-700 text-white shadow-sm'
@@ -687,7 +685,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 ))}
             </nav>
 
-            <div className="p-6" role="tabpanel" id={`${med.id}-${activeTab}-panel`} ref={contentRef}>
+            <div className="p-6" id={`${med.id}-${activeTab}-panel`} ref={contentRef}>
                 {activeTab === 'OVERVIEW' && (
                     <div className="space-y-6">
                         <p className="text-slate-700 leading-relaxed">

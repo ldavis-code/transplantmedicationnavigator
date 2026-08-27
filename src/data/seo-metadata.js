@@ -9,12 +9,12 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 export const seoMetadata = {
   home: {
     title: 'Transplant Medication Navigator™',
-    description: 'Get FREE transplant medications through Patient Assistance Programs. Find help paying for tacrolimus, mycophenolate, immunosuppressants. Compare prices, copay foundations & grants for kidney, liver, heart transplant patients. Created by a transplant recipient.',
+    description: 'Find programs that may lower or cover the cost of transplant medicines if you qualify. Find help paying for tacrolimus, mycophenolate, immunosuppressants. Compare prices, copay foundations & grants for kidney, liver, heart transplant patients. Created by a transplant recipient.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Free Transplant Medication Help | Transplant Medication Navigator™',
-    ogDescription: 'Find FREE medications for transplant patients through Patient Assistance Programs. Get tacrolimus, mycophenolate & immunosuppressants at no cost. Compare prices, find copay foundations & grants. Created by a transplant recipient.',
+    ogDescription: 'Find programs that may lower or cover the cost of transplant medicines if you qualify, including tacrolimus, mycophenolate & other immunosuppressants. Compare prices, find copay foundations & grants. Created by a transplant recipient.',
     twitterTitle: 'Free Transplant Medication Help | Medication Navigator',
-    twitterDescription: 'Find FREE medications through Patient Assistance Programs. Compare prices, find copay foundations & grants for transplant patients.',
+    twitterDescription: 'Find programs that may lower or cover the cost of your medicines if you qualify. Compare prices, find copay foundations & grants for transplant patients.',
     breadcrumbName: 'Home',
     es: {
       // Every other Spanish page carries a descriptive Spanish title; the home
@@ -32,7 +32,7 @@ export const seoMetadata = {
     description: 'Take our free 2-minute quiz to find Patient Assistance Programs for your transplant medications. Get personalized recommendations for free tacrolimus, mycophenolate, and copay help based on your insurance and income.',
     canonical: `${BASE_URL}/wizard`,
     ogTitle: 'Find Your Path to Free Transplant Medications',
-    ogDescription: 'Answer a few questions to get personalized recommendations for FREE medications through Patient Assistance Programs. Takes 2 minutes.',
+    ogDescription: 'Answer a few questions to get personalized recommendations for Patient Assistance Programs that may lower or cover your medication costs if you qualify. Takes 2 minutes.',
     twitterTitle: 'My Path Quiz - Free Medication Finder',
     twitterDescription: 'Take our free quiz to discover Patient Assistance Programs for your transplant medications. Personalized recommendations in 2 minutes.',
     breadcrumbName: 'My Path Quiz',
@@ -45,12 +45,12 @@ export const seoMetadata = {
 
   medications: {
     title: 'Search Transplant Medications & Prices | Transplant Medication Navigator™',
-    description: 'Compare estimated transplant medication prices and find FREE assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
+    description: 'Compare estimated transplant medication prices and find assistance programs. Search tacrolimus (Prograf), mycophenolate (CellCept), prednisone, sirolimus (Rapamune), and more. Find copay cards, PAPs, and foundation grants.',
     canonical: `${BASE_URL}/medications`,
     ogTitle: 'Search Transplant Medications - Compare Estimated Prices & Find Free Help',
-    ogDescription: 'Search transplant medications, compare estimated prices, and find Patient Assistance Programs offering FREE medications. Tacrolimus, mycophenolate, sirolimus, and more.',
+    ogDescription: 'Search transplant medications, compare estimated prices, and find Patient Assistance Programs that may lower or cover medication costs if you qualify. Tacrolimus, mycophenolate, sirolimus, and more.',
     twitterTitle: 'Search Transplant Medications & Find Free Help',
-    twitterDescription: 'Compare estimated prices and find FREE medication assistance for tacrolimus, mycophenolate, prednisone, and other transplant drugs.',
+    twitterDescription: 'Compare estimated prices and find medication assistance programs for tacrolimus, mycophenolate, prednisone, and other transplant drugs.',
     breadcrumbName: 'Medications',
     es: {
       title: 'Busque medicamentos de trasplante y precios | Transplant Medication Navigator™',
@@ -205,11 +205,8 @@ export const seoMetadata = {
     twitterTitle: 'Partner Pilot Program',
     twitterDescription: 'Find medication assistance programs through your healthcare provider partnership.',
     breadcrumbName: 'Pilot Program',
-    es: {
-      title: 'Programa piloto para socios | Transplant Medication Navigator™',
-      description: 'Bienvenido al programa piloto. Encuentre programas de asistencia, busque medicamentos de trasplante y acceda a recursos financieros verificados.',
-      breadcrumbName: 'Programa piloto',
-    },
+    // No es: block — the page renders hard-coded English, so it must not
+    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
   },
 
   termsAndConditions: {
@@ -253,11 +250,8 @@ export const seoMetadata = {
     twitterTitle: 'Share Your Journey',
     twitterDescription: 'Share your medication experience to help improve access for all patients. Anonymous surveys available.',
     breadcrumbName: 'Survey',
-    es: {
-      title: 'Comparta su experiencia | Transplant Medication Navigator™',
-      description: 'Comparta su experiencia con los medicamentos para ayudar a mejorar el acceso para todos los pacientes. Encuestas anónimas para receptores de trasplante y personas con enfermedades crónicas.',
-      breadcrumbName: 'Encuesta',
-    },
+    // No es: block — the page renders hard-coded English, so it must not
+    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
   },
 
   surveyTransplant: {
@@ -269,11 +263,8 @@ export const seoMetadata = {
     twitterTitle: 'Transplant Medication Survey',
     twitterDescription: 'Share your transplant medication journey to help improve access for all patients.',
     breadcrumbName: 'Transplant Survey',
-    es: {
-      title: 'Encuesta sobre medicamentos de trasplante | Transplant Medication Navigator™',
-      description: 'Comparta su experiencia con los medicamentos de trasplante. Ayúdenos a entender los retos con los medicamentos antirrechazo, las farmacias, el seguro y los programas de asistencia.',
-      breadcrumbName: 'Encuesta de trasplante',
-    },
+    // No es: block — the page renders hard-coded English, so it must not
+    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
   },
 
   surveyGeneral: {
@@ -285,11 +276,8 @@ export const seoMetadata = {
     twitterTitle: 'General Medication Survey',
     twitterDescription: 'Share your experience managing medications for chronic conditions.',
     breadcrumbName: 'General Survey',
-    es: {
-      title: 'Encuesta general sobre medicamentos | Transplant Medication Navigator™',
-      description: 'Comparta su experiencia manejando medicamentos para enfermedades crónicas. Ayúdenos a abogar por mejor acceso y precios más justos.',
-      breadcrumbName: 'Encuesta general',
-    },
+    // No es: block — the page renders hard-coded English, so it must not
+    // declare a Spanish variant (see SPANISH_ROUTES note in prerender-seo.js).
   },
 
   myMedications: {

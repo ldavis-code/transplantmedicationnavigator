@@ -183,34 +183,6 @@
   query = { lang = "es" }
 
 [[redirects]]
-  from = "/survey"
-  to = "/es/survey"
-  status = 301
-  force = true
-  query = { lang = "es" }
-
-[[redirects]]
-  from = "/survey/transplant"
-  to = "/es/survey/transplant"
-  status = 301
-  force = true
-  query = { lang = "es" }
-
-[[redirects]]
-  from = "/survey/general"
-  to = "/es/survey/general"
-  status = 301
-  force = true
-  query = { lang = "es" }
-
-[[redirects]]
-  from = "/pilot"
-  to = "/es/pilot"
-  status = 301
-  force = true
-  query = { lang = "es" }
-
-[[redirects]]
   from = "/terms-and-conditions"
   to = "/es/terms-and-conditions"
   status = 301
@@ -416,25 +388,33 @@
   to = "/es/savings-tracker/index.html"
   status = 200
 
+# /survey renders hard-coded English, so its /es/ variant is not
+# prerendered (see scripts/prerender-seo.js); old links land on the real page.
 [[redirects]]
   from = "/es/survey"
-  to = "/es/survey/index.html"
-  status = 200
+  to = "/survey/"
+  status = 301
 
+# /survey/transplant renders hard-coded English, so its /es/ variant is not
+# prerendered (see scripts/prerender-seo.js); old links land on the real page.
 [[redirects]]
   from = "/es/survey/transplant"
-  to = "/es/survey/transplant/index.html"
-  status = 200
+  to = "/survey/transplant/"
+  status = 301
 
+# /survey/general renders hard-coded English, so its /es/ variant is not
+# prerendered (see scripts/prerender-seo.js); old links land on the real page.
 [[redirects]]
   from = "/es/survey/general"
-  to = "/es/survey/general/index.html"
-  status = 200
+  to = "/survey/general/"
+  status = 301
 
+# /pilot renders hard-coded English, so its /es/ variant is not
+# prerendered (see scripts/prerender-seo.js); old links land on the real page.
 [[redirects]]
   from = "/es/pilot"
-  to = "/es/pilot/index.html"
-  status = 200
+  to = "/pilot/"
+  status = 301
 
 [[redirects]]
   from = "/es/terms-and-conditions"

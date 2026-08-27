@@ -198,7 +198,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
                     <div className="border border-slate-200 rounded-lg p-4 bg-slate-50">
                         <h3 className="font-bold text-slate-900 flex items-center gap-2 mb-2">
                             <Pill size={16} className="text-slate-500" aria-hidden="true" />
-                            {t('wizard.results.programs.othersTitle', { count: medsWithout.length })}
+                            {t(medsWithPrograms.length === 0 ? 'wizard.results.programs.othersTitleAll' : 'wizard.results.programs.othersTitle', { count: medsWithout.length })}
                         </h3>
                         <p className="text-sm text-slate-600 mb-3">{t('wizard.results.programs.othersNote')}</p>
                         <ul className="flex flex-wrap gap-2">
