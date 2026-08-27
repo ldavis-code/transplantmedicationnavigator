@@ -1,0 +1,162 @@
+{
+  "_comment": [
+    "Canonical condition taxonomy for the medication catalogue.",
+    "",
+    "`category` on a medication is a DRUG CLASS label ('NSAID', 'Diuretic',",
+    "'Inhaled Corticosteroid') that grew organically and mixes classes with",
+    "conditions ('Diabetes', 'Cystic Fibrosis'). It stays as-is because it",
+    "drives display labels (medications.categories.* i18n keys), the related-",
+    "medications rail and price-estimate defaults.",
+    "",
+    "`condition` answers the question patients actually ask -- what is this",
+    "for -- and is a small closed set. It is derived from category by the map",
+    "below, with per-medication overrides for the handful of drugs whose class",
+    "does not imply their use here (nadolol is a beta blocker, but in this",
+    "catalogue it prevents variceal bleeding in liver disease).",
+    "",
+    "Run `npm run conditions:apply` after editing to rewrite the resolved",
+    "`condition` field on every record in medications.json. It exits non-zero",
+    "if a category has no mapping, so a new category cannot ship unclassified."
+  ],
+
+  "conditions": [
+    { "id": "rejection-prevention", "label": "Preventing Transplant Rejection", "group": "Transplant" },
+    { "id": "rejection-treatment", "label": "Treating Transplant Rejection", "group": "Transplant" },
+    { "id": "infection", "label": "Infection", "group": "Transplant" },
+    { "id": "hepatitis", "label": "Hepatitis B & C", "group": "Liver" },
+    { "id": "liver-disease", "label": "Liver Disease", "group": "Liver" },
+    { "id": "kidney-disease", "label": "Kidney Disease", "group": "Kidney" },
+    { "id": "anemia", "label": "Anemia", "group": "Blood" },
+    { "id": "low-white-cells", "label": "Low White Blood Cell Count", "group": "Blood" },
+    { "id": "blood-clots", "label": "Blood Clots", "group": "Blood" },
+    { "id": "high-blood-pressure", "label": "High Blood Pressure", "group": "Heart" },
+    { "id": "heart-failure", "label": "Heart Failure", "group": "Heart" },
+    { "id": "heart-rhythm", "label": "Irregular Heartbeat", "group": "Heart" },
+    { "id": "high-cholesterol", "label": "High Cholesterol", "group": "Heart" },
+    { "id": "fluid-retention", "label": "Fluid Retention", "group": "Heart" },
+    { "id": "pulmonary-hypertension", "label": "Pulmonary Hypertension", "group": "Lung" },
+    { "id": "asthma-copd", "label": "Asthma & COPD", "group": "Lung" },
+    { "id": "cystic-fibrosis", "label": "Cystic Fibrosis", "group": "Lung" },
+    { "id": "pulmonary-fibrosis", "label": "Pulmonary Fibrosis", "group": "Lung" },
+    { "id": "allergies", "label": "Allergies", "group": "Lung" },
+    { "id": "diabetes", "label": "Diabetes", "group": "Metabolic" },
+    { "id": "thyroid", "label": "Thyroid Disease", "group": "Metabolic" },
+    { "id": "gout", "label": "Gout", "group": "Metabolic" },
+    { "id": "acid-reflux", "label": "Acid Reflux & Ulcers", "group": "Digestive" },
+    { "id": "digestive", "label": "Digestive Symptoms", "group": "Digestive" },
+    { "id": "pancreatic-insufficiency", "label": "Pancreatic Insufficiency", "group": "Digestive" },
+    { "id": "pain", "label": "Pain", "group": "Everyday" },
+    { "id": "mental-health", "label": "Mental Health & Sleep", "group": "Everyday" },
+    { "id": "nutrition", "label": "Nutrition & Supplements", "group": "Everyday" },
+    { "id": "electrolytes", "label": "Electrolyte Imbalance", "group": "Everyday" }
+  ],
+
+  "categoryToCondition": {
+    "Immunosuppressant": "rejection-prevention",
+    "Induction": "rejection-prevention",
+    "Steroid": "rejection-prevention",
+
+    "Acute Rejection": "rejection-treatment",
+    "Antibody-Mediated Rejection": "rejection-treatment",
+
+    "Anti-viral": "infection",
+    "Anti-fungal": "infection",
+    "Antibiotic": "infection",
+    "Inhaled Antibiotic": "infection",
+    "Infection Prevention": "infection",
+
+    "Hepatitis B/C": "hepatitis",
+    "Liver Support": "liver-disease",
+    "Beta Blocker": "liver-disease",
+
+    "Kidney Support": "kidney-disease",
+
+    "Anemia": "anemia",
+    "Blood Support": "low-white-cells",
+    "Anticoagulant": "blood-clots",
+    "Antiplatelet": "blood-clots",
+
+    "Blood Pressure": "high-blood-pressure",
+    "Heart Failure": "heart-failure",
+    "Antiarrhythmic": "heart-rhythm",
+    "Cholesterol": "high-cholesterol",
+    "Diuretic": "fluid-retention",
+
+    "Pulmonary Hypertension": "pulmonary-hypertension",
+    "Respiratory": "asthma-copd",
+    "Bronchodilator": "asthma-copd",
+    "Inhaled Corticosteroid": "asthma-copd",
+    "Leukotriene Modifier": "asthma-copd",
+    "Asthma Biologic": "asthma-copd",
+    "Mast Cell Stabilizer": "asthma-copd",
+    "Cystic Fibrosis": "cystic-fibrosis",
+    "Mucolytic": "cystic-fibrosis",
+    "Pulmonary Fibrosis": "pulmonary-fibrosis",
+
+    "Antihistamine": "allergies",
+    "Nasal Corticosteroid": "allergies",
+    "Nasal Antihistamine": "allergies",
+
+    "Diabetes": "diabetes",
+    "Thyroid": "thyroid",
+    "Gout": "gout",
+
+    "GI / Acid Suppression": "acid-reflux",
+    "GI Support": "digestive",
+    "Antiemetic": "digestive",
+    "Enzymes": "pancreatic-insufficiency",
+
+    "Pain Management": "pain",
+    "NSAID": "pain",
+    "Mental Health": "mental-health",
+    "Antipsychotic": "mental-health",
+
+    "Vitamin": "nutrition",
+    "Supplement": "nutrition",
+    "Electrolyte": "electrolytes"
+  },
+
+  "medicationOverrides": {
+    "_comment": "Drugs whose class does not imply their use in this catalogue.",
+    "ferrous-sulfate": "anemia",
+    "hydrochlorothiazide": "high-blood-pressure",
+    "chlorthalidone": "high-blood-pressure"
+  },
+
+  "categoryAliases": {
+    "_comment": [
+      "Category names collapsed onto the one that survives. Two groups:",
+      "",
+      "1. Merged duplicates. These were exact synonyms, not clinical",
+      "   distinctions: the site displayed 'Pain Relief' and 'Pain Management'",
+      "   as two separate groups holding three opioids between them, and",
+      "   sevelamer sat in both 'Kidney Support' (as Renvela) and 'Phosphate",
+      "   Binder (ESRD)'.",
+      "",
+      "2. Database vocabulary. The medications table grew plural category",
+      "   names ('Immunosuppressants') while every sentence and label on the",
+      "   site was written for the singular ('Tacrolimus is an",
+      "   immunosuppressant...'). scripts/sync-medications-json.js has always",
+      "   translated these on read; migration 048 applies them to the rows so",
+      "   both sides finally agree, and the read-time translation stays as a",
+      "   safety net for rows added later.",
+      "",
+      "Applied to medications.json by scripts/apply-medication-conditions.js,",
+      "to database rows by migration 048, and to future database reads by",
+      "scripts/sync-medications-json.js."
+    ],
+
+    "Pain Relief": "Pain Management",
+    "Anemia (ESRD)": "Anemia",
+    "Phosphate Binder (ESRD)": "Kidney Support",
+    "Asthma Biologic / Allergy": "Asthma Biologic",
+
+    "Immunosuppressants": "Immunosuppressant",
+    "Antivirals": "Anti-viral",
+    "Antifungals": "Anti-fungal",
+    "Steroids": "Steroid",
+    "Diuretics": "Diuretic",
+    "Induction Agents": "Induction",
+    "Anticoagulation": "Anticoagulant"
+  }
+}

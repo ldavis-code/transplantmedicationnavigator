@@ -78,6 +78,40 @@ const MIGRATIONS = [
       (sql) => sql`INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufacturer, stage, common_organs, pap_url, pap_program_id, copay_url, copay_program_id, cost_tier, generic_available, typical_copay_tier) VALUES ('cellcept', 'CellCept', 'Mycophenolate Mofetil', NULL, 'Immunosuppressant', 'Genentech', 'Post-transplant', ARRAY['Kidney','Liver','Heart','Lung','Pancreas'], 'https://www.genentech-access.com/patient.html', 'genentech-pap', 'https://www.genentech-access.com/patient.html', 'genentech-copay', 'medium', TRUE, '2') ON CONFLICT (id) DO NOTHING`,
     ],
   },
+  {
+    // `category` mixed drug classes ('NSAID') with conditions ('Diabetes')
+    // and carried synonyms side by side — 'Pain Relief' and 'Pain Management'
+    // were two groups holding three opioids between them — so nothing in the
+    // table said what a medication is FOR. Adds `condition`, backfilled from
+    // src/data/conditions.json (the single source for the taxonomy), and
+    // collapses the duplicate category names plus the database's plural
+    // spellings onto the site's vocabulary. Pairs with the
+    // src/data/medications.json change (the runtime merges DB over JSON, so
+    // rows left without a condition would override it with nulls). The
+    // column is quoted because CONDITION is a reserved word in the SQL
+    // standard. Category UPDATEs stop matching once applied and every
+    // condition UPDATE is guarded by IS DISTINCT FROM, so a re-run is a no-op.
+    id: '048_add_medication_condition',
+    statements: [
+      (sql) => sql`ALTER TABLE medications ADD COLUMN IF NOT EXISTS "condition" TEXT`,
+      (sql) => sql`CREATE INDEX IF NOT EXISTS idx_medications_condition ON medications("condition")`,
+      (sql) => sql`UPDATE medications SET category = 'Pain Management' WHERE category = 'Pain Relief'`,
+      (sql) => sql`UPDATE medications SET category = 'Anemia' WHERE category = 'Anemia (ESRD)'`,
+      (sql) => sql`UPDATE medications SET category = 'Kidney Support' WHERE category = 'Phosphate Binder (ESRD)'`,
+      (sql) => sql`UPDATE medications SET category = 'Asthma Biologic' WHERE category = 'Asthma Biologic / Allergy'`,
+      (sql) => sql`UPDATE medications SET category = 'Immunosuppressant' WHERE category = 'Immunosuppressants'`,
+      (sql) => sql`UPDATE medications SET category = 'Anti-viral' WHERE category = 'Antivirals'`,
+      (sql) => sql`UPDATE medications SET category = 'Anti-fungal' WHERE category = 'Antifungals'`,
+      (sql) => sql`UPDATE medications SET category = 'Steroid' WHERE category = 'Steroids'`,
+      (sql) => sql`UPDATE medications SET category = 'Diuretic' WHERE category = 'Diuretics'`,
+      (sql) => sql`UPDATE medications SET category = 'Induction' WHERE category = 'Induction Agents'`,
+      (sql) => sql`UPDATE medications SET category = 'Anticoagulant' WHERE category = 'Anticoagulation'`,
+      (sql) => sql`UPDATE medications m SET "condition" = c.condition FROM (VALUES ('Immunosuppressant', 'rejection-prevention'), ('Induction', 'rejection-prevention'), ('Steroid', 'rejection-prevention'), ('Acute Rejection', 'rejection-treatment'), ('Antibody-Mediated Rejection', 'rejection-treatment'), ('Anti-viral', 'infection'), ('Anti-fungal', 'infection'), ('Antibiotic', 'infection'), ('Inhaled Antibiotic', 'infection'), ('Infection Prevention', 'infection'), ('Hepatitis B/C', 'hepatitis'), ('Liver Support', 'liver-disease'), ('Beta Blocker', 'liver-disease'), ('Kidney Support', 'kidney-disease'), ('Anemia', 'anemia'), ('Blood Support', 'low-white-cells'), ('Anticoagulant', 'blood-clots'), ('Antiplatelet', 'blood-clots'), ('Blood Pressure', 'high-blood-pressure'), ('Heart Failure', 'heart-failure'), ('Antiarrhythmic', 'heart-rhythm'), ('Cholesterol', 'high-cholesterol'), ('Diuretic', 'fluid-retention'), ('Pulmonary Hypertension', 'pulmonary-hypertension'), ('Respiratory', 'asthma-copd'), ('Bronchodilator', 'asthma-copd'), ('Inhaled Corticosteroid', 'asthma-copd'), ('Leukotriene Modifier', 'asthma-copd'), ('Asthma Biologic', 'asthma-copd'), ('Mast Cell Stabilizer', 'asthma-copd'), ('Cystic Fibrosis', 'cystic-fibrosis'), ('Mucolytic', 'cystic-fibrosis'), ('Pulmonary Fibrosis', 'pulmonary-fibrosis'), ('Antihistamine', 'allergies'), ('Nasal Corticosteroid', 'allergies'), ('Nasal Antihistamine', 'allergies'), ('Diabetes', 'diabetes'), ('Thyroid', 'thyroid'), ('Gout', 'gout'), ('GI / Acid Suppression', 'acid-reflux'), ('GI Support', 'digestive'), ('Antiemetic', 'digestive'), ('Enzymes', 'pancreatic-insufficiency'), ('Pain Management', 'pain'), ('NSAID', 'pain'), ('Mental Health', 'mental-health'), ('Antipsychotic', 'mental-health'), ('Vitamin', 'nutrition'), ('Supplement', 'nutrition'), ('Electrolyte', 'electrolytes') ) AS c(category, condition) WHERE m.category = c.category AND m.id NOT IN ('ferrous-sulfate', 'hydrochlorothiazide', 'chlorthalidone') AND m."condition" IS DISTINCT FROM c.condition`,
+      (sql) => sql`UPDATE medications SET "condition" = 'anemia' WHERE id = 'ferrous-sulfate' AND "condition" IS DISTINCT FROM 'anemia'`,
+      (sql) => sql`UPDATE medications SET "condition" = 'high-blood-pressure' WHERE id = 'hydrochlorothiazide' AND "condition" IS DISTINCT FROM 'high-blood-pressure'`,
+      (sql) => sql`UPDATE medications SET "condition" = 'high-blood-pressure' WHERE id = 'chlorthalidone' AND "condition" IS DISTINCT FROM 'high-blood-pressure'`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
