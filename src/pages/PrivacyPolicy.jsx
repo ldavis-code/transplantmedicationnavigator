@@ -57,7 +57,6 @@ const PrivacyPolicy = () => {
                         <InfoCard titleKey="legal.privacy.cardUsageTitle" textKey="legal.privacy.cardUsageText" />
                         <InfoCard titleKey="legal.privacy.cardFeedbackTitle" textKey="legal.privacy.cardFeedbackText" />
                         <InfoCard titleKey="legal.privacy.cardEpicTitle" textKey="legal.privacy.cardEpicText" />
-                        <InfoCard titleKey="legal.privacy.cardChatTitle" textKey="legal.privacy.cardChatText" />
                         <InfoCard titleKey="legal.privacy.cardCookiesTitle" textKey="legal.privacy.cardCookiesText" />
                     </div>
                 </Section>

@@ -376,7 +376,7 @@ ${patientName || "[Your Name]"}`;
     );
 
     const TabButton = ({ id, label, icon: Icon, iconBg, iconColor }) => (
-        <button onClick={() => setActiveTab(id)} role="tab" id={`${id}-tab`} aria-selected={activeTab === id} aria-controls={`${id}-panel`} tabIndex={activeTab === id ? 0 : -1} className={`flex items-center justify-center gap-3 px-4 py-4 font-bold text-base md:text-lg transition-all border-b-4 min-h-[52px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
+        <button onClick={() => setActiveTab(id)} id={`${id}-tab`} aria-current={activeTab === id ? 'true' : undefined} className={`flex items-center justify-center gap-3 px-4 py-4 font-bold text-base md:text-lg transition-all border-b-4 min-h-[52px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 ${activeTab === id ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50' : 'border-transparent text-slate-700 hover:text-emerald-600 hover:bg-slate-50'}`}>
             <span className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg ${iconBg} transition-transform ${activeTab === id ? 'scale-110' : ''}`} aria-hidden="true">
                 <Icon size={20} className={iconColor} strokeWidth={2.5} />
             </span>
@@ -402,7 +402,7 @@ ${patientName || "[Your Name]"}`;
                     <ArrowRight className="text-blue-600 group-hover:translate-x-1 transition-transform" size={24} aria-hidden="true" />
                 </div>
             </Link>
-            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label={t('applicationHelp.tabs.ariaLabel')}>
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" aria-label={t('applicationHelp.tabs.ariaLabel')}>
                 <div className="flex flex-wrap">
                     <TabButton id="START" label={t('applicationHelp.tabs.start')} icon={HeartHandshake} iconBg="bg-rose-100" iconColor="text-rose-600" />
                     <TabButton id="INCOME" label={t('applicationHelp.tabs.income')} icon={DollarSign} iconBg="bg-emerald-100" iconColor="text-emerald-600" />
@@ -412,7 +412,7 @@ ${patientName || "[Your Name]"}`;
                     <TabButton id="MEDS" label={t('applicationHelp.tabs.meds')} icon={Pill} iconBg="bg-teal-100" iconColor="text-teal-600" />
                 </div>
             </nav>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" id={`${activeTab}-panel`}>
                 {activeTab === 'START' && (
                     <div className="space-y-8">
                         <aside className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg" role="note"><h2 className="text-emerald-800 font-bold text-xl mb-3 flex items-center gap-2"><CheckCircle size={24} aria-hidden="true" /> {t('applicationHelp.start.goodNews.title')}</h2><ul className="list-disc pl-5 text-emerald-900 space-y-2 text-lg leading-relaxed"><li><strong>{t('applicationHelp.start.goodNews.item1')}</strong></li><li>{t('applicationHelp.start.goodNews.item2')}</li></ul></aside>

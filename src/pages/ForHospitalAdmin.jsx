@@ -26,8 +26,8 @@ const ForHospitalAdmin = () => {
     const valueProps = [
         {
             icon: TrendingUp,
-            title: 'Improve SRTR Outcomes Metrics',
-            description: 'Medication non-adherence is the leading modifiable cause of graft loss. Connecting patients to assistance programs before cost becomes a barrier directly supports graft survival and your program\'s SRTR performance.'
+            title: 'Support Medication-Access Workflows Tied to Graft-Survival Goals',
+            description: 'Medication non-adherence is the leading modifiable cause of graft loss. Connecting patients to assistance programs before cost becomes a barrier supports the medication-access workflows tied to graft survival and the outcomes SRTR measures.'
         },
         {
             icon: Activity,

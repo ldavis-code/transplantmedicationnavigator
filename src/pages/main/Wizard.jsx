@@ -1135,6 +1135,34 @@ const Wizard = () => {
                     </button>
                 </div>
 
+                {/* One best next step before the dense details — a distressed
+                    reader should not have to parse two columns of results to
+                    know what to do first. Crisis answers route to the
+                    emergency guide; everyone else starts with their first
+                    matched program. */}
+                {(() => {
+                    const inCrisis = financial === FinancialStatus.CRISIS || financial === FinancialStatus.UNAFFORDABLE;
+                    return (
+                        <aside
+                            className={`bg-white p-5 rounded-r-xl shadow-sm border-l-4 ${inCrisis ? 'border-rose-600' : 'border-emerald-600'}`}
+                            aria-labelledby="best-next-step-heading"
+                        >
+                            <h2 id="best-next-step-heading" className={`text-sm font-bold uppercase tracking-wide ${inCrisis ? 'text-rose-800' : 'text-emerald-800'}`}>
+                                {t('wizard.results.bestNextStep.title')}
+                            </h2>
+                            <p className="mt-1 text-slate-800 font-medium">
+                                {inCrisis ? t('wizard.results.bestNextStep.crisis') : t('wizard.results.bestNextStep.default')}
+                            </p>
+                            {inCrisis && (
+                                <Link to="/education?topic=EMERGENCY" className="mt-3 inline-flex items-center gap-2 bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-rose-700 transition no-print">
+                                    <Clock size={16} aria-hidden="true" />
+                                    <span>{t('wizard.results.crisis.emergencyLink')}</span>
+                                </Link>
+                            )}
+                        </aside>
+                    );
+                })()}
+
                 {/* Critical Alerts */}
                 {isKidney && isMedicare && (
                     <aside className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-600" role="alert" aria-labelledby="medicare-alert">

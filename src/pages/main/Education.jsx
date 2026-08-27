@@ -244,10 +244,7 @@ const Education = () => {
     const TabButton = ({ id, label, icon: Icon }) => (
         <button
             onClick={() => setActiveTab(id)}
-            role="tab"
-            aria-selected={activeTab === id}
-            aria-controls={`${id}-panel`}
-            aria-label={label}
+            aria-current={activeTab === id ? 'true' : undefined}
             className={`flex items-center justify-center gap-2 px-3 sm:px-5 py-3 font-bold text-sm sm:text-base transition-all border-b-4 min-h-[48px] flex-1 min-w-[calc(33.333%-2px)] sm:min-w-0 ${
                 activeTab === id
                     ? 'border-emerald-600 text-emerald-800 bg-emerald-50'
@@ -315,7 +312,7 @@ const Education = () => {
                 </div>
             </Link>
 
-            <nav className="bg-white rounded-xl shadow-md border border-slate-200" role="tablist" aria-label={t('education.tabs.ariaLabel')}>
+            <nav className="bg-white rounded-xl shadow-md border border-slate-200" aria-label={t('education.tabs.ariaLabel')}>
                 <div className="flex flex-wrap">
                     {/* Ordered by need, not name: emergency first, then the
                         money-literacy arc (brand vs. generic -> deductible
@@ -332,7 +329,7 @@ const Education = () => {
                     <TabButton id="DIRECTORY" label={t('education.tabs.directory')} icon={Search} />
                 </div>
             </nav>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" role="tabpanel" id={`${activeTab}-panel`} aria-labelledby={`${activeTab}-tab`}>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[200px]" id={`${activeTab}-panel`}>
                 {activeTab === 'GENERICS' && (
                     <div className="max-w-4xl mx-auto">
                         <GenericsVsBrand />
