@@ -562,7 +562,6 @@ const Layout = ({ children }) => {
             <Link
                 to="/education?topic=EMERGENCY"
                 className="block bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-3 text-base text-center font-medium no-print transition-colors"
-                aria-label={t('layout.banner.urgentAriaLabel')}
             >
                 <span className="inline-flex items-center justify-center gap-2">
                     <ShieldAlert size={18} className="text-emerald-100 flex-shrink-0" aria-hidden="true" />

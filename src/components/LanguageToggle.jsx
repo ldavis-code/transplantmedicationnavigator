@@ -20,6 +20,16 @@ const SWITCH_LABELS_SHORT = {
     es: 'English',
 };
 
+// Accessible names for the compact variant. WCAG 2.5.3 (Label in Name):
+// the visible label must appear verbatim in the accessible name, so the
+// short label leads and the full invitation follows. On the Spanish page
+// the visible label is "English", which "Ver esta página en inglés" does
+// not contain — a speech-input user saying "English" couldn't activate it.
+const SWITCH_LABELS_COMPACT = {
+    en: `${SWITCH_LABELS_SHORT.en} — ${SWITCH_LABELS.en}`,
+    es: `${SWITCH_LABELS_SHORT.es} — ${SWITCH_LABELS.es}`,
+};
+
 /**
  * Language switcher shown on pages that have a Spanish translation.
  * Spanish lives at the /es/ path prefix, so switching is a full navigation
@@ -60,8 +70,8 @@ const LanguageToggle = ({ compact = false }) => {
             <button
                 onClick={switchLanguage}
                 lang={next}
-                aria-label={SWITCH_LABELS[current]}
-                title={SWITCH_LABELS[current]}
+                aria-label={SWITCH_LABELS_COMPACT[current]}
+                title={SWITCH_LABELS_COMPACT[current]}
                 className="hidden min-[360px]:inline-flex items-center gap-1.5 px-2 2xl:px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-700 text-sm 2xl:text-base font-semibold rounded-lg border border-emerald-300 transition min-h-[44px] min-w-[44px] justify-center whitespace-nowrap"
             >
                 <Globe size={16} aria-hidden="true" />

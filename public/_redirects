@@ -54,9 +54,10 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /evidence  lang=es  /es/evidence  301!
 /my-medications  lang=es  /es/my-medications  301!
 /savings-tracker  lang=es  /es/savings-tracker  301!
-# /survey* and /pilot have no ?lang=es forwards: those pages render
-# hard-coded English, so there is no Spanish variant to forward to
-# (see scripts/prerender-seo.js). Re-add when they are translated.
+/survey  lang=es  /es/survey  301!
+/survey/transplant  lang=es  /es/survey/transplant  301!
+/survey/general  lang=es  /es/survey/general  301!
+/pilot  lang=es  /es/pilot  301!
 /terms-and-conditions  lang=es  /es/terms-and-conditions  301!
 /privacy  lang=es  /es/privacy  301!
 /accessibility  lang=es  /es/accessibility  301!
@@ -99,12 +100,10 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /es/evidence  /es/evidence/index.html  200
 /es/my-medications  /es/my-medications/index.html  200
 /es/savings-tracker  /es/savings-tracker/index.html  200
-# The /es/ survey and pilot variants are not prerendered (hard-coded
-# English pages); old links land on the real English page instead.
-/es/survey  /survey/  301
-/es/survey/transplant  /survey/transplant/  301
-/es/survey/general  /survey/general/  301
-/es/pilot  /pilot/  301
+/es/survey  /es/survey/index.html  200
+/es/survey/transplant  /es/survey/transplant/index.html  200
+/es/survey/general  /es/survey/general/index.html  200
+/es/pilot  /es/pilot/index.html  200
 /es/terms-and-conditions  /es/terms-and-conditions/index.html  200
 /es/privacy  /es/privacy/index.html  200
 /es/accessibility  /es/accessibility/index.html  200

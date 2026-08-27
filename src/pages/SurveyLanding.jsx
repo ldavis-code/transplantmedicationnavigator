@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Heart, Pill, Shield, Quote } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { seoMetadata } from '../data/seo-metadata';
@@ -7,6 +8,7 @@ import { seoMetadata } from '../data/seo-metadata';
 // Offers transplant-specific and general medication surveys
 
 export default function SurveyLanding() {
+  const { t } = useTranslation();
   useMetaTags(seoMetadata.survey);
 
   return (
@@ -15,10 +17,10 @@ export default function SurveyLanding() {
       <div className="bg-white/80 backdrop-blur-sm border-b border-emerald-100">
         <div className="max-w-4xl mx-auto px-6 py-8 text-center">
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
-            Share Your Journey
+            {t('survey.landing.title')}
           </h1>
           <p className="text-lg text-slate-600">
-            Your experience can change the system
+            {t('survey.landing.subtitle')}
           </p>
         </div>
       </div>
@@ -30,23 +32,23 @@ export default function SurveyLanding() {
           <div className="bg-white rounded-2xl border-2 border-emerald-200 p-8 shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <Heart className="w-6 h-6 text-emerald-600" />
+                <Heart className="w-6 h-6 text-emerald-600" aria-hidden="true" />
               </div>
               <h2 className="text-xl font-bold text-slate-800">
-                Transplant Journey Survey
+                {t('survey.landing.transplantTitle')}
               </h2>
             </div>
             <p className="text-slate-600 mb-4">
-              For transplant patients dealing with anti-rejection drugs, pharmacies, and insurance.
+              {t('survey.landing.transplantText')}
             </p>
             <p className="text-sm text-slate-500 mb-6">
-              8 topic areas - complete only the ones relevant to you
+              {t('survey.landing.transplantMeta')}
             </p>
             <Link
               to="/survey/transplant"
               className="block w-full py-3 px-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center rounded-xl font-medium hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md hover:shadow-lg"
             >
-              Start Transplant Survey
+              {t('survey.landing.transplantStart')}
             </Link>
           </div>
 
@@ -54,23 +56,23 @@ export default function SurveyLanding() {
           <div className="bg-white rounded-2xl border-2 border-slate-200 p-8 shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center">
-                <Pill className="w-6 h-6 text-slate-600" />
+                <Pill className="w-6 h-6 text-slate-600" aria-hidden="true" />
               </div>
               <h2 className="text-xl font-bold text-slate-800">
-                General Medication Survey
+                {t('survey.landing.generalTitle')}
               </h2>
             </div>
             <p className="text-slate-600 mb-4">
-              For anyone who has trouble getting or paying for medicine.
+              {t('survey.landing.generalText')}
             </p>
             <p className="text-sm text-slate-500 mb-6">
-              5 topic areas - takes about 5 minutes
+              {t('survey.landing.generalMeta')}
             </p>
             <Link
               to="/survey/general"
               className="block w-full py-3 px-6 bg-slate-700 text-white text-center rounded-xl font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg"
             >
-              Start General Survey
+              {t('survey.landing.generalStart')}
             </Link>
           </div>
         </div>
@@ -78,25 +80,25 @@ export default function SurveyLanding() {
         {/* Why We're Asking Section */}
         <div className="bg-white rounded-2xl border border-slate-200 p-8 mb-8">
           <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <Quote className="w-5 h-5 text-emerald-600" />
-            Why We're Asking
+            <Quote className="w-5 h-5 text-emerald-600" aria-hidden="true" />
+            {t('survey.landing.whyTitle')}
           </h3>
           <blockquote className="text-slate-600 italic mb-4 border-l-4 border-emerald-200 pl-4">
-            "When you share your story, you help other patients. Together, we are building a guide that we wish we had. Your voice helps us fix a broken system."
+            {t('survey.landing.whyQuote')}
           </blockquote>
           <p className="text-sm text-slate-500">
-, Lorrinda, TRIO President & Liver Transplant Recipient
+            {t('survey.landing.whyAttribution')}
           </p>
         </div>
 
         {/* Privacy Notice */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm">
-            <Shield className="w-4 h-4" />
-            <span><strong>Privacy:</strong> No names, dates, or medical records collected</span>
+            <Shield className="w-4 h-4" aria-hidden="true" />
+            <span><strong>{t('survey.landing.privacyLabel')}</strong> {t('survey.landing.privacyText')}</span>
           </div>
           <p className="text-xs text-slate-400 mt-4">
-            Powered by TransplantMedicationNavigator.com, By patients, for patients
+            {t('survey.common.poweredBy')}
           </p>
         </div>
       </div>

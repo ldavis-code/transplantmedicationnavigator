@@ -47,14 +47,10 @@ const routes = [
 const SPANISH_PATHS = new Set([
     '/', '/wizard', '/education', '/application-help', '/faq',
     '/medications', '/evidence', '/my-medications', '/savings-tracker',
+    '/survey', '/survey/transplant', '/survey/general', '/pilot',
     '/terms-and-conditions', '/privacy', '/accessibility',
     '/about', '/feedback', '/education/appeals',
 ]);
-// NOTE: /survey, /survey/transplant, /survey/general and /pilot are NOT
-// listed: those pages render hard-coded English (no t() calls), so an /es/
-// URL would serve English content under a Spanish address with a misleading
-// hreflang pair. Re-add them here and in scripts/prerender-seo.js once the
-// pages are actually translated.
 
 // The per-medication pages (/medications/:id) are Spanish-capable too:
 // prerendered /es/ variants exist for every one of them

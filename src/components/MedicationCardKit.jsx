@@ -634,6 +634,54 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 );
             })()}
 
+            {/* Best next step — the one action this patient should take,
+                stated before the filters and tabs. The health-literacy review
+                found the card opened on secondary controls: a tired patient
+                had to work out the filter chips and four tabs before anything
+                told them what to actually do. Mirrors the priority the
+                ASSISTANCE tab already uses: copay card (commercial) → PAP →
+                cash price → foundations. */}
+            {(() => {
+                const usesCopay = showCopayCards && hasCopayProgram;
+                const usesPap = !usesCopay && hasPapProgram && !papNotForThisInsurance;
+                const usesCash = !usesCopay && !usesPap && !!cashPriceSource;
+                const stepText = usesCopay ? t('medications.card.nextStep.copay')
+                    : usesPap ? t('medications.card.nextStep.pap')
+                    : usesCash ? t('medications.card.nextStep.cash')
+                    : t('medications.card.nextStep.foundation');
+                const actionClass = 'inline-flex items-center justify-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition min-h-[44px] flex-shrink-0 no-print';
+                return (
+                    <div className="bg-emerald-50 px-6 py-4 border-b-2 border-emerald-200">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div>
+                                <p className="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-1">{t('medications.card.nextStep.label')}</p>
+                                <p className="text-sm font-medium text-emerald-900">{stepText}</p>
+                            </div>
+                            {usesCopay && (
+                                <a href={copayUrl} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('copay_card_click', { medication: med.brandName, programId: copayProgramId, source: 'medication-card-next-step' }); }} className={actionClass} aria-label={t('medications.card.assistance.getCardAria', { name: localizeMedName(med.brandName) })}>
+                                    {t('medications.card.assistance.getCard')}<ArrowRight size={14} aria-hidden="true" />
+                                </a>
+                            )}
+                            {usesPap && (
+                                <a href={papLink} target="_blank" rel="noreferrer" onClick={() => { trackServerEvent('pap_click', { medication: med.brandName, programId: papProgramId, source: 'medication-card-next-step' }); }} className={actionClass} aria-label={t('medications.card.assistance.applyAria', { name: localizeMedName(med.brandName) })}>
+                                    {t('medications.card.assistance.apply')}<ArrowRight size={14} aria-hidden="true" />
+                                </a>
+                            )}
+                            {usesCash && (
+                                <button onClick={() => setActiveTab('PRICE')} className={actionClass}>
+                                    {t('medications.card.cash.compare')}<ArrowRight size={14} aria-hidden="true" />
+                                </button>
+                            )}
+                            {!usesCopay && !usesPap && !usesCash && (
+                                <Link to="/application-help" className={actionClass} aria-label={t('medications.card.assistance.viewGuideAria')}>
+                                    {t('medications.card.assistance.viewGrants')}<ArrowRight size={14} aria-hidden="true" />
+                                </Link>
+                            )}
+                        </div>
+                    </div>
+                );
+            })()}
+
             {/* Quick Filters */}
             <div className="bg-white px-6 py-3 border-b border-slate-200 no-print">
                 <div className="flex items-center gap-2 flex-wrap">
