@@ -800,7 +800,7 @@ const Education = () => {
                         {/* Healthcare Insurance Infographic */}
                         <div className="flex justify-center mb-8">
                             <img
-                                src="/photos/tmn_infographic.jpg"
+                                src={i18n.resolvedLanguage === 'es' ? '/photos/tmn_infographic_es.jpg' : '/photos/tmn_infographic.jpg'}
                                 alt={t('education.insurance.infographicAlt')}
                                 aria-describedby="insurance-infographic-desc"
                                 className="max-w-full h-auto rounded-lg shadow-md"

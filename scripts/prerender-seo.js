@@ -163,7 +163,7 @@ const pages = [
       <ul style="color:#475569;text-align:left;max-width:560px;margin:0 auto 20px;line-height:1.8;">
         <li>IOTA Performance Year 2 began July 1, 2026: participating kidney transplant hospitals now carry downside risk of up to $2,000 per kidney transplant, and composite graft survival is the model's entire quality domain, worth up to 20 of 100 points (CMS IOTA Model, June 2026 final rule).</li>
         <li>Patient education is the fastest lever a program controls: medication cost education at discharge, a standardized tool for coordinators and social workers, and aggregate engagement reporting for QAPI and IOTA strategy reviews.</li>
-        <li>Improve SRTR outcomes: medication non-adherence is the leading modifiable cause of graft loss, associated with ~36% of graft losses (Dew MA et al., Transplantation, 2007).</li>
+        <li>Support the graft-survival outcomes SRTR measures: medication non-adherence is the leading modifiable cause of graft loss, associated with ~36% of graft losses (Dew MA et al., Transplantation, 2007).</li>
         <li>Reduce preventable readmissions driven by cost-related non-adherence &mdash; 40% of recipients report skipping doses due to cost (AST Therapeutic Needs Study, Taber DJ et al., American Journal of Transplantation, 2025).</li>
         <li>Strengthen CMS Conditions of Participation documentation with a trackable, standardized patient education resource.</li>
         <li>Privacy-first by design: no accounts, no PHI stored on our servers &mdash; health details stay in the patient's browser, and analytics are aggregate-only.</li>
