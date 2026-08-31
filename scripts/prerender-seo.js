@@ -166,7 +166,7 @@ const pages = [
         <li>Epic MyChart integration via Epic Connection Hub, discharge workflow support, and a white-label admin dashboard with aggregate, privacy-safe analytics.</li>
         <li>Typical patient impact: monthly out-of-pocket immunosuppressant costs drop from $624 without assistance to about $10 with copay card enrollment.</li>
       </ul>
-      <p style="margin-bottom:16px;"><a href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry" style="color:#059669;font-weight:600;text-decoration:underline;">Schedule a demo</a> or <a href="/pilot" style="color:#059669;font-weight:600;text-decoration:underline;">view the 90-day pilot program</a>.</p>`,
+      <p style="margin-bottom:16px;"><a href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry" style="color:#059669;font-weight:600;text-decoration:underline;">Schedule a demo</a> or <a href="/pilot" style="color:#059669;font-weight:600;text-decoration:underline;">view the 90-day pilot program</a>.</p>`,
   },
   {
     route: '/evidence',

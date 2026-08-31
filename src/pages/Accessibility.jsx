@@ -240,11 +240,11 @@ const Accessibility = () => {
                         <p className="text-slate-700">
                             <strong>{t('legal.a11y.fbEmailLabel')}</strong>{' '}
                             <a
-                                href="mailto:info@transplantmedicationnavigator.com?subject=Accessibility%20Feedback"
+                                href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Accessibility%20Feedback"
                                 className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
                             >
                                 <Mail size={16} aria-hidden="true" />
-                                info@transplantmedicationnavigator.com
+                                Ldavis@transplantmedicationnavigator.com
                             </a>
                         </p>
                         <p className="text-slate-700">
@@ -317,7 +317,7 @@ const Accessibility = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=Accessibility%20Assistance"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Accessibility%20Assistance"
                         className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition inline-flex items-center justify-center gap-2 min-h-[44px]"
                     >
                         <Mail size={18} aria-hidden="true" />

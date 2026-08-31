@@ -147,11 +147,11 @@ const PrivacyPolicy = () => {
                     <p className="text-slate-700 leading-relaxed">
                         {t('legal.privacy.s12Pre')}{' '}
                         <a
-                            href="mailto:info@transplantmedicationnavigator.com"
+                            href="mailto:Ldavis@transplantmedicationnavigator.com"
                             className="text-emerald-600 hover:text-emerald-700 underline inline-flex items-center gap-1"
                         >
                             <Mail size={16} aria-hidden="true" />
-                            info@transplantmedicationnavigator.com
+                            Ldavis@transplantmedicationnavigator.com
                         </a>
                     </p>
                 </Section>
