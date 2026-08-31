@@ -741,7 +741,7 @@ const Layout = ({ children }) => {
                     <p>{t('layout.footer.copyright')}</p>
                     <p className="mt-4 text-slate-300 text-sm">{t('layout.footer.createdBy')}</p>
                     <p className="mt-2 text-slate-400 text-sm">
-                        <a href="mailto:info@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline break-all">info@transplantmedicationnavigator.com</a>
+                        <a href="mailto:Ldavis@transplantmedicationnavigator.com" className="text-emerald-400 hover:text-emerald-300 underline break-all">Ldavis@transplantmedicationnavigator.com</a>
                     </p>
                     {/* Non-Discrimination Notice - Section 504 Compliance */}
                     <div className="mt-6 max-w-3xl mx-auto bg-slate-800 rounded-lg px-4 py-3 text-sm">

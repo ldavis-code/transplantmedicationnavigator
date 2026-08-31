@@ -244,7 +244,7 @@ const Demo = () => {
             </Link>
 
             <a
-              href="mailto:info@transplantmedicationnavigator.com?subject=Enterprise Demo Follow-up"
+              href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Enterprise Demo Follow-up"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-semibold rounded-xl shadow border border-slate-200 transition"
             >
               Contact Sales

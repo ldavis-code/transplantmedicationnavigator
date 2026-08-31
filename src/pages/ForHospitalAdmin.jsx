@@ -115,7 +115,7 @@ const ForHospitalAdmin = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Hospital%20Partnership%20Inquiry"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                     >
                         <Mail size={20} aria-hidden="true" />
@@ -159,7 +159,7 @@ const ForHospitalAdmin = () => {
                         <ArrowRight size={18} aria-hidden="true" />
                     </Link>
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=IOTA%20Strategy%20Call"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=IOTA%20Strategy%20Call"
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl shadow-sm border-2 border-slate-200 hover:border-slate-300 transition"
                     >
                         <Mail size={18} aria-hidden="true" />
@@ -333,14 +333,14 @@ const ForHospitalAdmin = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Administrator%20Demo%20Request"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Hospital%20Administrator%20Demo%20Request"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
                     >
                         <Mail size={20} aria-hidden="true" />
                         Schedule a Demo
                     </a>
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=Hospital%20Pilot%20RFI"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Hospital%20Pilot%20RFI"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl shadow-sm border-2 border-slate-200 hover:border-slate-300 transition"
                     >
                         Request RFI Package

@@ -222,7 +222,7 @@ const Evidence = () => {
                         <ArrowRight size={18} aria-hidden="true" />
                     </Link>
                     <a
-                        href="mailto:info@transplantmedicationnavigator.com?subject=Evidence%20Briefing%20Request"
+                        href="mailto:Ldavis@transplantmedicationnavigator.com?subject=Evidence%20Briefing%20Request"
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl shadow-sm border-2 border-slate-200 hover:border-slate-300 transition"
                     >
                         <Mail size={18} aria-hidden="true" />
