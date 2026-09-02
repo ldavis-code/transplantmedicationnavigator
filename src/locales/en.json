@@ -1400,7 +1400,9 @@
     "hero": {
       "title1": "Your transplant team decides your medicine.",
       "title2": "We help you get it.",
-      "subtitle": "What it should cost, which programs may be open to you, and what to do when your plan changes the rules."
+      "subtitle": "What it should cost, which programs may be open to you, and what to do when your plan changes the rules.",
+      "cta": "Answer 5 questions and see all your options",
+      "ctaHint": "About 2 minutes. No name, no account. Checks copay cards, assistance programs, foundations, and prices at once."
     },
     "flow": {
       "ariaLabel": "How it works, in three steps",
@@ -1487,7 +1489,7 @@
       "quoteMid2": ". But nobody told me about copay cards. I found one myself and now I pay just ",
       "price3": "$10",
       "quotePost": ".”",
-      "attribution": "Real patient · liver transplant · 2025 · Savings vary by medication and insurance"
+      "attribution": "Liver transplant recipient, 2025. Name withheld at the patient's request. Savings vary by medication and insurance."
     },
     "testimonial": {
       "ariaLabel": "Patient testimonial",

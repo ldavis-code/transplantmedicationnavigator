@@ -1398,9 +1398,11 @@
   },
   "home": {
     "hero": {
-      "title1": "Su equipo de trasplante decide su medicina.",
-      "title2": "Nosotros le ayudamos a conseguirla.",
-      "subtitle": "Cuánto debería costar, qué programas podrían estar disponibles para usted y qué hacer cuando su plan cambia las reglas."
+      "title1": "Su equipo de trasplante decide sus medicamentos.",
+      "title2": "Nosotros le ayudamos a conseguirlos.",
+      "subtitle": "Cuánto debería costar, qué programas podrían estar disponibles para usted y qué hacer cuando su plan cambia las reglas.",
+      "cta": "Responda 5 preguntas y vea todas sus opciones",
+      "ctaHint": "Unos 2 minutos. Sin nombre y sin cuenta. Revisa tarjetas de copago, programas de asistencia, fundaciones y precios a la vez."
     },
     "flow": {
       "ariaLabel": "Cómo funciona, en tres pasos",
@@ -1487,7 +1489,7 @@
       "quoteMid2": ". Pero nadie me habló de las tarjetas de copago. Encontré una por mi cuenta y ahora pago solo ",
       "price3": "$10",
       "quotePost": ".”",
-      "attribution": "Paciente real · trasplante de hígado · 2025 · Los ahorros varían según el medicamento y el seguro"
+      "attribution": "Receptora de trasplante de hígado, 2025. Nombre omitido a petición de la paciente. Los ahorros varían según el medicamento y el seguro."
     },
     "testimonial": {
       "ariaLabel": "Testimonio de un paciente",
