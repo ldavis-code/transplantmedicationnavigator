@@ -22,7 +22,7 @@ export const seoMetadata = {
       // result had no Spanish words in its headline while its description
       // was fully Spanish.
       title: 'Ayuda gratis para pagar sus medicamentos de trasplante | Transplant Medication Navigator™',
-      description: 'Consiga medicamentos de trasplante GRATIS con los Programas de Asistencia al Paciente. Encuentre ayuda para pagar tacrolimus, micofenolato e inmunosupresores. Compare precios y encuentre fundaciones de copago y ayudas para pacientes de trasplante de riñón, hígado y corazón.',
+      description: 'Sus medicamentos de trasplante podrían ser gratis si califica. Encuentre Programas de Asistencia al Paciente y ayuda para pagar tacrolimus, micofenolato e inmunosupresores. Compare precios y encuentre fundaciones de copago y ayudas para pacientes de trasplante de riñón, hígado y corazón.',
       breadcrumbName: 'Inicio',
     },
   },

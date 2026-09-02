@@ -135,6 +135,23 @@ const Home = () => {
                     {t('home.hero.subtitle')}
                 </p>
 
+                {/* Hero CTA is the quiz, not the medication list. The list is
+                    what every site has; five questions that check copay cards,
+                    assistance programs, foundations, and prices at once is
+                    what no other site has, so it gets the one button above
+                    the fold. The step-by-step flow below stays for the
+                    visitor who wants to look up a single drug. */}
+                <div className="mt-7">
+                    <Link
+                        to="/wizard"
+                        onClick={() => trackServerEvent('home_hero_quiz', { source: 'home' })}
+                        className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg rounded-xl shadow-md transition"
+                    >
+                        {t('home.hero.cta')} <ArrowRight size={18} aria-hidden="true" />
+                    </Link>
+                    <p className="text-sm text-slate-500 mt-3">{t('home.hero.ctaHint')}</p>
+                </div>
+
                 {/* Three-step journey map, so a first-time visitor sees the
                     whole path before scrolling into step 1. */}
                 <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-3 mt-7" aria-label={t('home.flow.ariaLabel')}>

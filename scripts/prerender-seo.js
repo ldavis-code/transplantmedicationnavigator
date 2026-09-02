@@ -541,7 +541,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
-            <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página... <span lang="en">/ Loading interactive features...</span>' : 'Loading interactive features... <span lang="es">/ Cargando la página...</span>'}</p>
+            <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página...' : 'Loading interactive features...'}</p>
             <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">${isEs
               ? 'Si esta página no carga, todavía puede ver la <a href="/es/medications" style="color:#059669;">lista de medicamentos</a> y el <a href="/es/application-help" style="color:#059669;">directorio de programas de asistencia</a>.'
               : 'If this page doesn\'t load, you can still browse the <a href="/medications" style="color:#059669;">medication list</a> and the <a href="/application-help" style="color:#059669;">assistance program directory</a>.'}</p>
@@ -582,10 +582,11 @@ function homeBody(isEs) {
       </h1>
       <p style="font-size: 1.125rem; color: #64748b; max-width: 620px; margin: 0 auto 24px;">${h.hero.subtitle}</p>
       <p style="margin-bottom: 12px;">
-        <a href="${pre}/medications" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${browseAll}</a>
+        <a href="${pre}/wizard" style="display: inline-block; padding: 14px 28px; background: #047857; color: white; font-weight: 700; border-radius: 12px; text-decoration: none;">${h.hero.cta}</a>
       </p>
+      <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 12px;">${h.hero.ctaHint}</p>
       <p style="color: #475569; margin-bottom: 24px;">
-        ${h.steps.multiplePre} <a href="${pre}/wizard" style="color: #047857; font-weight: 600;">${h.steps.multipleLink}</a>
+        <a href="${pre}/medications" style="color: #047857; font-weight: 600;">${browseAll}</a>
       </p>
       <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">${trustLine}</p>
       ${isEs ? '' : `<p lang="es" style="font-size: 0.875rem; color: #475569; margin-bottom: 24px;">
