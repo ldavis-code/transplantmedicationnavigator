@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.122.0",
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "^1.1.0",
     "@sentry/react": "^10.71.0",
     "fuse.js": "^7.1.0",
     "i18next": "^26.4.0",
