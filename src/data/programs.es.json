@@ -1,9 +1,9 @@
 {
   "copayPrograms": {
     "astellas-copay": {
-      "name": "Astellas Patient Support Solutions - Tarjeta de copago",
-      "maxBenefit": "Pague tan solo $0 de copago",
-      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "name": "Tarjeta de copago de Astellas Cares",
+      "maxBenefit": "Pague tan solo $0, hasta $3,000 al año",
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid. La tarjeta de Prograf no es válida en California ni en Massachusetts. Hay que renovar la inscripción cada 12 meses."
     },
     "novartis-copay": {
       "name": "Asistencia al Paciente de Novartis - Tarjeta de copago",

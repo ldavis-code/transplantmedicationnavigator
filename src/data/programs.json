@@ -2,11 +2,11 @@
   "copayPrograms": {
     "astellas-copay": {
       "programId": "astellas-copay",
-      "name": "Astellas Patient Support Solutions - Copay Card",
+      "name": "Astellas Cares Copay Card",
       "manufacturer": "Astellas",
-      "medications": ["tacrolimus", "cresemba"],
-      "url": "https://www.astellaspharmasupportsolutions.com/",
-      "lastVerified": "2026-07-03",
+      "medications": ["prograf", "astagraf-xl"],
+      "url": "https://astellascares.com/",
+      "lastVerified": "2026-09-08",
       "phone": "1-800-477-6472",
       "fax": "1-800-477-6572",
       "address": {
@@ -22,8 +22,8 @@
         "medicaid": false,
         "uninsured": false
       },
-      "maxBenefit": "Pay as little as $0 copay",
-      "notes": "Commercial insurance only. Not valid for government insurance."
+      "maxBenefit": "Pay as little as $0, up to $3,000 per year",
+      "notes": "Commercial insurance only. Not valid for government insurance. The Prograf card is not valid in California or Massachusetts. Re-enroll every 12 months."
     },
     "novartis-copay": {
       "programId": "novartis-copay",
