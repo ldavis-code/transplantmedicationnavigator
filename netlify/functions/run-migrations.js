@@ -159,6 +159,19 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE savings_programs SET application_url = 'https://astellascares.com/' WHERE application_url IN ('https://www.prograf.com/savings-information', 'https://www.astagrafxl.com/savings-info')`,
     ],
   },
+  {
+    // Transplant-center pilot registry behind the admin Center Analytics page
+    // (/admin/center-analytics). Maps a partner slug (events.partner) to a
+    // center name, pilot window, and the engagement targets agreed for the
+    // pilot; optional epic_org_id links the center's EHR-launch logins. No
+    // PHI. The extra events index serves the per-partner window queries.
+    id: '052_pilot_programs',
+    statements: [
+      (sql) => sql`CREATE TABLE IF NOT EXISTS pilot_programs (id SERIAL PRIMARY KEY, partner_slug TEXT UNIQUE NOT NULL, center_name TEXT NOT NULL, epic_org_id TEXT, status TEXT NOT NULL DEFAULT 'active', start_date DATE, end_date DATE, target_patients INTEGER, target_connections INTEGER, target_quiz_completes INTEGER, coordinator_name TEXT, notes TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`,
+      (sql) => sql`CREATE INDEX IF NOT EXISTS idx_pilot_programs_status ON pilot_programs (status)`,
+      (sql) => sql`CREATE INDEX IF NOT EXISTS idx_events_partner_ts_name ON events (partner, ts, event_name)`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;

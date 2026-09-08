@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { HeartHandshake, Search, Map, Building2, ShieldCheck } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
+import { rememberPartner } from '../lib/trackServerEvent.js';
 
 // Partner configuration - add new partners here. Partner and health-system
 // names are proper nouns and stay as-is in both languages; every sentence
@@ -32,6 +33,14 @@ const Pilot = () => {
     const isGenericPilot = !partnerConfig;
 
     useMetaTags(seoMetadata.pilot);
+
+    // Tag this browser session with the center so every later event (quiz,
+    // search, program click) rolls up to the center on the admin Center
+    // Analytics page. Unknown slugs are kept too: a center can be reported on
+    // before its pilot record exists.
+    useEffect(() => {
+        if (partner) rememberPartner(partner);
+    }, [partner]);
 
     // Track page view with partner tag
     useEffect(() => {

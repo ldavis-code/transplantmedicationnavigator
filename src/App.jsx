@@ -45,6 +45,7 @@ const LazyImpactReport = lazy(() => import('./pages/admin/ImpactReport.jsx'));
 const LazyInsights = lazy(() => import('./pages/admin/Insights.jsx'));
 const LazyComplianceOverview = lazy(() => import('./pages/admin/ComplianceOverview.jsx'));
 const LazyCenterLogins = lazy(() => import('./pages/admin/CenterLogins.jsx'));
+const LazyCenterAnalytics = lazy(() => import('./pages/admin/CenterAnalytics.jsx'));
 
 // Subscriber auth pages (lazy loaded)
 
@@ -909,6 +910,7 @@ const AdminRoutes = () => {
                         <Route path="/admin/insights" element={<LazyInsights />} />
                         <Route path="/admin/compliance-overview" element={<LazyComplianceOverview />} />
                         <Route path="/admin/center-logins" element={<LazyCenterLogins />} />
+                        <Route path="/admin/center-analytics" element={<LazyCenterAnalytics />} />
                     </Routes>
                 </Suspense>
             </AuthProvider>
