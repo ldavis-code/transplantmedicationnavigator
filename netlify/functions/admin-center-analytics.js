@@ -20,11 +20,11 @@
  * DELETE ?partner=slug              -> remove a pilot definition (events are untouched)
  */
 
-import { neon } from '@neondatabase/serverless';
-import crypto from 'crypto';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
+// CommonJS on purpose: Netlify bundles functions to CJS, where import.meta is
+// empty, so an ESM createRequire(import.meta.url) throws at load time (502).
+// admin-impact.js uses this same shape and requires the same JSON.
+const { neon } = require('@neondatabase/serverless');
+const crypto = require('crypto');
 const programsJson = require('../../src/data/programs.json');
 
 // programId -> { name, manufacturer } for labelling the top-programs table.
@@ -551,7 +551,7 @@ async function upsertPilot(db, body) {
   return { pilot: rowToPilot(rows[0]) };
 }
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers };
   if (!checkAuth(event)) return json(401, { error: 'Unauthorized' });
 
@@ -621,4 +621,4 @@ export async function handler(event) {
     const isEnvError = /not configured/.test(error.message || '');
     return json(isEnvError ? 503 : 500, { error: isEnvError ? error.message : 'Internal server error' });
   }
-}
+};

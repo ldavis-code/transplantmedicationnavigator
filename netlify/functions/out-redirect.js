@@ -1,6 +1,7 @@
-import { neon } from '@neondatabase/serverless';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+// CommonJS on purpose: Netlify bundles functions to CJS, where import.meta is
+// empty, so the previous ESM createRequire(import.meta.url) threw at module
+// load and every /out/ click returned 502 instead of redirecting (and logging).
+const { neon } = require('@neondatabase/serverless');
 const programsJson = require('../../src/data/programs.json');
 
 // Get URL from JSON fallback
@@ -35,7 +36,7 @@ const EVENT_NAMES = {
     pap: 'pap_click'
 };
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
     try {
         // Parse the path to extract program type and ID
         // Expected paths: /out/copay/:program_id, /out/foundation/:program_id, /out/pap/:program_id
@@ -164,4 +165,4 @@ export async function handler(event) {
             body: JSON.stringify({ error: 'Internal server error' })
         };
     }
-}
+};
