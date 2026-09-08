@@ -6,6 +6,10 @@
       "medicaid": false,
       "uninsured": true
     },
+    "veloxis-pap": {
+      "commercial": false,
+      "uninsured": true
+    },
     "novartis-pap": {
       "commercial": false,
       "medicare": true,

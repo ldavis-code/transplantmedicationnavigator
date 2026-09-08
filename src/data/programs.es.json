@@ -168,7 +168,7 @@
     "envarsus-copay": {
       "name": "Programa de ahorros de Envarsus XR",
       "maxBenefit": "Pague tan solo $0 al mes",
-      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta). No se puede usar con seguros del gobierno, como Medicare o Medicaid."
+      "notes": "Solo para personas con seguro comercial (el seguro de su trabajo o uno comprado por su cuenta) que recibieron un trasplante de riñón. Ahorra hasta $9,200 al año. No se puede usar con seguros del gobierno, como Medicare o Medicaid."
     },
     "mavyret-copay": {
       "name": "Tarjeta de ahorros de Mavyret",
@@ -255,7 +255,12 @@
     "astellas-pap": {
       "name": "Programa de Asistencia al Paciente de Astellas",
       "maxBenefit": "Medicamento gratis",
-      "notes": "Para pacientes sin seguro o con Medicare que cumplen los requisitos de ingresos."
+      "notes": "Para pacientes sin seguro o con Medicare que cumplen los requisitos de ingresos. Cubre Prograf, Astagraf XL y Cresemba de marca, no el tacrolimus genérico."
+    },
+    "veloxis-pap": {
+      "name": "Programa de Asistencia al Paciente de Veloxis",
+      "maxBenefit": "Medicamento gratis",
+      "notes": "Para personas con trasplante de riñón sin seguro o con seguro insuficiente que cumplen los requisitos de ingresos. Veloxis no publica si los planes de Medicare califican; llame al 1-844-835-6947 para preguntar. También tienen un programa puente para cubrir interrupciones temporales del seguro."
     },
     "novartis-pap": {
       "name": "Fundación de Asistencia al Paciente de Novartis",

@@ -693,10 +693,10 @@
       "programId": "envarsus-copay",
       "name": "Envarsus XR Savings Program",
       "manufacturer": "Veloxis",
-      "medications": ["tacrolimus-xr"],
-      "url": "https://www.envarsusxr.com/savings/",
-      "lastVerified": "2026-07-03",
-      "phone": "1-844-836-0088",
+      "medications": ["envarsus-xr"],
+      "url": "https://www.envarsusxr.com/savings-support",
+      "lastVerified": "2026-09-08",
+      "phone": "1-855-591-9134",
       "eligibility": {
         "commercial": true,
         "medicare": false,
@@ -704,7 +704,7 @@
         "uninsured": false
       },
       "maxBenefit": "Pay as little as $0 per month",
-      "notes": "Commercial insurance only. Not valid for government insurance."
+      "notes": "Commercial insurance only, for kidney transplant recipients. Saves up to $9,200 per year. Not valid for government insurance."
     },
     "mavyret-copay": {
       "programId": "mavyret-copay",
@@ -981,9 +981,9 @@
       "programId": "astellas-pap",
       "name": "Astellas Patient Assistance Program",
       "manufacturer": "Astellas",
-      "medications": ["tacrolimus", "cresemba"],
+      "medications": ["prograf", "astagraf-xl", "cresemba"],
       "url": "https://www.astellaspharmasupportsolutions.com/",
-      "lastVerified": "2026-07-03",
+      "lastVerified": "2026-09-08",
       "phone": "1-800-477-6472",
       "fax": "1-800-477-6572",
       "address": {
@@ -1001,7 +1001,22 @@
       },
       "incomeLimit": "400% FPL",
       "maxBenefit": "Free medication",
-      "notes": "For uninsured or Medicare patients who meet income requirements."
+      "notes": "For uninsured or Medicare patients who meet income requirements. Covers brand Prograf, Astagraf XL, and Cresemba, not generic tacrolimus."
+    },
+    "veloxis-pap": {
+      "programId": "veloxis-pap",
+      "name": "Veloxis Patient Assistance Program",
+      "manufacturer": "Veloxis",
+      "medications": ["envarsus-xr"],
+      "url": "https://veloxistransplantsupport.com/",
+      "lastVerified": "2026-09-08",
+      "phone": "1-844-835-6947",
+      "eligibility": {
+        "commercial": false,
+        "uninsured": true
+      },
+      "maxBenefit": "Free medication",
+      "notes": "For uninsured or underinsured kidney transplant recipients who meet income requirements. Veloxis does not publish whether Medicare plans qualify; call 1-844-VELOXIS to ask. A Bridge Program also covers temporary gaps in coverage."
     },
     "novartis-pap": {
       "programId": "novartis-pap",
