@@ -672,6 +672,18 @@ const ES_GENERIC_NAMES = {
   'Azathioprine': 'Azatioprina',
   'Prednisone': 'Prednisona',
 };
+// Spanish rendering of a generic-drug label. Mirrors localizeMedName() in
+// src/utils/medNames.js (which the app uses for the same cells): the drug
+// name maps through ES_GENERIC_NAMES, and the qualifiers "(generic)" and
+// "Extended-Release" are labels, not names, so they translate too. Never
+// applied to a brand name — a brand record's brand cell stays as printed on
+// the bottle.
+function esGenericLabel(name) {
+  const isGenericTagged = /\(generic\)\s*$/i.test(name);
+  const base = name.replace(/\s*\(generic\)\s*$/i, '');
+  const mapped = ES_GENERIC_NAMES[base] || base.replace(/Extended-Release/gi, 'de liberación prolongada');
+  return isGenericTagged ? `${mapped} (genérico)` : mapped;
+}
 
 function homeNoscript(isEs) {
   const RESOURCES = isEs ? RESOURCES_ES : RESOURCES_EN;
@@ -683,16 +695,28 @@ function homeNoscript(isEs) {
     const m = MED_BY_ID[id];
     if (!m) throw new Error(`noscript med id "${id}" missing from medications.json`);
     const generic = m.genericName || m.brandName;
-    const genericShown = isEs ? (ES_GENERIC_NAMES[generic] || generic) : generic;
+    const genericShown = isEs ? esGenericLabel(generic) : generic;
+    // A generic record's "brand" cell is the generic name again (e.g.
+    // "Tacrolimus (generic)"), so it localizes like one; a real brand does not.
+    const brandShown = isEs && isGenericRecord(m) ? esGenericLabel(m.brandName) : m.brandName;
+    const manufacturerShown = isEs && m.manufacturer === 'Generic' ? 'Genérico' : m.manufacturer;
     const program = m.papProgramId ? pap[m.papProgramId] : null;
     if (m.papProgramId && !program) throw new Error(`noscript med "${id}" points at missing PAP "${m.papProgramId}"`);
-    const assist = program
-      ? `<a href="${program.url}">${program.name}</a>`
-      : (isEs ? 'Genérico de bajo costo disponible' : 'Low-cost generic available');
+    // No PAP: a generic (or a brand with a generic) is cheap on its own. A
+    // brand with no generic and no PAP (Envarsus XR before its PAP was
+    // restored) must not claim one — point at its copay card instead.
+    let assist;
+    if (program) {
+      assist = `<a href="${program.url}">${program.name}</a>`;
+    } else if (m.generic_available === false && m.copayUrl) {
+      assist = `<a href="${m.copayUrl}">${isEs ? 'Tarjeta de copago (seguro comercial)' : 'Copay card (commercial insurance)'}</a>`;
+    } else {
+      assist = isEs ? 'Genérico de bajo costo disponible' : 'Low-cost generic available';
+    }
     return `                <tr>
                     <td>${genericShown}</td>
-                    <td>${m.brandName}</td>
-                    <td>${m.manufacturer}</td>
+                    <td>${brandShown}</td>
+                    <td>${manufacturerShown}</td>
                     <td>${assist}</td>
                 </tr>`;
   }).join('\n');

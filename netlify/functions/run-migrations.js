@@ -124,6 +124,23 @@ const MIGRATIONS = [
       (sql) => sql`ALTER TABLE organizations ADD COLUMN IF NOT EXISTS escalation_contact TEXT`,
     ],
   },
+  {
+    // 046 removed the Envarsus XR PAP because its link was the copay page and
+    // a phone check said "no PAP". Veloxis's own HCP site and the AST TxPharm
+    // COP patient guide (June 2026) both list one, enrolled through Veloxis
+    // Transplant Support — so the row gets a PAP again, as its own program
+    // with that URL. The copay row's /savings/ URL now 301s to an HCP-only
+    // page; out-redirect.js prefers programs.official_url, so the DB row
+    // moves to the patient page too. Pairs with the medications.json and
+    // programs.json changes (the runtime merges DB over JSON). Every
+    // statement is guarded, so a re-run is a no-op.
+    id: '050_envarsus_veloxis_pap',
+    statements: [
+      (sql) => sql`UPDATE medications SET pap_url = 'https://veloxistransplantsupport.com/', pap_program_id = 'veloxis-pap' WHERE id = 'envarsus-xr' AND (pap_url IS DISTINCT FROM 'https://veloxistransplantsupport.com/' OR pap_program_id IS DISTINCT FROM 'veloxis-pap')`,
+      (sql) => sql`INSERT INTO programs (program_id, program_type, name, official_url, active) VALUES ('veloxis-pap', 'pap', 'Veloxis Patient Assistance Program', 'https://veloxistransplantsupport.com/', true) ON CONFLICT (program_id) DO NOTHING`,
+      (sql) => sql`UPDATE programs SET official_url = 'https://www.envarsusxr.com/savings-support' WHERE program_id = 'envarsus-copay' AND official_url IS DISTINCT FROM 'https://www.envarsusxr.com/savings-support'`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
