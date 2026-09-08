@@ -141,6 +141,8 @@ Admin Dashboard
   │                                GET /admin-api/events/by-program
   │                                GET /admin-api/export/csv
   ├── /admin/impact-report ──────→ GET /admin-impact (DB + Netlify Analytics API)
+  ├── /admin/center-analytics ───→ GET/POST/DELETE /admin-center-analytics (events by partner tag,
+  │                                pilot_programs, patient_login_tracking)
   ├── /admin/medications ────────→ GET /medications + GET/PUT /admin-medications
   ├── /admin/users ──────────────→ GET/POST/PUT/DELETE /admin-users
   ├── /admin/surveys ────────────→ GET /admin-surveys
@@ -165,6 +167,12 @@ Admin Dashboard
 - **Shows:** Funder-ready report with traffic, funnel, top pages, referral sources, program connections, medication interest, weekly growth
 - **Source:** `events` table + Netlify Analytics API (if `NETLIFY_API_TOKEN` is set)
 - **Actions:** Change time range (30/90/180/365 days), print to PDF
+
+### Center Analytics (`/admin/center-analytics`)
+- **Shows:** One transplant center's pilot: goals vs. actuals (patients reached, program connections, quizzes completed), patient journey funnel, week-by-week activity, programs and medications behind the connections, self-reported coverage and cost burden, language split, Epic/MyChart logins, helpfulness votes, top pages
+- **Actions:** Pick a center, choose a range (including the pilot's own window), create or edit the pilot record (name, dates, targets, Epic org ID, center lead, notes), export CSV
+- **Source:** `events` rows whose `partner` matches the pilot's slug + `pilot_programs` (migration 052) + `patient_login_tracking` joined to `fhir_endpoint_directory` when the pilot has an `epic_org_id`
+- **Attribution:** a patient is tagged with the center when they arrive through `/pilot/<slug>` or any `?partner=<slug>` link; the tag is kept in `sessionStorage` for the rest of that browser session (`src/lib/trackServerEvent.js`). Events also carry a random per-tab `sessionId` so distinct visits can be counted. No patient identifiers.
 
 ### Medication Config (`/admin/medications`)
 - **Shows:** All 152 medications with search and category filters

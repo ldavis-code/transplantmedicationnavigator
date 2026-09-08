@@ -6,10 +6,68 @@
 
 const ENDPOINT = '/.netlify/functions/event';
 
-// Get partner from URL params (e.g., ?partner=hospital-xyz)
+// sessionStorage keys. Both values are scoped to the browser tab and cleared
+// when it closes; neither identifies a person.
+const PARTNER_KEY = 'tmn_partner';
+const SESSION_KEY = 'tmn_session_id';
+
+/**
+ * Remember which transplant center (pilot partner) a visitor came through.
+ * Called by the /pilot/:partner landing page so the tag follows the patient
+ * to the medication search, quiz, and program links for the rest of the
+ * session — without it, only the landing page itself would be attributed to
+ * the center, and the admin Center Analytics page would have nothing to show.
+ * @param {string} partner - slug such as 'methodist' (letters, digits, - and _)
+ */
+export function rememberPartner(partner) {
+  try {
+    const clean = String(partner || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50).toLowerCase();
+    if (clean) sessionStorage.setItem(PARTNER_KEY, clean);
+  } catch {
+    // Storage may be unavailable (private mode); attribution is best-effort.
+  }
+}
+
+// Partner from the URL first (?partner=hospital-xyz, or the /pilot/<slug>
+// landing path), then the one remembered for this session. A URL tag wins so
+// a coordinator's fresh link re-tags. Reading the pilot path here, not only in
+// the Pilot page's effect, means the landing page_view itself is attributed
+// even when the analytics hook fires before the lazy-loaded page mounts.
 function getPartner() {
   try {
-    return new URLSearchParams(window.location.search).get('partner') || null;
+    const fromQuery = new URLSearchParams(window.location.search).get('partner');
+    const fromPath = (window.location.pathname.match(/^(?:\/es)?\/pilot\/([a-z0-9_-]+)/i) || [])[1];
+    const fromUrl = fromQuery || fromPath;
+    if (fromUrl) {
+      rememberPartner(fromUrl);
+      return fromUrl;
+    }
+    return sessionStorage.getItem(PARTNER_KEY) || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Current partner tag ('methodist') or null. Exported so other surfaces can
+ * carry the same attribution the events do.
+ */
+export function getPartnerTag() {
+  return getPartner();
+}
+
+// Random per-tab id so the admin dashboards can count distinct visits
+// instead of guessing from page + date. Not tied to any account or person.
+function getSessionId() {
+  try {
+    let id = sessionStorage.getItem(SESSION_KEY);
+    if (!id) {
+      id = (typeof crypto !== 'undefined' && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+      sessionStorage.setItem(SESSION_KEY, id);
+    }
+    return id;
   } catch {
     return null;
   }
@@ -49,7 +107,11 @@ export function trackServerEvent(eventName, meta) {
       partner: getPartner(),
       lang: getLang(),
     };
-    if (meta) body.meta = meta;
+    const sessionId = getSessionId();
+    if (meta || sessionId) {
+      body.meta = { ...(meta || {}) };
+      if (sessionId && body.meta.sessionId === undefined) body.meta.sessionId = sessionId;
+    }
 
     // Fire and forget, don't await, don't block UI.
     //
