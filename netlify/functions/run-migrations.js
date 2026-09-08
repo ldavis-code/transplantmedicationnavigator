@@ -141,6 +141,24 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE programs SET official_url = 'https://www.envarsusxr.com/savings-support' WHERE program_id = 'envarsus-copay' AND official_url IS DISTINCT FROM 'https://www.envarsusxr.com/savings-support'`,
     ],
   },
+  {
+    // Prograf and Astagraf XL copay links both 302 to "not found" pages, and
+    // their copay_program_ids never existed in programs.json, so the card fell
+    // back to the dead URL. Astellas hosts the shared Prograf / Astagraf XL
+    // Copay Card on astellascares.com now; 'astellas-copay' becomes that card
+    // and both rows point at it. The legacy redirect rows keep their ids (event
+    // history) but move to the live URL, as do the chatbot's savings_programs
+    // rows. Pairs with the medications.json and programs.json changes (the
+    // runtime merges DB over JSON). Every statement is guarded, so a re-run is
+    // a no-op.
+    id: '051_astellas_cares_copay',
+    statements: [
+      (sql) => sql`UPDATE medications SET copay_url = 'https://astellascares.com/', copay_program_id = 'astellas-copay' WHERE id IN ('prograf', 'astagraf-xl') AND (copay_url IS DISTINCT FROM 'https://astellascares.com/' OR copay_program_id IS DISTINCT FROM 'astellas-copay')`,
+      (sql) => sql`UPDATE programs SET name = 'Astellas Cares Copay Card', official_url = 'https://astellascares.com/' WHERE program_id = 'astellas-copay' AND (name IS DISTINCT FROM 'Astellas Cares Copay Card' OR official_url IS DISTINCT FROM 'https://astellascares.com/')`,
+      (sql) => sql`UPDATE programs SET official_url = 'https://astellascares.com/' WHERE program_id IN ('prograf-copay', 'astagraf-copay') AND official_url IS DISTINCT FROM 'https://astellascares.com/'`,
+      (sql) => sql`UPDATE savings_programs SET application_url = 'https://astellascares.com/' WHERE application_url IN ('https://www.prograf.com/savings-information', 'https://www.astagrafxl.com/savings-info')`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
