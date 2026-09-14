@@ -412,7 +412,7 @@ const medicationPages = MEDICATIONS.map((m) => {
     'foundation grants',
     isGeneric
       ? 'the generic price — this is the generic, which usually costs far less than the brand'
-      : (m.generic_available ? 'a lower-cost generic version' : null),
+      : (m.generic_available ? 'the generic version, only if your transplant team approves a switch' : null),
     'discount cards and cash-price comparison (GoodRx, Cost Plus Drugs, and more)',
   ].filter(Boolean);
 
@@ -428,7 +428,7 @@ const medicationPages = MEDICATIONS.map((m) => {
     'Ayudas económicas de fundaciones',
     isGeneric
       ? 'El precio del genérico: este es el genérico, que normalmente cuesta mucho menos que la marca'
-      : (m.generic_available ? 'Una versión genérica de menor costo' : null),
+      : (m.generic_available ? 'La versión genérica, solo si su equipo de trasplante aprueba el cambio' : null),
     'Tarjetas de descuento y comparación de precios en efectivo (GoodRx, Cost Plus Drugs y más)',
   ].filter(Boolean);
 

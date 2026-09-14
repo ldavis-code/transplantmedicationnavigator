@@ -8,7 +8,7 @@ import EpicConnectButton from '../../components/EpicConnectButton.jsx';
 import LanguageToggle from '../../components/LanguageToggle.jsx';
 import { useMedicationsList } from '../../context/MedicationsContext.jsx';
 import { Map, Search, ArrowRight, Heart, X, HeartHandshake, CheckCircle, ChevronLeft, DollarSign, Shield, AlertTriangle, AlertCircle, Printer, PlusCircle, List, Check, LandPlot, Scale, Stethoscope, Pill, ChevronDown, Lightbulb, Users, Clock, Loader2 } from 'lucide-react';
-import { Role, TransplantStatus, OrganType, InsuranceType, FinancialStatus } from '../../data/constants.js';
+import { Role, TransplantStatus, OrganType, InsuranceType, FinancialStatus, fplDollars } from '../../data/constants.js';
 import ORGAN_MEDS_ES from '../../data/organ-medications.es.json';
 import { localizeMedName } from '../../utils/medNames.js';
 import { useMetaTags } from '../../hooks/useMetaTags.js';
@@ -1211,6 +1211,32 @@ const Wizard = () => {
                         </p>
                         <a href="https://www.medicare.gov" target="_blank" rel="noreferrer" className="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition no-print">
                             {t('wizard.results.medicareAlert.cta')}
+                        </a>
+                    </aside>
+                )}
+
+                {/* Extra Help (Low-Income Subsidy): the single biggest Medicare
+                    lever, and until now the only Medicare-specific guidance on
+                    the results page was Part B-ID for kidney recipients. Income
+                    limit quoted from the FPL constants (150% FPL) so it moves
+                    with the yearly update. */}
+                {isMedicare && (
+                    <aside className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-600" aria-labelledby="extra-help-heading">
+                        <h2 id="extra-help-heading" className="text-xl font-bold text-emerald-900 flex items-center gap-2">
+                            <DollarSign aria-hidden="true" /> {t('wizard.results.extraHelp.title')}
+                        </h2>
+                        <p className="mt-2 text-slate-700">
+                            <Trans i18nKey="wizard.results.extraHelp.text" values={{ single: fplDollars(1, 1.5), couple: fplDollars(2, 1.5) }} />
+                        </p>
+                        <p className="mt-2 text-sm text-slate-600">{t('wizard.results.extraHelp.note')}</p>
+                        <a
+                            href="https://www.ssa.gov/medicare/part-d-extra-help"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-4 inline-block bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-emerald-800 transition no-print"
+                            aria-label={t('wizard.results.extraHelp.ctaAria')}
+                        >
+                            {t('wizard.results.extraHelp.cta')}
                         </a>
                     </aside>
                 )}
