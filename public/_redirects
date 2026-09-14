@@ -112,9 +112,11 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /es/education/appeals  /es/education/appeals/index.html  200
 
 # TrumpRx guide: a static page, served under the same /es/ convention as
-# every other Spanish URL. The old /trumprx-es address permanently moves.
+# every other Spanish URL. The old /trumprx-es address permanently moves —
+# forced, because /trumprx-es resolves to the static trumprx-es.html and a
+# non-forced rule would be skipped in favor of serving that file.
 /es/trumprx  /trumprx-es.html  200
-/trumprx-es  /es/trumprx  301
+/trumprx-es  /es/trumprx  301!
 
 # English-only pages (partner and sales surfaces with no Spanish
 # translation) never answer under /es/: the shell there is lang="es", so

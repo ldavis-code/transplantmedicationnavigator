@@ -231,10 +231,13 @@
 
 # TrumpRx resource page, Spanish version: lives at /es/trumprx like every
 # other Spanish URL (rule below); the old address permanently moves there.
+# Forced: /trumprx-es resolves to the static trumprx-es.html, and a
+# non-forced rule would be skipped in favor of serving that file.
 [[redirects]]
   from = "/trumprx-es"
   to = "/es/trumprx"
   status = 301
+  force = true
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
