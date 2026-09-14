@@ -26,5 +26,3 @@ export function medDisplayName(med) {
     return localizeMedName((med.brandName || '').split('/')[0]);
 }
 
-// "Link verified" stamp: "July 2026" in English, "julio de 2026" in Spanish.
-// iso is a YYYY-MM-DD date string.

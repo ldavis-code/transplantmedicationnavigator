@@ -1,12 +1,26 @@
-// Last updated date - Update this when content changes (ISO date; the
-// footer formats it per language so the Spanish page never shows an
-// English-formatted date like "July 1, 2026")
-export const LAST_UPDATED_ISO = "2026-07-01";
+// THE date the site's content was last verified — the single source for
+// every "verified / last updated / reviewed" stamp a visitor can see: the
+// homepage banner, the footer, the grants card, the price-estimate notes,
+// the "Link verified" stamps on program cards, the TrumpRx guide (both
+// languages), llms.txt, and the JSON-LD lastReviewed in index.html.
+// The app reads it directly; scripts/generate-home-stats.js copies it into
+// the static pages at build time (the data-stat markers there), and
+// scripts/check-links.js rewrites it after a clean link check. Five
+// surfaces once showed five different dates at the same time — never add
+// a second date constant, and never stamp a deploy date here: a deploy is
+// not a content review.
+export const CONTENT_VERIFIED_ISO = "2026-09-08";
 
-// Date the full set of assistance-program links was last checked for accuracy.
-// Maintained by scripts/check-links.js, it rewrites these lines after a clean run.
-export const LINKS_LAST_VERIFIED = "2026-07-03";
-export const LINKS_LAST_VERIFIED_DISPLAY = "July 2026";
+// "September 2026" / "septiembre de 2026" (month, the default) or
+// "September 8, 2026" / "8 de septiembre de 2026" (full). Pure — no i18n
+// import — so the build scripts format with the same code as the app.
+export const formatVerifiedDate = (iso, lang = 'en', style = 'month') =>
+    new Date(iso + 'T00:00:00').toLocaleDateString(
+        String(lang || 'en').startsWith('es') ? 'es' : 'en-US',
+        style === 'full'
+            ? { year: 'numeric', month: 'long', day: 'numeric' }
+            : { month: 'long', year: 'numeric' }
+    );
 
 // 100% Federal Poverty Level, annual income, by household size (HHS
 // guidelines). One source for both the income-eligibility table on the

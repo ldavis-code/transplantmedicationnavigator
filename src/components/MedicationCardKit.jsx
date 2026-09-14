@@ -8,7 +8,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import TermTooltip from '../components/TermTooltip.jsx';
 import ReadAloudButton from '../components/ReadAloudButton.jsx';
 import { BookOpen, ArrowRight, Heart, X, CheckCircle, DollarSign, Shield, AlertTriangle, AlertCircle, Printer, ExternalLink, Building, Trash2, Globe, Info, Check, FileText, Pill, HelpCircle, Users, TrendingUp, Clock, Loader2, Star, Filter } from 'lucide-react';
-import { LINKS_LAST_VERIFIED } from '../data/constants.js';
+import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../data/constants.js';
 import PROGRAMS_ES from '../data/programs.es.json';
 import PROGRAM_ELIGIBILITY from '../data/program-eligibility.json';
 import COST_PLUS_EXCLUSIONS_DATA from '../data/cost-plus-exclusions.json';
@@ -370,11 +370,6 @@ const PriceReportModal = ({ isOpen, onClose, medicationId, medicationName, sourc
     );
 };
 
-// "Link verified" stamp: "July 2026" in English, "julio de 2026" in Spanish.
-// iso is a YYYY-MM-DD date string.
-function formatVerifiedMonthYear(iso, lang) {
-    return new Date(iso + 'T00:00:00').toLocaleDateString(lang === 'es' ? 'es' : 'en-US', { month: 'long', year: 'numeric' });
-}
 
 const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: showCopayCardsProp = true, quizAnswers = {} }) => {
     const { t, i18n } = useTranslation();
@@ -942,7 +937,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     </a>
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedMonthYear(copayProgram?.lastVerified || LINKS_LAST_VERIFIED, i18n.resolvedLanguage) })}
+                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                                     </p>
                                 </div>
                             </section>
@@ -1011,7 +1006,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 {papUrl && (
                                     <p className="mt-2 flex items-center justify-center gap-1 text-xs text-slate-500">
                                         <CheckCircle size={12} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedMonthYear(papProgram?.lastVerified || LINKS_LAST_VERIFIED, i18n.resolvedLanguage) })}
+                                        {t('medications.card.assistance.linkVerified', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                                     </p>
                                 )}
                             </section>
@@ -1264,7 +1259,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                {t('medications.card.price.estUpdated')}
+                                                {t('medications.card.price.estUpdated', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
@@ -1302,7 +1297,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                {t('medications.card.price.estUpdated')}
+                                                {t('medications.card.price.estUpdated', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
@@ -1340,7 +1335,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
-                                                {t('medications.card.price.estUpdated')}
+                                                {t('medications.card.price.estUpdated', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                                             </div>
                                         </td>
                                         <td className="p-3 no-print">
@@ -1414,7 +1409,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                         <div className="mt-3 space-y-2">
                             <div className="text-xs text-slate-600 italic flex items-start gap-2" role="note">
                                 <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                                <p>{t('medications.card.price.footerNote')}</p>
+                                <p>{t('medications.card.price.footerNote', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}</p>
                             </div>
                             {(costPlusStats || goodRxStats || singleCareStats) && (
                                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-start gap-2">

@@ -7,9 +7,11 @@
 <meta name="description" content="Everything transplant patients need to know about TrumpRx.gov: 800+ discounted drugs including generic immunosuppressants (mycophenolate, sirolimus, cyclosporine, everolimus), the deductible trap, Medicare/Medicaid restrictions, and how it compares to copay cards and PAPs.">
 <link rel="canonical" href="https://transplantmedicationnavigator.com/trumprx">
 <link rel="alternate" hreflang="en" href="https://transplantmedicationnavigator.com/trumprx">
-<link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/trumprx-es">
+<link rel="alternate" hreflang="es" href="https://transplantmedicationnavigator.com/es/trumprx">
 <link rel="alternate" hreflang="x-default" href="https://transplantmedicationnavigator.com/trumprx">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<!-- Self-hosted fonts (the site's CSP has font-src 'self'; a Google Fonts
+     stylesheet is blocked and silently fell back to system fonts). -->
+<link href="/fonts/fonts.css" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -41,7 +43,7 @@
   }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     color: var(--navy);
     background: var(--gray-50);
     line-height: 1.65;
@@ -665,7 +667,7 @@
 <div class="page-hero">
   <div class="hero-inner">
     <div class="breadcrumb">
-      <a href="/">Home</a> / <a href="/education">Resources</a> / TrumpRx.gov Guide &nbsp;&middot;&nbsp; <a href="/trumprx-es" lang="es" style="text-decoration:underline;">Ver esta página en español</a>
+      <a href="/">Home</a> / <a href="/education">Resources</a> / TrumpRx.gov Guide &nbsp;&middot;&nbsp; <a href="/es/trumprx" lang="es" style="text-decoration:underline;">Ver esta página en español</a>
     </div>
     <button type="button" class="print-page-btn" data-print-page>&#128424; Print this guide</button>
     <div class="hero-badge">
@@ -680,7 +682,7 @@
       <span>Launched: February 5, 2026</span>
       <span>800+ Medications Listed</span>
       <span>4 Transplant Immunosuppressants</span>
-      <span>Verified against TrumpRx.gov: August 24, 2026</span>
+      <span>Verified against TrumpRx.gov: <span data-stat="verifiedDateEn">September 8, 2026</span></span>
     </div>
   </div>
 </div>
@@ -812,7 +814,7 @@
   </div>
 
   <p style="font-size:13px; color:var(--slate); margin:-16px 0 20px; font-style:italic;">
-    Prices shown are the lowest listed cash price on TrumpRx.gov as of August 24, 2026 — your strength and quantity may cost more. These are <strong>cash prices outside insurance</strong>: they do not count toward your deductible or out-of-pocket maximum (see the warning above), and your insurance copay may already be lower. Compare before you switch.
+    Prices shown are the lowest listed cash price on TrumpRx.gov as of <span data-stat="verifiedDateEn">September 8, 2026</span> — your strength and quantity may cost more. These are <strong>cash prices outside insurance</strong>: they do not count toward your deductible or out-of-pocket maximum (see the warning above), and your insurance copay may already be lower. Compare before you switch.
   </p>
 
   <!-- Still Missing Alert -->
@@ -958,7 +960,7 @@
        ========================================== -->
   <div class="section-header" id="drugs">
     <h2>TrumpRx Medications Relevant to Transplant Patients</h2>
-    <p class="section-desc">Highlights from the 800+ drug list that matter for our community, organized by when you might need them. Prices verified August 24, 2026 — check TrumpRx for your exact strength and quantity.</p>
+    <p class="section-desc">Highlights from the 800+ drug list that matter for our community, organized by when you might need them. Prices verified <span data-stat="verifiedDateEn">September 8, 2026</span> — check TrumpRx for your exact strength and quantity.</p>
   </div>
 
   <div class="drug-table-wrap">
@@ -1341,7 +1343,7 @@
   </div>
 
   <div class="last-updated">
-    <strong>All prices and counts verified against TrumpRx.gov on August 24, 2026.</strong> We re-verify this page monthly, and sooner when TrumpRx announces major additions. &middot; Source: <a href="https://trumprx.gov" target="_blank" style="color:var(--teal)">TrumpRx.gov</a>, <a href="https://www.whitehouse.gov/fact-sheets/2026/02/fact-sheet-president-donald-j-trump-launches-trumprx-gov-to-bring-lower-drug-prices-to-american-patients/" target="_blank" style="color:var(--teal)">White House Fact Sheet</a> &middot; Related reading: <a href="/education?topic=deductible_trap" style="color:var(--teal)">The Deductible Trap</a>
+    <strong>All prices and counts verified against TrumpRx.gov on <span data-stat="verifiedDateEn">September 8, 2026</span>.</strong> We re-verify this page monthly, and sooner when TrumpRx announces major additions. &middot; Source: <a href="https://trumprx.gov" target="_blank" style="color:var(--teal)">TrumpRx.gov</a>, <a href="https://www.whitehouse.gov/fact-sheets/2026/02/fact-sheet-president-donald-j-trump-launches-trumprx-gov-to-bring-lower-drug-prices-to-american-patients/" target="_blank" style="color:var(--teal)">White House Fact Sheet</a> &middot; Related reading: <a href="/education?topic=deductible_trap" style="color:var(--teal)">The Deductible Trap</a>
   </div>
 
 </div>

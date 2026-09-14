@@ -18,7 +18,7 @@ import PROGRAMS_DATA from '../data/programs.json';
 import PRICE_ESTIMATES from '../data/price-estimates.json';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { localizeMedName } from '../utils/medNames.js';
-import { isGenericRecord, medPageName, medNameWithGeneric, brandNamesForGeneric } from '../utils/medIdentity.js';
+import { isGenericRecord, medPageName, medNameWithGeneric, brandNamesForGeneric, stripGenericTag } from '../utils/medIdentity.js';
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 
@@ -204,7 +204,7 @@ const MedicationDetail = () => {
                     {t('medications.detail.heading', { name: nameDisplay })}
                 </h1>
                 <p className="text-lg text-slate-600 mt-3">
-                    {nameDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.join(', ')})` : ''}{t('medications.detail.introTail')}
+                    {nameDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.map((o) => t(`wizard.organs.${o}`, { defaultValue: o })).join(', ')})` : ''}{t('medications.detail.introTail')}
                 </p>
                 {price && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>
@@ -290,8 +290,15 @@ const MedicationDetail = () => {
                     <h2 className="text-xl font-bold text-slate-900 mb-3">{t('medications.detail.relatedPre')}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.relatedPost')}</h2>
                     <div className="flex flex-wrap gap-2">
                         {related.map((m) => (
+                            // A generic record's name carries a "(generic)"
+                            // label; shown as a separate translated tag so
+                            // the chip never mixes an English drug name with
+                            // a Spanish qualifier ("... (genérico)").
                             <Link key={m.id} to={`/medications/${m.id}`} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 text-sm font-medium px-3 py-1.5 rounded-full">
-                                {localizeMedName(m.brandName)}
+                                {isGenericRecord(m) ? stripGenericTag(m.brandName) : localizeMedName(m.brandName)}
+                                {isGenericRecord(m) && (
+                                    <span className="text-[0.6875rem] font-semibold uppercase tracking-wide text-emerald-800 bg-emerald-50 border border-emerald-200 rounded px-1.5 py-0.5">{t('medications.detail.genericTag')}</span>
+                                )}
                             </Link>
                         ))}
                     </div>
