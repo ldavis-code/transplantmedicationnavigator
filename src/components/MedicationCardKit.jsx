@@ -21,6 +21,7 @@ import { submitPriceReport, fetchAllPriceStats } from '../lib/priceReportsApi.js
 import { costPlusUrl, goodRxUrl, singleCareUrl } from '../components/PricingLinks.jsx';
 import { trackServerEvent, getUiLang } from '../lib/trackServerEvent.js';
 import { isEpicGenericMed } from '../utils/medDisplay.js';
+import { isGenericRecord } from '../utils/medIdentity.js';
 import { PAP_FPL_MULTIPLE, fplDollars } from '../data/constants.js';
 
 const getPriceEstimate = (medicationId, category, source) => {
@@ -382,11 +383,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     // overlay (keyed by programId); English text from the program record.
     const esProgramNotes = (group, programId) =>
         (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
-    // If the patient's Epic import shows they take the GENERIC of this med, there
-    // is no manufacturer copay card (those are brand-only). Force copay cards off
-    // so every showCopayCards-gated section hides, and surface a note pointing to
-    // cash options like Cost Plus Drugs instead.
-    const takesGeneric = isEpicGenericMed(med.id);
+    // If the patient takes the GENERIC of this med, there is no manufacturer
+    // copay card (those are brand-only). Force copay cards off so every
+    // showCopayCards-gated section hides, and surface a note pointing to cash
+    // options like Cost Plus Drugs instead. True when the Epic import says so,
+    // and always when the record IS the generic ("Everolimus (generic)",
+    // "Prednisone"): those have no brand programs to offer, and every generic
+    // card should read the same whether or not the patient imported from Epic.
+    const takesGeneric = isEpicGenericMed(med.id) || isGenericRecord(med);
     const showCopayCards = showCopayCardsProp && !takesGeneric;
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
