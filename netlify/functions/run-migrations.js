@@ -172,6 +172,21 @@ const MIGRATIONS = [
       (sql) => sql`CREATE INDEX IF NOT EXISTS idx_events_partner_ts_name ON events (partner, ts, event_name)`,
     ],
   },
+  {
+    // The 'everolimus' row WAS Zortress (brand, Novartis, Specialty tier,
+    // brand copay card) while the site treats the id as the generic, and no
+    // generic everolimus record existed. Same split as 047 for
+    // mycophenolate: the id becomes "Everolimus (generic)" and a new
+    // 'zortress' row carries the brand and its Novartis programs. Pairs with
+    // the src/data/medications.json change (the runtime merges DB over JSON).
+    // Keyed on the stale brand_name so a re-run is a no-op; the INSERT is
+    // ON CONFLICT DO NOTHING.
+    id: '053_split_everolimus_generic',
+    statements: [
+      (sql) => sql`UPDATE medications SET brand_name = 'Everolimus (generic)', manufacturer = 'Generic', pap_url = NULL, pap_program_id = NULL, copay_url = NULL, copay_program_id = NULL, cost_tier = 'medium', typical_copay_tier = '2' WHERE id = 'everolimus' AND brand_name = 'Zortress'`,
+      (sql) => sql`INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufacturer, stage, common_organs, pap_url, pap_program_id, copay_url, copay_program_id, cost_tier, generic_available, typical_copay_tier) VALUES ('zortress', 'Zortress', 'Everolimus', NULL, 'Immunosuppressant', 'Novartis', 'Post-transplant', ARRAY['Heart','Intestine','Kidney','Liver','Lung','Pancreas'], 'https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance', 'novartis-pap', 'https://www.zortress.com/transplant/savings-and-support', 'zortress-copay', 'high', TRUE, 'Specialty') ON CONFLICT (id) DO NOTHING`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;
