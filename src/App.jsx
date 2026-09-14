@@ -67,7 +67,6 @@ import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 // small; the other route pages stay lazy.
 import Home from './pages/main/Home.jsx';
 // First-visit disclaimer modal
-import DisclaimerModal from './components/DisclaimerModal.jsx';
 // Paywall modal for free tier limits
 // AI Medication Assistant Chat Widget: retired from the layout — the floating
 // bubble competed with the page's own task flow. The component is kept in the
@@ -584,7 +583,7 @@ const Layout = ({ children }) => {
             <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition flex-shrink-0" aria-label={t('layout.nav.brandAriaLabel')}>
-                        <img src="/photos/logo.png" alt="" width={32} height={32} aria-hidden="true" className="flex-shrink-0" />
+                        <img src="/photos/logo.png" alt={t('layout.nav.logoAlt')} width={32} height={32} className="flex-shrink-0" />
                         <span className="font-bold text-base sm:text-lg leading-tight">
                             {t('layout.nav.brandLine1')}<br/>{t('layout.nav.brandLine2')}<sup className="text-xs">{t('layout.nav.brandTm')}</sup>
                         </span>
@@ -773,8 +772,6 @@ const Layout = ({ children }) => {
                         )}
                         <span className="text-slate-600" aria-hidden="true">|</span>
                         <Link to="/evidence" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.evidence')}</Link>
-                        <span className="text-slate-600" aria-hidden="true">|</span>
-                        <Link to="/admin/login" className="text-slate-400 hover:text-emerald-400 underline transition">{t('layout.footer.links.admin')}</Link>
                     </div>
                 </div>
             </footer>
@@ -954,7 +951,6 @@ const AppRoutes = () => {
         // one is set). On the public site the slug resolves to 'public' and
         // the provider does no network work.
         <TenantProvider>
-            <DisclaimerModal />
             <MainSiteRoutes />
         </TenantProvider>
     );

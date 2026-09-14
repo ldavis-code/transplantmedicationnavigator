@@ -1049,13 +1049,23 @@ function prerenderPages() {
   // React can render the real page (or its localized 404). No canonical
   // and no robots directive: real non-prerendered routes are also served
   // through them, and hydration supplies the correct head tags.
+  //
+  // The 404 variant (dist/404.html, dist/es/404.html) is what Netlify serves,
+  // with a real 404 status, for any URL no redirect rule claims — see the
+  // fallback rules in public/_redirects. It carries a noindex directive and
+  // a static "Page Not Found" body, so an unknown URL is no longer a 200
+  // with a not-found message that crawlers index as a thin duplicate. The
+  // app scripts still load, so a client-only route missing from the rewrite
+  // list renders normally, just with the wrong status code.
   try {
-    const shell = (isEs) => `<!DOCTYPE html>
+    const shell = (isEs, notFound = false) => {
+    const nf = (isEs ? ES_LOCALE : EN_LOCALE).layout.notFound;
+    return `<!DOCTYPE html>
 <html lang="${isEs ? 'es' : 'en'}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${SITE_NAME}</title>
+    <title>${notFound ? `${nf.title} | ${SITE_NAME}` : SITE_NAME}</title>${notFound ? '\n    <meta name="robots" content="noindex" />' : ''}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <meta name="theme-color" content="#059669" />
@@ -1068,7 +1078,10 @@ function prerenderPages() {
             ${isEs ? 'Saltar al contenido principal' : 'Skip to main content'}
         </a>
         <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
-            <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página...' : 'Loading...'}</p>
+            ${notFound
+              ? `<h1 style="color: #0f172a; font-size: 1.5rem; margin-bottom: 12px;">${nf.title}</h1>
+            <p style="color: #475569; margin-bottom: 16px;">${nf.text}</p>`
+              : `<p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página...' : 'Loading...'}</p>`}
             <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">${isEs
               ? 'Si esta página no carga, todavía puede ver la <a href="/es/medications" style="color:#059669;">lista de medicamentos</a> y el <a href="/es/application-help" style="color:#059669;">directorio de programas de asistencia</a>.'
               : 'If this page doesn\'t load, you can still browse the <a href="/medications" style="color:#059669;">medication list</a> and the <a href="/application-help" style="color:#059669;">assistance program directory</a>.'}</p>
@@ -1079,11 +1092,14 @@ function prerenderPages() {
     <script type="module" src="${mainScriptPath}"></script>
 </body>
 </html>`;
+    };
     fs.writeFileSync(path.join(distDir, 'app-shell.html'), shell(false), 'utf8');
     fs.mkdirSync(path.join(distDir, 'es'), { recursive: true });
     fs.writeFileSync(path.join(distDir, 'es', 'app-shell.html'), shell(true), 'utf8');
-    console.log('  ✅ SPA fallback shells -> app-shell.html, es/app-shell.html');
-    created += 2;
+    fs.writeFileSync(path.join(distDir, '404.html'), shell(false, true), 'utf8');
+    fs.writeFileSync(path.join(distDir, 'es', '404.html'), shell(true, true), 'utf8');
+    console.log('  ✅ SPA fallback shells -> app-shell.html, es/app-shell.html; 404 shells -> 404.html, es/404.html');
+    created += 4;
   } catch (error) {
     console.error('  ❌ Error creating SPA fallback shells:', error.message);
     errors++;

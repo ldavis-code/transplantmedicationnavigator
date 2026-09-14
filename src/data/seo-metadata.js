@@ -8,7 +8,9 @@ const SITE_NAME = 'Transplant Medication Navigator™';
 
 export const seoMetadata = {
   home: {
-    title: 'Transplant Medication Navigator™',
+    // Matches og:title — the bare brand name gave the English search result
+    // no words about what the site does (the Spanish page already had them).
+    title: 'Free Transplant Medication Help | Transplant Medication Navigator™',
     description: 'Find programs that may lower or cover the cost of transplant medicines if you qualify. Find help paying for tacrolimus, mycophenolate, immunosuppressants. Compare prices, copay foundations & grants for kidney, liver, heart transplant patients. Created by a transplant recipient.',
     canonical: `${BASE_URL}/`,
     ogTitle: 'Free Transplant Medication Help | Transplant Medication Navigator™',

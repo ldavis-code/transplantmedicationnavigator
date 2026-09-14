@@ -1,7 +1,10 @@
 <div role="region" aria-label="Cookie and analytics consent" class="fixed bottom-0 inset-x-0 z-[60] bg-slate-900 text-white shadow-2xl border-t border-slate-700 no-print">
 <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center gap-3">
-<p class="text-sm leading-relaxed flex-1">We use optional Google Analytics cookies to understand how the site is used. The site works fully without them, and we never sell your information. Would you like to allow analytics cookies? <a class="underline text-emerald-300 hover:text-emerald-200" href="/privacy" data-discover="true">Privacy Policy</a>
+<div class="text-sm leading-relaxed flex-1">
+<p class="font-semibold text-amber-200">Educational information only, not medical advice. Always check with your transplant team. In an emergency, call 911.</p>
+<p class="mt-1 text-slate-200">We use optional Google Analytics cookies to understand how the site is used. The site works fully without them, and we never sell your information. Would you like to allow analytics cookies? <a class="underline text-emerald-300 hover:text-emerald-200" href="/privacy" data-discover="true">Privacy Policy</a>
 </p>
+</div>
 <div class="flex gap-3 flex-shrink-0">
 <button class="px-4 py-2 min-h-[44px] rounded-lg border border-slate-500 text-slate-200 hover:bg-slate-800 font-medium text-sm transition">No thanks</button>
 <button class="px-4 py-2 min-h-[44px] rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition">Allow analytics</button>
@@ -9,34 +12,6 @@
 </div>
 </div>
 <div role="status" aria-live="assertive" aria-atomic="true" class="sr-only">Search Transplant Medications &amp; Prices | Transplant Medication Navigator™</div>
-<div class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-describedby="disclaimer-description">
-<div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 animate-in zoom-in-95 duration-200">
-<div class="flex justify-center mb-6">
-<div class="bg-amber-100 p-4 rounded-full">
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert text-amber-600" aria-hidden="true">
-<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3">
-</path>
-<path d="M12 9v4">
-</path>
-<path d="M12 17h.01">
-</path>
-</svg>
-</div>
-</div>
-<h2 id="disclaimer-title" class="text-2xl font-bold text-slate-900 text-center mb-4">Important Notice</h2>
-<p id="disclaimer-description" class="text-slate-700 text-center mb-6 leading-relaxed">This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.</p>
-<div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-<div class="flex items-center justify-center gap-2 text-red-800 font-bold">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
-<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
-</path>
-</svg>
-<span>In an emergency, call 911</span>
-</div>
-</div>
-<button class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-lg rounded-xl transition shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/50 min-h-[52px]">I Agree</button>
-</div>
-</div>
 <div class="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900">
 <a class="block bg-emerald-800 hover:bg-emerald-900 text-white px-4 py-3 text-base text-center font-medium no-print transition-colors" href="/education?topic=EMERGENCY" data-discover="true">
 <span class="inline-flex items-center justify-center gap-2">
@@ -56,7 +31,7 @@
 <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200 no-print" role="banner">
 <div class="container mx-auto px-4 h-16 flex items-center justify-between">
 <a class="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition flex-shrink-0" aria-label="Transplant Medication Navigator™ home" href="/" data-discover="true">
-<img src="/photos/logo.png" alt="" width="32" height="32" aria-hidden="true" class="flex-shrink-0">
+<img src="/photos/logo.png" alt="Transplant Medication Navigator logo" width="32" height="32" class="flex-shrink-0">
 <span class="font-bold text-base sm:text-lg leading-tight">Transplant Medication<br> Navigator<sup class="text-xs">™</sup>
 </span>
 </a>
@@ -197,8 +172,1173 @@
 </svg>
 </div>
 <h2 class="text-xl font-bold text-slate-900 mb-2">Your list is empty</h2>
-<p class="text-slate-700 max-w-md mx-auto">Use the search box above to add medications. You can add standard transplant drugs or any other medication you take.</p>
+<p class="text-slate-700 max-w-md mx-auto">Search above to add medications to your list, or pick one from the full list below. You can add standard transplant drugs or any other medication you take.</p>
 </div>
+<section aria-labelledby="med-directory-heading" class="bg-white border border-slate-200 rounded-2xl p-5">
+<h2 id="med-directory-heading" class="text-xl font-bold text-slate-900 mb-1">Browse all 260 medications, A to Z</h2>
+<p class="text-slate-600 text-sm mb-4">Every medication in our database. Open one to see its prices and the programs that help pay for it.</p>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">A</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zafirlukast" data-discover="true">Accolate<span class="text-slate-500"> (Zafirlukast)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/pioglitazone" data-discover="true">Actos<span class="text-slate-500"> (Pioglitazone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/adcirca" data-discover="true">Adcirca<span class="text-slate-500"> (Tadalafil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/adempas" data-discover="true">Adempas<span class="text-slate-500"> (Riociguat)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/admelog" data-discover="true">Admelog<span class="text-slate-500"> (Insulin Lispro)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fluticasone-salmeterol" data-discover="true">Advair<span class="text-slate-500"> (Fluticasone/Salmeterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/afrezza" data-discover="true">Afrezza<span class="text-slate-500"> (Insulin Human (Inhalation))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/aldactone" data-discover="true">Aldactone<span class="text-slate-500"> (Spironolactone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fexofenadine" data-discover="true">Allegra<span class="text-slate-500"> (Fexofenadine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ramipril" data-discover="true">Altace<span class="text-slate-500"> (Ramipril)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ciclesonide" data-discover="true">Alvesco<span class="text-slate-500"> (Ciclesonide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/glimepiride" data-discover="true">Amaryl<span class="text-slate-500"> (Glimepiride)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zolpidem" data-discover="true">Ambien<span class="text-slate-500"> (Zolpidem)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/amoxicillin" data-discover="true">Amoxil<span class="text-slate-500"> (Amoxicillin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/umeclidinium-vilanterol" data-discover="true">Anoro Ellipta<span class="text-slate-500"> (Umeclidinium/Vilanterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/apidra" data-discover="true">Apidra<span class="text-slate-500"> (Insulin Glulisine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/vitamin-e" data-discover="true">Aqua Gem-E / d-Alpha-Tocopherol<span class="text-slate-500"> (Vitamin E)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/aranesp" data-discover="true">Aranesp<span class="text-slate-500"> (Darbepoetin Alfa)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mometasone-inhaled" data-discover="true">Asmanex<span class="text-slate-500"> (Mometasone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/astagraf-xl" data-discover="true">Astagraf XL<span class="text-slate-500"> (Tacrolimus Extended-Release)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/azelastine-nasal" data-discover="true">Astelin / Astepro<span class="text-slate-500"> (Azelastine Nasal)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/hydroxyzine" data-discover="true">Atarax / Vistaril<span class="text-slate-500"> (Hydroxyzine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/atgam" data-discover="true">ATGAM<span class="text-slate-500"> (Anti-thymocyte globulin (Equine))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lorazepam" data-discover="true">Ativan<span class="text-slate-500"> (Lorazepam)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ipratropium" data-discover="true">Atrovent<span class="text-slate-500"> (Ipratropium)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/auryxia" data-discover="true">Auryxia<span class="text-slate-500"> (Ferric Citrate)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/irbesartan" data-discover="true">Avapro<span class="text-slate-500"> (Irbesartan)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">B</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/bactrim" data-discover="true">Bactrim / Septra<span class="text-slate-500"> (Trimethoprim-Sulfamethoxazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/baqsimi" data-discover="true">Baqsimi<span class="text-slate-500"> (Glucagon (Nasal))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/baraclude" data-discover="true">Baraclude<span class="text-slate-500"> (Entecavir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/olmesartan" data-discover="true">Benicar<span class="text-slate-500"> (Olmesartan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/dicyclomine" data-discover="true">Bentyl<span class="text-slate-500"> (Dicyclomine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nystatin" data-discover="true">Bio-Statin / Nystop<span class="text-slate-500"> (Nystatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/brenzavvy" data-discover="true">Brenzavvy<span class="text-slate-500"> (Bexagliflozin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fluticasone-vilanterol" data-discover="true">Breo Ellipta<span class="text-slate-500"> (Fluticasone/Vilanterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/bumetanide" data-discover="true">Bumex<span class="text-slate-500"> (Bumetanide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/buspirone" data-discover="true">BuSpar<span class="text-slate-500"> (Buspirone)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">C</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/vitamin-d" data-discover="true">Calciferol<span class="text-slate-500"> (Vitamin D)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/3e7d60c8-9882-4077-9fb5-848abaaf47fe" data-discover="true">Campath<span class="text-slate-500"> (alemtuzumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/campath" data-discover="true">Campath / Lemtrada<span class="text-slate-500"> (Alemtuzumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/diltiazem" data-discover="true">Cardizem<span class="text-slate-500"> (Diltiazem)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cayston" data-discover="true">Cayston<span class="text-slate-500"> (Aztreonam Inhaled)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/citalopram" data-discover="true">Celexa<span class="text-slate-500"> (Citalopram)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cellcept" data-discover="true">CellCept<span class="text-slate-500"> (Mycophenolate Mofetil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/multivitamin" data-discover="true">Centrum<span class="text-slate-500"> (Multivitamin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ciprofloxacin" data-discover="true">Cipro<span class="text-slate-500"> (Ciprofloxacin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/desloratadine" data-discover="true">Clarinex<span class="text-slate-500"> (Desloratadine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/loratadine" data-discover="true">Claritin<span class="text-slate-500"> (Loratadine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/colchicine" data-discover="true">Colcrys<span class="text-slate-500"> (Colchicine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ipratropium-albuterol" data-discover="true">Combivent / DuoNeb<span class="text-slate-500"> (Ipratropium/Albuterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/coreg" data-discover="true">Coreg<span class="text-slate-500"> (Carvedilol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nadolol" data-discover="true">Corgard<span class="text-slate-500"> (Nadolol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/warfarin" data-discover="true">Coumadin<span class="text-slate-500"> (Warfarin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/losartan" data-discover="true">Cozaar<span class="text-slate-500"> (Losartan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/creon" data-discover="true">Creon / Zenpep<span class="text-slate-500"> (Pancrelipase)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cresemba" data-discover="true">Cresemba<span class="text-slate-500"> (Isavuconazonium)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rosuvastatin" data-discover="true">Crestor<span class="text-slate-500"> (Rosuvastatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/duloxetine" data-discover="true">Cymbalta<span class="text-slate-500"> (Duloxetine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/liothyronine" data-discover="true">Cytomel<span class="text-slate-500"> (Liothyronine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cytovene" data-discover="true">Cytovene<span class="text-slate-500"> (Ganciclovir)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">D</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/trazodone" data-discover="true">Desyrel<span class="text-slate-500"> (Trazodone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/dexcom" data-discover="true">Dexcom<span class="text-slate-500"> (Continuous Glucose Monitor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/glyburide" data-discover="true">DiaBeta / Glynase<span class="text-slate-500"> (Glyburide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/diflucan" data-discover="true">Diflucan<span class="text-slate-500"> (Fluconazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/valsartan" data-discover="true">Diovan<span class="text-slate-500"> (Valsartan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mometasone-formoterol" data-discover="true">Dulera<span class="text-slate-500"> (Mometasone/Formoterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/dupilumab" data-discover="true">Dupixent<span class="text-slate-500"> (Dupilumab)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">E</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/aspirin" data-discover="true">Ecotrin / Bayer<span class="text-slate-500"> (Aspirin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/venlafaxine" data-discover="true">Effexor<span class="text-slate-500"> (Venlafaxine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/apixaban" data-discover="true">Eliquis<span class="text-slate-500"> (Apixaban)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/entresto" data-discover="true">Entresto<span class="text-slate-500"> (Sacubitril/Valsartan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/envarsus-xr" data-discover="true">Envarsus XR<span class="text-slate-500"> (Tacrolimus Extended-Release)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/epclusa" data-discover="true">Epclusa<span class="text-slate-500"> (Sofosbuvir/Velpatasvir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/esbriet" data-discover="true">Esbriet<span class="text-slate-500"> (Pirfenidone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/everolimus" data-discover="true">Everolimus (generic)</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/eversense" data-discover="true">Eversense<span class="text-slate-500"> (Continuous Glucose Monitor)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">F</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/farxiga" data-discover="true">Farxiga<span class="text-slate-500"> (Dapagliflozin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/benralizumab" data-discover="true">Fasenra<span class="text-slate-500"> (Benralizumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ferrous-sulfate" data-discover="true">Feosol<span class="text-slate-500"> (Ferrous Sulfate)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/feraheme" data-discover="true">Feraheme<span class="text-slate-500"> (Ferumoxytol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fiasp" data-discover="true">Fiasp<span class="text-slate-500"> (Insulin Aspart)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/flolan" data-discover="true">Flolan<span class="text-slate-500"> (Epoprostenol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fluticasone-nasal" data-discover="true">Flonase<span class="text-slate-500"> (Fluticasone Nasal)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fluticasone" data-discover="true">Flovent<span class="text-slate-500"> (Fluticasone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/folic-acid" data-discover="true">Folate<span class="text-slate-500"> (Folic Acid)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/freestyle-libre" data-discover="true">FreeStyle Libre<span class="text-slate-500"> (Continuous Glucose Monitor)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">G</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ivig" data-discover="true">Gammagard / Privigen / Octagam<span class="text-slate-500"> (Intravenous Immunoglobulin (IVIG))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/metformin" data-discover="true">Glucophage<span class="text-slate-500"> (Metformin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/glipizide" data-discover="true">Glucotrol<span class="text-slate-500"> (Glipizide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/granix" data-discover="true">Granix<span class="text-slate-500"> (Tbo-filgrastim)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">H</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/harvoni" data-discover="true">Harvoni<span class="text-slate-500"> (Ledipasvir/Sofosbuvir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/hectorol" data-discover="true">Hectorol<span class="text-slate-500"> (Doxercalciferol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/hbig" data-discover="true">HepaGam B / HyperHEP B<span class="text-slate-500"> (Hepatitis B Immune Globulin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/insulin-lispro" data-discover="true">Humalog<span class="text-slate-500"> (Insulin Lispro)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/humalog-mix" data-discover="true">Humalog Mix<span class="text-slate-500"> (Insulin Lispro Protamine/Insulin Lispro)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/humulin-70-30" data-discover="true">Humulin 70/30<span class="text-slate-500"> (Insulin NPH/Regular)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/humulin-n" data-discover="true">Humulin N<span class="text-slate-500"> (Insulin NPH)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/humulin-r" data-discover="true">Humulin R<span class="text-slate-500"> (Insulin Regular)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">I</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/loperamide" data-discover="true">Imodium<span class="text-slate-500"> (Loperamide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/imuran" data-discover="true">Imuran<span class="text-slate-500"> (Azathioprine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/inderal" data-discover="true">Inderal<span class="text-slate-500"> (Propranolol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/injectafer" data-discover="true">Injectafer<span class="text-slate-500"> (Ferric Carboxymaltose)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/eplerenone" data-discover="true">Inspra<span class="text-slate-500"> (Eplerenone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/invokana" data-discover="true">Invokana<span class="text-slate-500"> (Canagliflozin)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">J</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sitagliptin" data-discover="true">Januvia<span class="text-slate-500"> (Sitagliptin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/jardiance" data-discover="true">Jardiance<span class="text-slate-500"> (Empagliflozin)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">K</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/kalydeco" data-discover="true">Kalydeco<span class="text-slate-500"> (Ivacaftor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cephalexin" data-discover="true">Keflex<span class="text-slate-500"> (Cephalexin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/clonazepam" data-discover="true">Klonopin<span class="text-slate-500"> (Clonazepam)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/potassium-chloride" data-discover="true">Klor-Con<span class="text-slate-500"> (Potassium Chloride)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lactulose" data-discover="true">Kristalose / Generlac<span class="text-slate-500"> (Lactulose)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">L</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/digoxin" data-discover="true">Lanoxin<span class="text-slate-500"> (Digoxin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/insulin-glargine" data-discover="true">Lantus / Basaglar<span class="text-slate-500"> (Insulin Glargine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lasix" data-discover="true">Lasix<span class="text-slate-500"> (Furosemide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/letairis" data-discover="true">Letairis<span class="text-slate-500"> (Ambrisentan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/levofloxacin" data-discover="true">Levaquin<span class="text-slate-500"> (Levofloxacin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/escitalopram" data-discover="true">Lexapro<span class="text-slate-500"> (Escitalopram)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/atorvastatin" data-discover="true">Lipitor<span class="text-slate-500"> (Atorvastatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/livtencity" data-discover="true">Livtencity<span class="text-slate-500"> (Maribavir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lokelma" data-discover="true">Lokelma<span class="text-slate-500"> (Sodium Zirconium Cyclosilicate)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lopressor" data-discover="true">Lopressor / Toprol XL<span class="text-slate-500"> (Metoprolol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/pregabalin" data-discover="true">Lyrica<span class="text-slate-500"> (Pregabalin)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">M</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mavyret" data-discover="true">Mavyret<span class="text-slate-500"> (Glecaprevir/Pibrentasvir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/guardian-connect" data-discover="true">Medtronic Guardian Connect<span class="text-slate-500"> (Continuous Glucose Monitor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mepron" data-discover="true">Mepron<span class="text-slate-500"> (Atovaquone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lovastatin" data-discover="true">Mevacor<span class="text-slate-500"> (Lovastatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/hydrochlorothiazide" data-discover="true">Microzide<span class="text-slate-500"> (Hydrochlorothiazide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/miralax" data-discover="true">Miralax<span class="text-slate-500"> (Polyethylene Glycol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mircera" data-discover="true">Mircera<span class="text-slate-500"> (Methoxy Polyethylene Glycol-Epoetin Beta)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/meloxicam" data-discover="true">Mobic<span class="text-slate-500"> (Meloxicam)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ibuprofen" data-discover="true">Motrin / Advil<span class="text-slate-500"> (Ibuprofen)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/0455fed9-a5d3-4aec-bb95-5200d077c92e" data-discover="true">Mounjaro / Zepbound<span class="text-slate-500"> (tirzepatide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mycophenolate" data-discover="true">Mycophenolate Mofetil (generic)</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/myfortic" data-discover="true">Myfortic<span class="text-slate-500"> (Mycophenolic Acid)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">N</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/naproxen" data-discover="true">Naprosyn / Aleve<span class="text-slate-500"> (Naproxen)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/triamcinolone-nasal" data-discover="true">Nasacort<span class="text-slate-500"> (Triamcinolone Nasal)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cromolyn" data-discover="true">NasalCrom<span class="text-slate-500"> (Cromolyn Sodium)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mometasone-nasal" data-discover="true">Nasonex<span class="text-slate-500"> (Mometasone Nasal)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cyclosporine" data-discover="true">Neoral / Sandimmune / Gengraf<span class="text-slate-500"> (Cyclosporine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nesina" data-discover="true">Nesina<span class="text-slate-500"> (Alogliptin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/neupogen" data-discover="true">Neupogen<span class="text-slate-500"> (Filgrastim)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/gabapentin" data-discover="true">Neurontin<span class="text-slate-500"> (Gabapentin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/esomeprazole" data-discover="true">Nexium<span class="text-slate-500"> (Esomeprazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nivestym" data-discover="true">Nivestym<span class="text-slate-500"> (Filgrastim-aafi)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/hydrocodone-acetaminophen" data-discover="true">Norco / Vicodin<span class="text-slate-500"> (Hydrocodone/Acetaminophen)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/amlodipine" data-discover="true">Norvasc<span class="text-slate-500"> (Amlodipine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/insulin-aspart" data-discover="true">Novolog<span class="text-slate-500"> (Insulin Aspart)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/novolog-mix-70-30" data-discover="true">NovoLog Mix 70/30<span class="text-slate-500"> (Insulin Aspart Protamine/Insulin Aspart)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/noxafil" data-discover="true">Noxafil<span class="text-slate-500"> (Posaconazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/mepolizumab" data-discover="true">Nucala<span class="text-slate-500"> (Mepolizumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/belatacept" data-discover="true">Nulojix<span class="text-slate-500"> (Belatacept)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nypozi" data-discover="true">Nypozi<span class="text-slate-500"> (Filgrastim-txid)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">O</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ofev" data-discover="true">Ofev<span class="text-slate-500"> (Nintedanib)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/opsumit" data-discover="true">Opsumit<span class="text-slate-500"> (Macitentan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/opsynvi" data-discover="true">Opsynvi<span class="text-slate-500"> (Macitentan/Tadalafil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/orenitram" data-discover="true">Orenitram<span class="text-slate-500"> (Treprostinil (Oral))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/orkambi" data-discover="true">Orkambi<span class="text-slate-500"> (Lumacaftor/Ivacaftor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/oxycodone" data-discover="true">OxyContin / Roxicodone<span class="text-slate-500"> (Oxycodone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/semaglutide" data-discover="true">Ozempic / Wegovy<span class="text-slate-500"> (Semaglutide)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">P</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/amiodarone" data-discover="true">Pacerone / Cordarone<span class="text-slate-500"> (Amiodarone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/parsabiv" data-discover="true">Parsabiv<span class="text-slate-500"> (Etelcalcetide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/olopatadine-nasal" data-discover="true">Patanase<span class="text-slate-500"> (Olopatadine Nasal)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/famotidine" data-discover="true">Pepcid<span class="text-slate-500"> (Famotidine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/phoslo" data-discover="true">PhosLo<span class="text-slate-500"> (Calcium Acetate)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/clopidogrel" data-discover="true">Plavix<span class="text-slate-500"> (Clopidogrel)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/pravastatin" data-discover="true">Pravachol<span class="text-slate-500"> (Pravastatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/prednisone" data-discover="true">Prednisone</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lansoprazole" data-discover="true">Prevacid<span class="text-slate-500"> (Lansoprazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/prevymis" data-discover="true">Prevymis<span class="text-slate-500"> (Letermovir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/omeprazole" data-discover="true">Prilosec<span class="text-slate-500"> (Omeprazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/lisinopril" data-discover="true">Prinivil / Zestril<span class="text-slate-500"> (Lisinopril)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/albuterol" data-discover="true">ProAir / Ventolin / Proventil<span class="text-slate-500"> (Albuterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/7b75e9cc-d355-43de-91a3-f7330c9409fd" data-discover="true">ProAmatine<span class="text-slate-500"> (midodrine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/nifedipine" data-discover="true">Procardia / Adalat<span class="text-slate-500"> (Nifedipine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/procrit" data-discover="true">Procrit / Epogen<span class="text-slate-500"> (Epoetin Alfa)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/prograf" data-discover="true">Prograf<span class="text-slate-500"> (Tacrolimus)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/protonix" data-discover="true">Protonix<span class="text-slate-500"> (Pantoprazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/fluoxetine" data-discover="true">Prozac<span class="text-slate-500"> (Fluoxetine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/budesonide-inhaled" data-discover="true">Pulmicort<span class="text-slate-500"> (Budesonide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/pulmozyme" data-discover="true">Pulmozyme<span class="text-slate-500"> (Dornase Alfa)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">Q</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/beclomethasone" data-discover="true">QVAR<span class="text-slate-500"> (Beclomethasone)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">R</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sirolimus" data-discover="true">Rapamune<span class="text-slate-500"> (Sirolimus)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/releuko" data-discover="true">Releuko<span class="text-slate-500"> (Filgrastim-ayow)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/remodulin" data-discover="true">Remodulin<span class="text-slate-500"> (Treprostinil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/renvela" data-discover="true">Renvela<span class="text-slate-500"> (Sevelamer)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sevelamer" data-discover="true">Renvela / Renagel<span class="text-slate-500"> (Sevelamer)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/revatio" data-discover="true">Revatio / Viagra<span class="text-slate-500"> (Sildenafil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/resmetirom" data-discover="true">Rezdiffra<span class="text-slate-500"> (Resmetirom)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rezvoglar" data-discover="true">Rezvoglar<span class="text-slate-500"> (Insulin Glargine-aglr)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rituxan" data-discover="true">Rituxan<span class="text-slate-500"> (Rituximab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/calcitriol" data-discover="true">Rocaltrol / Calcijex<span class="text-slate-500"> (Calcitriol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rybelsus" data-discover="true">Rybelsus<span class="text-slate-500"> (Semaglutide (Oral))</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">S</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/saxenda" data-discover="true">Saxenda<span class="text-slate-500"> (Liraglutide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/semglee" data-discover="true">Semglee<span class="text-slate-500"> (Insulin Glargine-yfgn)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sensipar" data-discover="true">Sensipar<span class="text-slate-500"> (Cinacalcet)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/quetiapine" data-discover="true">Seroquel<span class="text-slate-500"> (Quetiapine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/simulect" data-discover="true">Simulect<span class="text-slate-500"> (Basiliximab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/montelukast" data-discover="true">Singulair<span class="text-slate-500"> (Montelukast)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/soliqua" data-discover="true">Soliqua 100/33<span class="text-slate-500"> (Insulin Glargine/Lixisenatide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/soliris" data-discover="true">Soliris<span class="text-slate-500"> (Eculizumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/solumedrol" data-discover="true">Solu-Medrol<span class="text-slate-500"> (Methylprednisolone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tiotropium" data-discover="true">Spiriva<span class="text-slate-500"> (Tiotropium)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sporanox" data-discover="true">Sporanox<span class="text-slate-500"> (Itraconazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/budesonide-formoterol" data-discover="true">Symbicort<span class="text-slate-500"> (Budesonide/Formoterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/symdeko" data-discover="true">Symdeko<span class="text-slate-500"> (Tezacaftor/Ivacaftor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/levothyroxine" data-discover="true">Synthroid / Levoxyl<span class="text-slate-500"> (Levothyroxine)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">T</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tacrolimus" data-discover="true">Tacrolimus (generic)</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/flecainide" data-discover="true">Tambocor<span class="text-slate-500"> (Flecainide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/atenolol" data-discover="true">Tenormin<span class="text-slate-500"> (Atenolol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tezepelumab" data-discover="true">Tezspire<span class="text-slate-500"> (Tezepelumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/chlorthalidone" data-discover="true">Thalitone<span class="text-slate-500"> (Chlorthalidone)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/thymoglobulin" data-discover="true">Thymoglobulin<span class="text-slate-500"> (Anti-thymocyte globulin (Rabbit))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tobramycin-inhaled" data-discover="true">TOBI / Bethkis / Kitabis Pak<span class="text-slate-500"> (Tobramycin Inhaled)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tolsura" data-discover="true">Tolsura<span class="text-slate-500"> (Itraconazole (SUBA))</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/toujeo" data-discover="true">Toujeo<span class="text-slate-500"> (Insulin Glargine U-300)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tracleer" data-discover="true">Tracleer<span class="text-slate-500"> (Bosentan)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tradjenta" data-discover="true">Tradjenta<span class="text-slate-500"> (Linagliptin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tresiba" data-discover="true">Tresiba<span class="text-slate-500"> (Insulin Degludec)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/trikafta" data-discover="true">Trikafta<span class="text-slate-500"> (Elexacaftor/Tezacaftor/Ivacaftor)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/dulaglutide" data-discover="true">Trulicity<span class="text-slate-500"> (Dulaglutide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tyvaso" data-discover="true">Tyvaso<span class="text-slate-500"> (Treprostinil (Inhaled))</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">U</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ultomiris" data-discover="true">Ultomiris<span class="text-slate-500"> (Ravulizumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/tramadol" data-discover="true">Ultram<span class="text-slate-500"> (Tramadol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/uptravi" data-discover="true">Uptravi<span class="text-slate-500"> (Selexipag)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ursodiol" data-discover="true">Urso / Actigall<span class="text-slate-500"> (Ursodiol)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">V</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/valcyte" data-discover="true">Valcyte<span class="text-slate-500"> (Valganciclovir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/valtrex" data-discover="true">Valtrex<span class="text-slate-500"> (Valacyclovir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/enalapril" data-discover="true">Vasotec<span class="text-slate-500"> (Enalapril)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/veletri" data-discover="true">Veletri<span class="text-slate-500"> (Epoprostenol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/veltassa" data-discover="true">Veltassa<span class="text-slate-500"> (Patiromer)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/vemlidy" data-discover="true">Vemlidy<span class="text-slate-500"> (Tenofovir Alafenamide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/venofer" data-discover="true">Venofer<span class="text-slate-500"> (Iron Sucrose)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ventavis" data-discover="true">Ventavis<span class="text-slate-500"> (Iloprost)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/vfend" data-discover="true">Vfend<span class="text-slate-500"> (Voriconazole)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/doxycycline" data-discover="true">Vibramycin<span class="text-slate-500"> (Doxycycline)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/victoza" data-discover="true">Victoza<span class="text-slate-500"> (Liraglutide)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/viread" data-discover="true">Viread<span class="text-slate-500"> (Tenofovir Disoproxil)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cholecalciferol" data-discover="true">Vitamin D3<span class="text-slate-500"> (Cholecalciferol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/vosevi" data-discover="true">Vosevi<span class="text-slate-500"> (Sofosbuvir/Velpatasvir/Voxilaprevir)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">W</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/bupropion" data-discover="true">Wellbutrin / Zyban<span class="text-slate-500"> (Bupropion)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/winrevair" data-discover="true">Winrevair<span class="text-slate-500"> (Sotatercept)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">X</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/alprazolam" data-discover="true">Xanax<span class="text-slate-500"> (Alprazolam)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rivaroxaban" data-discover="true">Xarelto<span class="text-slate-500"> (Rivaroxaban)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/rifaximin" data-discover="true">Xifaxan<span class="text-slate-500"> (Rifaximin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/omalizumab" data-discover="true">Xolair<span class="text-slate-500"> (Omalizumab)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/levalbuterol" data-discover="true">Xopenex<span class="text-slate-500"> (Levalbuterol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/levocetirizine" data-discover="true">Xyzal<span class="text-slate-500"> (Levocetirizine)</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-3">
+<h3 class="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">Z</h3>
+<ul class="grid sm:grid-cols-2 gap-x-6">
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ranitidine" data-discover="true">Zantac<span class="text-slate-500"> (Ranitidine)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zarxio" data-discover="true">Zarxio<span class="text-slate-500"> (Filgrastim-sndz)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/bisoprolol" data-discover="true">Zebeta<span class="text-slate-500"> (Bisoprolol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zemplar" data-discover="true">Zemplar<span class="text-slate-500"> (Paricalcitol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/azithromycin" data-discover="true">Zithromax / Z-Pak<span class="text-slate-500"> (Azithromycin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/simvastatin" data-discover="true">Zocor<span class="text-slate-500"> (Simvastatin)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/ondansetron" data-discover="true">Zofran<span class="text-slate-500"> (Ondansetron)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/sertraline" data-discover="true">Zoloft<span class="text-slate-500"> (Sertraline)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zortress" data-discover="true">Zortress<span class="text-slate-500"> (Everolimus)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zovirax" data-discover="true">Zovirax<span class="text-slate-500"> (Acyclovir)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/zileuton" data-discover="true">Zyflo<span class="text-slate-500"> (Zileuton)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/allopurinol" data-discover="true">Zyloprim<span class="text-slate-500"> (Allopurinol)</span>
+</a>
+</li>
+<li>
+<a class="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7" href="/medications/cetirizine" data-discover="true">Zyrtec<span class="text-slate-500"> (Cetirizine)</span>
+</a>
+</li>
+</ul>
+</div>
+</section>
 </div>
 </article>
 </main>
@@ -213,7 +1353,7 @@
 </circle>
 <path d="M12 6v6l4 2">
 </path>
-</svg>Verified quarterly · Last verified September 2026</p>
+</svg>Verified quarterly · Last verified August 2026</p>
 <p>© 2026 Transplant Medication Navigator™. All Rights Reserved.</p>
 <p class="mt-4 text-slate-300 text-sm">Created by Lorrinda Gray-Davis · Established August 2025</p>
 <p class="mt-2 text-slate-400 text-sm">
@@ -240,8 +1380,6 @@
 <a class="text-slate-400 hover:text-emerald-400 underline transition" href="/pricing" data-discover="true">Plans &amp; Pricing</a>
 <span class="text-slate-600" aria-hidden="true">|</span>
 <a class="text-slate-400 hover:text-emerald-400 underline transition" href="/evidence" data-discover="true">The Evidence</a>
-<span class="text-slate-600" aria-hidden="true">|</span>
-<a class="text-slate-400 hover:text-emerald-400 underline transition" href="/admin/login" data-discover="true">Admin</a>
 </div>
 </div>
 </footer>

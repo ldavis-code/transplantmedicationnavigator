@@ -13,6 +13,7 @@ import { seoMetadata } from '../../data/seo-metadata.js';
 import { fplDollars } from '../../data/constants.js';
 import { trackMedicationSearch, trackMedicationAddToList } from '../../lib/medicationTrackingApi.js';
 import { trackServerEvent } from '../../lib/trackServerEvent.js';
+import { noteResultsSeen, feedbackIsDue } from '../../lib/feedbackTiming.js';
 import { MedicationCard, ExternalMedCard } from '../../components/MedicationCardKit.jsx';
 
 const MedicationSearch = () => {
@@ -179,6 +180,30 @@ const MedicationSearch = () => {
 
     const displayListInternal = MEDICATIONS.filter(m => myListIds.includes(m.id));
     const hasItems = displayListInternal.length > 0 || myCustomMeds.length > 0;
+
+    // "Did you get your medication today?" is asked on a later visit, not
+    // the moment the results open (see lib/feedbackTiming.js).
+    const [feedbackDue, setFeedbackDue] = useState(false);
+    useEffect(() => {
+        if (!(hasItems && showSavings)) return;
+        noteResultsSeen();
+        setFeedbackDue(feedbackIsDue());
+    }, [hasItems, showSavings]);
+
+    // A–Z directory for the empty state. "Browse all N medications" on the
+    // homepage lands here, and an empty list box alone read as a blank page.
+    const directory = useMemo(() => {
+        const groups = new Map();
+        MEDICATIONS
+            .map((m) => ({ id: m.id, name: localizeMedName(m.brandName), generic: m.genericName }))
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .forEach((m) => {
+                const letter = m.name.charAt(0).toUpperCase();
+                if (!groups.has(letter)) groups.set(letter, []);
+                groups.get(letter).push(m);
+            });
+        return [...groups.entries()];
+    }, [MEDICATIONS]);
 
     return (
         <>
@@ -502,6 +527,29 @@ const MedicationSearch = () => {
                         <p className="text-slate-700 max-w-md mx-auto">{t('medications.search.emptyText')}</p>
                     </div>
                 )}
+                {!hasItems && (
+                    <section aria-labelledby="med-directory-heading" className="bg-white border border-slate-200 rounded-2xl p-5">
+                        <h2 id="med-directory-heading" className="text-xl font-bold text-slate-900 mb-1">{t('medications.search.browseAllTitle', { count: MEDICATIONS.length })}</h2>
+                        <p className="text-slate-600 text-sm mb-4">{t('medications.search.browseAllText')}</p>
+                        {directory.map(([letter, meds]) => (
+                            <div key={letter} className="mb-3">
+                                <h3 className="text-sm font-bold text-emerald-700 border-b border-slate-100 mb-1">{letter}</h3>
+                                <ul className="grid sm:grid-cols-2 gap-x-6">
+                                    {meds.map((m) => (
+                                        <li key={m.id}>
+                                            <Link to={`/medications/${m.id}`} className="text-slate-800 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-500 text-sm leading-7">
+                                                {m.name}
+                                                {m.generic && !m.name.toLowerCase().includes(m.generic.toLowerCase()) && (
+                                                    <span className="text-slate-500"> ({localizeMedName(m.generic)})</span>
+                                                )}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </section>
+                )}
                 {hasItems && showSavings && (
                     <>
                         {displayListInternal.map(med => (
@@ -599,7 +647,7 @@ const MedicationSearch = () => {
 
             {/* Grants & Foundations */}
             {/* Feedback Widget - at bottom of page */}
-            {hasItems && showSavings && (
+            {hasItems && showSavings && feedbackDue && (
                 <div className="no-print">
                     <FeedbackWidget />
                 </div>

@@ -4,13 +4,8 @@
     "body": "Usamos cookies opcionales de Google Analytics para entender cómo se usa el sitio. El sitio funciona completamente sin ellas y nunca vendemos su información. ¿Desea permitir las cookies de análisis?",
     "privacyLink": "Política de privacidad",
     "accept": "Permitir análisis",
-    "decline": "No, gracias"
-  },
-  "disclaimer": {
-    "title": "Aviso importante",
-    "text": "Esta herramienta ofrece información educativa para ayudarle a encontrar opciones de asistencia con sus medicamentos. No sustituye el consejo médico profesional. Consulte siempre a su equipo de trasplante o a su proveedor de salud si tiene preguntas sobre su afección médica o su tratamiento.",
-    "emergency": "En una emergencia, llame al 911",
-    "agree": "Estoy de acuerdo"
+    "decline": "No, gracias",
+    "disclaimer": "Información educativa, no consejo médico. Consulte siempre a su equipo de trasplante. En una emergencia, llame al 911."
   },
   "education": {
     "header": {
@@ -1332,6 +1327,7 @@
       "brandLine1": "Transplant Medication",
       "brandLine2": " Navigator",
       "brandTm": "™",
+      "logoAlt": "Logotipo de Transplant Medication Navigator",
       "mainAriaLabel": "Navegación principal",
       "mobileAriaLabel": "Navegación móvil",
       "openMenu": "Abrir menú",
@@ -1390,7 +1386,6 @@
         "hospitals": "Hospitales",
         "pricing": "Planes y precios",
         "evidence": "La evidencia",
-        "admin": "Admin",
         "privacyChoices": "Opciones de privacidad"
       }
     }
@@ -1711,6 +1706,10 @@
       "medicalInfoTitle": "Información médica importante",
       "medicalInfoText": "Tomar sus medicamentos de por vida es esencial para el éxito del trasplante. Consulte siempre a su equipo de trasplante antes de cambiar sus medicamentos o agregar uno nuevo, incluidas las medicinas sin receta y los suplementos.",
       "continueButton": "Mis medicamentos se ven bien, continuar →",
+      "noMedsTitle": "Todavía no ha agregado ningún medicamento",
+      "noMedsText": "Sus resultados relacionan los programas con los medicamentos de su lista. Sin uno, las siguientes páginas solo pueden mostrar opciones generales.",
+      "noMedsAdd": "Agregar un medicamento",
+      "noMedsContinue": "Continuar sin medicamentos",
       "guide": {
         "title": "Medicamentos comunes por tipo de órgano",
         "basedOnPre": "Según su trasplante de ",
@@ -2202,7 +2201,9 @@
       "addCustom": "Agregar personalizado",
       "addAsCustom": "Agregar \"{{term}}\" como medicamento personalizado",
       "emptyTitle": "Su lista está vacía",
-      "emptyText": "Use el cuadro de búsqueda de arriba para agregar medicamentos. Puede agregar medicamentos comunes de trasplante o cualquier otro medicamento que tome."
+      "emptyText": "Busque arriba para agregar medicamentos a su lista, o elija uno de la lista completa de abajo. Puede agregar medicamentos comunes de trasplante o cualquier otro medicamento que tome.",
+      "browseAllTitle": "Vea los {{count}} medicamentos, de la A a la Z",
+      "browseAllText": "Todos los medicamentos de nuestra base de datos. Abra uno para ver sus precios y los programas que ayudan a pagarlo."
     },
     "verify": {
       "title": "Sus medicamentos",

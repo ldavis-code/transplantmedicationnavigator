@@ -4,13 +4,8 @@
     "body": "We use optional Google Analytics cookies to understand how the site is used. The site works fully without them, and we never sell your information. Would you like to allow analytics cookies?",
     "privacyLink": "Privacy Policy",
     "accept": "Allow analytics",
-    "decline": "No thanks"
-  },
-  "disclaimer": {
-    "title": "Important Notice",
-    "text": "This tool provides educational information to help you navigate medication assistance options. It is not a substitute for professional medical advice. Always consult your transplant team or healthcare provider with any questions about your medical condition or treatment.",
-    "emergency": "In an emergency, call 911",
-    "agree": "I Agree"
+    "decline": "No thanks",
+    "disclaimer": "Educational information only, not medical advice. Always check with your transplant team. In an emergency, call 911."
   },
   "education": {
     "header": {
@@ -1332,6 +1327,7 @@
       "brandLine1": "Transplant Medication",
       "brandLine2": " Navigator",
       "brandTm": "™",
+      "logoAlt": "Transplant Medication Navigator logo",
       "mainAriaLabel": "Main navigation",
       "mobileAriaLabel": "Mobile navigation",
       "openMenu": "Open menu",
@@ -1390,7 +1386,6 @@
         "hospitals": "Hospitals",
         "pricing": "Plans & Pricing",
         "evidence": "The Evidence",
-        "admin": "Admin",
         "privacyChoices": "Privacy Choices"
       }
     }
@@ -1711,6 +1706,10 @@
       "medicalInfoTitle": "Important Medical Information",
       "medicalInfoText": "Lifelong medication adherence is essential for transplant success. Always consult your transplant team before changing medications or adding any new ones, including over-the-counter drugs and supplements.",
       "continueButton": "My medications look right, continue →",
+      "noMedsTitle": "You haven't added a medication yet",
+      "noMedsText": "Your results match programs to the medications on your list. Without one, the next pages can only show general options.",
+      "noMedsAdd": "Add a medication",
+      "noMedsContinue": "Continue without medications",
       "guide": {
         "title": "Common Medications by Organ Type",
         "basedOnPre": "Based on your ",
@@ -2202,7 +2201,9 @@
       "addCustom": "Add Custom",
       "addAsCustom": "Add \"{{term}}\" as custom medication",
       "emptyTitle": "Your list is empty",
-      "emptyText": "Use the search box above to add medications. You can add standard transplant drugs or any other medication you take."
+      "emptyText": "Search above to add medications to your list, or pick one from the full list below. You can add standard transplant drugs or any other medication you take.",
+      "browseAllTitle": "Browse all {{count}} medications, A to Z",
+      "browseAllText": "Every medication in our database. Open one to see its prices and the programs that help pay for it."
     },
     "verify": {
       "title": "Your Medications",

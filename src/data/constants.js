@@ -9,7 +9,7 @@
 // surfaces once showed five different dates at the same time — never add
 // a second date constant, and never stamp a deploy date here: a deploy is
 // not a content review.
-export const CONTENT_VERIFIED_ISO = "2026-09-08";
+export const CONTENT_VERIFIED_ISO = "2026-08-24";
 
 // "September 2026" / "septiembre de 2026" (month, the default) or
 // "September 8, 2026" / "8 de septiembre de 2026" (full). Pure — no i18n

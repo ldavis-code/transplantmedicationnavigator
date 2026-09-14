@@ -375,6 +375,8 @@ const Wizard = () => {
 
     // Search state for Step 5
     const [medSearchTerm, setMedSearchTerm] = useState('');
+    // Shown once when "continue" is pressed with an empty medication list.
+    const [noMedsPrompt, setNoMedsPrompt] = useState(false);
     const [medSearchResult, setMedSearchResult] = useState(null);
     const [isMedSearching, setIsMedSearching] = useState(false);
 
@@ -461,7 +463,17 @@ const Wizard = () => {
     const handleNextFromAboutYou = () => { trackServerEvent('quiz_start'); setStep(2); };
     // Step order: About You (1) → Transplant (2) → Medications (3) → Coverage (4) → Costs (5)
     const handleNextFromTransplant = () => setStep(3);
-    const handleNextFromMeds = () => setStep(4);
+    // Continuing with an empty list used to run the results page with
+    // nothing to match against — a dead end. One soft stop: point back at
+    // the search, or continue knowingly (a second press also continues).
+    const handleNextFromMeds = () => {
+        if ((answers.medications || []).length === 0 && !noMedsPrompt) {
+            setNoMedsPrompt(true);
+            return;
+        }
+        setNoMedsPrompt(false);
+        setStep(4);
+    };
     const handleNextFromCoverage = () => setStep(5);
     const handleNextFromCosts = () => {
         // Go directly to results
@@ -993,6 +1005,31 @@ const Wizard = () => {
                     </div>
                 </div>
 
+                {noMedsPrompt && (answers.medications || []).length === 0 && (
+                    <div role="alert" className="mb-4 bg-amber-50 border-2 border-amber-300 rounded-lg p-4">
+                        <p className="font-bold text-amber-900 mb-1">{t('wizard.meds.noMedsTitle')}</p>
+                        <p className="text-sm text-amber-800 mb-3">{t('wizard.meds.noMedsText')}</p>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const el = document.getElementById('wizard-med-search');
+                                    if (el) { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); el.focus(); }
+                                }}
+                                className="flex-1 py-2.5 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg min-h-[44px]"
+                            >
+                                {t('wizard.meds.noMedsAdd')}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => { setNoMedsPrompt(false); setStep(4); }}
+                                className="flex-1 py-2.5 px-4 border-2 border-slate-300 text-slate-700 hover:bg-slate-100 font-medium rounded-lg min-h-[44px]"
+                            >
+                                {t('wizard.meds.noMedsContinue')}
+                            </button>
+                        </div>
+                    </div>
+                )}
                 <button
                     onClick={handleNextFromMeds}
                     className="w-full py-3 font-bold rounded-lg shadow-md transition-all min-h-[48px] bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer"

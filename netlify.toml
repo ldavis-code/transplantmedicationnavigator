@@ -476,15 +476,199 @@
 # page shows the wrong thing" to crawlers and no-JS visitors. React
 # renders the real page (or its localized 404) on load. The Spanish rule
 # must come before the generic one.
+# Legacy URL aliases the app used to redirect client-side. Server-side
+# 301s so they never answer as 404s below; Netlify forwards the query string.
 [[redirects]]
-  from = "/es/*"
+  from = "/my-path-quiz"
+  to = "/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/es/my-path-quiz"
+  to = "/es/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/my-path"
+  to = "/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/es/my-path"
+  to = "/es/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/quiz"
+  to = "/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/es/quiz"
+  to = "/es/wizard"
+  status = 301
+
+[[redirects]]
+  from = "/resources"
+  to = "/education"
+  status = 301
+
+[[redirects]]
+  from = "/es/resources"
+  to = "/es/education"
+  status = 301
+
+[[redirects]]
+  from = "/grants-foundations"
+  to = "/application-help"
+  status = 301
+
+[[redirects]]
+  from = "/es/grants-foundations"
+  to = "/es/application-help"
+  status = 301
+
+[[redirects]]
+  from = "/grants"
+  to = "/application-help"
+  status = 301
+
+[[redirects]]
+  from = "/es/grants"
+  to = "/es/application-help"
+  status = 301
+
+[[redirects]]
+  from = "/savings-calculator"
+  to = "/savings-tracker"
+  status = 301
+
+[[redirects]]
+  from = "/es/savings-calculator"
+  to = "/es/savings-tracker"
+  status = 301
+
+[[redirects]]
+  from = "/calculator"
+  to = "/savings-tracker"
+  status = 301
+
+[[redirects]]
+  from = "/es/calculator"
+  to = "/es/savings-tracker"
+  status = 301
+
+[[redirects]]
+  from = "/research"
+  to = "/evidence"
+  status = 301
+
+[[redirects]]
+  from = "/es/research"
+  to = "/es/evidence"
+  status = 301
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms-and-conditions"
+  status = 301
+
+[[redirects]]
+  from = "/es/terms"
+  to = "/es/terms-and-conditions"
+  status = 301
+
+# Client-only routes with no prerendered file: the neutral app shell with a
+# 200 so React renders them. Anything not listed here (or prerendered, or an
+# alias above) is a real 404 below — add new client routes to this list.
+[[redirects]]
+  from = "/copay-reminders"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/copay-reminders"
   to = "/es/app-shell.html"
   status = 200
 
 [[redirects]]
-  from = "/*"
+  from = "/pilot/*"
   to = "/app-shell.html"
   status = 200
+
+[[redirects]]
+  from = "/es/pilot/*"
+  to = "/es/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/not-licensed"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/not-licensed"
+  to = "/es/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/demo"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/demo/*"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/for-transplant-programs"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/for-employers"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/for-payers"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/reporting"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/reporting/*"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/app-shell.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/app-shell.html"
+  status = 200
+
+# Everything else is a real 404: the not-found shell (scripts/prerender-seo.js)
+# with a 404 status, so unknown URLs are no longer soft 404s that Google
+# treats as thin duplicate pages. The Spanish rule must come before the
+# generic one.
+[[redirects]]
+  from = "/es/*"
+  to = "/es/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
 
 # Cache static assets aggressively (1 year) - Vite adds content hashes to filenames
 [[headers]]
