@@ -449,17 +449,6 @@ ${patientName || "[Your Name]"}`;
                                 <p className="text-amber-900 text-base font-medium bg-amber-50 border border-amber-200 p-3 rounded-lg">
                                     <Trans i18nKey="applicationHelp.start.cards.copay.eligibility" />
                                 </p>
-                                <div className="flex justify-center mt-4">
-                                    <img
-                                        src="/photos/copay-card-process.png"
-                                        alt={t('applicationHelp.start.cards.copay.imgAlt')}
-                                        aria-describedby="copay-card-desc"
-                                        className="max-w-full h-auto rounded-lg shadow-md"
-                                    />
-                                </div>
-                                <div id="copay-card-desc" className="sr-only">
-                                    {t('applicationHelp.start.cards.copay.imgDesc')}
-                                </div>
                             </section>
 
                             <section className="bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200">

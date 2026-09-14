@@ -1112,14 +1112,12 @@
       "cards": {
         "pap": {
           "title": "Programas de Asistencia al Paciente",
-          "text": "Programas para todas las personas que necesitan medicamentos a precios accesibles. Reciba medicamentos recetados gratis o por una cuota mínima, sin importar si tiene seguro o no."
+          "text": "Medicamentos gratis o a bajo costo directamente de la compañía farmacéutica. La mayoría de los programas son para pacientes con Medicare, Medicaid o sin seguro, y lo califican según sus ingresos."
         },
         "copay": {
           "title": "Tarjetas de copago",
           "text": "Las tarjetas de copago del fabricante ayudan a reducir lo que usted paga de su bolsillo en la farmacia.",
-          "eligibility": "<strong>Quién puede usar las tarjetas de copago:</strong> Solo con seguro que recibe a través de su trabajo o que compra por su cuenta. No sirven con Medicare, Medicaid ni los beneficios del VA. Si tiene alguno de estos, revise los Programas de Asistencia al Paciente.",
-          "imgAlt": "Cómo encontrar y solicitar tarjetas de copago",
-          "imgDesc": "Esta infografía explica cómo encontrar y solicitar tarjetas de copago para medicamentos. El proceso tiene 3 pasos principales. Primero, visite el sitio web del fabricante del medicamento o use nuestra herramienta para buscar tarjetas de copago. Segundo, revise los requisitos: la mayoría de las tarjetas de copago están disponibles si tiene seguro comercial y su medicamento cuesta más de $50 al mes. Tercero, complete la solicitud en línea, que toma de 5 a 10 minutos y requiere la información de su receta y los datos de su seguro. La mayoría de las tarjetas de copago se aprueban al instante y se pueden usar en su farmacia el mismo día. Las tarjetas de copago pueden reducir lo que usted paga de su bolsillo de cientos de dólares a tan solo $0-$25 al mes."
+          "eligibility": "<strong>Quién puede usar las tarjetas de copago:</strong> Solo con seguro que recibe a través de su trabajo o que compra por su cuenta. No sirven con Medicare, Medicaid ni los beneficios del VA. Si tiene alguno de estos, revise los Programas de Asistencia al Paciente."
         },
         "insurance": {
           "title": "Ayuda para pagar el seguro",
@@ -1134,7 +1132,8 @@
           "subtitle": "Directo del fabricante",
           "description": "Medicamentos gratis o a bajo costo entregados directamente por la compañía farmacéutica.",
           "bestFor": [
-            "Seguro comercial",
+            "Pacientes con Medicare",
+            "Pacientes con Medicaid",
             "Sin seguro",
             "Con seguro insuficiente"
           ],
@@ -1529,13 +1528,15 @@
     "name": "Lorrinda Gray-Davis",
     "role": "Sobreviviente de cáncer de hígado, receptora de un trasplante de hígado y presidenta de Transplant Recipients International Organization (TRIO)",
     "bio1": "En 2017, a Lorrinda le diagnosticaron enfermedad hepática terminal y un cáncer de hígado inoperable. Recibió su trasplante de hígado en 2018, y creó Transplant Medication Navigator porque sabe lo que es estar frente al mostrador de la farmacia con un precio que no puede pagar.",
-    "bio3": "Es presidenta de Transplant Recipients International Organization (TRIO) y vicepresidenta del Comité de Asuntos del Paciente de la OPTN, y asesora a HRSA sobre los estándares nacionales de seguridad en trasplantes.",
+    "bio3": "Es presidenta de Transplant Recipients International Organization (TRIO) y vicepresidenta del Comité de Asuntos del Paciente de la OPTN. También forma parte de dos órganos de HRSA: el Panel de Expertos Técnicos sobre Estándares de Seguridad y Calidad para las Organizaciones de Procuración de Órganos (OPO) y el Comité de Asignación Fuera de Secuencia (AOOS).",
     "stat1Label": "Receptora de trasplante desde",
     "stat4Label": "Trabajos de investigación y presentaciones publicados",
     "credsTitle": "Liderazgo y reconocimientos",
     "credentials": [
       "Vicepresidenta del Comité de Asuntos del Paciente de la OPTN",
-      "Comité de Nominaciones de Transición de la OPTN (2025)",
+      "Miembro del Panel de Expertos Técnicos de HRSA sobre Estándares de Seguridad y Calidad para las Organizaciones de Procuración de Órganos (2025–presente)",
+      "Miembro del Comité de Asignación Fuera de Secuencia (AOOS) de HRSA (2025–presente)",
+      "Comité de Nominaciones de Transición de HRSA (2025)",
       "Presidenta de TRIO (más de 1,500 miembros)",
       "Harrison Fellow, Fatty Liver Foundation",
       "Grupo Asesor de Pacientes de la AASLD",
