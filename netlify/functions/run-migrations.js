@@ -187,6 +187,7 @@ const MIGRATIONS = [
     statements: [
       (sql) => sql`UPDATE medications SET brand_name = 'Everolimus (generic)', manufacturer = 'Generic', pap_url = NULL, pap_program_id = NULL, copay_url = NULL, copay_program_id = NULL, cost_tier = 'medium', typical_copay_tier = '2' WHERE id = 'everolimus' AND brand_name = 'Zortress'`,
       (sql) => sql`INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufacturer, stage, common_organs, pap_url, pap_program_id, copay_url, copay_program_id, cost_tier, generic_available, typical_copay_tier) VALUES ('zortress', 'Zortress', 'Everolimus', NULL, 'Immunosuppressant', 'Novartis', 'post', ARRAY['heart','intestine','kidney','liver','lung','pancreas'], 'https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance', 'novartis-pap', 'https://www.zortress.com/transplant/savings-and-support', 'zortress-copay', 'high', TRUE, 'Specialty') ON CONFLICT (id) DO NOTHING`,
+      (sql) => sql`UPDATE medications SET "condition" = 'rejection-prevention' WHERE id = 'zortress' AND "condition" IS DISTINCT FROM 'rejection-prevention'`,
     ],
   },
 ];

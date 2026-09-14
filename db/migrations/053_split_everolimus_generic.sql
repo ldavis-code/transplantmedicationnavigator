@@ -61,3 +61,9 @@ VALUES
      'https://www.zortress.com/transplant/savings-and-support', 'zortress-copay',
      'high', TRUE, 'Specialty')
 ON CONFLICT (id) DO NOTHING;
+
+-- The INSERT above predates the "condition" column in its column list (048
+-- backfilled every other row from conditions.json), so set it here rather
+-- than leave Zortress the one row the API's ?condition= filter cannot find.
+UPDATE medications SET "condition" = 'rejection-prevention'
+ WHERE id = 'zortress' AND "condition" IS DISTINCT FROM 'rejection-prevention';
