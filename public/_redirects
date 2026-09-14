@@ -132,5 +132,51 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 # page shows the wrong thing" to crawlers and no-JS visitors. React
 # renders the real page (or its localized 404) on load. The Spanish rule
 # must come before the generic one.
-/es/*  /es/app-shell.html  200
-/*  /app-shell.html  200
+# Legacy URL aliases the app used to redirect client-side. Server-side
+# 301s so they never answer as 404s below; Netlify forwards the query string.
+/my-path-quiz  /wizard  301
+/es/my-path-quiz  /es/wizard  301
+/my-path  /wizard  301
+/es/my-path  /es/wizard  301
+/quiz  /wizard  301
+/es/quiz  /es/wizard  301
+/resources  /education  301
+/es/resources  /es/education  301
+/grants-foundations  /application-help  301
+/es/grants-foundations  /es/application-help  301
+/grants  /application-help  301
+/es/grants  /es/application-help  301
+/savings-calculator  /savings-tracker  301
+/es/savings-calculator  /es/savings-tracker  301
+/calculator  /savings-tracker  301
+/es/calculator  /es/savings-tracker  301
+/research  /evidence  301
+/es/research  /es/evidence  301
+/terms  /terms-and-conditions  301
+/es/terms  /es/terms-and-conditions  301
+
+# Client-only routes with no prerendered file: the neutral app shell with a
+# 200 so React renders them. Anything not listed here (or prerendered, or an
+# alias above) is a real 404 below — add new client routes to this list.
+/copay-reminders  /app-shell.html  200
+/es/copay-reminders  /es/app-shell.html  200
+/pilot/*  /app-shell.html  200
+/es/pilot/*  /es/app-shell.html  200
+/not-licensed  /app-shell.html  200
+/es/not-licensed  /es/app-shell.html  200
+/demo  /app-shell.html  200
+/demo/*  /app-shell.html  200
+/for-transplant-programs  /app-shell.html  200
+/for-employers  /app-shell.html  200
+/for-payers  /app-shell.html  200
+/reporting  /app-shell.html  200
+/reporting/*  /app-shell.html  200
+/admin  /app-shell.html  200
+/admin/*  /app-shell.html  200
+
+# Everything else is a real 404: the not-found shell (scripts/prerender-seo.js)
+# with a 404 status, so unknown URLs are no longer soft 404s that Google
+# treats as thin duplicate pages. The Spanish rule must come before the
+# generic one.
+/es/*  /es/404.html  404
+/*  /404.html  404

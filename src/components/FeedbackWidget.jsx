@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { Check, X, DollarSign, HelpCircle, CheckCircle, LifeBuoy, ArrowRight } from 'lucide-react';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
+import { markFeedbackAnswered } from '../lib/feedbackTiming.js';
 
 // Answers that mean the patient does not have their medication, or went
 // without it. Anti-rejection doses are not safely skippable, so these route
@@ -31,6 +32,7 @@ const FeedbackWidget = ({ medicationName }) => {
   // Q1: Did you get your medication today?
   const answerQ1 = (value) => {
     updateResponse('got_medication', value);
+    markFeedbackAnswered();
     // Record the outcome as a helpful-vote event so it shows in analytics
     // (yes = the tool helped them get their medication).
     trackServerEvent(value === 'yes' ? 'helpful_vote_yes' : 'helpful_vote_no', {

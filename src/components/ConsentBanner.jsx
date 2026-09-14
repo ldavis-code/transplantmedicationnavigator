@@ -8,12 +8,19 @@ import {
 } from '../lib/consent';
 
 /**
- * Cookie/analytics consent banner.
+ * Cookie/analytics consent banner — and the site's one first-visit notice.
  *
  * Shown until the visitor makes a choice. Google Analytics only loads after
  * "Accept" (see GoogleAnalytics.jsx). Visitors sending a Global Privacy
  * Control signal are treated as declined and never see the banner. The
  * footer "Privacy choices" link re-opens it so the choice can be changed.
+ *
+ * The one-line medical disclaimer rides on this bar. It used to be a
+ * full-screen "Important Notice" modal that a first-time phone visitor had
+ * to tap through — after the urgent-help banner and before this bar — to
+ * see anything at all. A patient who is out of medication should not have
+ * to dismiss two interruptions to reach the page; the full disclaimer is in
+ * the footer of every page and on the quiz itself.
  */
 export default function ConsentBanner() {
   const { t } = useTranslation();
@@ -39,12 +46,15 @@ export default function ConsentBanner() {
       className="fixed bottom-0 inset-x-0 z-[60] bg-slate-900 text-white shadow-2xl border-t border-slate-700 no-print"
     >
       <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center gap-3">
-        <p className="text-sm leading-relaxed flex-1">
-          {t('consent.body')}{' '}
-          <Link to="/privacy" className="underline text-emerald-300 hover:text-emerald-200">
-            {t('consent.privacyLink')}
-          </Link>
-        </p>
+        <div className="text-sm leading-relaxed flex-1">
+          <p className="font-semibold text-amber-200">{t('consent.disclaimer')}</p>
+          <p className="mt-1 text-slate-200">
+            {t('consent.body')}{' '}
+            <Link to="/privacy" className="underline text-emerald-300 hover:text-emerald-200">
+              {t('consent.privacyLink')}
+            </Link>
+          </p>
+        </div>
         <div className="flex gap-3 flex-shrink-0">
           <button
             onClick={() => choose('denied')}
