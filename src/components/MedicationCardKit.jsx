@@ -394,8 +394,20 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
 
     // Pharmacy availability - exclude medications not carried by each pharmacy
     // Excluded: Injectable biologics, IV formulations, hospital-only medications
-    // Cost Plus Drugs only carries generics - only show if generic_available is true
-    const isCostPlusAvailable = med.generic_available === true && !COST_PLUS_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
+    //
+    // Cost Plus Drugs sells generics only. A brand record's generic_available
+    // flag says a generic EXISTS — not that Cost Plus sells the brand. Gating
+    // on that flag put "Mark Cuban Cost Plus Drugs, $300–$500" on brand
+    // Prograf: a price Cost Plus never charges, and a nudge toward the
+    // generic, which is the transplant team's call and never ours. So Cost
+    // Plus appears only when the record IS the generic, or the patient's own
+    // import says they take the generic.
+    const isCostPlusAvailable = takesGeneric && med.generic_available !== false && !COST_PLUS_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
+
+    // Price lookups are by record id. A brand record's price override prices
+    // the brand; when the import says the patient takes the generic, that
+    // number is not theirs — no id means the category range is used instead.
+    const priceId = takesGeneric && !isGenericRecord(med) ? null : med.id;
     const isGoodRxAvailable = !GOODRX_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
     const isSingleCareAvailable = !SINGLECARE_EXCLUSIONS_DATA.includes(med.id) && med.manufacturer !== 'Various';
 
@@ -419,8 +431,8 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     // to a number we didn't get for this drug. Naming "Cost Plus $15-45" on
     // brand CellCept would read as a price you can go and pay for the brand,
     // when what Cost Plus stocks is the generic.
-    const hasSpecificCashPrice = !!(cashPriceSource
-        && PRICE_ESTIMATES_DATA.medicationOverrides[med.id]?.[cashPriceSource]);
+    const hasSpecificCashPrice = !!(cashPriceSource && priceId
+        && PRICE_ESTIMATES_DATA.medicationOverrides[priceId]?.[cashPriceSource]);
 
     // Lead with the drug (generic) name when (a) the record bundles several
     // brands (e.g. "Neoral / Sandimmune / Gengraf"), or (b) the patient's import
@@ -881,7 +893,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </div>
                                         <div className="text-right flex-shrink-0">
                                             <div className="text-teal-800 font-bold text-lg whitespace-nowrap">
-                                                {getPriceEstimate(med.id, med.category, cashPriceSource)}
+                                                {getPriceEstimate(priceId, med.category, cashPriceSource)}
                                             </div>
                                             <div className="text-xs text-slate-500">{t('medications.card.assistance.perMonth')}</div>
                                         </div>
@@ -1255,7 +1267,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3">
                                             <div className="text-blue-600 font-bold">
-                                                {getPriceEstimate(med.id, med.category, 'goodrx')}
+                                                {getPriceEstimate(priceId, med.category, 'goodrx')}
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -1293,7 +1305,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3">
                                             <div className="text-blue-600 font-bold">
-                                                {getPriceEstimate(med.id, med.category, 'singlecare')}
+                                                {getPriceEstimate(priceId, med.category, 'singlecare')}
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -1331,7 +1343,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                         </td>
                                         <td className="p-3">
                                             <div className="text-slate-600 font-bold">
-                                                {getPriceEstimate(med.id, med.category, 'costplus')}
+                                                {getPriceEstimate(priceId, med.category, 'costplus')}
                                             </div>
                                             <div className="text-xs text-slate-500 flex items-center gap-1 mt-1">
                                                 <Clock size={14} />
@@ -1495,19 +1507,19 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                 {isGoodRxAvailable && (
                                     <div className="flex justify-between">
                                         <span>GoodRx:</span>
-                                        <strong className="text-blue-600">{getPriceEstimate(med.id, med.category, 'goodrx')}</strong>
+                                        <strong className="text-blue-600">{getPriceEstimate(priceId, med.category, 'goodrx')}</strong>
                                     </div>
                                 )}
                                 {isSingleCareAvailable && (
                                     <div className="flex justify-between">
                                         <span>SingleCare:</span>
-                                        <strong className="text-blue-600">{getPriceEstimate(med.id, med.category, 'singlecare')}</strong>
+                                        <strong className="text-blue-600">{getPriceEstimate(priceId, med.category, 'singlecare')}</strong>
                                     </div>
                                 )}
                                 {isCostPlusAvailable && (
                                     <div className="flex justify-between">
                                         <span>Cost Plus Drugs:</span>
-                                        <strong className="text-slate-600">{getPriceEstimate(med.id, med.category, 'costplus')}</strong>
+                                        <strong className="text-slate-600">{getPriceEstimate(priceId, med.category, 'costplus')}</strong>
                                     </div>
                                 )}
                                 {isTrumpRxAvailable && (

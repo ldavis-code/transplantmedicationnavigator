@@ -1798,6 +1798,13 @@
         "text": "Como usted recibió un trasplante de riñón y tiene Medicare, puede calificar para <strong>Medicare Parte B-ID</strong>. Este beneficio cubre los medicamentos inmunosupresores de por vida. En 2026 cuesta <strong>$121.60 al mes</strong> (la prima). Además, cada año usted paga los primeros $283 (el deducible) y después el 20% del costo de cada medicamento; Medicare paga el resto.",
         "cta": "Revise si Califica en Medicare.gov"
       },
+      "extraHelp": {
+        "title": "Extra Help (Ayuda Adicional) de Medicare es lo que más puede bajar sus costos",
+        "text": "<strong>Extra Help</strong> (también llamado Subsidio por Bajos Ingresos) es un programa de Medicare para personas con ingresos y ahorros limitados. Puede eliminar la prima mensual y el deducible de la Parte D y dejarle copagos fijos pequeños por cada receta, genérica o de marca. En 2026 el límite de ingresos es de aproximadamente {{single}} al año para una persona o {{couple}} para una pareja, y muchas personas que califican nunca lo solicitan.",
+        "note": "La solicitud en línea con el Seguro Social toma unos 10 minutos, o llame al 1-800-772-1213 (hay atención en español). Si no califica, pregunte si su estado tiene un Programa Estatal de Asistencia Farmacéutica.",
+        "cta": "Solicitar Extra Help",
+        "ctaAria": "Solicitar Extra Help de Medicare en ssa.gov (se abre en una pestaña nueva)"
+      },
       "programs": {
         "title": "Sus programas, por medicamento",
         "subtitle": "Emparejados con su lista de medicamentos y su seguro. Estos son los primeros programas para revisar según la información que usted ingresó.",

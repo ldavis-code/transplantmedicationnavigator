@@ -1798,6 +1798,13 @@
         "text": "Since you are a kidney transplant recipient on Medicare, you may qualify for <strong>Medicare Part B-ID</strong>. This extends coverage for immunosuppressive drugs for life. The 2026 premium is <strong>$121.60/month</strong> (up from $110.40 in 2025), plus 20% coinsurance after a $283 deductible.",
         "cta": "Check Eligibility on Medicare.gov"
       },
+      "extraHelp": {
+        "title": "Medicare Extra Help can cut your drug costs the most",
+        "text": "<strong>Extra Help</strong> (also called the Low-Income Subsidy) is a Medicare program for people with limited income and savings. It can remove your Part D monthly premium and deductible and leave you with small set copays for each prescription, generic or brand. In 2026 the income limit is about {{single}} a year for one person or {{couple}} for a couple, and many people who qualify never apply.",
+        "note": "Applying online with Social Security takes about 10 minutes, or call 1-800-772-1213. If you do not qualify, ask whether your state has a State Pharmaceutical Assistance Program.",
+        "cta": "Apply for Extra Help",
+        "ctaAria": "Apply for Medicare Extra Help on ssa.gov (opens in new tab)"
+      },
       "programs": {
         "title": "Your Programs, By Medication",
         "subtitle": "Matched to your medication list and your insurance. These are the first programs to check based on the information you entered.",
