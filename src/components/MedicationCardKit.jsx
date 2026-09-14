@@ -21,6 +21,7 @@ import { submitPriceReport, fetchAllPriceStats } from '../lib/priceReportsApi.js
 import { costPlusUrl, goodRxUrl, singleCareUrl } from '../components/PricingLinks.jsx';
 import { trackServerEvent, getUiLang } from '../lib/trackServerEvent.js';
 import { isEpicGenericMed } from '../utils/medDisplay.js';
+import { isGenericRecord } from '../utils/medIdentity.js';
 import { PAP_FPL_MULTIPLE, fplDollars } from '../data/constants.js';
 
 const getPriceEstimate = (medicationId, category, source) => {
@@ -382,11 +383,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     // overlay (keyed by programId); English text from the program record.
     const esProgramNotes = (group, programId) =>
         (i18n.resolvedLanguage === 'es' && programId && PROGRAMS_ES[group]?.[programId]?.notes) || null;
-    // If the patient's Epic import shows they take the GENERIC of this med, there
-    // is no manufacturer copay card (those are brand-only). Force copay cards off
-    // so every showCopayCards-gated section hides, and surface a note pointing to
-    // cash options like Cost Plus Drugs instead.
-    const takesGeneric = isEpicGenericMed(med.id);
+    // If the patient takes the GENERIC of this med, there is no manufacturer
+    // copay card (those are brand-only). Force copay cards off so every
+    // showCopayCards-gated section hides, and surface a note pointing to cash
+    // options like Cost Plus Drugs instead. True when the Epic import says so,
+    // and always when the record IS the generic ("Everolimus (generic)",
+    // "Prednisone"): those have no brand programs to offer, and every generic
+    // card should read the same whether or not the patient imported from Epic.
+    const takesGeneric = isEpicGenericMed(med.id) || isGenericRecord(med);
     const showCopayCards = showCopayCardsProp && !takesGeneric;
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [reportModalData, setReportModalData] = useState(null);
@@ -836,6 +840,21 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 )}
                 {activeTab === 'ASSISTANCE' && (
                     <div className="space-y-4">
+                        {/* Generic notice - copay cards are brand-only; steer to cash options.
+                            Sits above the cash-price headline so the patient reads WHY a
+                            cash price is the answer before they see the number. */}
+                        {takesGeneric && (
+                            <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
+                                <h3 className="font-bold text-emerald-800 flex items-center gap-2">
+                                    <CheckCircle size={16} aria-hidden="true" />
+                                    {t('medications.card.assistance.takesGenericTitle')}{med.genericName ? ` (${localizeMedName(med.genericName)})` : ''}
+                                </h3>
+                                <p className="text-sm text-slate-700 mt-2">
+                                    <Trans i18nKey="medications.card.assistance.takesGenericText" />
+                                </p>
+                            </section>
+                        )}
+
                         {/* Cash-price headline. Only one of the four insurance paths —
                             brand plus commercial insurance — used to open with a number,
                             because only that path has a copay card. Generic-plus-
@@ -885,18 +904,6 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             </section>
                         )}
 
-                        {/* Generic notice - copay cards are brand-only; steer to cash options */}
-                        {takesGeneric && (
-                            <section className="border-2 border-emerald-300 rounded-xl p-5 bg-emerald-50" role="note">
-                                <h3 className="font-bold text-emerald-800 flex items-center gap-2">
-                                    <CheckCircle size={16} aria-hidden="true" />
-                                    {t('medications.card.assistance.takesGenericTitle')}{med.genericName ? ` (${localizeMedName(med.genericName)})` : ''}
-                                </h3>
-                                <p className="text-sm text-slate-700 mt-2">
-                                    <Trans i18nKey="medications.card.assistance.takesGenericText" />
-                                </p>
-                            </section>
-                        )}
                         {/* Copay Card Section - RECOMMENDED FOR YOU - For Commercial Insurance ONLY */}
                         {showCopayCards && hasCopayProgram && (activeFilter === 'all' || activeFilter === 'eligible' || activeFilter === 'under50') && (
                             <section className="border-2 border-emerald-400 rounded-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 shadow-md">
