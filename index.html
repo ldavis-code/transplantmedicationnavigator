@@ -159,7 +159,7 @@
         "@type": "MedicalAudience",
         "audienceType": ["Patient", "Caregiver"]
       },
-      "lastReviewed": "2026-04-07",
+      "lastReviewed": "2026-09-08",
       "reviewedBy": {
         "@type": "Organization",
         "name": "Transplant Recipients International Organization"
@@ -316,13 +316,14 @@
             Skip to main content
         </a>
         <!-- Verified banner. The date is the trust signal (a vendor name
-             means nothing to a patient), and it is deliberately NOT stamped
-             at build time: a deploy is not a content review. Bump the month
-             by hand when programs, prices, and links are actually
-             re-verified — same rule as the review dates in llms.txt. -->
+             means nothing to a patient). It is NOT a deploy date: the marker
+             is filled from CONTENT_VERIFIED_ISO (src/data/constants.js) by
+             scripts/generate-home-stats.js — the same date the footer, the
+             cards, the TrumpRx guide and llms.txt show — so bump that one
+             constant when programs, prices, and links are re-verified. -->
         <div style="background: linear-gradient(135deg, #047857 0%, #059669 40%, #10B981 100%); color: white; padding: 12px 24px; text-align: center;">
             <a href="/education" style="color: white; text-decoration: none; font-size: 0.9375rem;">
-                <strong>Verified September 2026</strong> — programs, prices, and links re-checked. <span style="color: #FEF3C7; text-decoration: underline;">See what's new →</span>
+                <strong>Verified <span data-stat="verifiedMonthEn">September 2026</span></strong> — programs, prices, and links re-checked. <span style="color: #FEF3C7; text-decoration: underline;">See what's new →</span>
             </a>
         </div>
 

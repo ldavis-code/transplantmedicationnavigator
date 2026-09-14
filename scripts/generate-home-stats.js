@@ -24,11 +24,20 @@
  * counted value into every one of them, so the counts have exactly one
  * source. A listed page with no markers left is a build error, not a silent
  * skip. Same marker convention scripts/prerender-seo.js uses for dist/.
+ *
+ * The same markers carry the content-verified date (CONTENT_VERIFIED_ISO in
+ * src/data/constants.js, the one date behind every visible "verified /
+ * last updated" stamp): the TrumpRx guide's "verified on" lines, the
+ * homepage banner in index.html, its JSON-LD lastReviewed, and the review
+ * sentence in llms.txt. It is a review date, not a deploy date — the build
+ * copies it, it never sets it (that is scripts/check-links.js, or a hand
+ * edit after a real re-verification).
  */
 
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../src/data/constants.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(__dirname, '..', 'src', 'data');
@@ -82,6 +91,31 @@ const stats = {
     assistancePrograms: countGroup(programs.papPrograms) + countGroup(programs.foundationPrograms),
 };
 
+// The content-verified date, formatted per language with the same function
+// the app's footer and cards use, so a static page can never show a
+// different month than the React pages beside it.
+const stamps = {
+    verifiedIso: CONTENT_VERIFIED_ISO,
+    verifiedMonthEn: formatVerifiedDate(CONTENT_VERIFIED_ISO, 'en'),
+    verifiedMonthEs: formatVerifiedDate(CONTENT_VERIFIED_ISO, 'es'),
+    verifiedDateEn: formatVerifiedDate(CONTENT_VERIFIED_ISO, 'en', 'full'),
+    verifiedDateEs: formatVerifiedDate(CONTENT_VERIFIED_ISO, 'es', 'full'),
+};
+const markers = { ...stats, ...stamps };
+
+// Replace every <span data-stat="KEY">…</span> with the current value.
+function stampMarkers(html) {
+    let stamped = 0;
+    let updated = html;
+    for (const [key, value] of Object.entries(markers)) {
+        updated = updated.replace(
+            new RegExp(`(<span data-stat="${key}">)[^<]*(</span>)`, 'g'),
+            (_match, open, close) => { stamped += 1; return `${open}${value}${close}`; }
+        );
+    }
+    return { updated, stamped };
+}
+
 const outPath = join(dataDir, 'home-stats.json');
 const next = JSON.stringify(stats, null, 2) + '\n';
 let prev = null;
@@ -116,14 +150,7 @@ for (const file of STATIC_PAGES) {
         failed = true;
         continue;
     }
-    let stamped = 0;
-    let updated = html;
-    for (const [key, value] of Object.entries(stats)) {
-        updated = updated.replace(
-            new RegExp(`(<span data-stat="${key}">)[^<]*(</span>)`, 'g'),
-            (_match, open, close) => { stamped += 1; return `${open}${value}${close}`; }
-        );
-    }
+    const { updated, stamped } = stampMarkers(html);
     if (stamped === 0) {
         console.error(`stats: no <span data-stat="..."> markers found in public/${file}`);
         failed = true;
@@ -134,6 +161,47 @@ for (const file of STATIC_PAGES) {
         console.log(`stats: public/${file} updated (${stamped} markers)`);
     } else {
         console.log(`stats: public/${file} unchanged (${stamped} markers)`);
+    }
+}
+
+// The app shell: the homepage "Verified <month>" banner (a data-stat
+// marker) and the JSON-LD lastReviewed date. Both must be present.
+const rootDir = join(__dirname, '..');
+{
+    const indexPath = join(rootDir, 'index.html');
+    const html = readFileSync(indexPath, 'utf8');
+    const { updated: withMarkers, stamped } = stampMarkers(html);
+    const reviewedRe = /("lastReviewed":\s*)"\d{4}-\d{2}-\d{2}"/;
+    if (stamped === 0 || !reviewedRe.test(withMarkers)) {
+        console.error('stats: index.html is missing the verified-date marker or the JSON-LD "lastReviewed" field');
+        failed = true;
+    } else {
+        const updated = withMarkers.replace(reviewedRe, `$1"${CONTENT_VERIFIED_ISO}"`);
+        if (updated !== html) {
+            writeFileSync(indexPath, updated, 'utf8');
+            console.log(`stats: index.html updated (${stamped} markers + lastReviewed)`);
+        } else {
+            console.log(`stats: index.html unchanged (${stamped} markers + lastReviewed)`);
+        }
+    }
+}
+
+// llms.txt: the "were last reviewed <Month YYYY>" sentence AI tools quote.
+{
+    const llmsPath = join(publicDir, 'llms.txt');
+    const txt = readFileSync(llmsPath, 'utf8');
+    const reviewedRe = /(were last reviewed )[A-Z][a-z]+ \d{4}/;
+    if (!reviewedRe.test(txt)) {
+        console.error('stats: public/llms.txt is missing the "were last reviewed <Month YYYY>" sentence');
+        failed = true;
+    } else {
+        const updated = txt.replace(reviewedRe, `$1${stamps.verifiedMonthEn}`);
+        if (updated !== txt) {
+            writeFileSync(llmsPath, updated, 'utf8');
+            console.log('stats: public/llms.txt review date updated');
+        } else {
+            console.log('stats: public/llms.txt review date unchanged');
+        }
     }
 }
 

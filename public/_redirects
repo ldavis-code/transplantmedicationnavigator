@@ -42,7 +42,7 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 # target again and loop. These targets never re-match — no lang rule
 # touches /es/... or /trumprx-es — and the forwarded ?lang=es left on the
 # target URL is harmless (the app strips it client-side).
-/trumprx  lang=es  /trumprx-es  301!
+/trumprx  lang=es  /es/trumprx  301!
 /  lang=es  /es/  301!
 /wizard  lang=es  /es/wizard  301!
 /education  lang=es  /es/education  301!
@@ -111,8 +111,19 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /es/feedback  /es/feedback/index.html  200
 /es/education/appeals  /es/education/appeals/index.html  200
 
-# TrumpRx guide under the /es/ convention -> its real Spanish page
-/es/trumprx  /trumprx-es  301
+# TrumpRx guide: a static page, served under the same /es/ convention as
+# every other Spanish URL. The old /trumprx-es address permanently moves —
+# forced, because /trumprx-es resolves to the static trumprx-es.html and a
+# non-forced rule would be skipped in favor of serving that file.
+/es/trumprx  /trumprx-es.html  200
+/trumprx-es  /es/trumprx  301!
+
+# English-only pages (partner and sales surfaces with no Spanish
+# translation) never answer under /es/: the shell there is lang="es", so
+# the English copy would be read in a Spanish voice and indexed under a
+# Spanish URL. Send them to the English page. Must precede the /es/* shell.
+/es/for-hospitals  /for-hospitals  301
+/es/pricing  /pricing  301
 
 # SPA fallbacks - routes without a prerendered file get a NEUTRAL app
 # shell (loading note + directory links + the app scripts), not the

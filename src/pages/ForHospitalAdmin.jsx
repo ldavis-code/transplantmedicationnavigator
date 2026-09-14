@@ -312,7 +312,7 @@ const ForHospitalAdmin = () => {
                     <div className="flex-grow text-center md:text-left">
                         <h2 className="text-xl font-bold text-emerald-900 mb-2">Leadership Built for Institutional Scale</h2>
                         <p className="text-slate-700 leading-relaxed">
-                            Founder Lorrinda Gray-Davis brings 20 years of enterprise operations experience, serves as Vice Chair of the OPTN Patient Affairs Committee, advises HRSA on national transplant safety standards — and is a liver transplant recipient herself. When you deploy this platform, you partner with a founder who has operated at institutional scale and lived the patient problem it solves.
+                            Founder Lorrinda Gray-Davis brings 20 years of enterprise operations experience, serves as Vice Chair of the OPTN Patient Affairs Committee, sits on HRSA's Technical Expert Panel for OPO Safety and Quality Standards and its Allocation Out of Sequence (AOOS) Committee — and is a liver transplant recipient herself. When you deploy this platform, you partner with a founder who has operated at institutional scale and lived the patient problem it solves.
                         </p>
                     </div>
                     <Link

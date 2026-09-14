@@ -240,14 +240,17 @@ async function runPool(urls) {
 function stampVerifiedDate() {
     const today = new Date();
     const iso = today.toISOString().slice(0, 10);
-    const display = today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
+    // CONTENT_VERIFIED_ISO is the one date every visible stamp derives from
+    // (see src/data/constants.js); the static pages pick it up on the next
+    // build via scripts/generate-home-stats.js.
     const constPath = join(ROOT, 'src/data/constants.js');
     let c = readFileSync(constPath, 'utf8');
-    c = c.replace(/export const LINKS_LAST_VERIFIED = "[^"]*";/,
-                  `export const LINKS_LAST_VERIFIED = "${iso}";`);
-    c = c.replace(/export const LINKS_LAST_VERIFIED_DISPLAY = "[^"]*";/,
-                  `export const LINKS_LAST_VERIFIED_DISPLAY = "${display}";`);
+    if (!/export const CONTENT_VERIFIED_ISO = "[^"]*";/.test(c)) {
+        throw new Error('CONTENT_VERIFIED_ISO not found in src/data/constants.js');
+    }
+    c = c.replace(/export const CONTENT_VERIFIED_ISO = "[^"]*";/,
+                  `export const CONTENT_VERIFIED_ISO = "${iso}";`);
     writeFileSync(constPath, c);
 
     const progPath = join(ROOT, 'src/data/programs.json');

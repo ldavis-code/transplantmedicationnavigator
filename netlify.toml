@@ -102,11 +102,10 @@
 # static file; ?lang=en needs no rule — the client still honors it, and
 # the plain path already serves English.
 #
-# /trumprx: its Spanish version is its own static page at /trumprx-es,
-# not an /es/ shell page.
+# /trumprx: its Spanish version is a static page served at /es/trumprx.
 [[redirects]]
   from = "/trumprx"
-  to = "/trumprx-es"
+  to = "/es/trumprx"
   status = 301
   force = true
   query = { lang = "es" }
@@ -230,11 +229,15 @@
   to = "/trumprx.html"
   status = 200
 
-# TrumpRx resource page, Spanish version
+# TrumpRx resource page, Spanish version: lives at /es/trumprx like every
+# other Spanish URL (rule below); the old address permanently moves there.
+# Forced: /trumprx-es resolves to the static trumprx-es.html, and a
+# non-forced rule would be skipped in favor of serving that file.
 [[redirects]]
   from = "/trumprx-es"
-  to = "/trumprx-es.html"
-  status = 200
+  to = "/es/trumprx"
+  status = 301
+  force = true
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
@@ -446,10 +449,24 @@
   to = "/es/education/appeals/index.html"
   status = 200
 
-# TrumpRx guide under the /es/ convention -> its real Spanish page
+# TrumpRx guide, Spanish version - serve the static HTML at the /es/ URL
 [[redirects]]
   from = "/es/trumprx"
-  to = "/trumprx-es"
+  to = "/trumprx-es.html"
+  status = 200
+
+# English-only pages (partner and sales surfaces with no Spanish
+# translation) never answer under /es/: the shell there is lang="es", so
+# the English copy would be read in a Spanish voice and indexed under a
+# Spanish URL. Send them to the English page. Must precede the /es/* shell.
+[[redirects]]
+  from = "/es/for-hospitals"
+  to = "/for-hospitals"
+  status = 301
+
+[[redirects]]
+  from = "/es/pricing"
+  to = "/pricing"
   status = 301
 
 # SPA fallbacks - routes without a prerendered file get a NEUTRAL app

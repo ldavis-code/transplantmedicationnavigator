@@ -407,7 +407,7 @@
         "trumpRxBold": "Esto también aplica a TrumpRx.gov.",
         "trumpRxText": "Los precios de TrumpRx son precios en efectivo fuera de su seguro: ese gasto tampoco cuenta para su deducible ni para su máximo de gastos de bolsillo, y muchos cupones de TrumpRx no se pueden combinar con el seguro. Precio en efectivo es precio en efectivo, no importa quién lo ofrezca.",
         "trumpRxLink": "Lea nuestra guía de TrumpRx para pacientes de trasplante →",
-        "trumpRxHref": "/trumprx-es"
+        "trumpRxHref": "/es/trumprx"
       },
       "example": {
         "title": "Ejemplo de la vida real",
@@ -1473,7 +1473,7 @@
       },
       "grants": {
         "title": "Ayudas y fundaciones",
-        "text": "{{programs}} programas de asistencia y fundaciones, más {{copayCards}} tarjetas de copago. Verificados, con enlaces directos y sin estafas. Actualizado en julio de 2026.",
+        "text": "{{programs}} programas de asistencia y fundaciones, más {{copayCards}} tarjetas de copago. Verificados, con enlaces directos y sin estafas. Actualizado en {{date}}.",
         "ariaLabel": "Explorar programas de ayudas económicas y fundaciones",
         "link": "Explorar programas"
       }
@@ -1666,6 +1666,7 @@
       "Heart": "Corazón",
       "Lung": "Pulmón",
       "Pancreas": "Páncreas",
+      "Intestine": "Intestino",
       "Multi-organ": "Multiórgano",
       "Other": "Otro"
     },
@@ -2292,7 +2293,7 @@
         "estimate": "Solo es un estimado; el precio de su farmacia puede ser diferente."
       },
       "perMo": "/mes",
-      "trumpRxGuideHref": "/trumprx-es",
+      "trumpRxGuideHref": "/es/trumprx",
       "context": {
         "insuranceLabel": "Seguro:",
         "commercial": "Comercial / Del empleador",
@@ -2458,7 +2459,7 @@
         "singleCareDesc": "Tarjeta gratis en más de 35,000 farmacias",
         "costPlusDesc": "Farmacia en línea con precios bajos",
         "community": "Comunidad: ${{min}}-${{max}} ({{num}} reportes)",
-        "estUpdated": "Est. actualizado en julio de 2026",
+        "estUpdated": "Est. actualizado en {{date}}",
         "checkLiveGoodRxAria": "Ver precio actual en GoodRx para {{name}} (se abre en una pestaña nueva)",
         "checkLiveSingleCareAria": "Ver precio actual en SingleCare para {{name}} (se abre en una pestaña nueva)",
         "checkLiveCostPlusAria": "Ver precio actual en Cost Plus Drugs (se abre en una pestaña nueva)",
@@ -2469,7 +2470,7 @@
         "ourGuideAria": "Nuestra guía de TrumpRx para pacientes de trasplante",
         "ourGuide": "Nuestra guía ",
         "visitTrumpRxAria": "Visitar TrumpRx.gov (se abre en una pestaña nueva)",
-        "footerNote": "Estos precios son para un suministro de 30 días. Su precio puede ser diferente. Llame a la farmacia para saber su precio exacto. (Última actualización: julio de 2026)",
+        "footerNote": "Estos precios son para un suministro de 30 días. Su precio puede ser diferente. Llame a la farmacia para saber su precio exacto. (Última actualización: {{date}})",
         "communityNote": "<strong>Los precios de la comunidad</strong> son precios reales que otras personas pagaron en los últimos 90 días. ¡Ayude a otros contándonos lo que usted pagó!",
         "costPlusNote": "<strong>Acerca de Cost Plus Drugs:</strong> Esta es una farmacia de pago en efectivo. Lo que usted paga allí no cuenta para su deducible. Pero el precio aún puede ser más bajo que el copago de su seguro. ¡Compare antes de decidir!",
         "trumpRxNotePre": "<strong>Acerca de TrumpRx.gov:</strong> Este es un descuento de pago en efectivo; NO cuenta para su deducible ni para su máximo de gastos de bolsillo.",
@@ -2578,6 +2579,7 @@
       },
       "relatedPre": "Otros medicamentos de tipo ",
       "relatedPost": "",
+      "genericTag": "Genérico",
       "disclaimer": "Información educativa solamente; no es consejo médico. Los precios son estimados y varían según la farmacia y el plan. Siempre hable con su equipo de trasplante antes de cambiar cómo o dónde surte (despacha) sus medicamentos."
     },
     "categories": {

@@ -1473,7 +1473,7 @@
       },
       "grants": {
         "title": "Grants & foundations",
-        "text": "{{programs}} assistance programs and foundations, plus {{copayCards}} copay cards. Verified, direct links, no scams. Updated July 2026.",
+        "text": "{{programs}} assistance programs and foundations, plus {{copayCards}} copay cards. Verified, direct links, no scams. Updated {{date}}.",
         "ariaLabel": "Browse programs: grants and foundations",
         "link": "Browse programs"
       }
@@ -1666,6 +1666,7 @@
       "Heart": "Heart",
       "Lung": "Lung",
       "Pancreas": "Pancreas",
+      "Intestine": "Intestine",
       "Multi-organ": "Multi-organ",
       "Other": "Other"
     },
@@ -2458,7 +2459,7 @@
         "singleCareDesc": "Free card at 35,000+ pharmacies",
         "costPlusDesc": "Online pharmacy with low prices",
         "community": "Community: ${{min}}-${{max}} ({{num}} reports)",
-        "estUpdated": "Est. updated July 2026",
+        "estUpdated": "Est. updated {{date}}",
         "checkLiveGoodRxAria": "Check live price on GoodRx for {{name}} (opens in new tab)",
         "checkLiveSingleCareAria": "Check live price on SingleCare for {{name}} (opens in new tab)",
         "checkLiveCostPlusAria": "Check live price on Cost Plus Drugs (opens in new tab)",
@@ -2469,7 +2470,7 @@
         "ourGuideAria": "Our Guide: TrumpRx for transplant patients",
         "ourGuide": "Our Guide ",
         "visitTrumpRxAria": "Visit TrumpRx.gov (opens in new tab)",
-        "footerNote": "These prices are for a 30-day supply. Your price may be different. Call the pharmacy to get your exact price. (Last updated: July 2026)",
+        "footerNote": "These prices are for a 30-day supply. Your price may be different. Call the pharmacy to get your exact price. (Last updated: {{date}})",
         "communityNote": "<strong>Community prices</strong> are real prices that other people paid in the last 90 days. Help others by telling us what you paid!",
         "costPlusNote": "<strong>About Cost Plus Drugs:</strong> This is a cash pharmacy. What you pay there does not count toward your deductible. But the price might still be lower than your insurance copay. Compare before you decide!",
         "trumpRxNotePre": "<strong>About TrumpRx.gov:</strong> This is a cash-pay discount, it does NOT count toward your deductible or out-of-pocket max.",
@@ -2578,6 +2579,7 @@
       },
       "relatedPre": "Other ",
       "relatedPost": " medications",
+      "genericTag": "Generic",
       "disclaimer": "Educational information only, not medical advice. Prices are estimates and vary by pharmacy and plan. Always talk to your transplant team before changing how or where you fill your medications."
     },
     "categories": {

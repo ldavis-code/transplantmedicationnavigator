@@ -39,6 +39,9 @@ const routes = [
     { path: '/terms-and-conditions', changefreq: 'yearly', priority: 0.4 },
     { path: '/privacy', changefreq: 'yearly', priority: 0.4 },
     { path: '/accessibility', changefreq: 'yearly', priority: 0.4 },
+    // Static HTML guide (public/trumprx.html, Spanish at /es/trumprx). No
+    // <route>/index.html exists for it, so its URL has no trailing slash.
+    { path: '/trumprx', changefreq: 'monthly', priority: 0.7, noSlash: true },
 ];
 
 // Routes with a full Spanish translation, served at the /es/ path prefix.
@@ -49,7 +52,7 @@ const SPANISH_PATHS = new Set([
     '/medications', '/evidence', '/my-medications', '/savings-tracker',
     '/survey', '/survey/transplant', '/survey/general', '/pilot',
     '/terms-and-conditions', '/privacy', '/accessibility',
-    '/about', '/feedback', '/education/appeals',
+    '/about', '/feedback', '/education/appeals', '/trumprx',
 ]);
 
 // The per-medication pages (/medications/:id) are Spanish-capable too:
@@ -66,27 +69,27 @@ const esPath = (path) => (path === '/' ? '/es/' : `/es${path}`);
 // A sitemap full of redirecting URLs shows up in Search Console as "Page
 // with redirect" — list the URL that actually answers 200 instead.
 const withSlash = (url) => (url.endsWith('/') ? url : `${url}/`);
-const fullUrl = (path) => withSlash(`${SITE_URL}${path}`);
+const fullUrl = (path, noSlash = false) => (noSlash ? `${SITE_URL}${path}` : withSlash(`${SITE_URL}${path}`));
 
 function generateSitemap() {
     const today = new Date().toISOString().split('T')[0];
 
     const allRoutes = [...routes, ...medicationRoutes];
-    const alternates = (path) => `
-        <xhtml:link rel="alternate" hreflang="en" href="${fullUrl(path)}" />
-        <xhtml:link rel="alternate" hreflang="es" href="${fullUrl(esPath(path))}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl(path)}" />`;
+    const alternates = (path, noSlash) => `
+        <xhtml:link rel="alternate" hreflang="en" href="${fullUrl(path, noSlash)}" />
+        <xhtml:link rel="alternate" hreflang="es" href="${fullUrl(esPath(path), noSlash)}" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl(path, noSlash)}" />`;
     const urls = allRoutes.flatMap(route => {
         const hasEs = hasSpanishVariant(route.path);
         const entries = [`    <url>
-        <loc>${fullUrl(route.path)}</loc>${hasEs ? alternates(route.path) : ''}
+        <loc>${fullUrl(route.path, route.noSlash)}</loc>${hasEs ? alternates(route.path, route.noSlash) : ''}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>
     </url>`];
         if (hasEs) {
             entries.push(`    <url>
-        <loc>${fullUrl(esPath(route.path))}</loc>${alternates(route.path)}
+        <loc>${fullUrl(esPath(route.path), route.noSlash)}</loc>${alternates(route.path, route.noSlash)}
         <lastmod>${today}</lastmod>
         <changefreq>${route.changefreq}</changefreq>
         <priority>${route.priority}</priority>

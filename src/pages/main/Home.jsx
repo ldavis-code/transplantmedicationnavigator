@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle, Quote } from 'lucide-react';
 import HOME_STATS from '../../data/home-stats.json';
+import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../../data/constants.js';
 import { useChatQuiz } from '../../context/ChatQuizContext.jsx';
 import { useMedicationsList } from '../../context/MedicationsContext.jsx';
 import { localizeMedName } from '../../utils/medNames.js';
@@ -410,7 +411,7 @@ const Home = () => {
                         <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true"><HeartHandshake size={20} /></div>
                         <h3 className="text-xl font-bold text-slate-900">{t('home.cards.grants.title')}</h3>
                     </div>
-                    <p className="text-slate-600 mb-3">{t('home.cards.grants.text', { programs: HOME_STATS.assistancePrograms, copayCards: HOME_STATS.copayCards })}</p>
+                    <p className="text-slate-600 mb-3">{t('home.cards.grants.text', { programs: HOME_STATS.assistancePrograms, copayCards: HOME_STATS.copayCards, date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}</p>
                     <Link to="/application-help" className="text-emerald-700 font-medium hover:underline inline-flex items-center gap-1" aria-label={t('home.cards.grants.ariaLabel')}>
                         {t('home.cards.grants.link')} <ArrowRight size={16} aria-hidden="true" />
                     </Link>

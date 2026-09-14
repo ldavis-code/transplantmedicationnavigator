@@ -100,7 +100,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import { TenantProvider } from './context/TenantContext.jsx';
 import { Map, Search, Menu, X, ShieldAlert, HeartHandshake, Shield, Check, ClipboardList, MessageCircle, Send, Clock, Loader2, Eye, EyeOff } from 'lucide-react';
 // --- CONSTANTS & DATA ---
-import { LAST_UPDATED_ISO, TransplantStatus } from './data/constants.js';
+import { CONTENT_VERIFIED_ISO, formatVerifiedDate, TransplantStatus } from './data/constants.js';
 import ASSISTANT_KNOWLEDGE_BASE_DATA from './data/knowledge-base.json';
 import QUICK_ACTIONS_DATA from './data/quick-actions.json';
 // Shared with the wizard route: powers the chat widget's med suggestions here
@@ -737,7 +737,7 @@ const Layout = ({ children }) => {
                     </p>
                     <p className="mb-2 text-emerald-400 font-medium">
                         <Clock className="inline-block w-4 h-4 mr-1 -mt-0.5" aria-hidden="true" />
-                        {t('layout.footer.lastUpdated', { date: new Date(LAST_UPDATED_ISO + 'T00:00:00').toLocaleDateString(i18n.resolvedLanguage?.startsWith('es') ? 'es' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) })}
+                        {t('layout.footer.lastUpdated', { date: formatVerifiedDate(CONTENT_VERIFIED_ISO, i18n.resolvedLanguage) })}
                     </p>
                     <p>{t('layout.footer.copyright')}</p>
                     <p className="mt-4 text-slate-300 text-sm">{t('layout.footer.createdBy')}</p>
@@ -809,6 +809,22 @@ const SpanishPathRedirect = () => {
     return <Navigate to={{ pathname, search: location.search, hash: location.hash }} replace />;
 };
 
+// English-only pages (partner and sales surfaces with no Spanish
+// translation) must not render under /es/: the shell there is lang="es",
+// so a screen reader would read the English copy in a Spanish voice, and
+// crawlers would index English under a Spanish URL. Netlify 301s direct
+// hits (public/_redirects, netlify.toml); this covers in-app navigation,
+// which never reaches the server. A full navigation, not a router
+// redirect: the /es basename is fixed for the life of the page.
+const EnglishOnlyRedirect = () => {
+    useEffect(() => {
+        const { pathname, search, hash } = window.location;
+        window.location.replace((pathname.replace(/^\/es(?=\/|$)/, '') || '/') + search + hash);
+    }, []);
+    return null;
+};
+const englishOnly = (element) => (IN_ES_PATH ? <EnglishOnlyRedirect /> : element);
+
 // Wrapper component for main site layout
 const MainSiteRoutes = () => (
     <Layout>
@@ -840,13 +856,13 @@ const MainSiteRoutes = () => (
                 <Route path="/survey/transplant" element={<LazyTransplantMedicationSurvey />} />
                 <Route path="/survey/general" element={<LazyGeneralMedicationSurvey />} />
                 <Route path="/feedback" element={<LazyFeedbackSurvey />} />
-                <Route path="/for-hospitals" element={<LazyForHospitalAdmin />} />
+                <Route path="/for-hospitals" element={englishOnly(<LazyForHospitalAdmin />)} />
                 <Route path="/evidence" element={<LazyEvidence />} />
                 <Route path="/research" element={<Navigate to="/evidence" replace />} />
                 <Route path="/for-transplant-programs" element={<Navigate to="/pricing#transplant-programs" replace />} />
                 <Route path="/for-employers" element={<Navigate to="/pricing#employers" replace />} />
                 <Route path="/for-payers" element={<Navigate to="/pricing#payers" replace />} />
-                <Route path="/pricing" element={<LazyPricing />} />
+                <Route path="/pricing" element={englishOnly(<LazyPricing />)} />
                 <Route path="/terms-and-conditions" element={<LazyTermsAndConditions />} />
                 <Route path="/terms" element={<Navigate to="/terms-and-conditions" replace />} />
                 <Route path="/privacy" element={<LazyPrivacyPolicy />} />

@@ -10,11 +10,14 @@
  * dateModified propagates into every prerendered page (the prerender uses
  * dist/index.html as its template).
  *
- * Deliberately NOT automated: the "reviewed July 2026" content-review dates
- * in llms.txt. A deploy is an update; it is not a content review. Bump those
- * by hand when medication prices, program details, or Medicare figures are
- * actually re-verified — the accessibility review flagged stale "reviewed on"
- * claims as a trust problem, and auto-stamping them would recreate it.
+ * Deliberately NOT stamped with the deploy date: the content-review dates
+ * (llms.txt "last reviewed", the homepage banner, JSON-LD lastReviewed, the
+ * TrumpRx guide). A deploy is an update; it is not a content review. Those
+ * all derive from CONTENT_VERIFIED_ISO in src/data/constants.js — bump that
+ * one line when programs, prices, and links are actually re-verified
+ * (scripts/generate-home-stats.js copies it into the static files) — the
+ * accessibility review flagged stale "reviewed on" claims as a trust
+ * problem, and auto-stamping them with a deploy date would recreate it.
  */
 
 import fs from 'fs';
