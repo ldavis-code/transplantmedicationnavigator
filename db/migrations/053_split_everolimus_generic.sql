@@ -29,6 +29,11 @@
 -- MedicationsContext merges DB over JSON, so the DB row left as Zortress
 -- would keep overriding the corrected JSON.
 --
+-- The live table carries a check constraint (medications_organs_chk, added in
+-- Neon rather than by a migration here) that only accepts lowercase organ
+-- names, and every row stores stage as 'post' / 'pre' / 'both' / 'peri'. The
+-- INSERT uses those forms; the title-case values 047 used no longer pass.
+--
 -- Idempotent: the UPDATE keys on the stale brand_name so a re-run is a no-op,
 -- and the INSERT is ON CONFLICT DO NOTHING.
 
@@ -50,8 +55,8 @@ INSERT INTO medications
      cost_tier, generic_available, typical_copay_tier)
 VALUES
     ('zortress', 'Zortress', 'Everolimus', NULL,
-     'Immunosuppressant', 'Novartis', 'Post-transplant',
-     ARRAY['Heart','Intestine','Kidney','Liver','Lung','Pancreas'],
+     'Immunosuppressant', 'Novartis', 'post',
+     ARRAY['heart','intestine','kidney','liver','lung','pancreas'],
      'https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance', 'novartis-pap',
      'https://www.zortress.com/transplant/savings-and-support', 'zortress-copay',
      'high', TRUE, 'Specialty')
