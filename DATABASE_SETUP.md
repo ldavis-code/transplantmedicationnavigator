@@ -33,6 +33,25 @@ admin token or paste the SQL into the Neon SQL Editor (the runner's
 statements are idempotent, so doing both is safe). Migrations 001–042
 predate the runner and were applied manually.
 
+### Medication vocabulary
+
+The `medications` table stores organs and stages in a short, lowercase form,
+and check constraints reject anything else (`medications_organs_chk` was
+added in Neon; migration 054 carries both it and `medications_stage_chk` so
+a database built from this repo gets the same guards):
+
+| Column | Allowed values |
+|---|---|
+| `common_organs` | `heart`, `intestine`, `kidney`, `liver`, `lung`, `pancreas` |
+| `stage` | `pre`, `post`, `both`, `peri` |
+
+`scripts/sync-medications-json.js` translates these back to the wording the
+site shows ("Kidney", "Post-transplant") when it regenerates
+`src/data/medications.json`, so the app never reads the short forms. Write
+the short forms in any new migration or one-off script: the title-case
+values in older migrations (002, 047) predate the constraints and will be
+rejected if copied.
+
 ### 3. Configure Environment Variables
 
 #### For Local Development

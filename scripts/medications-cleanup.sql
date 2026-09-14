@@ -63,8 +63,8 @@ WHERE m.id = r.id
 -- 2) BACKFILL the tacrolimus records (organs, stage, PAP, and rxcui for the
 --    generic-available IR product). COALESCE preserves any value already set.
 UPDATE medications SET
-    common_organs  = ARRAY['Kidney','Liver','Heart','Lung','Pancreas'],
-    stage          = COALESCE(stage, 'Post-transplant'),
+    common_organs  = ARRAY['kidney','liver','heart','lung','pancreas'],
+    stage          = COALESCE(stage, 'post'),
     cost_tier      = COALESCE(cost_tier, 'medium'),
     rxcui          = COALESCE(rxcui, '42316'),
     pap_url        = COALESCE(pap_url, 'https://www.astellaspharmasupportsolutions.com/'),
@@ -72,16 +72,16 @@ UPDATE medications SET
 WHERE id = 'prograf';
 
 UPDATE medications SET
-    common_organs  = ARRAY['Kidney','Liver','Heart','Lung','Pancreas'],
-    stage          = COALESCE(stage, 'Post-transplant'),
+    common_organs  = ARRAY['kidney','liver','heart','lung','pancreas'],
+    stage          = COALESCE(stage, 'post'),
     cost_tier      = COALESCE(cost_tier, 'medium'),
     pap_url        = COALESCE(pap_url, 'https://www.astellaspharmasupportsolutions.com/'),
     pap_program_id = COALESCE(pap_program_id, 'astellas-pap')
 WHERE id = 'astagraf-xl';
 
 UPDATE medications SET
-    common_organs  = ARRAY['Kidney','Liver'],
-    stage          = COALESCE(stage, 'Post-transplant'),
+    common_organs  = ARRAY['kidney','liver'],
+    stage          = COALESCE(stage, 'post'),
     cost_tier      = COALESCE(cost_tier, 'medium'),
     pap_url        = COALESCE(pap_url, 'https://www.envarsusxr.com/savings-support')
 WHERE id = 'envarsus-xr';
@@ -89,34 +89,34 @@ WHERE id = 'envarsus-xr';
 -- 3) BACKFILL common_organs on the other newly-added meds that came in with an
 --    empty array. Keyed by generic_name so it hits whichever row survived the
 --    dedupe. Only fills when currently empty/null (won't overwrite real data).
-UPDATE medications SET common_organs = ARRAY['Kidney','Heart','Pancreas']
+UPDATE medications SET common_organs = ARRAY['kidney','heart','pancreas']
 WHERE lower(generic_name) = 'tirzepatide' AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Liver']
+UPDATE medications SET common_organs = ARRAY['liver']
 WHERE lower(generic_name) = 'midodrine'   AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Liver']
+UPDATE medications SET common_organs = ARRAY['liver']
 WHERE lower(generic_name) = 'rifaximin'   AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Lung']
+UPDATE medications SET common_organs = ARRAY['lung']
 WHERE lower(generic_name) = 'pirfenidone' AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Lung']
+UPDATE medications SET common_organs = ARRAY['lung']
 WHERE lower(generic_name) = 'nintedanib'  AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Lung','Heart']
+UPDATE medications SET common_organs = ARRAY['lung','heart']
 WHERE lower(generic_name) = 'iloprost'    AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Lung','Heart']
+UPDATE medications SET common_organs = ARRAY['lung','heart']
 WHERE lower(generic_name) = 'macitentan'  AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Lung','Heart']
+UPDATE medications SET common_organs = ARRAY['lung','heart']
 WHERE lower(generic_name) = 'selexipag'   AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Kidney','Liver']
+UPDATE medications SET common_organs = ARRAY['kidney','liver']
 WHERE lower(generic_name) = 'basiliximab' AND (common_organs IS NULL OR common_organs = '{}');
 
-UPDATE medications SET common_organs = ARRAY['Kidney','Liver','Heart']
+UPDATE medications SET common_organs = ARRAY['kidney','liver','heart']
 WHERE lower(generic_name) = 'alemtuzumab' AND (common_organs IS NULL OR common_organs = '{}');
 
 -- Change to ROLLBACK to test without saving.

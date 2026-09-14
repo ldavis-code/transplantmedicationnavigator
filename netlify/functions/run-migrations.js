@@ -12,6 +12,13 @@
 //
 // Runs only as a Netlify scheduled function or with a valid admin token, so
 // it cannot be triggered anonymously.
+//
+// Medication rows use the table's short vocabulary, enforced by check
+// constraints since 054: organs lowercase ('heart', 'intestine', 'kidney',
+// 'liver', 'lung', 'pancreas') and stage one of 'pre' / 'post' / 'both' /
+// 'peri'. The title-case forms in older migrations (002, 047) predate the
+// constraints and will be rejected if copied. See "Medication vocabulary" in
+// DATABASE_SETUP.md.
 
 const { neon } = require('@neondatabase/serverless');
 const crypto = require('crypto');
@@ -188,6 +195,21 @@ const MIGRATIONS = [
       (sql) => sql`UPDATE medications SET brand_name = 'Everolimus (generic)', manufacturer = 'Generic', pap_url = NULL, pap_program_id = NULL, copay_url = NULL, copay_program_id = NULL, cost_tier = 'medium', typical_copay_tier = '2' WHERE id = 'everolimus' AND brand_name = 'Zortress'`,
       (sql) => sql`INSERT INTO medications (id, brand_name, generic_name, rxcui, category, manufacturer, stage, common_organs, pap_url, pap_program_id, copay_url, copay_program_id, cost_tier, generic_available, typical_copay_tier) VALUES ('zortress', 'Zortress', 'Everolimus', NULL, 'Immunosuppressant', 'Novartis', 'post', ARRAY['heart','intestine','kidney','liver','lung','pancreas'], 'https://www.novartis.com/us-en/patients-and-caregivers/patient-assistance', 'novartis-pap', 'https://www.zortress.com/transplant/savings-and-support', 'zortress-copay', 'high', TRUE, 'Specialty') ON CONFLICT (id) DO NOTHING`,
       (sql) => sql`UPDATE medications SET "condition" = 'rejection-prevention' WHERE id = 'zortress' AND "condition" IS DISTINCT FROM 'rejection-prevention'`,
+    ],
+  },
+  {
+    // The live table's medications_organs_chk (lowercase organ names) was
+    // added in Neon and never in this repo, so 053's Zortress INSERT copied
+    // 047's title-case organs and was rejected. Normalizes any long-form
+    // organ / stage values (none remain on the live table), then adds the
+    // organs constraint and a matching stage constraint where absent. Each
+    // constraint is guarded by name so the existing live one is untouched.
+    id: '054_medications_vocabulary_constraints',
+    statements: [
+      (sql) => sql`UPDATE medications SET common_organs = ARRAY(SELECT lower(o) FROM unnest(common_organs) AS o) WHERE common_organs IS NOT NULL AND EXISTS (SELECT 1 FROM unnest(common_organs) AS o WHERE o <> lower(o))`,
+      (sql) => sql`UPDATE medications SET stage = CASE stage WHEN 'Post-transplant' THEN 'post' WHEN 'Pre-transplant' THEN 'pre' WHEN 'Both (Pre & Post)' THEN 'both' WHEN 'Peri-transplant' THEN 'peri' END WHERE stage IN ('Post-transplant', 'Pre-transplant', 'Both (Pre & Post)', 'Peri-transplant')`,
+      (sql) => sql`DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'medications_organs_chk' AND conrelid = 'medications'::regclass) THEN ALTER TABLE medications ADD CONSTRAINT medications_organs_chk CHECK (common_organs IS NULL OR common_organs <@ ARRAY['heart','intestine','kidney','liver','lung','pancreas']::text[]); END IF; END $$`,
+      (sql) => sql`DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'medications_stage_chk' AND conrelid = 'medications'::regclass) THEN ALTER TABLE medications ADD CONSTRAINT medications_stage_chk CHECK (stage IS NULL OR stage IN ('pre', 'post', 'both', 'peri')); END IF; END $$`,
     ],
   },
 ];
