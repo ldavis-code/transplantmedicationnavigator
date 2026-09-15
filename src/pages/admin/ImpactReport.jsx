@@ -71,6 +71,17 @@ export default function ImpactReport() {
   const hasNetlify = sources.netlify;
   const hasDb = sources.database;
   const noData = data?.dataSource === 'none';
+  // Netlify only keeps about 30 days of traffic, so the Site Traffic figures
+  // cover traffic.period (capped) even when a longer report range is selected.
+  const trafficPeriod = traffic.period || {};
+  const trafficCapped = hasNetlify && trafficPeriod.capped;
+  const topCountries = traffic.topCountries || [];
+  const countryMax = topCountries.length ? Math.max(...topCountries.map(c => c.count), 1) : 1;
+  const usPageviews = traffic.usPageviews;
+  const usShare = usPageviews != null && traffic.pageviews > 0
+    ? Math.round((usPageviews / traffic.pageviews) * 100)
+    : null;
+  const nonUsPageviews = usPageviews != null ? Math.max((traffic.pageviews || 0) - usPageviews, 0) : null;
 
   return (
     <AdminLayout
@@ -123,18 +134,38 @@ export default function ImpactReport() {
 
       {/* Hero Stats, Site Traffic */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Site Traffic</h2>
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Site Traffic</h2>
+          {hasNetlify && trafficPeriod.start && (
+            <span className="text-sm text-gray-500">
+              Netlify Analytics, last {trafficPeriod.days} days ({trafficPeriod.start} to {trafficPeriod.end})
+            </span>
+          )}
+        </div>
+        {trafficCapped && (
+          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+            Netlify keeps about {trafficPeriod.retentionDays} days of traffic history, so the page view and
+            visitor figures below cover the last {trafficPeriod.days} days even though {days} days is selected.
+            The funnel, program, and medication sections use the full {days}-day range.
+          </p>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatCard
             icon={Eye}
             label="Page Views"
             value={traffic.pageviews}
+            sublabel={usPageviews != null ? `${usPageviews.toLocaleString()} from the United States (${usShare}%)` : undefined}
             color="bg-blue-50 text-blue-600"
           />
           <StatCard
             icon={Users}
             label="Unique Visitors"
             value={traffic.uniqueVisitors}
+            sublabel={
+              traffic.uniqueVisitorsMethod === 'range' ? 'Distinct visitors across the period'
+              : traffic.uniqueVisitorsMethod === 'daily-sum' ? 'Sum of daily uniques (may overcount)'
+              : undefined
+            }
             color="bg-green-50 text-green-600"
           />
           <StatCard
@@ -171,11 +202,11 @@ export default function ImpactReport() {
         </div>
       </section>
 
-      {/* Top Pages & Sources (Netlify data) */}
-      {hasNetlify && (traffic.topPages?.length > 0 || traffic.topSources?.length > 0) && (
+      {/* Top Pages, Sources & Countries (Netlify data) */}
+      {hasNetlify && (traffic.topPages?.length > 0 || traffic.topSources?.length > 0 || topCountries.length > 0) && (
         <section className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Traffic Insights</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${topCountries.length > 0 ? 'xl:grid-cols-3' : ''}`}>
             {/* Top Pages */}
             {traffic.topPages?.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -207,6 +238,39 @@ export default function ImpactReport() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Pageviews by Country */}
+            {topCountries.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm border p-6">
+                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-gray-400" /> Page Views by Country
+                </h3>
+                <div className="space-y-2.5">
+                  {topCountries.map((c, i) => {
+                    const pct = Math.round((c.count / countryMax) * 100);
+                    const isUs = c.code === 'US';
+                    return (
+                      <div key={`${c.code || c.name}-${i}`}>
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className={isUs ? 'font-semibold text-gray-900' : 'text-gray-700'}>{c.name}</span>
+                          <span className="text-gray-500 font-medium whitespace-nowrap">{c.count.toLocaleString()}</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+                          <div className={`h-full rounded-full ${isUs ? 'bg-[#006838]' : 'bg-gray-300'}`} style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {nonUsPageviews != null && nonUsPageviews > 0 && (
+                  <p className="text-xs text-gray-500 mt-3">
+                    {nonUsPageviews.toLocaleString()} page views came from outside the United States. This tool serves
+                    US transplant patients, so most of that is automated crawling and scanning rather than patients.
+                    Quote the US figure when describing reach.
+                  </p>
+                )}
               </div>
             )}
           </div>
