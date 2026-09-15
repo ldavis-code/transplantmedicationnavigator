@@ -33,8 +33,21 @@ const ALLOWED_EVENT_NAMES = [
     'helpful_vote_no',
     'epic_import',
     'coverage_selected',
-    'cost_burden'
+    'cost_burden',
+    // Learning measure: "How confident are you that you can afford your
+    // transplant medications?" on a 1-5 scale, asked once before the quiz
+    // (confidence_pre, sent with quiz_start) and once on the results page
+    // (confidence_post). meta.score carries the answer; meta.sessionId lets
+    // the admin reports pair the two answers from the same browser tab.
+    'confidence_pre',
+    'confidence_post'
 ];
+
+// Confidence events must carry an integer score from 1 to 5 — the reports
+// average these, so a stray 0, 6, or "4" as text would skew every mean.
+const CONFIDENCE_EVENTS = ['confidence_pre', 'confidence_post'];
+const CONFIDENCE_MIN = 1;
+const CONFIDENCE_MAX = 5;
 
 // Program type per program-click event name. The reporting dashboard groups
 // and filters by the program_type COLUMN (admin-api.js getEventsByProgram), so
@@ -163,6 +176,21 @@ export async function handler(event) {
                     allowed: ALLOWED_EVENT_NAMES
                 })
             };
+        }
+
+        // Confidence ratings: reject anything that is not a whole number 1-5
+        if (CONFIDENCE_EVENTS.includes(event_name)) {
+            const score = meta && meta.score;
+            if (!Number.isInteger(score) || score < CONFIDENCE_MIN || score > CONFIDENCE_MAX) {
+                return {
+                    statusCode: 400,
+                    headers,
+                    body: JSON.stringify({
+                        error: 'Invalid score',
+                        message: `${event_name} requires meta.score as a whole number from ${CONFIDENCE_MIN} to ${CONFIDENCE_MAX}`
+                    })
+                };
+            }
         }
 
         // Check for PHI fields in the entire request body

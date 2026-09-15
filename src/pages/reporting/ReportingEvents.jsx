@@ -30,6 +30,8 @@ const eventNameLabels = {
     pap_click: 'PAP Click',
     helpful_vote_yes: 'Helpful Yes',
     helpful_vote_no: 'Helpful No',
+    confidence_pre: 'Confidence (before)',
+    confidence_post: 'Confidence (after)',
 };
 
 const eventNameColors = {
@@ -43,6 +45,8 @@ const eventNameColors = {
     pap_click: 'bg-green-100 text-green-700',
     helpful_vote_yes: 'bg-emerald-100 text-emerald-700',
     helpful_vote_no: 'bg-red-100 text-red-700',
+    confidence_pre: 'bg-indigo-100 text-indigo-700',
+    confidence_post: 'bg-indigo-100 text-indigo-700',
 };
 
 export default function ReportingEvents() {

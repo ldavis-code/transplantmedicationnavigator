@@ -19,8 +19,8 @@ const ForTransplantPrograms = () => {
         },
         {
             icon: BarChart3,
-            title: 'Privacy-Safe Engagement Analytics',
-            description: 'Track how patients engage with resources without collecting PHI. See which programs are most accessed and measure pilot impact.'
+            title: 'Intelligence You Cannot Get From Your EHR',
+            description: 'See what share of your patients are routed to patient assistance programs versus commercial copay cards, which medications they need help with, and how many reached a program, all without collecting PHI.'
         },
         {
             icon: Lock,
@@ -29,13 +29,15 @@ const ForTransplantPrograms = () => {
         }
     ];
 
+    // What the 90-day readout tells a center. Savings totals are left off on
+    // purpose: they are self-reported by the patients who choose to log them.
     const trackingCapabilities = [
-        'Page views by pilot partner tag',
-        'Clicks to medication search',
-        'Clicks to assistance program links',
-        'Applications initiated (outbound clicks)',
-        'Program types most accessed',
-        'Engagement over 90-day pilot period'
+        'Share of your patients routed to patient assistance programs vs. commercial copay cards',
+        'The medications your patients most often need help paying for',
+        'How many patients reached a program that can lower their cost',
+        'Confidence in affording medications, asked before and after the quiz',
+        'Coverage mix and self-reported cost burden of the patients you reach',
+        'Week-by-week engagement across the 90-day pilot'
     ];
 
     return (
@@ -81,10 +83,10 @@ const ForTransplantPrograms = () => {
                     <div className="bg-emerald-100 p-2 rounded-lg" aria-hidden="true">
                         <BarChart3 size={24} className="text-emerald-600" />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900">What You Can Report</h2>
+                    <h2 className="text-2xl font-bold text-slate-900">What Your Pilot Report Tells You</h2>
                 </div>
                 <p className="text-slate-600 mb-6">
-                    With a pilot partnership, you receive a 90-day engagement report showing:
+                    With a pilot partnership, you receive a 90-day readout your financial coordinator cannot get from the EHR:
                 </p>
                 <div className="grid md:grid-cols-2 gap-3">
                     {trackingCapabilities.map((capability, index) => (
@@ -112,8 +114,8 @@ const ForTransplantPrograms = () => {
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
-                        <h3 className="font-bold text-slate-900 mb-2">Review Engagement</h3>
-                        <p className="text-slate-600 text-sm">After 90 days, receive a detailed report on patient engagement with resources</p>
+                        <h3 className="font-bold text-slate-900 mb-2">Read the Results</h3>
+                        <p className="text-slate-600 text-sm">After 90 days, receive a readout: who was routed where, which medications, how many reached a program, and confidence before and after</p>
                     </div>
                 </div>
             </section>

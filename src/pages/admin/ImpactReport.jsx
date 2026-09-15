@@ -1,17 +1,19 @@
 /**
  * Impact Report Page
- * Funder-ready metrics: Netlify traffic, conversion funnel, program connections, medication insights
+ * Funder-ready metrics: Netlify traffic, conversion funnel, programs reached,
+ * the learning measure (confidence before and after the quiz), medication insights
  */
 
 import { useState, useEffect } from 'react';
 import {
-  ArrowLeft, Download, TrendingUp, Users, Heart, Pill,
+  Download, Users, Pill,
   BarChart3, FileText, DollarSign, Globe, Eye,
-  ExternalLink, ArrowRight,
+  ExternalLink, ArrowRight, DoorOpen, GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
 import AdminLayout from './AdminLayout';
+import LearningMeasure from '../../components/admin/LearningMeasure';
 
 const API = '/.netlify/functions/admin-impact';
 
@@ -175,10 +177,10 @@ export default function ImpactReport() {
             color="bg-purple-50 text-purple-600"
           />
           <StatCard
-            icon={Heart}
-            label="Program Connections"
+            icon={DoorOpen}
+            label="Programs Reached"
             value={conn.total}
-            sublabel="Patients linked to assistance"
+            sublabel={`${(conn.copay || 0).toLocaleString()} copay · ${(conn.foundation || 0).toLocaleString()} foundation · ${(conn.pap || 0).toLocaleString()} PAP`}
             color="bg-orange-50 text-orange-600"
           />
         </div>
@@ -196,9 +198,23 @@ export default function ImpactReport() {
               rate={funnel.quizStarts > 0 ? Math.round((funnel.quizCompletes / funnel.quizStarts) * 100) : 0} />
             <FunnelStep label="Medication Searches" value={funnel.medSearches} maxValue={funnel.pageViews} color="bg-green-500"
               rate={funnel.quizCompletes > 0 ? Math.round((funnel.medSearches / funnel.quizCompletes) * 100) : 0} />
-            <FunnelStep label="Application Clicks" value={funnel.applicationClicks} maxValue={funnel.pageViews} color="bg-orange-500"
+            <FunnelStep label="Programs Reached" value={funnel.applicationClicks} maxValue={funnel.pageViews} color="bg-orange-500"
               rate={funnel.medSearches > 0 ? Math.round((funnel.applicationClicks / funnel.medSearches) * 100) : 0} />
           </div>
+        </div>
+      </section>
+
+      {/* Learning Measure: the one question asked before and after the quiz */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <GraduationCap className="h-5 w-5 text-indigo-500" /> Learning Measure
+        </h2>
+        <p className="text-sm text-gray-600 mb-4">
+          Confidence in affording transplant medications, rated 1 to 5 before the quiz and again on the results page,
+          in the last {days} days. Confidence gain is the standard endpoint for patient-education interventions.
+        </p>
+        <div className="bg-white rounded-lg shadow-sm border p-6">
+          <LearningMeasure confidence={data?.confidence} />
         </div>
       </section>
 
@@ -277,12 +293,16 @@ export default function ImpactReport() {
         </section>
       )}
 
-      {/* Program Connection Breakdown */}
+      {/* Programs Reached breakdown: the conversion metric. A click through to
+          a copay card, PAP, or foundation is a real, observable action, and the
+          copay/PAP split shows the insurance routing working. */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Assistance Program Connections</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Programs Reached</h2>
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <p className="text-sm text-gray-600 mb-4">
-            Patients connected to financial assistance programs in the last {days} days:
+            Patients who clicked through to a program that can lower their cost in the last {days} days. Commercially
+            insured patients are routed to copay cards; Medicare, Medicaid, and uninsured patients to patient assistance
+            programs, so the split below is the routing at work:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ProgramCard
@@ -313,7 +333,7 @@ export default function ImpactReport() {
       {/* Connections by Company */}
       {data?.connectionsByCompany?.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Program Connections by Company</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Programs Reached by Company</h2>
           <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -434,7 +454,7 @@ export default function ImpactReport() {
                       <span className="w-16 text-right text-gray-700 font-medium">{w.uniqueSessions}</span>
                     </div>
                     <span className="w-20 text-right text-green-600 text-xs">
-                      {w.programConnections} conn.
+                      {w.programConnections} reached
                     </span>
                   </div>
                 );
@@ -442,7 +462,7 @@ export default function ImpactReport() {
             </div>
             <div className="flex justify-between mt-4 pt-3 border-t text-xs text-gray-400">
               <span>Sessions per week</span>
-              <span>Green = program connections</span>
+              <span>Green = programs reached</span>
             </div>
           </div>
         </section>

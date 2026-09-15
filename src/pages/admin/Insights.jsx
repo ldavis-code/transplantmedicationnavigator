@@ -2,19 +2,25 @@
  * Insights Page
  *
  * Surfaces data that was being captured but never shown in admin:
- *  - Patient-logged savings totals (user_savings)
+ *  - Programs reached: patients who clicked through to a copay card, PAP, or
+ *    foundation, with the copay/PAP split that shows insurance routing (events)
+ *  - Learning measure: confidence in affording medications, before and after
+ *    the quiz (events, see lib/confidenceStats.cjs)
  *  - Most-requested medications NOT in the catalog (missing_medications)
  *  - MyChart / Epic import adoption + engagement events (events)
  *  - Patient feedback outcomes (Neon feedback table)
+ *  - Self-reported savings from the Savings Tracker (user_savings), kept at the
+ *    bottom: patients opt in to log these, so it is a story, not a conversion metric
  */
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft, DollarSign, PlusCircle, Smartphone, MessageSquare, Pill, TrendingUp,
-  HeartHandshake,
+  ArrowLeft, DollarSign, PlusCircle, Smartphone, MessageSquare, TrendingUp,
+  HeartHandshake, DoorOpen, GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import LearningMeasure, { confidenceHeadline } from '../../components/admin/LearningMeasure';
 
 const API = '/.netlify/functions/admin-api';
 
@@ -129,6 +135,12 @@ export default function Insights() {
 
   const helpfulTotal = (stats?.helpfulVotesYes || 0) + (stats?.helpfulVotesNo || 0);
   const helpfulRate = helpfulTotal > 0 ? Math.round((stats.helpfulVotesYes / helpfulTotal) * 100) : null;
+  // Programs reached: the patient arrived at a door that can lower their cost.
+  const copayClicks = stats?.copayClicks || 0;
+  const papClicks = stats?.papClicks || 0;
+  const foundationClicks = stats?.foundationClicks || 0;
+  const programsReached = copayClicks + papClicks + foundationClicks;
+  const confidence = confidenceHeadline(stats?.confidence);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -140,7 +152,7 @@ export default function Insights() {
             </Link>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Insights</h1>
-              <p className="text-sm text-gray-500">Patient savings, demand signals, feature adoption &amp; feedback</p>
+              <p className="text-sm text-gray-500">Programs reached, learning, demand signals, feature adoption &amp; feedback</p>
             </div>
           </div>
         </div>
@@ -170,8 +182,8 @@ export default function Insights() {
                   <div className="text-[11px] text-gray-500 mt-1 leading-tight">Got their medication</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-gray-900">{savings?.available ? money(savings.totalSaved) : 'N/A'}</div>
-                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Patient cost removed</div>
+                  <div className="text-2xl font-bold text-gray-900">{programsReached.toLocaleString()}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Reached a program that can lower their cost</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-rose-600">{coverage?.available ? `${coverage.highBurdenPct}%` : 'N/A'}</div>
@@ -200,11 +212,16 @@ export default function Insights() {
         </section>
 
         {/* Headline metrics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           <StatCard
-            icon={DollarSign} tone="emerald" label="Total patient savings"
-            value={savings?.available ? money(savings.totalSaved) : 'N/A'}
-            sublabel={savings?.available ? `${savings.totalEntries} logs · ${savings.uniquePatients} patients` : 'No savings logged yet'}
+            icon={DoorOpen} tone="emerald" label="Programs reached"
+            value={programsReached.toLocaleString()}
+            sublabel={`${copayClicks} copay · ${foundationClicks} foundation · ${papClicks} PAP`}
+          />
+          <StatCard
+            icon={GraduationCap} tone="purple" label="Confidence gain"
+            value={confidence.value}
+            sublabel={confidence.sublabel}
           />
           <StatCard
             icon={Smartphone} tone="blue" label="MyChart imports"
@@ -223,33 +240,27 @@ export default function Insights() {
           />
         </div>
 
-        {/* Patient savings */}
-        <Section title="Patient Savings" icon={DollarSign}>
-          {savings?.available && savings.totalEntries > 0 ? (
-            <div className="space-y-5">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div><div className="text-2xl font-bold text-emerald-700">{money(savings.totalSaved)}</div><div className="text-xs text-gray-500">Total saved</div></div>
-                <div><div className="text-2xl font-bold text-gray-900">{savings.totalEntries}</div><div className="text-xs text-gray-500">Savings logged</div></div>
-                <div><div className="text-2xl font-bold text-gray-900">{savings.uniquePatients}</div><div className="text-xs text-gray-500">Patients</div></div>
-                <div><div className="text-2xl font-bold text-gray-900">{money(savings.avgSavedPerFill)}</div><div className="text-xs text-gray-500">Avg / fill</div></div>
-              </div>
-              {savings.byProgram?.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-500 mb-2">Savings by program type</h3>
-                  <div className="space-y-1.5">
-                    {savings.byProgram.map((p) => (
-                      <div key={p.programType} className="flex items-center justify-between text-sm">
-                        <span className="text-gray-700">{PROGRAM_LABELS[p.programType] || p.programType} <span className="text-gray-400">({p.entries})</span></span>
-                        <span className="font-semibold text-emerald-700">{money(p.saved)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+        {/* Programs reached: the conversion metric. A click through to a copay
+            card, PAP, or foundation is a real, observable action, and the
+            copay/PAP split shows the insurance routing working: commercially
+            insured patients go to copay cards, Medicare and uninsured patients
+            to patient assistance programs. */}
+        <Section title="Programs Reached" icon={DoorOpen}>
+          {programsReached > 0 ? (
+            <div className="space-y-3">
+              <BarRow label="Copay card programs (commercial insurance)" count={copayClicks} total={programsReached} tone="blue" />
+              <BarRow label="Patient assistance programs (Medicare, Medicaid, uninsured)" count={papClicks} total={programsReached} tone="emerald" emphasize />
+              <BarRow label="Foundation grants" count={foundationClicks} total={programsReached} tone="amber" />
+              <p className="text-xs text-gray-400 pt-1">All time. Each count is a click through to the program's own site. The Impact Report and Center Analytics break this down by period, company, and center.</p>
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No patient savings logged yet. Patients log savings from the Savings Tracker.</p>
+            <p className="text-sm text-gray-500">No program clicks recorded yet.</p>
           )}
+        </Section>
+
+        {/* Learning measure */}
+        <Section title="Learning: Confidence Before and After the Quiz" icon={GraduationCap}>
+          <LearningMeasure confidence={stats?.confidence} />
         </Section>
 
         {/* Missing medications */}
@@ -412,6 +423,39 @@ export default function Insights() {
                 ? 'No feedback has been submitted yet.'
                 : 'No patient feedback yet.'}
             </p>
+          )}
+        </Section>
+
+        {/* Self-reported savings, last on purpose: patients opt in to log
+            these from the Savings Tracker, so the total reflects who chose to
+            log, not what the tool did. Programs reached (above) is the
+            conversion metric; this is supporting color. */}
+        <Section title="Self-Reported Savings (Savings Tracker)" icon={DollarSign}>
+          {savings?.available && savings.totalEntries > 0 ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div><div className="text-2xl font-bold text-gray-900">{money(savings.totalSaved)}</div><div className="text-xs text-gray-500">Total logged</div></div>
+                <div><div className="text-2xl font-bold text-gray-900">{savings.totalEntries}</div><div className="text-xs text-gray-500">Savings logged</div></div>
+                <div><div className="text-2xl font-bold text-gray-900">{savings.uniquePatients}</div><div className="text-xs text-gray-500">Patients</div></div>
+                <div><div className="text-2xl font-bold text-gray-900">{money(savings.avgSavedPerFill)}</div><div className="text-xs text-gray-500">Avg / fill</div></div>
+              </div>
+              {savings.byProgram?.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-2">Logged savings by program type</h3>
+                  <div className="space-y-1.5">
+                    {savings.byProgram.map((p) => (
+                      <div key={p.programType} className="flex items-center justify-between text-sm">
+                        <span className="text-gray-700">{PROGRAM_LABELS[p.programType] || p.programType} <span className="text-gray-400">({p.entries})</span></span>
+                        <span className="font-semibold text-gray-900">{money(p.saved)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <p className="text-xs text-gray-400">Self-logged by patients who opt in to the Savings Tracker. Not a conversion metric, and not a sample of all users.</p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">No savings logged yet. Patients can log savings from the Savings Tracker if they choose to.</p>
           )}
         </Section>
       </main>

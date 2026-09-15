@@ -6,6 +6,7 @@
 const { neon } = require('@neondatabase/serverless');
 const crypto = require('crypto');
 const programsJson = require('../../src/data/programs.json');
+const { getConfidenceStats } = require('../../lib/confidenceStats.cjs');
 
 // Build a lookup: programId -> manufacturer
 const programManufacturerMap = {};
@@ -314,6 +315,15 @@ exports.handler = async function handler(event) {
       // medication_tracking table may not exist yet
     }
 
+    // Learning measure: confidence before and after the quiz, this window.
+    var confidence = { available: false };
+    try {
+      if (!db) db = getDb();
+      confidence = await getConfidenceStats(db, { startIso: cutoff });
+    } catch (e) {
+      // DATABASE_URL missing; the section renders as "no data yet"
+    }
+
     // Price reports (table may not exist)
     var priceReportStats = { total_reports: 0, unique_medications: 0 };
     try {
@@ -430,6 +440,7 @@ exports.handler = async function handler(event) {
           totalReports: parseInt(priceReportStats.total_reports || 0),
           uniqueMedications: parseInt(priceReportStats.unique_medications || 0),
         },
+        confidence: confidence,
       }),
     };
   } catch (error) {

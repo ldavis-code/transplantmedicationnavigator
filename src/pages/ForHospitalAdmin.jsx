@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Building2, ShieldCheck, BarChart3, CheckCircle, ArrowRight, Users, Mail, FileCheck, Server, HeartPulse, ClipboardCheck, DollarSign, BookOpen, AlertTriangle, TrendingUp, Activity, Lock } from 'lucide-react';
+import { Building2, ShieldCheck, BarChart3, CheckCircle, ArrowRight, Users, Mail, FileCheck, Server, HeartPulse, ClipboardCheck, BookOpen, TrendingUp, Activity, Lock, Lightbulb, Pill, DoorOpen, GraduationCap } from 'lucide-react';
 import { useMetaTags } from '../hooks/useMetaTags.js';
 import { seoMetadata } from '../data/seo-metadata.js';
 
@@ -60,17 +60,41 @@ const ForHospitalAdmin = () => {
         {
             icon: ClipboardCheck,
             title: 'White-Label Admin Dashboard',
-            description: 'Hospital administrators get a dedicated dashboard with engagement analytics, patient resource utilization, and pilot reporting, all aggregate, all privacy-safe.'
+            description: 'Hospital administrators get a dedicated dashboard with a pilot readout: what share of your patients were routed to patient assistance programs versus copay cards, which medications they needed help with, how many reached a program, and confidence before and after. All aggregate, all privacy-safe.'
         }
     ];
 
+    // What the pilot report actually tells a center. Savings totals are not
+    // on this list on purpose: they are self-reported by the patients who
+    // choose to log them. Programs reached is the observable action, and the
+    // routing split and confidence change are the insight a center cannot get
+    // from its EHR.
     const outcomesData = [
-        'Graft survival support through medication access',
-        'Reduced cost-driven non-adherence post-transplant',
-        'Trackable patient education for CMS documentation',
-        'Aggregate engagement data for quality improvement',
-        'Social worker and coordinator workflow support',
-        'No IT integration required for basic deployment'
+        'Share of your patients routed to patient assistance programs vs. commercial copay cards',
+        'The medications your patients most often need help paying for',
+        'How many patients reached a program that can lower their cost',
+        'Confidence in affording medications, asked before and after the quiz',
+        'Coverage mix and self-reported cost burden of the patients you reach',
+        'Trackable patient education for CMS documentation'
+    ];
+
+    // The three things a financial coordinator cannot see today.
+    const intelligence = [
+        {
+            icon: ShieldCheck,
+            title: 'Who is routed where',
+            description: 'What share of your patients are hitting Medicare and Medicaid patient assistance pathways versus commercial copay cards. The split shows the insurance routing working, patient by patient, without a chart review.'
+        },
+        {
+            icon: Pill,
+            title: 'Which medications worry them',
+            description: 'The medications your patients most often look for help with, so your pharmacist and coordinators know where the cost anxiety actually sits.'
+        },
+        {
+            icon: DoorOpen,
+            title: 'How many reached a door',
+            description: 'A patient clicking through to a copay card, patient assistance program, or foundation is a real, observable action: the moment they arrive at a program that can lower their cost.'
+        }
     ];
 
     // The $624 -> $10 figures are ONE patient's experience (the liver
@@ -231,14 +255,14 @@ const ForHospitalAdmin = () => {
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">4</div>
-                        <h3 className="font-bold text-slate-900 mb-2">Outcomes Report</h3>
-                        <p className="text-slate-600 text-sm">Receive a detailed engagement report with quality metrics alignment</p>
+                        <h3 className="font-bold text-slate-900 mb-2">Pilot Readout</h3>
+                        <p className="text-slate-600 text-sm">Receive a readout of who was routed where, which medications, how many reached a program, and confidence before and after, aligned to your quality metrics</p>
                     </div>
                 </div>
                 <div className="border-t border-slate-200 pt-8">
                     <div className="flex items-center gap-2 mb-4">
                         <BarChart3 size={20} className="text-emerald-600" aria-hidden="true" />
-                        <h3 className="font-bold text-slate-900">What your pilot reporting covers</h3>
+                        <h3 className="font-bold text-slate-900">What your pilot report tells you</h3>
                     </div>
                     <div className="grid md:grid-cols-2 gap-3">
                         {outcomesData.map((outcome, index) => (
@@ -248,6 +272,43 @@ const ForHospitalAdmin = () => {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Intelligence a center cannot get from its EHR */}
+            <section className="bg-white rounded-2xl shadow-sm border-2 border-emerald-200 p-8 md:p-10" aria-labelledby="intelligence-heading">
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <Lightbulb size={24} />
+                    </div>
+                    <h2 id="intelligence-heading" className="text-xl md:text-2xl font-extrabold text-slate-900">What You Learn About Your Patients</h2>
+                </div>
+                <p className="text-slate-600 mb-8 max-w-3xl">
+                    A center cannot tell you today what share of its patients are hitting Medicare patient assistance pathways versus commercial copay cards, or which drugs its patients are anxious about. The pilot report can. It is operational insight a financial coordinator has no other way to get.
+                </p>
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                    {intelligence.map((item, index) => (
+                        <div key={index} className="bg-slate-50 rounded-xl border border-slate-200 p-5">
+                            <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-3" aria-hidden="true">
+                                <item.icon size={20} />
+                            </div>
+                            <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
+                            <p className="text-slate-600 text-sm">{item.description}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-emerald-800">A pilot readout reads like this</p>
+                        <span className="text-xs font-semibold text-amber-800 bg-amber-100 border border-amber-200 rounded-full px-2.5 py-0.5">Illustrative example, not pilot data</span>
+                    </div>
+                    <p className="text-slate-800 leading-relaxed">
+                        &ldquo;Of your patients who used the Navigator this quarter, 60% were routed to patient assistance programs and 35% to commercial copay cards. The medications they most often needed help with were tacrolimus, mycophenolate, and valganciclovir. 41 reached a program that can lower their cost. Confidence in affording their medications rose from 2.1 to 3.8 out of 5 among patients who answered before and after the quiz.&rdquo;
+                    </p>
+                    <p className="text-xs text-slate-500 mt-3 flex items-start gap-2">
+                        <GraduationCap size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span>The confidence measure is a single question asked before and after the quiz on a 1-to-5 scale, the standard endpoint for patient-education interventions. Your report uses your patients&rsquo; numbers; every figure is an anonymous aggregate.</span>
+                    </p>
                 </div>
             </section>
 
