@@ -21,6 +21,30 @@ for (const section of ['copayPrograms', 'papPrograms']) {
 const JWT_SECRET = process.env.JWT_SECRET;
 const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
 const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
+// Netlify Web Analytics keeps roughly 30 days of history.
+const NETLIFY_RETENTION_DAYS = 30;
+
+// Map a Netlify country value (ISO code like "FI" or a name like "Finland")
+// to { code, name }.
+var regionNames = null;
+try {
+  regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+} catch (e) {
+  regionNames = null;
+}
+var COUNTRY_NAME_TO_CODE = { 'united states': 'US', 'united states of america': 'US', 'usa': 'US' };
+function normalizeCountry(value) {
+  var raw = (value || '').toString().trim();
+  if (!raw) return { code: null, name: 'Unknown' };
+  if (/^[A-Za-z]{2}$/.test(raw)) {
+    var code = raw.toUpperCase();
+    var name = code;
+    try { name = (regionNames && regionNames.of(code)) || code; } catch (e) { name = code; }
+    return { code: code, name: name };
+  }
+  var lower = raw.toLowerCase();
+  return { code: COUNTRY_NAME_TO_CODE[lower] || null, name: raw };
+}
 
 let _sql;
 function getDb() {
@@ -103,8 +127,14 @@ exports.handler = async function handler(event) {
     const cutoffDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
     const cutoff = cutoffDate.toISOString();
 
+    // Netlify Analytics only retains about 30 days of traffic, so a longer
+    // report window returns the same 30 days. Cap the Netlify query at 30 days
+    // and tell the UI what window the traffic figures actually cover.
+    var netlifyDays = Math.min(days, NETLIFY_RETENTION_DAYS);
+    var netlifyFromDate = new Date(now.getTime() - netlifyDays * 24 * 60 * 60 * 1000);
+
     // Netlify Analytics API expects timestamps in milliseconds
-    const fromTs = cutoffDate.getTime();
+    const fromTs = netlifyFromDate.getTime();
     const toTs = now.getTime();
 
     // --- Netlify Analytics (real traffic data) ---
@@ -113,11 +143,17 @@ exports.handler = async function handler(event) {
       fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
       fetchNetlifyAnalytics('ranking/pages', fromTs, toTs, '&limit=20'),
       fetchNetlifyAnalytics('ranking/sources', fromTs, toTs, '&limit=15'),
+      // resolution=range returns one bucket with distinct visitors across the
+      // whole window (what the Netlify dashboard shows as "unique visitors").
+      fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=range'),
+      fetchNetlifyAnalytics('ranking/countries', fromTs, toTs, '&limit=10'),
     ]);
     var pageviewsData = results[0];
     var visitorsData = results[1];
     var topPagesData = results[2];
     var topSourcesData = results[3];
+    var visitorsRangeData = results[4];
+    var countriesData = results[5];
 
     // Aggregate Netlify totals
     var netlifyPageviews = 0;
@@ -140,13 +176,25 @@ exports.handler = async function handler(event) {
         return { date: d.date, pageviews: d.count || 0 };
       });
     }
+    // Summing daily unique visitors counts a returning visitor once per day,
+    // which inflates the total. Prefer the whole-window distinct count and only
+    // fall back to the daily sum if the range query is unavailable.
+    var visitorsMethod = 'none';
     if (visitorsData && visitorsData.data) {
       netlifyVisitors = sumAnalyticsData(visitorsData.data);
+      visitorsMethod = 'daily-sum';
       visitorsData.data.forEach(function(d, i) {
         if (dailyTraffic[i]) {
           dailyTraffic[i].visitors = Array.isArray(d) ? (d[1] || 0) : (d.count || 0);
         }
       });
+    }
+    if (visitorsRangeData && visitorsRangeData.data && visitorsRangeData.data.length) {
+      var rangeVisitors = sumAnalyticsData(visitorsRangeData.data);
+      if (rangeVisitors > 0) {
+        netlifyVisitors = rangeVisitors;
+        visitorsMethod = 'range';
+      }
     }
 
     // Top pages from Netlify
@@ -158,6 +206,17 @@ exports.handler = async function handler(event) {
     var topSources = ((topSourcesData && topSourcesData.data) || []).map(function(s) {
       return { source: s.resource || 'Direct', count: s.count || 0 };
     });
+
+    // Pageviews by country. Netlify may return ISO codes or names; normalize
+    // so the UI can show a name and the US share can be isolated. Most non-US
+    // traffic on this site is automated scanning, so the US figure is the
+    // closer proxy for real patient reach.
+    var topCountries = ((countriesData && countriesData.data) || []).map(function(c) {
+      var norm = normalizeCountry(c.resource);
+      return { code: norm.code, name: norm.name, count: c.count || 0 };
+    });
+    var usCountry = topCountries.find(function(c) { return c.code === 'US'; });
+    var usPageviews = usCountry ? usCountry.count : null;
 
     var hasNetlifyData = !!(NETLIFY_API_TOKEN && NETLIFY_SITE_ID);
 
@@ -297,9 +356,20 @@ exports.handler = async function handler(event) {
         traffic: {
           pageviews: totalPageviews,
           uniqueVisitors: totalVisitors,
+          uniqueVisitorsMethod: hasNetlifyData ? visitorsMethod : 'sessions',
+          usPageviews: hasNetlifyData ? usPageviews : null,
           topPages: topPages,
           topSources: topSources,
+          topCountries: topCountries,
           dailyTraffic: hasNetlifyData ? dailyTraffic : [],
+          // The window the Netlify figures actually cover (capped at retention).
+          period: {
+            days: netlifyDays,
+            start: netlifyFromDate.toISOString().split('T')[0],
+            end: now.toISOString().split('T')[0],
+            capped: days > netlifyDays,
+            retentionDays: NETLIFY_RETENTION_DAYS,
+          },
         },
         patientReach: {
           uniqueSessions: parseInt(c.unique_sessions || 0),

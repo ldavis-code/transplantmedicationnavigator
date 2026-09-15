@@ -104,13 +104,18 @@ exports.handler = async function handler(event) {
 
     var results = await Promise.all([
       fetchNetlifyAnalytics('pageviews', fromTs, toTs, '&resolution=day'),
-      fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
+      // resolution=range gives distinct visitors across the whole window, the
+      // same figure the Netlify dashboard shows. Summing daily uniques counts
+      // a returning visitor once per day and overstates the total.
+      fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=range'),
       fetchNetlifyAnalytics('bandwidth', fromTs, toTs, '&resolution=day'),
+      fetchNetlifyAnalytics('visitors', fromTs, toTs, '&resolution=day'),
     ]);
 
     var pageviewsData = results[0];
     var visitorsData = results[1];
     var bandwidthData = results[2];
+    var visitorsDailyData = results[3];
 
     var totalPageviews = 0;
     var totalVisitors = 0;
@@ -130,8 +135,10 @@ exports.handler = async function handler(event) {
       totalPageviews = sumData(pageviewsData.data);
     }
 
-    if (visitorsData && visitorsData.data) {
+    if (visitorsData && visitorsData.data && sumData(visitorsData.data) > 0) {
       totalVisitors = sumData(visitorsData.data);
+    } else if (visitorsDailyData && visitorsDailyData.data) {
+      totalVisitors = sumData(visitorsDailyData.data);
     }
 
     if (bandwidthData && bandwidthData.data) {
