@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, lazy, useMemo } from 'react';
+import { useState, useEffect, useCallback, lazy, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import Fuse from 'fuse.js';
@@ -290,21 +290,27 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
 // Learning measure: a 1-5 confidence scale, asked once on the first step
 // (before any education) and once on the results page. Five equal tap
 // targets so it works one-handed on a phone; the anchors sit under the ends
-// of the row. The score is a plain integer and is reported anonymously
-// (confidence_pre / confidence_post in netlify/functions/event.js).
+// of the row for sighted users, and are folded into the accessible names
+// (the group label names both ends, options 1 and 5 name theirs) so a
+// screen reader user hears which end is "confident". The score is a plain
+// integer and is reported anonymously (confidence_pre / confidence_post in
+// netlify/functions/event.js).
 const CONFIDENCE_SCORES = [1, 2, 3, 4, 5];
 const ConfidenceScale = ({ value, onChange, ariaLabel, optionAria, lowLabel, highLabel }) => (
     <div>
         <div className="grid grid-cols-5 gap-2" role="radiogroup" aria-label={ariaLabel}>
             {CONFIDENCE_SCORES.map((score) => {
                 const isSelected = value === score;
+                const anchor = score === CONFIDENCE_SCORES[0] ? lowLabel
+                    : score === CONFIDENCE_SCORES[CONFIDENCE_SCORES.length - 1] ? highLabel
+                    : null;
                 return (
                     <button
                         key={score}
                         type="button"
                         role="radio"
                         aria-checked={isSelected}
-                        aria-label={optionAria(score)}
+                        aria-label={anchor ? `${optionAria(score)}, ${anchor}` : optionAria(score)}
                         onClick={() => onChange(score)}
                         className={`min-h-[52px] rounded-xl border-2 text-xl font-bold transition-all duration-200 shadow-sm ${
                             isSelected
@@ -360,6 +366,12 @@ const Wizard = () => {
         // before the quiz (step 1) and after it (results page).
         confidencePre: null,
         confidencePost: null,
+        // Set once confidence_pre has been sent. Lives in answers (and so in
+        // the sessionStorage resume payload) rather than a ref, because the
+        // Epic MyChart round-trip and a plain reload remount the page with
+        // the answers restored; a ref would reset and the score would be
+        // sent again for the same session.
+        confidencePreSent: false,
     };
     const readQuizResume = () => {
         try {
@@ -502,13 +514,13 @@ const Wizard = () => {
 
     // Navigation Logic - Updated for grouped sections
     // The "before" confidence score travels with quiz_start, so every started
-    // quiz has one and going back to this step never sends it twice.
-    const confidencePreSent = useRef(false);
+    // quiz has one, and going back to this step (or reloading) never sends it
+    // twice: the first answer is the "before".
     const handleNextFromAboutYou = () => {
         trackServerEvent('quiz_start');
-        if (answers.confidencePre && !confidencePreSent.current) {
-            confidencePreSent.current = true;
+        if (answers.confidencePre && !answers.confidencePreSent) {
             trackServerEvent('confidence_pre', { score: answers.confidencePre });
+            setAnswers((prev) => ({ ...prev, confidencePreSent: true }));
         }
         setStep(2);
     };
@@ -1566,7 +1578,10 @@ const Wizard = () => {
                 {/* Learning measure, second half: the confidence question from
                     step 1, asked again now that the plan is on screen. The admin
                     Learning reports pair it with the first answer from the same
-                    browser tab. */}
+                    browser tab, so it is only asked when there is a "before":
+                    the /wizard?step=meds deep link skips step 1, and an "after"
+                    with no "before" would describe a different population. */}
+                {answers.confidencePre && (
                 <section
                     className={`no-print rounded-2xl border-2 p-6 ${answers.confidencePost ? 'border-emerald-200 bg-emerald-50' : 'border-emerald-300 bg-white shadow-sm'}`}
                     aria-labelledby="confidence-post-heading"
@@ -1598,6 +1613,7 @@ const Wizard = () => {
                         </>
                     )}
                 </section>
+                )}
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
                     <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label={t('wizard.results.restartAria')}>{t('wizard.results.restart')}</button>

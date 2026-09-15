@@ -249,6 +249,8 @@ async function getCenterAnalytics(db, slug, pilot, period) {
         COUNT(*) FILTER (WHERE lang = 'en')                                      AS en_events,
         COUNT(DISTINCT meta_json->>'sessionId') FILTER (WHERE meta_json->>'sessionId' IS NOT NULL) AS tracked_sessions,
         COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts)))) AS est_sessions,
+        COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts))))
+          FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click'))      AS sessions_reached,
         COUNT(DISTINCT DATE(ts))                                                 AS active_days,
         MIN(ts)                                                                  AS first_event,
         MAX(ts)                                                                  AS last_event
@@ -376,6 +378,10 @@ async function getCenterAnalytics(db, slug, pilot, period) {
   const quizCompletes = toInt(t.quiz_completes);
   const medSearches = toInt(t.med_searches);
   const sessions = toInt(t.est_sessions);
+  // Sessions with at least one program click. `connections` counts clicks
+  // (one patient opening three programs is three), so this is the honest
+  // numerator for "of N sessions, how many reached a program".
+  const sessionsReached = toInt(t.sessions_reached);
   const p = previous[0] || {};
 
   return {
@@ -389,6 +395,7 @@ async function getCenterAnalytics(db, slug, pilot, period) {
       quizCompletes,
       medSearches,
       connections,
+      sessionsReached,
       resourceViews: toInt(t.resource_views),
       epicImports: toInt(t.epic_imports),
       epicMatchedMeds: toInt(t.epic_matched_meds),
@@ -416,7 +423,7 @@ async function getCenterAnalytics(db, slug, pilot, period) {
       quizCompleteRate: pct(quizCompletes, quizStarts),
       medSearchRate: pct(medSearches, quizCompletes),
       connectionRate: pct(connections, medSearches),
-      sessionsToConnection: pct(connections, sessions),
+      sessionsToConnection: pct(sessionsReached, sessions),
     },
     connectionsByType: {
       copay: toInt(t.copay_clicks),
@@ -487,6 +494,7 @@ function buildCsv(slug, pilot, period, a) {
   push('Summary', 'Quiz completes', s.quizCompletes, pilot?.targetQuizCompletes != null ? `target ${pilot.targetQuizCompletes}` : '');
   push('Summary', 'Medication searches', s.medSearches, '');
   push('Summary', 'Programs reached', s.connections, pilot?.targetConnections != null ? `target ${pilot.targetConnections}` : '');
+  push('Summary', 'Patient sessions that reached at least one program', s.sessionsReached, `${pct(s.sessionsReached, s.sessions)}% of sessions`);
   push('Summary', 'Copay card clicks', a.connectionsByType.copay, '');
   push('Summary', 'PAP clicks', a.connectionsByType.pap, '');
   push('Summary', 'Foundation clicks', a.connectionsByType.foundation, '');

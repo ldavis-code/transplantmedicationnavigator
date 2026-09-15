@@ -296,17 +296,21 @@ function joinNames(names) {
 // review as-is. Returns [] when there is nothing to say yet.
 function buildReadout({ centerName, summary, byType, medications, confidence, periodLabel }) {
   const sentences = [];
-  const reached = summary.connections;
-  if (reached > 0) {
-    const papPct = pctOf(byType.pap, reached);
-    const copayPct = pctOf(byType.copay, reached);
-    const foundationPct = pctOf(byType.foundation, reached);
+  const clicks = summary.connections;
+  const sessionsReached = summary.sessionsReached ?? 0;
+  if (clicks > 0) {
+    // Sessions and click-throughs are different counts: one patient who opens
+    // three programs is one session reached and three click-throughs.
+    const papPct = pctOf(byType.pap, clicks);
+    const copayPct = pctOf(byType.copay, clicks);
+    const foundationPct = pctOf(byType.foundation, clicks);
     sentences.push(
       `Of ${centerName}'s ${fmt(summary.sessions)} patient sessions (${periodLabel.toLowerCase()}), ` +
-      `${fmt(reached)} reached a program that can lower their cost.`
+      `${fmt(sessionsReached)} reached at least one program that can lower their cost, ` +
+      `${fmt(clicks)} program click-through${clicks === 1 ? '' : 's'} in all.`
     );
     const parts = [];
-    if (byType.pap > 0) parts.push(`${papPct}% were routed to patient assistance programs (the Medicare, Medicaid, and uninsured pathway)`);
+    if (byType.pap > 0) parts.push(`${papPct}% of those click-throughs were routed to patient assistance programs (the Medicare, Medicaid, and uninsured pathway)`);
     if (byType.copay > 0) parts.push(`${copayPct}% to commercial copay cards`);
     if (byType.foundation > 0) parts.push(`${foundationPct}% to foundation grants`);
     if (parts.length) sentences.push(`${joinNames(parts)}.`);
@@ -372,8 +376,9 @@ function PilotReadout({ centerName, summary, byType, medications, confidence, pe
         </p>
       )}
       <p className="text-xs text-gray-500 mt-3">
-        Routing is the share of programs reached by type. Medications are the card the patient was on when they
-        reached a program, not a patient list. Confidence is the 1-to-5 question asked before and after the quiz.
+        Sessions reached counts browser sessions with at least one program click; programs reached counts the clicks.
+        Routing is the share of those clicks by type. Medications are the card the patient was on when they reached a
+        program, not a patient list. Confidence is the 1-to-5 question asked before and after the quiz.
       </p>
     </section>
   );
@@ -823,7 +828,7 @@ export default function CenterAnalytics() {
                   <FunnelStep label="Program reached" value={funnel.connections} maxValue={funnel.pageViews} color="bg-emerald-600" />
                 </div>
                 <p className="text-xs text-gray-500 mt-4">
-                  Percentages are the share of page views. {funnel.quizCompleteRate}% of started quizzes were finished, and {funnel.sessionsToConnection}% of patient sessions reached at least one program.
+                  Percentages are the share of page views. {funnel.quizCompleteRate}% of started quizzes were finished, and {funnel.sessionsToConnection}% of patient sessions ({fmt(s.sessionsReached)}) reached at least one program.
                 </p>
               </Section>
 
