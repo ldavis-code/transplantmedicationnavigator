@@ -17,13 +17,13 @@ import {
   Building2,
   Pill,
   Settings,
-  CreditCard,
   TrendingUp,
   ShieldCheck,
   Globe,
   Eye,
   HardDrive,
-  DollarSign,
+  DoorOpen,
+  GraduationCap,
   Smartphone,
   PlusCircle,
   MessageSquare,
@@ -31,6 +31,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useTenant } from '../../context/TenantContext';
 import AdminLayout from './AdminLayout';
+import { confidenceHeadline } from '../../components/admin/LearningMeasure';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -40,7 +41,6 @@ export default function AdminDashboard() {
   const [loadingStats, setLoadingStats] = useState(true);
   const [webAnalytics, setWebAnalytics] = useState(null);
   const [loadingWebAnalytics, setLoadingWebAnalytics] = useState(true);
-  const [savings, setSavings] = useState(null);
   const [missing, setMissing] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [currentPassword, setCurrentPassword] = useState('');
@@ -91,8 +91,9 @@ export default function AdminDashboard() {
     }
   }, [isAdmin, getToken]);
 
-  // Load combined impact data (patient savings, missing meds, feedback) so the
-  // dashboard is one place to reference everything.
+  // Load combined impact data (missing meds, feedback) so the dashboard is
+  // one place to reference everything. Programs reached and the learning
+  // measure come with /stats above.
   useEffect(() => {
     async function loadImpact() {
       const authHeaders = { Authorization: `Bearer ${getToken()}` };
@@ -100,12 +101,10 @@ export default function AdminDashboard() {
         fetch(`/.netlify/functions/admin-api/${path}`, { headers: authHeaders })
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null);
-      const [s, m, f] = await Promise.all([
-        get('savings-summary'),
+      const [m, f] = await Promise.all([
         get('missing-medications'),
         get('feedback-summary'),
       ]);
-      setSavings(s);
       setMissing(m);
       setFeedback(f);
     }
@@ -186,7 +185,7 @@ export default function AdminDashboard() {
     },
     {
       title: 'Insights',
-      description: 'Savings, missing meds, adoption & feedback',
+      description: 'Programs reached, learning, missing meds & feedback',
       icon: TrendingUp,
       href: '/admin/insights',
       color: 'bg-emerald-100 text-emerald-600',
@@ -214,8 +213,11 @@ export default function AdminDashboard() {
     { label: 'Unique Sessions (Mo)', value: stats?.uniqueSessions || 0, icon: Users },
   ];
 
-  const money = (n) => (n || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  // Programs reached: a patient clicked through to a copay card, foundation,
+  // or PAP. That is the moment they arrive at a door that can lower their
+  // cost, and the copay/PAP split shows the insurance routing at work.
   const programClicks = (stats?.copayClicks || 0) + (stats?.foundationClicks || 0) + (stats?.papClicks || 0);
+  const confidence = confidenceHeadline(stats?.confidence);
   const helpfulTotal = (stats?.helpfulVotesYes || 0) + (stats?.helpfulVotesNo || 0);
   const gotMedRate = helpfulTotal > 0 ? Math.round(((stats?.helpfulVotesYes || 0) / helpfulTotal) * 100) : null;
 
@@ -248,12 +250,13 @@ export default function AdminDashboard() {
           <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg shadow-sm border border-emerald-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-emerald-700">Total Patient Savings</p>
-                <p className="text-3xl font-bold text-emerald-900 mt-1">{savings?.available ? money(savings.totalSaved) : '$0'}</p>
-                <p className="text-xs text-emerald-600 mt-1">{savings?.available ? `${savings.totalEntries} logs · ${savings.uniquePatients} patients` : 'No savings logged yet'}</p>
+                <p className="text-sm font-medium text-emerald-700">Programs Reached</p>
+                <p className="text-3xl font-bold text-emerald-900 mt-1">{loadingStats ? '...' : programClicks.toLocaleString()}</p>
+                <p className="text-xs text-emerald-600 mt-1">{stats?.copayClicks || 0} copay · {stats?.foundationClicks || 0} foundation · {stats?.papClicks || 0} PAP</p>
               </div>
-              <DollarSign className="h-10 w-10 text-emerald-400" />
+              <DoorOpen className="h-10 w-10 text-emerald-400" />
             </div>
+            <p className="text-xs text-emerald-700/80 mt-3">Patients who clicked through to a program that can lower their cost.</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border p-6">
             <div className="flex items-center justify-between">
@@ -268,11 +271,11 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-lg shadow-sm border p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Program Clicks</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{programClicks.toLocaleString()}</p>
-                <p className="text-xs text-gray-400 mt-1">{stats?.copayClicks || 0} copay · {stats?.foundationClicks || 0} found. · {stats?.papClicks || 0} PAP</p>
+                <p className="text-sm text-gray-500">Confidence Gain</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{loadingStats ? '...' : confidence.value}</p>
+                <p className="text-xs text-gray-400 mt-1">{confidence.sublabel}</p>
               </div>
-              <CreditCard className="h-8 w-8 text-amber-400" />
+              <GraduationCap className="h-8 w-8 text-indigo-400" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow-sm border p-6">

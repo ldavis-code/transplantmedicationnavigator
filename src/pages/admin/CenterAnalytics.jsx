@@ -1,10 +1,11 @@
 /**
  * Center Analytics
- * One transplant center's pilot at a glance: goals vs. actuals, the patient
- * journey funnel, program connections, and what the center's patients looked
- * for. Data comes from admin-center-analytics (events tagged with the center's
- * partner slug, plus EHR-launch logins when the pilot is linked to an Epic org).
- * Aggregate counts only, no patient identifiers.
+ * One transplant center's pilot at a glance: the pilot readout (who was routed
+ * where, which medications, how many reached a program, confidence before and
+ * after), goals vs. actuals, the patient journey funnel, and what the center's
+ * patients looked for. Data comes from admin-center-analytics (events tagged
+ * with the center's partner slug, plus EHR-launch logins when the pilot is
+ * linked to an Epic org). Aggregate counts only, no patient identifiers.
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
@@ -12,10 +13,12 @@ import {
   Building2, Users, Target, TrendingUp, TrendingDown, Minus, Download, Filter,
   Pill, Link2, Globe, Stethoscope, Smartphone, ThumbsUp, Calendar, Pencil,
   Plus, X, Save, Trash2, AlertTriangle, ClipboardCheck, Layers, Info,
+  Lightbulb, Copy, Check, GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AdminLayout from './AdminLayout';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import LearningMeasure, { confidenceHeadline } from '../../components/admin/LearningMeasure';
 
 const API = '/.netlify/functions/admin-center-analytics';
 
@@ -249,12 +252,12 @@ function WeeklyChart({ weeks }) {
   const height = (v) => (v > 0 ? Math.max(3, Math.round((v / max) * 100)) : 0);
   return (
     <div>
-      <div className="flex items-end gap-2 h-40" role="img" aria-label="Patient sessions and program connections per week">
+      <div className="flex items-end gap-2 h-40" role="img" aria-label="Patient sessions and programs reached per week">
         {weeks.map((w) => (
           <div
             key={w.week}
             className="flex-1 flex items-end justify-center gap-0.5 h-full"
-            title={`Week of ${formatWeek(w.week)}: ${w.sessions} sessions, ${w.connections} connections`}
+            title={`Week of ${formatWeek(w.week)}: ${w.sessions} sessions, ${w.connections} programs reached`}
           >
             <div className="w-1/2 rounded-t bg-emerald-500" style={{ height: `${height(w.sessions)}%` }} />
             <div className="w-1/2 rounded-t bg-blue-600" style={{ height: `${height(w.connections)}%` }} />
@@ -268,9 +271,111 @@ function WeeklyChart({ weeks }) {
       </div>
       <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
         <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-emerald-500" /> Patient sessions</span>
-        <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-blue-600" /> Program connections</span>
+        <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-blue-600" /> Programs reached</span>
       </div>
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Pilot readout
+// ---------------------------------------------------------------------------
+
+const pctOf = (n, d) => (d > 0 ? Math.round((n / d) * 100) : 0);
+
+function joinNames(names) {
+  if (names.length <= 1) return names.join('');
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+// The sentences a financial coordinator cannot get from the EHR: what share
+// of the center's patients were routed to patient assistance programs versus
+// commercial copay cards, which medications they needed help with, how many
+// reached a program, and whether confidence moved. Built from the same
+// aggregates the rest of the page shows, so it can be pasted into a pilot
+// review as-is. Returns [] when there is nothing to say yet.
+function buildReadout({ centerName, summary, byType, medications, confidence, periodLabel }) {
+  const sentences = [];
+  const reached = summary.connections;
+  if (reached > 0) {
+    const papPct = pctOf(byType.pap, reached);
+    const copayPct = pctOf(byType.copay, reached);
+    const foundationPct = pctOf(byType.foundation, reached);
+    sentences.push(
+      `Of ${centerName}'s ${fmt(summary.sessions)} patient sessions (${periodLabel.toLowerCase()}), ` +
+      `${fmt(reached)} reached a program that can lower their cost.`
+    );
+    const parts = [];
+    if (byType.pap > 0) parts.push(`${papPct}% were routed to patient assistance programs (the Medicare, Medicaid, and uninsured pathway)`);
+    if (byType.copay > 0) parts.push(`${copayPct}% to commercial copay cards`);
+    if (byType.foundation > 0) parts.push(`${foundationPct}% to foundation grants`);
+    if (parts.length) sentences.push(`${joinNames(parts)}.`);
+  }
+  const topMeds = (medications || []).slice(0, 3).map((m) => m.medication).filter(Boolean);
+  if (topMeds.length > 0) {
+    sentences.push(
+      topMeds.length === 1
+        ? `The medication patients most often needed help with was ${topMeds[0]}.`
+        : `The medications patients most often needed help with were ${joinNames(topMeds)}.`
+    );
+  }
+  const paired = confidence?.available ? confidence.paired : null;
+  if (paired && paired.n > 0) {
+    const verb = paired.meanGain > 0 ? 'rose' : paired.meanGain < 0 ? 'fell' : 'held steady';
+    sentences.push(
+      `Confidence in affording their medications ${verb} from ${paired.preMean} to ${paired.postMean} out of 5 ` +
+      `among the ${fmt(paired.n)} who answered before and after the quiz (${paired.improvedPct}% improved).`
+    );
+  }
+  return sentences;
+}
+
+function PilotReadout({ centerName, summary, byType, medications, confidence, periodLabel, slug }) {
+  const [copied, setCopied] = useState(false);
+  const sentences = buildReadout({ centerName, summary, byType, medications, confidence, periodLabel });
+  const text = sentences.join(' ');
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked (http, permissions): the text is on screen to select.
+    }
+  };
+
+  return (
+    <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6">
+      <div className="flex items-start justify-between gap-4 mb-3">
+        <div className="flex items-center gap-2">
+          <Lightbulb className="h-5 w-5 text-emerald-700" />
+          <h2 className="text-lg font-bold text-gray-900">Pilot readout</h2>
+        </div>
+        {sentences.length > 0 && (
+          <button
+            type="button"
+            onClick={copy}
+            className="print:hidden inline-flex items-center gap-1.5 text-xs font-medium text-emerald-800 bg-white border border-emerald-200 rounded-lg px-3 py-1.5 hover:bg-emerald-100"
+          >
+            {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+            {copied ? 'Copied' : 'Copy readout'}
+          </button>
+        )}
+      </div>
+      {sentences.length > 0 ? (
+        <p className="text-gray-800 leading-relaxed">{text}</p>
+      ) : (
+        <p className="text-sm text-gray-600">
+          Not enough activity yet to read this pilot. The readout fills in as patients arrive through{' '}
+          <span className="font-mono">/pilot/{slug}</span> and reach programs.
+        </p>
+      )}
+      <p className="text-xs text-gray-500 mt-3">
+        Routing is the share of programs reached by type. Medications are the card the patient was on when they
+        reached a program, not a patient list. Confidence is the 1-to-5 question asked before and after the quiz.
+      </p>
+    </section>
   );
 }
 
@@ -344,7 +449,7 @@ function PilotForm({ initial, onSave, onCancel, saving, error, lockSlug }) {
             <input id="pf-tp" type="number" min="0" className={input} value={form.targetPatients} onChange={set('targetPatients')} placeholder="100" />
           </div>
           <div>
-            <label className={label} htmlFor="pf-tc">Program connections</label>
+            <label className={label} htmlFor="pf-tc">Programs reached</label>
             <input id="pf-tc" type="number" min="0" className={input} value={form.targetConnections} onChange={set('targetConnections')} placeholder="40" />
           </div>
           <div>
@@ -668,12 +773,23 @@ export default function CenterAnalytics() {
               </div>
             </section>
 
+            {/* The readout: the sentences a center cannot get anywhere else */}
+            <PilotReadout
+              centerName={pilot?.centerName || selected}
+              slug={selected}
+              summary={s}
+              byType={byType}
+              medications={data.medications}
+              confidence={data.confidence}
+              periodLabel={data.period.label}
+            />
+
             {/* Headline numbers */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard icon={Users} tone="emerald" label="Patient sessions" value={s.sessions}
                 sublabel={`${fmt(s.pilotArrivals)} arrived via the pilot page`}
                 delta={prev ? { current: s.sessions, previous: prev.sessions } : undefined} />
-              <StatCard icon={Link2} tone="blue" label="Program connections" value={s.connections}
+              <StatCard icon={Link2} tone="blue" label="Programs reached" value={s.connections}
                 sublabel={`${fmt(byType.copay)} copay · ${fmt(byType.pap)} PAP · ${fmt(byType.foundation)} foundation`}
                 delta={prev ? { current: s.connections, previous: prev.connections } : undefined} />
               <StatCard icon={ClipboardCheck} tone="purple" label="Quizzes completed" value={s.quizCompletes}
@@ -689,7 +805,7 @@ export default function CenterAnalytics() {
               <div className="grid md:grid-cols-3 gap-6">
                 <GoalRow label="Patients reached" actual={s.sessions} target={pilot?.targetPatients}
                   hint="Distinct browser sessions tagged with this center." />
-                <GoalRow label="Program connections" actual={s.connections} target={pilot?.targetConnections}
+                <GoalRow label="Programs reached" actual={s.connections} target={pilot?.targetConnections}
                   hint="Clicks through to a copay card, PAP, or foundation." />
                 <GoalRow label="Quizzes completed" actual={s.quizCompletes} target={pilot?.targetQuizCompletes}
                   hint="Patients who finished the savings quiz." />
@@ -704,10 +820,10 @@ export default function CenterAnalytics() {
                   <FunnelStep label="Medication searched" value={funnel.medSearches} maxValue={funnel.pageViews} color="bg-amber-500" />
                   <FunnelStep label="Quiz started" value={funnel.quizStarts} maxValue={funnel.pageViews} color="bg-blue-500" />
                   <FunnelStep label="Quiz completed" value={funnel.quizCompletes} maxValue={funnel.pageViews} color="bg-purple-500" />
-                  <FunnelStep label="Program connection" value={funnel.connections} maxValue={funnel.pageViews} color="bg-emerald-600" />
+                  <FunnelStep label="Program reached" value={funnel.connections} maxValue={funnel.pageViews} color="bg-emerald-600" />
                 </div>
                 <p className="text-xs text-gray-500 mt-4">
-                  Percentages are the share of page views. {funnel.quizCompleteRate}% of started quizzes were finished, and {funnel.sessionsToConnection}% of patient sessions included at least one program connection.
+                  Percentages are the share of page views. {funnel.quizCompleteRate}% of started quizzes were finished, and {funnel.sessionsToConnection}% of patient sessions reached at least one program.
                 </p>
               </Section>
 
@@ -748,10 +864,10 @@ export default function CenterAnalytics() {
                       ))}
                     </tbody>
                   </table>
-                ) : <Empty>No program connections yet in this window.</Empty>}
+                ) : <Empty>No programs reached yet in this window.</Empty>}
               </Section>
 
-              <Section title="Medications behind those connections" icon={Pill}>
+              <Section title="Medications behind those programs" icon={Pill}>
                 {data.medications.length > 0 ? (
                   <div className="space-y-3">
                     {data.medications.map((m) => (
@@ -797,8 +913,11 @@ export default function CenterAnalytics() {
               </Section>
             </div>
 
-            {/* Integration + satisfaction */}
-            <div className="grid md:grid-cols-3 gap-4">
+            {/* Integration, learning, satisfaction */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <StatCard icon={GraduationCap} tone="purple" label="Confidence gain"
+                value={confidenceHeadline(data.confidence).value}
+                sublabel={confidenceHeadline(data.confidence).sublabel} />
               <StatCard icon={Stethoscope} tone="teal" label="Epic / MyChart logins"
                 value={data.ehrLogins ? data.ehrLogins.periodLogins : 0}
                 sublabel={data.ehrLogins
@@ -810,6 +929,11 @@ export default function CenterAnalytics() {
                 value={helpfulTotal > 0 ? `${Math.round((s.helpfulYes / helpfulTotal) * 100)}%` : '—'}
                 sublabel={helpfulTotal > 0 ? `${fmt(s.helpfulYes)} yes · ${fmt(s.helpfulNo)} no` : 'No feedback votes yet'} />
             </div>
+
+            {/* Learning measure: confidence before and after the quiz */}
+            <Section title="Learning: confidence before and after the quiz" icon={GraduationCap}>
+              <LearningMeasure confidence={data.confidence} />
+            </Section>
 
             {/* Top pages */}
             <Section title="Where patients spent time" icon={Layers}>
@@ -828,7 +952,7 @@ export default function CenterAnalytics() {
               <div className="space-y-1">
                 <p><strong className="text-gray-800">How attribution works.</strong> A patient is counted for this center after arriving through <span className="font-mono">/pilot/{selected}</span> or a <span className="font-mono">?partner={selected}</span> link. The tag stays with them for the rest of that browser session.</p>
                 <p><strong className="text-gray-800">What is not here.</strong> No names, MRNs, or medication lists. Counts are browser sessions, so one patient on two devices counts twice. Discount-card links (GoodRx, Cost Plus) are logged without the center tag and are not included.</p>
-                <p><strong className="text-gray-800">For the pilot review.</strong> Use the pilot window range, export the CSV, and pair it with the center's own outcomes (fills, delays avoided, coordinator time).</p>
+                <p><strong className="text-gray-800">For the pilot review.</strong> Use the pilot window range, copy the readout, export the CSV, and pair it with the center's own outcomes (fills, delays avoided, coordinator time).</p>
               </div>
             </div>
           </>

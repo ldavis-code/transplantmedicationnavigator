@@ -1680,7 +1680,15 @@
       "statusAria": "Seleccione su etapa del trasplante",
       "statusPreEval": "Antes del trasplante (Evaluación/Lista de espera)",
       "statusPostAcute": "Después del trasplante (Primer año)",
-      "statusPostStable": "Después del trasplante (Más de 1 año)"
+      "statusPostStable": "Después del trasplante (Más de 1 año)",
+      "confidenceBadge": "1c",
+      "confidenceQuestionSelf": "¿Qué tan seguro está de que puede pagar sus medicamentos del trasplante?",
+      "confidenceQuestionOther": "¿Qué tan seguro está de que la persona a la que ayuda puede pagar sus medicamentos del trasplante?",
+      "confidenceAria": "Califique su confianza del 1 al 5",
+      "confidenceOptionAria": "{{score}} de 5",
+      "confidenceLow": "Nada seguro",
+      "confidenceHigh": "Muy seguro",
+      "confidenceNote": "Lo preguntamos una vez ahora y otra al final para saber si esta herramienta ayuda. Su respuesta es anónima y nunca se vincula con usted."
     },
     "transplant": {
       "title": "Su trasplante",
@@ -1919,6 +1927,16 @@
         "appealLink": "Vea cómo apelar",
         "appealPost": ".",
         "getHelpLink": "Obtenga ayuda paso a paso para solicitar →"
+      },
+      "confidence": {
+        "title": "Una última pregunta",
+        "questionSelf": "Ahora que tiene su plan, ¿qué tan seguro está de que puede pagar sus medicamentos del trasplante?",
+        "questionOther": "Ahora que tiene el plan, ¿qué tan seguro está de que la persona a la que ayuda puede pagar sus medicamentos del trasplante?",
+        "aria": "Califique su confianza ahora, del 1 al 5",
+        "thanks": "Gracias. Su respuesta nos ayuda a mejorar esta herramienta.",
+        "before": "Antes",
+        "now": "Ahora",
+        "note": "Anónimo y nunca vinculado con usted."
       },
       "restart": "Reiniciar el cuestionario",
       "restartAria": "Reiniciar el cuestionario desde el principio"

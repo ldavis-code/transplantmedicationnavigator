@@ -26,6 +26,7 @@
 const { neon } = require('@neondatabase/serverless');
 const crypto = require('crypto');
 const programsJson = require('../../src/data/programs.json');
+const { getConfidenceStats } = require('../../lib/confidenceStats.cjs');
 
 // programId -> { name, manufacturer } for labelling the top-programs table.
 const PROGRAM_INFO = {};
@@ -225,6 +226,7 @@ async function getCenterAnalytics(db, slug, pilot, period) {
     costBurden,
     sources,
     previous,
+    confidence,
   ] = await Promise.all([
     // Headline counts for the window
     db`
@@ -336,6 +338,8 @@ async function getCenterAnalytics(db, slug, pilot, period) {
             AND ts < ${startIso}
         `
       : Promise.resolve([]),
+    // Learning measure: confidence before and after the quiz, this center
+    getConfidenceStats(db, { startIso, endIso, partner: slug }),
   ]);
 
   // EHR-launch logins for the center, when the pilot is linked to an Epic org.
@@ -450,6 +454,7 @@ async function getCenterAnalytics(db, slug, pilot, period) {
     costBurden: costBurden.map((r) => ({ value: r.value, count: toInt(r.count) })),
     sources: sources.map((r) => ({ page: r.page_source, views: toInt(r.views) })),
     ehrLogins,
+    confidence,
   };
 }
 
@@ -481,10 +486,12 @@ function buildCsv(slug, pilot, period, a) {
   push('Summary', 'Quiz starts', s.quizStarts, '');
   push('Summary', 'Quiz completes', s.quizCompletes, pilot?.targetQuizCompletes != null ? `target ${pilot.targetQuizCompletes}` : '');
   push('Summary', 'Medication searches', s.medSearches, '');
-  push('Summary', 'Program connections', s.connections, pilot?.targetConnections != null ? `target ${pilot.targetConnections}` : '');
+  push('Summary', 'Programs reached', s.connections, pilot?.targetConnections != null ? `target ${pilot.targetConnections}` : '');
   push('Summary', 'Copay card clicks', a.connectionsByType.copay, '');
   push('Summary', 'PAP clicks', a.connectionsByType.pap, '');
   push('Summary', 'Foundation clicks', a.connectionsByType.foundation, '');
+  push('Summary', 'Routed to PAPs (share of programs reached)', pct(a.connectionsByType.pap, s.connections), '%');
+  push('Summary', 'Routed to copay cards (share of programs reached)', pct(a.connectionsByType.copay, s.connections), '%');
   push('Summary', 'MyChart imports', s.epicImports, `${s.epicMatchedMeds} medications matched`);
   push('Summary', 'Helpful votes (yes)', s.helpfulYes, '');
   push('Summary', 'Helpful votes (no)', s.helpfulNo, '');
@@ -494,9 +501,21 @@ function buildCsv(slug, pilot, period, a) {
     push('EHR', 'Epic logins (period)', a.ehrLogins.periodLogins, '');
     push('EHR', 'Epic logins (all time)', a.ehrLogins.allTime, a.ehrLogins.lastLogin || '');
   }
+  if (a.confidence && a.confidence.available) {
+    const c = a.confidence;
+    push('Learning', 'Confidence before quiz, mean (1-5)', c.pre.mean ?? '', `n ${c.pre.n}${c.pre.sd != null ? `; SD ${c.pre.sd}` : ''}`);
+    push('Learning', 'Confidence after quiz, mean (1-5)', c.post.mean ?? '', `n ${c.post.n}${c.post.sd != null ? `; SD ${c.post.sd}` : ''}`);
+    push('Learning', 'Paired before/after answers', c.paired.n, '');
+    push('Learning', 'Mean confidence gain (paired)', c.paired.meanGain ?? '', c.paired.gainSd != null ? `SD ${c.paired.gainSd}` : '');
+    push('Learning', 'Improved', c.paired.improved, `${c.paired.improvedPct}% of paired`);
+    push('Learning', 'Unchanged', c.paired.unchanged, '');
+    push('Learning', 'Declined', c.paired.declined, '');
+    c.pre.distribution.forEach((count, i) => push('Learning', `Before: answered ${i + 1}`, count, ''));
+    c.post.distribution.forEach((count, i) => push('Learning', `After: answered ${i + 1}`, count, ''));
+  }
 
   for (const w of a.weekly) {
-    push('Weekly', String(w.week).slice(0, 10), w.sessions, `views ${w.pageViews}; quiz ${w.quizCompletes}; connections ${w.connections}`);
+    push('Weekly', String(w.week).slice(0, 10), w.sessions, `views ${w.pageViews}; quiz ${w.quizCompletes}; programs reached ${w.connections}`);
   }
   for (const pr of a.programs) {
     push('Programs', pr.name, pr.clicks, `${pr.programType}${pr.manufacturer ? `; ${pr.manufacturer}` : ''}`);

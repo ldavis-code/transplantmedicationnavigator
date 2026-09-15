@@ -1680,7 +1680,15 @@
       "statusAria": "Select your transplant status",
       "statusPreEval": "Pre-transplant (Evaluation/Waitlist)",
       "statusPostAcute": "Post-transplant (Within 1st year)",
-      "statusPostStable": "Post-transplant (1+ years)"
+      "statusPostStable": "Post-transplant (1+ years)",
+      "confidenceBadge": "1c",
+      "confidenceQuestionSelf": "How confident are you that you can afford your transplant medications?",
+      "confidenceQuestionOther": "How confident are you that the person you are helping can afford their transplant medications?",
+      "confidenceAria": "Rate your confidence from 1 to 5",
+      "confidenceOptionAria": "{{score}} out of 5",
+      "confidenceLow": "Not at all confident",
+      "confidenceHigh": "Very confident",
+      "confidenceNote": "We ask this once now and once at the end to see if this tool helps. Your answer is anonymous and never linked to you."
     },
     "transplant": {
       "title": "Your Transplant",
@@ -1919,6 +1927,16 @@
         "appealLink": "See how to appeal",
         "appealPost": ".",
         "getHelpLink": "Get step-by-step help applying →"
+      },
+      "confidence": {
+        "title": "One last question",
+        "questionSelf": "Now that you have your plan, how confident are you that you can afford your transplant medications?",
+        "questionOther": "Now that you have the plan, how confident are you that the person you are helping can afford their transplant medications?",
+        "aria": "Rate your confidence now, from 1 to 5",
+        "thanks": "Thank you. Your answer helps us make this tool better.",
+        "before": "Before",
+        "now": "Now",
+        "note": "Anonymous, and never linked to you."
       },
       "restart": "Restart Wizard",
       "restartAria": "Restart the wizard from beginning"

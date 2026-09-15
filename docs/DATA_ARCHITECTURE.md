@@ -111,6 +111,7 @@ Event names (whitelist):
 - `foundation_click` — user clicks a foundation link
 - `pap_click` — user clicks a PAP link
 - `helpful_vote_yes` / `helpful_vote_no` — user votes on helpfulness
+- `confidence_pre` / `confidence_post` — learning measure: "How confident are you that you can afford your transplant medications?" (1-5), asked on the first quiz step and again on the results page; `meta_json.score` holds the answer and `meta_json.sessionId` (a random per-tab id) lets the admin reports pair the two
 
 ---
 
@@ -121,7 +122,9 @@ Patient's browser
   │
   ├── Page load ──────────────────→ POST /event (page_view)
   ├── Starts quiz ────────────────→ POST /event (quiz_start)
+  ├── Starts quiz ────────────────→ POST /event (confidence_pre, score 1-5)
   ├── Finishes quiz ──────────────→ POST /event (quiz_complete)
+  ├── Rates confidence again ─────→ POST /event (confidence_post, score 1-5)
   ├── Searches medication ────────→ POST /event (med_search)
   │                                 POST /medication-tracking
   ├── Clicks copay/PAP/foundation → GET /out-redirect → logs event → redirects to external site

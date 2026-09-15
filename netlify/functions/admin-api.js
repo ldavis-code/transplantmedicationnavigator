@@ -15,6 +15,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import crypto from 'crypto';
+import { getConfidenceStats } from '../../lib/confidenceStats.cjs';
 
 // Initialize Neon client lazily
 let sql;
@@ -217,6 +218,10 @@ async function getStats(db) {
         WHERE event_name = 'epic_import'
     `;
 
+    // Learning measure (all time): confidence in affording medications,
+    // asked before and after the quiz. See lib/confidenceStats.cjs.
+    const confidence = await getConfidenceStats(db);
+
     return {
         totalEvents: parseInt(totalEvents[0]?.count || 0),
         eventsThisWeek: parseInt(eventsThisWeek[0]?.count || 0),
@@ -235,6 +240,7 @@ async function getStats(db) {
         helpfulVotesYes: parseInt(clickStats[0]?.helpful_yes || 0),
         helpfulVotesNo: parseInt(clickStats[0]?.helpful_no || 0),
         resourceViews: parseInt(clickStats[0]?.resource_views || 0),
+        confidence,
     };
 }
 
@@ -579,6 +585,13 @@ async function getPartnerReport(db, partner, params) {
         ORDER BY week ASC
     `;
 
+    // Learning measure for this partner's patients over the same window
+    const confidence = await getConfidenceStats(db, {
+        startIso: startDate.toISOString(),
+        endIso: endDate.toISOString(),
+        partner,
+    });
+
     return {
         partner,
         reportPeriod: {
@@ -615,6 +628,7 @@ async function getPartnerReport(db, partner, params) {
             medSearchRate: funnel.medSearchRate,
             applicationClickRate: funnel.applicationClickRate,
         },
+        confidence,
     };
 }
 

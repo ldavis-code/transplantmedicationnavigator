@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, useMemo } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import Fuse from 'fuse.js';
@@ -287,6 +287,43 @@ const PreTransplantMedicationGuide = ({ answers, onMedicationClick }) => {
     );
 };
 
+// Learning measure: a 1-5 confidence scale, asked once on the first step
+// (before any education) and once on the results page. Five equal tap
+// targets so it works one-handed on a phone; the anchors sit under the ends
+// of the row. The score is a plain integer and is reported anonymously
+// (confidence_pre / confidence_post in netlify/functions/event.js).
+const CONFIDENCE_SCORES = [1, 2, 3, 4, 5];
+const ConfidenceScale = ({ value, onChange, ariaLabel, optionAria, lowLabel, highLabel }) => (
+    <div>
+        <div className="grid grid-cols-5 gap-2" role="radiogroup" aria-label={ariaLabel}>
+            {CONFIDENCE_SCORES.map((score) => {
+                const isSelected = value === score;
+                return (
+                    <button
+                        key={score}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        aria-label={optionAria(score)}
+                        onClick={() => onChange(score)}
+                        className={`min-h-[52px] rounded-xl border-2 text-xl font-bold transition-all duration-200 shadow-sm ${
+                            isSelected
+                                ? 'border-emerald-700 bg-emerald-600 text-white ring-2 ring-emerald-300 shadow-md'
+                                : 'border-slate-300 bg-slate-50 text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md'
+                        }`}
+                    >
+                        {score}
+                    </button>
+                );
+            })}
+        </div>
+        <div className="flex justify-between text-xs text-slate-600 mt-2" aria-hidden="true">
+            <span>{lowLabel}</span>
+            <span>{highLabel}</span>
+        </div>
+    </div>
+);
+
 // Wizard Page
 const Wizard = () => {
     useMetaTags(seoMetadata.wizard);
@@ -319,6 +356,10 @@ const Wizard = () => {
         medications: [],
         specialtyPharmacyAware: null,
         financialStatus: null,
+        // Learning measure: confidence in affording the medications, 1-5,
+        // before the quiz (step 1) and after it (results page).
+        confidencePre: null,
+        confidencePost: null,
     };
     const readQuizResume = () => {
         try {
@@ -460,7 +501,25 @@ const Wizard = () => {
     const prevStep = () => setStep(step - 1);
 
     // Navigation Logic - Updated for grouped sections
-    const handleNextFromAboutYou = () => { trackServerEvent('quiz_start'); setStep(2); };
+    // The "before" confidence score travels with quiz_start, so every started
+    // quiz has one and going back to this step never sends it twice.
+    const confidencePreSent = useRef(false);
+    const handleNextFromAboutYou = () => {
+        trackServerEvent('quiz_start');
+        if (answers.confidencePre && !confidencePreSent.current) {
+            confidencePreSent.current = true;
+            trackServerEvent('confidence_pre', { score: answers.confidencePre });
+        }
+        setStep(2);
+    };
+    // The "after" score: one tap on the results page, sent as soon as it is
+    // given. The button row is replaced by a thank-you, so it cannot repeat.
+    const handleConfidencePost = (score) => {
+        setAnswers((prev) => ({ ...prev, confidencePost: score }));
+        trackServerEvent('confidence_post', { score });
+    };
+    // Carepartners and coordinators answer about the person they are helping.
+    const isHelpingOther = !!answers.role && answers.role !== Role.PATIENT;
     // Step order: About You (1) → Transplant (2) → Medications (3) → Coverage (4) → Costs (5)
     const handleNextFromTransplant = () => setStep(3);
     // Continuing with an empty list used to run the results page with
@@ -634,9 +693,30 @@ const Wizard = () => {
                     </div>
                 )}
 
-                {/* Next button - enabled when both role and status are selected */}
+                {/* Question 1c: confidence before the quiz - shows after status is selected */}
+                {answers.role && answers.status && (
+                    <div className="mb-8">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{t('wizard.aboutYou.confidenceBadge')}</span>
+                            <h2 className="text-lg font-bold text-slate-800">
+                                {isHelpingOther ? t('wizard.aboutYou.confidenceQuestionOther') : t('wizard.aboutYou.confidenceQuestionSelf')}
+                            </h2>
+                        </div>
+                        <ConfidenceScale
+                            value={answers.confidencePre}
+                            onChange={(score) => handleSingleSelect('confidencePre', score)}
+                            ariaLabel={t('wizard.aboutYou.confidenceAria')}
+                            optionAria={(score) => t('wizard.aboutYou.confidenceOptionAria', { score })}
+                            lowLabel={t('wizard.aboutYou.confidenceLow')}
+                            highLabel={t('wizard.aboutYou.confidenceHigh')}
+                        />
+                        <p className="text-sm text-slate-500 mt-3">{t('wizard.aboutYou.confidenceNote')}</p>
+                    </div>
+                )}
+
+                {/* Next button - enabled once role, status, and the confidence score are selected */}
                 <button
-                    disabled={!answers.role || !answers.status}
+                    disabled={!answers.role || !answers.status || !answers.confidencePre}
                     onClick={handleNextFromAboutYou}
                     className="w-full py-3 bg-emerald-700 disabled:bg-slate-300 text-white font-bold rounded-lg disabled:cursor-not-allowed transition hover:bg-emerald-800"
                     aria-label={t('wizard.nav.nextAria')}
@@ -1482,6 +1562,42 @@ const Wizard = () => {
                     </div>
 
                 </div>
+
+                {/* Learning measure, second half: the confidence question from
+                    step 1, asked again now that the plan is on screen. The admin
+                    Learning reports pair it with the first answer from the same
+                    browser tab. */}
+                <section
+                    className={`no-print rounded-2xl border-2 p-6 ${answers.confidencePost ? 'border-emerald-200 bg-emerald-50' : 'border-emerald-300 bg-white shadow-sm'}`}
+                    aria-labelledby="confidence-post-heading"
+                >
+                    <h2 id="confidence-post-heading" className="text-lg font-bold text-slate-900 mb-2">{t('wizard.results.confidence.title')}</h2>
+                    {answers.confidencePost ? (
+                        <div role="status">
+                            <p className="text-slate-800 font-medium">{t('wizard.results.confidence.thanks')}</p>
+                            {answers.confidencePre && (
+                                <p className="text-sm text-slate-600 mt-1">
+                                    {t('wizard.results.confidence.before')}: {answers.confidencePre}/5 · {t('wizard.results.confidence.now')}: {answers.confidencePost}/5
+                                </p>
+                            )}
+                        </div>
+                    ) : (
+                        <>
+                            <p className="text-slate-700 mb-4">
+                                {isHelpingOther ? t('wizard.results.confidence.questionOther') : t('wizard.results.confidence.questionSelf')}
+                            </p>
+                            <ConfidenceScale
+                                value={null}
+                                onChange={handleConfidencePost}
+                                ariaLabel={t('wizard.results.confidence.aria')}
+                                optionAria={(score) => t('wizard.aboutYou.confidenceOptionAria', { score })}
+                                lowLabel={t('wizard.aboutYou.confidenceLow')}
+                                highLabel={t('wizard.aboutYou.confidenceHigh')}
+                            />
+                            <p className="text-xs text-slate-500 mt-3">{t('wizard.results.confidence.note')}</p>
+                        </>
+                    )}
+                </section>
 
                 <div className="text-center pt-8 border-t border-slate-100 no-print">
                     <button onClick={() => setStep(1)} className="text-slate-700 hover:text-emerald-600 text-sm underline min-h-[44px] px-4" aria-label={t('wizard.results.restartAria')}>{t('wizard.results.restart')}</button>
