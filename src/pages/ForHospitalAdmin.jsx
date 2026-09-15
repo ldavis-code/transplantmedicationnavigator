@@ -73,18 +73,25 @@ const ForHospitalAdmin = () => {
         'No IT integration required for basic deployment'
     ];
 
+    // The $624 -> $10 figures are ONE patient's experience (the liver
+    // recipient quoted on the homepage), not an average — a hospital
+    // pharmacist will ask for the sample if it reads as one. The 36% figure
+    // is from Butler's 2004 systematic review of kidney transplant
+    // nonadherence, which attributed that share of graft losses to it; Dew
+    // 2007 (previously cited here) is a meta-analysis of nonadherence RATES
+    // and does not support a graft-loss attribution.
     const costImpact = [
         {
             stat: '$624',
-            label: 'Average monthly out-of-pocket cost for immunosuppressants without assistance'
+            label: "One patient's monthly out-of-pocket cost for a brand-name immunosuppressant before assistance (liver transplant recipient, 2025)"
         },
         {
             stat: '$10',
-            label: 'Typical monthly cost with copay card enrollment'
+            label: 'What that same patient pays per month after copay card enrollment'
         },
         {
             stat: '~36%',
-            label: 'of graft losses are associated with immunosuppressant non-adherence, the leading modifiable cause of transplant failure (Dew MA et al., Transplantation, 2007)'
+            label: 'of kidney graft losses are associated with immunosuppressant non-adherence, the leading modifiable cause of graft failure (Butler JA et al., Transplantation, 2004)'
         }
     ];
 
@@ -259,10 +266,10 @@ const ForHospitalAdmin = () => {
                     ))}
                 </div>
                 <p className="text-emerald-100 leading-relaxed max-w-3xl mx-auto text-center mb-6">
-                    A single graft loss costs the healthcare system over $150,000 in incremental annual costs from dialysis and re-transplant workup (Samoylova ML et al., Transplant International, 2022), and readmissions for rejection episodes driven by non-adherence cost $20,000–$50,000 per event. Connecting even a fraction of at-risk patients to programs that cut monthly out-of-pocket costs from $624 to about $10 generates measurable ROI in reduced readmissions, preserved grafts, and improved SRTR performance.
+                    A single graft loss costs the healthcare system over $150,000 in incremental annual costs from dialysis and re-transplant workup (Samoylova ML et al., Transplant International, 2022), and readmissions for rejection episodes driven by non-adherence cost $20,000–$50,000 per event. Connecting even a fraction of at-risk patients to the programs that took one of our patients from $624 a month to about $10 generates measurable ROI in reduced readmissions, preserved grafts, and improved SRTR performance. Savings vary by medication and insurance.
                 </p>
                 <p className="text-emerald-300 text-xs text-center">
-                    Sources: Dew MA et al., Transplantation 2007 (PMID: 17460556); Chisholm-Burns MA et al., Clinical Transplantation 2008 (PMID: 18673373); Samoylova ML et al., Transplant International 2022 (DOI: 10.3389/ti.2022.10422); Milliman Report: 2025 U.S. Organ and Tissue Transplants (February 2025); Manufacturer copay card programs; SRTR Annual Data Report
+                    Sources: Butler JA et al., Transplantation 2004 (PMID: 15021846); Pinsky BW et al., American Journal of Transplantation 2009 (PMID: 19843035); Chisholm-Burns MA et al., Clinical Transplantation 2008 (PMID: 18673373); Samoylova ML et al., Transplant International 2022 (DOI: 10.3389/ti.2022.10422); Milliman Report: 2025 U.S. Organ and Tissue Transplants (February 2025); Manufacturer copay card programs; SRTR Annual Data Report
                 </p>
             </section>
 
