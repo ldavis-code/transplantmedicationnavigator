@@ -36,6 +36,22 @@ const EVENT_NAMES = {
     pap: 'pap_click'
 };
 
+// Links that live under /out/copay/ and /out/pap/ so the redirect can look up
+// their search-template URL, but are not assistance programs: price lookups
+// (GoodRx, SingleCare, Cost Plus Drugs, TrumpRx) and the "Drug facts" link
+// on every medication card (Drugs.com). Logging those as copay_card_click /
+// pap_click inflated "programs reached" and its copay/PAP split (a Medicare
+// patient reading drug facts counted as reaching a PAP). They get their own
+// event names and program types, so every program-click report leaves them
+// out. Migration 055 reclassifies the rows written before this.
+const NON_PROGRAM_LINKS = {
+    'goodrx-search': { eventName: 'price_lookup_click', programType: 'price_lookup' },
+    'singlecare-search': { eventName: 'price_lookup_click', programType: 'price_lookup' },
+    'costplus-search': { eventName: 'price_lookup_click', programType: 'price_lookup' },
+    'trumprx-gov': { eventName: 'price_lookup_click', programType: 'price_lookup' },
+    'drugs-com-search': { eventName: 'drug_info_click', programType: 'drug_info' }
+};
+
 exports.handler = async function handler(event) {
     try {
         // Parse the path to extract program type and ID
@@ -122,14 +138,16 @@ exports.handler = async function handler(event) {
                 await db`ALTER TABLE events ADD COLUMN IF NOT EXISTS lang TEXT`.catch(() => {});
                 schemaFixed = true;
             }
-            const eventName = EVENT_NAMES[programType];
+            const nonProgram = NON_PROGRAM_LINKS[programId] || null;
+            const eventName = nonProgram ? nonProgram.eventName : EVENT_NAMES[programType];
+            const loggedType = nonProgram ? nonProgram.programType : programType;
             await db`
                 INSERT INTO events (event_name, partner, page_source, program_type, program_id, meta_json, lang)
                 VALUES (
                     ${eventName},
                     ${partner},
                     ${pageSource},
-                    ${programType},
+                    ${loggedType},
                     ${programId},
                     ${JSON.stringify({ redirect: true, fallback: usedFallback })},
                     ${lang}

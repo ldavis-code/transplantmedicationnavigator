@@ -32,6 +32,8 @@ const eventNameLabels = {
     helpful_vote_no: 'Helpful No',
     confidence_pre: 'Confidence (before)',
     confidence_post: 'Confidence (after)',
+    price_lookup_click: 'Price Lookup',
+    drug_info_click: 'Drug Info',
 };
 
 const eventNameColors = {
@@ -47,6 +49,8 @@ const eventNameColors = {
     helpful_vote_no: 'bg-red-100 text-red-700',
     confidence_pre: 'bg-indigo-100 text-indigo-700',
     confidence_post: 'bg-indigo-100 text-indigo-700',
+    price_lookup_click: 'bg-amber-100 text-amber-700',
+    drug_info_click: 'bg-slate-100 text-slate-700',
 };
 
 export default function ReportingEvents() {

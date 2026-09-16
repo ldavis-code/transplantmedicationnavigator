@@ -182,8 +182,8 @@ export default function Insights() {
                   <div className="text-[11px] text-gray-500 mt-1 leading-tight">Got their medication</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-gray-900">{programsReached.toLocaleString()}</div>
-                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Reached a program that can lower their cost</div>
+                  <div className="text-2xl font-bold text-gray-900">{(stats?.sessionsReached || 0).toLocaleString()}</div>
+                  <div className="text-[11px] text-gray-500 mt-1 leading-tight">Patient sessions that reached a program that can lower their cost</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-rose-600">{coverage?.available ? `${coverage.highBurdenPct}%` : 'N/A'}</div>
@@ -241,17 +241,16 @@ export default function Insights() {
         </div>
 
         {/* Programs reached: the conversion metric. A click through to a copay
-            card, PAP, or foundation is a real, observable action, and the
-            copay/PAP split shows the insurance routing working: commercially
-            insured patients go to copay cards, Medicare and uninsured patients
-            to patient assistance programs. */}
+            card, PAP, or foundation is a real, observable action. The split is
+            by program type (what the patient opened), not by coverage: a click
+            carries no insurance information. */}
         <Section title="Programs Reached" icon={DoorOpen}>
           {programsReached > 0 ? (
             <div className="space-y-3">
-              <BarRow label="Copay card programs (commercial insurance)" count={copayClicks} total={programsReached} tone="blue" />
-              <BarRow label="Patient assistance programs (Medicare, Medicaid, uninsured)" count={papClicks} total={programsReached} tone="emerald" emphasize />
+              <BarRow label="Copay card programs" count={copayClicks} total={programsReached} tone="blue" />
+              <BarRow label="Patient assistance programs" count={papClicks} total={programsReached} tone="emerald" emphasize />
               <BarRow label="Foundation grants" count={foundationClicks} total={programsReached} tone="amber" />
-              <p className="text-xs text-gray-400 pt-1">All time. Each count is a click through to the program's own site. The Impact Report and Center Analytics break this down by period, company, and center.</p>
+              <p className="text-xs text-gray-400 pt-1">All time. Each count is a click through to the program's own site; one patient opening three programs counts three. {(stats?.sessionsReached || 0).toLocaleString()} patient sessions reached at least one program. Price lookups (GoodRx, SingleCare, Cost Plus, TrumpRx) and drug-information links are logged separately and are not in these counts. The Impact Report and Center Analytics break this down by period, company, and center.</p>
             </div>
           ) : (
             <p className="text-sm text-gray-500">No program clicks recorded yet.</p>

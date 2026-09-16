@@ -366,12 +366,16 @@ const Wizard = () => {
         // before the quiz (step 1) and after it (results page).
         confidencePre: null,
         confidencePost: null,
-        // Set once confidence_pre has been sent. Lives in answers (and so in
-        // the sessionStorage resume payload) rather than a ref, because the
-        // Epic MyChart round-trip and a plain reload remount the page with
-        // the answers restored; a ref would reset and the score would be
-        // sent again for the same session.
+        // Set once confidence_pre has been sent, with the score that was
+        // sent. Lives in answers (and so in the sessionStorage resume payload)
+        // rather than a ref, because the Epic MyChart round-trip and a plain
+        // reload remount the page with the answers restored; a ref would
+        // reset and the score would be sent again for the same session. The
+        // recorded score is what the results page shows as "before": the
+        // step-1 scale stays editable, but only the first answer is the
+        // "before" in the data.
         confidencePreSent: false,
+        confidencePreRecorded: null,
     };
     const readQuizResume = () => {
         try {
@@ -519,8 +523,9 @@ const Wizard = () => {
     const handleNextFromAboutYou = () => {
         trackServerEvent('quiz_start');
         if (answers.confidencePre && !answers.confidencePreSent) {
-            trackServerEvent('confidence_pre', { score: answers.confidencePre });
-            setAnswers((prev) => ({ ...prev, confidencePreSent: true }));
+            const score = answers.confidencePre;
+            trackServerEvent('confidence_pre', { score });
+            setAnswers((prev) => ({ ...prev, confidencePreSent: true, confidencePreRecorded: score }));
         }
         setStep(2);
     };
@@ -1578,10 +1583,11 @@ const Wizard = () => {
                 {/* Learning measure, second half: the confidence question from
                     step 1, asked again now that the plan is on screen. The admin
                     Learning reports pair it with the first answer from the same
-                    browser tab, so it is only asked when there is a "before":
-                    the /wizard?step=meds deep link skips step 1, and an "after"
-                    with no "before" would describe a different population. */}
-                {answers.confidencePre && (
+                    browser tab, so it is only asked when a "before" was actually
+                    sent: the /wizard?step=meds deep link skips step 1, and an
+                    "after" with no "before" would describe a different
+                    population. */}
+                {answers.confidencePreSent && (
                 <section
                     className={`no-print rounded-2xl border-2 p-6 ${answers.confidencePost ? 'border-emerald-200 bg-emerald-50' : 'border-emerald-300 bg-white shadow-sm'}`}
                     aria-labelledby="confidence-post-heading"
@@ -1590,9 +1596,9 @@ const Wizard = () => {
                     {answers.confidencePost ? (
                         <div role="status">
                             <p className="text-slate-800 font-medium">{t('wizard.results.confidence.thanks')}</p>
-                            {answers.confidencePre && (
+                            {answers.confidencePreRecorded && (
                                 <p className="text-sm text-slate-600 mt-1">
-                                    {t('wizard.results.confidence.before')}: {answers.confidencePre}/5 · {t('wizard.results.confidence.now')}: {answers.confidencePost}/5
+                                    {t('wizard.results.confidence.before')}: {answers.confidencePreRecorded}/5 · {t('wizard.results.confidence.now')}: {answers.confidencePost}/5
                                 </p>
                             )}
                         </div>

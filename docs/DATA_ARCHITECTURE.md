@@ -111,6 +111,7 @@ Event names (whitelist):
 - `foundation_click` — user clicks a foundation link
 - `pap_click` — user clicks a PAP link
 - `helpful_vote_yes` / `helpful_vote_no` — user votes on helpfulness
+- `price_lookup_click` / `drug_info_click` — written by the `/out/` redirect for the GoodRx, SingleCare, Cost Plus, and TrumpRx price lookups and the Drugs.com "Drug facts" link; kept apart from the program clicks so a price check never counts as a program reached
 - `confidence_pre` / `confidence_post` — learning measure: "How confident are you that you can afford your transplant medications?" (1-5), asked on the first quiz step and again on the results page; `meta_json.score` holds the answer and `meta_json.sessionId` (a random per-tab id) lets the admin reports pair the two
 
 ---

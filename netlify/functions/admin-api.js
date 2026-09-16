@@ -200,6 +200,8 @@ async function getStats(db) {
             COUNT(*) FILTER (WHERE event_name = 'copay_card_click') as copay_clicks,
             COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_clicks,
             COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_clicks,
+            COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))))
+              FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as sessions_reached,
             COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
             COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completes,
             COUNT(*) FILTER (WHERE event_name = 'epic_import') as epic_imports,
@@ -234,6 +236,9 @@ async function getStats(db) {
         copayClicks: parseInt(clickStats[0]?.copay_clicks || 0),
         foundationClicks: parseInt(clickStats[0]?.foundation_clicks || 0),
         papClicks: parseInt(clickStats[0]?.pap_clicks || 0),
+        // Distinct sessions with at least one program click. The click counts
+        // above count clicks (one patient opening three programs is three).
+        sessionsReached: parseInt(clickStats[0]?.sessions_reached || 0),
         quizStarts: parseInt(clickStats[0]?.quiz_starts || 0),
         quizCompletes: parseInt(clickStats[0]?.quiz_completes || 0),
         epicImports: parseInt(clickStats[0]?.epic_imports || 0),

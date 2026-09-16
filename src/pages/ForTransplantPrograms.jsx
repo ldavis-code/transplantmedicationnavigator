@@ -20,7 +20,7 @@ const ForTransplantPrograms = () => {
         {
             icon: BarChart3,
             title: 'Intelligence You Cannot Get From Your EHR',
-            description: 'See what share of your patients are routed to patient assistance programs versus commercial copay cards, which medications they need help with, and how many reached a program, all without collecting PHI.'
+            description: 'See how many of your patient sessions opened a patient assistance program versus a commercial copay card, which medications they need help with, and how many reached a program, all without collecting PHI.'
         },
         {
             icon: Lock,
@@ -32,9 +32,9 @@ const ForTransplantPrograms = () => {
     // What the 90-day readout tells a center. Savings totals are left off on
     // purpose: they are self-reported by the patients who choose to log them.
     const trackingCapabilities = [
-        'Share of your patients routed to patient assistance programs vs. commercial copay cards',
+        'How many patient sessions opened a patient assistance program vs. a commercial copay card',
         'The medications your patients most often need help paying for',
-        'How many patients reached a program that can lower their cost',
+        'How many patient sessions reached a program that can lower their cost',
         'Confidence in affording medications, asked before and after the quiz',
         'Coverage mix and self-reported cost burden of the patients you reach',
         'Week-by-week engagement across the 90-day pilot'
@@ -115,7 +115,7 @@ const ForTransplantPrograms = () => {
                     <div className="text-center">
                         <div className="w-12 h-12 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">3</div>
                         <h3 className="font-bold text-slate-900 mb-2">Read the Results</h3>
-                        <p className="text-slate-600 text-sm">After 90 days, receive a readout: who was routed where, which medications, how many reached a program, and confidence before and after</p>
+                        <p className="text-slate-600 text-sm">After 90 days, receive a readout: which program types your patients opened, which medications, how many sessions reached a program, and confidence before and after</p>
                     </div>
                 </div>
             </section>

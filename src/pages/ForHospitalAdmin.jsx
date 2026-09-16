@@ -60,7 +60,7 @@ const ForHospitalAdmin = () => {
         {
             icon: ClipboardCheck,
             title: 'White-Label Admin Dashboard',
-            description: 'Hospital administrators get a dedicated dashboard with a pilot readout: what share of your patients were routed to patient assistance programs versus copay cards, which medications they needed help with, how many reached a program, and confidence before and after. All aggregate, all privacy-safe.'
+            description: 'Hospital administrators get a dedicated dashboard with a pilot readout: how many patient sessions reached a program, how many opened a patient assistance program versus a copay card, which medications drew the most requests for help, and confidence before and after. All aggregate, all privacy-safe.'
         }
     ];
 
@@ -70,9 +70,9 @@ const ForHospitalAdmin = () => {
     // routing split and confidence change are the insight a center cannot get
     // from its EHR.
     const outcomesData = [
-        'Share of your patients routed to patient assistance programs vs. commercial copay cards',
+        'How many patient sessions opened a patient assistance program vs. a commercial copay card',
         'The medications your patients most often need help paying for',
-        'How many patients reached a program that can lower their cost',
+        'How many patient sessions reached a program that can lower their cost',
         'Confidence in affording medications, asked before and after the quiz',
         'Coverage mix and self-reported cost burden of the patients you reach',
         'Trackable patient education for CMS documentation'
@@ -82,13 +82,13 @@ const ForHospitalAdmin = () => {
     const intelligence = [
         {
             icon: ShieldCheck,
-            title: 'Who is routed where',
-            description: 'What share of your patients are hitting Medicare and Medicaid patient assistance pathways versus commercial copay cards. The split shows the insurance routing working, patient by patient, without a chart review.'
+            title: 'Which doors they open',
+            description: 'How many of your patient sessions opened a patient assistance program versus a commercial copay card or a foundation grant. Counted from what patients actually clicked, aggregate only, without a chart review.'
         },
         {
             icon: Pill,
-            title: 'Which medications worry them',
-            description: 'The medications your patients most often look for help with, so your pharmacist and coordinators know where the cost anxiety actually sits.'
+            title: 'Which medications they seek help for',
+            description: 'The medications your patients most often look for help with, so your pharmacist and coordinators know which medications drew the most requests for help.'
         },
         {
             icon: DoorOpen,
@@ -284,7 +284,7 @@ const ForHospitalAdmin = () => {
                     <h2 id="intelligence-heading" className="text-xl md:text-2xl font-extrabold text-slate-900">What You Learn About Your Patients</h2>
                 </div>
                 <p className="text-slate-600 mb-8 max-w-3xl">
-                    A center cannot tell you today what share of its patients are hitting Medicare patient assistance pathways versus commercial copay cards, or which drugs its patients are anxious about. The pilot report can. It is operational insight a financial coordinator has no other way to get.
+                    A center cannot tell you today how many of its patients are opening patient assistance programs versus commercial copay cards, or which medications its patients most often seek help paying for. The pilot report can. It is operational insight a financial coordinator has no other way to get.
                 </p>
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                     {intelligence.map((item, index) => (
@@ -303,11 +303,11 @@ const ForHospitalAdmin = () => {
                         <span className="text-xs font-semibold text-amber-800 bg-amber-100 border border-amber-200 rounded-full px-2.5 py-0.5">Illustrative example, not pilot data</span>
                     </div>
                     <p className="text-slate-800 leading-relaxed">
-                        &ldquo;Of your patients who used the Navigator this quarter, 60% were routed to patient assistance programs and 35% to commercial copay cards. The medications they most often needed help with were tacrolimus, mycophenolate, and valganciclovir. 41 reached a program that can lower their cost. Confidence in affording their medications rose from 2.1 to 3.8 out of 5 among patients who answered before and after the quiz.&rdquo;
+                        &ldquo;Of your 120 patient sessions this quarter, 38 reached at least one program that can lower their cost, 61 program click-throughs in all. Of those 38 sessions, 23 opened a patient assistance program, 14 a commercial copay card, and 4 a foundation grant. The medications patients most often needed help with were tacrolimus, mycophenolate, and valganciclovir. Confidence in affording their medications rose from 2.1 to 3.8 out of 5 among the 31 who answered before and after the quiz (74% improved).&rdquo;
                     </p>
                     <p className="text-xs text-slate-500 mt-3 flex items-start gap-2">
                         <GraduationCap size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
-                        <span>The confidence measure is a single question asked before and after the quiz on a 1-to-5 scale, the standard endpoint for patient-education interventions. Your report uses your patients&rsquo; numbers; every figure is an anonymous aggregate.</span>
+                        <span>The confidence measure is a single question asked before and after the quiz on a 1-to-5 scale, a common pre/post endpoint for patient-education programs. Your report uses your patients&rsquo; numbers; every figure is an anonymous aggregate of browser sessions, never a patient list.</span>
                     </p>
                 </div>
             </section>
