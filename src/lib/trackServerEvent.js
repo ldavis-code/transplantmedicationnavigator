@@ -85,6 +85,36 @@ function getLang() {
 }
 
 /**
+ * Tag outbound /out/ links with the per-tab session id at click time.
+ *
+ * The /out/ redirect logs program clicks server-side; without the session id
+ * those rows have only page + date, so the admin "sessions that reached a
+ * program" counts collapsed every /out/ click from one page on one day into a
+ * single session. One delegated listener appends `sid=` to the href as the
+ * click happens (the browser navigates to the href as it stands after the
+ * handlers run), so the rendered markup stays free of the random id, which
+ * keeps the page snapshots deterministic. Same id the client events carry;
+ * it identifies a browser tab, never a person. Installed once from main.jsx.
+ */
+export function installOutboundSessionTag(doc = typeof document !== 'undefined' ? document : null) {
+  if (!doc || doc.__tmnOutTag) return;
+  doc.__tmnOutTag = true;
+  doc.addEventListener('click', (event) => {
+    try {
+      const anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+      if (!anchor) return;
+      const href = anchor.getAttribute('href') || '';
+      if (!href.startsWith('/out/') || /[?&]sid=/.test(href)) return;
+      const sid = getSessionId();
+      if (!sid) return;
+      anchor.setAttribute('href', `${href}${href.includes('?') ? '&' : '?'}sid=${encodeURIComponent(sid)}`);
+    } catch {
+      // Tagging is best-effort; the link still works untagged.
+    }
+  }, true);
+}
+
+/**
  * Current UI language for tagging outbound /out/ links ('en' or 'es').
  * Exported so link hrefs carry the same language the client events carry —
  * the out-redirect function logs it next to the click's source.
