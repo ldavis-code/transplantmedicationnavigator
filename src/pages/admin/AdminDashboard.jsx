@@ -256,7 +256,7 @@ export default function AdminDashboard() {
               </div>
               <DoorOpen className="h-10 w-10 text-emerald-400" />
             </div>
-            <p className="text-xs text-emerald-700/80 mt-3">Patients who clicked through to a program that can lower their cost.</p>
+            <p className="text-xs text-emerald-700/80 mt-3">Click-throughs to a copay card, foundation, or PAP; one patient opening three programs counts three. {(stats?.sessionsReached || 0).toLocaleString()} patient sessions reached at least one.</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border p-6">
             <div className="flex items-center justify-between">

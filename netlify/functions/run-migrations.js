@@ -212,6 +212,19 @@ const MIGRATIONS = [
       (sql) => sql`DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'medications_stage_chk' AND conrelid = 'medications'::regclass) THEN ALTER TABLE medications ADD CONSTRAINT medications_stage_chk CHECK (stage IS NULL OR stage IN ('pre', 'post', 'both', 'peri')); END IF; END $$`,
     ],
   },
+  {
+    // The /out/ redirect logged price lookups (GoodRx, SingleCare, Cost Plus,
+    // TrumpRx) and the Drugs.com "Drug facts" link as copay_card_click /
+    // pap_click, so "programs reached" and its copay/PAP split counted a
+    // Medicare patient reading drug facts as reaching a PAP. out-redirect.js
+    // now writes them as price_lookup_click / drug_info_click; this moves the
+    // rows written before that. The event_name guards make a re-run a no-op.
+    id: '055_reclassify_price_lookup_events',
+    statements: [
+      (sql) => sql`UPDATE events SET event_name = 'price_lookup_click', program_type = 'price_lookup' WHERE program_id IN ('goodrx-search', 'singlecare-search', 'costplus-search', 'trumprx-gov') AND event_name IN ('copay_card_click', 'pap_click')`,
+      (sql) => sql`UPDATE events SET event_name = 'drug_info_click', program_type = 'drug_info' WHERE program_id = 'drugs-com-search' AND event_name = 'pap_click'`,
+    ],
+  },
 ];
 
 const JWT_SECRET = process.env.JWT_SECRET;

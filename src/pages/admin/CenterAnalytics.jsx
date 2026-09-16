@@ -288,32 +288,35 @@ function joinNames(names) {
   return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 }
 
-// The sentences a financial coordinator cannot get from the EHR: what share
-// of the center's patients were routed to patient assistance programs versus
-// commercial copay cards, which medications they needed help with, how many
-// reached a program, and whether confidence moved. Built from the same
-// aggregates the rest of the page shows, so it can be pasted into a pilot
-// review as-is. Returns [] when there is nothing to say yet.
-function buildReadout({ centerName, summary, byType, medications, confidence, periodLabel }) {
+// The sentences a financial coordinator cannot get from the EHR: how many of
+// the center's patient sessions reached a program, which program types they
+// opened (patient assistance programs versus commercial copay cards versus
+// foundations), which medications they needed help with, and whether
+// confidence moved. Built from the same aggregates the rest of the page
+// shows, so it can be pasted into a pilot review as-is. Counts are what the
+// events record: sessions and clicks by program type, never coverage (a click
+// carries no insurance information). Returns [] when there is nothing to say.
+function buildReadout({ centerName, summary, medications, confidence, periodLabel }) {
   const sentences = [];
   const clicks = summary.connections;
   const sessionsReached = summary.sessionsReached ?? 0;
   if (clicks > 0) {
     // Sessions and click-throughs are different counts: one patient who opens
     // three programs is one session reached and three click-throughs.
-    const papPct = pctOf(byType.pap, clicks);
-    const copayPct = pctOf(byType.copay, clicks);
-    const foundationPct = pctOf(byType.foundation, clicks);
     sentences.push(
       `Of ${centerName}'s ${fmt(summary.sessions)} patient sessions (${periodLabel.toLowerCase()}), ` +
       `${fmt(sessionsReached)} reached at least one program that can lower their cost, ` +
       `${fmt(clicks)} program click-through${clicks === 1 ? '' : 's'} in all.`
     );
+    const byS = summary.sessionsReachedByType || {};
     const parts = [];
-    if (byType.pap > 0) parts.push(`${papPct}% of those click-throughs were routed to patient assistance programs (the Medicare, Medicaid, and uninsured pathway)`);
-    if (byType.copay > 0) parts.push(`${copayPct}% to commercial copay cards`);
-    if (byType.foundation > 0) parts.push(`${foundationPct}% to foundation grants`);
-    if (parts.length) sentences.push(`${joinNames(parts)}.`);
+    if (byS.pap > 0) parts.push(`${fmt(byS.pap)} opened a patient assistance program`);
+    if (byS.copay > 0) parts.push(`${fmt(byS.copay)} a commercial copay card`);
+    if (byS.foundation > 0) parts.push(`${fmt(byS.foundation)} a foundation grant`);
+    const overlap = (byS.pap || 0) + (byS.copay || 0) + (byS.foundation || 0) > sessionsReached;
+    if (parts.length && sessionsReached > 0) {
+      sentences.push(`Of those ${fmt(sessionsReached)} sessions, ${joinNames(parts)}${overlap ? ' (some opened more than one)' : ''}.`);
+    }
   }
   const topMeds = (medications || []).slice(0, 3).map((m) => m.medication).filter(Boolean);
   if (topMeds.length > 0) {
@@ -334,9 +337,9 @@ function buildReadout({ centerName, summary, byType, medications, confidence, pe
   return sentences;
 }
 
-function PilotReadout({ centerName, summary, byType, medications, confidence, periodLabel, slug }) {
+function PilotReadout({ centerName, summary, medications, confidence, periodLabel, slug }) {
   const [copied, setCopied] = useState(false);
-  const sentences = buildReadout({ centerName, summary, byType, medications, confidence, periodLabel });
+  const sentences = buildReadout({ centerName, summary, medications, confidence, periodLabel });
   const text = sentences.join(' ');
 
   const copy = async () => {
@@ -377,8 +380,9 @@ function PilotReadout({ centerName, summary, byType, medications, confidence, pe
       )}
       <p className="text-xs text-gray-500 mt-3">
         Sessions reached counts browser sessions with at least one program click; programs reached counts the clicks.
-        Routing is the share of those clicks by type. Medications are the card the patient was on when they reached a
-        program, not a patient list. Confidence is the 1-to-5 question asked before and after the quiz.
+        Program types are what patients opened, not their coverage (a click carries no insurance information). Medications
+        are the card the patient was on when they reached a program, not a patient list. Confidence is the 1-to-5 question
+        asked before and after the quiz.
       </p>
     </section>
   );
@@ -783,7 +787,6 @@ export default function CenterAnalytics() {
               centerName={pilot?.centerName || selected}
               slug={selected}
               summary={s}
-              byType={byType}
               medications={data.medications}
               confidence={data.confidence}
               periodLabel={data.period.label}

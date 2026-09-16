@@ -211,7 +211,7 @@ export default function ImpactReport() {
         </h2>
         <p className="text-sm text-gray-600 mb-4">
           Confidence in affording transplant medications, rated 1 to 5 before the quiz and again on the results page,
-          in the last {days} days. Confidence gain is the standard endpoint for patient-education interventions.
+          in the last {days} days. Confidence gain is a common pre/post endpoint for patient-education programs.
         </p>
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <LearningMeasure confidence={data?.confidence} />
@@ -294,15 +294,16 @@ export default function ImpactReport() {
       )}
 
       {/* Programs Reached breakdown: the conversion metric. A click through to
-          a copay card, PAP, or foundation is a real, observable action, and the
-          copay/PAP split shows the insurance routing working. */}
+          a copay card, PAP, or foundation is a real, observable action. The
+          split is by program type (what was opened), not coverage: a click
+          carries no insurance information. */}
       <section className="mb-8">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Programs Reached</h2>
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <p className="text-sm text-gray-600 mb-4">
-            Patients who clicked through to a program that can lower their cost in the last {days} days. Commercially
-            insured patients are routed to copay cards; Medicare, Medicaid, and uninsured patients to patient assistance
-            programs, so the split below is the routing at work:
+            Click-throughs to a program that can lower a patient's cost in the last {days} days, by program type.
+            {' '}{(conn.sessionsReached || 0).toLocaleString()} patient sessions reached at least one; one patient opening
+            three programs counts three.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ProgramCard
@@ -327,6 +328,11 @@ export default function ImpactReport() {
               color="bg-purple-500"
             />
           </div>
+          <p className="text-xs text-gray-400 mt-4">
+            Not counted above: {(conn.priceLookups || 0).toLocaleString()} price lookups (GoodRx, SingleCare, Cost Plus
+            Drugs, TrumpRx) and {(conn.drugInfoClicks || 0).toLocaleString()} drug-information clicks (Drugs.com) in this
+            period. They are logged separately so a price check never reads as a program reached.
+          </p>
         </div>
       </section>
 

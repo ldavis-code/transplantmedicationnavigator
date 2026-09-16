@@ -24,6 +24,10 @@ const programTypeConfig = {
     copay: { icon: CreditCard, color: 'bg-blue-100 text-blue-600', label: 'Copay Card' },
     foundation: { icon: Heart, color: 'bg-pink-100 text-pink-600', label: 'Foundation' },
     pap: { icon: Pill, color: 'bg-green-100 text-green-600', label: 'PAP' },
+    // Not assistance programs: logged separately by out-redirect.js so they
+    // stay out of "programs reached", but still listed here by id.
+    price_lookup: { icon: CreditCard, color: 'bg-amber-100 text-amber-700', label: 'Price Lookup' },
+    drug_info: { icon: FileText, color: 'bg-slate-100 text-slate-600', label: 'Drug Info' },
 };
 
 export default function ReportingPrograms() {

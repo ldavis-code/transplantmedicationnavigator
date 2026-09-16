@@ -23,8 +23,10 @@ import {
     Pill,
     BarChart3,
     FileText,
+    GraduationCap,
 } from 'lucide-react';
 import { useReportingAuth } from '../../context/ReportingAuthContext';
+import LearningMeasure from '../../components/admin/LearningMeasure';
 
 const API_BASE = '/.netlify/functions/admin-api';
 
@@ -346,6 +348,15 @@ export default function ReportingPartnerReport() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        {/* Learning measure: confidence before and after the quiz */}
+                        <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+                            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <GraduationCap className="h-5 w-5 text-gray-400" />
+                                Learning: Confidence Before and After the Quiz
+                            </h3>
+                            <LearningMeasure confidence={report.confidence} />
                         </div>
 
                         {/* Top Programs */}

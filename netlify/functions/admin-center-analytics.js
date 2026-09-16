@@ -251,6 +251,12 @@ async function getCenterAnalytics(db, slug, pilot, period) {
         COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts)))) AS est_sessions,
         COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts))))
           FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click'))      AS sessions_reached,
+        COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts))))
+          FILTER (WHERE event_name = 'copay_card_click')                                          AS sessions_copay,
+        COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts))))
+          FILTER (WHERE event_name = 'pap_click')                                                 AS sessions_pap,
+        COUNT(DISTINCT COALESCE(meta_json->>'sessionId', CONCAT(page_source, '-', DATE(ts))))
+          FILTER (WHERE event_name = 'foundation_click')                                          AS sessions_foundation,
         COUNT(DISTINCT DATE(ts))                                                 AS active_days,
         MIN(ts)                                                                  AS first_event,
         MAX(ts)                                                                  AS last_event
@@ -396,6 +402,13 @@ async function getCenterAnalytics(db, slug, pilot, period) {
       medSearches,
       connections,
       sessionsReached,
+      // Sessions that opened each program type. A session can appear under
+      // more than one type, so these can sum to more than sessionsReached.
+      sessionsReachedByType: {
+        copay: toInt(t.sessions_copay),
+        pap: toInt(t.sessions_pap),
+        foundation: toInt(t.sessions_foundation),
+      },
       resourceViews: toInt(t.resource_views),
       epicImports: toInt(t.epic_imports),
       epicMatchedMeds: toInt(t.epic_matched_meds),
@@ -495,6 +508,9 @@ function buildCsv(slug, pilot, period, a) {
   push('Summary', 'Medication searches', s.medSearches, '');
   push('Summary', 'Programs reached', s.connections, pilot?.targetConnections != null ? `target ${pilot.targetConnections}` : '');
   push('Summary', 'Patient sessions that reached at least one program', s.sessionsReached, `${pct(s.sessionsReached, s.sessions)}% of sessions`);
+  push('Summary', 'Sessions that opened a PAP', s.sessionsReachedByType.pap, `${pct(s.sessionsReachedByType.pap, s.sessionsReached)}% of sessions that reached a program`);
+  push('Summary', 'Sessions that opened a copay card', s.sessionsReachedByType.copay, `${pct(s.sessionsReachedByType.copay, s.sessionsReached)}% of sessions that reached a program`);
+  push('Summary', 'Sessions that opened a foundation', s.sessionsReachedByType.foundation, `${pct(s.sessionsReachedByType.foundation, s.sessionsReached)}% of sessions that reached a program`);
   push('Summary', 'Copay card clicks', a.connectionsByType.copay, '');
   push('Summary', 'PAP clicks', a.connectionsByType.pap, '');
   push('Summary', 'Foundation clicks', a.connectionsByType.foundation, '');

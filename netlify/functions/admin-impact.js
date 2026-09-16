@@ -237,6 +237,9 @@ exports.handler = async function handler(event) {
             COUNT(*) FILTER (WHERE event_name = 'foundation_click') as foundation_connections,
             COUNT(*) FILTER (WHERE event_name = 'pap_click') as pap_connections,
             COUNT(*) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as total_connections,
+            COUNT(DISTINCT COALESCE(meta_json->>'sessionId',
+              CONCAT(COALESCE(partner, 'public'), '-', page_source, '-', DATE(ts))
+            )) FILTER (WHERE event_name IN ('copay_card_click', 'foundation_click', 'pap_click')) as sessions_reached,
             COUNT(*) FILTER (WHERE event_name = 'quiz_start') as quiz_starts,
             COUNT(*) FILTER (WHERE event_name = 'quiz_complete') as quiz_completions,
             COUNT(*) FILTER (WHERE event_name = 'med_search') as med_searches,
@@ -391,6 +394,12 @@ exports.handler = async function handler(event) {
           copay: parseInt(c.copay_connections || 0),
           foundation: parseInt(c.foundation_connections || 0),
           pap: parseInt(c.pap_connections || 0),
+          // Distinct sessions with at least one program click (total counts clicks).
+          sessionsReached: parseInt(c.sessions_reached || 0),
+          // Not programs: logged separately by out-redirect.js so they never
+          // land in the counts above. Shown so the report can say so.
+          priceLookups: funnelCounts.price_lookup_click || 0,
+          drugInfoClicks: funnelCounts.drug_info_click || 0,
           quizStarts: parseInt(c.quiz_starts || 0),
           quizCompletions: parseInt(c.quiz_completions || 0),
           medSearches: parseInt(c.med_searches || 0),
