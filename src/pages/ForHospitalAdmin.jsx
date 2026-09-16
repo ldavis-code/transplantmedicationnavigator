@@ -256,7 +256,7 @@ const ForHospitalAdmin = () => {
                     <div className="text-center">
                         <div className="w-12 h-12 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">4</div>
                         <h3 className="font-bold text-slate-900 mb-2">Pilot Readout</h3>
-                        <p className="text-slate-600 text-sm">Receive a readout of who was routed where, which medications, how many reached a program, and confidence before and after, aligned to your quality metrics</p>
+                        <p className="text-slate-600 text-sm">Receive a readout of which program types your patients opened, which medications, how many sessions reached a program, and confidence before and after, aligned to your quality metrics</p>
                     </div>
                 </div>
                 <div className="border-t border-slate-200 pt-8">
@@ -303,7 +303,7 @@ const ForHospitalAdmin = () => {
                         <span className="text-xs font-semibold text-amber-800 bg-amber-100 border border-amber-200 rounded-full px-2.5 py-0.5">Illustrative example, not pilot data</span>
                     </div>
                     <p className="text-slate-800 leading-relaxed">
-                        &ldquo;Of your 120 patient sessions this quarter, 38 reached at least one program that can lower their cost, 61 program click-throughs in all. Of those 38 sessions, 23 opened a patient assistance program, 14 a commercial copay card, and 4 a foundation grant. The medications patients most often needed help with were tacrolimus, mycophenolate, and valganciclovir. Confidence in affording their medications rose from 2.1 to 3.8 out of 5 among the 31 who answered before and after the quiz (74% improved).&rdquo;
+                        &ldquo;Of your 120 patient sessions this quarter, 38 reached at least one program that can lower their cost, 61 program click-throughs in all. Of those 38 sessions, 23 opened a patient assistance program, 14 a commercial copay card, and 4 a foundation grant (some opened more than one). The medications patients most often needed help with were tacrolimus, mycophenolate, and valganciclovir. Confidence in affording their medications rose from 2.1 to 3.8 out of 5 among the 31 who answered before and after the quiz (74% improved).&rdquo;
                     </p>
                     <p className="text-xs text-slate-500 mt-3 flex items-start gap-2">
                         <GraduationCap size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />

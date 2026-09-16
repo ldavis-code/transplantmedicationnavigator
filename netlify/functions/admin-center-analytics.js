@@ -514,8 +514,8 @@ function buildCsv(slug, pilot, period, a) {
   push('Summary', 'Copay card clicks', a.connectionsByType.copay, '');
   push('Summary', 'PAP clicks', a.connectionsByType.pap, '');
   push('Summary', 'Foundation clicks', a.connectionsByType.foundation, '');
-  push('Summary', 'Routed to PAPs (share of programs reached)', pct(a.connectionsByType.pap, s.connections), '%');
-  push('Summary', 'Routed to copay cards (share of programs reached)', pct(a.connectionsByType.copay, s.connections), '%');
+  push('Summary', 'Share of click-throughs to PAPs', pct(a.connectionsByType.pap, s.connections), '%');
+  push('Summary', 'Share of click-throughs to copay cards', pct(a.connectionsByType.copay, s.connections), '%');
   push('Summary', 'MyChart imports', s.epicImports, `${s.epicMatchedMeds} medications matched`);
   push('Summary', 'Helpful votes (yes)', s.helpfulYes, '');
   push('Summary', 'Helpful votes (no)', s.helpfulNo, '');

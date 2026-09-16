@@ -1596,9 +1596,12 @@ const Wizard = () => {
                     {answers.confidencePost ? (
                         <div role="status">
                             <p className="text-slate-800 font-medium">{t('wizard.results.confidence.thanks')}</p>
-                            {answers.confidencePreRecorded && (
+                            {/* Payloads saved before confidencePreRecorded existed
+                                carry the sent score in confidencePre (it was never
+                                re-sent), so fall back to it. */}
+                            {(answers.confidencePreRecorded || answers.confidencePre) && (
                                 <p className="text-sm text-slate-600 mt-1">
-                                    {t('wizard.results.confidence.before')}: {answers.confidencePreRecorded}/5 · {t('wizard.results.confidence.now')}: {answers.confidencePost}/5
+                                    {t('wizard.results.confidence.before')}: {answers.confidencePreRecorded || answers.confidencePre}/5 · {t('wizard.results.confidence.now')}: {answers.confidencePost}/5
                                 </p>
                             )}
                         </div>
