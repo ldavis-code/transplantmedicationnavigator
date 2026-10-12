@@ -9,16 +9,19 @@
  * so crawlers see per-medication titles, descriptions, and content.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Pill, CreditCard, HeartHandshake, Tag, DollarSign, ArrowRight, Search, ShieldCheck, AlertTriangle } from 'lucide-react';
 import MEDICATIONS_DATA from '../data/medications.json';
 import PROGRAMS_DATA from '../data/programs.json';
 import PRICE_ESTIMATES from '../data/price-estimates.json';
+import PROGRAMS_ES from '../data/programs.es.json';
+import COST_PLUS_EXCLUSIONS from '../data/cost-plus-exclusions.json';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { localizeMedName } from '../utils/medNames.js';
 import { isGenericRecord, medPageName, medNameWithGeneric, brandNamesForGeneric, stripGenericTag } from '../utils/medIdentity.js';
+import { buildMedFacts, priceFor } from '../utils/medFacts.js';
 
 const BASE_URL = 'https://transplantmedicationnavigator.com';
 
@@ -35,23 +38,24 @@ function findProgram(id) {
     return null;
 }
 
-// Best-available cash price range for a medication, if we have an estimate.
-function priceRange(med, t) {
-    const o = PRICE_ESTIMATES.medicationOverrides?.[med.id];
-    if (!o) return null;
-    const src = o.costplus || o.goodrx || o.walmart;
-    if (!src || src.min == null || src.max == null) return null;
-    const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
-    return Math.round(src.min) === Math.round(src.max)
-        ? t('medications.detail.priceRangeSingle', { price: money(src.min) })
-        : t('medications.detail.priceRangeBetween', { min: money(src.min), max: money(src.max) });
+// Cash price range for THIS record (src/utils/medFacts.js priceFor — the
+// same figure the prerendered facts block shows), formatted for display.
+const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+function formatRange({ min, max }, t) {
+    return Math.round(min) === Math.round(max)
+        ? t('medications.detail.priceRangeSingle', { price: money(min) })
+        : t('medications.detail.priceRangeBetween', { min: money(min), max: money(max) });
 }
 
 function useStructuredData(schemas) {
     useEffect(() => {
+        // The prerendered page ships the same object in its head (same
+        // builder); drop that copy so there is only ever one.
+        document.querySelectorAll('script[data-med-detail]').forEach((s) => s.remove());
         const el = document.createElement('script');
         el.type = 'application/ld+json';
         el.setAttribute('data-med-detail', 'true');
+        if (!schemas) return undefined;
         el.textContent = JSON.stringify(schemas);
         document.head.appendChild(el);
         return () => { el.remove(); };
@@ -105,66 +109,29 @@ const MedicationDetail = () => {
     const hasPap = !!(med && (med.papUrl || med.papProgramId));
     const copayLink = med && (med.copayUrl || findProgram(med.copayProgramId)?.url);
     const papLink = med && (med.papUrl || findProgram(med.papProgramId)?.url);
-    const price = med && priceRange(med, t);
+    const priceEst = med && priceFor(med, PRICE_ESTIMATES, COST_PLUS_EXCLUSIONS);
+    const price = priceEst ? formatRange(priceEst, t) : null;
     const genericDiffers = nameWithGeneric !== pageNameEn;
 
-    // FAQ content — also emitted as structured data below.
-    const faqs = med ? [
-        hasCopay && {
-            q: t('medications.detail.faq.copayQ', { name: nameDisplay }),
-            a: t('medications.detail.faq.copayA', { name: nameDisplay }),
-        },
-        {
-            q: t('medications.detail.faq.freeQ', { name: nameDisplay }),
-            a: t('medications.detail.faq.freeA', { name: nameDisplay }),
-        },
-        isGeneric ? {
-            // "Is there a generic for Tacrolimus (generic)?" answered itself.
-            q: t('medications.detail.faq.isGenericQ'),
-            a: brandsDisplay
-                ? t('medications.detail.faq.isGenericA', { generic: nameDisplay, brand: brandsDisplay })
-                : t('medications.detail.faq.isGenericNoBrandA', { generic: nameDisplay }),
-        } : med.generic_available && {
-            q: t('medications.detail.faq.genericQ', { name: nameDisplay }),
-            a: t('medications.detail.faq.genericA', { generic: localizeMedName(med.genericName) }),
-        },
-        price && {
-            q: t('medications.detail.faq.costQ', { name: nameDisplay }),
-            a: t('medications.detail.faq.costA', { price }),
-        },
-    ].filter(Boolean) : [];
-
-    // Deliberately not schema.org/Drug: Drug is a subtype of Product, so
-    // Google's Product snippets validator flags it as a critical error unless
-    // it carries offers/review/aggregateRating — none of which apply to an
-    // informational page that sells nothing.
-    const structured = med ? [
-        {
-            '@context': 'https://schema.org',
-            '@type': 'MedicalWebPage',
-            name: nameWithGeneric,
-            description: `${nameWithGeneric} is ${aOrAn(med.category)} ${med.category ? med.category.toLowerCase() + ' medication' : 'medication'} used by transplant patients. Learn how to lower the cost with copay cards, patient assistance programs, and foundation grants.`,
-            url: `${BASE_URL}/medications/${med.id}`,
-            about: {
-                '@type': 'MedicalEntity',
-                name: pageNameEn,
-                // For a generic record the alternate name is the brand it
-                // stands in for, not a repeat of its own name.
-                ...(isGeneric
-                    ? (genericBrands.length ? { alternateName: genericBrands } : {})
-                    : { alternateName: med.genericName }),
-            },
-        },
-        faqs.length ? {
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map((f) => ({
-                '@type': 'Question',
-                name: f.q,
-                acceptedAnswer: { '@type': 'Answer', text: f.a },
-            })),
-        } : null,
-    ].filter(Boolean) : [];
+    // FAQ and structured data come from the shared facts builder — the same
+    // one the prerendered page uses — so the FAQ a patient reads, the
+    // FAQPage JSON-LD, and the static page say the same thing, and the
+    // answers follow the per-program eligibility rule
+    // (src/utils/programEligibility.js) instead of routing by insurance type.
+    const facts = useMemo(() => (med ? buildMedFacts(med, {
+        lang: isSpanish ? 'es' : 'en',
+        allMeds: MEDICATIONS_DATA,
+        programs: PROGRAMS_DATA,
+        programsEs: PROGRAMS_ES,
+        priceEstimates: PRICE_ESTIMATES,
+        costPlusExclusions: COST_PLUS_EXCLUSIONS,
+        localizeName: localizeMedName,
+        categoryLabel: (c) => t(`medications.categories.${c}`, { defaultValue: c }),
+        priceRange: (r) => formatRange(r, t),
+    }) : null), [med, isSpanish, t]);
+    const faqs = facts ? facts.faqs : [];
+    const papFor = facts ? (facts.sections.find((sec) => sec.pap)?.pap || null) : null;
+    const structured = useMemo(() => (facts ? facts.jsonLd : null), [facts]);
 
     useStructuredData(structured);
 
@@ -225,7 +192,15 @@ const MedicationDetail = () => {
 
                 <div className="border border-amber-200 bg-amber-50 rounded-xl p-5">
                     <h3 className="flex items-center gap-2 font-bold text-amber-900 mb-1"><HeartHandshake size={18} aria-hidden="true" /> {t('medications.detail.papTitle')}</h3>
-                    <p className="text-slate-700 text-sm">{t('medications.detail.papText', { name: nameDisplay })}{hasPap ? '' : t('medications.detail.papAsk')}</p>
+                    <p className="text-slate-700 text-sm">
+                        {/* Who the PAP serves comes from the program's own
+                            eligibility flags (same facts as the static page),
+                            never from insurance type alone. Generic wording
+                            only when the program carries no flags. */}
+                        {papFor
+                            ? [papFor.forLine, papFor.check ? facts.checkLabel : null].filter(Boolean).join(' ')
+                            : <>{t('medications.detail.papText', { name: nameDisplay })}{hasPap ? '' : t('medications.detail.papAsk')}</>}
+                    </p>
                     {hasPap && papLink && <a href={papLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-amber-800 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.papLink')}<ArrowRight size={14} aria-hidden="true" /></a>}
                 </div>
 

@@ -11,6 +11,7 @@ import { BookOpen, ArrowRight, Heart, X, CheckCircle, DollarSign, Shield, AlertT
 import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../data/constants.js';
 import PROGRAMS_ES from '../data/programs.es.json';
 import PROGRAM_ELIGIBILITY from '../data/program-eligibility.json';
+import { programStatus, STATUS } from '../utils/programEligibility.js';
 import COST_PLUS_EXCLUSIONS_DATA from '../data/cost-plus-exclusions.json';
 import GOODRX_EXCLUSIONS_DATA from '../data/goodrx-exclusions.json';
 import SINGLECARE_EXCLUSIONS_DATA from '../data/singlecare-exclusions.json';
@@ -479,13 +480,21 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
     // from papProgram: nothing upstream carries it. medications.js selects
     // straight from the medications table with no join to programs, so
     // med.papProgram is only ever the {url, name} fallback built above.
-    const papNotForThisInsurance = !!(eligibilityKey && papProgramId
-        && PROGRAM_ELIGIBILITY.papPrograms?.[papProgramId]?.[eligibilityKey] === false);
-    const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl);
+    //
+    // One rule for every surface (src/utils/programEligibility.js, also used
+    // by the quiz and the prerendered medication pages): a program shows on
+    // a pathway only when its flag is true, shows with "Check eligibility
+    // with the program" when the flag is unknown, and is hidden when false.
+    // Copay cards are commercial-only, always.
+    const papStatus = programStatus('pap', papProgramId ? PROGRAM_ELIGIBILITY.papPrograms?.[papProgramId] : null, eligibilityKey);
+    const papCheckEligibility = papStatus === STATUS.CHECK;
+    const copayStatus = programStatus('copay', copayProgramId ? PROGRAM_ELIGIBILITY.copayPrograms?.[copayProgramId] : null, 'commercial');
+    const copayCheckEligibility = copayStatus === STATUS.CHECK;
+    const hasCopayProgram = !!(copayProgram || copayProgramId || med.copayUrl) && copayStatus !== STATUS.HIDDEN;
     // Manufacturer Patient Assistance Programs are brand-specific. If the patient
     // takes the GENERIC, the brand's PAP (and copay) don't apply, hide both, so a
     // generic never surfaces e.g. the Genentech program for CellCept/Valcyte.
-    const hasPapProgram = !!(papProgram || papProgramId || med.papUrl) && !takesGeneric;
+    const hasPapProgram = !!(papProgram || papProgramId || med.papUrl) && !takesGeneric && papStatus !== STATUS.HIDDEN;
 
     // Use direct URL from JSON data (bypasses database lookup for reliability)
     const papLink = papUrl || `https://www.drugs.com/search.php?searchterm=${med.brandName.split('/')[0]}`;
@@ -653,10 +662,14 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 ASSISTANCE tab already uses: copay card (commercial) → PAP →
                 cash price → foundations. */}
             {(() => {
+                // Medicaid usually covers the medication, so a Medicaid
+                // patient's next step is their coverage, never cash.
+                const isMedicaid = eligibilityKey === 'medicaid';
                 const usesCopay = showCopayCards && hasCopayProgram;
-                const usesPap = !usesCopay && hasPapProgram && !papNotForThisInsurance;
-                const usesCash = !usesCopay && !usesPap && !!cashPriceSource;
-                const stepText = usesCopay ? t('medications.card.nextStep.copay')
+                const usesPap = !usesCopay && hasPapProgram;
+                const usesCash = !usesCopay && !usesPap && !isMedicaid && !!cashPriceSource;
+                const stepText = isMedicaid ? t('medications.card.nextStep.medicaid')
+                    : usesCopay ? t('medications.card.nextStep.copay')
                     : usesPap ? t('medications.card.nextStep.pap')
                     : usesCash ? t('medications.card.nextStep.cash')
                     : t('medications.card.nextStep.foundation');
@@ -683,7 +696,7 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                     {t('medications.card.cash.compare')}<ArrowRight size={14} aria-hidden="true" />
                                 </button>
                             )}
-                            {!usesCopay && !usesPap && !usesCash && (
+                            {!usesCopay && !usesPap && !usesCash && !isMedicaid && (
                                 <Link to="/application-help" className={actionClass} aria-label={t('medications.card.assistance.viewGuideAria')}>
                                     {t('medications.card.assistance.viewGrants')}<ArrowRight size={14} aria-hidden="true" />
                                 </Link>
@@ -929,10 +942,17 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                                                     {copayProgram?.name || t('medications.card.fallbacks.brandCopayCard', { name: localizeMedName(med.brandName) })}
                                                 </h3>
                                                 <div className="flex items-center gap-2 mt-1">
-                                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
-                                                        <CheckCircle size={12} aria-hidden="true" />
-                                                        {t('medications.card.assistance.eligible')}
-                                                    </span>
+                                                    {copayCheckEligibility ? (
+                                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-800">
+                                                            <Info size={12} aria-hidden="true" />
+                                                            {t('medications.card.assistance.checkEligibility')}
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                                                            <CheckCircle size={12} aria-hidden="true" />
+                                                            {t('medications.card.assistance.eligible')}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <p className="text-sm text-slate-600 mt-2">
                                                     {t('medications.card.assistance.copayFor')}
@@ -959,38 +979,24 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                             hasPapProgram is already false for generics (manufacturer PAPs
                             are brand-specific); Foundations & Grants below still apply. */}
                         {hasPapProgram && (activeFilter === 'all' || activeFilter === 'free') && (
-                            <section className={`rounded-xl p-5 ${
-                                papNotForThisInsurance
-                                    ? 'border border-slate-200 bg-slate-50'
-                                    : 'border border-amber-200 bg-gradient-to-r from-amber-50/50 to-orange-50/50'
-                            }`}>
-                                {/* Says plainly that this one isn't the patient's
-                                    route, and where their route is, instead of
-                                    leaving them to infer it from an eligibility
-                                    line further down. */}
-                                {papNotForThisInsurance && (
-                                    <div className="mb-3 pb-3 border-b border-slate-200">
-                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-700">
+                            <section className="rounded-xl p-5 border border-amber-200 bg-gradient-to-r from-amber-50/50 to-orange-50/50">
+                                {/* A PAP whose own flags rule out this
+                                    patient's insurance is not shown at all
+                                    (programEligibility.js). One whose flag is
+                                    unknown is shown, and says so. */}
+                                {papCheckEligibility && (
+                                    <div className="mb-3">
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-800">
                                             <Info size={12} aria-hidden="true" />
-                                            {t('medications.card.assistance.papNotEligible')}
+                                            {t('medications.card.assistance.checkEligibility')}
                                         </span>
-                                        <p className="text-sm text-slate-600 mt-2">
-                                            {/* Point at the copay card only when the
-                                                patient can actually use one — it is
-                                                commercial-only, so the same gate the
-                                                copay section itself uses. Medicaid and
-                                                Medicare patients get the neutral note. */}
-                                            {showCopayCards && hasCopayProgram
-                                                ? t('medications.card.assistance.papUseCopayInstead')
-                                                : t('medications.card.assistance.papNotEligibleText')}
-                                        </p>
                                     </div>
                                 )}
-                                <div className={`flex items-start justify-between gap-4 ${papNotForThisInsurance ? 'opacity-60' : ''}`}>
+                                <div className="flex items-start justify-between gap-4">
                                     <div className="flex items-start gap-3">
-                                        <span className={`w-3 h-3 rounded-full flex-shrink-0 mt-1.5 ${papNotForThisInsurance ? 'bg-slate-400' : 'bg-amber-500'}`}></span>
+                                        <span className="w-3 h-3 rounded-full flex-shrink-0 mt-1.5 bg-amber-500"></span>
                                         <div>
-                                            <h3 className={`font-bold flex items-center gap-2 ${papNotForThisInsurance ? 'text-slate-700' : 'text-amber-800'}`}>
+                                            <h3 className="font-bold flex items-center gap-2 text-amber-800">
                                                 {papProgram?.name || t('medications.card.fallbacks.manufacturerPap', { manufacturer: med.manufacturer })}
                                             </h3>
                                             <div className="flex items-center gap-2 mt-1">

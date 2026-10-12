@@ -11,7 +11,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { seoMetadata } from '../src/data/seo-metadata.js';
-import { isGenericRecord, medPageName, medNameWithGeneric } from '../src/utils/medIdentity.js';
+import { isGenericRecord, medNameWithGeneric, medPageName } from '../src/utils/medIdentity.js';
+import { buildMedFacts } from '../src/utils/medFacts.js';
+import { renderMedFactsHtml } from './lib/med-facts-html.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -396,41 +398,47 @@ function programsDirectoryBody(isEs) {
       </div>`;
 }
 
-const medicationPages = MEDICATIONS.map((m) => {
-  // Names via src/utils/medIdentity.js — the same helpers the page component
-  // uses, so a record that IS the generic ("Tacrolimus (generic)") is named
-  // once here too instead of prerendering "Tacrolimus (generic) (Tacrolimus)"
-  // into the title and body crawlers read.
-  const isGeneric = isGenericRecord(m);
-  const brand = esc(medPageName(m));
-  const cat = esc((m.category || 'medication').toLowerCase());
-  const nameWithGeneric = esc(medNameWithGeneric(m));
-  const hasCopay = !!(m.copayUrl || m.copayProgramId);
-  const ways = [
-    hasCopay ? 'a manufacturer copay card (for commercial insurance)' : null,
-    'patient assistance programs that can provide it for free if you qualify',
-    'foundation grants',
-    isGeneric
-      ? 'the generic price — this is the generic, which usually costs far less than the brand'
-      : (m.generic_available ? 'the generic version, only if your transplant team approves a switch' : null),
-    'discount cards and cash-price comparison (GoodRx, Cost Plus Drugs, and more)',
-  ].filter(Boolean);
+// Data files behind the per-medication facts block (src/utils/medFacts.js).
+const readData = (file) => JSON.parse(fs.readFileSync(path.join(projectRoot, 'src', 'data', file), 'utf8'));
+const PROGRAMS_ES = readData('programs.es.json');
+const PRICE_ESTIMATES = readData('price-estimates.json');
+const COST_PLUS_EXCLUSIONS = readData('cost-plus-exclusions.json');
 
-  // Spanish variant: names localized the way the app displays them, the
-  // intro assembled from the same locale strings the component renders,
-  // and the category translated via medications.categories.
-  const brandEs = esc(localizeMedNameEs(medPageName(m)));
+// Price ranges and the deductible-trap note come from the same locale
+// strings the app renders, so the static page reads the same as the card.
+const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const priceRangeFor = (locale) => ({ min, max }) => (Math.round(min) === Math.round(max)
+  ? fill(locale.medications.detail.priceRangeSingle, { price: money(min) })
+  : fill(locale.medications.detail.priceRangeBetween, { min: money(min), max: money(max) }));
+const deductibleNoteFor = (locale) => {
+  const w = locale.medications.card.warning;
+  return { title: w.title, text: `${w.pre.trim()} ${w.notCount}${w.deductible}${w.notCountPost} ${w.text2}`.replace(/\s+/g, ' ') };
+};
+
+const factsFor = (m, lang) => buildMedFacts(m, {
+  lang,
+  allMeds: MEDICATIONS,
+  programs: PROGRAMS,
+  programsEs: PROGRAMS_ES,
+  priceEstimates: PRICE_ESTIMATES,
+  costPlusExclusions: COST_PLUS_EXCLUSIONS,
+  localizeName: lang === 'es' ? localizeMedNameEs : (n) => n,
+  categoryLabel: (c) => (lang === 'es' ? (ES_CATEGORIES[c] || c) : c),
+  priceRange: priceRangeFor(lang === 'es' ? ES_LOCALE : EN_LOCALE),
+  deductibleNote: deductibleNoteFor(lang === 'es' ? ES_LOCALE : EN_LOCALE),
+});
+
+// One page per medication at /medications/:id, English and Spanish. The
+// body is the full facts block (src/utils/medFacts.js) so crawlers that
+// don't run JavaScript see the real answer; React replaces it on mount.
+// Records with missing or unverified copay/PAP data still render, but with
+// noindex — the sitemap leaves them out from the same facts model.
+const medicationPages = MEDICATIONS.map((m) => {
+  const nameWithGeneric = esc(medNameWithGeneric(m));
+  const brand = esc(medPageName(m));
   const nameWithGenericEs = esc(localizeMedNameEs(medNameWithGeneric(m)));
-  const catEs = esc((ES_CATEGORIES[m.category] || m.category || 'medicamento').toLowerCase());
-  const waysEs = [
-    hasCopay ? 'Una tarjeta de copago del fabricante (para seguro comercial)' : null,
-    'Programas de Asistencia al Paciente que pueden darlo gratis si usted califica',
-    'Ayudas económicas de fundaciones',
-    isGeneric
-      ? 'El precio del genérico: este es el genérico, que normalmente cuesta mucho menos que la marca'
-      : (m.generic_available ? 'La versión genérica, solo si su equipo de trasplante aprueba el cambio' : null),
-    'Tarjetas de descuento y comparación de precios en efectivo (GoodRx, Cost Plus Drugs y más)',
-  ].filter(Boolean);
+  const en = factsFor(m, 'en');
+  const es = factsFor(m, 'es');
 
   return {
     route: `/medications/${m.id}`,
@@ -438,21 +446,16 @@ const medicationPages = MEDICATIONS.map((m) => {
     description: `Find copay cards, patient assistance programs, and foundation grants for ${nameWithGeneric}. See ways to lower the cost of your transplant medication.`,
     ogTitle: `How to Afford ${brand}: Copay Cards & Patient Assistance`,
     ogDescription: `Ways to save on ${nameWithGeneric}: copay cards, free-medication programs, foundation grants, and price comparison.`,
-    bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">How to Afford ${brand}</h1>
-      <p style="color:#475569;margin-bottom:16px;">${nameWithGeneric} is ${/^[aeiou]/i.test(cat) ? 'an' : 'a'} ${cat} medication used by transplant patients. Here are the ways to lower what you pay:</p>
-      <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
-        ${ways.map((w) => `<li>${esc(w[0].toUpperCase() + w.slice(1))}</li>`).join('')}
-      </ul>
-      <p style="margin-bottom:16px;"><a href="/wizard" style="color:#059669;font-weight:600;text-decoration:underline;">Take the free 2-minute quiz</a> to find the programs you qualify for.</p>`,
+    bodyHtml: renderMedFactsHtml(en),
+    jsonLd: en.jsonLd,
+    noindex: !en.indexable,
+    wide: true,
     es: {
       title: fill(ES_DETAIL.meta.title, { name: nameWithGenericEs }),
       description: fill(ES_DETAIL.meta.description, { name: nameWithGenericEs }),
-      bodyHtml: `<h1 style="color:#0f172a;margin-bottom:12px;">${fill(ES_DETAIL.heading, { name: brandEs })}</h1>
-      <p style="color:#475569;margin-bottom:16px;">${nameWithGenericEs}${esc(ES_DETAIL.introIs)}${catEs}${esc(ES_DETAIL.introUsedBy)}${esc(ES_DETAIL.introTail)}</p>
-      <ul style="color:#475569;text-align:left;max-width:520px;margin:0 auto 20px;line-height:1.8;">
-        ${waysEs.map((w) => `<li>${esc(w)}</li>`).join('')}
-      </ul>
-      <p style="margin-bottom:16px;"><a href="/es/wizard" style="color:#059669;font-weight:600;text-decoration:underline;">${esc(ES_DETAIL.ctaQuiz.trim())}</a> para encontrar los programas para los que usted califica.</p>`,
+      bodyHtml: renderMedFactsHtml(es),
+      jsonLd: es.jsonLd,
+      noindex: !es.indexable,
     },
   };
 });
@@ -476,6 +479,13 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     ? `\n    <meta name="ai-content-summary" content="${page.aiSummary}" />`
     : '';
 
+  // Structured data rendered into the static head (crawlers don't run JS).
+  // data-med-detail lets src/pages/MedicationDetail.jsx replace it with the
+  // identical object built from the same source, so there is one copy.
+  const jsonLdTag = page.jsonLd
+    ? `\n    <script type="application/ld+json" data-med-detail="true">${JSON.stringify(page.jsonLd).replace(/</g, '\\u003c')}</script>`
+    : '';
+
   const hreflangTags = hasSpanishVariant(page.route)
     ? `
     <!-- Language alternates -->
@@ -494,8 +504,8 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
     <title>${page.title}</title>
     <meta name="title" content="${page.title}" />
     <meta name="description" content="${page.description}" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="${pageUrl}" />${aiSummaryTag}${hreflangTags}
+    <meta name="robots" content="${page.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}" />
+    <link rel="canonical" href="${pageUrl}" />${aiSummaryTag}${hreflangTags}${jsonLdTag}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -538,7 +548,7 @@ function generatePageHTML(page, mainScriptPath, stylesheetTags, lang = 'en') {
             ${isEs ? 'Saltar al contenido principal' : 'Skip to main content'}
         </a>
         <!-- Static content for SEO - React will replace this when it loads -->
-        <main id="main-content" style="max-width: 600px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
+        <main id="main-content" style="max-width: ${page.wide ? '760px' : '600px'}; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center;">
             ${page.bodyHtml || `<h1 style="color: #0f172a; margin-bottom: 16px;">${pageTitle}</h1>
             <p style="color: #475569; margin-bottom: 24px;">${page.description}</p>`}
             <p style="color: #64748b; margin-bottom: 16px;">${isEs ? 'Cargando la página...' : 'Loading interactive features...'}</p>
@@ -893,6 +903,8 @@ function spanishPage(page) {
     ogTitle: (es.title || page.title).split(' | ')[0],
     ogDescription: es.description || page.description,
     aiSummary: undefined,
+    jsonLd: es.jsonLd,
+    noindex: es.noindex ?? page.noindex,
     bodyHtml: page.route === '/' ? homeBody(true) : es.bodyHtml,
     noscriptHtml: page.route === '/' ? homeNoscript(true) : undefined,
   };

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:readability && npm run check:i18n && npm run check:conditions && node scripts/generate-home-stats.js && node scripts/generate-program-eligibility.js && node scripts/generate-sitemap.js && vite build && node scripts/inject-route-preloads.js --entry && node scripts/stamp-freshness.js && node scripts/prerender-seo.js && node scripts/inject-route-preloads.js --pages",
+    "build": "npm run check:readability && npm run check:i18n && npm run check:conditions && node scripts/generate-home-stats.js && node scripts/generate-program-eligibility.js && node scripts/generate-sitemap.js && node scripts/report-medication-data.js && vite build && node scripts/inject-route-preloads.js --entry && node scripts/stamp-freshness.js && node scripts/prerender-seo.js && node scripts/inject-route-preloads.js --pages",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
+    "report:meds": "node scripts/report-medication-data.js",
+    "sync:eligibility": "node scripts/sync-program-eligibility.js",
     "sync:medications": "node scripts/sync-medications-json.js",
     "conditions:apply": "node scripts/apply-medication-conditions.js",
     "check:conditions": "node scripts/apply-medication-conditions.js --check",

@@ -6,6 +6,8 @@ import PROGRAMS_ES from '../data/programs.es.json';
 import { InsuranceType } from '../data/constants.js';
 import { medDisplayName } from '../utils/medDisplay.js';
 import { trackServerEvent } from '../lib/trackServerEvent.js';
+import { programStatus, STATUS } from '../utils/programEligibility.js';
+import { FOUNDATION_ORGANS } from '../utils/medFacts.js';
 
 /**
  * WizardProgramMatches - the payoff panel on the wizard results screen.
@@ -29,11 +31,8 @@ const ELIGIBILITY_KEY = {
 const isGenericMed = (med) =>
     /\(generic\)/i.test(med?.brandName || '') || (med?.manufacturer || '').toLowerCase() === 'generic';
 
-// Foundations that only serve specific organs — hidden unless the patient
-// selected a matching organ (the rest of the program data has no organ field).
-const FOUNDATION_ORGANS = {
-    'american-kidney-fund': ['Kidney'],
-};
+// Foundations that only serve specific organs live in src/utils/medFacts.js
+// (FOUNDATION_ORGANS), shared with the prerendered medication pages.
 
 const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
     const { t, i18n } = useTranslation();
@@ -72,7 +71,7 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
     // Foundations that accept this insurance type (shown for Medicare, where
     // copay cards are legally off the table, and as a backup for others).
     const foundations = Object.entries(PROGRAMS.foundationPrograms || {})
-        .filter(([, p]) => !eligKey || p.eligibility?.[eligKey] !== false)
+        .filter(([, p]) => programStatus('foundation', p.eligibility, eligKey) !== STATUS.HIDDEN)
         .filter(([id]) => {
             const only = FOUNDATION_ORGANS[id];
             return !only || only.some((o) => (organs || []).includes(o));
@@ -89,27 +88,32 @@ const WizardProgramMatches = ({ medIds, insurance, medications, organs }) => {
         }
 
         // Copay card first for commercial insurance — it's the fastest win.
-        if (isCommercial && (copay || med.copayUrl)) {
+        // Commercial-only, and hidden when the card itself says it doesn't
+        // take commercial coverage (src/utils/programEligibility.js).
+        const copayStatus = programStatus('copay', copay?.eligibility, 'commercial');
+        if (isCommercial && (copay || med.copayUrl) && copayStatus !== STATUS.HIDDEN) {
             rows.push({
                 kind: 'copay',
                 name: esName('copayPrograms', med.copayProgramId) || copay?.name || t('wizard.results.programs.copayFallbackName', { manufacturer: med.manufacturer }),
                 url: copay?.url || med.copayUrl,
                 programId: med.copayProgramId,
                 benefit: esBenefit('copayPrograms', med.copayProgramId) || copay?.maxBenefit || null,
-                eligible: copay ? copay.eligibility?.commercial !== false : true,
+                eligible: copayStatus === STATUS.ELIGIBLE ? true : null,
             });
         }
 
-        // Manufacturer PAP — skip only when the program explicitly excludes
-        // this insurance type.
-        if ((pap || med.papUrl) && !(pap && eligKey && pap.eligibility?.[eligKey] === false)) {
+        // Manufacturer PAP — the shared rule: shown when its flag for this
+        // insurance is true, shown as "check eligibility" when unknown,
+        // hidden when false.
+        const papStatus = programStatus('pap', pap?.eligibility, eligKey);
+        if ((pap || med.papUrl) && papStatus !== STATUS.HIDDEN) {
             rows.push({
                 kind: 'pap',
                 name: esName('papPrograms', med.papProgramId) || pap?.name || t('wizard.results.programs.papFallbackName', { manufacturer: med.manufacturer }),
                 url: pap?.url || med.papUrl,
                 programId: med.papProgramId,
                 incomeLimit: pap?.incomeLimit || null,
-                eligible: pap ? (eligKey ? pap.eligibility?.[eligKey] === true : null) : null,
+                eligible: eligKey && papStatus === STATUS.ELIGIBLE ? true : null,
             });
         }
 
