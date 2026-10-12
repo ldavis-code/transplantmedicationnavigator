@@ -19,7 +19,10 @@ const PROGRAMS = JSON.parse(
 // noindex (scripts/prerender-seo.js) and left out of the sitemap. Same test,
 // same source: src/utils/medFacts.js. The list is in
 // reports/medication-data-review.md (npm run report:meds).
-const indexableMeds = MEDICATIONS.filter((m) => isIndexable(m, PROGRAMS));
+const WITHDRAWN = JSON.parse(
+    readFileSync(join(__dirname, '..', 'src', 'data', 'withdrawn-medications.json'), 'utf8')
+);
+const indexableMeds = MEDICATIONS.filter((m) => isIndexable(m, PROGRAMS, WITHDRAWN));
 const medicationRoutes = indexableMeds.map((m) => ({
     path: `/medications/${m.id}`, changefreq: 'monthly', priority: 0.7,
 }));

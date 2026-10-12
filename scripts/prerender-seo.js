@@ -403,6 +403,7 @@ const readData = (file) => JSON.parse(fs.readFileSync(path.join(projectRoot, 'sr
 const PROGRAMS_ES = readData('programs.es.json');
 const PRICE_ESTIMATES = readData('price-estimates.json');
 const COST_PLUS_EXCLUSIONS = readData('cost-plus-exclusions.json');
+const WITHDRAWN_MEDS = readData('withdrawn-medications.json');
 
 // Price ranges and the deductible-trap note come from the same locale
 // strings the app renders, so the static page reads the same as the card.
@@ -422,6 +423,7 @@ const factsFor = (m, lang) => buildMedFacts(m, {
   programsEs: PROGRAMS_ES,
   priceEstimates: PRICE_ESTIMATES,
   costPlusExclusions: COST_PLUS_EXCLUSIONS,
+  withdrawnMeds: WITHDRAWN_MEDS,
   localizeName: lang === 'es' ? localizeMedNameEs : (n) => n,
   categoryLabel: (c) => (lang === 'es' ? (ES_CATEGORIES[c] || c) : c),
   priceRange: priceRangeFor(lang === 'es' ? ES_LOCALE : EN_LOCALE),
@@ -439,6 +441,29 @@ const medicationPages = MEDICATIONS.map((m) => {
   const nameWithGenericEs = esc(localizeMedNameEs(medNameWithGeneric(m)));
   const en = factsFor(m, 'en');
   const es = factsFor(m, 'es');
+
+  // Withdrawn medications: the title and description say so instead of
+  // promising ways to afford a drug that can't be filled.
+  if (en.withdrawn) {
+    return {
+      route: `/medications/${m.id}`,
+      title: `${esc(en.heading)} | Transplant Medication Navigator™`,
+      description: esc(en.withdrawn.text),
+      ogTitle: esc(en.heading),
+      ogDescription: esc(en.withdrawn.text),
+      bodyHtml: renderMedFactsHtml(en),
+      jsonLd: en.jsonLd,
+      noindex: true,
+      wide: true,
+      es: {
+        title: `${esc(es.heading)} | Transplant Medication Navigator™`,
+        description: esc(es.withdrawn.text),
+        bodyHtml: renderMedFactsHtml(es),
+        jsonLd: es.jsonLd,
+        noindex: true,
+      },
+    };
+  }
 
   return {
     route: `/medications/${m.id}`,

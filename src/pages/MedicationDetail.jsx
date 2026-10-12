@@ -18,6 +18,7 @@ import PROGRAMS_DATA from '../data/programs.json';
 import PRICE_ESTIMATES from '../data/price-estimates.json';
 import PROGRAMS_ES from '../data/programs.es.json';
 import COST_PLUS_EXCLUSIONS from '../data/cost-plus-exclusions.json';
+import WITHDRAWN_MEDS from '../data/withdrawn-medications.json';
 import { useMetaTags } from '../hooks/useMetaTags';
 import { localizeMedName } from '../utils/medNames.js';
 import { isGenericRecord, medPageName, medNameWithGeneric, brandNamesForGeneric, stripGenericTag } from '../utils/medIdentity.js';
@@ -125,6 +126,7 @@ const MedicationDetail = () => {
         programsEs: PROGRAMS_ES,
         priceEstimates: PRICE_ESTIMATES,
         costPlusExclusions: COST_PLUS_EXCLUSIONS,
+        withdrawnMeds: WITHDRAWN_MEDS,
         localizeName: localizeMedName,
         categoryLabel: (c) => t(`medications.categories.${c}`, { defaultValue: c }),
         priceRange: (r) => formatRange(r, t),
@@ -168,17 +170,32 @@ const MedicationDetail = () => {
                     <Pill size={14} aria-hidden="true" /> {t(`medications.categories.${med.category}`, { defaultValue: med.category })}
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
-                    {t('medications.detail.heading', { name: nameDisplay })}
+                    {facts?.withdrawn ? facts.heading : t('medications.detail.heading', { name: nameDisplay })}
                 </h1>
-                <p className="text-lg text-slate-600 mt-3">
-                    {nameDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.map((o) => t(`wizard.organs.${o}`, { defaultValue: o })).join(', ')})` : ''}{t('medications.detail.introTail')}
-                </p>
-                {price && (
+                {!facts?.withdrawn && (
+                    <p className="text-lg text-slate-600 mt-3">
+                        {nameDisplay}{genericDiffers ? ` (${localizeMedName(med.genericName)})` : ''}{t('medications.detail.introIs')}{isSpanish ? '' : aOrAn(med.category) + ' '}{med.category && t(`medications.categories.${med.category}`, { defaultValue: med.category }).toLowerCase()}{t('medications.detail.introUsedBy')}{med.commonOrgans?.length ? ` (${med.commonOrgans.map((o) => t(`wizard.organs.${o}`, { defaultValue: o })).join(', ')})` : ''}{t('medications.detail.introTail')}
+                    </p>
+                )}
+                {price && !facts?.withdrawn && (
                     <p className="text-sm text-slate-500 mt-2">{t('medications.detail.estPricePre')}<strong className="text-slate-700">{price}</strong>{t('medications.detail.estPricePost')}</p>
                 )}
             </header>
 
+            {/* Withdrawn from the market (src/data/withdrawn-medications.json):
+                the notice replaces every way-to-pay section, and no
+                substitute is ever named — that is the transplant team's call. */}
+            {facts?.withdrawn && (
+                <div role="alert" className="border-2 border-red-300 bg-red-50 rounded-xl p-5">
+                    <p className="flex items-start gap-2 font-bold text-red-900"><AlertTriangle size={20} className="flex-shrink-0 mt-0.5" aria-hidden="true" />{facts.withdrawn.text}</p>
+                    {facts.withdrawn.source && (
+                        <a href={facts.withdrawn.source.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-red-800 font-semibold text-sm mt-2 ml-7 hover:underline">{facts.withdrawn.source.label}<ArrowRight size={14} aria-hidden="true" /></a>
+                    )}
+                </div>
+            )}
+
             {/* Ways to save */}
+            {!facts?.withdrawn && (<>
             <section className="space-y-4">
                 <h2 className="text-xl font-bold text-slate-900">{t('medications.detail.waysTitle', { name: nameDisplay })}</h2>
 
@@ -233,6 +250,7 @@ const MedicationDetail = () => {
                     <Link to="/medications" className="inline-flex items-center gap-1 text-slate-700 font-semibold text-sm mt-2 hover:underline">{t('medications.detail.discountLink', { name: nameDisplay })}<ArrowRight size={14} aria-hidden="true" /></Link>
                 </div>
             </section>
+            </>)}
 
             {/* CTA */}
             <section className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl p-6 md:p-8 text-center">

@@ -72,6 +72,16 @@ function section(s, f) {
 }
 
 export function renderMedFactsHtml(f) {
+    // Withdrawn from the market: the notice and nothing else that could read
+    // as a way to fill it (see src/utils/medFacts.js).
+    if (f.withdrawn) {
+        return `<article style="${S.article}" data-med-facts="${esc(f.id)}">
+    <h1 style="${S.h1}">${esc(f.heading)}</h1>
+    <div role="alert" style="${S.warn}"><p style="${S.p}"><strong>${esc(f.withdrawn.text)}</strong></p>${f.withdrawn.source ? `<p style="${S.p}"><a href="${esc(f.withdrawn.source.href)}" rel="noopener" style="${S.link}">${esc(f.withdrawn.source.label)}</a></p>` : ''}</div>
+    <p style="${S.p}"><strong>${esc(f.bottle.never)}</strong></p>
+    <p style="${S.note}">${esc(f.footer)}</p>
+  </article>`;
+    }
     const foundations = f.foundations.items.map((p) => programCard({
         ...p,
         forLine: [p.forLine, p.kidneyOnly ? f.foundations.kidneyLabel : null].filter(Boolean).join(' '),

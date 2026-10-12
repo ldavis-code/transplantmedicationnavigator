@@ -2354,6 +2354,7 @@
         "withCopayCard": "With Copay Card",
         "annual": "Annual Savings"
       },
+      "withdrawn": "{{name}} was withdrawn from the US market in {{year}}. Ask your transplant team what to take instead.",
       "nextStep": {
         "label": "Best next step",
         "copay": "Ask for this medication's copay card. Most patients with commercial insurance pay $0-$10 a month.",
