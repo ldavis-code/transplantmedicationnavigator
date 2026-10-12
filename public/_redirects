@@ -23,6 +23,14 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /out/foundation/*  /.netlify/functions/out-redirect  200!
 /out/pap/*  /.netlify/functions/out-redirect  200!
 
+# Merged medication records (approved 2026-10). The duplicate Campath record
+# (UUID id) was folded into /medications/campath. Both slash forms, both
+# languages, forced so a stale static file can never shadow the redirect.
+/medications/3e7d60c8-9882-4077-9fb5-848abaaf47fe  /medications/campath/  301!
+/medications/3e7d60c8-9882-4077-9fb5-848abaaf47fe/  /medications/campath/  301!
+/es/medications/3e7d60c8-9882-4077-9fb5-848abaaf47fe  /es/medications/campath/  301!
+/es/medications/3e7d60c8-9882-4077-9fb5-848abaaf47fe/  /es/medications/campath/  301!
+
 # Spanish lives at the /es/ path prefix: scripts/prerender-seo.js writes
 # every Spanish page to dist/es/<route>/index.html and Netlify serves the
 # static files directly — no query parameter involved, so shorteners, QR

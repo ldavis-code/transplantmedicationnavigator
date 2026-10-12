@@ -1,6 +1,17 @@
-# Cleanup proposals: awaiting approval
+# Cleanup proposals
 
-Nothing in this file has been applied. The redirects and SQL below are proposals. Each one needs Lorrinda's approval before it goes into `public/_redirects` or Neon.
+## Decisions (2026-10-12)
+
+| Item | Decision | Status |
+|---|---|---|
+| Campath | Merge the UUID duplicate into `campath`, keep all organs, rename to "Campath" (Lemtrada dropped) | Done in the site data + 301 redirects; Neon: `db/migrations/058_medication_cleanup.sql` |
+| Renvela / sevelamer | Option A: `/sevelamer` becomes the generic page | Done in the site data; Neon: migration 058. Cost tier conflict (medium/2 vs high/Specialty) still open |
+| Readable slugs (tirzepatide, midodrine) | Not approved; UUID addresses stay | No change |
+| Zantac | Option A: keep the page, withdrawn notice, noindex | Done (`src/data/withdrawn-medications.json`) |
+| Ofev / Esbriet / Ventavis | Approved as "delete the duplicate rows". In Neon these are the **only** rows for those medications, so they are re-keyed to `ofev` / `esbriet` / `ventavis` instead of deleted — nothing lost | Neon: migration 058 |
+| 259 count | Waiting on which device showed it | Open |
+
+The original proposals follow for the record.
 
 Changing or removing a medication `id` changes the page URL. It also affects other tables that store the id: `savings_programs.medication_id` (a foreign key with `ON DELETE SET NULL`), the `medication_tracking` table, and stored analytics events. Each merge below therefore updates those tables in the same transaction.
 

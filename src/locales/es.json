@@ -2354,6 +2354,7 @@
         "withCopayCard": "Con tarjeta de copago",
         "annual": "Ahorro anual"
       },
+      "withdrawn": "{{name}} fue retirado del mercado de EE. UU. en {{year}}. Pregunte a su equipo de trasplante qué tomar en su lugar.",
       "nextStep": {
         "label": "Siguiente paso",
         "copay": "Pida la tarjeta de copago de este medicamento. La mayoría de los pacientes con seguro comercial paga de $0 a $10 al mes.",

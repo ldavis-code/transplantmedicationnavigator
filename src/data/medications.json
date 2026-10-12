@@ -3858,7 +3858,7 @@
   },
   {
     "id": "campath",
-    "brandName": "Campath / Lemtrada",
+    "brandName": "Campath",
     "genericName": "Alemtuzumab",
     "rxcui": null,
     "category": "Induction",
@@ -3985,27 +3985,6 @@
     "cost_tier": "high",
     "generic_available": false,
     "typical_copay_tier": "Specialty"
-  },
-  {
-    "id": "3e7d60c8-9882-4077-9fb5-848abaaf47fe",
-    "brandName": "Campath",
-    "genericName": "alemtuzumab",
-    "rxcui": null,
-    "category": "Induction",
-    "condition": "rejection-prevention",
-    "manufacturer": "Sanofi",
-    "stage": "Peri-transplant",
-    "commonOrgans": [
-      "Kidney"
-    ],
-    "papUrl": null,
-    "papProgramId": null,
-    "copayUrl": null,
-    "copayProgramId": null,
-    "supportUrl": null,
-    "cost_tier": null,
-    "generic_available": false,
-    "typical_copay_tier": null
   },
   {
     "id": "mepron",
@@ -5149,20 +5128,20 @@
   },
   {
     "id": "sevelamer",
-    "brandName": "Renvela / Renagel",
+    "brandName": "Sevelamer (generic)",
     "genericName": "Sevelamer",
     "rxcui": null,
     "category": "Kidney Support",
     "condition": "kidney-disease",
-    "manufacturer": "Sanofi",
+    "manufacturer": "Generic",
     "stage": "Pre-transplant",
     "commonOrgans": [
       "Kidney"
     ],
-    "papUrl": "https://www.sanofipatientconnection.com/",
-    "papProgramId": "sanofi-pap",
-    "copayUrl": "https://www.sanofipatientconnection.com/",
-    "copayProgramId": "sanofi-copay",
+    "papUrl": null,
+    "papProgramId": null,
+    "copayUrl": null,
+    "copayProgramId": null,
     "supportUrl": null,
     "cost_tier": "high",
     "generic_available": true,

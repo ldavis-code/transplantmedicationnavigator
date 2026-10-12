@@ -44,6 +44,7 @@ export const NOINDEX_ISSUES = new Set([
     'pap-url-only',
     'program-not-verified',
     'program-no-eligibility',
+    'withdrawn',
 ]);
 
 export const MEDICAID_DEFAULT = {
@@ -129,6 +130,9 @@ const COPY = {
         otherLang: 'Ver esta página en español',
         footer: 'Educational information only, not medical or legal advice. Created by Lorrinda Gray-Davis, liver transplant recipient. Nothing you enter on this site is stored on our servers.',
         audience: 'Transplant patients and caregivers',
+        withdrawn: (n, y) => `${n} was withdrawn from the US market in ${y}. Ask your transplant team what to take instead.`,
+        withdrawnSource: 'Read the FDA announcement',
+        withdrawnHeading: (n) => `${n}: withdrawn from the US market`,
     },
     es: {
         heading: (n) => `Cómo pagar ${n}`,
@@ -207,6 +211,9 @@ const COPY = {
         otherLang: 'View this page in English',
         footer: 'Información educativa solamente; no es consejo médico ni legal. Creado por Lorrinda Gray-Davis, receptora de un trasplante de hígado. Nada de lo que usted escribe en este sitio se guarda en nuestros servidores.',
         audience: 'Pacientes de trasplante y sus cuidadores',
+        withdrawn: (n, y) => `${n} fue retirado del mercado de EE. UU. en ${y}. Pregunte a su equipo de trasplante qué tomar en su lugar.`,
+        withdrawnSource: 'Lea el anuncio de la FDA (en inglés)',
+        withdrawnHeading: (n) => `${n}: retirado del mercado de EE. UU.`,
     },
 };
 
@@ -489,6 +496,19 @@ export function buildMedFacts(med, ctx) {
     }
     if (priceLine) faqs.push({ q: c.faqCostQ(name), a: c.faqCostA(priceLine) });
 
+    // ---- Withdrawn from the market ----
+    // A withdrawn medication keeps its page (people still search for it) but
+    // shows only the notice: no programs, prices, or cash options for a drug
+    // that can't be filled, and never a named substitute — that choice
+    // belongs to the transplant team. Noindex. Source:
+    // src/data/withdrawn-medications.json.
+    const w = ctx.withdrawnMeds?.[med.id] || null;
+    const withdrawn = w ? { text: c.withdrawn(loc(medNameWithGeneric(med)), w.year), source: w.sourceUrl ? { href: w.sourceUrl, label: c.withdrawnSource } : null } : null;
+    if (withdrawn) {
+        issues.push({ kind: 'withdrawn', detail: `withdrawn from the US market in ${w.year}` });
+        faqs.length = 0;
+    }
+
     // ---- Index status ----
     const blocking = issues.filter((i) => NOINDEX_ISSUES.has(i.kind));
     const unknownFlags = [copay, pap].filter((p) => p && p.programId && p.eligibility)
@@ -511,7 +531,7 @@ export function buildMedFacts(med, ctx) {
                 '@type': 'MedicalWebPage',
                 '@id': url,
                 url,
-                name: c.heading(name),
+                name: withdrawn ? c.withdrawnHeading(loc(medNameWithGeneric(med))) : c.heading(name),
                 inLanguage: lang,
                 ...(lastVerifiedIso ? { dateModified: lastVerifiedIso, lastReviewed: lastVerifiedIso } : {}),
                 audience: { '@type': 'PeopleAudience', audienceType: c.audience },
@@ -523,10 +543,10 @@ export function buildMedFacts(med, ctx) {
                     founder: { '@type': 'Person', name: 'Lorrinda Gray-Davis' },
                 },
             },
-            {
+            ...(faqs.length ? [{
                 '@type': 'FAQPage',
                 mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-            },
+            }] : []),
         ],
     };
 
@@ -536,7 +556,7 @@ export function buildMedFacts(med, ctx) {
         isGeneric: generic,
         name,
         nameWithGeneric: loc(medNameWithGeneric(med)),
-        heading: c.heading(name),
+        heading: withdrawn ? c.withdrawnHeading(loc(medNameWithGeneric(med))) : c.heading(name),
         lastVerifiedIso,
         lastVerified: lastVerifiedIso ? c.lastVerified(formatVerifiedDate(lastVerifiedIso, lang, 'full')) : null,
         lastVerifiedTail: c.lastVerifiedTail,
@@ -563,6 +583,7 @@ export function buildMedFacts(med, ctx) {
         quiz: { href: `${prefix}/wizard`, label: c.quiz, tail: c.quizTail },
         otherLang: { href: lang === 'es' ? `/medications/${med.id}/` : `/es/medications/${med.id}/`, label: c.otherLang, lang: lang === 'es' ? 'en' : 'es' },
         footer: c.footer,
+        withdrawn,
         indexable: blocking.length === 0,
         issues,
         unknownFlags,
@@ -575,6 +596,7 @@ export function buildMedFacts(med, ctx) {
  * Whether a medication page may be indexed — the same test buildMedFacts
  * applies, without building the page. Used by scripts/generate-sitemap.js.
  */
-export function isIndexable(med, programs) {
+export function isIndexable(med, programs, withdrawnMeds = {}) {
+    if (withdrawnMeds?.[med?.id]) return false;
     return !resolvePrograms(med, programs).issues.some((i) => NOINDEX_ISSUES.has(i.kind));
 }

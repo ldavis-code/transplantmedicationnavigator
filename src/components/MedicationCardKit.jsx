@@ -11,6 +11,7 @@ import { BookOpen, ArrowRight, Heart, X, CheckCircle, DollarSign, Shield, AlertT
 import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../data/constants.js';
 import PROGRAMS_ES from '../data/programs.es.json';
 import PROGRAM_ELIGIBILITY from '../data/program-eligibility.json';
+import WITHDRAWN_MEDS from '../data/withdrawn-medications.json';
 import { programStatus, STATUS } from '../utils/programEligibility.js';
 import COST_PLUS_EXCLUSIONS_DATA from '../data/cost-plus-exclusions.json';
 import GOODRX_EXCLUSIONS_DATA from '../data/goodrx-exclusions.json';
@@ -661,7 +662,18 @@ const MedicationCard = ({ med, onRemove, onPriceReportSubmit, showCopayCards: sh
                 told them what to actually do. Mirrors the priority the
                 ASSISTANCE tab already uses: copay card (commercial) → PAP →
                 cash price → foundations. */}
-            {(() => {
+            {/* Withdrawn from the US market (src/data/withdrawn-medications.json):
+                say so first, and never name a substitute. */}
+            {WITHDRAWN_MEDS[med.id] && (
+                <div role="alert" className="bg-red-50 px-6 py-4 border-b-2 border-red-200">
+                    <p className="flex items-start gap-2 text-sm font-bold text-red-900">
+                        <AlertTriangle size={18} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        {t('medications.card.withdrawn', { name: localizeMedName(med.brandName), year: WITHDRAWN_MEDS[med.id].year })}
+                    </p>
+                </div>
+            )}
+
+            {!WITHDRAWN_MEDS[med.id] && (() => {
                 // Medicaid usually covers the medication, so a Medicaid
                 // patient's next step is their coverage, never cash.
                 const isMedicaid = eligibilityKey === 'medicaid';

@@ -2,7 +2,7 @@
 
 Generated 2026-10-12 by `npm run report:meds` (scripts/report-medication-data.js). Nothing in this list was changed automatically.
 
-**Summary:** 260 medication records · 206 indexed · **54 noindex** · 16 programs with unknown eligibility fields · 25 PAP links with no program record.
+**Summary:** 259 medication records · 204 indexed · **55 noindex** · 16 programs with unknown eligibility fields · 25 PAP links with no program record.
 
 ## 1. Pages rendered with noindex (left out of the sitemap)
 
@@ -44,6 +44,7 @@ These pages still load for patients, but search engines are told not to list the
 - `victoza` — Victoza (Liraglutide): PAP is a URL only (https://www.novocare.com/), with no program record or eligibility flags
 - `rybelsus` — Rybelsus (Semaglutide (Oral)): PAP is a URL only (https://www.novocare.com/), with no program record or eligibility flags
 - `creon` — Creon / Zenpep (Pancrelipase): abbvie-creon-pap has no eligibility flags
+- `ranitidine` — Zantac (Ranitidine): withdrawn from the US market in 2020
 - `harvoni` — Harvoni (Ledipasvir/Sofosbuvir): PAP is a URL only (https://www.gileadadvancingaccess.com/), with no program record or eligibility flags
 - `epclusa` — Epclusa (Sofosbuvir/Velpatasvir): epclusa-copay has no eligibility flags
 - `vosevi` — Vosevi (Sofosbuvir/Velpatasvir/Voxilaprevir): PAP is a URL only (https://www.gileadadvancingaccess.com/), with no program record or eligibility flags
@@ -211,7 +212,7 @@ After migration 056 runs, fill these in Neon and run `node scripts/sync-program-
 _None._
 
 ### Records that combine several brands on one page (one page = one product)
-38 records. Flagged only; splitting them is a data decision.
+36 records. Flagged only; splitting them is a data decision.
 
 - `ivig` — Gammagard / Privigen / Octagam (Intravenous Immunoglobulin (IVIG))
 - `procrit` — Procrit / Epogen (Epoetin Alfa)
@@ -235,7 +236,6 @@ _None._
 - `lopressor` — Lopressor / Toprol XL (Metoprolol)
 - `hbig` — HepaGam B / HyperHEP B (Hepatitis B Immune Globulin)
 - `cyclosporine` — Neoral / Sandimmune / Gengraf (Cyclosporine)
-- `campath` — Campath / Lemtrada (Alemtuzumab)
 - `bactrim` — Bactrim / Septra (Trimethoprim-Sulfamethoxazole)
 - `tobramycin-inhaled` — TOBI / Bethkis / Kitabis Pak (Tobramycin Inhaled)
 - `calcitriol` — Rocaltrol / Calcijex (Calcitriol)
@@ -247,12 +247,11 @@ _None._
 - `azelastine-nasal` — Astelin / Astepro (Azelastine Nasal)
 - `hydrocodone-acetaminophen` — Norco / Vicodin (Hydrocodone/Acetaminophen)
 - `oxycodone` — OxyContin / Roxicodone (Oxycodone)
-- `sevelamer` — Renvela / Renagel (Sevelamer)
 - `revatio` — Revatio / Viagra (Sildenafil)
 - `albuterol` — ProAir / Ventolin / Proventil (Albuterol)
 - `levothyroxine` — Synthroid / Levoxyl (Levothyroxine)
 
 ### Prices
-239 brand-name records have no drug-specific price estimate. Their pages show no cost estimate rather than borrowing the generic price for their category (brand and generic pages never share prices). Generic records show the typical price for the category, labeled as typical.
+237 brand-name records have no drug-specific price estimate. Their pages show no cost estimate rather than borrowing the generic price for their category (brand and generic pages never share prices). Generic records show the typical price for the category, labeled as typical.
 
 See also: reports/cleanup-proposals.md (duplicates, slugs, Zantac, medication count).

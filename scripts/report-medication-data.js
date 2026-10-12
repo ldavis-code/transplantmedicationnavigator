@@ -27,9 +27,10 @@ const meds = read('medications.json');
 const programs = read('programs.json');
 const priceEstimates = read('price-estimates.json');
 const costPlusExclusions = read('cost-plus-exclusions.json');
+const withdrawnMeds = read('withdrawn-medications.json');
 
 const facts = meds.map((m) => buildMedFacts(m, {
-    lang: 'en', allMeds: meds, programs, programsEs: {}, priceEstimates, costPlusExclusions,
+    lang: 'en', allMeds: meds, programs, programsEs: {}, priceEstimates, costPlusExclusions, withdrawnMeds,
     priceRange: ({ min, max }) => `$${min}-$${max}`,
 }));
 
