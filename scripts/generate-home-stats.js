@@ -186,22 +186,45 @@ const rootDir = join(__dirname, '..');
     }
 }
 
-// llms.txt: the "were last reviewed <Month YYYY>" sentence AI tools quote.
+// llms.txt: both review-date lines AI tools quote — "were last reviewed
+// <Month YYYY>" in the summary and "Content last reviewed: <Month YYYY>" in
+// the footer. Both are stamped from CONTENT_VERIFIED_ISO at build time so
+// they can never disagree again (they said August and July at once).
 {
     const llmsPath = join(publicDir, 'llms.txt');
     const txt = readFileSync(llmsPath, 'utf8');
-    const reviewedRe = /(were last reviewed )[A-Z][a-z]+ \d{4}/;
-    if (!reviewedRe.test(txt)) {
-        console.error('stats: public/llms.txt is missing the "were last reviewed <Month YYYY>" sentence');
+    const reviewedRes = [
+        /(were last reviewed )[A-Z][a-z]+ \d{4}/,
+        /(Content last reviewed: )[A-Z][a-z]+ \d{4}/,
+    ];
+    let updated = txt;
+    for (const re of reviewedRes) {
+        if (!re.test(updated)) {
+            console.error(`stats: public/llms.txt is missing a review-date line matching ${re}`);
+            failed = true;
+        } else {
+            updated = updated.replace(re, `$1${stamps.verifiedMonthEn}`);
+        }
+    }
+    if (updated !== txt) {
+        writeFileSync(llmsPath, updated, 'utf8');
+        console.log('stats: public/llms.txt review dates updated');
+    } else {
+        console.log('stats: public/llms.txt review dates unchanged');
+    }
+}
+
+// robots.txt: the "last major update <Month YYYY>" comment, same source.
+{
+    const robotsPath = join(publicDir, 'robots.txt');
+    const txt = readFileSync(robotsPath, 'utf8');
+    const re = /(last major update )[A-Z][a-z]+ \d{4}/;
+    if (!re.test(txt)) {
+        console.error('stats: public/robots.txt is missing the "last major update <Month YYYY>" comment');
         failed = true;
     } else {
-        const updated = txt.replace(reviewedRe, `$1${stamps.verifiedMonthEn}`);
-        if (updated !== txt) {
-            writeFileSync(llmsPath, updated, 'utf8');
-            console.log('stats: public/llms.txt review date updated');
-        } else {
-            console.log('stats: public/llms.txt review date unchanged');
-        }
+        const updated = txt.replace(re, `$1${stamps.verifiedMonthEn}`);
+        if (updated !== txt) writeFileSync(robotsPath, updated, 'utf8');
     }
 }
 

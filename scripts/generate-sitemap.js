@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { isIndexable } from '../src/utils/medFacts.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,7 +12,15 @@ const SITE_URL = 'https://transplantmedicationnavigator.com';
 const MEDICATIONS = JSON.parse(
     readFileSync(join(__dirname, '..', 'src', 'data', 'medications.json'), 'utf8')
 );
-const medicationRoutes = MEDICATIONS.map((m) => ({
+const PROGRAMS = JSON.parse(
+    readFileSync(join(__dirname, '..', 'src', 'data', 'programs.json'), 'utf8')
+);
+// Pages whose copay/PAP data is missing or unverified are prerendered with
+// noindex (scripts/prerender-seo.js) and left out of the sitemap. Same test,
+// same source: src/utils/medFacts.js. The list is in
+// reports/medication-data-review.md (npm run report:meds).
+const indexableMeds = MEDICATIONS.filter((m) => isIndexable(m, PROGRAMS));
+const medicationRoutes = indexableMeds.map((m) => ({
     path: `/medications/${m.id}`, changefreq: 'monthly', priority: 0.7,
 }));
 
@@ -107,7 +116,7 @@ ${urls}
     const outputPath = join(__dirname, '..', 'public', 'sitemap.xml');
     writeFileSync(outputPath, sitemap);
     console.log(`Sitemap generated: ${outputPath}`);
-    console.log(`Pages included: ${allRoutes.length} (${medicationRoutes.length} medication pages)`);
+    console.log(`Pages included: ${allRoutes.length} (${medicationRoutes.length} medication pages; ${MEDICATIONS.length - medicationRoutes.length} noindex medication pages left out)`);
     console.log(`Last modified: ${today}`);
 }
 
