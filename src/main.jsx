@@ -5,10 +5,15 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { initErrorLogger } from './utils/errorLogger';
 import { i18nReady } from './i18n.js';
 import { medicationsReady } from './context/MedicationsContext.jsx';
+import { installOutboundSessionTag } from './lib/trackServerEvent.js';
 import './main.css';
 
 // Initialize error logging (connects to Sentry in production if DSN is configured)
 initErrorLogger();
+
+// Tag /out/ program links with the per-tab session id as they are clicked,
+// so the admin session counts include redirect-logged clicks.
+installOutboundSessionTag();
 
 // A deploy replaces the content-hashed chunks, so a tab loaded from the
 // previous deploy can fail a later dynamic import (route chunk, locale

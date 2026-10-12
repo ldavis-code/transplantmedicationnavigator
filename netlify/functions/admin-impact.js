@@ -261,6 +261,7 @@ exports.handler = async function handler(event) {
           SELECT program_id, program_type, COUNT(*) as clicks
           FROM events
           WHERE program_id IS NOT NULL AND ts >= ${cutoff}
+            AND event_name IN ('copay_card_click', 'foundation_click', 'pap_click')
           GROUP BY program_id, program_type
           ORDER BY clicks DESC
           LIMIT 15

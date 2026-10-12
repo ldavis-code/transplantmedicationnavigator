@@ -91,6 +91,12 @@ exports.handler = async function handler(event) {
         const rawLang = event.queryStringParameters?.lang || null;
         const lang = ['en', 'es'].includes(rawLang) ? rawLang : null;
 
+        // Per-tab session id the client attaches to /out/ links (&sid=), the
+        // same random id its own events carry. Stored as meta_json.sessionId
+        // so distinct-session counts include redirect clicks. Never a person.
+        const rawSid = event.queryStringParameters?.sid || '';
+        const sessionId = String(rawSid).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 64) || null;
+
         const db = getDb();
         let redirectUrl = null;
         let usedFallback = false;
@@ -149,7 +155,7 @@ exports.handler = async function handler(event) {
                     ${pageSource},
                     ${loggedType},
                     ${programId},
-                    ${JSON.stringify({ redirect: true, fallback: usedFallback })},
+                    ${JSON.stringify(sessionId ? { redirect: true, fallback: usedFallback, sessionId } : { redirect: true, fallback: usedFallback })},
                     ${lang}
                 )
             `;

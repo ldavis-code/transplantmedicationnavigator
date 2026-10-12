@@ -347,7 +347,8 @@ async function getEventsByPartner(db, params) {
             COALESCE(partner, '(none)') as partner,
             program_id as top_program
         FROM events
-        WHERE program_id IS NOT NULL${lang ? ' AND lang = $1' : ''}
+        WHERE program_id IS NOT NULL
+          AND event_name IN ('copay_card_click', 'foundation_click', 'pap_click')${lang ? ' AND lang = $1' : ''}
         GROUP BY partner, program_id
         ORDER BY COALESCE(partner, '(none)'), COUNT(*) DESC`,
         lang ? [lang] : []
@@ -561,6 +562,7 @@ async function getPartnerReport(db, partner, params) {
         FROM events
         WHERE partner = ${partner}
           AND program_id IS NOT NULL
+          AND event_name IN ('copay_card_click', 'foundation_click', 'pap_click')
           AND ts >= ${startDate.toISOString()}
           AND ts <= ${endDate.toISOString()}
         GROUP BY program_id, program_type
