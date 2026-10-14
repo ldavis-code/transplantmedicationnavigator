@@ -517,12 +517,17 @@ export function buildMedFacts(med, ctx) {
 
     // ---- JSON-LD ----
     const url = `${BASE_URL}${prefix}/medications/${med.id}/`;
+    // Substance, not Drug: schema.org makes Drug a subtype of Product, so
+    // Google reads it as something for sale and flags the page in Search
+    // Console ("Either offers, review, or aggregateRating should be
+    // specified"). We don't sell medications, so an Offer would be false.
+    const drugName = generic ? stripGenericTag(med.genericName) : medPageName(med);
+    const activeIngredient = lower(stripGenericTag(med.genericName));
     const drug = {
-        '@type': 'Drug',
-        name: generic ? stripGenericTag(med.genericName) : medPageName(med),
-        nonProprietaryName: lower(stripGenericTag(med.genericName)),
-        ...(mfr ? { manufacturer: { '@type': 'Organization', name: mfr } } : {}),
-        ...(med.category ? { drugClass: med.category } : {}),
+        '@type': 'Substance',
+        name: drugName,
+        ...(activeIngredient && activeIngredient !== lower(drugName) ? { alternateName: activeIngredient } : {}),
+        ...(activeIngredient ? { activeIngredient } : {}),
     };
     const jsonLd = {
         '@context': 'https://schema.org',
