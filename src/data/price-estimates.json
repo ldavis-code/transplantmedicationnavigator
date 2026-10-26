@@ -94,13 +94,6 @@
       "goodrx": { "min": 7000, "max": 18000 },
       "singlecare": { "min": 7500, "max": 15000 }
     },
-    "xifaxan": {
-      "note": "Rifaximin - expensive liver support medication",
-      "costplus": { "min": 400, "max": 700 },
-      "walmart": { "min": 600, "max": 1100 },
-      "goodrx": { "min": 450, "max": 950 },
-      "singlecare": { "min": 480, "max": 850 }
-    },
     "entresto": {
       "note": "Sacubitril/Valsartan - heart failure medication. Medicare 2026 negotiated price: $295/month (down from $628, 53% reduction). Generic approved July 2025",
       "walmart": { "min": 220, "max": 420 },
@@ -128,28 +121,16 @@
       "goodrx": { "min": 250, "max": 700 },
       "singlecare": { "min": 280, "max": 600 }
     },
-    "eliquis": {
+    "apixaban": {
       "note": "Apixaban - anticoagulant. Medicare 2026 negotiated price: $231/month (down from $521, 56% reduction)",
-      "costplus": { "min": 180, "max": 320 },
-      "walmart": { "min": 280, "max": 520 },
-      "goodrx": { "min": 200, "max": 480 },
-      "singlecare": { "min": 220, "max": 460 },
       "medicare2026": { "negotiated": 231, "listPrice": 521, "reduction": "56%" }
     },
-    "xarelto": {
+    "rivaroxaban": {
       "note": "Rivaroxaban - anticoagulant. Medicare 2026 negotiated price: $197/month (down from $517, 62% reduction)",
-      "costplus": { "min": 180, "max": 320 },
-      "walmart": { "min": 280, "max": 520 },
-      "goodrx": { "min": 200, "max": 480 },
-      "singlecare": { "min": 220, "max": 460 },
       "medicare2026": { "negotiated": 197, "listPrice": 517, "reduction": "62%" }
     },
-    "januvia": {
+    "sitagliptin": {
       "note": "Sitagliptin - DPP-4 inhibitor for diabetes. Medicare 2026 negotiated price: $113/month (down from $527, 79% reduction)",
-      "costplus": { "min": 80, "max": 160 },
-      "walmart": { "min": 150, "max": 350 },
-      "goodrx": { "min": 100, "max": 300 },
-      "singlecare": { "min": 120, "max": 280 },
       "medicare2026": { "negotiated": 113, "listPrice": 527, "reduction": "79%" }
     },
     "semaglutide": {
@@ -163,35 +144,7 @@
       "walmart": { "min": 480, "max": 880 },
       "goodrx": { "min": 320, "max": 780 },
       "singlecare": { "min": 360, "max": 700 }
-    },
-    "symbicort": {
-      "note": "Budesonide/Formoterol - respiratory inhaler",
-      "costplus": { "min": 140, "max": 240 },
-      "walmart": { "min": 240, "max": 390 },
-      "goodrx": { "min": 170, "max": 370 },
-      "singlecare": { "min": 190, "max": 330 }
-    },
-    "advair": {
-      "note": "Fluticasone/Salmeterol - respiratory inhaler, generics available",
-      "costplus": { "min": 80, "max": 160 },
-      "walmart": { "min": 150, "max": 300 },
-      "goodrx": { "min": 100, "max": 280 },
-      "singlecare": { "min": 120, "max": 260 }
-    },
-    "spiriva": {
-      "note": "Tiotropium - COPD inhaler",
-      "costplus": { "min": 180, "max": 330 },
-      "walmart": { "min": 280, "max": 480 },
-      "goodrx": { "min": 200, "max": 460 },
-      "singlecare": { "min": 220, "max": 400 }
-    },
-    "lyrica": {
-      "note": "Pregabalin - nerve pain medication, generic available at much lower cost",
-      "costplus": { "min": 15, "max": 40 },
-      "walmart": { "min": 20, "max": 60 },
-      "goodrx": { "min": 15, "max": 50 },
-      "singlecare": { "min": 18, "max": 55 }
     }
   },
-  "lastUpdated": "2026-04-07"
+  "lastUpdated": "2026-10-26"
 }

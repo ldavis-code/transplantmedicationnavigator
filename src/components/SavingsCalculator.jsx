@@ -27,24 +27,28 @@ function getPriceRange(medicationId, medicationName) {
         || priceEstimates.categoryDefaults?.default
         || {};
 
+    // Some brand-only records carry just the CMS figures and no cash prices
+    // we could verify; for those the CMS list price is the retail baseline.
+    const medicare = override?.medicare2026;
+    const hasCash = !!(data.walmart || data.goodrx || data.costplus);
     // Retail baseline = Walmart-style cash price (higher than discount pharmacies).
-    const retailLow = data.walmart?.min ?? data.goodrx?.min ?? 30;
-    const retailHigh = data.walmart?.max ?? data.goodrx?.max ?? 85;
+    const retailLow = data.walmart?.min ?? data.goodrx?.min ?? medicare?.listPrice ?? 30;
+    const retailHigh = data.walmart?.max ?? data.goodrx?.max ?? medicare?.listPrice ?? 85;
     // Assisted = best discount/cash route (Cost Plus first, then GoodRx).
     let assistedLow = data.costplus?.min ?? data.goodrx?.min ?? 15;
     let assistedHigh = data.costplus?.max ?? data.goodrx?.max ?? 45;
     // A Medicare 2026 negotiated price is a firm figure when present.
-    if (override?.medicare2026?.negotiated) {
-        assistedLow = Math.min(assistedLow, override.medicare2026.negotiated);
-        assistedHigh = override.medicare2026.negotiated;
+    if (medicare?.negotiated) {
+        assistedLow = hasCash ? Math.min(assistedLow, medicare.negotiated) : medicare.negotiated;
+        assistedHigh = medicare.negotiated;
     }
-    return { retailLow, retailHigh, assistedLow, assistedHigh, hasOverride: !!override };
+    return { retailLow, retailHigh, assistedLow, assistedHigh, hasOverride: !!override && (hasCash || !!medicare) };
 }
 
 // Fallback medications if none provided from context
 const FALLBACK_MEDICATIONS = [
     { id: 'creon', name: 'Creon (Pancrelipase)', category: 'Digestive Enzyme' },
-    { id: 'eliquis', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
+    { id: 'apixaban', name: 'Eliquis (Apixaban)', category: 'Anticoagulant' },
     { id: 'entresto', name: 'Entresto (Heart Failure)', category: 'Cardiovascular' },
     { id: 'farxiga', name: 'Farxiga (Dapagliflozin)', category: 'Diabetes/Heart/Kidney' },
     { id: 'jardiance', name: 'Jardiance (Empagliflozin)', category: 'Diabetes/Heart/Kidney' },
@@ -56,7 +60,7 @@ const FALLBACK_MEDICATIONS = [
     { id: 'tacrolimus', name: 'Tacrolimus (Generic Prograf)', category: 'Immunosuppressant' },
     { id: 'valcyte', name: 'Valganciclovir (Generic Valcyte)', category: 'Antiviral' },
     { id: 'vfend', name: 'Voriconazole (Generic Vfend)', category: 'Antifungal' },
-    { id: 'xarelto', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
+    { id: 'rivaroxaban', name: 'Xarelto (Rivaroxaban)', category: 'Anticoagulant' },
 ];
 
 export default function SavingsCalculator({ medications = [] }) {
