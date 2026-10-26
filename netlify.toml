@@ -585,6 +585,17 @@
   to = "/es/evidence"
   status = 301
 
+# Short link for slides and handouts
+[[redirects]]
+  from = "/2027"
+  to = "/whats-changing-2027/"
+  status = 301
+
+[[redirects]]
+  from = "/es/2027"
+  to = "/es/whats-changing-2027/"
+  status = 301
+
 [[redirects]]
   from = "/terms"
   to = "/terms-and-conditions"
