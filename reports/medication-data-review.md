@@ -1,6 +1,6 @@
 # Medication data review
 
-Generated 2026-10-12 by `npm run report:meds` (scripts/report-medication-data.js). Nothing in this list was changed automatically.
+Generated 2026-10-26 by `npm run report:meds` (scripts/report-medication-data.js). Nothing in this list was changed automatically.
 
 **Summary:** 259 medication records · 204 indexed · **55 noindex** · 16 programs with unknown eligibility fields · 25 PAP links with no program record.
 
