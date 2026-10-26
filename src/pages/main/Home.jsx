@@ -48,9 +48,10 @@ const Home = () => {
     const insuranceType = answers?.insurance_type;
 
     const [searchTerm, setSearchTerm] = useState('');
-    // Medication chosen in step 1, carried to the results page by the
-    // "See my options" button under step 2.
-    const [pendingMed, setPendingMed] = useState(null);
+    // Medications chosen in step 1, carried to the results page by the
+    // "See my options" button under step 2. Patients usually take several,
+    // so each pick adds to the list instead of replacing the last one.
+    const [pendingMeds, setPendingMeds] = useState([]);
 
     // fuse.js stays out of the entry bundle: the chunk loads on the first
     // keystroke, and plain substring matching answers until it arrives.
@@ -105,7 +106,7 @@ const Home = () => {
     // the patient picks the medication or the insurance first.
     const chooseMedication = (med) => {
         setSearchTerm('');
-        setPendingMed(med);
+        setPendingMeds(prev => (prev.some(m => m.id === med.id) ? prev : [...prev, med]));
         trackServerEvent('home_med_selected', { medicationId: med.id });
     };
 
@@ -114,15 +115,20 @@ const Home = () => {
         if (med) chooseMedication(med);
     };
 
+    const removeMedication = (id) => {
+        setPendingMeds(prev => prev.filter(m => m.id !== id));
+    };
+
     const chooseInsurance = (value) => {
         setAnswer('insurance_type', value);
         trackServerEvent('coverage_selected', { insuranceType: value, source: 'home' });
     };
 
     const seeOptions = () => {
-        if (!pendingMed) return;
-        trackServerEvent('home_see_options', { medicationId: pendingMed.id, insuranceType: insuranceType || 'unset' });
-        navigate(`/medications?ids=${pendingMed.id}`);
+        if (pendingMeds.length === 0) return;
+        const ids = pendingMeds.map(m => m.id).join(',');
+        trackServerEvent('home_see_options', { medicationId: ids, medicationCount: pendingMeds.length, insuranceType: insuranceType || 'unset' });
+        navigate(`/medications?ids=${ids}`);
     };
 
     return (
@@ -275,19 +281,29 @@ const Home = () => {
                     </Link>
                 </p>
 
-                {pendingMed && (
-                    <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-3">
-                        <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
-                        <p className="flex-grow text-slate-800">
-                            <span className="font-bold">{t('home.steps.selectedPre')}{localizeMedName(pendingMed.brandName)}</span>
-                        </p>
-                        <button
-                            onClick={() => setPendingMed(null)}
-                            className="text-slate-400 hover:text-slate-600"
-                            aria-label={t('home.steps.clearSelected')}
-                        >
-                            <X size={18} aria-hidden="true" />
-                        </button>
+                {pendingMeds.length > 0 && (
+                    <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                            <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" aria-hidden="true" />
+                            <p className="font-bold text-slate-800">
+                                {pendingMeds.length === 1 ? t('home.steps.selectedOne') : t('home.steps.selectedMany', { count: pendingMeds.length })}
+                            </p>
+                        </div>
+                        <ul className="flex flex-wrap gap-2">
+                            {pendingMeds.map((med) => (
+                                <li key={med.id} className="flex items-center gap-1 pl-4 pr-2 py-1.5 bg-white border border-emerald-200 rounded-full text-sm font-semibold text-slate-800">
+                                    {localizeMedName(med.brandName)}
+                                    <button
+                                        onClick={() => removeMedication(med.id)}
+                                        className="p-1 text-slate-400 hover:text-slate-600"
+                                        aria-label={t('home.steps.removeSelected', { name: localizeMedName(med.brandName) })}
+                                    >
+                                        <X size={16} aria-hidden="true" />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                        <p className="text-sm text-slate-600 mt-3">{t('home.steps.addAnotherHint')}</p>
                     </div>
                 )}
             </section>
@@ -317,14 +333,14 @@ const Home = () => {
 
                 <button
                     onClick={seeOptions}
-                    disabled={!pendingMed}
-                    className={`mt-6 w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center justify-center gap-2 ${pendingMed
+                    disabled={pendingMeds.length === 0}
+                    className={`mt-6 w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg shadow-md transition flex items-center justify-center gap-2 ${pendingMeds.length > 0
                         ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                         : 'bg-slate-200 text-slate-500 cursor-not-allowed'}`}
                 >
                     {t('home.steps.seeOptions')} <ArrowRight size={18} aria-hidden="true" />
                 </button>
-                {!pendingMed && (
+                {pendingMeds.length === 0 && (
                     <p className="text-sm text-slate-500 mt-2">{t('home.steps.seeOptionsHint')}</p>
                 )}
 
