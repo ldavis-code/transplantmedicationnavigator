@@ -4241,5 +4241,138 @@
     "closeDialog": "Cerrar el diálogo",
     "loading": "Cargando el contenido",
     "helpfulTipAria": "Consejo útil"
+  },
+  "changes2027": {
+    "banner": {
+      "badge": "Nuevo para 2027",
+      "text": "Las reglas de Medicare, Medicaid y el Mercado de Salud cambian el 1 de enero.",
+      "link": "Vea lo que cambia"
+    },
+    "page": {
+      "back": "Volver al inicio",
+      "badge": "Actualizado el 26 de octubre de 2026",
+      "title": "Lo que cambia en 2027",
+      "intro": "Hay reglas nuevas desde el 1 de enero de 2027. Algunas bajan lo que usted paga por sus medicamentos. Otras pueden poner en riesgo su seguro si se salta un paso. Esto es lo que los pacientes de trasplante deben saber, y lo que deben hacer ahora.",
+      "datesTitle": "Fechas clave",
+      "dates": [
+        {
+          "when": "15 oct – 7 dic de 2026",
+          "what": "Inscripción abierta de Medicare. Elija o cambie su plan de medicamentos para 2027."
+        },
+        {
+          "when": "1 nov de 2026 – 15 ene de 2027",
+          "what": "Inscripción abierta del Mercado de Salud (CuidadoDeSalud.gov). Inscríbase antes del 15 de diciembre para tener seguro desde el 1 de enero."
+        },
+        {
+          "when": "Antes del 1 ene de 2027",
+          "what": "Las reglas de trabajo de Medicaid empiezan en muchos estados. Algunos empiezan antes, y otros podrían tener más tiempo."
+        },
+        {
+          "when": "1 ene de 2027",
+          "what": "Empiezan los nuevos límites de Medicare y los precios más bajos de 15 medicamentos."
+        }
+      ],
+      "partD": {
+        "title": "Medicare Parte D: nuevo límite anual",
+        "lead": "La Parte D es la cobertura de medicamentos de Medicare. En 2027, lo máximo que usted paga en un año por los medicamentos cubiertos sube.",
+        "capLabel": "Límite anual de lo que usted paga",
+        "deductibleLabel": "Deducible más alto que puede cobrar un plan",
+        "was": "2026",
+        "now": "2027",
+        "p1": "Cuando su parte del costo de los medicamentos llega a $2,400, usted paga $0 por los medicamentos cubiertos el resto de 2027. La cuota mensual de su plan no cuenta para los $2,400.",
+        "p2": "Muchos pacientes de trasplante toman varios medicamentos caros y llegan al límite al principio del año. Puede pedirle a su plan el Plan de Pago de Recetas de Medicare. Divide lo que debe en pagos mensuales, en vez de una sola cuenta grande en enero.",
+        "actionTitle": "Haga esto antes del 7 de diciembre",
+        "actions": [
+          "Lea la carta \"Aviso Anual de Cambios\" que le envió su plan. Dice lo que cambia en 2027.",
+          "Revise que cada medicamento de trasplante que toma esté en la lista de medicamentos de su plan para 2027. Revise también la forma exacta, como de marca o genérico, y cápsulas o líquido.",
+          "Compare planes en Medicare.gov o llame al 1-800-MEDICARE (1-800-633-4227).",
+          "Si tiene poco dinero, solicite la Ayuda Adicional. Puede bajar mucho lo que paga por sus medicamentos."
+        ],
+        "planFinder": "Compare los planes de 2027 en Medicare.gov"
+      },
+      "prices": {
+        "title": "Precios más bajos de Medicare para 15 medicamentos",
+        "lead": "Medicare negoció con los fabricantes. Los precios más bajos empiezan el 1 de enero de 2027 para las personas con cobertura de medicamentos de Medicare. Varios de estos medicamentos son comunes después de un trasplante.",
+        "colDrug": "Medicamento",
+        "colUse": "Se usa para",
+        "colList": "Precio de lista (30 días)",
+        "colNew": "Precio de Medicare en 2027",
+        "uses": {
+          "xifaxan": "Hígado: confusión por enfermedad del hígado (encefalopatía hepática)",
+          "semaglutide": "Diabetes, salud del corazón, peso",
+          "janumet": "Diabetes",
+          "tradjenta": "Diabetes",
+          "trelegy": "Pulmones: asma y EPOC",
+          "breo": "Pulmones: asma y EPOC",
+          "ofev": "Pulmones: cicatrices (fibrosis pulmonar)"
+        },
+        "othersLabel": "Los otros 8 medicamentos:",
+        "others": "Xtandi, Pomalyst, Ibrance, Linzess, Calquence, Austedo, Vraylar y Otezla.",
+        "note": "Los precios de lista son de 2024. Lo que usted paga sigue dependiendo de su plan. Un precio más bajo puede significar un copago más bajo, y puede ayudarle a pagar menos antes de llegar al límite de $2,400. Estos precios son solo para Medicare.",
+        "round1": "Los primeros 10 precios de Medicare empezaron en enero de 2026. Incluyen Eliquis, Xarelto, Januvia, Jardiance, Farxiga y Entresto."
+      },
+      "medicaid": {
+        "title": "Medicaid: nuevas reglas de trabajo",
+        "warning": "Si pierde Medicaid, podría perder la cobertura de su medicamento contra el rechazo. No ignore las cartas de su oficina de Medicaid.",
+        "whoTitle": "Quién tiene que seguir las nuevas reglas",
+        "who": "Adultos de 19 a 64 años que recibieron Medicaid porque su estado lo amplió. Cada mes tendrá que mostrar 80 horas de trabajo, estudio, capacitación laboral o trabajo voluntario. Puede combinarlos.",
+        "exemptTitle": "Quién no tiene que hacerlo",
+        "exempt": [
+          "Personas embarazadas o que acaban de tener un bebé",
+          "Personas con una discapacidad, o \"médicamente frágiles\" (con un problema de salud grave o complejo)",
+          "Padres y cuidadores de un niño menor de 14 años o de una persona con discapacidad",
+          "Indígenas americanos y nativos de Alaska",
+          "Algunas otras personas, según su estado"
+        ],
+        "transplantTitle": "Lo que esto significa después de un trasplante",
+        "transplant": "Las reglas no nombran a los pacientes de trasplante. Muchos podrían contar como \"médicamente frágiles\". Pero es posible que tenga que mostrar que su salud le impide hacer 80 horas al mes. Cada estado decide qué pruebas pide.",
+        "actionTitle": "Haga esto ahora",
+        "actions": [
+          "Pregúntele a su trabajador social de trasplante si las reglas de trabajo aplican para usted.",
+          "Pídale a su equipo de trasplante una carta sobre su salud, por si su estado le pide pruebas.",
+          "Abra y conteste cada carta de Medicaid antes de la fecha límite.",
+          "Si pierde Medicaid, llame a su centro de trasplante ese mismo día."
+        ],
+        "notMedicare": "Estas reglas son solo para Medicaid. No cambian Medicare.",
+        "stateLink": "Busque la oficina de Medicaid de su estado"
+      },
+      "marketplace": {
+        "title": "Planes del Mercado de Salud: menos ayuda con la prima",
+        "lead": "Los planes del Mercado de Salud son los seguros que compra en CuidadoDeSalud.gov o en el sitio de su estado.",
+        "p1": "La ayuda extra con las primas que empezó en 2021 terminó después de 2025. El Congreso no la renovó. En 2027, los hogares que ganan más de 4 veces el nivel de pobreza no reciben ninguna ayuda con la prima. También se espera que la mayoría de los planes cuesten más.",
+        "p2": "Las tarjetas de copago de los fabricantes todavía se pueden usar con los planes del Mercado de Salud.",
+        "actionTitle": "Haga esto durante la inscripción abierta",
+        "actions": [
+          "Revise los precios de 2027. No deje que el plan del año pasado se renueve sin revisarlo.",
+          "Revise que el plan cubra sus medicamentos de trasplante y su centro de trasplante.",
+          "Inscríbase antes del 15 de diciembre para que su plan empiece el 1 de enero."
+        ],
+        "link": "Busque planes de 2027 en CuidadoDeSalud.gov"
+      },
+      "pending": {
+        "title": "Lo que falta por anunciar",
+        "p1": "Medicare todavía no ha fijado los costos de 2027 de la Parte B ni de la Parte B-ID. La Parte B-ID es la cobertura solo de medicamentos para pacientes de trasplante de riñón. Medicare suele anunciarlos en noviembre. En 2026, la Parte B-ID cuesta $121.60 al mes.",
+        "p2": "Actualizaremos esta página cuando Medicare los anuncie."
+      },
+      "checklistTitle": "Su lista para 2027",
+      "checklist": [
+        "Medicare: revise la lista de medicamentos de su plan para 2027 antes del 7 de diciembre.",
+        "Medicaid: pregunte si las reglas de trabajo aplican para usted, y pida una carta a su equipo de trasplante.",
+        "Mercado de Salud: compare los planes de 2027 e inscríbase antes del 15 de diciembre.",
+        "Todos: avísele a su farmacéutico de trasplante de cualquier cambio en su seguro."
+      ],
+      "helpTitle": "¿Necesita ayuda para pagar sus medicamentos?",
+      "helpText": "Conteste 5 preguntas y le mostraremos los programas que podrían ayudarle.",
+      "helpCta": "Ver mis opciones",
+      "sourcesTitle": "De dónde viene esta información",
+      "sourcesNote": "Las cifras son de los Centros de Servicios de Medicare y Medicaid (CMS). Las reglas pueden cambiar. Consulte con su plan o su estado antes de decidir.",
+      "sources": {
+        "partD": "CMS: límites de la Parte D para 2027 (abril de 2026, en inglés)",
+        "prices": "CMS: precios negociados para 2027 (en inglés)",
+        "medicaid": "CMS: reglas de trabajo de Medicaid (junio de 2026, en inglés)",
+        "healthcare": "CuidadoDeSalud.gov: fechas de inscripción"
+      },
+      "externalNote": "(se abre en una pestaña nueva)"
+    }
   }
 }

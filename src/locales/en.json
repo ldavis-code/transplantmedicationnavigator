@@ -4061,5 +4061,138 @@
     "closeDialog": "Close dialog",
     "loading": "Loading content",
     "helpfulTipAria": "Helpful tip"
+  },
+  "changes2027": {
+    "banner": {
+      "badge": "New for 2027",
+      "text": "Medicare, Medicaid, and Marketplace rules change on January 1.",
+      "link": "See what's changing"
+    },
+    "page": {
+      "back": "Back to home",
+      "badge": "Updated October 26, 2026",
+      "title": "What's changing in 2027",
+      "intro": "New rules start January 1, 2027. Some will lower what you pay for medicine. Others could put your coverage at risk if you miss a step. Here is what transplant patients need to know, and what to do now.",
+      "datesTitle": "Key dates",
+      "dates": [
+        {
+          "when": "Oct 15 – Dec 7, 2026",
+          "what": "Medicare open enrollment. Pick or change your 2027 drug plan."
+        },
+        {
+          "when": "Nov 1, 2026 – Jan 15, 2027",
+          "what": "Marketplace (HealthCare.gov) open enrollment. Sign up by December 15 for coverage that starts January 1."
+        },
+        {
+          "when": "By Jan 1, 2027",
+          "what": "Medicaid work rules start in many states. Some states start sooner, and some may get more time."
+        },
+        {
+          "when": "Jan 1, 2027",
+          "what": "New Medicare drug limits and lower prices on 15 drugs begin."
+        }
+      ],
+      "partD": {
+        "title": "Medicare Part D: new yearly limit",
+        "lead": "Part D is Medicare's drug coverage. In 2027, the most you pay for covered drugs in a year goes up.",
+        "capLabel": "Yearly limit on what you pay",
+        "deductibleLabel": "Highest deductible a plan can charge",
+        "was": "2026",
+        "now": "2027",
+        "p1": "Once your share of drug costs reaches $2,400, you pay $0 for covered drugs for the rest of 2027. Your monthly plan fee does not count toward the $2,400.",
+        "p2": "Many transplant patients take several costly drugs and reach the limit early in the year. You can ask your plan for the Medicare Prescription Payment Plan. It splits what you owe into monthly bills instead of one big bill in January.",
+        "actionTitle": "Do this before December 7",
+        "actions": [
+          "Read the \"Annual Notice of Change\" letter your plan mailed you. It lists what changes in 2027.",
+          "Check that every transplant drug you take is on your plan's 2027 drug list. Check the exact form too, like brand or generic, and capsules or liquid.",
+          "Compare plans on Medicare.gov or call 1-800-MEDICARE (1-800-633-4227).",
+          "If money is tight, apply for Extra Help. It can lower your drug costs a lot."
+        ],
+        "planFinder": "Compare 2027 plans on Medicare.gov"
+      },
+      "prices": {
+        "title": "Lower Medicare prices on 15 drugs",
+        "lead": "Medicare bargained with drug makers. Lower prices start January 1, 2027, for people with Medicare drug coverage. Several of these drugs are common after a transplant.",
+        "colDrug": "Drug",
+        "colUse": "Used for",
+        "colList": "List price (30 days)",
+        "colNew": "Medicare price in 2027",
+        "uses": {
+          "xifaxan": "Liver: confusion from liver disease (hepatic encephalopathy)",
+          "semaglutide": "Diabetes, heart health, weight",
+          "janumet": "Diabetes",
+          "tradjenta": "Diabetes",
+          "trelegy": "Lungs: asthma and COPD",
+          "breo": "Lungs: asthma and COPD",
+          "ofev": "Lungs: scarring (pulmonary fibrosis)"
+        },
+        "othersLabel": "The other 8 drugs:",
+        "others": "Xtandi, Pomalyst, Ibrance, Linzess, Calquence, Austedo, Vraylar, and Otezla.",
+        "note": "List prices are from 2024. What you pay still depends on your plan. A lower price can mean a lower copay, and it can help you pay less before you reach the $2,400 limit. These prices are for Medicare only.",
+        "round1": "The first 10 Medicare prices started in January 2026. They include Eliquis, Xarelto, Januvia, Jardiance, Farxiga, and Entresto."
+      },
+      "medicaid": {
+        "title": "Medicaid: new work rules",
+        "warning": "If you lose Medicaid, you could lose coverage for your anti-rejection medicine. Do not ignore mail from your Medicaid office.",
+        "whoTitle": "Who has to follow the new rules",
+        "who": "Adults ages 19 to 64 who got Medicaid because their state expanded it. Each month, you will need to show 80 hours of work, school, job training, or volunteer work. You can mix them.",
+        "exemptTitle": "Who does not have to",
+        "exempt": [
+          "People who are pregnant or just had a baby",
+          "People with a disability, or who are \"medically frail\" (have a serious or complex health problem)",
+          "Parents and caregivers of a child under 14, or of a person with a disability",
+          "American Indians and Alaska Natives",
+          "Some others, depending on your state"
+        ],
+        "transplantTitle": "What this means after a transplant",
+        "transplant": "Transplant patients are not named in the rules. Many may count as \"medically frail.\" But you may have to show that your health makes it hard to do 80 hours a month. Each state decides what proof it needs.",
+        "actionTitle": "Do this now",
+        "actions": [
+          "Ask your transplant social worker if the work rules apply to you.",
+          "Ask your transplant team for a letter about your health, in case your state asks for proof.",
+          "Open and answer every letter from Medicaid by its deadline.",
+          "If your Medicaid stops, call your transplant center the same day."
+        ],
+        "notMedicare": "These rules are for Medicaid only. They do not change Medicare.",
+        "stateLink": "Find your state's Medicaid office"
+      },
+      "marketplace": {
+        "title": "Marketplace plans: less help with premiums",
+        "lead": "Marketplace plans are the health plans you buy at HealthCare.gov or your state's site.",
+        "p1": "The extra premium help that started in 2021 ended after 2025. Congress did not renew it. In 2027, households that earn more than 4 times the poverty level get no help with premiums at all. Most plans are also expected to cost more.",
+        "p2": "Copay cards from drug makers can still be used with Marketplace plans.",
+        "actionTitle": "Do this during open enrollment",
+        "actions": [
+          "Look at the 2027 prices. Do not let last year's plan renew without checking it.",
+          "Check that your transplant drugs and transplant center are covered by the plan.",
+          "Sign up by December 15 so your plan starts January 1."
+        ],
+        "link": "Shop 2027 plans on HealthCare.gov"
+      },
+      "pending": {
+        "title": "Still to come",
+        "p1": "Medicare has not yet set the 2027 costs for Part B or Part B-ID. Part B-ID is the drug-only coverage for kidney transplant patients. Medicare usually announces these in November. In 2026, Part B-ID costs $121.60 a month.",
+        "p2": "We will update this page when Medicare announces them."
+      },
+      "checklistTitle": "Your 2027 checklist",
+      "checklist": [
+        "Medicare: check your plan's 2027 drug list by December 7.",
+        "Medicaid: ask if the work rules apply to you, and get a letter from your transplant team.",
+        "Marketplace: compare 2027 plans and sign up by December 15.",
+        "Everyone: tell your transplant pharmacist about any change in your coverage."
+      ],
+      "helpTitle": "Need help paying for your medicine?",
+      "helpText": "Answer 5 questions and we will show the programs that may help you.",
+      "helpCta": "Find my options",
+      "sourcesTitle": "Where this information comes from",
+      "sourcesNote": "Figures are from the Centers for Medicare & Medicaid Services (CMS). Rules can change. Check with your plan or state before you decide.",
+      "sources": {
+        "partD": "CMS: 2027 Part D limits (Rate Announcement, April 2026)",
+        "prices": "CMS: Negotiated prices for 2027",
+        "medicaid": "CMS: Medicaid work rules (June 2026)",
+        "healthcare": "HealthCare.gov: open enrollment dates"
+      },
+      "externalNote": "(opens in a new tab)"
+    }
   }
 }

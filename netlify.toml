@@ -223,6 +223,13 @@
   force = true
   query = { lang = "es" }
 
+[[redirects]]
+  from = "/whats-changing-2027"
+  to = "/es/whats-changing-2027"
+  status = 301
+  force = true
+  query = { lang = "es" }
+
 # TrumpRx resource page - serve static HTML
 [[redirects]]
   from = "/trumprx"
@@ -336,6 +343,11 @@
   to = "/education/appeals/index.html"
   status = 200
 
+[[redirects]]
+  from = "/whats-changing-2027"
+  to = "/whats-changing-2027/index.html"
+  status = 200
+
 # Epic FHIR OAuth callback - serve static HTML (must come before SPA fallback)
 [[redirects]]
   from = "/auth/epic/callback"
@@ -447,6 +459,11 @@
 [[redirects]]
   from = "/es/education/appeals"
   to = "/es/education/appeals/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/es/whats-changing-2027"
+  to = "/es/whats-changing-2027/index.html"
   status = 200
 
 # TrumpRx guide, Spanish version - serve the static HTML at the /es/ URL
@@ -566,6 +583,17 @@
 [[redirects]]
   from = "/es/research"
   to = "/es/evidence"
+  status = 301
+
+# Short link for slides and handouts
+[[redirects]]
+  from = "/2027"
+  to = "/whats-changing-2027/"
+  status = 301
+
+[[redirects]]
+  from = "/es/2027"
+  to = "/es/whats-changing-2027/"
   status = 301
 
 [[redirects]]

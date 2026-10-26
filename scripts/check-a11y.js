@@ -35,6 +35,8 @@ const PAGES = [
   '/application-help',
   '/savings-tracker',
   '/feedback',
+  '/whats-changing-2027',
+  '/es/whats-changing-2027',
   '/privacy',
   '/accessibility',
   '/for-hospitals',

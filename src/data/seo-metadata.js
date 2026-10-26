@@ -391,6 +391,22 @@ export const seoMetadata = {
     },
   },
 
+  changes2027: {
+    title: "What's Changing in 2027 for Transplant Medicines | Transplant Medication Navigator™",
+    description: 'New for 2027: the Medicare Part D yearly limit rises to $2,400, Medicare prices drop on 15 drugs including Xifaxan, Medicaid work rules start, and Marketplace premium help shrinks. What transplant patients should do now.',
+    canonical: `${BASE_URL}/whats-changing-2027`,
+    ogTitle: "What's Changing in 2027 for Transplant Medicines",
+    ogDescription: 'Medicare, Medicaid, and Marketplace changes that start January 1, 2027, and what transplant patients should do before open enrollment ends.',
+    twitterTitle: "What's Changing in 2027 for Transplant Medicines",
+    twitterDescription: 'Medicare, Medicaid, and Marketplace changes for 2027, and what transplant patients should do now.',
+    breadcrumbName: "What's changing in 2027",
+    es: {
+      title: 'Lo que cambia en 2027 para los medicamentos de trasplante | Transplant Medication Navigator™',
+      description: 'Nuevo para 2027: el límite anual de Medicare Parte D sube a $2,400, Medicare baja el precio de 15 medicamentos como Xifaxan, empiezan las reglas de trabajo de Medicaid y baja la ayuda con la prima del Mercado de Salud. Qué deben hacer ahora los pacientes de trasplante.',
+      breadcrumbName: 'Lo que cambia en 2027',
+    },
+  },
+
   feedback: {
     title: 'Share Your Feedback | Transplant Medication Navigator™',
     description: 'Tell us what is working and what we can improve. Your feedback helps make this free transplant medication assistance guide better for every patient and caregiver.',

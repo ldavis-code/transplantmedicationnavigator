@@ -29,6 +29,7 @@ const LazyTermsAndConditions = lazy(() => import('./pages/TermsAndConditions.jsx
 const LazyPrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
 const LazyAccessibility = lazy(() => import('./pages/Accessibility.jsx'));
 const LazyAppeals = lazy(() => import('./pages/Appeals.jsx'));
+const LazyChanges2027 = lazy(() => import('./pages/Changes2027.jsx'));
 const LazyFeedbackSurvey = lazy(() => import('./pages/FeedbackSurvey.jsx'));
 const LazyEpicCallback = lazy(() => import('./pages/EpicCallback.jsx'));
 const LazyNotLicensed = lazy(() => import('./pages/NotLicensed.jsx'));
@@ -840,6 +841,8 @@ const MainSiteRoutes = () => (
                 <Route path="/education" element={<LazyEducation />} />
                 <Route path="/resources" element={<Navigate to="/education" replace />} />
                 <Route path="/education/appeals" element={<LazyAppeals />} />
+                <Route path="/whats-changing-2027" element={<LazyChanges2027 />} />
+                <Route path="/2027" element={<Navigate to="/whats-changing-2027" replace />} />
                 <Route path="/application-help" element={<LazyApplicationHelp />} />
                 <Route path="/grants-foundations" element={<Navigate to="/application-help" replace />} />
                 <Route path="/grants" element={<Navigate to="/application-help" replace />} />

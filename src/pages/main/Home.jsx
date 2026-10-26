@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle, Quote } from 'lucide-react';
+import { Download, ArrowRight, BookOpen, ShieldCheck, HeartHandshake, Phone, ExternalLink, X, CheckCircle, Quote, CalendarDays } from 'lucide-react';
 import HOME_STATS from '../../data/home-stats.json';
 import { CONTENT_VERIFIED_ISO, formatVerifiedDate } from '../../data/constants.js';
 import { useChatQuiz } from '../../context/ChatQuizContext.jsx';
@@ -133,6 +133,22 @@ const Home = () => {
 
     return (
         <article className="space-y-10">
+            {/* 2027 changes banner. Remove (here and in homeBody in
+                scripts/prerender-seo.js) once the 2027 changes are old news. */}
+            <Link
+                to="/whats-changing-2027"
+                onClick={() => trackServerEvent('home_2027_banner_click')}
+                className="max-w-3xl mx-auto mt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-5 py-3 bg-amber-50 hover:bg-amber-100 border-2 border-amber-300 rounded-xl text-slate-800 transition"
+            >
+                <span className="inline-flex items-center gap-1.5 self-start sm:self-auto text-xs font-extrabold tracking-wide uppercase bg-amber-200 text-amber-900 px-2.5 py-1 rounded-full flex-shrink-0">
+                    <CalendarDays size={14} aria-hidden="true" /> {t('changes2027.banner.badge')}
+                </span>
+                <span className="flex-grow">{t('changes2027.banner.text')}</span>
+                <span className="inline-flex items-center gap-1 font-bold text-emerald-800 underline flex-shrink-0">
+                    {t('changes2027.banner.link')} <ArrowRight size={16} aria-hidden="true" />
+                </span>
+            </Link>
+
             {/* Hero */}
             <section className="text-center max-w-3xl mx-auto pt-6 md:pt-10">
                 <h1 className="text-3xl md:text-5xl font-extrabold text-emerald-900 leading-tight mb-4">
