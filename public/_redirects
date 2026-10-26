@@ -72,6 +72,7 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /about  lang=es  /es/about  301!
 /feedback  lang=es  /es/feedback  301!
 /education/appeals  lang=es  /es/education/appeals  301!
+/whats-changing-2027  lang=es  /es/whats-changing-2027  301!
 
 # Prerendered pages - serve static HTML with SEO meta tags
 # These rules ensure search engines see page-specific meta descriptions
@@ -95,6 +96,7 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /about  /about/index.html  200
 /feedback  /feedback/index.html  200
 /education/appeals  /education/appeals/index.html  200
+/whats-changing-2027  /whats-changing-2027/index.html  200
 
 # Spanish prerendered pages - serve the static /es/ HTML at the clean URL
 # (mirrors the English block above; without these, Netlify 301s /es/faq to
@@ -118,6 +120,7 @@ https://www.transplantmedicationnavigator.com/*  https://transplantmedicationnav
 /es/about  /es/about/index.html  200
 /es/feedback  /es/feedback/index.html  200
 /es/education/appeals  /es/education/appeals/index.html  200
+/es/whats-changing-2027  /es/whats-changing-2027/index.html  200
 
 # TrumpRx guide: a static page, served under the same /es/ convention as
 # every other Spanish URL. The old /trumprx-es address permanently moves —

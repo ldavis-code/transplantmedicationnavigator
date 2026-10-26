@@ -36,7 +36,7 @@ const SPANISH_ROUTES = new Set([
   '/medications', '/evidence', '/my-medications', '/savings-tracker',
   '/survey', '/survey/transplant', '/survey/general', '/pilot',
   '/terms-and-conditions', '/privacy', '/accessibility',
-  '/about', '/feedback', '/education/appeals',
+  '/about', '/feedback', '/education/appeals', '/whats-changing-2027',
 ]);
 
 // Spanish titles/descriptions come from the same source the app uses
@@ -61,6 +61,7 @@ const SPANISH_META = {
   '/about': seoMetadata.about.es,
   '/feedback': seoMetadata.feedback.es,
   '/education/appeals': seoMetadata.appeals.es,
+  '/whats-changing-2027': seoMetadata.changes2027.es,
 };
 const ES_LOCALE = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'src', 'locales', 'es.json'), 'utf8')
@@ -263,6 +264,13 @@ const pages = [
     ogDescription: seoMetadata.appeals.ogDescription,
   },
   {
+    route: '/whats-changing-2027',
+    title: seoMetadata.changes2027.title,
+    description: seoMetadata.changes2027.description,
+    ogTitle: seoMetadata.changes2027.ogTitle,
+    ogDescription: seoMetadata.changes2027.ogDescription,
+  },
+  {
     route: '/accessibility',
     title: 'Accessibility Statement | Transplant Medication Navigator™',
     description: 'Our commitment to making Transplant Medication Navigator accessible to all users, including those with disabilities.',
@@ -303,6 +311,10 @@ faqPage.es = { bodyHtml: faqBody(true) };
 const educationPage = pages.find((p) => p.route === '/education');
 educationPage.bodyHtml = educationBody(false);
 educationPage.es = { bodyHtml: educationBody(true) };
+const changes2027Page = pages.find((p) => p.route === '/whats-changing-2027');
+changes2027Page.wide = true;
+changes2027Page.bodyHtml = changes2027Body(false);
+changes2027Page.es = { bodyHtml: changes2027Body(true) };
 
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -371,6 +383,28 @@ function educationBody(isEs) {
         ? 'Guías sobre cómo pagar sus medicamentos de trasplante. Elija un tema:'
         : 'Guides on paying for your transplant medications. Choose a topic:'}</p>
       <ul style="list-style:none;padding:0;max-width:520px;margin:0 auto 20px;text-align:left;font-size:1rem;">${items}</ul>`;
+}
+
+// /whats-changing-2027 — the page's own text, from the same locale strings
+// the app renders, so the dates and dollar figures crawlers see cannot
+// drift from the hydrated page.
+function changes2027Body(isEs) {
+  const c = (isEs ? ES_LOCALE : EN_LOCALE).changes2027.page;
+  const h2 = (txt) => `<h2 style="color:#047857;font-size:1.25rem;margin:24px 0 6px;">${esc(txt)}</h2>`;
+  const p = (txt) => `<p style="margin:0 0 10px;color:#334155;">${esc(txt)}</p>`;
+  const ul = (items) => `<ul style="margin:0 0 10px;padding-left:20px;color:#334155;">${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
+  const dates = c.dates.map((d) => `<li><strong>${esc(d.when)}</strong>: ${esc(d.what)}</li>`).join('');
+  return `<h1 style="color:#0f172a;margin-bottom:12px;">${esc(c.title)}</h1>
+      <div style="text-align:left;font-size:0.9375rem;line-height:1.65;margin-bottom:20px;">
+      <p style="color:#475569;margin-bottom:12px;">${esc(c.intro)}</p>
+      ${h2(c.datesTitle)}<ul style="margin:0 0 10px;padding-left:20px;color:#334155;">${dates}</ul>
+      ${h2(c.partD.title)}${p(c.partD.lead)}${p(c.partD.p1)}${p(c.partD.p2)}${ul(c.partD.actions)}
+      ${h2(c.prices.title)}${p(c.prices.lead)}${p(`${c.prices.othersLabel} ${c.prices.others}`)}${p(c.prices.note)}
+      ${h2(c.medicaid.title)}${p(c.medicaid.warning)}${p(c.medicaid.who)}${ul(c.medicaid.exempt)}${p(c.medicaid.transplant)}${ul(c.medicaid.actions)}
+      ${h2(c.marketplace.title)}${p(c.marketplace.lead)}${p(c.marketplace.p1)}${p(c.marketplace.p2)}${ul(c.marketplace.actions)}
+      ${h2(c.pending.title)}${p(c.pending.p1)}${p(c.pending.p2)}
+      ${h2(c.checklistTitle)}${ul(c.checklist)}
+      </div>`;
 }
 
 // /application-help — the program directory: every PAP, foundation, and
@@ -611,7 +645,12 @@ function homeBody(isEs) {
   const statLabels = isEs
     ? ['Medicamentos', 'Programas de asistencia', 'Tarjetas de copago']
     : ['Medications', 'Assistance Programs', 'Copay Cards'];
+  const b = (isEs ? ES_LOCALE : EN_LOCALE).changes2027.banner;
   return `<div style="text-align: center;">
+      <p style="max-width: 720px; margin: 16px auto 0; padding: 12px 20px; background: #fffbeb; border: 2px solid #fcd34d; border-radius: 12px; color: #1e293b;">
+        <strong style="color: #78350f;">${b.badge}:</strong> ${b.text}
+        <a href="${pre}/whats-changing-2027" style="color: #065f46; font-weight: 700;">${b.link}</a>
+      </p>
       <h1 style="font-size: 2rem; font-weight: 800; color: #064e3b; margin: 24px 0 16px; line-height: 1.25;">
         ${h.hero.title1}<br />${h.hero.title2}
       </h1>
