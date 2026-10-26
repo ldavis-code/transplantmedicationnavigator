@@ -137,11 +137,12 @@
       "medicare2026": { "negotiated": 231, "listPrice": 521, "reduction": "56%" }
     },
     "xarelto": {
-      "note": "Rivaroxaban - anticoagulant. One of 15 drugs selected for Medicare 2027 price negotiation",
+      "note": "Rivaroxaban - anticoagulant. Medicare 2026 negotiated price: $197/month (down from $517, 62% reduction)",
       "costplus": { "min": 180, "max": 320 },
       "walmart": { "min": 280, "max": 520 },
       "goodrx": { "min": 200, "max": 480 },
-      "singlecare": { "min": 220, "max": 460 }
+      "singlecare": { "min": 220, "max": 460 },
+      "medicare2026": { "negotiated": 197, "listPrice": 517, "reduction": "62%" }
     },
     "januvia": {
       "note": "Sitagliptin - DPP-4 inhibitor for diabetes. Medicare 2026 negotiated price: $113/month (down from $527, 79% reduction)",
